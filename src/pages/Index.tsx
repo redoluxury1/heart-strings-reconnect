@@ -1,12 +1,91 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import React from 'react';
+import Navbar from '../components/layout/Navbar';
+import Hero from '../components/home/Hero';
+import ConflictStages from '../components/home/ConflictStages';
+import ContentContainer from '../components/common/ContentContainer';
+import { Heart, Handshake, MessageCircle } from 'lucide-react';
+import Card from '../components/common/Card';
 
 const Index = () => {
+  const benefits = [
+    {
+      title: "Emotional Intelligence",
+      description: "Learn to recognize and manage emotions during conflict to avoid escalation.",
+      icon: <Heart className="h-5 w-5" />
+    },
+    {
+      title: "Better Communication",
+      description: "Develop skills to express needs and listen effectively even when tensions are high.",
+      icon: <MessageCircle className="h-5 w-5" />
+    },
+    {
+      title: "Stronger Connection",
+      description: "Transform conflicts into opportunities to deepen understanding and intimacy.",
+      icon: <Handshake className="h-5 w-5" />
+    }
+  ];
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-slate-50">
+      <Navbar />
+      
+      <main>
+        <Hero />
+        <ConflictStages />
+        
+        <section className="py-16 bg-white">
+          <ContentContainer>
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-slate-800 mb-4">
+                Build a Healthier Relationship
+              </h2>
+              <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+                HeartStrings helps you develop the skills and insights needed for conflict resolution and deeper connection.
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {benefits.map((benefit, index) => (
+                <Card key={index} icon={benefit.icon} title={benefit.title} className="h-full">
+                  <p className="text-slate-600">{benefit.description}</p>
+                </Card>
+              ))}
+            </div>
+          </ContentContainer>
+        </section>
+        
+        <section className="py-16 bg-gradient-to-br from-rose-100 to-rose-50">
+          <ContentContainer>
+            <div className="text-center">
+              <h2 className="text-3xl font-bold text-slate-800 mb-4">
+                Start Healing Today
+              </h2>
+              <p className="text-lg text-slate-600 max-w-2xl mx-auto mb-8">
+                Every relationship faces challenges. Take the first step toward healthier conflict resolution and deeper connection.
+              </p>
+              <button className="bg-rose-500 hover:bg-rose-600 text-white px-8 py-3 rounded-md font-medium transition-colors">
+                Begin Your Journey
+              </button>
+            </div>
+          </ContentContainer>
+        </section>
+      </main>
+      
+      <footer className="bg-slate-800 text-slate-200 py-12">
+        <ContentContainer>
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <div className="flex items-center space-x-2 mb-6 md:mb-0">
+              <Heart className="h-6 w-6 text-rose-400" />
+              <span className="text-xl font-semibold">HeartStrings</span>
+            </div>
+            
+            <p className="text-slate-400 text-sm">
+              © {new Date().getFullYear()} HeartStrings. All rights reserved.
+            </p>
+          </div>
+        </ContentContainer>
+      </footer>
     </div>
   );
 };
