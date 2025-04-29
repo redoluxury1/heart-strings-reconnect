@@ -35,11 +35,18 @@ const ConflictStages = () => {
     <section className="py-16">
       <ContentContainer>
         <div className="text-center mb-12">
+          <div className="flex justify-center mb-4">
+            <img 
+              src="/lovable-uploads/4c43c832-fd35-4f81-8d27-f1fbfa7d6250.png" 
+              alt="Bridge For Couples Icon" 
+              className="h-16 w-auto" 
+            />
+          </div>
           <h2 className="text-3xl font-bold text-slate-800 mb-4">
             Support at Every Stage
           </h2>
           <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-            HeartStrings provides tailored guidance for wherever you are in the conflict resolution process.
+            Bridge For Couples provides tailored guidance for wherever you are in the conflict resolution process.
           </p>
         </div>
 

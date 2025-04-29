@@ -37,6 +37,13 @@ const Index = () => {
         <section className="py-16 bg-white">
           <ContentContainer>
             <div className="text-center mb-12">
+              <div className="flex justify-center mb-4">
+                <img 
+                  src="/lovable-uploads/61c36ea7-9582-4359-8fed-7603197af3d6.png" 
+                  alt="Bridge For Couples Icon" 
+                  className="h-16 w-auto" 
+                />
+              </div>
               <h2 className="text-3xl font-bold text-slate-800 mb-4">
                 Build a Healthier Relationship
               </h2>

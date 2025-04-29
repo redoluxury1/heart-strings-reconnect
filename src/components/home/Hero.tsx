@@ -11,7 +11,11 @@ const Hero = () => {
         <div className="flex flex-col items-center text-center">
           <div className="mb-6">
             <div className="inline-flex items-center justify-center p-4 bg-white rounded-full shadow-sm">
-              <Heart className="h-8 w-8 text-rose-500" />
+              <img 
+                src="/lovable-uploads/4c43c832-fd35-4f81-8d27-f1fbfa7d6250.png" 
+                alt="Bridge For Couples Icon" 
+                className="h-12 w-auto" 
+              />
             </div>
           </div>
           
@@ -20,7 +24,7 @@ const Hero = () => {
           </h1>
           
           <p className="text-lg md:text-xl text-slate-600 max-w-2xl mb-8">
-            HeartStrings provides emotional guidance and practical tools to help couples navigate conflict 
+            Bridge For Couples provides emotional guidance and practical tools to help couples navigate conflict 
             and find their way back to each other.
           </p>
           
