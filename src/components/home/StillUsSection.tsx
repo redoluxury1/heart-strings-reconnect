@@ -105,7 +105,7 @@ const StillUsSection = () => {
                 <Link to={card.link} className="block mt-auto">
                   <Button 
                     variant="outline" 
-                    className="w-full border-rosewood-tint text-rosewood-tint hover:bg-rosewood-tint/10 transition-colors"
+                    className="w-full border-midnight-indigo text-midnight-indigo hover:bg-midnight-indigo/10 transition-colors"
                   >
                     {card.buttonText}
                   </Button>
