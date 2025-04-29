@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import LoveNotesReceived from "./pages/LoveNotesReceived";
 
 const queryClient = new QueryClient();
 
@@ -20,6 +21,7 @@ const App = () => (
           <Route path="/during-conflict" element={<NotFound />} />
           <Route path="/post-conflict" element={<NotFound />} />
           <Route path="/reconnect" element={<NotFound />} />
+          <Route path="/love-notes" element={<LoveNotesReceived />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

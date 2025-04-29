@@ -8,6 +8,7 @@ import { Heart, Handshake, MessageCircle } from 'lucide-react';
 import Card from '../components/common/Card';
 import BrandSection from '../components/common/BrandSection';
 import CallToAction from '../components/home/CallToAction';
+import DailyLoveNote from '../components/home/DailyLoveNote';
 
 const Index = () => {
   const benefits = [
@@ -34,6 +35,10 @@ const Index = () => {
       
       <main>
         <Hero />
+        
+        {/* Daily Love Note Section */}
+        <DailyLoveNote />
+        
         <ConflictStages />
         
         <BrandSection
