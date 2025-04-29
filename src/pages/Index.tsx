@@ -6,7 +6,7 @@ import ConflictStages from '../components/home/ConflictStages';
 import ContentContainer from '../components/common/ContentContainer';
 import { Heart, Handshake, MessageCircle } from 'lucide-react';
 import Card from '../components/common/Card';
-import BrandSection from '../common/BrandSection';
+import BrandSection from '../components/common/BrandSection';
 import CallToAction from '../components/home/CallToAction';
 
 const Index = () => {
