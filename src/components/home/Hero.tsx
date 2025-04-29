@@ -48,7 +48,7 @@ const MessageBubble = ({ message, style, position, onAnimationEnd }) => {
         "z-10 opacity-0"
       )}
       style={{ 
-        animation: 'fadeIn 1s forwards 0.2s',
+        animation: 'fadeIn 2s forwards 0.5s',
       }}
       onAnimationEnd={onAnimationEnd}
     >
@@ -81,12 +81,12 @@ const Hero = () => {
     setTimeout(() => {
       const bubbleElement = document.getElementById(`bubble-${newBubble.id}`);
       if (bubbleElement) {
-        bubbleElement.style.animation = 'fadeOut 1s forwards';
+        bubbleElement.style.animation = 'fadeOut 2s forwards';
         bubbleElement.addEventListener('animationend', () => {
           setVisibleBubbles(prev => prev.filter(bubble => bubble.id !== newBubble.id));
         });
       }
-    }, 5000); // Display for 5 seconds
+    }, 8000); // Display for 8 seconds (increased from 5)
   };
 
   // Effect to periodically add new bubbles
@@ -96,11 +96,11 @@ const Hero = () => {
     
     // Set interval to add new bubbles
     const interval = setInterval(() => {
-      if (visibleBubbles.length < 5) {
+      if (visibleBubbles.length < 3) { // Reduced max concurrent bubbles from 5 to 3
         createBubble();
         setBubbleCounter(prev => prev + 1);
       }
-    }, 2000); // New bubble every 2 seconds
+    }, 4000); // New bubble every 4 seconds (increased from 2)
     
     return () => clearInterval(interval);
   }, [visibleBubbles.length]);
@@ -121,7 +121,7 @@ const Hero = () => {
               "z-10"
             )}
             style={{ 
-              animation: 'fadeIn 1s forwards',
+              animation: 'fadeIn 2s forwards',
             }}
           >
             {bubble.message}
