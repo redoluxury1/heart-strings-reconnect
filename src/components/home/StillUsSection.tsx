@@ -4,6 +4,7 @@ import ContentContainer from '../common/ContentContainer';
 import { Button } from "@/components/ui/button";
 import { Flame, HeartCrack, Heart, MessageCircle, Puzzle } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 // Card content type definition
 type CardContent = {
@@ -19,6 +20,8 @@ type CardContent = {
 };
 
 const StillUsSection = () => {
+  const isMobile = useIsMobile();
+  
   const cards: CardContent[] = [
     {
       title: "Mid-Fight",
@@ -67,49 +70,95 @@ const StillUsSection = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 gap-8">
           {cards.map((card, index) => (
             <div key={index} className="transition-all duration-300 hover:scale-[1.02] focus-within:scale-[1.02]">
               <div className={`h-full rounded-xl shadow-md p-6 md:p-7 bg-gradient-to-b ${card.gradientClass} border border-white/20`}>
-                <div className="mb-5 flex items-center">
-                  <div className={`p-3 rounded-full ${card.iconBgClass}`}>
-                    {card.icon}
+                {isMobile ? (
+                  // Mobile layout (vertical)
+                  <>
+                    <div className="mb-5 flex items-center">
+                      <div className={`p-3 rounded-full ${card.iconBgClass}`}>
+                        {card.icon}
+                      </div>
+                      <h3 className="ml-3 text-xl font-cormorant font-medium text-midnight-indigo">
+                        {card.title}
+                      </h3>
+                    </div>
+                    
+                    <p className="text-midnight-indigo/80 text-sm md:text-base mb-5">
+                      {card.description}
+                    </p>
+                    
+                    <div className="mb-6">
+                      <p className="font-medium text-sm text-midnight-indigo mb-2">Includes Tools:</p>
+                      <ul className="text-sm space-y-1.5">
+                        {card.tools.map((tool, idx) => (
+                          <li key={idx} className="flex items-center">
+                            <span className="h-1.5 w-1.5 rounded-full bg-midnight-indigo/50 mr-2"></span>
+                            <span className="text-midnight-indigo/80">{tool}</span>
+                          </li>
+                        ))}
+                        {card.comingSoonTools?.map((tool, idx) => (
+                          <li key={idx} className="flex items-center">
+                            <span className="h-1.5 w-1.5 rounded-full bg-midnight-indigo/50 mr-2"></span>
+                            <span className="text-midnight-indigo/80 italic">{tool} <span className="text-xs text-midnight-indigo/60">(Coming Soon)</span></span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    
+                    <Link to={card.link} className="block mt-auto">
+                      <Button 
+                        variant="outline" 
+                        className="w-full border-midnight-indigo text-midnight-indigo hover:bg-midnight-indigo/10 transition-colors"
+                      >
+                        {card.buttonText}
+                      </Button>
+                    </Link>
+                  </>
+                ) : (
+                  // Desktop layout (horizontal)
+                  <div className="flex flex-row">
+                    <div className="mr-8 flex-shrink-0">
+                      <div className={`p-3 rounded-full ${card.iconBgClass} mb-2`}>
+                        {card.icon}
+                      </div>
+                      <h3 className="text-xl font-cormorant font-medium text-midnight-indigo mb-3">
+                        {card.title}
+                      </h3>
+                      <p className="text-midnight-indigo/80 text-sm md:text-base mb-4 max-w-xs">
+                        {card.description}
+                      </p>
+                      <Link to={card.link} className="block">
+                        <Button 
+                          variant="outline" 
+                          className="w-full border-midnight-indigo text-midnight-indigo hover:bg-midnight-indigo/10 transition-colors"
+                        >
+                          {card.buttonText}
+                        </Button>
+                      </Link>
+                    </div>
+                    
+                    <div className="flex-grow">
+                      <p className="font-medium text-sm text-midnight-indigo mb-2">Includes Tools:</p>
+                      <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
+                        {card.tools.map((tool, idx) => (
+                          <div key={idx} className="flex items-center">
+                            <span className="h-1.5 w-1.5 rounded-full bg-midnight-indigo/50 mr-2"></span>
+                            <span className="text-midnight-indigo/80">{tool}</span>
+                          </div>
+                        ))}
+                        {card.comingSoonTools?.map((tool, idx) => (
+                          <div key={idx} className="flex items-center">
+                            <span className="h-1.5 w-1.5 rounded-full bg-midnight-indigo/50 mr-2"></span>
+                            <span className="text-midnight-indigo/80 italic">{tool} <span className="text-xs text-midnight-indigo/60">(Coming Soon)</span></span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   </div>
-                  <h3 className="ml-3 text-xl font-cormorant font-medium text-midnight-indigo">
-                    {card.title}
-                  </h3>
-                </div>
-                
-                <p className="text-midnight-indigo/80 text-sm md:text-base mb-5">
-                  {card.description}
-                </p>
-                
-                <div className="mb-6">
-                  <p className="font-medium text-sm text-midnight-indigo mb-2">Includes Tools:</p>
-                  <ul className="text-sm space-y-1.5">
-                    {card.tools.map((tool, idx) => (
-                      <li key={idx} className="flex items-center">
-                        <span className="h-1.5 w-1.5 rounded-full bg-midnight-indigo/50 mr-2"></span>
-                        <span className="text-midnight-indigo/80">{tool}</span>
-                      </li>
-                    ))}
-                    {card.comingSoonTools?.map((tool, idx) => (
-                      <li key={idx} className="flex items-center">
-                        <span className="h-1.5 w-1.5 rounded-full bg-midnight-indigo/50 mr-2"></span>
-                        <span className="text-midnight-indigo/80 italic">{tool} <span className="text-xs text-midnight-indigo/60">(Coming Soon)</span></span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                
-                <Link to={card.link} className="block mt-auto">
-                  <Button 
-                    variant="outline" 
-                    className="w-full border-midnight-indigo text-midnight-indigo hover:bg-midnight-indigo/10 transition-colors"
-                  >
-                    {card.buttonText}
-                  </Button>
-                </Link>
+                )}
               </div>
             </div>
           ))}
