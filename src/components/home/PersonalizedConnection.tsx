@@ -45,8 +45,9 @@ const PersonalizedConnection = () => {
             Let's personalize your experience
           </h2>
           <p className="text-center text-midnight-indigo font-inter font-light max-w-2xl mx-auto">
-            Your relationship isn't one-size-fits-all — and neither is Bridge For Couples. 
-            These quick quizzes help us tailor support to you and your partner's unique connection style.
+            Your relationship isn't one-size-fits all and Bridge For Couples is built to reflect that. 
+            These in-depth quizzes help us understand how you love, how you communicate and how we can 
+            support your relationship in the most meaningful way.
           </p>
         </div>
 
