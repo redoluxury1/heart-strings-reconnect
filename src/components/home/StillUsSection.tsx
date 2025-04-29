@@ -118,31 +118,27 @@ const StillUsSection = () => {
                     </Link>
                   </>
                 ) : (
-                  // Desktop layout (horizontal)
-                  <div className="flex flex-row">
-                    <div className="mr-8 flex-shrink-0">
-                      <div className={`p-3 rounded-full ${card.iconBgClass} mb-2`}>
+                  // Desktop layout (horizontal) - reorganized
+                  <div className="flex flex-col">
+                    {/* Header with icon and title together */}
+                    <div className="flex items-center mb-2">
+                      <div className={`p-2 rounded-full ${card.iconBgClass} mr-2`}>
                         {card.icon}
                       </div>
-                      <h3 className="text-xl font-cormorant font-medium text-midnight-indigo mb-3">
+                      <h3 className="text-xl font-cormorant font-medium text-midnight-indigo">
                         {card.title}
                       </h3>
-                      <p className="text-midnight-indigo/80 text-sm md:text-base mb-4 max-w-xs">
-                        {card.description}
-                      </p>
-                      <Link to={card.link} className="block">
-                        <Button 
-                          variant="outline" 
-                          className="w-full border-midnight-indigo text-midnight-indigo hover:bg-midnight-indigo/10 transition-colors"
-                        >
-                          {card.buttonText}
-                        </Button>
-                      </Link>
                     </div>
                     
-                    <div className="flex-grow">
+                    {/* Description */}
+                    <p className="text-midnight-indigo/80 text-sm md:text-base mb-4">
+                      {card.description}
+                    </p>
+                    
+                    {/* Tools list */}
+                    <div className="mb-5 flex-grow">
                       <p className="font-medium text-sm text-midnight-indigo mb-2">Includes Tools:</p>
-                      <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-1.5">
                         {card.tools.map((tool, idx) => (
                           <div key={idx} className="flex items-center">
                             <span className="h-1.5 w-1.5 rounded-full bg-midnight-indigo/50 mr-2"></span>
@@ -157,6 +153,16 @@ const StillUsSection = () => {
                         ))}
                       </div>
                     </div>
+                    
+                    {/* Button at the bottom */}
+                    <Link to={card.link} className="block">
+                      <Button 
+                        variant="outline" 
+                        className="w-full border-midnight-indigo text-midnight-indigo hover:bg-midnight-indigo/10 transition-colors"
+                      >
+                        {card.buttonText}
+                      </Button>
+                    </Link>
                   </div>
                 )}
               </div>
