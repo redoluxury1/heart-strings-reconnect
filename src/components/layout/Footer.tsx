@@ -11,14 +11,15 @@ const Footer = ({ showCTA = false }: FooterProps) => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-midnight-indigo pt-9 pb-12 md:pb-16">
+    <footer className="bg-midnight-indigo pt-9 pb-12 md:pb-16 relative z-10">
+      <div className="absolute inset-0 bg-midnight-indigo"></div>
       <ContentContainer>
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center relative z-10">
           <div className="mb-6">
             <img 
               src="/lovable-uploads/258c4a04-63bc-4f6b-a3eb-312b251ac758.png" 
               alt="Bridge For Couples" 
-              className="h-7 md:h-9 w-auto" 
+              className="h-14 md:h-16 w-auto" 
             />
           </div>
           
