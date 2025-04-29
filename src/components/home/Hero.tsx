@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button";
 import ContentContainer from '../common/ContentContainer';
@@ -73,7 +74,7 @@ const Hero = () => {
       setIsFadingOut(true);
       const bubbleElement = document.getElementById(`bubble-${newBubble.id}`);
       if (bubbleElement) {
-        bubbleElement.style.animation = 'fadeOut 2s forwards';
+        bubbleElement.style.animation = 'fadeOut 1s forwards';
         bubbleElement.addEventListener('animationend', () => {
           setVisibleBubbles(prev => prev.filter(bubble => bubble.id !== newBubble.id));
           // After the fade out is complete, allow for a new bubble
@@ -84,9 +85,9 @@ const Hero = () => {
       // Allow adding a new bubble only after this one starts fading
       setTimeout(() => {
         setIsAddingBubble(false);
-      }, 500);
+      }, 300); // Reduced from 500ms to 300ms
       
-    }, 4000); // Display for 4 seconds before starting to fade
+    }, 2500); // Reduced from 4000ms to 2500ms for faster display time
   };
 
   // Effect to periodically add new bubbles
@@ -94,7 +95,7 @@ const Hero = () => {
     // Initial bubble on load with delay
     const initialTimer = setTimeout(() => {
       createBubble();
-    }, 1000);
+    }, 800); // Reduced from 1000ms to 800ms
     
     // Set interval to add new bubbles only if we're not already adding one 
     // and no bubble is currently fading out
@@ -102,7 +103,7 @@ const Hero = () => {
       if (visibleBubbles.length < 2 && !isAddingBubble && !isFadingOut) {
         createBubble();
       }
-    }, 1000); // Check frequently if we can add a new bubble
+    }, 500); // Reduced from 1000ms to 500ms to check more frequently
     
     return () => {
       clearTimeout(initialTimer);
@@ -128,7 +129,7 @@ const Hero = () => {
               bubble.style.position
             )}
             style={{ 
-              animation: 'fadeIn 2s forwards',
+              animation: 'fadeIn 1s forwards', // Reduced from 2s to 1s for faster fade in
             }}
           >
             {bubble.message}
