@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ContentContainer from '../common/ContentContainer';
 import { 
   Carousel, 
@@ -9,6 +9,7 @@ import {
   CarouselPrevious 
 } from '@/components/ui/carousel';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { cn } from '@/lib/utils';
 
 interface StatSlideProps {
   statistic: string;
@@ -18,15 +19,15 @@ interface StatSlideProps {
 
 const StatSlide: React.FC<StatSlideProps> = ({ statistic, explanation, punchline }) => {
   return (
-    <div className="flex flex-col items-center justify-center text-center min-h-[300px] p-6 md:p-10 bg-soft-blush rounded-lg shadow-sm">
+    <div className="flex flex-col items-center justify-center text-center min-h-[300px] p-6 md:p-10">
       <div className="mb-6">
-        <h3 className="font-cormorant font-bold text-4xl md:text-6xl text-mauve-rose mb-4">
+        <h3 className="font-cormorant font-bold text-4xl md:text-6xl lg:text-7xl text-mauve-rose mb-4">
           {statistic}
         </h3>
         <p className="text-base md:text-lg mb-8 text-midnight-indigo max-w-lg mx-auto">
           {explanation}
         </p>
-        <p className="font-semibold text-sm md:text-base tracking-wide italic text-midnight-indigo">
+        <p className="font-semibold text-sm md:text-base tracking-wide italic text-midnight-indigo/70">
           {punchline}
         </p>
       </div>
@@ -36,6 +37,8 @@ const StatSlide: React.FC<StatSlideProps> = ({ statistic, explanation, punchline
 
 const WhyItMattersSection: React.FC = () => {
   const isMobile = useIsMobile();
+  const [autoPlay, setAutoPlay] = useState<boolean>(true);
+  const [currentSlide, setCurrentSlide] = useState<number>(0);
   
   const statistics = [
     {
@@ -45,28 +48,45 @@ const WhyItMattersSection: React.FC = () => {
     },
     {
       statistic: "80%",
-      explanation: "of Millennials say emotional intelligence is essential for long-term love.",
-      punchline: "Clarity and empathy are the new intimacy."
+      explanation: "of Millennials say emotional intelligence is a top priority in relationships.",
+      punchline: "We're not just falling in love — we're learning how to stay in it."
     },
     {
       statistic: "65%",
-      explanation: "of couples say they've had the same fight more than 5 times.",
-      punchline: "What if your next conflict ended differently?"
+      explanation: "of couples avoid hard conversations out of fear it will make things worse.",
+      punchline: "But silence isn't safety — it's distance."
     },
     {
-      statistic: "1 in 3",
-      explanation: "couples say they don't feel heard by their partner.",
-      punchline: "Being right doesn't feel as good as being understood."
+      statistic: "1 in 2",
+      explanation: "couples say they don't feel truly heard by their partner.",
+      punchline: "Bridge For Couples helps turn misunderstandings into moments of connection."
     },
     {
-      statistic: "58%",
-      explanation: "of people say they'd stay married with the right tools.",
-      punchline: "You're not failing — you're just missing support."
+      statistic: "83%",
+      explanation: "of people believe better conflict tools would improve their relationship.",
+      punchline: "No one teaches us how to fight fair — until now."
+    },
+    {
+      statistic: "71%",
+      explanation: "of couples say they want to reconnect but don't know how.",
+      punchline: "Bridge For Couples makes that first step easier."
     }
   ];
+  
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout>;
+    
+    if (autoPlay) {
+      timer = setTimeout(() => {
+        setCurrentSlide((prev) => (prev + 1) % statistics.length);
+      }, 5500); // Rotate every 5.5 seconds
+    }
+    
+    return () => clearTimeout(timer);
+  }, [currentSlide, autoPlay, statistics.length]);
 
   return (
-    <section className="py-20 bg-soft-cream">
+    <section className="py-20 bg-soft-blush">
       <ContentContainer>
         <div className="text-center mb-14">
           <h2 className="font-cormorant text-3xl md:text-4xl font-medium text-midnight-indigo">
@@ -74,17 +94,27 @@ const WhyItMattersSection: React.FC = () => {
           </h2>
         </div>
 
-        <div className="mt-10">
+        <div className="mt-10 relative">
           <Carousel
             opts={{
               align: "center",
               loop: true,
             }}
             className="w-full"
+            setApi={(api) => {
+              if (api) {
+                api.on('select', () => {
+                  // Pause autoplay when manually navigating
+                  setAutoPlay(false);
+                  // Resume autoplay after 10 seconds of inactivity
+                  setTimeout(() => setAutoPlay(true), 10000);
+                });
+              }
+            }}
           >
             <CarouselContent>
               {statistics.map((stat, index) => (
-                <CarouselItem key={index} className={isMobile ? "basis-full" : "basis-full md:basis-3/4"}>
+                <CarouselItem key={index} className="basis-full">
                   <StatSlide 
                     statistic={stat.statistic}
                     explanation={stat.explanation}
@@ -93,9 +123,17 @@ const WhyItMattersSection: React.FC = () => {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <div className="flex items-center justify-center gap-2 mt-8">
-              <CarouselPrevious className="static translate-y-0 h-10 w-10" />
-              <CarouselNext className="static translate-y-0 h-10 w-10" />
+            <div className="absolute inset-y-0 left-4 flex items-center">
+              <CarouselPrevious className={cn(
+                "static relative left-0 transform-none h-8 w-8 md:h-10 md:w-10 bg-white/80 hover:bg-white",
+                "border border-mauve-rose/20"
+              )} />
+            </div>
+            <div className="absolute inset-y-0 right-4 flex items-center">
+              <CarouselNext className={cn(
+                "static relative right-0 transform-none h-8 w-8 md:h-10 md:w-10 bg-white/80 hover:bg-white",
+                "border border-mauve-rose/20"
+              )} />
             </div>
           </Carousel>
         </div>
