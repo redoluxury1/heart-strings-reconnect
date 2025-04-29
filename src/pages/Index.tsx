@@ -6,8 +6,6 @@ import ContentContainer from '../components/common/ContentContainer';
 import DailyLoveNote from '../components/home/DailyLoveNote';
 import StillUsSection from '../components/home/StillUsSection';
 import PersonalizedConnection from '../components/home/PersonalizedConnection';
-import CallToAction from '../components/home/CallToAction';
-import RelationshipCarousel from '../components/home/RelationshipCarousel';
 import WhyItMattersSection from '../components/home/WhyItMattersSection';
 
 const Index = () => {
@@ -24,10 +22,6 @@ const Index = () => {
         <StillUsSection />
         
         <PersonalizedConnection />
-        
-        <RelationshipCarousel />
-        
-        <CallToAction />
         
         <WhyItMattersSection />
       </main>
