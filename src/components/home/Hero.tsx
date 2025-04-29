@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button";
 import ContentContainer from '../common/ContentContainer';
@@ -60,6 +59,7 @@ const MessageBubble = ({ message, style, position, onAnimationEnd }) => {
 const Hero = () => {
   const [visibleBubbles, setVisibleBubbles] = useState([]);
   const [isAddingBubble, setIsAddingBubble] = useState(false);
+  const [lastPosition, setLastPosition] = useState(-1);
 
   // Function to create a new bubble
   const createBubble = () => {
@@ -69,7 +69,14 @@ const Hero = () => {
     
     const messageIndex = Math.floor(Math.random() * messages.length);
     const styleIndex = Math.floor(Math.random() * bubbleStyles.length);
-    const positionIndex = Math.floor(Math.random() * bubbleVariants.length);
+    
+    // Choose a position that's different from the last one
+    let positionIndex;
+    do {
+      positionIndex = Math.floor(Math.random() * bubbleVariants.length);
+    } while (positionIndex === lastPosition && bubbleVariants.length > 1);
+    
+    setLastPosition(positionIndex);
     
     const newBubble = {
       id: Date.now(),
@@ -84,7 +91,7 @@ const Hero = () => {
     setTimeout(() => {
       const bubbleElement = document.getElementById(`bubble-${newBubble.id}`);
       if (bubbleElement) {
-        bubbleElement.style.animation = 'fadeOut 6s forwards';
+        bubbleElement.style.animation = 'fadeOut 4s forwards';
         bubbleElement.addEventListener('animationend', () => {
           setVisibleBubbles(prev => prev.filter(bubble => bubble.id !== newBubble.id));
         });
@@ -93,9 +100,9 @@ const Hero = () => {
       // Allow adding a new bubble after a delay
       setTimeout(() => {
         setIsAddingBubble(false);
-      }, 4000);
+      }, 2000);
       
-    }, 14000); // Increased display time to 14 seconds before starting to fade
+    }, 10000); // Display for 10 seconds before starting to fade
   };
 
   // Effect to periodically add new bubbles
@@ -110,7 +117,7 @@ const Hero = () => {
       if (visibleBubbles.length < 2 && !isAddingBubble) {
         createBubble();
       }
-    }, 8000); // Check every 8 seconds if we can add a new bubble
+    }, 5000); // Check every 5 seconds if we can add a new bubble
     
     return () => {
       clearTimeout(initialTimer);
@@ -134,7 +141,7 @@ const Hero = () => {
               "z-10"
             )}
             style={{ 
-              animation: 'fadeIn 6s forwards',
+              animation: 'fadeIn 4s forwards',
             }}
           >
             {bubble.message}
