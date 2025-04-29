@@ -41,7 +41,7 @@ const Index = () => {
                 Build a Healthier Relationship
               </h2>
               <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-                HeartStrings helps you develop the skills and insights needed for conflict resolution and deeper connection.
+                Bridge For Couples helps you develop the skills and insights needed for conflict resolution and deeper connection.
               </p>
             </div>
             
@@ -75,13 +75,16 @@ const Index = () => {
       <footer className="bg-slate-800 text-slate-200 py-12">
         <ContentContainer>
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="flex items-center space-x-2 mb-6 md:mb-0">
-              <Heart className="h-6 w-6 text-rose-400" />
-              <span className="text-xl font-semibold">HeartStrings</span>
+            <div className="flex items-center mb-6 md:mb-0">
+              <img 
+                src="/lovable-uploads/bca4bf72-9398-4185-bfe1-a6d123aaf426.png" 
+                alt="Bridge For Couples" 
+                className="h-10 w-auto" 
+              />
             </div>
             
             <p className="text-slate-400 text-sm">
-              © {new Date().getFullYear()} HeartStrings. All rights reserved.
+              © {new Date().getFullYear()} Bridge For Couples. All rights reserved.
             </p>
           </div>
         </ContentContainer>

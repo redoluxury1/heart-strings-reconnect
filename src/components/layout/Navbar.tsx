@@ -10,7 +10,7 @@ const Navbar = () => {
       <div className="flex items-center space-x-2">
         <Link to="/" className="flex items-center">
           <img 
-            src="/lovable-uploads/27d2c13d-bb89-4f27-a4d5-8756ef834fea.png" 
+            src="/lovable-uploads/80619689-94c4-43be-b585-6e9079eace63.png" 
             alt="Bridge For Couples" 
             className="h-12 w-auto" 
           />
