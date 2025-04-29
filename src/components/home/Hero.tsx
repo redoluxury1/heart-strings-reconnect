@@ -59,10 +59,14 @@ const MessageBubble = ({ message, style, position, onAnimationEnd }) => {
 
 const Hero = () => {
   const [visibleBubbles, setVisibleBubbles] = useState([]);
-  const [bubbleCounter, setBubbleCounter] = useState(0);
+  const [isAddingBubble, setIsAddingBubble] = useState(false);
 
   // Function to create a new bubble
   const createBubble = () => {
+    if (isAddingBubble) return;
+    
+    setIsAddingBubble(true);
+    
     const messageIndex = Math.floor(Math.random() * messages.length);
     const styleIndex = Math.floor(Math.random() * bubbleStyles.length);
     const positionIndex = Math.floor(Math.random() * bubbleVariants.length);
@@ -72,7 +76,6 @@ const Hero = () => {
       message: messages[messageIndex],
       style: bubbleStyles[styleIndex],
       position: bubbleVariants[positionIndex],
-      phase: 'entering'
     };
     
     setVisibleBubbles(prev => [...prev, newBubble]);
@@ -81,29 +84,39 @@ const Hero = () => {
     setTimeout(() => {
       const bubbleElement = document.getElementById(`bubble-${newBubble.id}`);
       if (bubbleElement) {
-        bubbleElement.style.animation = 'fadeOut 4s forwards';
+        bubbleElement.style.animation = 'fadeOut 6s forwards';
         bubbleElement.addEventListener('animationend', () => {
           setVisibleBubbles(prev => prev.filter(bubble => bubble.id !== newBubble.id));
         });
       }
-    }, 10000); // Increased display time to 10 seconds (from 8 seconds)
+      
+      // Allow adding a new bubble after a delay
+      setTimeout(() => {
+        setIsAddingBubble(false);
+      }, 4000);
+      
+    }, 14000); // Increased display time to 14 seconds before starting to fade
   };
 
   // Effect to periodically add new bubbles
   useEffect(() => {
-    // Initial bubble on load
-    createBubble();
+    // Initial bubble on load with delay
+    const initialTimer = setTimeout(() => {
+      createBubble();
+    }, 1000);
     
-    // Set interval to add new bubbles
+    // Set interval to add new bubbles only if we're not already adding one
     const interval = setInterval(() => {
-      if (visibleBubbles.length < 2) { // Reduced max concurrent bubbles from 3 to 2
+      if (visibleBubbles.length < 2 && !isAddingBubble) {
         createBubble();
-        setBubbleCounter(prev => prev + 1);
       }
-    }, 6000); // New bubble every 6 seconds (increased from 4 seconds)
+    }, 8000); // Check every 8 seconds if we can add a new bubble
     
-    return () => clearInterval(interval);
-  }, [visibleBubbles.length]);
+    return () => {
+      clearTimeout(initialTimer);
+      clearInterval(interval);
+    };
+  }, [visibleBubbles.length, isAddingBubble]);
 
   return (
     <div className="bg-gradient-to-b from-rose-50 to-white py-20 relative overflow-hidden">
@@ -121,7 +134,7 @@ const Hero = () => {
               "z-10"
             )}
             style={{ 
-              animation: 'fadeIn 4s forwards',
+              animation: 'fadeIn 6s forwards',
             }}
           >
             {bubble.message}
