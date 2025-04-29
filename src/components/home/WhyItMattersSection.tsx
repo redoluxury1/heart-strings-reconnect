@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import ContentContainer from '../common/ContentContainer';
 import { 
@@ -22,12 +21,12 @@ const StatSlide: React.FC<StatSlideProps> = ({ statistic, explanation, punchline
     <div className="flex flex-col items-center justify-center text-center min-h-[280px] p-6">
       <div>
         <h3 
-          className="font-inter font-bold text-5xl md:text-6xl lg:text-7xl text-mauve-rose mb-1 tracking-tight"
+          className="font-inter font-bold text-7xl md:text-8xl lg:text-9xl text-mauve-rose mb-0 tracking-tight leading-none"
           aria-label={`${statistic} ${explanation}`}
         >
           {statistic}
         </h3>
-        <p className="text-base md:text-lg lg:text-xl mb-2 text-[#222222] font-medium max-w-lg mx-auto leading-tight">
+        <p className="text-base md:text-lg lg:text-xl mb-2 text-midnight-indigo font-medium max-w-lg mx-auto leading-tight">
           {explanation}
         </p>
         <p className="italic text-sm md:text-base tracking-wide text-midnight-indigo/70 font-light">
@@ -91,16 +90,16 @@ const WhyItMattersSection: React.FC = () => {
   return (
     <section className="py-16 bg-soft-blush">
       <ContentContainer>
-        <div className="text-center mb-2">
+        <div className="text-center mb-0">
           <h2 className="font-cormorant text-3xl md:text-4xl font-medium text-midnight-indigo mb-1">
             Why It Matters
           </h2>
-          <p className="text-base text-midnight-indigo/90 max-w-3xl mx-auto font-inter">
+          <p className="text-base text-midnight-indigo/90 max-w-3xl mx-auto font-inter mb-0">
             Real stats. Real struggles. Let's rewrite the story — with better tools, calmer conversations, and deeper connection
           </p>
         </div>
 
-        <div className="mt-4 relative">
+        <div className="mt-1 relative">
           <Carousel
             opts={{
               align: "center",
