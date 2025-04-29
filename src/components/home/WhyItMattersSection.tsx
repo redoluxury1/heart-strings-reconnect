@@ -21,7 +21,7 @@ const StatSlide: React.FC<StatSlideProps> = ({ statistic, explanation, punchline
   return (
     <div className="flex flex-col items-center justify-center text-center min-h-[300px] p-6 md:p-10">
       <div className="mb-6">
-        <h3 className="font-cormorant font-bold text-4xl md:text-6xl lg:text-7xl text-mauve-rose mb-4">
+        <h3 className="font-cormorant font-bold text-5xl md:text-7xl lg:text-8xl text-mauve-rose mb-4">
           {statistic}
         </h3>
         <p className="text-base md:text-lg mb-8 text-midnight-indigo max-w-lg mx-auto">
@@ -88,10 +88,13 @@ const WhyItMattersSection: React.FC = () => {
   return (
     <section className="py-20 bg-soft-blush">
       <ContentContainer>
-        <div className="text-center mb-14">
-          <h2 className="font-cormorant text-3xl md:text-4xl font-medium text-midnight-indigo">
+        <div className="text-center mb-6">
+          <h2 className="font-cormorant text-3xl md:text-4xl font-medium text-midnight-indigo mb-2">
             Why It Matters
           </h2>
+          <p className="text-sm md:text-base text-midnight-indigo/80 max-w-2xl mx-auto">
+            Real stats. Real struggles. Let's rewrite the story- with better tools, calmer conversations and deeper connection
+          </p>
         </div>
 
         <div className="mt-10 relative">
