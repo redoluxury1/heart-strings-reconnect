@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button";
 import ContentContainer from '../common/ContentContainer';
@@ -19,43 +18,22 @@ const messages = [
 
 // Color schemes for bubbles
 const bubbleStyles = [
-  { bgColor: "bg-rosewood-tint", textColor: "text-white" },
-  { bgColor: "bg-mauve-rose", textColor: "text-white" },
-  { bgColor: "bg-lavender-blue", textColor: "text-white" },
-  { bgColor: "bg-soft-cream", textColor: "text-midnight-indigo" },
-  { bgColor: "bg-soft-blush", textColor: "text-midnight-indigo" },
+  { bgColor: "bg-rosewood-tint", textColor: "text-white", position: "after:border-t-rosewood-tint" },
+  { bgColor: "bg-mauve-rose", textColor: "text-white", position: "after:border-t-mauve-rose" },
+  { bgColor: "bg-lavender-blue", textColor: "text-white", position: "after:border-t-lavender-blue" },
+  { bgColor: "bg-soft-cream", textColor: "text-midnight-indigo", position: "after:border-t-soft-cream" },
+  { bgColor: "bg-soft-blush", textColor: "text-midnight-indigo", position: "after:border-t-soft-blush" },
 ];
 
-// Bubble positions and sizes (for variety, coming from different corners)
+// Text bubble positions and tails (for variety, coming from different corners)
 const bubbleVariants = [
-  "left-[5%] top-[5%] -rotate-2 max-w-[200px]", // Top left
-  "right-[5%] top-[5%] rotate-2 max-w-[210px]", // Top right
-  "left-[10%] top-[40%] -rotate-1 max-w-[190px]", // Middle left
-  "right-[10%] top-[40%] rotate-1 max-w-[220px]", // Middle right
-  "left-[25%] top-[10%] rotate-3 max-w-[180px]", // Upper left
-  "right-[25%] top-[10%] -rotate-3 max-w-[230px]", // Upper right
+  { position: "left-[5%] top-[5%] -rotate-2 max-w-[200px]", tail: "after:left-4" }, // Top left
+  { position: "right-[5%] top-[5%] rotate-2 max-w-[210px]", tail: "after:right-4" }, // Top right
+  { position: "left-[10%] top-[40%] -rotate-1 max-w-[190px]", tail: "after:left-6" }, // Middle left
+  { position: "right-[10%] top-[40%] rotate-1 max-w-[220px]", tail: "after:right-6" }, // Middle right
+  { position: "left-[25%] top-[10%] rotate-3 max-w-[180px]", tail: "after:left-10" }, // Upper left
+  { position: "right-[25%] top-[10%] -rotate-3 max-w-[230px]", tail: "after:right-10" }, // Upper right
 ];
-
-// Message Bubble Component
-const MessageBubble = ({ message, style, position, onAnimationEnd }) => {
-  return (
-    <div 
-      className={cn(
-        "absolute px-4 py-2 rounded-full shadow-sm font-inter font-semibold text-center",
-        style.bgColor,
-        style.textColor,
-        position,
-        "z-10 opacity-0"
-      )}
-      style={{ 
-        animation: 'fadeIn 4s forwards 0.5s',
-      }}
-      onAnimationEnd={onAnimationEnd}
-    >
-      {message}
-    </div>
-  );
-};
 
 const Hero = () => {
   const [visibleBubbles, setVisibleBubbles] = useState([]);
@@ -84,7 +62,8 @@ const Hero = () => {
       id: Date.now(),
       message: messages[messageIndex],
       style: bubbleStyles[styleIndex],
-      position: bubbleVariants[positionIndex],
+      positionStyle: bubbleVariants[positionIndex].position,
+      tailPosition: bubbleVariants[positionIndex].tail,
     };
     
     setVisibleBubbles(prev => [...prev, newBubble]);
@@ -140,11 +119,13 @@ const Hero = () => {
             id={`bubble-${bubble.id}`}
             key={bubble.id}
             className={cn(
-              "absolute px-4 py-2 rounded-full shadow-sm font-inter font-semibold text-center",
+              "absolute px-4 py-2 rounded-xl shadow-sm font-inter font-semibold text-center",
               bubble.style.bgColor,
               bubble.style.textColor,
-              bubble.position,
-              "z-10"
+              bubble.positionStyle,
+              bubble.tailPosition,
+              "z-10 after:content-[''] after:absolute after:bottom-[-8px] after:border-l-[8px] after:border-l-transparent after:border-r-[8px] after:border-r-transparent after:border-t-[8px]",
+              bubble.style.position
             )}
             style={{ 
               animation: 'fadeIn 2s forwards',
