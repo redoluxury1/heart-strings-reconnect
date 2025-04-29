@@ -88,7 +88,7 @@ const WhyItMattersSection: React.FC = () => {
   return (
     <section className="py-20 bg-soft-blush">
       <ContentContainer>
-        <div className="text-center mb-6">
+        <div className="text-center mb-2">
           <h2 className="font-cormorant text-3xl md:text-4xl font-medium text-midnight-indigo mb-2">
             Why It Matters
           </h2>
@@ -97,7 +97,7 @@ const WhyItMattersSection: React.FC = () => {
           </p>
         </div>
 
-        <div className="mt-10 relative">
+        <div className="mt-6 relative">
           <Carousel
             opts={{
               align: "center",
@@ -128,18 +128,16 @@ const WhyItMattersSection: React.FC = () => {
             </CarouselContent>
             <div className="absolute inset-y-0 left-4 flex items-center">
               <CarouselPrevious className={cn(
-                "static relative left-0 transform-none h-8 w-8 md:h-10 md:w-10 bg-white/80 hover:bg-white",
-                "border border-mauve-rose/20"
+                "static relative left-0 transform-none h-8 w-8 md:h-10 md:w-10 bg-transparent hover:bg-transparent border-none shadow-none"
               )}>
-                <span className="text-lg font-bold">&lt;</span>
+                <span className="text-2xl font-bold text-midnight-indigo">&lt;</span>
               </CarouselPrevious>
             </div>
             <div className="absolute inset-y-0 right-4 flex items-center">
               <CarouselNext className={cn(
-                "static relative right-0 transform-none h-8 w-8 md:h-10 md:w-10 bg-white/80 hover:bg-white",
-                "border border-mauve-rose/20"
+                "static relative right-0 transform-none h-8 w-8 md:h-10 md:w-10 bg-transparent hover:bg-transparent border-none shadow-none"
               )}>
-                <span className="text-lg font-bold">&gt;</span>
+                <span className="text-2xl font-bold text-midnight-indigo">&gt;</span>
               </CarouselNext>
             </div>
           </Carousel>
