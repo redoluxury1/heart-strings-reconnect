@@ -9,6 +9,7 @@ import Card from '../components/common/Card';
 import BrandSection from '../components/common/BrandSection';
 import CallToAction from '../components/home/CallToAction';
 import DailyLoveNote from '../components/home/DailyLoveNote';
+import StillUsSection from '../components/home/StillUsSection';
 
 const Index = () => {
   const benefits = [
@@ -38,6 +39,8 @@ const Index = () => {
           <Hero />
           <DailyLoveNote />
         </div>
+        
+        <StillUsSection />
         
         <ConflictStages />
         
