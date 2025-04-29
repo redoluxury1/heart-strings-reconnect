@@ -9,6 +9,7 @@ import BrandSection from '../components/common/BrandSection';
 import CallToAction from '../components/home/CallToAction';
 import DailyLoveNote from '../components/home/DailyLoveNote';
 import StillUsSection from '../components/home/StillUsSection';
+import PersonalizedConnection from '../components/home/PersonalizedConnection';
 
 const Index = () => {
   const benefits = [
@@ -40,6 +41,8 @@ const Index = () => {
         </div>
         
         <StillUsSection />
+        
+        <PersonalizedConnection />
         
         <BrandSection
           className="bg-white"
