@@ -21,10 +21,10 @@ const StatSlide: React.FC<StatSlideProps> = ({ statistic, explanation, punchline
   return (
     <div className="flex flex-col items-center justify-center text-center min-h-[300px] p-6 md:p-10">
       <div className="mb-6">
-        <h3 className="font-cormorant font-bold text-5xl md:text-7xl lg:text-8xl text-mauve-rose mb-4">
+        <h3 className="font-cormorant font-bold text-5xl md:text-7xl lg:text-8xl text-mauve-rose mb-2">
           {statistic}
         </h3>
-        <p className="text-base md:text-lg mb-8 text-midnight-indigo max-w-lg mx-auto">
+        <p className="text-base md:text-lg mb-4 text-midnight-indigo max-w-lg mx-auto">
           {explanation}
         </p>
         <p className="font-semibold text-sm md:text-base tracking-wide italic text-midnight-indigo/70">
@@ -130,13 +130,17 @@ const WhyItMattersSection: React.FC = () => {
               <CarouselPrevious className={cn(
                 "static relative left-0 transform-none h-8 w-8 md:h-10 md:w-10 bg-white/80 hover:bg-white",
                 "border border-mauve-rose/20"
-              )} />
+              )}>
+                <span className="text-lg font-bold">&lt;</span>
+              </CarouselPrevious>
             </div>
             <div className="absolute inset-y-0 right-4 flex items-center">
               <CarouselNext className={cn(
                 "static relative right-0 transform-none h-8 w-8 md:h-10 md:w-10 bg-white/80 hover:bg-white",
                 "border border-mauve-rose/20"
-              )} />
+              )}>
+                <span className="text-lg font-bold">&gt;</span>
+              </CarouselNext>
             </div>
           </Carousel>
         </div>
