@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import ContentContainer from '../common/ContentContainer';
 import { 
@@ -128,7 +129,8 @@ const WhyItMattersSection: React.FC = () => {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <div className="flex justify-center mt-2">
+            {/* Move the navigation controls up by removing the mt-2 class and adding negative margin */}
+            <div className="flex justify-center -mt-4">
               <div className="flex items-center gap-3">
                 <CarouselPrevious className={cn(
                   "static relative h-8 w-8 md:h-10 md:w-10 bg-transparent hover:bg-transparent border-none shadow-none"
