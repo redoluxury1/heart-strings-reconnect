@@ -2,7 +2,6 @@
 import React from 'react';
 import Navbar from '../components/layout/Navbar';
 import Hero from '../components/home/Hero';
-import ConflictStages from '../components/home/ConflictStages';
 import ContentContainer from '../components/common/ContentContainer';
 import { Heart, Handshake, MessageCircle } from 'lucide-react';
 import Card from '../components/common/Card';
@@ -41,8 +40,6 @@ const Index = () => {
         </div>
         
         <StillUsSection />
-        
-        <ConflictStages />
         
         <BrandSection
           className="bg-white"
