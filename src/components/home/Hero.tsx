@@ -1,14 +1,138 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button";
 import ContentContainer from '../common/ContentContainer';
-import { Heart } from 'lucide-react';
+import { cn } from "@/lib/utils";
+
+// Messages to cycle through
+const messages = [
+  "It's okay to feel everything.",
+  "You're on the same team.",
+  "Take a breath — you're doing your best.",
+  "Small steps still count.",
+  "You don't have to be perfect to be loved.",
+  "Kindness calms everything.",
+  "You're learning. You're trying. That matters.",
+  "Connection starts with one calm message.",
+  "You're allowed to pause before you respond."
+];
+
+// Color schemes for bubbles
+const bubbleStyles = [
+  { bgColor: "bg-rosewood-tint", textColor: "text-white" },
+  { bgColor: "bg-mauve-rose", textColor: "text-white" },
+  { bgColor: "bg-lavender-blue", textColor: "text-white" },
+  { bgColor: "bg-soft-cream", textColor: "text-midnight-indigo" },
+  { bgColor: "bg-soft-blush", textColor: "text-midnight-indigo" },
+];
+
+// Bubble positions and sizes (for variety)
+const bubbleVariants = [
+  "left-[10%] top-5 -rotate-3 max-w-[180px]",
+  "left-[35%] top-10 rotate-2 max-w-[220px]",
+  "left-[60%] top-3 -rotate-1 max-w-[200px]",
+  "left-[20%] top-16 rotate-3 max-w-[190px]",
+  "left-[45%] top-20 -rotate-2 max-w-[210px]",
+  "left-[70%] top-14 rotate-1 max-w-[230px]",
+];
+
+// Message Bubble Component
+const MessageBubble = ({ message, style, position, onAnimationEnd }) => {
+  return (
+    <div 
+      className={cn(
+        "absolute px-4 py-2 rounded-full shadow-sm font-inter font-semibold text-center",
+        "animate-fade-in opacity-0",
+        style.bgColor,
+        style.textColor,
+        position,
+        "z-10"
+      )}
+      style={{ 
+        animationDuration: '1s',
+        animationFillMode: 'forwards',
+        animationDelay: '0.2s',
+      }}
+      onAnimationEnd={onAnimationEnd}
+    >
+      {message}
+    </div>
+  );
+};
 
 const Hero = () => {
+  const [visibleBubbles, setVisibleBubbles] = useState([]);
+  const [bubbleCounter, setBubbleCounter] = useState(0);
+
+  // Function to create a new bubble
+  const createBubble = () => {
+    const messageIndex = Math.floor(Math.random() * messages.length);
+    const styleIndex = Math.floor(Math.random() * bubbleStyles.length);
+    const positionIndex = Math.floor(Math.random() * bubbleVariants.length);
+    
+    const newBubble = {
+      id: Date.now(),
+      message: messages[messageIndex],
+      style: bubbleStyles[styleIndex],
+      position: bubbleVariants[positionIndex],
+      phase: 'entering'
+    };
+    
+    setVisibleBubbles(prev => [...prev, newBubble]);
+    
+    // Set timeout to remove the bubble after display time
+    setTimeout(() => {
+      setVisibleBubbles(prev => 
+        prev.map(bubble => 
+          bubble.id === newBubble.id 
+            ? {...bubble, phase: 'exiting'} 
+            : bubble
+        )
+      );
+    }, 5000); // Display for 5 seconds
+  };
+
+  // Handle animation end for exiting bubbles
+  const handleAnimationEnd = (id) => {
+    setVisibleBubbles(prev => prev.filter(bubble => bubble.id !== id));
+  };
+
+  // Effect to periodically add new bubbles
+  useEffect(() => {
+    // Initial bubble on load
+    createBubble();
+    
+    // Set interval to add new bubbles
+    const interval = setInterval(() => {
+      createBubble();
+      setBubbleCounter(prev => prev + 1);
+      
+      // Limit number of concurrent bubbles
+      if (bubbleCounter > 10) {
+        clearInterval(interval);
+      }
+    }, 2000); // New bubble every 2 seconds
+    
+    return () => clearInterval(interval);
+  }, [bubbleCounter]);
+
   return (
-    <div className="bg-gradient-to-b from-rose-50 to-white py-20">
+    <div className="bg-gradient-to-b from-rose-50 to-white py-20 relative overflow-hidden">
+      {/* Message Bubbles Container */}
+      <div className="absolute inset-0 h-[180px] w-full overflow-hidden">
+        {visibleBubbles.map(bubble => (
+          <MessageBubble
+            key={bubble.id}
+            message={bubble.message}
+            style={bubble.style}
+            position={bubble.position}
+            onAnimationEnd={() => bubble.phase === 'exiting' && handleAnimationEnd(bubble.id)}
+          />
+        ))}
+      </div>
+      
       <ContentContainer>
-        <div className="flex flex-col items-center text-center">
+        <div className="flex flex-col items-center text-center mt-16">
           <div className="mb-6">
             <div className="inline-flex items-center justify-center p-4 bg-white rounded-full shadow-sm">
               <img 
