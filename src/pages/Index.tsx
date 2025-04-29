@@ -8,6 +8,7 @@ import StillUsSection from '../components/home/StillUsSection';
 import PersonalizedConnection from '../components/home/PersonalizedConnection';
 import CallToAction from '../components/home/CallToAction';
 import RelationshipCarousel from '../components/home/RelationshipCarousel';
+import WhyItMattersSection from '../components/home/WhyItMattersSection';
 
 const Index = () => {
   return (
@@ -27,6 +28,8 @@ const Index = () => {
         <RelationshipCarousel />
         
         <CallToAction />
+        
+        <WhyItMattersSection />
       </main>
       
       <footer className="bg-slate-800 text-slate-200 py-12">
