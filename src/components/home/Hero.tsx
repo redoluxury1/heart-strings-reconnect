@@ -42,16 +42,13 @@ const MessageBubble = ({ message, style, position, onAnimationEnd }) => {
     <div 
       className={cn(
         "absolute px-4 py-2 rounded-full shadow-sm font-inter font-semibold text-center",
-        "animate-fade-in opacity-0",
         style.bgColor,
         style.textColor,
         position,
-        "z-10"
+        "z-10 opacity-0"
       )}
       style={{ 
-        animationDuration: '1s',
-        animationFillMode: 'forwards',
-        animationDelay: '0.2s',
+        animation: 'fadeIn 1s forwards 0.2s',
       }}
       onAnimationEnd={onAnimationEnd}
     >
@@ -82,19 +79,14 @@ const Hero = () => {
     
     // Set timeout to remove the bubble after display time
     setTimeout(() => {
-      setVisibleBubbles(prev => 
-        prev.map(bubble => 
-          bubble.id === newBubble.id 
-            ? {...bubble, phase: 'exiting'} 
-            : bubble
-        )
-      );
+      const bubbleElement = document.getElementById(`bubble-${newBubble.id}`);
+      if (bubbleElement) {
+        bubbleElement.style.animation = 'fadeOut 1s forwards';
+        bubbleElement.addEventListener('animationend', () => {
+          setVisibleBubbles(prev => prev.filter(bubble => bubble.id !== newBubble.id));
+        });
+      }
     }, 5000); // Display for 5 seconds
-  };
-
-  // Handle animation end for exiting bubbles
-  const handleAnimationEnd = (id) => {
-    setVisibleBubbles(prev => prev.filter(bubble => bubble.id !== id));
   };
 
   // Effect to periodically add new bubbles
@@ -104,33 +96,40 @@ const Hero = () => {
     
     // Set interval to add new bubbles
     const interval = setInterval(() => {
-      createBubble();
-      setBubbleCounter(prev => prev + 1);
-      
-      // Limit number of concurrent bubbles
-      if (bubbleCounter > 10) {
-        clearInterval(interval);
+      if (visibleBubbles.length < 5) {
+        createBubble();
+        setBubbleCounter(prev => prev + 1);
       }
     }, 2000); // New bubble every 2 seconds
     
     return () => clearInterval(interval);
-  }, [bubbleCounter]);
+  }, [visibleBubbles.length]);
 
   return (
     <div className="bg-gradient-to-b from-rose-50 to-white py-20 relative overflow-hidden">
       {/* Message Bubbles Container */}
       <div className="absolute inset-0 h-[180px] w-full overflow-hidden">
         {visibleBubbles.map(bubble => (
-          <MessageBubble
+          <div 
+            id={`bubble-${bubble.id}`}
             key={bubble.id}
-            message={bubble.message}
-            style={bubble.style}
-            position={bubble.position}
-            onAnimationEnd={() => bubble.phase === 'exiting' && handleAnimationEnd(bubble.id)}
-          />
+            className={cn(
+              "absolute px-4 py-2 rounded-full shadow-sm font-inter font-semibold text-center",
+              bubble.style.bgColor,
+              bubble.style.textColor,
+              bubble.position,
+              "z-10"
+            )}
+            style={{ 
+              animation: 'fadeIn 1s forwards',
+            }}
+          >
+            {bubble.message}
+          </div>
         ))}
       </div>
       
+      {/* Main Hero Content */}
       <ContentContainer>
         <div className="flex flex-col items-center text-center mt-16">
           <div className="mb-6">
