@@ -6,6 +6,8 @@ import ConflictStages from '../components/home/ConflictStages';
 import ContentContainer from '../components/common/ContentContainer';
 import { Heart, Handshake, MessageCircle } from 'lucide-react';
 import Card from '../components/common/Card';
+import BrandSection from '../common/BrandSection';
+import CallToAction from '../components/home/CallToAction';
 
 const Index = () => {
   const benefits = [
@@ -34,49 +36,21 @@ const Index = () => {
         <Hero />
         <ConflictStages />
         
-        <section className="py-16 bg-white">
-          <ContentContainer>
-            <div className="text-center mb-12">
-              <div className="flex justify-center mb-4">
-                <img 
-                  src="/lovable-uploads/61c36ea7-9582-4359-8fed-7603197af3d6.png" 
-                  alt="Bridge For Couples Icon" 
-                  className="h-16 w-auto" 
-                />
-              </div>
-              <h2 className="text-3xl font-bold text-slate-800 mb-4">
-                Build a Healthier Relationship
-              </h2>
-              <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-                Bridge For Couples helps you develop the skills and insights needed for conflict resolution and deeper connection.
-              </p>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {benefits.map((benefit, index) => (
-                <Card key={index} icon={benefit.icon} title={benefit.title} className="h-full">
-                  <p className="text-slate-600">{benefit.description}</p>
-                </Card>
-              ))}
-            </div>
-          </ContentContainer>
-        </section>
+        <BrandSection
+          className="bg-white"
+          title="Build a Healthier Relationship"
+          subtitle="Bridge For Couples helps you develop the skills and insights needed for conflict resolution and deeper connection."
+        >
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {benefits.map((benefit, index) => (
+              <Card key={index} icon={benefit.icon} title={benefit.title} className="h-full">
+                <p className="text-slate-600">{benefit.description}</p>
+              </Card>
+            ))}
+          </div>
+        </BrandSection>
         
-        <section className="py-16 bg-gradient-to-br from-rose-100 to-rose-50">
-          <ContentContainer>
-            <div className="text-center">
-              <h2 className="text-3xl font-bold text-slate-800 mb-4">
-                Start Healing Today
-              </h2>
-              <p className="text-lg text-slate-600 max-w-2xl mx-auto mb-8">
-                Every relationship faces challenges. Take the first step toward healthier conflict resolution and deeper connection.
-              </p>
-              <button className="bg-rose-500 hover:bg-rose-600 text-white px-8 py-3 rounded-md font-medium transition-colors">
-                Begin Your Journey
-              </button>
-            </div>
-          </ContentContainer>
-        </section>
+        <CallToAction />
       </main>
       
       <footer className="bg-slate-800 text-slate-200 py-12">
@@ -84,7 +58,7 @@ const Index = () => {
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="flex items-center mb-6 md:mb-0">
               <img 
-                src="/lovable-uploads/bca4bf72-9398-4185-bfe1-a6d123aaf426.png" 
+                src="/lovable-uploads/d5fb821b-b9d2-40c0-b55d-31fd2af60ac4.png" 
                 alt="Bridge For Couples" 
                 className="h-10 w-auto" 
               />
