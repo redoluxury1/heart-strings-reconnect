@@ -109,7 +109,7 @@ const Hero = () => {
   }, [visibleBubbles.length, usedPositions]);
 
   return (
-    <div className="bg-gradient-to-b from-rose-50 to-white py-20 relative overflow-hidden">
+    <div className="bg-gradient-to-b from-rose-50 via-white to-white py-20 relative overflow-hidden">
       {/* Message Bubbles Container */}
       <div className="absolute inset-0 h-[180px] w-full overflow-hidden">
         {visibleBubbles.map(bubble => (
