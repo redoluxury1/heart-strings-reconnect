@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/carousel';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
-import { MessageCircle, Heart, Eye, Handshake, PuzzlePiece, Lock } from 'lucide-react';
+import { MessageCircle, Heart, Eye, Handshake, Lock } from 'lucide-react';
 
 interface StatSlideProps {
   statistic: string;
@@ -84,7 +84,7 @@ const WhyItMattersSection: React.FC = () => {
       statistic: "71%",
       explanation: "of couples say they want to reconnect but don't know how.",
       punchline: "Bridge For Couples makes that first step easier.",
-      icon: <PuzzlePiece className="w-8 h-8 md:w-10 md:h-10 text-midnight-indigo" />
+      icon: <MessageCircle className="w-8 h-8 md:w-10 md:h-10 text-midnight-indigo" />
     }
   ];
   
