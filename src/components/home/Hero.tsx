@@ -48,7 +48,7 @@ const MessageBubble = ({ message, style, position, onAnimationEnd }) => {
         "z-10 opacity-0"
       )}
       style={{ 
-        animation: 'fadeIn 2s forwards 0.5s',
+        animation: 'fadeIn 4s forwards 0.5s',
       }}
       onAnimationEnd={onAnimationEnd}
     >
@@ -81,7 +81,7 @@ const Hero = () => {
     setTimeout(() => {
       const bubbleElement = document.getElementById(`bubble-${newBubble.id}`);
       if (bubbleElement) {
-        bubbleElement.style.animation = 'fadeOut 2s forwards';
+        bubbleElement.style.animation = 'fadeOut 4s forwards';
         bubbleElement.addEventListener('animationend', () => {
           setVisibleBubbles(prev => prev.filter(bubble => bubble.id !== newBubble.id));
         });
@@ -121,7 +121,7 @@ const Hero = () => {
               "z-10"
             )}
             style={{ 
-              animation: 'fadeIn 2s forwards',
+              animation: 'fadeIn 4s forwards',
             }}
           >
             {bubble.message}
