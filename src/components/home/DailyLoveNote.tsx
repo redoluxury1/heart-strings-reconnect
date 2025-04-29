@@ -46,7 +46,7 @@ const DailyLoveNote = () => {
   };
 
   return (
-    <div className="bg-gradient-to-b from-white to-soft-blush py-10 px-4">
+    <div className="relative z-0 mt-[-50px] pt-[70px] bg-gradient-to-b from-white to-soft-blush px-4 pb-10">
       <div className="max-w-xl mx-auto">
         <h2 className="font-cormorant text-2xl md:text-3xl font-medium text-midnight-indigo mb-4 text-center">
           Daily Love Note

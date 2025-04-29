@@ -34,10 +34,10 @@ const Index = () => {
       <Navbar />
       
       <main>
-        <Hero />
-        
-        {/* Daily Love Note Section */}
-        <DailyLoveNote />
+        <div className="relative">
+          <Hero />
+          <DailyLoveNote />
+        </div>
         
         <ConflictStages />
         

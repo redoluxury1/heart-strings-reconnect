@@ -109,9 +109,9 @@ const Hero = () => {
   }, [visibleBubbles.length, usedPositions]);
 
   return (
-    <div className="bg-gradient-to-b from-rose-50 via-white to-white py-20 relative overflow-hidden">
-      {/* Message Bubbles Container */}
-      <div className="absolute inset-0 h-[180px] w-full overflow-hidden">
+    <div className="relative z-10 bg-gradient-to-b from-rose-50 via-white to-transparent py-20 overflow-visible">
+      {/* Message Bubbles Container - extending beyond its boundaries */}
+      <div className="absolute inset-0 h-[220px] w-full overflow-visible">
         {visibleBubbles.map(bubble => (
           <div 
             id={`bubble-${bubble.id}`}
@@ -122,7 +122,7 @@ const Hero = () => {
               bubble.style.textColor,
               bubble.positionStyle,
               bubble.tailPosition,
-              "z-10 after:content-[''] after:absolute after:bottom-[-8px] after:border-l-[8px] after:border-l-transparent after:border-r-[8px] after:border-r-transparent after:border-t-[8px]",
+              "z-20 after:content-[''] after:absolute after:bottom-[-8px] after:border-l-[8px] after:border-l-transparent after:border-r-[8px] after:border-r-transparent after:border-t-[8px]",
               bubble.style.position
             )}
             style={{ 
