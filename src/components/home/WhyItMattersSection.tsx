@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/carousel';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
-import { MessageCircle, Heart, Eye, LinkedHands, TwoInterlockingRings, Puzzle, Lock } from 'lucide-react';
+import { MessageCircle, Heart, Eye, Handshake, PuzzlePiece, Lock } from 'lucide-react';
 
 interface StatSlideProps {
   statistic: string;
@@ -72,19 +72,19 @@ const WhyItMattersSection: React.FC = () => {
       statistic: "1 in 2",
       explanation: "couples say they don't feel truly heard by their partner.",
       punchline: "Bridge For Couples helps turn misunderstandings into moments of connection.",
-      icon: <LinkedHands className="w-8 h-8 md:w-10 md:h-10 text-midnight-indigo" />
+      icon: <Handshake className="w-8 h-8 md:w-10 md:h-10 text-midnight-indigo" />
     },
     {
       statistic: "83%",
       explanation: "of people believe better conflict tools would improve their relationship.",
       punchline: "No one teaches us how to fight fair — until now.",
-      icon: <TwoInterlockingRings className="w-8 h-8 md:w-10 md:h-10 text-mauve-rose" />
+      icon: <Lock className="w-8 h-8 md:w-10 md:h-10 text-mauve-rose" />
     },
     {
       statistic: "71%",
       explanation: "of couples say they want to reconnect but don't know how.",
       punchline: "Bridge For Couples makes that first step easier.",
-      icon: <Puzzle className="w-8 h-8 md:w-10 md:h-10 text-midnight-indigo" />
+      icon: <PuzzlePiece className="w-8 h-8 md:w-10 md:h-10 text-midnight-indigo" />
     }
   ];
   
@@ -142,8 +142,8 @@ const WhyItMattersSection: React.FC = () => {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            {/* Move the navigation controls up by removing the mt-2 class and adding negative margin */}
-            <div className="flex justify-center -mt-4">
+            {/* Changed margin-top from -mt-4 to -mt-6 as requested */}
+            <div className="flex justify-center -mt-6">
               <div className="flex items-center gap-3">
                 <CarouselPrevious className={cn(
                   "static relative h-8 w-8 md:h-10 md:w-10 bg-transparent hover:bg-transparent border-none shadow-none"
