@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -18,6 +19,10 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				'cormorant': ['Cormorant Garamond', 'Georgia', 'serif'],
+				'inter': ['Inter', 'system-ui', 'sans-serif'],
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -61,7 +66,14 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+				// Brand specific colors
+				'midnight-indigo': '#4A448C',
+				'soft-cream': '#E7D9C9',
+				'soft-blush': '#F1EDE8',
+				'rosewood-tint': '#E69999',
+				'mauve-rose': '#C7747F',
+				'lavender-blue': '#8A8AC9',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
