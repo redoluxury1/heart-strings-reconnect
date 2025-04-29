@@ -23,7 +23,7 @@ const Navbar = () => {
           <img 
             src="/lovable-uploads/80619689-94c4-43be-b585-6e9079eace63.png" 
             alt="Bridge For Couples" 
-            className="h-20 w-auto" // Increased from h-12 to h-20
+            className="h-28 w-auto" // Increased from h-20 to h-28
           />
           <span className="sr-only">Bridge For Couples</span>
         </Link>
