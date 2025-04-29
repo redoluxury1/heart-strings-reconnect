@@ -26,14 +26,14 @@ const bubbleStyles = [
   { bgColor: "bg-soft-blush", textColor: "text-midnight-indigo" },
 ];
 
-// Bubble positions and sizes (for variety)
+// Bubble positions and sizes (for variety, coming from different corners)
 const bubbleVariants = [
-  "left-[10%] top-5 -rotate-3 max-w-[180px]",
-  "left-[35%] top-10 rotate-2 max-w-[220px]",
-  "left-[60%] top-3 -rotate-1 max-w-[200px]",
-  "left-[20%] top-16 rotate-3 max-w-[190px]",
-  "left-[45%] top-20 -rotate-2 max-w-[210px]",
-  "left-[70%] top-14 rotate-1 max-w-[230px]",
+  "left-[5%] top-[5%] -rotate-2 max-w-[200px]", // Top left
+  "right-[5%] top-[5%] rotate-2 max-w-[210px]", // Top right
+  "left-[10%] top-[40%] -rotate-1 max-w-[190px]", // Middle left
+  "right-[10%] top-[40%] rotate-1 max-w-[220px]", // Middle right
+  "left-[25%] top-[10%] rotate-3 max-w-[180px]", // Upper left
+  "right-[25%] top-[10%] -rotate-3 max-w-[230px]", // Upper right
 ];
 
 // Message Bubble Component
@@ -86,7 +86,7 @@ const Hero = () => {
           setVisibleBubbles(prev => prev.filter(bubble => bubble.id !== newBubble.id));
         });
       }
-    }, 8000); // Display for 8 seconds (increased from 5)
+    }, 10000); // Increased display time to 10 seconds (from 8 seconds)
   };
 
   // Effect to periodically add new bubbles
@@ -96,11 +96,11 @@ const Hero = () => {
     
     // Set interval to add new bubbles
     const interval = setInterval(() => {
-      if (visibleBubbles.length < 3) { // Reduced max concurrent bubbles from 5 to 3
+      if (visibleBubbles.length < 2) { // Reduced max concurrent bubbles from 3 to 2
         createBubble();
         setBubbleCounter(prev => prev + 1);
       }
-    }, 4000); // New bubble every 4 seconds (increased from 2)
+    }, 6000); // New bubble every 6 seconds (increased from 4 seconds)
     
     return () => clearInterval(interval);
   }, [visibleBubbles.length]);
