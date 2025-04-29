@@ -38,8 +38,8 @@ const StillUsSection = () => {
       title: "Post-Fight",
       description: "That was a lot. This space helps you process what just happened, understand what you need, and find clarity before reconnecting.",
       icon: <HeartCrack className="h-6 w-6" />,
-      tools: ["Talk It Out Prompt Library", "Build a Bridge"],
-      comingSoonTools: [],
+      tools: ["Talk It Out Prompt Library"],
+      comingSoonTools: ["Build a Bridge"],
       link: "/post-conflict",
       gradientClass: "from-soft-cream/40 to-soft-cream/10",
       iconBgClass: "bg-soft-cream/40",
@@ -102,7 +102,7 @@ const StillUsSection = () => {
                         {card.comingSoonTools?.map((tool, idx) => (
                           <li key={idx} className="flex items-center">
                             <span className="h-1.5 w-1.5 rounded-full bg-midnight-indigo/50 mr-2"></span>
-                            <span className="text-midnight-indigo/80 italic">{tool} <span className="text-xs text-midnight-indigo/60">(Coming Soon)</span></span>
+                            <span className="text-midnight-indigo/80">{tool} <span className="text-xs text-midnight-indigo/60">(Coming Soon)</span></span>
                           </li>
                         ))}
                       </ul>
@@ -148,7 +148,7 @@ const StillUsSection = () => {
                         {card.comingSoonTools?.map((tool, idx) => (
                           <div key={idx} className="flex items-center">
                             <span className="h-1.5 w-1.5 rounded-full bg-midnight-indigo/50 mr-2"></span>
-                            <span className="text-midnight-indigo/80 italic">{tool} <span className="text-xs text-midnight-indigo/60">(Coming Soon)</span></span>
+                            <span className="text-midnight-indigo/80">{tool} <span className="text-xs text-midnight-indigo/60">(Coming Soon)</span></span>
                           </div>
                         ))}
                       </div>
