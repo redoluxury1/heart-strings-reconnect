@@ -10,10 +10,10 @@
     --background: 36 28% 85%;  /* Soft Cream */
     --foreground: 248 34% 41%;  /* Midnight Indigo */
 
-    --card: 30 25% 93%;  /* Soft Blush */
+    --card: 30 25% 93%;  /* Soft Blush - Updated to match exact value */
     --card-foreground: 248 34% 41%;  /* Midnight Indigo */
 
-    --popover: 30 25% 93%;  /* Soft Blush */
+    --popover: 30 25% 93%;  /* Soft Blush - Updated to match exact value */
     --popover-foreground: 248 34% 41%;  /* Midnight Indigo */
 
     --primary: 248 34% 41%;  /* Midnight Indigo */

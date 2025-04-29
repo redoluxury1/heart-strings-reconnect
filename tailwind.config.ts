@@ -70,7 +70,7 @@ export default {
 				// Brand specific colors
 				'midnight-indigo': '#4A448C',
 				'soft-cream': '#E7D9C9',
-				'soft-blush': '#F1EDE8',
+				'soft-blush': '#F1EAE8',  // Updated from #F1EDE8 to #F1EAE8
 				'rosewood-tint': '#E69999',
 				'mauve-rose': '#C7747F',
 				'lavender-blue': '#8A8AC9',
