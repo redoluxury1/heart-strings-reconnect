@@ -12,6 +12,7 @@ const Footer = ({ showCTA = false }: FooterProps) => {
 
   return (
     <footer className="bg-midnight-indigo pt-9 pb-12 md:pb-16 relative z-10">
+      {/* Added solid background fill instead of transparent one */}
       <div className="absolute inset-0 bg-midnight-indigo"></div>
       <ContentContainer>
         <div className="flex flex-col items-center relative z-10">
