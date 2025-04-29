@@ -19,15 +19,18 @@ interface StatSlideProps {
 
 const StatSlide: React.FC<StatSlideProps> = ({ statistic, explanation, punchline }) => {
   return (
-    <div className="flex flex-col items-center justify-center text-center min-h-[300px] p-6 md:p-10">
-      <div className="mb-6">
-        <h3 className="font-cormorant font-bold text-5xl md:text-7xl lg:text-8xl text-mauve-rose mb-2">
+    <div className="flex flex-col items-center justify-center text-center min-h-[280px] p-6">
+      <div>
+        <h3 
+          className="font-inter font-bold text-5xl md:text-6xl lg:text-7xl text-mauve-rose mb-1 tracking-tight"
+          aria-label={`${statistic} ${explanation}`}
+        >
           {statistic}
         </h3>
-        <p className="text-base md:text-lg mb-4 text-midnight-indigo max-w-lg mx-auto">
+        <p className="text-base md:text-lg lg:text-xl mb-2 text-[#222222] font-medium max-w-lg mx-auto leading-tight">
           {explanation}
         </p>
-        <p className="font-semibold text-sm md:text-base tracking-wide italic text-midnight-indigo/70">
+        <p className="italic text-sm md:text-base tracking-wide text-midnight-indigo/70 font-light">
           {punchline}
         </p>
       </div>
@@ -86,18 +89,18 @@ const WhyItMattersSection: React.FC = () => {
   }, [currentSlide, autoPlay, statistics.length]);
 
   return (
-    <section className="py-20 bg-soft-blush">
+    <section className="py-16 bg-soft-blush">
       <ContentContainer>
         <div className="text-center mb-2">
-          <h2 className="font-cormorant text-3xl md:text-4xl font-medium text-midnight-indigo mb-2">
+          <h2 className="font-cormorant text-3xl md:text-4xl font-medium text-midnight-indigo mb-1">
             Why It Matters
           </h2>
-          <p className="text-sm md:text-base text-midnight-indigo/80 max-w-2xl mx-auto">
-            Real stats. Real struggles. Let's rewrite the story- with better tools, calmer conversations and deeper connection
+          <p className="text-base text-midnight-indigo/90 max-w-3xl mx-auto font-inter">
+            Real stats. Real struggles. Let's rewrite the story — with better tools, calmer conversations, and deeper connection
           </p>
         </div>
 
-        <div className="mt-6 relative">
+        <div className="mt-4 relative">
           <Carousel
             opts={{
               align: "center",
@@ -126,19 +129,19 @@ const WhyItMattersSection: React.FC = () => {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <div className="absolute inset-y-0 left-4 flex items-center">
-              <CarouselPrevious className={cn(
-                "static relative left-0 transform-none h-8 w-8 md:h-10 md:w-10 bg-transparent hover:bg-transparent border-none shadow-none"
-              )}>
-                <span className="text-2xl font-bold text-midnight-indigo">&lt;</span>
-              </CarouselPrevious>
-            </div>
-            <div className="absolute inset-y-0 right-4 flex items-center">
-              <CarouselNext className={cn(
-                "static relative right-0 transform-none h-8 w-8 md:h-10 md:w-10 bg-transparent hover:bg-transparent border-none shadow-none"
-              )}>
-                <span className="text-2xl font-bold text-midnight-indigo">&gt;</span>
-              </CarouselNext>
+            <div className="flex justify-center mt-2">
+              <div className="flex items-center gap-3">
+                <CarouselPrevious className={cn(
+                  "static relative h-8 w-8 md:h-10 md:w-10 bg-transparent hover:bg-transparent border-none shadow-none"
+                )}>
+                  <span className="text-2xl font-bold text-midnight-indigo">&lt;</span>
+                </CarouselPrevious>
+                <CarouselNext className={cn(
+                  "static relative h-8 w-8 md:h-10 md:w-10 bg-transparent hover:bg-transparent border-none shadow-none"
+                )}>
+                  <span className="text-2xl font-bold text-midnight-indigo">&gt;</span>
+                </CarouselNext>
+              </div>
             </div>
           </Carousel>
         </div>
