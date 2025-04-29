@@ -15,6 +15,7 @@ type CardContent = {
   link: string;
   gradientClass: string;
   iconBgClass: string;
+  buttonText: string;
 };
 
 const StillUsSection = () => {
@@ -28,6 +29,7 @@ const StillUsSection = () => {
       link: "/during-conflict",
       gradientClass: "from-lavender-blue/20 to-lavender-blue/5",
       iconBgClass: "bg-lavender-blue/20",
+      buttonText: "Let's Slow Down",
     },
     {
       title: "Post-Fight",
@@ -38,6 +40,7 @@ const StillUsSection = () => {
       link: "/post-conflict",
       gradientClass: "from-soft-cream/40 to-soft-cream/10",
       iconBgClass: "bg-soft-cream/40",
+      buttonText: "Let's Reflect",
     },
     {
       title: "Reconnecting",
@@ -48,6 +51,7 @@ const StillUsSection = () => {
       link: "/reconnect",
       gradientClass: "from-mauve-rose/20 to-mauve-rose/5",
       iconBgClass: "bg-mauve-rose/20",
+      buttonText: "Let's Grow Closer",
     },
   ];
 
@@ -103,7 +107,7 @@ const StillUsSection = () => {
                     variant="outline" 
                     className="w-full border-rosewood-tint text-rosewood-tint hover:bg-rosewood-tint/10 transition-colors"
                   >
-                    Explore Tools
+                    {card.buttonText}
                   </Button>
                 </Link>
               </div>
