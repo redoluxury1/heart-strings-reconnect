@@ -3,33 +3,13 @@ import React from 'react';
 import Navbar from '../components/layout/Navbar';
 import Hero from '../components/home/Hero';
 import ContentContainer from '../components/common/ContentContainer';
-import { Heart, Handshake, MessageCircle } from 'lucide-react';
-import Card from '../components/common/Card';
-import BrandSection from '../components/common/BrandSection';
-import CallToAction from '../components/home/CallToAction';
 import DailyLoveNote from '../components/home/DailyLoveNote';
 import StillUsSection from '../components/home/StillUsSection';
 import PersonalizedConnection from '../components/home/PersonalizedConnection';
+import CallToAction from '../components/home/CallToAction';
+import RelationshipCarousel from '../components/home/RelationshipCarousel';
 
 const Index = () => {
-  const benefits = [
-    {
-      title: "Emotional Intelligence",
-      description: "Learn to recognize and manage emotions during conflict to avoid escalation.",
-      icon: <Heart className="h-5 w-5" />
-    },
-    {
-      title: "Better Communication",
-      description: "Develop skills to express needs and listen effectively even when tensions are high.",
-      icon: <MessageCircle className="h-5 w-5" />
-    },
-    {
-      title: "Stronger Connection",
-      description: "Transform conflicts into opportunities to deepen understanding and intimacy.",
-      icon: <Handshake className="h-5 w-5" />
-    }
-  ];
-
   return (
     <div className="min-h-screen bg-slate-50">
       <Navbar />
@@ -44,19 +24,7 @@ const Index = () => {
         
         <PersonalizedConnection />
         
-        <BrandSection
-          className="bg-white"
-          title="Build a Healthier Relationship"
-          subtitle="Bridge For Couples helps you develop the skills and insights needed for conflict resolution and deeper connection."
-        >
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {benefits.map((benefit, index) => (
-              <Card key={index} icon={benefit.icon} title={benefit.title} className="h-full">
-                <p className="text-slate-600">{benefit.description}</p>
-              </Card>
-            ))}
-          </div>
-        </BrandSection>
+        <RelationshipCarousel />
         
         <CallToAction />
       </main>
