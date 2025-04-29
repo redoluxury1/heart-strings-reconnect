@@ -5,22 +5,9 @@ import { Input } from "@/components/ui/input";
 import { Send } from "lucide-react";
 import { toast } from "sonner";
 
-// Sample rotating prompts
-const DAILY_PROMPTS = [
-  "What's one small way your partner made life easier this week?",
-  "When did your partner make you feel seen?",
-  "What's something little you're thankful for about your partner?",
-  "Share a moment your partner made you smile recently.",
-  "What quality do you admire most in your partner right now?",
-  "How did your partner show up for you this week?"
-];
-
 const DailyLoveNote = () => {
   const [loveNote, setLoveNote] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  // Get a random prompt from the array
-  const todaysPrompt = DAILY_PROMPTS[Math.floor(Math.random() * DAILY_PROMPTS.length)];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -53,7 +40,7 @@ const DailyLoveNote = () => {
         </h2>
         
         <p className="text-center text-midnight-indigo font-inter mb-6">
-          {todaysPrompt}
+          What is one thing your partner did today to make you feel special?
         </p>
         
         <form onSubmit={handleSubmit} className="space-y-4">
