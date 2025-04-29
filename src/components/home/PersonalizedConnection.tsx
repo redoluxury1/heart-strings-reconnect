@@ -40,15 +40,12 @@ const PersonalizedConnection = () => {
   return (
     <section className="py-20 bg-soft-cream">
       <ContentContainer>
-        <div className="text-center mb-14">
-          <h2 className="font-cormorant text-3xl md:text-4xl font-medium text-midnight-indigo mb-4">
-            Let's personalize your experience
-          </h2>
-          <p className="text-center text-midnight-indigo font-inter font-light max-w-2xl mx-auto">
-            Your relationship isn't one-size-fits all and Bridge For Couples is built to reflect that. 
-            These in-depth quizzes help us understand how you love, how you communicate and how we can 
-            support your relationship in the most meaningful way.
-          </p>
+        <div className="flex justify-center mb-12">
+          <img 
+            src="/lovable-uploads/9a88535e-3519-4f4b-8575-b501719fe61b.png" 
+            alt="Love Code + Blueprint = Your relationship playbook" 
+            className="max-w-full h-auto w-3/4 md:w-1/2"
+          />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
