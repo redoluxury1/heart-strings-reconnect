@@ -17,6 +17,7 @@ type CardContent = {
   gradientClass: string;
   iconBgClass: string;
   buttonText: string;
+  sectionHeader: string;
 };
 
 const StillUsSection = () => {
@@ -33,6 +34,7 @@ const StillUsSection = () => {
       gradientClass: "from-lavender-blue/20 to-lavender-blue/5",
       iconBgClass: "bg-lavender-blue/20",
       buttonText: "Let's Slow Down",
+      sectionHeader: "Let's Start Here:",
     },
     {
       title: "Post-Fight",
@@ -44,6 +46,7 @@ const StillUsSection = () => {
       gradientClass: "from-soft-cream/40 to-soft-cream/10",
       iconBgClass: "bg-soft-cream/40",
       buttonText: "Let's Reflect",
+      sectionHeader: "How to Move Forward:",
     },
     {
       title: "Reconnecting",
@@ -55,6 +58,7 @@ const StillUsSection = () => {
       gradientClass: "from-mauve-rose/20 to-mauve-rose/5",
       iconBgClass: "bg-mauve-rose/20",
       buttonText: "Let's Grow Closer",
+      sectionHeader: "Grow Stronger:",
     },
   ];
 
@@ -91,7 +95,7 @@ const StillUsSection = () => {
                     </p>
                     
                     <div className="mb-6">
-                      <p className="font-medium text-sm text-midnight-indigo mb-2">Includes Tools:</p>
+                      <p className="font-medium text-sm text-midnight-indigo mb-2">{card.sectionHeader}</p>
                       <ul className="text-sm space-y-1.5">
                         {card.tools.map((tool, idx) => (
                           <li key={idx} className="flex items-center">
@@ -137,7 +141,7 @@ const StillUsSection = () => {
                     
                     {/* Tools list */}
                     <div className="mb-5 flex-grow">
-                      <p className="font-medium text-sm text-midnight-indigo mb-2">Includes Tools:</p>
+                      <p className="font-medium text-sm text-midnight-indigo mb-2">{card.sectionHeader}</p>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-1.5">
                         {card.tools.map((tool, idx) => (
                           <div key={idx} className="flex items-center">
