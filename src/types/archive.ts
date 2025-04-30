@@ -27,3 +27,9 @@ export interface JournalEntry {
 }
 
 export type ViewMode = 'list' | 'expanded';
+
+export interface SaveToastOptions {
+  title?: string;
+  description?: string;
+  action?: React.ReactNode;
+}

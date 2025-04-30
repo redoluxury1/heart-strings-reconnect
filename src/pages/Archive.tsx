@@ -17,12 +17,12 @@ const Archive = () => {
       
       <div className="py-10">
         <ContentContainer>
-          <h1 className="font-cormorant text-3xl md:text-4xl font-bold text-midnight-indigo mb-8 text-center">
+          <h1 className="font-cormorant text-3xl md:text-4xl font-bold text-midnight-indigo mb-4 text-center">
             The Archive
           </h1>
           
-          <p className="text-center mb-10 max-w-lg mx-auto text-midnight-indigo/80">
-            Your personal collection of communication insights, love notes, and reflections.
+          <p className="text-center mb-10 max-w-2xl mx-auto text-midnight-indigo/70">
+            Everything worth holding onto—from the things you've said to the love you've received.
           </p>
           
           <Tabs
@@ -31,26 +31,26 @@ const Archive = () => {
             onValueChange={setActiveTab}
             className="w-full"
           >
-            <TabsList className="grid grid-cols-3 mb-8">
+            <TabsList className="flex justify-center mb-8 bg-transparent p-1 gap-2">
               <TabsTrigger 
                 value="saved-rephrases"
-                className="flex flex-col items-center space-y-2 py-3"
+                className="flex items-center gap-2 py-3 px-5 data-[state=active]:bg-soft-blush rounded-full"
               >
-                <Book className="h-5 w-5" />
+                <Book className="h-4 w-4" />
                 <span>Saved Rephrases</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="love-notes"
-                className="flex flex-col items-center space-y-2 py-3"
+                className="flex items-center gap-2 py-3 px-5 data-[state=active]:bg-soft-blush rounded-full"
               >
-                <Heart className="h-5 w-5" />
+                <Heart className="h-4 w-4" />
                 <span>Love Notes</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="journal"
-                className="flex flex-col items-center space-y-2 py-3"
+                className="flex items-center gap-2 py-3 px-5 data-[state=active]:bg-soft-blush rounded-full"
               >
-                <BookOpen className="h-5 w-5" />
+                <BookOpen className="h-4 w-4" />
                 <span>Journal</span>
               </TabsTrigger>
             </TabsList>

@@ -2,7 +2,7 @@
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { Book } from 'lucide-react';
+import { Book, ArrowRight } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -28,6 +28,10 @@ const SaveConfirmationDialog: React.FC<SaveConfirmationDialogProps> = ({
     navigate('/archive');
   };
 
+  const handleKeepGoing = () => {
+    onOpenChange(false);
+  };
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
@@ -38,16 +42,24 @@ const SaveConfirmationDialog: React.FC<SaveConfirmationDialogProps> = ({
           <DialogDescription className="text-center">
             —one rephrase at a time.
             <br />
-            It's now saved to your Archive. Come back to it any time.
+            This phrase was saved to your Archive.
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter className="sm:justify-center">
+        <DialogFooter className="sm:justify-center flex-col sm:flex-row gap-2">
           <Button 
             onClick={handleGoToArchive}
             className="bg-lavender-blue hover:bg-lavender-blue/90 text-white"
           >
             <Book className="h-4 w-4 mr-1" />
-            Go to Archive
+            View in Archive
+          </Button>
+          <Button 
+            variant="outline"
+            onClick={handleKeepGoing}
+            className="border-lavender-blue text-lavender-blue hover:bg-lavender-blue/10"
+          >
+            Keep Going
+            <ArrowRight className="h-4 w-4 ml-1" />
           </Button>
         </DialogFooter>
       </DialogContent>

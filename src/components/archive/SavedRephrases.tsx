@@ -1,16 +1,13 @@
 
 import React, { useState } from 'react';
-import { 
-  Card, 
-  CardContent, 
-  CardDescription, 
-  CardFooter, 
-  CardHeader, 
-  CardTitle 
-} from "@/components/ui/card";
+import { format } from 'date-fns';
+import { Search, Star, StarOff, FilterX, Copy } from 'lucide-react';
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { 
+import { Input } from "@/components/ui/input";
+import { SavedRephrase } from '@/types/archive';
+import { useToast } from "@/hooks/use-toast";
+import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
@@ -18,10 +15,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuCheckboxItem,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
-import { SavedRephrase } from '@/types/archive';
-import { format } from 'date-fns';
-import { Search, SlidersHorizontal, Star, StarOff } from 'lucide-react';
 
 // Sample data - in a real app, this would come from storage/database
 const sampleRephrases: SavedRephrase[] = [
@@ -58,6 +51,7 @@ const SavedRephrases = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
+  const { toast } = useToast();
 
   const toggleFavorite = (id: string) => {
     setRephrases(rephrases.map(rephrase => 
@@ -66,6 +60,24 @@ const SavedRephrases = () => {
         : rephrase
     ));
   };
+
+  const handleCopyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text).then(() => {
+      toast({
+        title: "Copied!",
+        description: "Phrase copied to clipboard",
+        duration: 2000,
+      });
+    });
+  };
+
+  const clearFilters = () => {
+    setSearchTerm('');
+    setSelectedCategories([]);
+    setShowFavoritesOnly(false);
+  };
+
+  const hasActiveFilters = searchTerm || selectedCategories.length > 0 || showFavoritesOnly;
 
   const filteredRephrases = rephrases
     .filter(rephrase => {
@@ -95,38 +107,43 @@ const SavedRephrases = () => {
 
   return (
     <div>
-      <div className="mb-6 flex flex-col sm:flex-row gap-4 items-center justify-between">
-        <div className="relative w-full sm:w-72">
-          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+      <div className="mb-6 flex gap-4 items-center justify-center">
+        <div className="relative w-full max-w-md">
+          <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
           <Input
             placeholder="Search rephrases..."
-            className="pl-8"
+            className="pl-10 pr-4 py-2 rounded-full"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-        
+
         <div className="flex gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            className={showFavoritesOnly ? "bg-mauve-rose/10 text-mauve-rose border-mauve-rose/50" : ""}
-            onClick={() => setShowFavoritesOnly(!showFavoritesOnly)}
-          >
-            {showFavoritesOnly ? <Star className="h-4 w-4 mr-1" /> : <StarOff className="h-4 w-4 mr-1" />}
-            {showFavoritesOnly ? "Favorites" : "All Items"}
-          </Button>
-          
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="sm">
-                <SlidersHorizontal className="h-4 w-4 mr-1" />
+              <Button 
+                variant="outline" 
+                size="sm"
+                className="rounded-full px-5 border-slate-200"
+              >
                 Filter
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56">
-              <DropdownMenuLabel>Filter by Category</DropdownMenuLabel>
+              <DropdownMenuLabel>Filter Options</DropdownMenuLabel>
               <DropdownMenuSeparator />
+              
+              <DropdownMenuCheckboxItem
+                checked={showFavoritesOnly}
+                onCheckedChange={setShowFavoritesOnly}
+              >
+                Favorites Only
+              </DropdownMenuCheckboxItem>
+              
+              <DropdownMenuSeparator />
+              <DropdownMenuLabel>Categories</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              
               {categoriesList.map((category) => (
                 <DropdownMenuCheckboxItem
                   key={category}
@@ -146,45 +163,78 @@ const SavedRephrases = () => {
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
+
+          {hasActiveFilters && (
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              onClick={clearFilters}
+              className="rounded-full"
+            >
+              <FilterX className="h-4 w-4 mr-1" />
+              Clear
+            </Button>
+          )}
         </div>
       </div>
       
       {filteredRephrases.length > 0 ? (
-        <div className="space-y-4">
+        <div className="space-y-5">
           {filteredRephrases.map((rephrase) => (
-            <Card key={rephrase.id} className="bg-white">
-              <CardHeader className="pb-2">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <CardTitle className="text-lg text-midnight-indigo">"{rephrase.originalPhrase}"</CardTitle>
-                    <CardDescription className="text-xs">
-                      Saved {format(new Date(rephrase.dateSaved), 'PPP')}
-                    </CardDescription>
-                  </div>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className={`p-1 h-auto ${rephrase.isFavorite ? 'text-mauve-rose' : 'text-gray-400'}`}
-                    onClick={() => toggleFavorite(rephrase.id)}
-                  >
-                    <Star className="h-5 w-5 fill-current" />
-                    <span className="sr-only">
-                      {rephrase.isFavorite ? 'Remove from favorites' : 'Add to favorites'}
-                    </span>
-                  </Button>
+            <div 
+              key={rephrase.id} 
+              className="bg-white rounded-xl shadow-sm border border-slate-100 p-6 animate-fade-in relative"
+            >
+              <div className="flex justify-between items-start">
+                <div className="mb-3">
+                  <p className="text-xs text-slate-500">
+                    Saved {format(new Date(rephrase.dateSaved), 'MMMM d, yyyy')}
+                  </p>
                 </div>
-              </CardHeader>
-              <CardContent>
-                <p className="text-lavender-blue font-medium">"{rephrase.rephraseText}"</p>
-              </CardContent>
-              <CardFooter className="pt-0 justify-between">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className={`p-1 h-auto ${rephrase.isFavorite ? 'text-mauve-rose' : 'text-gray-400'}`}
+                  onClick={() => toggleFavorite(rephrase.id)}
+                >
+                  {rephrase.isFavorite ? (
+                    <Star className="h-5 w-5 fill-mauve-rose" />
+                  ) : (
+                    <StarOff className="h-5 w-5" />
+                  )}
+                  <span className="sr-only">
+                    {rephrase.isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+                  </span>
+                </Button>
+              </div>
+
+              <div className="mb-4">
+                <p className="text-xl md:text-2xl text-midnight-indigo font-cormorant mb-3">
+                  "{rephrase.rephraseText}"
+                </p>
+                <p className="text-sm text-slate-600 italic">
+                  Original: {rephrase.originalPhrase}
+                </p>
+              </div>
+
+              <div className="flex justify-between items-center">
                 {rephrase.category && (
-                  <Badge variant="outline" className="bg-white/50 text-midnight-indigo/70 border-lavender-blue/20">
+                  <Badge className="bg-soft-blush/30 text-midnight-indigo hover:bg-soft-blush/40 border-none">
                     {rephrase.category}
                   </Badge>
                 )}
-              </CardFooter>
-            </Card>
+                
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="text-slate-500 hover:text-midnight-indigo"
+                  onClick={() => handleCopyToClipboard(rephrase.rephraseText)}
+                >
+                  <Copy className="h-4 w-4 mr-1" />
+                  Copy
+                </Button>
+              </div>
+            </div>
           ))}
         </div>
       ) : (
