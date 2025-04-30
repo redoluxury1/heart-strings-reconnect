@@ -42,7 +42,7 @@ const PersonalizedConnection = () => {
       <ContentContainer>
         <div className="flex justify-center mb-12">
           <img 
-            src="/lovable-uploads/a0a2f92c-6f5e-4b89-996d-4ca6a41ba42a.png" 
+            src="/lovable-uploads/80973c36-0222-4e2d-ab5e-3e65a0ae5aaa.png" 
             alt="Love Code + Blueprint = Your relationship playbook" 
             className="max-w-full h-auto w-[85%] md:w-[65%]"
           />
