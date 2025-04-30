@@ -98,4 +98,13 @@ export const goals: Goal[] = [
       "I think we both want the same thing deep down. Could we try approaching it this way?"
     ]
   },
+  {
+    id: 'set-boundary',
+    title: 'Set a boundary',
+    phrases: [
+      "I care about our relationship, but I need to be clear about what works for me.",
+      "I'm committed to us, and that means I need to be honest about my limits here.",
+      "For me to feel safe in this conversation, I need us to agree that..."
+    ]
+  },
 ];

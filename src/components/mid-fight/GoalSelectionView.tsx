@@ -33,26 +33,28 @@ const GoalSelectionView: React.FC<GoalSelectionViewProps> = ({
         </p>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-3 mb-6">
         {goals.map((goal) => (
           <Button
             key={goal.id}
             variant="outline"
-            className="flex justify-start border-lavender-blue/40 text-midnight-indigo hover:bg-mauve-rose/10 hover:text-mauve-rose hover:border-mauve-rose/40 h-auto py-3 px-4 transition-all whitespace-normal text-left"
+            className="flex justify-center items-center text-center h-auto aspect-square sm:aspect-auto sm:h-auto py-3 px-3 border-lavender-blue/40 text-midnight-indigo hover:bg-mauve-rose/10 hover:text-mauve-rose hover:border-mauve-rose/40 transition-all whitespace-normal"
             onClick={() => onGoalSelect(goal)}
           >
-            <span className="text-sm text-left line-clamp-2">{goal.title}</span>
+            <span className="text-xs sm:text-sm line-clamp-3">{goal.title}</span>
           </Button>
         ))}
 
         {/* Something else option */}
         <Button
           variant="outline"
-          className="flex justify-start border-lavender-blue/40 text-midnight-indigo hover:bg-mauve-rose/10 hover:text-mauve-rose hover:border-mauve-rose/40 h-auto py-3 px-4 transition-all"
+          className="flex justify-center items-center text-center h-auto aspect-square sm:aspect-auto sm:h-auto py-3 px-3 border-lavender-blue/40 text-midnight-indigo hover:bg-mauve-rose/10 hover:text-mauve-rose hover:border-mauve-rose/40 transition-all"
           onClick={onSomethingElse}
         >
-          <Edit className="h-4 w-4 mr-2 flex-shrink-0" />
-          <span className="text-sm text-left line-clamp-2">Something else</span>
+          <div className="flex flex-col items-center gap-1">
+            <Edit className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+            <span className="text-xs sm:text-sm line-clamp-2">Something else</span>
+          </div>
         </Button>
       </div>
 

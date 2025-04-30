@@ -26,25 +26,14 @@ const PausePhraseTool: React.FC<PausePhraseToolProps> = ({ onClose }) => {
     setStep('phrase-options');
   };
 
-  const handleFavoritePhrase = (phrase: string) => {
-    // In a real app, we would save this to user's favorites
-    toast({
-      title: "Phrase saved to favorites",
-      description: "You can access this later in your saved phrases",
-    });
+  const handleBackToTopics = () => {
+    setIsCustomizing(false);
+    setStep('goal-selection');
   };
 
   const handleCustomizePhrase = (phrase: string) => {
     setCustomPhrase(phrase);
     setIsCustomizing(true);
-  };
-
-  const handleSaveCustomPhrase = () => {
-    toast({
-      title: "Custom phrase saved",
-      description: "Your personalized phrase is ready to use",
-    });
-    setIsCustomizing(false);
   };
 
   const handleStartConversation = () => {
@@ -77,15 +66,13 @@ const PausePhraseTool: React.FC<PausePhraseToolProps> = ({ onClose }) => {
         <CustomizePhraseView
           customPhrase={customPhrase}
           onCustomPhraseChange={setCustomPhrase}
-          onBack={() => setIsCustomizing(false)}
-          onSave={handleSaveCustomPhrase}
+          onBackToTopics={handleBackToTopics}
           onStartConversation={handleStartConversation}
         />
       ) : (
         <PhraseSelectionView
           selectedGoal={selectedGoal}
-          onBack={() => setStep('goal-selection')}
-          onFavoritePhrase={handleFavoritePhrase}
+          onBack={handleBackToTopics}
           onCustomizePhrase={handleCustomizePhrase}
         />
       )}

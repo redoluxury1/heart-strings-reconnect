@@ -6,29 +6,19 @@ import { ArrowLeft, MessageCircle } from 'lucide-react';
 interface CustomizePhraseViewProps {
   customPhrase: string;
   onCustomPhraseChange: (phrase: string) => void;
-  onBack: () => void;
-  onSave: () => void;
+  onBackToTopics: () => void;
   onStartConversation: () => void;
 }
 
 const CustomizePhraseView: React.FC<CustomizePhraseViewProps> = ({
   customPhrase,
   onCustomPhraseChange,
-  onBack,
-  onSave,
+  onBackToTopics,
   onStartConversation
 }) => {
   return (
     <>
       <div className="mb-6">
-        <Button
-          variant="ghost"
-          className="text-midnight-indigo hover:bg-midnight-indigo/5 mb-2"
-          onClick={onBack}
-        >
-          <ArrowLeft className="h-4 w-4 mr-2" />
-          Back to phrases
-        </Button>
         <h3 className="text-xl font-cormorant font-medium text-midnight-indigo mb-2">
           Customize your phrase
         </h3>
@@ -44,7 +34,7 @@ const CustomizePhraseView: React.FC<CustomizePhraseViewProps> = ({
         <Button
           variant="outline"
           className="border-midnight-indigo text-midnight-indigo hover:bg-midnight-indigo/10"
-          onClick={onBack}
+          onClick={onBackToTopics}
         >
           <ArrowLeft className="h-4 w-4 mr-2" />
           New Topic

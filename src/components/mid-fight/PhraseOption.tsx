@@ -1,15 +1,15 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Heart, MessageCircle } from 'lucide-react';
+import { ArrowLeft, MessageCircle } from 'lucide-react';
 
 interface PhraseOptionProps {
   text: string;
-  onFavorite: () => void;
+  onNewTopic: () => void;
   onCustomize: () => void;
 }
 
-const PhraseOption: React.FC<PhraseOptionProps> = ({ text, onFavorite, onCustomize }) => {
+const PhraseOption: React.FC<PhraseOptionProps> = ({ text, onNewTopic, onCustomize }) => {
   return (
     <div className="bg-soft-blush/20 p-4 rounded-lg mb-4 border border-lavender-blue/20 hover:bg-mauve-rose/5 transition-colors">
       <p className="text-midnight-indigo mb-3 font-light italic hover:text-mauve-rose">{text}</p>
@@ -18,10 +18,10 @@ const PhraseOption: React.FC<PhraseOptionProps> = ({ text, onFavorite, onCustomi
           variant="outline" 
           size="sm" 
           className="text-xs flex items-center gap-1 border-mauve-rose/50 text-mauve-rose hover:bg-mauve-rose/10"
-          onClick={onFavorite}
+          onClick={onNewTopic}
         >
-          <Heart className="h-3.5 w-3.5" />
-          <span>Favorite</span>
+          <ArrowLeft className="h-3.5 w-3.5" />
+          <span>New Topic</span>
         </Button>
         <Button 
           variant="outline" 
