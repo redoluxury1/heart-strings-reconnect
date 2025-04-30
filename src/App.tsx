@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import LoveNotesReceived from "./pages/LoveNotesReceived";
 import MidFight from "./pages/MidFight";
+import LoveCodeQuiz from "./pages/LoveCodeQuiz";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/post-conflict" element={<NotFound />} />
           <Route path="/reconnect" element={<NotFound />} />
           <Route path="/love-notes" element={<LoveNotesReceived />} />
+          <Route path="/love-code-quiz" element={<LoveCodeQuiz />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

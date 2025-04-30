@@ -8,6 +8,7 @@ import DailyLoveNote from '../components/home/DailyLoveNote';
 import StillUsSection from '../components/home/StillUsSection';
 import PersonalizedConnection from '../components/home/PersonalizedConnection';
 import WhyItMattersSection from '../components/home/WhyItMattersSection';
+import LoveCodeQuizSection from '../components/home/LoveCodeQuizSection';
 
 const Index = () => {
   return (
@@ -23,6 +24,8 @@ const Index = () => {
         <StillUsSection />
         
         <PersonalizedConnection />
+        
+        <LoveCodeQuizSection />
         
         <WhyItMattersSection />
       </main>
