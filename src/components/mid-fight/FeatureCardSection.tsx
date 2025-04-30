@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { MessageCircle, Puzzle, Hand } from 'lucide-react';
 import FeatureCard, { Feature } from './FeatureCard';
@@ -38,11 +37,11 @@ const FeatureCardSection: React.FC<FeatureCardSectionProps> = ({
   return (
     <>
       {/* Pause Phrase Tool - Always visible without needing to click */}
-      <section className="py-8 bg-soft-blush/30">
+      <section className="py-6 md:py-8 bg-soft-blush/30">
         <ContentContainer maxWidth="lg">
-          <div className="bg-white rounded-lg shadow-md p-6 border border-lavender-blue/20">
-            <div className="flex flex-col items-center mb-6">
-              <Hand className="h-24 w-24 text-mauve-rose mb-4" />
+          <div className="bg-white rounded-lg shadow-md p-5 md:p-6 border border-lavender-blue/20">
+            <div className="flex flex-col items-center mb-5 md:mb-6">
+              <Hand className="h-16 md:h-24 w-16 md:w-24 text-mauve-rose mb-3 md:mb-4" />
             </div>
             <PausePhraseTool onClose={() => {}} />
           </div>
@@ -50,9 +49,9 @@ const FeatureCardSection: React.FC<FeatureCardSectionProps> = ({
       </section>
       
       {/* Other feature cards */}
-      <section className="py-8 bg-soft-blush/30">
+      <section className="py-6 md:py-8 bg-soft-blush/30">
         <ContentContainer maxWidth="lg">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
             {features.map((feature) => (
               <FeatureCard 
                 key={feature.id}

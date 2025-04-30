@@ -17,6 +17,15 @@ const formatLoveCode = (code: string): string => {
   return loveCodeDescriptions[code]?.title || code.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
 };
 
+// Richer, deeper color scheme for the pie chart
+const COLORS = [
+  "#7E59A5", // Deeper purple for Loving Words
+  "#BB5575", // Richer mauve for Thoughtful Gestures
+  "#3E7A9C", // Deeper blue for Intentional Time
+  "#4A7B5A", // Deeper green for Helpful Actions
+  "#9C5B41"  // Richer warm brown for Physical Connection
+];
+
 const QuizResults: React.FC<QuizResultsProps> = ({ results, onRestart, onHome }) => {
   const primaryDesc = loveCodeDescriptions[results.primaryCode];
   const secondaryDesc = loveCodeDescriptions[results.secondaryCode];
@@ -27,12 +36,10 @@ const QuizResults: React.FC<QuizResultsProps> = ({ results, onRestart, onHome })
     value,
     code
   }));
-
-  const COLORS = Object.values(loveCodeDescriptions).map(desc => desc.color);
   
   return (
     <div className="max-w-4xl mx-auto">
-      <div className="bg-white p-8 md:p-10 rounded-xl shadow-md">
+      <div className="bg-white p-6 md:p-10 rounded-xl shadow-md">
         <div className="flex justify-center mb-6">
           <Heart className="h-12 w-12 text-mauve-rose" />
         </div>
@@ -41,27 +48,49 @@ const QuizResults: React.FC<QuizResultsProps> = ({ results, onRestart, onHome })
           Your Love Code™ Results
         </h1>
         
-        {/* Pie Chart Section */}
-        <div className="h-80 mb-10">
+        {/* Pie Chart Section with better mobile responsiveness */}
+        <div className="h-[300px] md:h-[400px] mb-10 w-full overflow-hidden">
           <ResponsiveContainer width="100%" height="100%">
-            <PieChart>
+            <PieChart margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
               <Pie
                 data={chartData}
                 cx="50%"
                 cy="50%"
-                labelLine={false}
-                outerRadius={120}
-                fill="#8884d8"
+                innerRadius={0}
+                outerRadius="80%"
+                paddingAngle={2}
                 dataKey="value"
                 nameKey="name"
                 label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                labelLine={false}
               >
                 {chartData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  <Cell 
+                    key={`cell-${index}`} 
+                    fill={COLORS[index % COLORS.length]} 
+                    stroke="#fff"
+                    strokeWidth={2}
+                  />
                 ))}
               </Pie>
-              <Legend />
-              <Tooltip formatter={(value) => `${value}%`} />
+              <Tooltip 
+                formatter={(value) => `${value}%`}
+                contentStyle={{ 
+                  backgroundColor: 'white',
+                  borderColor: '#E7D9C9',
+                  borderRadius: '8px',
+                  boxShadow: '0 4px 8px rgba(0,0,0,0.1)'
+                }}
+              />
+              <Legend
+                layout="horizontal"
+                verticalAlign="bottom"
+                align="center"
+                wrapperStyle={{
+                  paddingTop: '20px',
+                  fontSize: '12px'
+                }}
+              />
             </PieChart>
           </ResponsiveContainer>
         </div>

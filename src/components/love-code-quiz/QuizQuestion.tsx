@@ -28,7 +28,7 @@ const QuizQuestion: React.FC<QuizQuestionProps> = ({
 
   return (
     <div className="max-w-3xl mx-auto">
-      <div className="bg-white p-8 md:p-10 rounded-xl shadow-md">
+      <div className="bg-white p-6 md:p-10 rounded-xl shadow-md">
         <div className="mb-8">
           <div className="flex justify-between items-center mb-2">
             <span className="text-sm font-medium text-midnight-indigo/70">Question {questionNumber} of {totalQuestions}</span>
@@ -46,10 +46,12 @@ const QuizQuestion: React.FC<QuizQuestionProps> = ({
             <Button
               key={answer.id}
               variant="outline"
-              className="w-full justify-start py-4 px-5 h-auto text-left border-lavender-blue/30 text-midnight-indigo/80 hover:bg-soft-blush/30 hover:border-mauve-rose/40 transition-all"
+              className="w-full justify-start py-6 px-5 h-auto text-left border-lavender-blue/30 text-midnight-indigo/90 
+                hover:bg-mauve-rose/10 hover:border-mauve-rose focus:bg-mauve-rose/10 focus:border-mauve-rose
+                active:bg-mauve-rose/20 transition-all min-h-[80px] break-words whitespace-normal"
               onClick={() => onSelectAnswer(question.id, answer.code)}
             >
-              {answer.text}
+              <span className="line-clamp-none">{answer.text}</span>
             </Button>
           ))}
         </div>
