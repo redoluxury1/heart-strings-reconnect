@@ -38,9 +38,9 @@ const PersonalizedConnection = () => {
   ];
 
   return (
-    <section className="py-20 bg-[#F9F4EB]">
+    <section className="py-12 bg-[#F9F4EB]">
       <ContentContainer>
-        <div className="flex justify-center mb-12">
+        <div className="flex justify-center mb-6">
           <img 
             src="/lovable-uploads/80973c36-0222-4e2d-ab5e-3e65a0ae5aaa.png" 
             alt="Love Code + Blueprint = Your relationship playbook" 
