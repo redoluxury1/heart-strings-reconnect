@@ -6,7 +6,6 @@ import Hero from '../components/home/Hero';
 import ContentContainer from '../components/common/ContentContainer';
 import DailyLoveNote from '../components/home/DailyLoveNote';
 import StillUsSection from '../components/home/StillUsSection';
-import PersonalizedConnection from '../components/home/PersonalizedConnection';
 import WhyItMattersSection from '../components/home/WhyItMattersSection';
 import LoveCodeQuizSection from '../components/home/LoveCodeQuizSection';
 
@@ -22,8 +21,6 @@ const Index = () => {
         </div>
         
         <StillUsSection />
-        
-        <PersonalizedConnection />
         
         <LoveCodeQuizSection />
         
