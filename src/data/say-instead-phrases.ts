@@ -1,13 +1,4 @@
-
-import { PhraseCategory } from '../types/love-code-quiz';
-
-export interface SayInsteadPhrase {
-  id: string;
-  original: string;
-  categories: PhraseCategory[];
-  alternatives: string[];
-  whyItWorks: string;
-}
+import { PhraseCategory, SayInsteadPhrase } from '../types/love-code-quiz';
 
 export const sayInsteadPhrases: SayInsteadPhrase[] = [
   {

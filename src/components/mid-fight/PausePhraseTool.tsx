@@ -1,8 +1,16 @@
 
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Heart, MessageCircle, ArrowLeft } from 'lucide-react';
+import { Heart, MessageCircle, ArrowLeft, SendHorizontal } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
+import { 
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle
+} from "@/components/ui/dialog";
 
 interface PhraseOptionProps {
   text: string;
@@ -109,7 +117,34 @@ const goals: Goal[] = [
       "I notice I'm feeling sad, and I'm trying to understand why.",
       "When that happened, I felt confused about where we stand."
     ]
-  }
+  },
+  {
+    id: 'share-fear',
+    title: 'Share a vulnerability',
+    phrases: [
+      "I'm afraid that if I'm honest about this, you might pull away from me.",
+      "It's hard for me to say this, but I'm worried about where we're heading.",
+      "I feel scared to bring this up because I don't want to make things worse between us."
+    ]
+  },
+  {
+    id: 'acknowledge-pattern',
+    title: 'Address a recurring issue',
+    phrases: [
+      "I notice we keep having the same argument. Can we try something different this time?",
+      "I think we're stuck in a pattern here. I want us to find a new way through this together.",
+      "This feels familiar—like we've been here before. What can we do differently right now?"
+    ]
+  },
+  {
+    id: 'suggest-solution',
+    title: 'Suggest a compromise',
+    phrases: [
+      "What if we both try to meet in the middle? Maybe I could... and you could...",
+      "I have an idea that might work for both of us. Would you be open to hearing it?",
+      "I think we both want the same thing deep down. Could we try approaching it this way?"
+    ]
+  },
 ];
 
 interface PausePhraseToolProps {
@@ -122,6 +157,8 @@ const PausePhraseTool: React.FC<PausePhraseToolProps> = ({ onClose }) => {
   const [customPhrase, setCustomPhrase] = useState('');
   const [isCustomizing, setIsCustomizing] = useState(false);
   const { toast } = useToast();
+  const [startConversationOpen, setStartConversationOpen] = useState(false);
+  const [partnerName, setPartnerName] = useState("your partner"); // In a real app, this would come from user data
 
   const handleGoalSelect = (goal: Goal) => {
     setSelectedGoal(goal);
@@ -149,6 +186,18 @@ const PausePhraseTool: React.FC<PausePhraseToolProps> = ({ onClose }) => {
     setIsCustomizing(false);
   };
 
+  const handleStartConversation = () => {
+    setStartConversationOpen(true);
+  };
+
+  const handleSendInvite = () => {
+    toast({
+      title: "Conversation request sent",
+      description: `${partnerName} will be notified that you want to talk things through.`,
+    });
+    setStartConversationOpen(false);
+  };
+
   return (
     <div className="flex flex-col">
       {step === 'goal-selection' ? (
@@ -170,9 +219,20 @@ const PausePhraseTool: React.FC<PausePhraseToolProps> = ({ onClose }) => {
                 className="flex justify-start border-lavender-blue/40 text-midnight-indigo hover:bg-mauve-rose/10 hover:text-mauve-rose hover:border-mauve-rose/40 h-auto py-3 px-4 transition-all"
                 onClick={() => handleGoalSelect(goal)}
               >
-                {goal.title}
+                <span className="text-sm text-left line-clamp-2">{goal.title}</span>
               </Button>
             ))}
+          </div>
+
+          <div className="flex justify-center mt-4">
+            <Button
+              variant="default"
+              className="bg-lavender-blue hover:bg-lavender-blue/90 text-white flex items-center gap-2"
+              onClick={handleStartConversation}
+            >
+              <SendHorizontal className="h-4 w-4" />
+              Start Conversation with Partner
+            </Button>
           </div>
         </>
       ) : isCustomizing ? (
@@ -240,6 +300,59 @@ const PausePhraseTool: React.FC<PausePhraseToolProps> = ({ onClose }) => {
           ))}
         </>
       )}
+
+      {/* Start Conversation Dialog */}
+      <Dialog open={startConversationOpen} onOpenChange={setStartConversationOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Start a conversation</DialogTitle>
+            <DialogDescription>
+              This will send a notification to {partnerName} that you'd like to talk things through together.
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="space-y-4 py-4">
+            <p className="text-sm text-midnight-indigo/80">
+              In-app conversations help both of you communicate more effectively with guidance on rephrasing difficult messages.
+            </p>
+            
+            <div className="bg-soft-blush/20 p-4 rounded-lg">
+              <p className="text-sm font-medium mb-2">How it works:</p>
+              <ul className="text-xs space-y-2">
+                <li className="flex items-start gap-2">
+                  <span className="bg-lavender-blue/20 text-lavender-blue rounded-full h-5 w-5 flex items-center justify-center flex-shrink-0">1</span>
+                  <span>{partnerName} will receive a notification</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="bg-lavender-blue/20 text-lavender-blue rounded-full h-5 w-5 flex items-center justify-center flex-shrink-0">2</span>
+                  <span>Once they join, you can both send messages</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="bg-lavender-blue/20 text-lavender-blue rounded-full h-5 w-5 flex items-center justify-center flex-shrink-0">3</span>
+                  <span>The app will suggest kinder ways to phrase difficult messages</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setStartConversationOpen(false)}
+              className="border-midnight-indigo text-midnight-indigo"
+            >
+              Cancel
+            </Button>
+            <Button 
+              variant="default"
+              className="bg-lavender-blue hover:bg-lavender-blue/90"
+              onClick={handleSendInvite}
+            >
+              Send Invitation
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
