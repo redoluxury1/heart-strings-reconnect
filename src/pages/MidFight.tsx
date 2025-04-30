@@ -1,9 +1,9 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import ContentContainer from '@/components/common/ContentContainer';
-import { Clock, Heart, MessageCircle, Puzzle } from 'lucide-react';
+import { Clock, Flame, Heart, MessageCircle, Puzzle } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 
@@ -48,21 +48,54 @@ const features = [
 
 const MidFight = () => {
   const [selectedFeature, setSelectedFeature] = useState<string | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const [hasHapticFired, setHasHapticFired] = useState(false);
+
+  // Handle visibility and haptic feedback
+  useEffect(() => {
+    // Set visible with a small delay for fade-in effect
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+      
+      // Fire haptic feedback when visible (if supported)
+      if (!hasHapticFired && navigator.vibrate) {
+        navigator.vibrate(100); // Subtle 100ms vibration
+        setHasHapticFired(true);
+      }
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [hasHapticFired]);
 
   return (
     <div className="min-h-screen bg-slate-50">
       <Navbar />
       
       <main className="pb-16">
-        {/* Top statement section with gradient background */}
-        <section className="bg-gradient-to-r from-mauve-rose/30 to-lavender-blue/30 py-16">
-          <ContentContainer maxWidth="lg">
-            <div className="text-center relative">
-              <h2 className="font-cormorant text-4xl md:text-5xl font-medium text-midnight-indigo mb-3">
-                This isn't about winning the fight—it's about staying connected through it.
-              </h2>
+        {/* Emotional Header Block */}
+        <section 
+          className={`px-4 sm:px-6 md:px-8 py-16 bg-mauve-rose/30 rounded-md transition-opacity duration-700 ease-in-out ${
+            isVisible ? 'opacity-100' : 'opacity-0'
+          }`}
+          aria-label="Emotional message that reads: 'This moment isn't about being right. It's about not losing each other. Take a second to breathe. You're doing better than you think.'"
+        >
+          <div className="max-w-3xl mx-auto text-center relative">
+            <div className="flex justify-center mb-6">
+              <Flame className={`h-16 w-16 text-mauve-rose ${isVisible ? 'animate-pulse' : ''}`} />
             </div>
-          </ContentContainer>
+            
+            <h1 className="font-cormorant text-3xl sm:text-4xl md:text-5xl font-medium text-midnight-indigo mb-6">
+              This moment isn't about being right.<br />
+              It's about not losing each other.
+            </h1>
+            
+            <p className="text-midnight-indigo/80 text-lg md:text-xl max-w-2xl mx-auto font-normal mb-4">
+              Take a second to breathe.
+            </p>
+            <p className="text-midnight-indigo/80 text-lg md:text-xl max-w-2xl mx-auto font-normal">
+              You're doing better than you think.
+            </p>
+          </div>
         </section>
         
         {/* Page description */}
