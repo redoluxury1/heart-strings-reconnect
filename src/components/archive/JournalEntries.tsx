@@ -28,9 +28,6 @@ import {
   Star, 
   PenLine, 
   Trash2, 
-  BookOpen,
-  LayoutList,
-  ListFilter,
   Plus 
 } from 'lucide-react';
 
@@ -183,14 +180,6 @@ const JournalEntries = () => {
 
   return (
     <div>
-      <div className="flex justify-center mb-4">
-        <div className="bg-soft-blush/50 p-3 rounded-lg max-w-md text-center">
-          <p className="text-midnight-indigo text-sm">
-            Just need to get it out? This space is only for you.
-          </p>
-        </div>
-      </div>
-      
       <div className="mb-6 flex flex-wrap gap-4 items-center justify-between">
         <div className="relative w-full sm:w-72">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -212,66 +201,6 @@ const JournalEntries = () => {
             <Star className="h-4 w-4 mr-1" />
             {showFavoritesOnly ? "Favorites" : "All Entries"}
           </Button>
-          
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button variant="outline" size="sm">
-                <ListFilter className="h-4 w-4 mr-1" />
-                Tags
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-md">
-              <DialogHeader>
-                <DialogTitle>Filter by Tags</DialogTitle>
-                <DialogDescription>
-                  Select tags to filter your journal entries
-                </DialogDescription>
-              </DialogHeader>
-              <div className="flex flex-wrap gap-2 py-4">
-                {allTags.map(tag => (
-                  <Badge 
-                    key={tag}
-                    variant={selectedTags.includes(tag) ? "default" : "outline"} 
-                    className={`cursor-pointer ${
-                      selectedTags.includes(tag) 
-                        ? "bg-lavender-blue hover:bg-lavender-blue/80" 
-                        : "hover:bg-lavender-blue/10"
-                    }`}
-                    onClick={() => toggleTag(tag, selectedTags, setSelectedTags)}
-                  >
-                    {tag}
-                  </Badge>
-                ))}
-              </div>
-              <DialogFooter>
-                <Button 
-                  variant="ghost" 
-                  onClick={() => setSelectedTags([])}
-                >
-                  Clear All
-                </Button>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
-          
-          <Button
-            variant="outline"
-            size="sm"
-            className={viewMode === 'list' ? "bg-mauve-rose/10 text-mauve-rose border-mauve-rose/50" : ""}
-            onClick={() => setViewMode(viewMode === 'list' ? 'expanded' : 'list')}
-          >
-            {viewMode === 'list' ? (
-              <>
-                <LayoutList className="h-4 w-4 mr-1" />
-                List
-              </>
-            ) : (
-              <>
-                <BookOpen className="h-4 w-4 mr-1" />
-                Expanded
-              </>
-            )}
-          </Button>
         </div>
       </div>
 
@@ -280,7 +209,7 @@ const JournalEntries = () => {
           <DialogTrigger asChild>
             <Button className="bg-lavender-blue hover:bg-lavender-blue/90 text-white">
               <Plus className="h-4 w-4 mr-2" />
-              New Journal Entry
+              Add a thought
             </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-lg">
