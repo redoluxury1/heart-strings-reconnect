@@ -1,19 +1,12 @@
 
 import React from 'react';
-import { Heart, MessageCircle, Puzzle } from 'lucide-react';
+import { MessageCircle, Puzzle } from 'lucide-react';
 import FeatureCard, { Feature } from './FeatureCard';
 import ContentContainer from '@/components/common/ContentContainer';
+import PausePhraseTool from './PausePhraseTool';
 
 // Feature data
 const features: Feature[] = [
-  {
-    id: 'mood-check-in',
-    title: 'Mood Check-In',
-    description: 'Helps you name what you\'re feeling before you say more.',
-    icon: <Heart className="h-6 w-6 text-rosewood-tint" />,
-    comingSoon: false,
-    alwaysVisible: false,
-  },
   {
     id: 'pause-phrase',
     title: 'Pause & Phrase Toolkit',
@@ -59,6 +52,11 @@ const FeatureCardSection: React.FC<FeatureCardSectionProps> = ({
               feature={feature}
               isSelected={selectedFeature === feature.id}
               toggleFeature={toggleFeature}
+              customContent={
+                feature.id === 'pause-phrase' && selectedFeature === 'pause-phrase' 
+                  ? <PausePhraseTool onClose={() => toggleFeature('pause-phrase')} />
+                  : null
+              }
             />
           ))}
         </div>

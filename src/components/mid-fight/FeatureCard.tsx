@@ -1,6 +1,5 @@
 
 import React from 'react';
-import { LucideIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
@@ -18,9 +17,10 @@ interface FeatureCardProps {
   feature: Feature;
   isSelected: boolean;
   toggleFeature: (featureId: string) => void;
+  customContent?: React.ReactNode;
 }
 
-const FeatureCard: React.FC<FeatureCardProps> = ({ feature, isSelected, toggleFeature }) => {
+const FeatureCard: React.FC<FeatureCardProps> = ({ feature, isSelected, toggleFeature, customContent }) => {
   return (
     <Collapsible 
       open={isSelected} 
@@ -70,9 +70,11 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ feature, isSelected, toggleFe
       
       {/* Tool content */}
       <CollapsibleContent className="mt-4 bg-white rounded-lg shadow-md p-6 border border-lavender-blue/20 overflow-hidden animate-accordion-down">
-        <div className="text-center text-midnight-indigo/80">
-          Tool content for {feature.title} will appear here.
-        </div>
+        {customContent || (
+          <div className="text-center text-midnight-indigo/80">
+            Tool content for {feature.title} will appear here.
+          </div>
+        )}
       </CollapsibleContent>
     </Collapsible>
   );
