@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Hourglass } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -116,7 +117,7 @@ const TimeoutTimer: React.FC<TimeoutTimerProps> = ({ animationsEnabled = true })
                 <Button 
                   key={preset.value}
                   variant="outline"
-                  className="border-lavender-blue text-midnight-indigo hover:bg-lavender-blue/10"
+                  className="border-lavender-blue text-midnight-indigo hover:bg-mauve-rose/10 hover:text-mauve-rose hover:border-mauve-rose"
                   onClick={() => startTimer(preset.value)}
                 >
                   {preset.label}
@@ -134,25 +135,25 @@ const TimeoutTimer: React.FC<TimeoutTimerProps> = ({ animationsEnabled = true })
                   placeholder="Enter time"
                   min="1"
                   max="120"
-                  className="flex-1 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-lavender-blue"
+                  className="flex-1 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-lavender-blue text-sm"
                 />
                 <div className="flex gap-2">
                   <Button 
                     type="button"
-                    variant={customTimeUnit === 'minutes' ? 'default' : 'outline'}
+                    variant="outline"
                     className={customTimeUnit === 'minutes' 
-                      ? "bg-lavender-blue hover:bg-lavender-blue/90 text-white" 
-                      : "border-lavender-blue text-midnight-indigo hover:bg-lavender-blue/10"}
+                      ? "border-lavender-blue bg-lavender-blue text-white hover:bg-mauve-rose hover:border-mauve-rose" 
+                      : "border-lavender-blue text-midnight-indigo hover:bg-mauve-rose/10 hover:text-mauve-rose hover:border-mauve-rose"}
                     onClick={() => setCustomTimeUnit('minutes')}
                   >
                     Minutes
                   </Button>
                   <Button 
                     type="button"
-                    variant={customTimeUnit === 'hours' ? 'default' : 'outline'}
+                    variant="outline"
                     className={customTimeUnit === 'hours' 
-                      ? "bg-lavender-blue hover:bg-lavender-blue/90 text-white" 
-                      : "border-lavender-blue text-midnight-indigo hover:bg-lavender-blue/10"}
+                      ? "border-lavender-blue bg-lavender-blue text-white hover:bg-mauve-rose hover:border-mauve-rose" 
+                      : "border-lavender-blue text-midnight-indigo hover:bg-mauve-rose/10 hover:text-mauve-rose hover:border-mauve-rose"}
                     onClick={() => setCustomTimeUnit('hours')}
                   >
                     Hours

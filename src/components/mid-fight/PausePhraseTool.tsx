@@ -27,8 +27,11 @@ const PausePhraseTool: React.FC<PausePhraseToolProps> = ({ onClose }) => {
   };
 
   const handleBackToTopics = () => {
-    setIsCustomizing(false);
-    setStep('goal-selection');
+    if (isCustomizing) {
+      setIsCustomizing(false);
+    } else {
+      setStep('goal-selection');
+    }
   };
 
   const handleCustomizePhrase = (phrase: string) => {

@@ -33,11 +33,11 @@ const CustomizePhraseView: React.FC<CustomizePhraseViewProps> = ({
       <div className="flex justify-center space-x-4">
         <Button
           variant="outline"
-          className="border-midnight-indigo text-midnight-indigo hover:bg-midnight-indigo/10"
+          className="border-midnight-indigo text-midnight-indigo hover:bg-mauve-rose/10 hover:text-mauve-rose hover:border-mauve-rose/40"
           onClick={onBackToTopics}
         >
           <ArrowLeft className="h-4 w-4 mr-2" />
-          New Topic
+          New Phrase
         </Button>
         <Button
           variant="default"

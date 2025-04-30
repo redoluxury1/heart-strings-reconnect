@@ -36,16 +36,15 @@ const GoalSelectionView: React.FC<GoalSelectionViewProps> = ({
         </p>
       </div>
       
-      <div className={`grid ${isMobile ? 'grid-cols-2 gap-2' : 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-3'} mb-6`}>
-        {goals.map((goal) => (
+      <div className="space-y-2 mb-6">
+        {goals.filter(goal => goal.title !== "Say how I feel without blame").map((goal) => (
           <Button
             key={goal.id}
             variant="outline"
-            className={`flex justify-center items-center text-center border-lavender-blue/40 text-midnight-indigo hover:bg-mauve-rose/10 hover:text-mauve-rose hover:border-mauve-rose/40 transition-all whitespace-normal
-              ${isMobile ? 'h-auto py-1.5 px-3 text-xs' : 'h-auto aspect-square sm:aspect-auto sm:h-auto py-3 px-3'}`}
+            className="w-full flex justify-start items-center border-lavender-blue/40 text-midnight-indigo hover:bg-mauve-rose/10 hover:text-mauve-rose hover:border-mauve-rose/40 transition-all py-2 px-3 h-auto"
             onClick={() => onGoalSelect(goal)}
           >
-            <span className={`${isMobile ? 'text-xs line-clamp-2' : 'text-xs sm:text-sm line-clamp-3'}`}>
+            <span className={`text-xs sm:text-sm`}>
               {goal.title}
             </span>
           </Button>
@@ -54,13 +53,12 @@ const GoalSelectionView: React.FC<GoalSelectionViewProps> = ({
         {/* Something else option */}
         <Button
           variant="outline"
-          className={`flex justify-center items-center text-center border-lavender-blue/40 text-midnight-indigo hover:bg-mauve-rose/10 hover:text-mauve-rose hover:border-mauve-rose/40 transition-all
-            ${isMobile ? 'h-auto py-1.5 px-3' : 'h-auto aspect-square sm:aspect-auto sm:h-auto py-3 px-3'}`}
+          className="w-full flex justify-start items-center border-lavender-blue/40 text-midnight-indigo hover:bg-mauve-rose/10 hover:text-mauve-rose hover:border-mauve-rose/40 transition-all py-2 px-3 h-auto"
           onClick={onSomethingElse}
         >
-          <div className="flex flex-col items-center gap-1">
+          <div className="flex items-center gap-2">
             <Edit className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-            <span className={`${isMobile ? 'text-xs' : 'text-xs sm:text-sm'} line-clamp-2`}>Something else</span>
+            <span className={`text-xs sm:text-sm`}>Something else</span>
           </div>
         </Button>
       </div>
