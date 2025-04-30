@@ -129,7 +129,7 @@ const ConversationDialog: React.FC<ConversationDialogProps> = ({
               className="bg-lavender-blue hover:bg-lavender-blue/90"
               onClick={handleReturnToToolkit}
             >
-              Return to Toolkit
+              Take some time for yourself
             </Button>
           </div>
         )}
