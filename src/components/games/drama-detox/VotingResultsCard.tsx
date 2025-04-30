@@ -57,7 +57,7 @@ const VotingResultsCard = ({ scenario, userVote }: VotingResultsCardProps) => {
       
       {scenario.submittedBy && (
         <p className="text-xs text-midnight-indigo/60 text-right">
-          Submitted by a Bridge community member
+          Submitted by a BFC community member
         </p>
       )}
     </div>

@@ -24,6 +24,11 @@ const DramaDetox = () => {
       setCurrentScenarioIndex(prev => prev + 1);
       setShowResults(false);
       setUserVote(null);
+      // Scroll to top when going to next scenario
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
     }
   };
   
@@ -32,6 +37,11 @@ const DramaDetox = () => {
       setCurrentScenarioIndex(prev => prev - 1);
       setShowResults(false);
       setUserVote(null);
+      // Scroll to top when going to previous scenario as well
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
     }
   };
 
