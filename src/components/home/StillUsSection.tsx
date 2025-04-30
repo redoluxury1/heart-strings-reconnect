@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import ContentContainer from '../common/ContentContainer';
 import { Button } from "@/components/ui/button";
@@ -75,7 +74,7 @@ const StillUsSection = () => {
       title: "Mid-Fight",
       description: "Emotions are high? That's okay. Here's where you can pause, breathe, and calm things down before saying more.",
       icon: <Flame className="h-6 w-6" />,
-      tools: ["Time Out Timer", "Mood Check-In", "Pause & Phrase Toolkit", "Say This Instead"],
+      tools: ["Time Out Timer", "Pause & Phrase Toolkit", "Say This Instead"],
       comingSoonTools: ["Build a Bridge"],
       link: "/during-conflict",
       gradientClass: "from-lavender-blue/20 to-lavender-blue/5",

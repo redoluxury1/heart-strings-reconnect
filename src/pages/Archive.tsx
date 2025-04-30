@@ -32,24 +32,22 @@ const Archive = () => {
             onValueChange={setActiveTab}
             className="w-full"
           >
-            <TabsList className="flex justify-center mb-8 bg-transparent p-1 gap-2 flex-wrap">
-              <div className="flex justify-center w-full flex-wrap gap-2">
-                <div className="flex gap-2 flex-wrap justify-center">
-                  <TabsTrigger 
-                    value="saved-rephrases"
-                    className="flex items-center gap-2 py-3 px-5 data-[state=active]:bg-midnight-indigo data-[state=active]:text-white rounded-full"
-                  >
-                    <Book className="h-4 w-4" />
-                    <span>Saved Rephrases</span>
-                  </TabsTrigger>
-                  <TabsTrigger 
-                    value="love-notes"
-                    className="flex items-center gap-2 py-3 px-5 data-[state=active]:bg-mauve-rose data-[state=active]:text-white rounded-full"
-                  >
-                    <Heart className="h-4 w-4" />
-                    <span>Love Notes</span>
-                  </TabsTrigger>
-                </div>
+            <TabsList className="flex flex-col sm:flex-row justify-center mb-8 bg-transparent p-1 gap-2">
+              <div className="flex flex-col sm:flex-row justify-center w-full gap-2">
+                <TabsTrigger 
+                  value="saved-rephrases"
+                  className="flex items-center gap-2 py-3 px-5 data-[state=active]:bg-midnight-indigo data-[state=active]:text-white rounded-full"
+                >
+                  <Book className="h-4 w-4" />
+                  <span>Saved Rephrases</span>
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="love-notes"
+                  className="flex items-center gap-2 py-3 px-5 data-[state=active]:bg-mauve-rose data-[state=active]:text-white rounded-full"
+                >
+                  <Heart className="h-4 w-4" />
+                  <span>Love Notes</span>
+                </TabsTrigger>
                 <TabsTrigger 
                   value="thoughts"
                   className="flex items-center gap-2 py-3 px-5 data-[state=active]:bg-soft-blush data-[state=active]:text-midnight-indigo rounded-full"
