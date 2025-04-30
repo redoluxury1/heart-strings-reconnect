@@ -1,7 +1,8 @@
+
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, Edit, MessageCircle, BookmarkPlus, Journal } from 'lucide-react';
+import { ArrowLeft, Edit, MessageCircle, BookmarkPlus, Book } from 'lucide-react';
 import { SayInsteadPhrase } from '@/types/say-instead';
 import AlternativeOption from './AlternativeOption';
 import { useToast } from '@/hooks/use-toast';
@@ -109,7 +110,7 @@ const PhraseDetailView: React.FC<PhraseDetailViewProps> = ({ phrase, onBack }) =
                 onClick={handleGoToJournal}
                 className="bg-lavender-blue hover:bg-lavender-blue/90 text-white"
               >
-                <Journal className="h-4 w-4 mr-1" />
+                <Book className="h-4 w-4 mr-1" />
                 Go to My Journal
               </Button>
             </DialogFooter>
