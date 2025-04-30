@@ -36,21 +36,21 @@ const Archive = () => {
               <div className="flex flex-col sm:flex-row justify-center w-full gap-2">
                 <TabsTrigger 
                   value="saved-rephrases"
-                  className="flex items-center gap-2 py-3 px-5 data-[state=active]:bg-midnight-indigo data-[state=active]:text-white rounded-full"
+                  className="flex items-center gap-2 py-3 px-5 data-[state=active]:bg-midnight-indigo data-[state=active]:text-white rounded-full text-xs sm:text-sm"
                 >
                   <Book className="h-4 w-4" />
                   <span>Saved Rephrases</span>
                 </TabsTrigger>
                 <TabsTrigger 
                   value="love-notes"
-                  className="flex items-center gap-2 py-3 px-5 data-[state=active]:bg-mauve-rose data-[state=active]:text-white rounded-full"
+                  className="flex items-center gap-2 py-3 px-5 data-[state=active]:bg-mauve-rose data-[state=active]:text-white rounded-full text-xs sm:text-sm"
                 >
                   <Heart className="h-4 w-4" />
                   <span>Love Notes</span>
                 </TabsTrigger>
                 <TabsTrigger 
                   value="thoughts"
-                  className="flex items-center gap-2 py-3 px-5 data-[state=active]:bg-soft-blush data-[state=active]:text-midnight-indigo rounded-full"
+                  className="flex items-center gap-2 py-3 px-5 data-[state=active]:bg-soft-blush data-[state=active]:text-midnight-indigo rounded-full text-xs sm:text-sm"
                 >
                   <BookOpen className="h-4 w-4" />
                   <span>Thoughts</span>
