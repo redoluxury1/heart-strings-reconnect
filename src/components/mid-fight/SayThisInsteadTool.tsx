@@ -14,19 +14,28 @@ import {
   SelectValue
 } from "@/components/ui/select";
 
+// Ensure we're displaying at least 3 options per category
+const validateCategories = (phrases: SayInsteadPhrase[]) => {
+  const categoryCounts: Record<string, number> = {};
+  
+  // Count phrases per category
+  phrases.forEach(phrase => {
+    phrase.categories.forEach(category => {
+      categoryCounts[category] = (categoryCounts[category] || 0) + 1;
+    });
+  });
+  
+  // Filter out categories with less than 3 phrases
+  return Object.keys(categoryCounts).filter(category => categoryCounts[category] >= 3);
+};
+
 const SayThisInsteadTool: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedPhrase, setSelectedPhrase] = useState<SayInsteadPhrase | null>(null);
   
-  // Extract unique categories from all phrases
+  // Extract valid categories from all phrases (ensuring at least 3 per category)
   const categories = useMemo(() => {
-    const allCategories = new Set<string>();
-    sayInsteadPhrases.forEach(phrase => {
-      phrase.categories.forEach(category => {
-        allCategories.add(category);
-      });
-    });
-    return Array.from(allCategories).sort();
+    return validateCategories(sayInsteadPhrases).sort();
   }, []);
   
   // Filter phrases based on selected category

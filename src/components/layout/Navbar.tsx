@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { Link } from 'react-router-dom';
 import { cn } from "@/lib/utils";
@@ -15,6 +15,21 @@ import {
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navRef = useRef<HTMLDivElement>(null);
+
+  // Close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (navRef.current && !navRef.current.contains(event.target as Node) && mobileMenuOpen) {
+        setMobileMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [mobileMenuOpen]);
 
   return (
     <nav className="w-full py-4 px-6 md:px-12 flex items-center justify-between border-b border-slate-200">
@@ -68,7 +83,7 @@ const Navbar = () => {
           variant="ghost"
           size="icon"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label="Toggle menu"
+          aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
         >
           {mobileMenuOpen ? <X /> : <Menu />}
         </Button>
@@ -76,7 +91,7 @@ const Navbar = () => {
       
       {/* Mobile navigation */}
       {mobileMenuOpen && (
-        <div className="absolute top-16 left-0 right-0 bg-white shadow-md z-50 md:hidden">
+        <div ref={navRef} className="absolute top-16 left-0 right-0 bg-white shadow-md z-50 md:hidden">
           <div className="flex flex-col p-4 space-y-3">
             <Link 
               to="/" 

@@ -26,21 +26,15 @@ const ConversationDialog: React.FC<ConversationDialogProps> = ({
   onSendInvite,
   topicId = 'something-else'
 }) => {
-  const [inviteSent, setInviteSent] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
 
   const handleSendInvite = () => {
     onSendInvite();
-    setInviteSent(true);
-  };
-
-  const handleFirstStep = () => {
     setShowSuccess(true);
   };
 
   const handleReturnToToolkit = () => {
     setShowSuccess(false);
-    setInviteSent(false);
     onOpenChange(false);
   };
 
@@ -81,32 +75,20 @@ const ConversationDialog: React.FC<ConversationDialogProps> = ({
             </div>
             
             <DialogFooter>
-              {!inviteSent ? (
-                <>
-                  <Button
-                    variant="outline"
-                    onClick={() => onOpenChange(false)}
-                    className="border-midnight-indigo text-midnight-indigo"
-                  >
-                    Start Over
-                  </Button>
-                  <Button 
-                    variant="default"
-                    className="bg-lavender-blue hover:bg-lavender-blue/90"
-                    onClick={handleSendInvite}
-                  >
-                    Begin Reconnecting
-                  </Button>
-                </>
-              ) : (
-                <Button 
-                  variant="default"
-                  className="w-full bg-lavender-blue hover:bg-lavender-blue/90"
-                  onClick={handleFirstStep}
-                >
-                  You took the first step
-                </Button>
-              )}
+              <Button
+                variant="outline"
+                onClick={() => onOpenChange(false)}
+                className="border-midnight-indigo text-midnight-indigo"
+              >
+                Start Over
+              </Button>
+              <Button 
+                variant="default"
+                className="bg-lavender-blue hover:bg-lavender-blue/90"
+                onClick={handleSendInvite}
+              >
+                Begin Reconnecting
+              </Button>
             </DialogFooter>
           </>
         ) : (
@@ -121,6 +103,9 @@ const ConversationDialog: React.FC<ConversationDialogProps> = ({
               </h3>
               <p className="text-sm text-midnight-indigo/70 mt-2">
                 That's a step forward.
+              </p>
+              <p className="text-xs italic text-midnight-indigo/60 mt-3">
+                We notified your partner that you sent a message
               </p>
             </div>
             
