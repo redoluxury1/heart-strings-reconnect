@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -166,8 +165,21 @@ const MidFight = () => {
   const renderTimeoutTimer = () => (
     <div className="bg-white rounded-lg shadow-md p-6 border border-lavender-blue/20 mt-6 mb-10">
       <div className="flex flex-col items-center">
-        <div className="flex justify-center mb-4">
-          <Hourglass className="h-24 w-24 text-lavender-blue" />
+        <div className="flex justify-center mb-4 relative">
+          {/* Hourglass with sand animation */}
+          <div className="relative">
+            <Hourglass className="h-24 w-24 text-mauve-rose" />
+            {timerActive && (
+              <>
+                {/* Top sand */}
+                <div className="absolute top-7 left-1/2 transform -translate-x-1/2 w-5 h-5 bg-mauve-rose/40 rounded-full animate-ping opacity-70" style={{ animationDuration: '1.5s' }} />
+                {/* Middle dropping sand */}
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 w-0.5 h-8 bg-mauve-rose/40 animate-pulse" style={{ animationDuration: '1s' }} />
+                {/* Bottom collecting sand */}
+                <div className="absolute bottom-7 left-1/2 transform -translate-x-1/2 w-8 h-3 bg-mauve-rose/40 rounded-t-full animate-pulse" style={{ animationDuration: '3s' }} />
+              </>
+            )}
+          </div>
         </div>
         
         <h3 className="text-2xl font-cormorant font-medium text-midnight-indigo mb-6">Take a Breather</h3>
@@ -239,7 +251,7 @@ const MidFight = () => {
             <p className="text-midnight-indigo mb-2">
               Your partner has been notified that you need some time.
             </p>
-            <div className="text-4xl font-bold text-lavender-blue my-6">
+            <div className="text-4xl font-bold text-mauve-rose my-6">
               {formatTime()}
             </div>
             <Button 
