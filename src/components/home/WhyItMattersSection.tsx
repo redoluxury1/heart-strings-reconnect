@@ -10,23 +10,18 @@ import {
 } from '@/components/ui/carousel';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
-import { MessageCircle, Heart, Eye, Handshake, Lock } from 'lucide-react';
 
 interface StatSlideProps {
   statistic: string;
   explanation: string;
   punchline: string;
-  icon: React.ReactNode;
 }
 
-const StatSlide: React.FC<StatSlideProps> = ({ statistic, explanation, punchline, icon }) => {
+const StatSlide: React.FC<StatSlideProps> = ({ statistic, explanation, punchline }) => {
   return (
     <div className="flex flex-col items-center justify-center text-center min-h-[280px] p-6">
       <div>
-        {/* Icon above statistic */}
-        <div className="mb-3 md:mb-4">
-          {icon}
-        </div>
+        {/* Removed the icon here */}
         <h3 
           className="font-inter font-bold text-7xl md:text-8xl lg:text-9xl text-mauve-rose mb-0 tracking-tight leading-none"
           aria-label={`${statistic} ${explanation}`}
@@ -54,37 +49,31 @@ const WhyItMattersSection: React.FC = () => {
       statistic: "72%",
       explanation: "of couples say communication is the biggest reason they fight.",
       punchline: "It's not just what you say — it's how you say it.",
-      icon: <MessageCircle className="w-8 h-8 md:w-10 md:h-10 text-mauve-rose" />
     },
     {
       statistic: "80%",
       explanation: "of Millennials say emotional intelligence is a top priority in relationships.",
       punchline: "We're not just falling in love — we're learning how to stay in it.",
-      icon: <Heart className="w-8 h-8 md:w-10 md:h-10 text-midnight-indigo" />
     },
     {
       statistic: "65%",
       explanation: "of couples avoid hard conversations out of fear it will make things worse.",
       punchline: "But silence isn't safety — it's distance.",
-      icon: <Eye className="w-8 h-8 md:w-10 md:h-10 text-mauve-rose" />
     },
     {
       statistic: "1 in 2",
       explanation: "couples say they don't feel truly heard by their partner.",
       punchline: "Bridge For Couples helps turn misunderstandings into moments of connection.",
-      icon: <Handshake className="w-8 h-8 md:w-10 md:h-10 text-midnight-indigo" />
     },
     {
       statistic: "83%",
       explanation: "of people believe better conflict tools would improve their relationship.",
       punchline: "No one teaches us how to fight fair — until now.",
-      icon: <Lock className="w-8 h-8 md:w-10 md:h-10 text-mauve-rose" />
     },
     {
       statistic: "71%",
       explanation: "of couples say they want to reconnect but don't know how.",
       punchline: "Bridge For Couples makes that first step easier.",
-      icon: <MessageCircle className="w-8 h-8 md:w-10 md:h-10 text-midnight-indigo" />
     }
   ];
   
@@ -112,7 +101,8 @@ const WhyItMattersSection: React.FC = () => {
           </p>
         </div>
 
-        <div className="mt-1 relative">
+        <div className="mt-0 relative">
+          {/* Reduced the mt-1 to mt-0 to decrease the padding */}
           <Carousel
             opts={{
               align: "center",
@@ -137,12 +127,10 @@ const WhyItMattersSection: React.FC = () => {
                     statistic={stat.statistic}
                     explanation={stat.explanation}
                     punchline={stat.punchline}
-                    icon={stat.icon}
                   />
                 </CarouselItem>
               ))}
             </CarouselContent>
-            {/* Changed margin-top from -mt-4 to -mt-6 as requested */}
             <div className="flex justify-center -mt-6">
               <div className="flex items-center gap-3">
                 <CarouselPrevious className={cn(
