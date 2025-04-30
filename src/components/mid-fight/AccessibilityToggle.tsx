@@ -29,3 +29,4 @@ const AccessibilityToggle: React.FC<AccessibilityToggleProps> = ({
 };
 
 export default AccessibilityToggle;
+

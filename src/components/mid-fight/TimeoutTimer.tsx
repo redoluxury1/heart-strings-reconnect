@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Hourglass } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -92,16 +91,12 @@ const TimeoutTimer: React.FC<TimeoutTimerProps> = ({ animationsEnabled = true })
     <div className="bg-white rounded-lg shadow-md p-6 border border-lavender-blue/20 mt-6 mb-10">
       <div className="flex flex-col items-center">
         <div className="flex justify-center mb-4 relative">
-          {/* Hourglass with sand animation */}
+          {/* Hourglass with simplified animation */}
           <div className="relative">
             <Hourglass className="h-24 w-24 text-mauve-rose" />
             {timerActive && animationsEnabled && (
               <>
-                {/* Top sand */}
-                <div className="absolute top-7 left-1/2 transform -translate-x-1/2 w-5 h-5 bg-mauve-rose/40 rounded-full animate-ping opacity-70" style={{ animationDuration: '1.5s' }} />
-                {/* Middle dropping sand */}
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 w-0.5 h-8 bg-mauve-rose/40 animate-pulse" style={{ animationDuration: '1s' }} />
-                {/* Bottom collecting sand */}
+                {/* Only keep the bottom collecting sand animation */}
                 <div className="absolute bottom-7 left-1/2 transform -translate-x-1/2 w-8 h-3 bg-mauve-rose/40 rounded-t-full animate-pulse" style={{ animationDuration: '3s' }} />
               </>
             )}

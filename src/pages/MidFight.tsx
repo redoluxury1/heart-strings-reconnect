@@ -6,7 +6,6 @@ import ContentContainer from '@/components/common/ContentContainer';
 import EmotionalHeader from '@/components/mid-fight/EmotionalHeader';
 import TimeoutTimer from '@/components/mid-fight/TimeoutTimer';
 import FeatureCardSection from '@/components/mid-fight/FeatureCardSection';
-import AccessibilityToggle from '@/components/mid-fight/AccessibilityToggle';
 
 const MidFight = () => {
   const [selectedFeature, setSelectedFeature] = useState<string | null>(null);
@@ -46,26 +45,12 @@ const MidFight = () => {
       setAnimationsEnabled(savedPreference === 'true');
     }
   }, []);
-  
-  // Save animation preference when changed
-  const handleAnimationToggle = (enabled: boolean) => {
-    setAnimationsEnabled(enabled);
-    localStorage.setItem('animations-enabled', String(enabled));
-  };
 
   return (
     <div className="min-h-screen bg-slate-50">
       <Navbar />
       
       <main className="pb-16">
-        {/* Accessibility controls */}
-        <div className="fixed top-24 right-4 z-10">
-          <AccessibilityToggle 
-            animationsEnabled={animationsEnabled} 
-            onChange={handleAnimationToggle} 
-          />
-        </div>
-      
         {/* Emotional Header Block */}
         <EmotionalHeader isVisible={isVisible} animationsEnabled={animationsEnabled} />
         
