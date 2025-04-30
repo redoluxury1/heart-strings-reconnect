@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Bridge, Puzzle, Hand } from 'lucide-react';
+import { Book, Puzzle, Hand } from 'lucide-react';
 import FeatureCard, { Feature } from './FeatureCard';
 import ContentContainer from '@/components/common/ContentContainer';
 import PausePhraseTool from './PausePhraseTool';
@@ -12,7 +12,7 @@ const features: Feature[] = [
     id: 'build-bridge',
     title: 'Build a Bridge',
     description: 'Sometimes we just need a third party to help us navigate something hard. We are building our team of experts to bring this feature to life.',
-    icon: <Bridge className="h-6 w-6 text-mauve-rose" />,
+    icon: <Book className="h-6 w-6 text-mauve-rose" />,
     comingSoon: true,
     alwaysVisible: false,
     microtext: "Want to get in on the ground level?"

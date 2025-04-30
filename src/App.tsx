@@ -10,6 +10,7 @@ import NotFound from "./pages/NotFound";
 import LoveNotesReceived from "./pages/LoveNotesReceived";
 import MidFight from "./pages/MidFight";
 import LoveCodeQuiz from "./pages/LoveCodeQuiz";
+import Archive from "./pages/Archive";
 
 // Scroll to top on route change
 function ScrollToTop() {
@@ -38,6 +39,7 @@ const App = () => (
           <Route path="/reconnect" element={<NotFound />} />
           <Route path="/love-notes" element={<LoveNotesReceived />} />
           <Route path="/love-code-quiz" element={<LoveCodeQuiz />} />
+          <Route path="/archive" element={<Archive />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

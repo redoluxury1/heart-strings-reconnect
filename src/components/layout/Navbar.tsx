@@ -3,12 +3,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { Link } from 'react-router-dom';
 import { cn } from "@/lib/utils";
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Book } from 'lucide-react';
 import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
@@ -69,6 +68,12 @@ const Navbar = () => {
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
+              <Link to="/archive" className="text-sm font-medium hover:text-mauve-rose transition-colors px-3 py-2">
+                <Book className="h-4 w-4 mr-1 inline" />
+                Archive
+              </Link>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
               <Button variant="outline" className="text-midnight-indigo border-midnight-indigo hover:bg-soft-blush rounded-full">
                 Get Started
               </Button>
@@ -120,6 +125,14 @@ const Navbar = () => {
               onClick={() => setMobileMenuOpen(false)}
             >
               Reconnecting
+            </Link>
+            <Link 
+              to="/archive" 
+              className="text-midnight-indigo hover:text-mauve-rose px-4 py-2 hover:bg-soft-blush rounded flex items-center"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <Book className="h-4 w-4 mr-2" />
+              Archive
             </Link>
             <Button 
               variant="outline" 

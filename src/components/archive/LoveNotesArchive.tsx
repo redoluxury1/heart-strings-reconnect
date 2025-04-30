@@ -1,0 +1,185 @@
+
+import React, { useState } from 'react';
+import { 
+  Card, 
+  CardContent, 
+  CardDescription, 
+  CardFooter, 
+  CardHeader
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Heart, Star, Search, Reply, Smile } from 'lucide-react';
+import { LoveNoteArchive } from '@/types/archive';
+import { format } from 'date-fns';
+
+// Sample data - in a real app, this would come from storage/database
+const sampleLoveNotes: LoveNoteArchive[] = [
+  {
+    id: '1',
+    prompt: "What's one small way your partner made life easier this week?",
+    message: "You made dinner three nights in a row when I was stressed about work. It meant the world to me.",
+    timestamp: new Date(Date.now() - 86400000 * 2), // 2 days ago
+    isFavorite: true,
+    reaction: 'heart'
+  },
+  {
+    id: '2',
+    prompt: "When did your partner make you feel seen?",
+    message: "When you noticed I was quiet yesterday and asked if I was okay instead of just letting it go.",
+    timestamp: new Date(Date.now() - 86400000 * 5), // 5 days ago
+    isFavorite: false,
+    reaction: null
+  },
+  {
+    id: '3',
+    prompt: "Share a moment your partner made you smile recently.",
+    message: "The silly dance you did while making breakfast just to make me laugh.",
+    timestamp: new Date(Date.now() - 86400000 * 8), // 8 days ago
+    isFavorite: false,
+    reaction: 'smile'
+  }
+];
+
+const LoveNotesArchive = () => {
+  const [loveNotes, setLoveNotes] = useState<LoveNoteArchive[]>(sampleLoveNotes);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
+
+  const toggleFavorite = (id: string) => {
+    setLoveNotes(loveNotes.map(note => 
+      note.id === id 
+        ? { ...note, isFavorite: !note.isFavorite } 
+        : note
+    ));
+  };
+
+  const setReaction = (id: string, reaction: 'heart' | 'star' | 'smile' | null) => {
+    setLoveNotes(loveNotes.map(note => 
+      note.id === id 
+        ? { ...note, reaction } 
+        : note
+    ));
+  };
+
+  const filteredNotes = loveNotes
+    .filter(note => {
+      // Apply search filter
+      if (searchTerm && !note.message.toLowerCase().includes(searchTerm.toLowerCase())) {
+        return false;
+      }
+      
+      // Apply favorites filter
+      if (showFavoritesOnly && !note.isFavorite) {
+        return false;
+      }
+      
+      return true;
+    })
+    .sort((a, b) => {
+      // Sort by date (newest first)
+      return b.timestamp.getTime() - a.timestamp.getTime();
+    });
+
+  return (
+    <div>
+      <h3 className="text-xl font-cormorant font-medium text-midnight-indigo mb-4 text-center">
+        All the little things they said that mattered
+      </h3>
+      
+      <div className="mb-6 flex flex-col sm:flex-row gap-4 items-center justify-between">
+        <div className="relative w-full sm:w-72">
+          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder="Search love notes..."
+            className="pl-8"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
+        
+        <Button
+          variant="outline"
+          size="sm"
+          className={showFavoritesOnly ? "bg-mauve-rose/10 text-mauve-rose border-mauve-rose/50" : ""}
+          onClick={() => setShowFavoritesOnly(!showFavoritesOnly)}
+        >
+          {showFavoritesOnly ? <Star className="h-4 w-4 mr-1" /> : <Heart className="h-4 w-4 mr-1" />}
+          {showFavoritesOnly ? "Favorites" : "All Notes"}
+        </Button>
+      </div>
+      
+      {filteredNotes.length > 0 ? (
+        <div className="space-y-4">
+          {filteredNotes.map((note) => (
+            <Card key={note.id} className="bg-white">
+              <CardHeader className="pb-2">
+                <div className="flex justify-between items-start">
+                  <CardDescription className="text-sm text-rosewood-tint">
+                    {note.prompt}
+                  </CardDescription>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className={`p-1 h-auto ${note.isFavorite ? 'text-mauve-rose' : 'text-gray-400'}`}
+                    onClick={() => toggleFavorite(note.id)}
+                  >
+                    <Star className="h-5 w-5 fill-current" />
+                    <span className="sr-only">
+                      {note.isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+                    </span>
+                  </Button>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <p className="text-midnight-indigo">"{note.message}"</p>
+              </CardContent>
+              <CardFooter className="flex justify-between">
+                <div className="text-xs text-gray-500">
+                  {format(note.timestamp, 'PPp')}
+                </div>
+                
+                <div className="flex space-x-2">
+                  <div className="flex space-x-1">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className={`p-1 h-auto ${note.reaction === 'heart' ? 'text-red-500' : 'text-gray-400'}`}
+                      onClick={() => setReaction(note.id, note.reaction === 'heart' ? null : 'heart')}
+                    >
+                      <Heart className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className={`p-1 h-auto ${note.reaction === 'smile' ? 'text-amber-500' : 'text-gray-400'}`}
+                      onClick={() => setReaction(note.id, note.reaction === 'smile' ? null : 'smile')}
+                    >
+                      <Smile className="h-4 w-4" />
+                    </Button>
+                  </div>
+                  
+                  <Button variant="ghost" size="sm" className="text-lavender-blue">
+                    <Reply className="h-4 w-4 mr-1" />
+                    Reply
+                  </Button>
+                </div>
+              </CardFooter>
+            </Card>
+          ))}
+        </div>
+      ) : (
+        <div className="text-center py-10">
+          <p className="text-midnight-indigo text-lg mb-2">
+            No love notes found
+          </p>
+          <p className="text-midnight-indigo/60">
+            Love notes sent by your partner will appear here.
+          </p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default LoveNotesArchive;
