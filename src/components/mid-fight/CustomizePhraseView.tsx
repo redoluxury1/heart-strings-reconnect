@@ -34,21 +34,21 @@ const CustomizePhraseView: React.FC<CustomizePhraseViewProps> = ({
         className="w-full border border-lavender-blue/30 rounded-lg p-3 mb-6 h-32 focus:outline-none focus:ring-1 focus:ring-lavender-blue"
       />
       
-      <div className="flex justify-center space-x-4">
+      <div className="flex justify-center space-x-4 px-4">
         <Button
           variant="outline"
-          className="border-midnight-indigo text-midnight-indigo hover:bg-mauve-rose/10 hover:text-mauve-rose hover:border-mauve-rose/40"
+          className="border-midnight-indigo text-midnight-indigo hover:bg-mauve-rose/10 hover:text-mauve-rose hover:border-mauve-rose/40 px-3"
           onClick={onBackToTopics}
         >
-          <ArrowLeft className="h-4 w-4 mr-2" />
+          <ArrowLeft className="h-4 w-4 mr-1" />
           New Phrase
         </Button>
         <Button
           variant="default"
-          className="bg-lavender-blue hover:bg-lavender-blue/90 text-white"
+          className="bg-lavender-blue hover:bg-lavender-blue/90 text-white px-3"
           onClick={onStartConversation}
         >
-          <MessageCircle className="h-4 w-4 mr-2" />
+          <MessageCircle className="h-4 w-4 mr-1" />
           Say it with care
         </Button>
       </div>

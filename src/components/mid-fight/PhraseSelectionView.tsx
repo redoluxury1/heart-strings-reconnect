@@ -104,17 +104,8 @@ const PhraseSelectionView: React.FC<PhraseSelectionViewProps> = ({
           </div>
         )}
         
-        <div className="flex justify-between items-center">
-          <Button 
-            variant="ghost" 
-            size="sm" 
-            className="text-xs text-lavender-blue"
-            onClick={toggleWhyItWorks}
-          >
-            {showWhyItWorks ? "Hide explanation" : "Why this works"}
-          </Button>
-          
-          <div className="flex space-x-2">
+        <div className="flex flex-col items-center space-y-3">
+          <div className="flex space-x-4 justify-center w-full">
             <Button 
               variant="outline" 
               size="sm" 
@@ -134,6 +125,15 @@ const PhraseSelectionView: React.FC<PhraseSelectionViewProps> = ({
               <span>Customize</span>
             </Button>
           </div>
+          
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            className="text-xs text-lavender-blue justify-center"
+            onClick={toggleWhyItWorks}
+          >
+            {showWhyItWorks ? "Hide explanation" : "Why this works"}
+          </Button>
         </div>
       </div>
       

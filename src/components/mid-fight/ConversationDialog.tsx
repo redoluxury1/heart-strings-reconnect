@@ -1,7 +1,7 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { SendHorizontal, PenLine, MessageSquare } from 'lucide-react';
+import { SendHorizontal, MessageSquare } from 'lucide-react';
 import { 
   Dialog,
   DialogContent,
@@ -10,8 +10,6 @@ import {
   DialogHeader,
   DialogTitle
 } from "@/components/ui/dialog";
-import { Textarea } from "@/components/ui/textarea";
-import { getPartnerResponsesForTopic } from '@/data/partner-responses';
 
 interface ConversationDialogProps {
   isOpen: boolean;
@@ -28,23 +26,15 @@ const ConversationDialog: React.FC<ConversationDialogProps> = ({
   onSendInvite,
   topicId = 'something-else'
 }) => {
-  const [initialMessage, setInitialMessage] = useState('');
   const [inviteSent, setInviteSent] = useState(false);
-  const [suggestedResponses, setSuggestedResponses] = useState<string[]>([]);
   const [showSuccess, setShowSuccess] = useState(false);
-
-  useEffect(() => {
-    if (topicId) {
-      setSuggestedResponses(getPartnerResponsesForTopic(topicId));
-    }
-  }, [topicId]);
 
   const handleSendInvite = () => {
     onSendInvite();
     setInviteSent(true);
   };
 
-  const handleContinue = () => {
+  const handleFirstStep = () => {
     setShowSuccess(true);
   };
 
@@ -84,41 +74,10 @@ const ConversationDialog: React.FC<ConversationDialogProps> = ({
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="bg-lavender-blue/20 text-lavender-blue rounded-full h-5 w-5 flex items-center justify-center flex-shrink-0">3</span>
-                    <span>The app will help you phrase things with calm and care.</span>
+                    <span>We will help you and your partner phrase things with calm and care.</span>
                   </li>
                 </ul>
               </div>
-
-              {inviteSent && (
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2">
-                    <PenLine className="h-4 w-4 text-lavender-blue" />
-                    <p className="text-sm font-medium">Start typing your message</p>
-                  </div>
-                  <Textarea 
-                    value={initialMessage}
-                    onChange={(e) => setInitialMessage(e.target.value)}
-                    placeholder="Type your message here..."
-                    className="w-full min-h-20 border border-lavender-blue/30 rounded-lg p-3 focus:outline-none focus:ring-1 focus:ring-lavender-blue"
-                  />
-                  
-                  {suggestedResponses.length > 0 && (
-                    <div className="mt-3 space-y-2">
-                      <div className="flex items-center gap-2">
-                        <MessageSquare className="h-4 w-4 text-lavender-blue" />
-                        <p className="text-sm font-medium">How {partnerName} might respond:</p>
-                      </div>
-                      <div className="space-y-2">
-                        {suggestedResponses.map((response, index) => (
-                          <div key={index} className="bg-lavender-blue/10 p-3 rounded-md text-xs text-midnight-indigo border border-lavender-blue/20">
-                            {response}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              )}
             </div>
             
             <DialogFooter>
@@ -142,16 +101,17 @@ const ConversationDialog: React.FC<ConversationDialogProps> = ({
               ) : (
                 <Button 
                   variant="default"
-                  className="bg-lavender-blue hover:bg-lavender-blue/90"
-                  onClick={handleContinue}
+                  className="w-full bg-lavender-blue hover:bg-lavender-blue/90"
+                  onClick={handleFirstStep}
                 >
-                  Continue
+                  You took the first step
                 </Button>
               )}
             </DialogFooter>
           </>
         ) : (
           <div className="py-6 text-center">
+            <DialogHeader className="absolute right-4 top-4" />
             <div className="mb-6">
               <div className="bg-lavender-blue/20 rounded-full h-16 w-16 flex items-center justify-center mx-auto mb-4">
                 <MessageSquare className="h-8 w-8 text-lavender-blue" />
@@ -164,22 +124,13 @@ const ConversationDialog: React.FC<ConversationDialogProps> = ({
               </p>
             </div>
             
-            <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3 justify-center">
-              <Button
-                variant="outline"
-                className="border-midnight-indigo text-midnight-indigo"
-                onClick={handleReturnToToolkit}
-              >
-                Return to Toolkit
-              </Button>
-              <Button 
-                variant="default"
-                className="bg-lavender-blue hover:bg-lavender-blue/90"
-                onClick={handleReturnToToolkit}
-              >
-                Keep Talking
-              </Button>
-            </div>
+            <Button 
+              variant="default"
+              className="bg-lavender-blue hover:bg-lavender-blue/90"
+              onClick={handleReturnToToolkit}
+            >
+              Return to Toolkit
+            </Button>
           </div>
         )}
       </DialogContent>

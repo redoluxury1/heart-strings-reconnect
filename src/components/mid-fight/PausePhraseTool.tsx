@@ -54,7 +54,6 @@ const PausePhraseTool: React.FC<PausePhraseToolProps> = ({ onClose }) => {
       title: "Conversation request sent",
       description: `${partnerName} will be notified that you want to talk things through.`,
     });
-    setStartConversationOpen(false);
   };
 
   const handleSomethingElse = () => {
