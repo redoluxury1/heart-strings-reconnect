@@ -13,7 +13,11 @@ const timeoutPresets = [
   { label: '1 hour', value: 60 },
 ];
 
-const TimeoutTimer: React.FC = () => {
+interface TimeoutTimerProps {
+  animationsEnabled?: boolean;
+}
+
+const TimeoutTimer: React.FC<TimeoutTimerProps> = ({ animationsEnabled = true }) => {
   // Timer states
   const [timerActive, setTimerActive] = useState(false);
   const [timerMinutes, setTimerMinutes] = useState(0);
@@ -91,7 +95,7 @@ const TimeoutTimer: React.FC = () => {
           {/* Hourglass with sand animation */}
           <div className="relative">
             <Hourglass className="h-24 w-24 text-mauve-rose" />
-            {timerActive && (
+            {timerActive && animationsEnabled && (
               <>
                 {/* Top sand */}
                 <div className="absolute top-7 left-1/2 transform -translate-x-1/2 w-5 h-5 bg-mauve-rose/40 rounded-full animate-ping opacity-70" style={{ animationDuration: '1.5s' }} />
