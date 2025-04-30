@@ -1,20 +1,22 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, MessageCircle } from 'lucide-react';
 
 interface CustomizePhraseViewProps {
   customPhrase: string;
   onCustomPhraseChange: (phrase: string) => void;
   onBack: () => void;
   onSave: () => void;
+  onStartConversation: () => void;
 }
 
 const CustomizePhraseView: React.FC<CustomizePhraseViewProps> = ({
   customPhrase,
   onCustomPhraseChange,
   onBack,
-  onSave
+  onSave,
+  onStartConversation
 }) => {
   return (
     <>
@@ -35,23 +37,25 @@ const CustomizePhraseView: React.FC<CustomizePhraseViewProps> = ({
       <textarea
         value={customPhrase}
         onChange={(e) => onCustomPhraseChange(e.target.value)}
-        className="w-full border border-lavender-blue/30 rounded-lg p-3 mb-4 h-32 focus:outline-none focus:ring-1 focus:ring-lavender-blue"
+        className="w-full border border-lavender-blue/30 rounded-lg p-3 mb-6 h-32 focus:outline-none focus:ring-1 focus:ring-lavender-blue"
       />
       
-      <div className="flex justify-end space-x-3">
+      <div className="flex justify-center space-x-4">
         <Button
           variant="outline"
           className="border-midnight-indigo text-midnight-indigo hover:bg-midnight-indigo/10"
           onClick={onBack}
         >
-          Cancel
+          <ArrowLeft className="h-4 w-4 mr-2" />
+          New Topic
         </Button>
         <Button
           variant="default"
           className="bg-lavender-blue hover:bg-lavender-blue/90 text-white"
-          onClick={onSave}
+          onClick={onStartConversation}
         >
-          Save Phrase
+          <MessageCircle className="h-4 w-4 mr-2" />
+          Let's Talk
         </Button>
       </div>
     </>

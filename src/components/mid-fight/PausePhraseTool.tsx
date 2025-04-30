@@ -59,6 +59,11 @@ const PausePhraseTool: React.FC<PausePhraseToolProps> = ({ onClose }) => {
     setStartConversationOpen(false);
   };
 
+  const handleSomethingElse = () => {
+    setCustomPhrase("I'd like to talk about something that's been on my mind...");
+    setIsCustomizing(true);
+  };
+
   return (
     <div className="flex flex-col">
       {step === 'goal-selection' ? (
@@ -66,6 +71,7 @@ const PausePhraseTool: React.FC<PausePhraseToolProps> = ({ onClose }) => {
           goals={goals}
           onGoalSelect={handleGoalSelect}
           onStartConversation={handleStartConversation}
+          onSomethingElse={handleSomethingElse}
         />
       ) : isCustomizing ? (
         <CustomizePhraseView
@@ -73,6 +79,7 @@ const PausePhraseTool: React.FC<PausePhraseToolProps> = ({ onClose }) => {
           onCustomPhraseChange={setCustomPhrase}
           onBack={() => setIsCustomizing(false)}
           onSave={handleSaveCustomPhrase}
+          onStartConversation={handleStartConversation}
         />
       ) : (
         <PhraseSelectionView

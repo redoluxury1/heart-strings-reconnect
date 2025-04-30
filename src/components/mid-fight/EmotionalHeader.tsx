@@ -26,8 +26,10 @@ const EmotionalHeader: React.FC<EmotionalHeaderProps> = ({
         </div>
         
         <h1 className="font-cormorant text-3xl sm:text-4xl md:text-5xl font-medium text-midnight-indigo mb-6">
-          This moment isn't about being right.<br />
-          It's about not losing each other.
+          <span className="block">This moment isn't</span>
+          <span className="block">about being right.</span>
+          <span className="block">It's about not losing</span>
+          <span className="block">each other.</span>
         </h1>
         
         <div className="space-y-0">
