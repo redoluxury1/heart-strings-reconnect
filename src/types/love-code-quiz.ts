@@ -33,8 +33,26 @@ export interface LoveCodeDescription {
   growthTips: string;
   shortSummary: string;
   color: string;
+  detailedDescription?: {
+    emotionalCore?: string;
+    howYouFeelLoved?: string;
+    oftenMisread?: string;
+    relationalGrowthTips?: string;
+  };
+  secondaryDescription?: string;
 }
 
 export interface LoveCodeDescriptions {
   [key: string]: LoveCodeDescription;
+}
+
+// PhraseCatagory definition for say-instead-phrases
+export type PhraseCategory = string;
+
+export interface SayInsteadPhrase {
+  id: number;
+  original: string;
+  categories: PhraseCategory[];
+  alternatives: string[];
+  whyItWorks: string;
 }
