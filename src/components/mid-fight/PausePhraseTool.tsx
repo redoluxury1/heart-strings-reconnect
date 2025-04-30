@@ -1,30 +1,20 @@
 
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Copy, Heart, MessageCircle, ArrowLeft } from 'lucide-react';
+import { Heart, MessageCircle, ArrowLeft } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 
 interface PhraseOptionProps {
   text: string;
-  onCopy: () => void;
   onFavorite: () => void;
   onCustomize: () => void;
 }
 
-const PhraseOption: React.FC<PhraseOptionProps> = ({ text, onCopy, onFavorite, onCustomize }) => {
+const PhraseOption: React.FC<PhraseOptionProps> = ({ text, onFavorite, onCustomize }) => {
   return (
-    <div className="bg-soft-blush/20 p-4 rounded-lg mb-4 border border-lavender-blue/20">
-      <p className="text-midnight-indigo mb-3 font-light italic">{text}</p>
+    <div className="bg-soft-blush/20 p-4 rounded-lg mb-4 border border-lavender-blue/20 hover:bg-mauve-rose/5 transition-colors">
+      <p className="text-midnight-indigo mb-3 font-light italic hover:text-mauve-rose">{text}</p>
       <div className="flex space-x-2 justify-end">
-        <Button 
-          variant="outline" 
-          size="sm" 
-          className="text-xs flex items-center gap-1 border-midnight-indigo/50 text-midnight-indigo hover:bg-midnight-indigo/10"
-          onClick={onCopy}
-        >
-          <Copy className="h-3.5 w-3.5" />
-          <span>Copy</span>
-        </Button>
         <Button 
           variant="outline" 
           size="sm" 
@@ -138,14 +128,6 @@ const PausePhraseTool: React.FC<PausePhraseToolProps> = ({ onClose }) => {
     setStep('phrase-options');
   };
 
-  const handleCopyPhrase = (phrase: string) => {
-    navigator.clipboard.writeText(phrase);
-    toast({
-      title: "Copied to clipboard",
-      description: "You can now paste this phrase in your conversation",
-    });
-  };
-
   const handleFavoritePhrase = (phrase: string) => {
     // In a real app, we would save this to user's favorites
     toast({
@@ -185,7 +167,7 @@ const PausePhraseTool: React.FC<PausePhraseToolProps> = ({ onClose }) => {
               <Button
                 key={goal.id}
                 variant="outline"
-                className="flex justify-start border-lavender-blue/40 text-midnight-indigo hover:bg-lavender-blue/10 h-auto py-3 px-4"
+                className="flex justify-start border-lavender-blue/40 text-midnight-indigo hover:bg-mauve-rose/10 hover:text-mauve-rose hover:border-mauve-rose/40 h-auto py-3 px-4 transition-all"
                 onClick={() => handleGoalSelect(goal)}
               >
                 {goal.title}
@@ -252,7 +234,6 @@ const PausePhraseTool: React.FC<PausePhraseToolProps> = ({ onClose }) => {
             <PhraseOption
               key={index}
               text={phrase}
-              onCopy={() => handleCopyPhrase(phrase)}
               onFavorite={() => handleFavoritePhrase(phrase)}
               onCustomize={() => handleCustomizePhrase(phrase)}
             />

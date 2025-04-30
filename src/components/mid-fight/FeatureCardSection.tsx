@@ -40,11 +40,7 @@ const FeatureCardSection: React.FC<FeatureCardSectionProps> = ({
         <ContentContainer maxWidth="lg">
           <div className="bg-white rounded-lg shadow-md p-6 border border-lavender-blue/20">
             <div className="flex flex-col items-center mb-6">
-              <Hand className="h-24 w-24 text-midnight-indigo mb-4" />
-              <h3 className="text-2xl font-cormorant font-medium text-midnight-indigo">Pause &amp; Phrase Toolkit</h3>
-              <p className="text-midnight-indigo/80 text-center mt-2">
-                Say what you mean—without making things worse.
-              </p>
+              <Hand className="h-24 w-24 text-mauve-rose mb-4" />
             </div>
             <PausePhraseTool onClose={() => {}} />
           </div>
