@@ -11,6 +11,7 @@ interface CustomizePhraseViewProps {
   onStartConversation: () => void;
   onSaveToLibrary?: () => void;
   showSaveOption?: boolean;
+  isFromSayThisInstead?: boolean;
 }
 
 const CustomizePhraseView: React.FC<CustomizePhraseViewProps> = ({
@@ -19,16 +20,19 @@ const CustomizePhraseView: React.FC<CustomizePhraseViewProps> = ({
   onBackToTopics,
   onStartConversation,
   onSaveToLibrary,
-  showSaveOption = false
+  showSaveOption = false,
+  isFromSayThisInstead = false
 }) => {
   return (
     <>
       <div className="mb-4">
         <h3 className="text-xl font-cormorant font-medium text-midnight-indigo mb-2">
-          Customize your phrase
+          {isFromSayThisInstead ? "Make it yours" : "Customize your phrase"}
         </h3>
         <p className="text-sm text-midnight-indigo/70 italic">
-          Speak in your own voice—but let it come from a calm place.
+          {isFromSayThisInstead 
+            ? "You're rewriting the way you speak when it's hardest. Say it how you would—but softer."
+            : "Speak in your own voice—but let it come from a calm place."}
         </p>
       </div>
       

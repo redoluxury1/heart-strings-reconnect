@@ -1,13 +1,21 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, Edit, MessageCircle, BookmarkPlus } from 'lucide-react';
+import { ArrowLeft, Edit, MessageCircle, BookmarkPlus, Journal } from 'lucide-react';
 import { SayInsteadPhrase } from '@/types/say-instead';
 import AlternativeOption from './AlternativeOption';
 import { useToast } from '@/hooks/use-toast';
 import CustomizePhraseView from '../CustomizePhraseView';
 import ConversationDialog from '../ConversationDialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { useNavigate } from 'react-router-dom';
 
 interface PhraseDetailViewProps {
   phrase: SayInsteadPhrase;
@@ -19,7 +27,9 @@ const PhraseDetailView: React.FC<PhraseDetailViewProps> = ({ phrase, onBack }) =
   const [customPhrase, setCustomPhrase] = useState('');
   const [showWhyItWorks, setShowWhyItWorks] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [showSaveConfirmation, setShowSaveConfirmation] = useState(false);
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const handleCustomize = (alternative: string) => {
     setCustomPhrase(alternative);
@@ -28,15 +38,37 @@ const PhraseDetailView: React.FC<PhraseDetailViewProps> = ({ phrase, onBack }) =
 
   const handleSaveToLibrary = (text: string) => {
     // This would connect to a database in a real implementation
-    toast({
-      title: "Phrase saved to library",
-      description: "Your customized phrase has been saved for future reference.",
-    });
+    // Save the custom phrase along with the original phrase
+    const savedEntry = {
+      originalPhrase: phrase.original,
+      customPhrase: text,
+      dateSaved: new Date().toISOString(),
+      isFavorite: false
+    };
+    
+    // In a real app, we would store this in a database
+    // For now, we can just show the confirmation dialog
+    setShowSaveConfirmation(true);
   };
 
   const handleStartConversation = () => {
     // Open the conversation dialog
     setIsDialogOpen(true);
+  };
+
+  const handleGoToJournal = () => {
+    // Close the confirmation dialog
+    setShowSaveConfirmation(false);
+    
+    // Navigate to journal page (would be implemented in a real app)
+    // For now, we'll just show a toast message
+    toast({
+      title: "Journal feature",
+      description: "The journal feature will be implemented in a future update.",
+    });
+    
+    // This would navigate to the journal page in a real implementation
+    // navigate('/journal');
   };
 
   if (isCustomizing) {
@@ -49,6 +81,7 @@ const PhraseDetailView: React.FC<PhraseDetailViewProps> = ({ phrase, onBack }) =
           onStartConversation={handleStartConversation}
           onSaveToLibrary={() => handleSaveToLibrary(customPhrase)}
           showSaveOption={true}
+          isFromSayThisInstead={true}
         />
         
         <ConversationDialog
@@ -57,6 +90,31 @@ const PhraseDetailView: React.FC<PhraseDetailViewProps> = ({ phrase, onBack }) =
           partnerName="Partner"
           onSendInvite={() => {}}
         />
+        
+        {/* Save Confirmation Dialog */}
+        <Dialog open={showSaveConfirmation} onOpenChange={setShowSaveConfirmation}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle className="text-center font-cormorant text-midnight-indigo text-xl">
+                You're changing the way you communicate
+              </DialogTitle>
+              <DialogDescription className="text-center">
+                —one rephrase at a time.
+                <br />
+                This message just got saved to your Journal for future you to come back to.
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter className="sm:justify-center">
+              <Button 
+                onClick={handleGoToJournal}
+                className="bg-lavender-blue hover:bg-lavender-blue/90 text-white"
+              >
+                <Journal className="h-4 w-4 mr-1" />
+                Go to My Journal
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </>
     );
   }
