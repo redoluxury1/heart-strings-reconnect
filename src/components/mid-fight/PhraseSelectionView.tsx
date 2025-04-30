@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, ArrowRight, Edit } from 'lucide-react';
@@ -96,25 +95,31 @@ const PhraseSelectionView: React.FC<PhraseSelectionViewProps> = ({
       <div className="bg-soft-blush/20 p-4 rounded-lg mb-6 border border-lavender-blue/20">
         <p className="text-midnight-indigo mb-3 font-light italic">{currentPhrase}</p>
         
-        {/* Navigation buttons moved inside the phrase box */}
-        <div className="flex justify-between items-center mb-3">
+        {/* Navigation buttons - now more compact and under the phrase */}
+        <div className="flex justify-center items-center mb-1 gap-3">
           <Button 
             variant="outline"
+            size="sm"
             onClick={goToPreviousPhrase}
-            className="border-lavender-blue/40 text-midnight-indigo hover:bg-mauve-rose/10 hover:text-mauve-rose hover:border-mauve-rose/40"
+            className="border-lavender-blue/40 text-midnight-indigo hover:bg-mauve-rose/10 hover:text-mauve-rose hover:border-mauve-rose/40 h-8 px-3 py-1"
           >
-            <ArrowLeft className="h-4 w-4 mr-1" /> Go back
+            <ArrowLeft className="h-3.5 w-3.5 mr-1" /> Go back
           </Button>
+          <Button 
+            variant="outline"
+            size="sm"
+            onClick={goToNextPhrase}
+            className="border-lavender-blue/40 text-midnight-indigo hover:bg-mauve-rose/10 hover:text-mauve-rose hover:border-mauve-rose/40 h-8 px-3 py-1"
+          >
+            Try again <ArrowRight className="h-3.5 w-3.5 ml-1" />
+          </Button>
+        </div>
+
+        {/* Phrase counter - now below the buttons */}
+        <div className="text-center mb-3">
           <span className="text-xs text-midnight-indigo/60">
             {currentPhraseIndex + 1} of {phrasesCount}
           </span>
-          <Button 
-            variant="outline"
-            onClick={goToNextPhrase}
-            className="border-lavender-blue/40 text-midnight-indigo hover:bg-mauve-rose/10 hover:text-mauve-rose hover:border-mauve-rose/40"
-          >
-            Try again <ArrowRight className="h-4 w-4 ml-1" />
-          </Button>
         </div>
         
         {showWhyItWorks && (
