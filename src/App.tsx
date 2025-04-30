@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -11,6 +10,7 @@ import LoveNotesReceived from "./pages/LoveNotesReceived";
 import MidFight from "./pages/MidFight";
 import LoveCodeQuiz from "./pages/LoveCodeQuiz";
 import Archive from "./pages/Archive";
+import Games from "./pages/Games";
 
 // Scroll to top on route change
 function ScrollToTop() {
@@ -40,6 +40,7 @@ const App = () => (
           <Route path="/love-notes" element={<LoveNotesReceived />} />
           <Route path="/love-code-quiz" element={<LoveCodeQuiz />} />
           <Route path="/archive" element={<Archive />} />
+          <Route path="/games" element={<Games />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

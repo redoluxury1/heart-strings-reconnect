@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { Link } from 'react-router-dom';
 import { cn } from "@/lib/utils";
-import { Menu, X, Book } from 'lucide-react';
+import { Menu, X, Book, Gamepad } from 'lucide-react';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -68,6 +68,12 @@ const Navbar = () => {
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
+              <Link to="/games" className="text-sm font-medium hover:text-mauve-rose transition-colors px-3 py-2">
+                <Gamepad className="h-4 w-4 mr-1 inline" />
+                Games
+              </Link>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
               <Link to="/archive" className="text-sm font-medium hover:text-mauve-rose transition-colors px-3 py-2">
                 <Book className="h-4 w-4 mr-1 inline" />
                 Archive
@@ -125,6 +131,14 @@ const Navbar = () => {
               onClick={() => setMobileMenuOpen(false)}
             >
               Reconnecting
+            </Link>
+            <Link 
+              to="/games" 
+              className="text-midnight-indigo hover:text-mauve-rose px-4 py-2 hover:bg-soft-blush rounded flex items-center"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <Gamepad className="h-4 w-4 mr-2" />
+              Games
             </Link>
             <Link 
               to="/archive" 
