@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -7,6 +8,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { toast } from '@/components/ui/sonner';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 // Feature data
 const features = [
@@ -55,7 +58,7 @@ const features = [
 // Preset timer options in minutes
 const timeoutPresets = [
   { label: '15 min', value: 15 },
-  { label: '30 min', value: 30 },
+  { label: '30 min', value: 60 },
   { label: '1 hour', value: 60 },
 ];
 
@@ -69,6 +72,7 @@ const MidFight = () => {
   const [timerMinutes, setTimerMinutes] = useState(0);
   const [customMinutes, setCustomMinutes] = useState('');
   const [remainingSeconds, setRemainingSeconds] = useState(0);
+  const [customTimeUnit, setCustomTimeUnit] = useState<'minutes' | 'hours'>('minutes');
 
   // Handle visibility and haptic feedback
   useEffect(() => {
@@ -134,7 +138,16 @@ const MidFight = () => {
   // Handle custom timer input
   const handleCustomTimerStart = () => {
     if (customMinutes && !isNaN(Number(customMinutes))) {
-      const mins = Math.min(Math.max(1, Number(customMinutes)), 120); // Limit between 1-120 minutes
+      let mins = Number(customMinutes);
+      
+      // Convert hours to minutes if the unit is hours
+      if (customTimeUnit === 'hours') {
+        mins = mins * 60;
+      }
+      
+      // Limit between 1-120 minutes
+      mins = Math.min(Math.max(1, mins), 120);
+      
       startTimer(mins);
       setCustomMinutes('');
     }
@@ -178,21 +191,46 @@ const MidFight = () => {
               ))}
             </div>
             
-            <div className="flex w-full max-w-md mb-4">
-              <input
-                type="number"
-                value={customMinutes}
-                onChange={(e) => setCustomMinutes(e.target.value)}
-                placeholder="Custom minutes (1-120)"
-                min="1"
-                max="120"
-                className="flex-1 px-3 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-lavender-blue"
-              />
+            <div className="w-full max-w-md mb-6">
+              <Label className="block text-midnight-indigo mb-2">Set your own time:</Label>
+              <div className="flex gap-2 mb-3">
+                <Input
+                  type="number"
+                  value={customMinutes}
+                  onChange={(e) => setCustomMinutes(e.target.value)}
+                  placeholder="Enter time"
+                  min="1"
+                  max="120"
+                  className="flex-1 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-lavender-blue"
+                />
+                <div className="flex gap-2">
+                  <Button 
+                    type="button"
+                    variant={customTimeUnit === 'minutes' ? 'default' : 'outline'}
+                    className={customTimeUnit === 'minutes' 
+                      ? "bg-lavender-blue hover:bg-lavender-blue/90 text-white" 
+                      : "border-lavender-blue text-midnight-indigo hover:bg-lavender-blue/10"}
+                    onClick={() => setCustomTimeUnit('minutes')}
+                  >
+                    Minutes
+                  </Button>
+                  <Button 
+                    type="button"
+                    variant={customTimeUnit === 'hours' ? 'default' : 'outline'}
+                    className={customTimeUnit === 'hours' 
+                      ? "bg-lavender-blue hover:bg-lavender-blue/90 text-white" 
+                      : "border-lavender-blue text-midnight-indigo hover:bg-lavender-blue/10"}
+                    onClick={() => setCustomTimeUnit('hours')}
+                  >
+                    Hours
+                  </Button>
+                </div>
+              </div>
               <Button 
-                className="bg-lavender-blue hover:bg-lavender-blue/90 text-white rounded-l-none"
+                className="w-full bg-lavender-blue hover:bg-lavender-blue/90 text-white"
                 onClick={handleCustomTimerStart}
               >
-                Start
+                Breathe
               </Button>
             </div>
           </>
@@ -239,7 +277,7 @@ const MidFight = () => {
               It's about not losing each other.
             </h1>
             
-            <div className="space-y-1">
+            <div className="space-y-0">
               <p className="text-midnight-indigo/80 text-lg md:text-xl max-w-2xl mx-auto font-normal">
                 Take a second to breathe.
               </p>
