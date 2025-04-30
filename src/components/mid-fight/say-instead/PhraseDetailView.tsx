@@ -7,6 +7,7 @@ import { SayInsteadPhrase } from '@/types/say-instead';
 import AlternativeOption from './AlternativeOption';
 import { useToast } from '@/hooks/use-toast';
 import CustomizePhraseView from '../CustomizePhraseView';
+import ConversationDialog from '../ConversationDialog';
 
 interface PhraseDetailViewProps {
   phrase: SayInsteadPhrase;
@@ -17,6 +18,7 @@ const PhraseDetailView: React.FC<PhraseDetailViewProps> = ({ phrase, onBack }) =
   const [isCustomizing, setIsCustomizing] = useState(false);
   const [customPhrase, setCustomPhrase] = useState('');
   const [showWhyItWorks, setShowWhyItWorks] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const { toast } = useToast();
 
   const handleCustomize = (alternative: string) => {
@@ -33,23 +35,29 @@ const PhraseDetailView: React.FC<PhraseDetailViewProps> = ({ phrase, onBack }) =
   };
 
   const handleStartConversation = () => {
-    // Use the same flow as in PausePhraseTool
-    toast({
-      title: "Coming soon",
-      description: "This feature will integrate with the conversation dialog flow.",
-    });
+    // Open the conversation dialog
+    setIsDialogOpen(true);
   };
 
   if (isCustomizing) {
     return (
-      <CustomizePhraseView 
-        customPhrase={customPhrase}
-        onCustomPhraseChange={setCustomPhrase}
-        onBackToTopics={() => setIsCustomizing(false)}
-        onStartConversation={handleStartConversation}
-        onSaveToLibrary={() => handleSaveToLibrary(customPhrase)}
-        showSaveOption={true}
-      />
+      <>
+        <CustomizePhraseView 
+          customPhrase={customPhrase}
+          onCustomPhraseChange={setCustomPhrase}
+          onBackToTopics={() => setIsCustomizing(false)}
+          onStartConversation={handleStartConversation}
+          onSaveToLibrary={() => handleSaveToLibrary(customPhrase)}
+          showSaveOption={true}
+        />
+        
+        <ConversationDialog
+          isOpen={isDialogOpen}
+          onOpenChange={setIsDialogOpen}
+          partnerName="Partner"
+          onSendInvite={() => {}}
+        />
+      </>
     );
   }
 
