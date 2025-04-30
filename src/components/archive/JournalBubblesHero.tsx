@@ -36,6 +36,12 @@ const messages = [
   "I recognized their love language."
 ];
 
+// Special bubbles for tab categories
+const specialBubbles = [
+  { message: "Love Notes", style: "bg-mauve-rose text-white" },
+  { message: "Thoughts", style: "bg-soft-blush text-midnight-indigo" }
+];
+
 // Color schemes for bubbles
 const bubbleStyles = [
   { bgColor: "bg-rosewood-tint", textColor: "text-white", position: "after:border-t-rosewood-tint" },
@@ -55,14 +61,20 @@ const bubbleVariants = [
   { position: "right-[25%] top-[40%] -rotate-3 max-w-[230px]", tail: "after:right-10" }, // Middle right
 ];
 
+// Fixed positions for special bubbles
+const specialBubblePositions = [
+  { position: "left-[15%] top-[25%] -rotate-3 max-w-[180px]", tail: "after:left-10" }, // Love Notes
+  { position: "right-[15%] top-[65%] rotate-2 max-w-[160px]", tail: "after:right-8" }, // Thoughts
+];
+
 const JournalBubblesHero = () => {
   const [visibleBubbles, setVisibleBubbles] = useState([]);
   const [usedPositions, setUsedPositions] = useState([]);
 
   // Function to create a new bubble
   const createBubble = () => {
-    // Only allow up to 3 bubbles at once
-    if (visibleBubbles.length >= 3) return;
+    // Only allow up to 3 random bubbles at once
+    if (visibleBubbles.length >= 5) return;
     
     const messageIndex = Math.floor(Math.random() * messages.length);
     const styleIndex = Math.floor(Math.random() * bubbleStyles.length);
@@ -90,7 +102,8 @@ const JournalBubblesHero = () => {
       style: bubbleStyles[styleIndex],
       positionStyle: bubbleVariants[selectedVariantIndex].position,
       tailPosition: bubbleVariants[selectedVariantIndex].tail,
-      variantIndex: selectedVariantIndex
+      variantIndex: selectedVariantIndex,
+      isSpecial: false
     };
     
     setVisibleBubbles(prev => [...prev, newBubble]);
@@ -108,6 +121,25 @@ const JournalBubblesHero = () => {
       }
     }, 3000); // Display time - 3 seconds before fade out starts
   };
+
+  // Create special bubbles for "Love Notes" and "Thoughts"
+  useEffect(() => {
+    // Add special bubbles once
+    const specialBubblesWithIds = specialBubbles.map((bubble, index) => ({
+      id: `special-${index}`,
+      message: bubble.message,
+      style: {
+        bgColor: bubble.message === "Love Notes" ? "bg-mauve-rose" : "bg-soft-blush",
+        textColor: bubble.message === "Love Notes" ? "text-white" : "text-midnight-indigo",
+        position: bubble.message === "Love Notes" ? "after:border-t-mauve-rose" : "after:border-t-soft-blush"
+      },
+      positionStyle: specialBubblePositions[index].position,
+      tailPosition: specialBubblePositions[index].tail,
+      isSpecial: true
+    }));
+
+    setVisibleBubbles(prev => [...prev, ...specialBubblesWithIds]);
+  }, []);
 
   // Effect to periodically add new bubbles
   useEffect(() => {
@@ -133,26 +165,37 @@ const JournalBubblesHero = () => {
     <div className="relative z-10 py-20 overflow-visible">
       {/* Message Bubbles Container - extending beyond its boundaries */}
       <div className="absolute inset-0 h-[220px] w-full overflow-visible">
-        {visibleBubbles.map(bubble => (
-          <div 
-            id={`bubble-${bubble.id}`}
-            key={bubble.id}
-            className={cn(
-              "absolute px-4 py-2 rounded-xl shadow-sm font-cormorant font-semibold text-center",
-              bubble.style.bgColor,
-              bubble.style.textColor,
-              bubble.positionStyle,
-              bubble.tailPosition,
-              "z-20 after:content-[''] after:absolute after:bottom-[-8px] after:border-l-[8px] after:border-l-transparent after:border-r-[8px] after:border-r-transparent after:border-t-[8px]",
-              bubble.style.position
-            )}
-            style={{ 
-              animation: 'fadeIn 1s forwards',
-            }}
-          >
-            {bubble.message}
-          </div>
-        ))}
+        {visibleBubbles.map(bubble => {
+          // Special styling for "Love Notes" and "Thoughts" bubbles
+          const specialStyles = bubble.isSpecial 
+            ? "font-bold text-base z-30 shadow-md" 
+            : "z-20";
+            
+          // Don't fade out special bubbles
+          const animationStyle = bubble.isSpecial 
+            ? { animation: 'fadeIn 0.8s forwards, pulse 3s infinite' } 
+            : { animation: 'fadeIn 1s forwards' };
+            
+          return (
+            <div 
+              id={`bubble-${bubble.id}`}
+              key={bubble.id}
+              className={cn(
+                "absolute px-4 py-2 rounded-xl shadow-sm font-cormorant font-semibold text-center",
+                bubble.style.bgColor,
+                bubble.style.textColor,
+                bubble.positionStyle,
+                bubble.tailPosition,
+                "after:content-[''] after:absolute after:bottom-[-8px] after:border-l-[8px] after:border-l-transparent after:border-r-[8px] after:border-r-transparent after:border-t-[8px]",
+                bubble.style.position,
+                specialStyles
+              )}
+              style={animationStyle}
+            >
+              {bubble.message}
+            </div>
+          );
+        })}
       </div>
     </div>
   );

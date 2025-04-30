@@ -43,10 +43,15 @@ const Archive = () => {
                 </TabsTrigger>
                 <TabsTrigger 
                   value="love-notes"
-                  className="flex items-center gap-2 py-3 px-5 data-[state=active]:bg-mauve-rose data-[state=active]:text-white rounded-full text-xs sm:text-sm"
+                  className="flex items-center gap-2 py-3 px-5 data-[state=active]:bg-mauve-rose data-[state=active]:text-white rounded-full text-xs sm:text-sm relative"
                 >
                   <Heart className="h-4 w-4" />
                   <span>Love Notes</span>
+                  {activeTab !== 'love-notes' && (
+                    <div className="absolute -right-2 -top-2 bg-mauve-rose text-white text-xs px-2 py-1 rounded-full animate-pulse">
+                      New
+                    </div>
+                  )}
                 </TabsTrigger>
                 <TabsTrigger 
                   value="thoughts"
@@ -67,7 +72,7 @@ const Archive = () => {
             </TabsContent>
             
             <TabsContent value="thoughts">
-              <div className="text-center mb-8">
+              <div className="text-center mb-8 pt-4 sm:pt-0">
                 <p className="text-midnight-indigo text-lg font-medium">Just need to get it out?</p>
                 <p className="text-midnight-indigo/70">This space is only for you.</p>
               </div>

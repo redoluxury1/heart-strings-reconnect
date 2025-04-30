@@ -39,7 +39,7 @@ const JournalEntries = () => {
   } = useJournalEntries();
 
   return (
-    <div>
+    <div className="mt-4 sm:mt-0">
       <JournalSearch
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
