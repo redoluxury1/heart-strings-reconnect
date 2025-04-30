@@ -1,8 +1,10 @@
+
 import React from 'react';
 import { MessageCircle, Puzzle, Hand } from 'lucide-react';
 import FeatureCard, { Feature } from './FeatureCard';
 import ContentContainer from '@/components/common/ContentContainer';
 import PausePhraseTool from './PausePhraseTool';
+import SayThisInsteadTool from './SayThisInsteadTool';
 
 // Feature data
 const features: Feature[] = [
@@ -57,7 +59,11 @@ const FeatureCardSection: React.FC<FeatureCardSectionProps> = ({
                 feature={feature}
                 isSelected={selectedFeature === feature.id}
                 toggleFeature={toggleFeature}
-                customContent={null}
+                customContent={
+                  feature.id === 'say-instead' && selectedFeature === 'say-instead' 
+                    ? <SayThisInsteadTool /> 
+                    : null
+                }
               />
             ))}
           </div>
