@@ -1,27 +1,45 @@
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { sayInsteadPhrases } from '@/data/say-instead-phrases';
 import { SayInsteadPhrase } from '@/types/say-instead';
 import { MessageCircle } from 'lucide-react';
-import SearchBar from './say-instead/SearchBar';
 import PhraseCard from './say-instead/PhraseCard';
 import PhraseDetailView from './say-instead/PhraseDetailView';
 import NoResults from './say-instead/NoResults';
+import { 
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from "@/components/ui/select";
 
 const SayThisInsteadTool: React.FC = () => {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedPhrase, setSelectedPhrase] = useState<SayInsteadPhrase | null>(null);
   
-  // Filter phrases based on search term
-  const filteredPhrases = searchTerm.trim() === '' 
-    ? sayInsteadPhrases 
-    : sayInsteadPhrases.filter(phrase => 
-        phrase.original.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        phrase.alternatives.some(alt => alt.toLowerCase().includes(searchTerm.toLowerCase())) ||
-        phrase.categories.some(category => 
-          category.toLowerCase().includes(searchTerm.toLowerCase())
-        )
-      );
+  // Extract unique categories from all phrases
+  const categories = useMemo(() => {
+    const allCategories = new Set<string>();
+    sayInsteadPhrases.forEach(phrase => {
+      phrase.categories.forEach(category => {
+        allCategories.add(category);
+      });
+    });
+    return Array.from(allCategories).sort();
+  }, []);
+  
+  // Filter phrases based on selected category
+  const filteredPhrases = useMemo(() => {
+    if (selectedCategory === 'all') {
+      return sayInsteadPhrases;
+    }
+    return sayInsteadPhrases.filter(phrase => 
+      phrase.categories.some(category => 
+        category === selectedCategory
+      )
+    );
+  }, [selectedCategory]);
 
   return (
     <div className="space-y-6">
@@ -35,11 +53,25 @@ const SayThisInsteadTool: React.FC = () => {
         </p>
       </div>
       
-      {/* Search */}
-      <SearchBar 
-        searchTerm={searchTerm} 
-        onSearchChange={setSearchTerm} 
-      />
+      {/* Category Filter Dropdown */}
+      <div>
+        <Select 
+          value={selectedCategory} 
+          onValueChange={setSelectedCategory}
+        >
+          <SelectTrigger className="w-full bg-white border-lavender-blue/30 focus:border-lavender-blue">
+            <SelectValue placeholder="Filter by category" />
+          </SelectTrigger>
+          <SelectContent className="bg-white">
+            <SelectItem value="all">All Categories</SelectItem>
+            {categories.map((category) => (
+              <SelectItem key={category} value={category}>
+                {category}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
       
       {/* Results display */}
       <div className="space-y-4 max-h-[400px] overflow-auto pr-2">
