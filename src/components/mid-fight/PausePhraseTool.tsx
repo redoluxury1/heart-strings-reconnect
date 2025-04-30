@@ -166,14 +166,6 @@ const PausePhraseTool: React.FC<PausePhraseToolProps> = ({ onClose }) => {
     });
     setIsCustomizing(false);
   };
-  
-  const handleDone = () => {
-    toast({
-      title: "You've got this!",
-      description: "Remember to breathe and speak from the heart.",
-    });
-    onClose();
-  };
 
   return (
     <div className="flex flex-col">
@@ -199,16 +191,6 @@ const PausePhraseTool: React.FC<PausePhraseToolProps> = ({ onClose }) => {
                 {goal.title}
               </Button>
             ))}
-          </div>
-          
-          <div className="flex justify-end">
-            <Button
-              variant="default"
-              className="bg-lavender-blue hover:bg-lavender-blue/90 text-white"
-              onClick={handleDone}
-            >
-              Done
-            </Button>
           </div>
         </>
       ) : isCustomizing ? (
@@ -275,16 +257,6 @@ const PausePhraseTool: React.FC<PausePhraseToolProps> = ({ onClose }) => {
               onCustomize={() => handleCustomizePhrase(phrase)}
             />
           ))}
-          
-          <div className="flex justify-end mt-2">
-            <Button
-              variant="default"
-              className="bg-lavender-blue hover:bg-lavender-blue/90 text-white"
-              onClick={handleDone}
-            >
-              Done
-            </Button>
-          </div>
         </>
       )}
     </div>

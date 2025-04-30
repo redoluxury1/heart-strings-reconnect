@@ -54,14 +54,14 @@ const MidFight = () => {
         {/* Emotional Header Block */}
         <EmotionalHeader isVisible={isVisible} animationsEnabled={animationsEnabled} />
         
-        {/* Directly show the time out timer */}
+        {/* Timeout Timer Section */}
         <section className="py-8 bg-soft-blush/30">
           <ContentContainer maxWidth="lg">
             <TimeoutTimer animationsEnabled={animationsEnabled} />
           </ContentContainer>
         </section>
 
-        {/* Feature cards (excluding the timeout timer) */}
+        {/* Feature cards including the always-visible Pause & Phrase tool */}
         <FeatureCardSection 
           selectedFeature={selectedFeature}
           toggleFeature={toggleFeature}

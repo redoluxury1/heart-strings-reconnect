@@ -23,7 +23,7 @@ const Navbar = () => {
           <img 
             src="/lovable-uploads/80619689-94c4-43be-b585-6e9079eace63.png" 
             alt="Bridge For Couples" 
-            className="h-28 w-auto" // Increased from h-20 to h-28
+            className="h-28 w-auto"
           />
           <span className="sr-only">Bridge For Couples</span>
         </Link>
@@ -39,41 +39,19 @@ const Navbar = () => {
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <NavigationMenuTrigger className="text-midnight-indigo hover:text-mauve-rose bg-transparent hover:bg-soft-blush">Resources</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-                  <li>
-                    <NavigationMenuLink asChild>
-                      <Link to="/during-conflict" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-soft-blush hover:text-midnight-indigo focus:bg-soft-blush focus:text-midnight-indigo">
-                        <div className="text-sm font-medium leading-none">During Conflict</div>
-                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                          Tools and techniques to handle active disagreements
-                        </p>
-                      </Link>
-                    </NavigationMenuLink>
-                  </li>
-                  <li>
-                    <NavigationMenuLink asChild>
-                      <Link to="/post-conflict" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-soft-blush hover:text-midnight-indigo focus:bg-soft-blush focus:text-midnight-indigo">
-                        <div className="text-sm font-medium leading-none">Post Conflict</div>
-                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                          Healing and reflection after disagreements
-                        </p>
-                      </Link>
-                    </NavigationMenuLink>
-                  </li>
-                  <li>
-                    <NavigationMenuLink asChild>
-                      <Link to="/reconnect" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-soft-blush hover:text-midnight-indigo focus:bg-soft-blush focus:text-midnight-indigo">
-                        <div className="text-sm font-medium leading-none">Reconnect</div>
-                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                          Activities to strengthen your relationship
-                        </p>
-                      </Link>
-                    </NavigationMenuLink>
-                  </li>
-                </ul>
-              </NavigationMenuContent>
+              <Link to="/during-conflict" className="text-sm font-medium hover:text-mauve-rose transition-colors px-3 py-2">
+                Mid-Fight
+              </Link>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <Link to="/post-conflict" className="text-sm font-medium hover:text-mauve-rose transition-colors px-3 py-2">
+                Post-Fight
+              </Link>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <Link to="/reconnect" className="text-sm font-medium hover:text-mauve-rose transition-colors px-3 py-2">
+                Reconnecting
+              </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
               <Button variant="outline" className="text-midnight-indigo border-midnight-indigo hover:bg-soft-blush rounded-full">
@@ -112,21 +90,21 @@ const Navbar = () => {
               className="text-midnight-indigo hover:text-mauve-rose px-4 py-2 hover:bg-soft-blush rounded"
               onClick={() => setMobileMenuOpen(false)}
             >
-              During Conflict
+              Mid-Fight
             </Link>
             <Link 
               to="/post-conflict" 
               className="text-midnight-indigo hover:text-mauve-rose px-4 py-2 hover:bg-soft-blush rounded"
               onClick={() => setMobileMenuOpen(false)}
             >
-              Post Conflict
+              Post-Fight
             </Link>
             <Link 
               to="/reconnect" 
               className="text-midnight-indigo hover:text-mauve-rose px-4 py-2 hover:bg-soft-blush rounded"
               onClick={() => setMobileMenuOpen(false)}
             >
-              Reconnect
+              Reconnecting
             </Link>
             <Button 
               variant="outline" 
