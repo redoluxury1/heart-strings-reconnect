@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import LoveNotesReceived from "./pages/LoveNotesReceived";
+import MidFight from "./pages/MidFight";
 
 const queryClient = new QueryClient();
 
@@ -18,7 +19,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/during-conflict" element={<NotFound />} />
+          <Route path="/during-conflict" element={<MidFight />} />
           <Route path="/post-conflict" element={<NotFound />} />
           <Route path="/reconnect" element={<NotFound />} />
           <Route path="/love-notes" element={<LoveNotesReceived />} />
