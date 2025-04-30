@@ -20,6 +20,15 @@ type CardContent = {
   sectionHeader: string;
 };
 
+// Heart decoration component
+const HeartDecoration = ({ className }: { className: string }) => {
+  return (
+    <div className={`absolute pointer-events-none ${className}`}>
+      <Heart className="h-16 w-16 text-midnight-indigo/15" />
+    </div>
+  );
+};
+
 const StillUsSection = () => {
   const isMobile = useIsMobile();
   
@@ -63,9 +72,17 @@ const StillUsSection = () => {
   ];
 
   return (
-    <section className="py-20 bg-soft-blush">
+    <section className="py-20 bg-soft-blush relative overflow-hidden">
+      {/* Decorative hearts */}
+      <HeartDecoration className="top-12 left-[5%] transform rotate-12" />
+      <HeartDecoration className="top-40 right-[7%] transform -rotate-12" />
+      <HeartDecoration className="bottom-32 left-[12%] transform -rotate-6" />
+      <HeartDecoration className="bottom-24 right-[15%] transform rotate-6" />
+      {!isMobile && <HeartDecoration className="top-1/2 left-[25%] transform -rotate-12" />}
+      {!isMobile && <HeartDecoration className="top-1/4 right-[22%] transform rotate-8" />}
+      
       <ContentContainer>
-        <div className="text-center mb-14">
+        <div className="text-center mb-14 relative z-10">
           <h2 className="font-cormorant text-3xl md:text-4xl font-medium italic text-midnight-indigo mb-4">
             We're still US
           </h2>
@@ -74,7 +91,7 @@ const StillUsSection = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-8">
+        <div className="grid grid-cols-1 gap-8 relative z-10">
           {cards.map((card, index) => (
             <div key={index} className="transition-all duration-300 hover:scale-[1.02] focus-within:scale-[1.02]">
               <div className={`h-full rounded-xl shadow-md p-6 md:p-7 bg-gradient-to-b ${card.gradientClass} border border-white/20`}>
