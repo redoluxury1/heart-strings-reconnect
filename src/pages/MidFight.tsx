@@ -98,17 +98,6 @@ const MidFight = () => {
           </div>
         </section>
         
-        {/* Page description */}
-        <section className="py-10 bg-white">
-          <ContentContainer maxWidth="lg">
-            <div className="text-center">
-              <p className="text-midnight-indigo/90 text-lg md:text-xl max-w-3xl mx-auto">
-                This page provides a supportive space for emotionally charged moments. It includes tools designed to help you pause, regulate, and communicate with clarity.
-              </p>
-            </div>
-          </ContentContainer>
-        </section>
-        
         {/* Feature cards */}
         <section className="py-12 bg-soft-blush/30">
           <ContentContainer maxWidth="lg">
