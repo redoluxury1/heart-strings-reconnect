@@ -1,4 +1,5 @@
-import { PhraseCategory, SayInsteadPhrase } from '../types/love-code-quiz';
+
+import { SayInsteadPhrase } from '../types/say-instead';
 
 export const sayInsteadPhrases: SayInsteadPhrase[] = [
   {

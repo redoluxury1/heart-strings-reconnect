@@ -1,12 +1,13 @@
 
 import React, { useState } from 'react';
-import { Search } from 'lucide-react';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { sayInsteadPhrases, SayInsteadPhrase } from '@/data/say-instead-phrases';
+import { sayInsteadPhrases } from '@/data/say-instead-phrases';
+import { SayInsteadPhrase } from '@/types/say-instead';
+import SearchBar from './say-instead/SearchBar';
+import PhraseCard from './say-instead/PhraseCard';
+import PhraseDetailView from './say-instead/PhraseDetailView';
+import NoResults from './say-instead/NoResults';
 
-const SayThisInsteadTool = () => {
+const SayThisInsteadTool: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedPhrase, setSelectedPhrase] = useState<SayInsteadPhrase | null>(null);
   
@@ -20,6 +21,16 @@ const SayThisInsteadTool = () => {
         )
       );
 
+  const handleFavorite = (alternative: string) => {
+    // This would be implemented in a future feature
+    console.log('Favorite:', alternative);
+  };
+
+  const handleCustomize = (alternative: string) => {
+    // This would be implemented in a future feature
+    console.log('Customize:', alternative);
+  };
+
   return (
     <div className="space-y-6">
       <div>
@@ -32,105 +43,31 @@ const SayThisInsteadTool = () => {
       </div>
       
       {/* Search */}
-      <div className="relative">
-        <Search className="h-4 w-4 absolute top-3 left-3 text-midnight-indigo/50" />
-        <Input
-          type="text"
-          placeholder="Search by phrase or category (e.g., 'listen', 'dismissive'...)"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="pl-10 bg-white border-lavender-blue/30 focus:border-lavender-blue"
-        />
-      </div>
+      <SearchBar 
+        searchTerm={searchTerm} 
+        onSearchChange={setSearchTerm} 
+      />
       
       {/* Results display */}
       <div className="space-y-4 max-h-[400px] overflow-auto pr-2">
         {selectedPhrase ? (
-          <div className="bg-soft-blush/30 p-4 rounded-lg">
-            <div className="flex justify-between items-start mb-3">
-              <h4 className="font-medium text-lg text-midnight-indigo">"{selectedPhrase.original}"</h4>
-              <Button 
-                variant="ghost" 
-                size="sm"
-                onClick={() => setSelectedPhrase(null)} 
-                className="text-xs text-lavender-blue hover:text-lavender-blue/80"
-              >
-                Back to list
-              </Button>
-            </div>
-            
-            <div className="flex flex-wrap gap-1 mb-3">
-              {selectedPhrase.categories.map((category, index) => (
-                <Badge key={index} variant="outline" className="bg-white/50 text-midnight-indigo/70 border-lavender-blue/20">
-                  {category}
-                </Badge>
-              ))}
-            </div>
-            
-            <div className="space-y-3 mb-3">
-              <p className="font-medium text-midnight-indigo">Say this instead:</p>
-              {selectedPhrase.alternatives.map((alternative, index) => (
-                <div 
-                  key={index} 
-                  className="group bg-white p-3 rounded border border-lavender-blue/10 hover:border-lavender-blue/30 transition-all"
-                >
-                  <p className="text-midnight-indigo group-hover:text-mauve-rose transition-colors">
-                    "{alternative}"
-                  </p>
-                  <div className="flex justify-end gap-2 mt-2">
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
-                      className="text-xs text-lavender-blue hover:bg-lavender-blue/10"
-                    >
-                      Favorite
-                    </Button>
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
-                      className="text-xs text-lavender-blue hover:bg-lavender-blue/10"
-                    >
-                      Customize
-                    </Button>
-                  </div>
-                </div>
-              ))}
-            </div>
-            
-            <div className="bg-white/70 p-3 rounded-lg mt-4">
-              <p className="text-sm text-midnight-indigo/80">
-                <span className="font-medium">Why this works:</span> {selectedPhrase.whyItWorks}
-              </p>
-            </div>
-          </div>
+          <PhraseDetailView 
+            phrase={selectedPhrase}
+            onBack={() => setSelectedPhrase(null)}
+            onFavorite={handleFavorite}
+            onCustomize={handleCustomize}
+          />
         ) : (
           filteredPhrases.length > 0 ? (
             filteredPhrases.map((phrase) => (
-              <div 
+              <PhraseCard
                 key={phrase.id}
+                phrase={phrase}
                 onClick={() => setSelectedPhrase(phrase)}
-                className="bg-white p-4 rounded-lg border border-lavender-blue/10 cursor-pointer hover:border-lavender-blue/30 transition-all hover:shadow-sm"
-              >
-                <p className="font-medium text-midnight-indigo mb-2">"{phrase.original}"</p>
-                <div className="flex flex-wrap gap-1">
-                  {phrase.categories.slice(0, 2).map((category, index) => (
-                    <Badge key={index} variant="outline" className="bg-white/50 text-midnight-indigo/70 border-lavender-blue/20">
-                      {category}
-                    </Badge>
-                  ))}
-                  {phrase.categories.length > 2 && (
-                    <Badge variant="outline" className="bg-white/50 text-midnight-indigo/70 border-lavender-blue/20">
-                      +{phrase.categories.length - 2} more
-                    </Badge>
-                  )}
-                </div>
-              </div>
+              />
             ))
           ) : (
-            <div className="text-center py-6">
-              <p className="text-midnight-indigo/60">No phrases match your search.</p>
-              <p className="text-midnight-indigo/60">Try another term or category.</p>
-            </div>
+            <NoResults />
           )
         )}
       </div>
