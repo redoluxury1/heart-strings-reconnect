@@ -60,6 +60,25 @@ export const relationshipScenarios: Scenario[] = [
     submittedBy: true
   },
   {
+    id: "book-purchase-dispute",
+    title: "The Book Purchase Dispute",
+    description: "A woman published her first book and expected her boyfriend to buy a copy. He felt that since they lived together, purchasing the book was unnecessary.",
+    options: [
+      {
+        id: "a",
+        label: "Boyfriend who didn't buy the book is the problem",
+        votes: 55
+      },
+      {
+        id: "b",
+        label: "Woman expecting the purchase is the problem",
+        votes: 45
+      }
+    ],
+    insight: "Support in relationships can take many forms. The meaning behind gestures often matters more than the practical considerations.",
+    submittedBy: true
+  },
+  {
     id: "roommate-interference",
     title: "The Roommate's Interference",
     description: "His best friend and roommate constantly interfered in their relationship, even spreading rumors. When she confronted her boyfriend, he sided with his friend, leading to a breakup.",

@@ -58,5 +58,24 @@ export const friendshipScenarios: Scenario[] = [
     ],
     insight: "Gift-giving creates social expectations that can lead to hurt feelings when unmet. But not every oversight carries negative intent - sometimes we simply forget.",
     submittedBy: true
+  },
+  {
+    id: "engagement-overshadow",
+    title: "The Engagement Overshadow",
+    description: "During a weekend getaway, a woman got engaged. Coincidentally, her best friend announced her own engagement the same weekend. The friend accused her of stealing the spotlight.",
+    options: [
+      {
+        id: "a",
+        label: "Newly engaged woman is the problem",
+        votes: 20
+      },
+      {
+        id: "b",
+        label: "Best friend making accusations is the problem",
+        votes: 80
+      }
+    ],
+    insight: "Life's milestones often coincide by chance. Joy doesn't need to be competitive - there's enough celebration to go around when we focus on mutual happiness rather than attention.",
+    submittedBy: true
   }
 ];

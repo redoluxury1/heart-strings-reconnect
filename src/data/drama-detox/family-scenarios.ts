@@ -77,5 +77,43 @@ export const familyScenarios: Scenario[] = [
     ],
     insight: "Co-parenting after separation requires ongoing communication. Decisions about children's health should involve both parents and relevant professionals.",
     submittedBy: true
+  },
+  {
+    id: "wedding-invitation-controversy",
+    title: "The Wedding Invitation Controversy",
+    description: "A groom decided not to invite his estranged mother to his wedding, citing years of neglect. She accused him of holding a grudge and trying to embarrass her.",
+    options: [
+      {
+        id: "a",
+        label: "Groom who didn't invite his mother is the problem",
+        votes: 25
+      },
+      {
+        id: "b",
+        label: "Mother who feels entitled to an invitation is the problem",
+        votes: 75
+      }
+    ],
+    insight: "Wedding guest lists often bring unresolved family issues to the surface. No one is entitled to be present at milestone events - inclusion is earned through consistent care and respect.",
+    submittedBy: true
+  },
+  {
+    id: "step-sibling-conflict",
+    title: "The Step-Sibling Conflict",
+    description: "A woman refused to attend her sister's wedding because her nephew was being bullied by his future stepsister, and she felt the marriage would exacerbate the issue.",
+    options: [
+      {
+        id: "a",
+        label: "Sister getting married is the problem",
+        votes: 40
+      },
+      {
+        id: "b",
+        label: "Woman refusing to attend is the problem",
+        votes: 60
+      }
+    ],
+    insight: "Blended families face unique challenges. Supporting children through these transitions matters, but adults must also recognize the limits of their influence on others' relationships.",
+    submittedBy: true
   }
 ];
