@@ -23,6 +23,9 @@ const CustomizePhraseView: React.FC<CustomizePhraseViewProps> = ({
         <h3 className="text-xl font-cormorant font-medium text-midnight-indigo mb-2">
           Customize your phrase
         </h3>
+        <p className="text-sm text-midnight-indigo/70 italic">
+          Speak in your own voice—but let it come from a calm place.
+        </p>
       </div>
       
       <Textarea
@@ -46,7 +49,7 @@ const CustomizePhraseView: React.FC<CustomizePhraseViewProps> = ({
           onClick={onStartConversation}
         >
           <MessageCircle className="h-4 w-4 mr-2" />
-          Let's Talk
+          Say it with care
         </Button>
       </div>
     </>

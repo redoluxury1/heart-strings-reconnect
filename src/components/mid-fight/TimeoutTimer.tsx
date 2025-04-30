@@ -104,12 +104,14 @@ const TimeoutTimer: React.FC<TimeoutTimerProps> = ({ animationsEnabled = true })
           </div>
         </div>
         
-        <h3 className="text-2xl font-cormorant font-medium text-midnight-indigo mb-6">Take a Breather</h3>
+        <h3 className="font-cormorant text-2xl sm:text-4xl md:text-5xl font-medium text-midnight-indigo mb-6">
+          Space isn't distance. It's protection. Let's take a beat.
+        </h3>
         
         {!timerActive ? (
           <>
             <p className="text-midnight-indigo/80 mb-6 text-center max-w-md">
-              Select a preset time or enter your own. Your partner will be notified that you need some space.
+              We'll let your partner know you're pausing to breathe—not walking away.
             </p>
             
             <div className="grid grid-cols-3 gap-3 w-full max-w-md mb-6">
@@ -117,7 +119,7 @@ const TimeoutTimer: React.FC<TimeoutTimerProps> = ({ animationsEnabled = true })
                 <Button 
                   key={preset.value}
                   variant="outline"
-                  className="border-lavender-blue text-midnight-indigo hover:bg-mauve-rose/10 hover:text-mauve-rose hover:border-mauve-rose"
+                  className="border-lavender-blue text-midnight-indigo hover:bg-mauve-rose hover:text-white hover:border-mauve-rose"
                   onClick={() => startTimer(preset.value)}
                 >
                   {preset.label}
@@ -143,7 +145,7 @@ const TimeoutTimer: React.FC<TimeoutTimerProps> = ({ animationsEnabled = true })
                     variant="outline"
                     className={customTimeUnit === 'minutes' 
                       ? "border-lavender-blue bg-lavender-blue text-white hover:bg-mauve-rose hover:border-mauve-rose" 
-                      : "border-lavender-blue text-midnight-indigo hover:bg-mauve-rose/10 hover:text-mauve-rose hover:border-mauve-rose"}
+                      : "border-lavender-blue text-midnight-indigo hover:bg-mauve-rose hover:text-white hover:border-mauve-rose"}
                     onClick={() => setCustomTimeUnit('minutes')}
                   >
                     <span className="text-xs">Minutes</span>
@@ -153,7 +155,7 @@ const TimeoutTimer: React.FC<TimeoutTimerProps> = ({ animationsEnabled = true })
                     variant="outline"
                     className={customTimeUnit === 'hours' 
                       ? "border-lavender-blue bg-lavender-blue text-white hover:bg-mauve-rose hover:border-mauve-rose" 
-                      : "border-lavender-blue text-midnight-indigo hover:bg-mauve-rose/10 hover:text-mauve-rose hover:border-mauve-rose"}
+                      : "border-lavender-blue text-midnight-indigo hover:bg-mauve-rose hover:text-white hover:border-mauve-rose"}
                     onClick={() => setCustomTimeUnit('hours')}
                   >
                     <span className="text-xs">Hours</span>
@@ -164,7 +166,7 @@ const TimeoutTimer: React.FC<TimeoutTimerProps> = ({ animationsEnabled = true })
                 className="w-full bg-lavender-blue hover:bg-lavender-blue/90 text-white"
                 onClick={handleCustomTimerStart}
               >
-                <span className="text-xs">Enter time</span>
+                <span className="text-xs">Start Timer & Notify Partner</span>
               </Button>
             </div>
           </>
@@ -176,6 +178,9 @@ const TimeoutTimer: React.FC<TimeoutTimerProps> = ({ animationsEnabled = true })
             <div className="text-4xl font-bold text-mauve-rose my-6">
               {formatTime()}
             </div>
+            <p className="text-midnight-indigo/80 mb-4 italic">
+              You're doing something brave. Give yourself this time.
+            </p>
             <Button 
               variant="outline"
               className="border-mauve-rose text-mauve-rose hover:bg-mauve-rose/10"

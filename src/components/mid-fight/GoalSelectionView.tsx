@@ -29,10 +29,13 @@ const GoalSelectionView: React.FC<GoalSelectionViewProps> = ({
     <>
       <div className="mb-6 text-center">
         <h3 className="text-xl font-cormorant font-medium text-midnight-indigo mb-2">
-          What are you trying to say?
+          Let's get the words right—without making it worse.
         </h3>
         <p className="text-sm text-midnight-indigo/70">
-          We'll help you say it clearly—without making things worse.
+          You know what you want to say. We'll help you say it in a way they can actually hear.
+        </p>
+        <p className="text-xs text-midnight-indigo/60 mt-2 italic">
+          Take your time. There's no rush to get it perfect—just clearer.
         </p>
       </div>
       
@@ -70,7 +73,7 @@ const GoalSelectionView: React.FC<GoalSelectionViewProps> = ({
           onClick={onStartConversation}
         >
           <SendHorizontal className="h-4 w-4" />
-          Start Conversation with Partner
+          Say it with care
         </Button>
       </div>
     </>

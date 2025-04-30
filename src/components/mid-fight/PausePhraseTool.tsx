@@ -28,7 +28,13 @@ const PausePhraseTool: React.FC<PausePhraseToolProps> = ({ onClose }) => {
 
   const handleBackToTopics = () => {
     if (isCustomizing) {
-      setIsCustomizing(false);
+      // If we were customizing a specific phrase, go back to phrase options
+      if (selectedGoal) {
+        setIsCustomizing(false);
+      } else {
+        // If it was "Something else" with no selected goal, go back to topics
+        setStep('goal-selection');
+      }
     } else {
       setStep('goal-selection');
     }
@@ -52,8 +58,9 @@ const PausePhraseTool: React.FC<PausePhraseToolProps> = ({ onClose }) => {
   };
 
   const handleSomethingElse = () => {
-    // Just go directly to customization with a blank template
-    setCustomPhrase("I'd like to talk about something that's been on my mind...");
+    // For "Something else", go directly to customization with a blank template
+    setCustomPhrase("");
+    setSelectedGoal(null);
     setIsCustomizing(true);
   };
 
