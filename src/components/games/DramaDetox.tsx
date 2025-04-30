@@ -1,11 +1,10 @@
-
 import React, { useState } from 'react';
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Gamepad } from 'lucide-react';
 import ScenarioCard from './drama-detox/ScenarioCard';
 import VotingResultsCard from './drama-detox/VotingResultsCard';
-import dramaDetoxScenarios from '../../data/drama-detox-scenarios';
+import dramaDetoxScenarios from '../../data/drama-detox';
 
 const DramaDetox = () => {
   const [currentScenarioIndex, setCurrentScenarioIndex] = useState(0);
