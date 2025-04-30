@@ -32,4 +32,5 @@ export interface SaveToastOptions {
   title?: string;
   description?: string;
   action?: React.ReactNode;
+  duration?: number;
 }
