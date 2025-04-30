@@ -47,7 +47,7 @@ const sampleEntries: JournalEntry[] = [
   {
     id: '2',
     title: 'Feeling disconnected',
-    content: 'It's been three days of barely talking. I know we're both busy but it's starting to feel like more than that. Need to check in.',
+    content: "It's been three days of barely talking. I know we're both busy but it's starting to feel like more than that. Need to check in.",
     timestamp: new Date(Date.now() - 86400000 * 7), // 7 days ago
     tags: ['conflict', 'communication'],
     isFavorite: false
@@ -55,7 +55,7 @@ const sampleEntries: JournalEntry[] = [
   {
     id: '3',
     title: 'Date night success',
-    content: 'Finally tried that new restaurant we've been meaning to go to. It was so nice to just focus on each other without distractions.',
+    content: "Finally tried that new restaurant we've been meaning to go to. It was so nice to just focus on each other without distractions.",
     timestamp: new Date(Date.now() - 86400000 * 12), // 12 days ago
     tags: ['grateful', 'connection'],
     isFavorite: false
