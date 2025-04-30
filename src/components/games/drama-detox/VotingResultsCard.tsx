@@ -54,12 +54,6 @@ const VotingResultsCard = ({ scenario, userVote }: VotingResultsCardProps) => {
           <p className="text-midnight-indigo/80 text-sm">{scenario.insight}</p>
         </div>
       )}
-      
-      {scenario.submittedBy && (
-        <p className="text-xs text-midnight-indigo/60 text-right">
-          Submitted by a BFC community member
-        </p>
-      )}
     </div>
   );
 };

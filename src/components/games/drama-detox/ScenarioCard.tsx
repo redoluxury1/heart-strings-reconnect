@@ -53,6 +53,12 @@ const ScenarioCard = ({ scenario, onVote }: ScenarioCardProps) => {
         <Vote className="h-4 w-4" />
         Cast Your Vote
       </Button>
+      
+      {scenario.submittedBy && (
+        <p className="text-xs text-midnight-indigo/60 text-right mt-4">
+          Submitted by a BFC community member
+        </p>
+      )}
     </div>
   );
 };
