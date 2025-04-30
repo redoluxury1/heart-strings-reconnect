@@ -70,7 +70,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ feature, isSelected, toggleFe
               }`}
               disabled={feature.comingSoon}
             >
-              {isSelected ? "Close Tool" : feature.comingSoon ? "Join Waitlist" : "Open Tool"}
+              {isSelected ? "Close Tool" : feature.comingSoon ? "Become a Founding Expert" : "Open Tool"}
             </Button>
           </CollapsibleTrigger>
         </CardContent>

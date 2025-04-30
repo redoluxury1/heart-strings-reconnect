@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { MessageCircle, Puzzle, Hand } from 'lucide-react';
+import { Bridge, Puzzle, Hand } from 'lucide-react';
 import FeatureCard, { Feature } from './FeatureCard';
 import ContentContainer from '@/components/common/ContentContainer';
 import PausePhraseTool from './PausePhraseTool';
@@ -10,9 +10,9 @@ import SayThisInsteadTool from './SayThisInsteadTool';
 const features: Feature[] = [
   {
     id: 'build-bridge',
-    title: 'Become a Founding Expert',
-    description: 'Sometimes we just need a third party to help us navigate something hard. We are building our team of experts bring this feature to life.',
-    icon: <Puzzle className="h-6 w-6 text-mauve-rose" />,
+    title: 'Build a Bridge',
+    description: 'Sometimes we just need a third party to help us navigate something hard. We are building our team of experts to bring this feature to life.',
+    icon: <Bridge className="h-6 w-6 text-mauve-rose" />,
     comingSoon: true,
     alwaysVisible: false,
     microtext: "Want to get in on the ground level?"
