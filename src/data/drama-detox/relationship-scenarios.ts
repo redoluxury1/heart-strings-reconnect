@@ -96,5 +96,24 @@ export const relationshipScenarios: Scenario[] = [
     ],
     insight: "Individual interests enrich our lives, but secrecy erodes trust. Couples need space for individual joy while maintaining financial transparency.",
     submittedBy: true
+  },
+  {
+    id: "phone-privacy",
+    title: "The Phone Privacy Dilemma",
+    description: "After noticing her partner being secretive with his phone, she checked his messages while he was showering. She found nothing suspicious, but he discovered what she'd done and feels his privacy was violated.",
+    options: [
+      {
+        id: "a",
+        label: "Partner who snooped through the phone is the problem",
+        votes: 65
+      },
+      {
+        id: "b",
+        label: "Partner who was secretive with his phone is the problem",
+        votes: 35
+      }
+    ],
+    insight: "Trust and transparency exist in tension with privacy and boundaries. Suspicion often prompts behavior that further damages trust, creating a cycle that's hard to break without open communication.",
+    submittedBy: false
   }
 ];
