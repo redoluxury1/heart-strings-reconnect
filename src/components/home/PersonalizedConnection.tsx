@@ -76,17 +76,17 @@ const PersonalizedConnection = () => {
           <Heart size={54} strokeWidth={1.5} />
         </div>
 
-        {/* New indigo-colored hearts */}
-        <div className="absolute top-[25%] right-[35%] text-midnight-indigo opacity-30">
+        {/* More transparent indigo-colored hearts */}
+        <div className="absolute top-[25%] right-[35%] text-midnight-indigo opacity-15">
           <Heart size={58} strokeWidth={1.5} />
         </div>
-        <div className="absolute top-[45%] left-[25%] text-midnight-indigo opacity-25">
+        <div className="absolute top-[45%] left-[25%] text-midnight-indigo opacity-15">
           <Heart size={68} strokeWidth={1.5} />
         </div>
-        <div className="absolute bottom-[25%] right-[8%] text-midnight-indigo opacity-30">
+        <div className="absolute bottom-[25%] right-[8%] text-midnight-indigo opacity-18">
           <Heart size={50} strokeWidth={1.5} />
         </div>
-        <div className="absolute top-[15%] right-[22%] text-midnight-indigo opacity-25">
+        <div className="absolute top-[15%] right-[22%] text-midnight-indigo opacity-15">
           <Heart size={42} strokeWidth={1.5} />
         </div>
       </div>
