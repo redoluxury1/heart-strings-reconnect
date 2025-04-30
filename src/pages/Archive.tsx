@@ -8,9 +8,11 @@ import SavedRephrases from '../components/archive/SavedRephrases';
 import LoveNotesArchive from '../components/archive/LoveNotesArchive';
 import JournalEntries from '../components/archive/JournalEntries';
 import JournalBubblesHero from '../components/archive/JournalBubblesHero';
+import { useIsMobile } from '../hooks/use-mobile';
 
 const Archive = () => {
   const [activeTab, setActiveTab] = useState('saved-rephrases');
+  const isMobile = useIsMobile();
 
   return (
     <div className="min-h-screen bg-[#F1ECE8]">
@@ -20,7 +22,7 @@ const Archive = () => {
         <ContentContainer>
           <JournalBubblesHero />
           
-          <p className="text-center mb-10 max-w-2xl mx-auto text-midnight-indigo/70">
+          <p className="text-center mb-10 max-w-2xl mx-auto text-midnight-indigo/70 mt-16">
             Everything worth holding onto—from the things you've said to the love you've received.
           </p>
           
@@ -30,27 +32,27 @@ const Archive = () => {
             onValueChange={setActiveTab}
             className="w-full"
           >
-            <TabsList className="flex justify-center mb-8 bg-transparent p-1 gap-2">
+            <TabsList className={`flex justify-center mb-8 bg-transparent p-1 gap-2 ${isMobile ? 'flex-wrap' : ''}`}>
               <TabsTrigger 
                 value="saved-rephrases"
-                className="flex items-center gap-2 py-3 px-5 data-[state=active]:bg-soft-blush rounded-full"
+                className="flex items-center gap-2 py-3 px-5 data-[state=active]:bg-midnight-indigo data-[state=active]:text-white rounded-full"
               >
                 <Book className="h-4 w-4" />
                 <span>Saved Rephrases</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="love-notes"
-                className="flex items-center gap-2 py-3 px-5 data-[state=active]:bg-soft-blush rounded-full"
+                className="flex items-center gap-2 py-3 px-5 data-[state=active]:bg-mauve-rose data-[state=active]:text-white rounded-full"
               >
                 <Heart className="h-4 w-4" />
                 <span>Love Notes</span>
               </TabsTrigger>
               <TabsTrigger 
-                value="journal"
-                className="flex items-center gap-2 py-3 px-5 data-[state=active]:bg-soft-blush rounded-full"
+                value="thoughts"
+                className="flex items-center gap-2 py-3 px-5 data-[state=active]:bg-soft-blush data-[state=active]:text-midnight-indigo rounded-full"
               >
                 <BookOpen className="h-4 w-4" />
-                <span>Journal</span>
+                <span>Thoughts</span>
               </TabsTrigger>
             </TabsList>
             
@@ -62,7 +64,11 @@ const Archive = () => {
               <LoveNotesArchive />
             </TabsContent>
             
-            <TabsContent value="journal">
+            <TabsContent value="thoughts">
+              <div className="text-center mb-8">
+                <p className="text-midnight-indigo text-lg font-medium">Just need to get it out?</p>
+                <p className="text-midnight-indigo/70">This space is only for you.</p>
+              </div>
               <JournalEntries />
             </TabsContent>
           </Tabs>

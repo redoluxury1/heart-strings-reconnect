@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { 
   Card, 
@@ -8,8 +7,7 @@ import {
   CardHeader
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Heart, Star, Search, Reply, Smile } from 'lucide-react';
+import { Heart, Reply, Smile } from 'lucide-react';
 import { LoveNoteArchive } from '@/types/archive';
 import { format } from 'date-fns';
 
@@ -43,17 +41,8 @@ const sampleLoveNotes: LoveNoteArchive[] = [
 
 const LoveNotesArchive = () => {
   const [loveNotes, setLoveNotes] = useState<LoveNoteArchive[]>(sampleLoveNotes);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
-
-  const toggleFavorite = (id: string) => {
-    setLoveNotes(loveNotes.map(note => 
-      note.id === id 
-        ? { ...note, isFavorite: !note.isFavorite } 
-        : note
-    ));
-  };
-
+  
+  // We're removing the favorite feature but keeping setReaction
   const setReaction = (id: string, reaction: 'heart' | 'star' | 'smile' | null) => {
     setLoveNotes(loveNotes.map(note => 
       note.id === id 
@@ -62,24 +51,10 @@ const LoveNotesArchive = () => {
     ));
   };
 
-  const filteredNotes = loveNotes
-    .filter(note => {
-      // Apply search filter
-      if (searchTerm && !note.message.toLowerCase().includes(searchTerm.toLowerCase())) {
-        return false;
-      }
-      
-      // Apply favorites filter
-      if (showFavoritesOnly && !note.isFavorite) {
-        return false;
-      }
-      
-      return true;
-    })
-    .sort((a, b) => {
-      // Sort by date (newest first)
-      return b.timestamp.getTime() - a.timestamp.getTime();
-    });
+  // Sort notes by date (newest first)
+  const sortedNotes = [...loveNotes].sort((a, b) => {
+    return b.timestamp.getTime() - a.timestamp.getTime();
+  });
 
   return (
     <div>
@@ -87,49 +62,14 @@ const LoveNotesArchive = () => {
         All the little things they said that mattered
       </h3>
       
-      <div className="mb-6 flex flex-col sm:flex-row gap-4 items-center justify-between">
-        <div className="relative w-full sm:w-72">
-          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Search love notes..."
-            className="pl-8"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </div>
-        
-        <Button
-          variant="outline"
-          size="sm"
-          className={showFavoritesOnly ? "bg-mauve-rose/10 text-mauve-rose border-mauve-rose/50" : ""}
-          onClick={() => setShowFavoritesOnly(!showFavoritesOnly)}
-        >
-          {showFavoritesOnly ? <Star className="h-4 w-4 mr-1" /> : <Heart className="h-4 w-4 mr-1" />}
-          {showFavoritesOnly ? "Favorites" : "All Notes"}
-        </Button>
-      </div>
-      
-      {filteredNotes.length > 0 ? (
+      {sortedNotes.length > 0 ? (
         <div className="space-y-4">
-          {filteredNotes.map((note) => (
+          {sortedNotes.map((note) => (
             <Card key={note.id} className="bg-white">
               <CardHeader className="pb-2">
-                <div className="flex justify-between items-start">
-                  <CardDescription className="text-sm text-rosewood-tint">
-                    {note.prompt}
-                  </CardDescription>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className={`p-1 h-auto ${note.isFavorite ? 'text-mauve-rose' : 'text-gray-400'}`}
-                    onClick={() => toggleFavorite(note.id)}
-                  >
-                    <Star className="h-5 w-5 fill-current" />
-                    <span className="sr-only">
-                      {note.isFavorite ? 'Remove from favorites' : 'Add to favorites'}
-                    </span>
-                  </Button>
-                </div>
+                <CardDescription className="text-sm text-rosewood-tint">
+                  {note.prompt}
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <p className="text-midnight-indigo">"{note.message}"</p>
