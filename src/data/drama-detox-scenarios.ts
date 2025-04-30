@@ -10,17 +10,12 @@ const dramaDetoxScenarios: Scenario[] = [
       {
         id: "a",
         label: "The partner who forgot the cake is the problem",
-        votes: 45
+        votes: 70
       },
       {
         id: "b",
         label: "The person who's upset is being too dramatic",
-        votes: 18
-      },
-      {
-        id: "c",
-        label: "They both need to chill and communicate better",
-        votes: 37
+        votes: 30
       }
     ],
     insight: "Thoughtfulness matters in relationships, but so does grace when mistakes happen. Neither perfection nor punishment builds connection.",
@@ -34,17 +29,12 @@ const dramaDetoxScenarios: Scenario[] = [
       {
         id: "a",
         label: "Sister with the pet emergency is the problem",
-        votes: 28
+        votes: 45
       },
       {
         id: "b",
         label: "Bride who isn't understanding is the problem",
-        votes: 32
-      },
-      {
-        id: "c",
-        label: "They both need to find compromise",
-        votes: 40
+        votes: 55
       }
     ],
     insight: "Family dynamics are tricky, especially during high-stress events. Often, both perspectives have validity if we can see beyond our own viewpoint.",
@@ -58,17 +48,12 @@ const dramaDetoxScenarios: Scenario[] = [
       {
         id: "a",
         label: "Partner changing plans last minute is the problem",
-        votes: 32
+        votes: 65
       },
       {
         id: "b", 
         label: "Person refusing to consider alternatives is the problem",
-        votes: 18
-      },
-      {
-        id: "c",
-        label: "They both need to find a compromise",
-        votes: 50
+        votes: 35
       }
     ],
     insight: "Flexibility and respect for joint planning are both important in relationships. The issue is less about the destination and more about how changes are communicated and negotiated.",
@@ -82,17 +67,12 @@ const dramaDetoxScenarios: Scenario[] = [
       {
         id: "a",
         label: "He's the problem for ignoring her allergy",
-        votes: 75
+        votes: 85
       },
       {
         id: "b",
         label: "She's the problem for not appreciating his effort",
-        votes: 5
-      },
-      {
-        id: "c",
-        label: "They both need to communicate better",
-        votes: 20
+        votes: 15
       }
     ],
     insight: "Showing care means paying attention to someone's needs and preferences, especially regarding health concerns like allergies. True thoughtfulness involves listening.",
@@ -106,17 +86,12 @@ const dramaDetoxScenarios: Scenario[] = [
       {
         id: "a",
         label: "Sister who declined to be MOH is the problem",
-        votes: 35
+        votes: 45
       },
       {
         id: "b",
         label: "Sister who missed the wedding is the problem",
-        votes: 25
-      },
-      {
-        id: "c",
-        label: "They both need to address their hurt feelings",
-        votes: 40
+        votes: 55
       }
     ],
     insight: "Unresolved hurt often emerges in reciprocal situations. Healing requires acknowledging past hurts rather than expecting them to disappear without discussion.",
@@ -130,16 +105,11 @@ const dramaDetoxScenarios: Scenario[] = [
       {
         id: "a",
         label: "Daughter-in-law overstepped boundaries",
-        votes: 45
+        votes: 65
       },
       {
         id: "b",
         label: "Mother-in-law overreacted to a practical question",
-        votes: 20
-      },
-      {
-        id: "c",
-        label: "Both need to approach sensitive topics more carefully",
         votes: 35
       }
     ],
@@ -154,17 +124,12 @@ const dramaDetoxScenarios: Scenario[] = [
       {
         id: "a",
         label: "Friend who made accusations is the problem",
-        votes: 55
+        votes: 75
       },
       {
         id: "b",
         label: "Person who planned another vacation is the problem",
-        votes: 15
-      },
-      {
-        id: "c",
-        label: "Both need to understand each other's perspectives",
-        votes: 30
+        votes: 25
       }
     ],
     insight: "Financial decisions are personal, and comparing different expenses isn't always fair. True friendship allows others to set their own priorities without guilt.",
@@ -178,17 +143,12 @@ const dramaDetoxScenarios: Scenario[] = [
       {
         id: "a",
         label: "Overstaying friend is the problem",
-        votes: 70
+        votes: 85
       },
       {
         id: "b",
         label: "Host who didn't set clear boundaries is the problem",
-        votes: 10
-      },
-      {
-        id: "c",
-        label: "Both need better communication about expectations",
-        votes: 20
+        votes: 15
       }
     ],
     insight: "Kindness doesn't mean endless sacrifice. Clear time frames and expectations at the beginning of an arrangement can prevent resentment later.",
@@ -202,17 +162,12 @@ const dramaDetoxScenarios: Scenario[] = [
       {
         id: "a",
         label: "Husband who made a secret purchase is the problem",
-        votes: 40
+        votes: 60
       },
       {
         id: "b",
         label: "Wife who disapproved of his hobby is the problem",
-        votes: 25
-      },
-      {
-        id: "c",
-        label: "Both need to respect individual interests and finances",
-        votes: 35
+        votes: 40
       }
     ],
     insight: "Individual interests enrich our lives, but secrecy erodes trust. Couples need space for individual joy while maintaining financial transparency.",
@@ -226,16 +181,11 @@ const dramaDetoxScenarios: Scenario[] = [
       {
         id: "a",
         label: "Father who changed children's diet without discussion is the problem",
-        votes: 30
+        votes: 55
       },
       {
         id: "b",
         label: "Mother who puts beliefs above medical advice is the problem",
-        votes: 25
-      },
-      {
-        id: "c",
-        label: "Both need to prioritize children's health and co-parent better",
         votes: 45
       }
     ],
@@ -250,17 +200,12 @@ const dramaDetoxScenarios: Scenario[] = [
       {
         id: "a",
         label: "Partner who made a major purchase without consultation is the problem",
-        votes: 65
+        votes: 85
       },
       {
         id: "b",
         label: "Partner who's upset about the purchase is the problem",
-        votes: 5
-      },
-      {
-        id: "c",
-        label: "Both need to establish clearer financial boundaries",
-        votes: 30
+        votes: 15
       }
     ],
     insight: "Major financial decisions in a partnership require mutual consultation. Individual autonomy matters, but shared financial impact demands shared decision-making.",
@@ -274,17 +219,12 @@ const dramaDetoxScenarios: Scenario[] = [
       {
         id: "a",
         label: "Interfering roommate is the problem",
-        votes: 35
+        votes: 45
       },
       {
         id: "b",
         label: "Boyfriend who didn't support his partner is the problem",
-        votes: 40
-      },
-      {
-        id: "c",
-        label: "All three need better boundaries and communication",
-        votes: 25
+        votes: 55
       }
     ],
     insight: "Relationships require safe boundaries from outside interference. Loyalty matters, but not at the expense of truth and respectful treatment.",
@@ -298,17 +238,12 @@ const dramaDetoxScenarios: Scenario[] = [
       {
         id: "a",
         label: "Person who forgot the gift is the problem",
-        votes: 20
+        votes: 40
       },
       {
         id: "b",
         label: "Colleague with hurt feelings is the problem",
-        votes: 30
-      },
-      {
-        id: "c",
-        label: "Neither is a problem - these things happen",
-        votes: 50
+        votes: 60
       }
     ],
     insight: "Gift-giving creates social expectations that can lead to hurt feelings when unmet. But not every oversight carries negative intent - sometimes we simply forget.",
