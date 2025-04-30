@@ -38,31 +38,42 @@ const PersonalizedConnection = () => {
   ];
 
   return (
-    <section className="py-12 bg-[#F9F4EB] relative overflow-hidden">
-      {/* Decorative hearts in background */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
+    <section className="py-10 bg-[#F9F4EB] relative overflow-hidden">
+      {/* Decorative hearts in background - with increased opacity */}
+      <div className="absolute inset-0 z-0">
         {/* Top left hearts */}
-        <div className="absolute -top-4 left-[5%] text-[#FDE1D3] opacity-20">
-          <Heart size={64} />
+        <div className="absolute -top-4 left-[5%] text-[#FDE1D3] opacity-30">
+          <Heart size={64} strokeWidth={1.5} />
         </div>
-        <div className="absolute top-[15%] left-[15%] text-[#FFDEE2] opacity-15">
-          <Heart size={48} />
+        <div className="absolute top-[15%] left-[15%] text-[#FFDEE2] opacity-30">
+          <Heart size={48} strokeWidth={1.5} />
         </div>
         
         {/* Right side hearts */}
-        <div className="absolute top-[10%] right-[10%] text-[#F1F0FB] opacity-20">
-          <Heart size={56} />
+        <div className="absolute top-[10%] right-[10%] text-[#F1F0FB] opacity-30">
+          <Heart size={56} strokeWidth={1.5} />
         </div>
-        <div className="absolute top-[40%] right-[5%] text-[#FFDEE2] opacity-15">
-          <Heart size={72} />
+        <div className="absolute top-[40%] right-[5%] text-[#FFDEE2] opacity-30">
+          <Heart size={72} strokeWidth={1.5} />
         </div>
         
         {/* Bottom hearts */}
-        <div className="absolute bottom-[10%] left-[20%] text-[#FDE1D3] opacity-20">
-          <Heart size={52} />
+        <div className="absolute bottom-[10%] left-[20%] text-[#FDE1D3] opacity-30">
+          <Heart size={52} strokeWidth={1.5} />
         </div>
-        <div className="absolute bottom-[15%] right-[25%] text-[#F1F0FB] opacity-15">
-          <Heart size={40} />
+        <div className="absolute bottom-[15%] right-[25%] text-[#F1F0FB] opacity-30">
+          <Heart size={40} strokeWidth={1.5} />
+        </div>
+        
+        {/* Add more hearts around the section for better visibility */}
+        <div className="absolute top-[30%] left-[30%] text-[#FFDEE2] opacity-30">
+          <Heart size={60} strokeWidth={1.5} />
+        </div>
+        <div className="absolute top-[50%] left-[10%] text-[#F1F0FB] opacity-30">
+          <Heart size={48} strokeWidth={1.5} />
+        </div>
+        <div className="absolute top-[60%] right-[15%] text-[#FDE1D3] opacity-30">
+          <Heart size={54} strokeWidth={1.5} />
         </div>
       </div>
       
