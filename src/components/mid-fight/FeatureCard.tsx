@@ -11,6 +11,7 @@ export interface Feature {
   icon: React.ReactNode;
   comingSoon: boolean;
   alwaysVisible: boolean;
+  microtext?: string;
 }
 
 interface FeatureCardProps {
@@ -52,6 +53,13 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ feature, isSelected, toggleFe
           <CardDescription className="text-midnight-indigo/80 mb-5">
             {feature.description}
           </CardDescription>
+          
+          {feature.microtext && (
+            <p className="text-xs text-midnight-indigo/60 italic text-center mb-2">
+              {feature.microtext}
+            </p>
+          )}
+          
           <CollapsibleTrigger asChild disabled={feature.comingSoon}>
             <Button
               variant={feature.comingSoon ? "outline" : "default"}
