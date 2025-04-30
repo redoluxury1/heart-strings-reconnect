@@ -25,7 +25,8 @@ const SavedRephrases = () => {
     setShowFavoritesOnly(false);
   };
 
-  const hasActiveFilters = searchTerm || selectedCategories.length > 0 || showFavoritesOnly;
+  // Fixed the type issue by ensuring hasActiveFilters is always a boolean
+  const hasActiveFilters = searchTerm !== '' || selectedCategories.length > 0 || showFavoritesOnly;
 
   const filteredRephrases = rephrases
     .filter(rephrase => {

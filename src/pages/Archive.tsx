@@ -7,33 +7,18 @@ import ContentContainer from '../components/common/ContentContainer';
 import SavedRephrases from '../components/archive/SavedRephrases';
 import LoveNotesArchive from '../components/archive/LoveNotesArchive';
 import JournalEntries from '../components/archive/JournalEntries';
+import JournalBubblesHero from '../components/archive/JournalBubblesHero';
 
 const Archive = () => {
   const [activeTab, setActiveTab] = useState('saved-rephrases');
-  const [titleVisible, setTitleVisible] = useState(false);
-
-  useEffect(() => {
-    // Trigger the title animation after component mounts
-    setTimeout(() => {
-      setTitleVisible(true);
-    }, 300);
-  }, []);
 
   return (
-    <div className="min-h-screen bg-soft-cream">
+    <div className="min-h-screen bg-[#F1ECE8]">
       <Navbar />
       
       <div className="py-10">
         <ContentContainer>
-          <div className="overflow-hidden h-24 flex items-end justify-center mb-4">
-            <h1 
-              className={`font-cormorant text-3xl md:text-4xl font-bold text-midnight-indigo
-                transition-all duration-1000 ease-in-out
-                ${titleVisible ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'}`}
-            >
-              The Archive
-            </h1>
-          </div>
+          <JournalBubblesHero />
           
           <p className="text-center mb-10 max-w-2xl mx-auto text-midnight-indigo/70">
             Everything worth holding onto—from the things you've said to the love you've received.
