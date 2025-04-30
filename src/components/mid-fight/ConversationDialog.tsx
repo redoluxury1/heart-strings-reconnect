@@ -1,7 +1,7 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { SendHorizontal, PenLine } from 'lucide-react';
+import { SendHorizontal, PenLine, MessageSquare } from 'lucide-react';
 import { 
   Dialog,
   DialogContent,
@@ -11,22 +11,32 @@ import {
   DialogTitle
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
+import { getPartnerResponsesForTopic } from '@/data/partner-responses';
 
 interface ConversationDialogProps {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
   partnerName: string;
   onSendInvite: () => void;
+  topicId?: string;
 }
 
 const ConversationDialog: React.FC<ConversationDialogProps> = ({
   isOpen,
   onOpenChange,
   partnerName,
-  onSendInvite
+  onSendInvite,
+  topicId = 'something-else'
 }) => {
   const [initialMessage, setInitialMessage] = useState('');
   const [inviteSent, setInviteSent] = useState(false);
+  const [suggestedResponses, setSuggestedResponses] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (topicId) {
+      setSuggestedResponses(getPartnerResponsesForTopic(topicId));
+    }
+  }, [topicId]);
 
   const handleSendInvite = () => {
     onSendInvite();
@@ -78,6 +88,22 @@ const ConversationDialog: React.FC<ConversationDialogProps> = ({
                 placeholder="Type your message here..."
                 className="w-full min-h-20 border border-lavender-blue/30 rounded-lg p-3 focus:outline-none focus:ring-1 focus:ring-lavender-blue"
               />
+              
+              {suggestedResponses.length > 0 && (
+                <div className="mt-3 space-y-2">
+                  <div className="flex items-center gap-2">
+                    <MessageSquare className="h-4 w-4 text-lavender-blue" />
+                    <p className="text-sm font-medium">How {partnerName} might respond:</p>
+                  </div>
+                  <div className="space-y-2">
+                    {suggestedResponses.map((response, index) => (
+                      <div key={index} className="bg-lavender-blue/10 p-3 rounded-md text-xs text-midnight-indigo border border-lavender-blue/20">
+                        {response}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           )}
         </div>

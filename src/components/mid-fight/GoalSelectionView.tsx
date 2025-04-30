@@ -2,6 +2,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { SendHorizontal, Edit } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface Goal {
   id: string;
@@ -22,6 +23,8 @@ const GoalSelectionView: React.FC<GoalSelectionViewProps> = ({
   onStartConversation,
   onSomethingElse
 }) => {
+  const isMobile = useIsMobile();
+  
   return (
     <>
       <div className="mb-6 text-center">
@@ -33,27 +36,31 @@ const GoalSelectionView: React.FC<GoalSelectionViewProps> = ({
         </p>
       </div>
       
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-3 mb-6">
+      <div className={`grid ${isMobile ? 'grid-cols-2 gap-2' : 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-3'} mb-6`}>
         {goals.map((goal) => (
           <Button
             key={goal.id}
             variant="outline"
-            className="flex justify-center items-center text-center h-auto aspect-square sm:aspect-auto sm:h-auto py-3 px-3 border-lavender-blue/40 text-midnight-indigo hover:bg-mauve-rose/10 hover:text-mauve-rose hover:border-mauve-rose/40 transition-all whitespace-normal"
+            className={`flex justify-center items-center text-center border-lavender-blue/40 text-midnight-indigo hover:bg-mauve-rose/10 hover:text-mauve-rose hover:border-mauve-rose/40 transition-all whitespace-normal
+              ${isMobile ? 'h-auto py-1.5 px-3 text-xs' : 'h-auto aspect-square sm:aspect-auto sm:h-auto py-3 px-3'}`}
             onClick={() => onGoalSelect(goal)}
           >
-            <span className="text-xs sm:text-sm line-clamp-3">{goal.title}</span>
+            <span className={`${isMobile ? 'text-xs line-clamp-2' : 'text-xs sm:text-sm line-clamp-3'}`}>
+              {goal.title}
+            </span>
           </Button>
         ))}
 
         {/* Something else option */}
         <Button
           variant="outline"
-          className="flex justify-center items-center text-center h-auto aspect-square sm:aspect-auto sm:h-auto py-3 px-3 border-lavender-blue/40 text-midnight-indigo hover:bg-mauve-rose/10 hover:text-mauve-rose hover:border-mauve-rose/40 transition-all"
+          className={`flex justify-center items-center text-center border-lavender-blue/40 text-midnight-indigo hover:bg-mauve-rose/10 hover:text-mauve-rose hover:border-mauve-rose/40 transition-all
+            ${isMobile ? 'h-auto py-1.5 px-3' : 'h-auto aspect-square sm:aspect-auto sm:h-auto py-3 px-3'}`}
           onClick={onSomethingElse}
         >
           <div className="flex flex-col items-center gap-1">
             <Edit className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-            <span className="text-xs sm:text-sm line-clamp-2">Something else</span>
+            <span className={`${isMobile ? 'text-xs' : 'text-xs sm:text-sm'} line-clamp-2`}>Something else</span>
           </div>
         </Button>
       </div>

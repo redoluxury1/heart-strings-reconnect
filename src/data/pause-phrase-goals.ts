@@ -107,4 +107,13 @@ export const goals: Goal[] = [
       "For me to feel safe in this conversation, I need us to agree that..."
     ]
   },
+  {
+    id: 'request-appreciation',
+    title: 'Ask for appreciation',
+    phrases: [
+      "I'd really value hearing what you appreciate about me right now.",
+      "It would help me feel more connected if we could share some things we value about each other.",
+      "I'm feeling a bit unseen. Could you share something you appreciate about our relationship?"
+    ]
+  },
 ];

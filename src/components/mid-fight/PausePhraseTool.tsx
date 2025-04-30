@@ -83,6 +83,7 @@ const PausePhraseTool: React.FC<PausePhraseToolProps> = ({ onClose }) => {
         onOpenChange={setStartConversationOpen}
         partnerName={partnerName}
         onSendInvite={handleSendInvite}
+        topicId={selectedGoal?.id || 'something-else'}
       />
     </div>
   );
