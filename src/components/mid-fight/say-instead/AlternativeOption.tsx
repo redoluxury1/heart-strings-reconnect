@@ -1,16 +1,17 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
+import { Edit, BookmarkPlus } from 'lucide-react';
 
 interface AlternativeOptionProps {
   alternative: string;
-  onFavorite: () => void;
+  onSaveToLibrary: () => void;
   onCustomize: () => void;
 }
 
 const AlternativeOption: React.FC<AlternativeOptionProps> = ({ 
   alternative,
-  onFavorite,
+  onSaveToLibrary,
   onCustomize
 }) => {
   return (
@@ -23,9 +24,10 @@ const AlternativeOption: React.FC<AlternativeOptionProps> = ({
           variant="outline" 
           size="sm" 
           className="text-xs text-lavender-blue hover:bg-lavender-blue/10"
-          onClick={onFavorite}
+          onClick={onSaveToLibrary}
         >
-          Favorite
+          <BookmarkPlus className="h-3.5 w-3.5 mr-1" />
+          Save
         </Button>
         <Button 
           variant="outline" 
@@ -33,6 +35,7 @@ const AlternativeOption: React.FC<AlternativeOptionProps> = ({
           className="text-xs text-lavender-blue hover:bg-lavender-blue/10"
           onClick={onCustomize}
         >
+          <Edit className="h-3.5 w-3.5 mr-1" />
           Customize
         </Button>
       </div>

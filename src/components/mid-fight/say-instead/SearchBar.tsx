@@ -14,7 +14,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, onSearchChange }) => 
       <Search className="h-4 w-4 absolute top-3 left-3 text-midnight-indigo/50" />
       <Input
         type="text"
-        placeholder="Search by phrase or category (e.g., 'listen', 'dismissive'...)"
+        placeholder="Search phrases or topics (e.g., 'listen', 'dismissive'...)"
         value={searchTerm}
         onChange={(e) => onSearchChange(e.target.value)}
         className="pl-10 bg-white border-lavender-blue/30 focus:border-lavender-blue"

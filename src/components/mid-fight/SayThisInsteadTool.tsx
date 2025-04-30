@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { sayInsteadPhrases } from '@/data/say-instead-phrases';
 import { SayInsteadPhrase } from '@/types/say-instead';
+import { MessageCircle } from 'lucide-react';
 import SearchBar from './say-instead/SearchBar';
 import PhraseCard from './say-instead/PhraseCard';
 import PhraseDetailView from './say-instead/PhraseDetailView';
@@ -16,28 +17,20 @@ const SayThisInsteadTool: React.FC = () => {
     ? sayInsteadPhrases 
     : sayInsteadPhrases.filter(phrase => 
         phrase.original.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        phrase.alternatives.some(alt => alt.toLowerCase().includes(searchTerm.toLowerCase())) ||
         phrase.categories.some(category => 
           category.toLowerCase().includes(searchTerm.toLowerCase())
         )
       );
 
-  const handleFavorite = (alternative: string) => {
-    // This would be implemented in a future feature
-    console.log('Favorite:', alternative);
-  };
-
-  const handleCustomize = (alternative: string) => {
-    // This would be implemented in a future feature
-    console.log('Customize:', alternative);
-  };
-
   return (
     <div className="space-y-6">
-      <div>
-        <h3 className="text-2xl font-cormorant font-medium text-midnight-indigo mb-2">
+      <div className="flex flex-col items-center mb-5">
+        <MessageCircle className="h-16 md:h-20 w-16 md:w-20 text-mauve-rose mb-3" />
+        <h3 className="text-2xl font-cormorant font-medium text-midnight-indigo mb-2 text-center">
           Say This Instead
         </h3>
-        <p className="text-midnight-indigo/80 mb-4">
+        <p className="text-midnight-indigo/80 mb-4 text-center max-w-2xl">
           Turn common conflict phrases into calmer alternatives that keep the conversation productive.
         </p>
       </div>
@@ -54,8 +47,6 @@ const SayThisInsteadTool: React.FC = () => {
           <PhraseDetailView 
             phrase={selectedPhrase}
             onBack={() => setSelectedPhrase(null)}
-            onFavorite={handleFavorite}
-            onCustomize={handleCustomize}
           />
         ) : (
           filteredPhrases.length > 0 ? (

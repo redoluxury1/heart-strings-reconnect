@@ -5,16 +5,8 @@ import ContentContainer from '@/components/common/ContentContainer';
 import PausePhraseTool from './PausePhraseTool';
 import SayThisInsteadTool from './SayThisInsteadTool';
 
-// Feature data
+// Feature data for other features (not including "say-instead" which will be displayed directly)
 const features: Feature[] = [
-  {
-    id: 'say-instead',
-    title: 'Say This Instead',
-    description: 'Turn common conflict phrases into calmer alternatives.',
-    icon: <MessageCircle className="h-6 w-6 text-soft-cream" />,
-    comingSoon: false,
-    alwaysVisible: false,
-  },
   {
     id: 'build-bridge',
     title: 'Build a Bridge',
@@ -22,7 +14,7 @@ const features: Feature[] = [
     icon: <Puzzle className="h-6 w-6 text-mauve-rose" />,
     comingSoon: true,
     alwaysVisible: false,
-  },
+  }
 ];
 
 interface FeatureCardSectionProps {
@@ -36,7 +28,7 @@ const FeatureCardSection: React.FC<FeatureCardSectionProps> = ({
 }) => {
   return (
     <>
-      {/* Pause Phrase Tool - Always visible without needing to click */}
+      {/* Pause Phrase Tool - Always visible */}
       <section className="py-6 md:py-8 bg-soft-blush/30">
         <ContentContainer maxWidth="lg">
           <div className="bg-white rounded-lg shadow-md p-5 md:p-6 border border-lavender-blue/20">
@@ -48,26 +40,33 @@ const FeatureCardSection: React.FC<FeatureCardSectionProps> = ({
         </ContentContainer>
       </section>
       
-      {/* Other feature cards */}
+      {/* Say This Instead - Always visible */}
       <section className="py-6 md:py-8 bg-soft-blush/30">
         <ContentContainer maxWidth="lg">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-            {features.map((feature) => (
-              <FeatureCard 
-                key={feature.id}
-                feature={feature}
-                isSelected={selectedFeature === feature.id}
-                toggleFeature={toggleFeature}
-                customContent={
-                  feature.id === 'say-instead' && selectedFeature === 'say-instead' 
-                    ? <SayThisInsteadTool /> 
-                    : null
-                }
-              />
-            ))}
+          <div className="bg-white rounded-lg shadow-md p-5 md:p-6 border border-lavender-blue/20">
+            <SayThisInsteadTool />
           </div>
         </ContentContainer>
       </section>
+      
+      {/* Other feature cards */}
+      {features.length > 0 && (
+        <section className="py-6 md:py-8 bg-soft-blush/30">
+          <ContentContainer maxWidth="lg">
+            <div className="grid grid-cols-1 md:grid-cols-1 gap-6 md:gap-8">
+              {features.map((feature) => (
+                <FeatureCard 
+                  key={feature.id}
+                  feature={feature}
+                  isSelected={selectedFeature === feature.id}
+                  toggleFeature={toggleFeature}
+                  customContent={null}
+                />
+              ))}
+            </div>
+          </ContentContainer>
+        </section>
+      )}
     </>
   );
 };
