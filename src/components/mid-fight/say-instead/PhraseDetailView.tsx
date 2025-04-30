@@ -122,18 +122,18 @@ const PhraseDetailView: React.FC<PhraseDetailViewProps> = ({ phrase, onBack }) =
 
   return (
     <div className="bg-soft-blush/30 p-4 rounded-lg">
-      <div className="flex justify-between items-start mb-3">
-        <h4 className="font-medium text-lg text-midnight-indigo">"{phrase.original}"</h4>
-        <Button 
-          variant="ghost" 
-          size="sm"
-          onClick={onBack} 
-          className="text-xs text-lavender-blue hover:text-lavender-blue/80"
-        >
-          <ArrowLeft className="h-4 w-4 mr-1" />
-          Back to list
-        </Button>
-      </div>
+      {/* Back button moved under the dropdown menu */}
+      <Button 
+        variant="ghost" 
+        size="sm"
+        onClick={onBack} 
+        className="text-xs text-lavender-blue hover:text-mauve-rose mb-3 -ml-2"
+      >
+        <ArrowLeft className="h-4 w-4 mr-1" />
+        Back to list
+      </Button>
+      
+      <h4 className="font-medium text-lg text-midnight-indigo mb-3">"{phrase.original}"</h4>
       
       <div className="flex flex-wrap gap-1 mb-3">
         {phrase.categories.map((category, index) => (
@@ -159,7 +159,7 @@ const PhraseDetailView: React.FC<PhraseDetailViewProps> = ({ phrase, onBack }) =
         <Button 
           variant="ghost" 
           size="sm" 
-          className="text-xs text-lavender-blue justify-center"
+          className="text-xs text-lavender-blue justify-center hover:text-mauve-rose"
           onClick={() => setShowWhyItWorks(!showWhyItWorks)}
         >
           {showWhyItWorks ? "Hide explanation" : "Why this works"}

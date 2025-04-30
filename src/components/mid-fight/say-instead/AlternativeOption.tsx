@@ -23,7 +23,7 @@ const AlternativeOption: React.FC<AlternativeOptionProps> = ({
         <Button 
           variant="outline" 
           size="sm" 
-          className="text-xs text-lavender-blue hover:bg-lavender-blue/10"
+          className="text-xs text-lavender-blue hover:bg-mauve-rose/10 hover:text-mauve-rose hover:border-mauve-rose/50"
           onClick={onSaveToLibrary}
         >
           <BookmarkPlus className="h-3.5 w-3.5 mr-1" />
@@ -32,7 +32,7 @@ const AlternativeOption: React.FC<AlternativeOptionProps> = ({
         <Button 
           variant="outline" 
           size="sm" 
-          className="text-xs text-lavender-blue hover:bg-lavender-blue/10"
+          className="text-xs text-lavender-blue hover:bg-mauve-rose/10 hover:text-mauve-rose hover:border-mauve-rose/50"
           onClick={onCustomize}
         >
           <Edit className="h-3.5 w-3.5 mr-1" />
