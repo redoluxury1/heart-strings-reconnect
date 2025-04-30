@@ -16,6 +16,7 @@ const features = [
     description: 'A gentle way to take space without storming off.',
     icon: <Clock className="h-6 w-6 text-lavender-blue" />,
     comingSoon: false,
+    alwaysVisible: true, // New property for features that should always be visible
   },
   {
     id: 'mood-check-in',
@@ -23,6 +24,7 @@ const features = [
     description: 'Helps you name what you\'re feeling before you say more.',
     icon: <Heart className="h-6 w-6 text-rosewood-tint" />,
     comingSoon: false,
+    alwaysVisible: false,
   },
   {
     id: 'pause-phrase',
@@ -30,6 +32,7 @@ const features = [
     description: 'Say what you mean—without making things worse.',
     icon: <MessageCircle className="h-6 w-6 text-midnight-indigo" />,
     comingSoon: false,
+    alwaysVisible: false,
   },
   {
     id: 'say-instead',
@@ -37,6 +40,7 @@ const features = [
     description: 'Turn common conflict phrases into calmer alternatives.',
     icon: <MessageCircle className="h-6 w-6 text-soft-cream" />,
     comingSoon: false,
+    alwaysVisible: false,
   },
   {
     id: 'build-bridge',
@@ -44,6 +48,7 @@ const features = [
     description: 'Get expert help on what to say next.',
     icon: <Puzzle className="h-6 w-6 text-mauve-rose" />,
     comingSoon: true,
+    alwaysVisible: false,
   },
 ];
 
@@ -144,6 +149,74 @@ const MidFight = () => {
     }
   };
 
+  // Render the timer tool
+  const renderTimeoutTimer = () => (
+    <div className="bg-white rounded-lg shadow-md p-6 border border-lavender-blue/20 mt-6 mb-10">
+      <div className="flex flex-col items-center">
+        <div className="flex justify-center mb-4">
+          <Hourglass className="h-24 w-24 text-lavender-blue" />
+        </div>
+        
+        <h3 className="text-2xl font-cormorant font-medium text-midnight-indigo mb-6">Take a Breather</h3>
+        
+        {!timerActive ? (
+          <>
+            <p className="text-midnight-indigo/80 mb-6 text-center max-w-md">
+              Select a preset time or enter your own. Your partner will be notified that you need some space.
+            </p>
+            
+            <div className="grid grid-cols-3 gap-3 w-full max-w-md mb-6">
+              {timeoutPresets.map((preset) => (
+                <Button 
+                  key={preset.value}
+                  variant="outline"
+                  className="border-lavender-blue text-midnight-indigo hover:bg-lavender-blue/10"
+                  onClick={() => startTimer(preset.value)}
+                >
+                  {preset.label}
+                </Button>
+              ))}
+            </div>
+            
+            <div className="flex w-full max-w-md mb-4">
+              <input
+                type="number"
+                value={customMinutes}
+                onChange={(e) => setCustomMinutes(e.target.value)}
+                placeholder="Custom minutes (1-120)"
+                min="1"
+                max="120"
+                className="flex-1 px-3 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-lavender-blue"
+              />
+              <Button 
+                className="bg-lavender-blue hover:bg-lavender-blue/90 text-white rounded-l-none"
+                onClick={handleCustomTimerStart}
+              >
+                Start
+              </Button>
+            </div>
+          </>
+        ) : (
+          <div className="text-center">
+            <p className="text-midnight-indigo mb-2">
+              Your partner has been notified that you need some time.
+            </p>
+            <div className="text-4xl font-bold text-lavender-blue my-6">
+              {formatTime()}
+            </div>
+            <Button 
+              variant="outline"
+              className="border-mauve-rose text-mauve-rose hover:bg-mauve-rose/10"
+              onClick={() => setTimerActive(false)}
+            >
+              Cancel Timer
+            </Button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+
   return (
     <div className="min-h-screen bg-slate-50">
       <Navbar />
@@ -177,11 +250,18 @@ const MidFight = () => {
           </div>
         </section>
         
-        {/* Feature cards */}
-        <section className="py-12 bg-soft-blush/30">
+        {/* Directly show the time out timer */}
+        <section className="py-8 bg-soft-blush/30">
+          <ContentContainer maxWidth="lg">
+            {renderTimeoutTimer()}
+          </ContentContainer>
+        </section>
+
+        {/* Feature cards (excluding the timeout timer) */}
+        <section className="py-8 bg-soft-blush/30">
           <ContentContainer maxWidth="lg">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {features.map((feature) => (
+              {features.filter(feature => feature.id !== 'timeout-timer').map((feature) => (
                 <Collapsible 
                   key={feature.id}
                   open={selectedFeature === feature.id} 
@@ -229,75 +309,13 @@ const MidFight = () => {
                     </CardContent>
                   </Card>
                   
-                  {/* Tool content - Time Out Timer */}
-                  {feature.id === 'timeout-timer' && (
-                    <CollapsibleContent className="mt-4 bg-white rounded-lg shadow-md p-6 border border-lavender-blue/20 overflow-hidden animate-accordion-down">
-                      <div className="flex flex-col items-center">
-                        <div className="flex justify-center mb-4">
-                          <Hourglass className="h-24 w-24 text-lavender-blue" />
-                        </div>
-                        
-                        <h3 className="text-2xl font-cormorant font-medium text-midnight-indigo mb-6">Take a Breather</h3>
-                        
-                        {!timerActive ? (
-                          <>
-                            <p className="text-midnight-indigo/80 mb-6 text-center max-w-md">
-                              Select a preset time or enter your own. Your partner will be notified that you need some space.
-                            </p>
-                            
-                            <div className="grid grid-cols-3 gap-3 w-full max-w-md mb-6">
-                              {timeoutPresets.map((preset) => (
-                                <Button 
-                                  key={preset.value}
-                                  variant="outline"
-                                  className="border-lavender-blue text-midnight-indigo hover:bg-lavender-blue/10"
-                                  onClick={() => startTimer(preset.value)}
-                                >
-                                  {preset.label}
-                                </Button>
-                              ))}
-                            </div>
-                            
-                            <div className="flex w-full max-w-md mb-4">
-                              <input
-                                type="number"
-                                value={customMinutes}
-                                onChange={(e) => setCustomMinutes(e.target.value)}
-                                placeholder="Custom minutes (1-120)"
-                                min="1"
-                                max="120"
-                                className="flex-1 px-3 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-lavender-blue"
-                              />
-                              <Button 
-                                className="bg-lavender-blue hover:bg-lavender-blue/90 text-white rounded-l-none"
-                                onClick={handleCustomTimerStart}
-                              >
-                                Start
-                              </Button>
-                            </div>
-                          </>
-                        ) : (
-                          <div className="text-center">
-                            <p className="text-midnight-indigo mb-2">
-                              Your partner has been notified that you need some time.
-                            </p>
-                            <div className="text-4xl font-bold text-lavender-blue my-6">
-                              {formatTime()}
-                            </div>
-                            <Button 
-                              variant="outline"
-                              className="border-mauve-rose text-mauve-rose hover:bg-mauve-rose/10"
-                              onClick={() => setTimerActive(false)}
-                            >
-                              Cancel Timer
-                            </Button>
-                          </div>
-                        )}
-                      </div>
-                    </CollapsibleContent>
-                  )}
-                  
-                  {/* Other tool contents would go here */}
+                  {/* Other tool contents */}
+                  <CollapsibleContent className="mt-4 bg-white rounded-lg shadow-md p-6 border border-lavender-blue/20 overflow-hidden animate-accordion-down">
+                    {/* Tool content here */}
+                    <div className="text-center text-midnight-indigo/80">
+                      Tool content for {feature.title} will appear here.
+                    </div>
+                  </CollapsibleContent>
                 </Collapsible>
               ))}
             </div>
