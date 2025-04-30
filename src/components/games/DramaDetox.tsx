@@ -5,14 +5,14 @@ import { Button } from "@/components/ui/button";
 import { Gamepad } from 'lucide-react';
 import ScenarioCard from './drama-detox/ScenarioCard';
 import VotingResultsCard from './drama-detox/VotingResultsCard';
-import { scenarios } from '../../data/drama-detox-scenarios';
+import dramaDetoxScenarios from '../../data/drama-detox-scenarios';
 
 const DramaDetox = () => {
   const [currentScenarioIndex, setCurrentScenarioIndex] = useState(0);
   const [showResults, setShowResults] = useState(false);
   const [userVote, setUserVote] = useState<string | null>(null);
   
-  const currentScenario = scenarios[currentScenarioIndex];
+  const currentScenario = dramaDetoxScenarios[currentScenarioIndex];
   
   const handleVote = (option: string) => {
     setUserVote(option);
@@ -20,7 +20,7 @@ const DramaDetox = () => {
   };
   
   const handleNextScenario = () => {
-    if (currentScenarioIndex < scenarios.length - 1) {
+    if (currentScenarioIndex < dramaDetoxScenarios.length - 1) {
       setCurrentScenarioIndex(prev => prev + 1);
       setShowResults(false);
       setUserVote(null);
@@ -74,7 +74,7 @@ const DramaDetox = () => {
           {showResults && (
             <Button
               onClick={handleNextScenario}
-              disabled={currentScenarioIndex === scenarios.length - 1}
+              disabled={currentScenarioIndex === dramaDetoxScenarios.length - 1}
               className="bg-[#9b87f5] hover:bg-[#7E69AB] text-white"
             >
               Next Scenario

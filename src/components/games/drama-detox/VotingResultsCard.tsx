@@ -43,7 +43,6 @@ const VotingResultsCard = ({ scenario, userVote }: VotingResultsCardProps) => {
             <Progress 
               value={option.votes} 
               className={`h-2 ${option.id === userVote ? 'bg-[#E5DEFF]' : 'bg-gray-100'}`}
-              indicatorClassName={option.id === userVote ? 'bg-[#9b87f5]' : 'bg-gray-300'}
             />
           </div>
         ))}
