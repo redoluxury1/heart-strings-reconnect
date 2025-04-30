@@ -54,16 +54,13 @@ const MidFight = () => {
       <Navbar />
       
       <main className="pb-16">
-        {/* Hero section */}
-        <section className="bg-lavender-blue/20 py-16">
+        {/* Top statement section with gradient background */}
+        <section className="bg-gradient-to-r from-mauve-rose/30 to-lavender-blue/30 py-16">
           <ContentContainer maxWidth="lg">
             <div className="text-center relative">
-              <h1 className="font-cormorant text-4xl md:text-5xl font-medium text-midnight-indigo mb-3">
-                Mid-Fight
-              </h1>
-              <p className="text-midnight-indigo/80 text-lg md:text-xl max-w-2xl mx-auto font-light">
-                "This isn't about winning the fight—it's about staying connected through it."
-              </p>
+              <h2 className="font-cormorant text-4xl md:text-5xl font-medium text-midnight-indigo mb-3">
+                This isn't about winning the fight—it's about staying connected through it.
+              </h2>
             </div>
           </ContentContainer>
         </section>
