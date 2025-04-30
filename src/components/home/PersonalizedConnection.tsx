@@ -13,6 +13,7 @@ type QuizCardProps = {
   buttonColorClass: string;
   icon: React.ReactNode;
   bgColorClass: string;
+  linkTo: string;
 };
 
 const PersonalizedConnection = () => {
@@ -25,7 +26,8 @@ const PersonalizedConnection = () => {
       buttonText: "Take the Quiz",
       buttonColorClass: "bg-midnight-indigo hover:bg-midnight-indigo/90",
       icon: <Heart className="h-5 w-5" />,
-      bgColorClass: "bg-white/80"
+      bgColorClass: "bg-white/80",
+      linkTo: "/love-code-quiz"
     },
     {
       title: "Discover Your Blueprint",
@@ -33,7 +35,8 @@ const PersonalizedConnection = () => {
       buttonText: "Start Blueprint Quiz",
       buttonColorClass: "bg-rosewood-tint hover:bg-rosewood-tint/90",
       icon: <Compass className="h-5 w-5" />,
-      bgColorClass: "bg-white/80"
+      bgColorClass: "bg-white/80",
+      linkTo: "#"
     }
   ];
 
@@ -120,7 +123,7 @@ const PersonalizedConnection = () => {
                   {card.description}
                 </p>
                 
-                <Link to="#" className="block mt-auto">
+                <Link to={card.linkTo} className="block mt-auto">
                   <button 
                     className={cn(
                       "w-full rounded-full py-2.5 px-4 text-white transition-colors font-inter",
