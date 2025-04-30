@@ -37,7 +37,7 @@ const GoalSelectionView: React.FC<GoalSelectionViewProps> = ({
       </div>
       
       <div className="space-y-2 mb-6">
-        {goals.filter(goal => goal.title !== "Say how I feel without blame").map((goal) => (
+        {goals.map((goal) => (
           <Button
             key={goal.id}
             variant="outline"

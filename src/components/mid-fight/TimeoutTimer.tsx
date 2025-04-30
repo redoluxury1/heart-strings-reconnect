@@ -146,7 +146,7 @@ const TimeoutTimer: React.FC<TimeoutTimerProps> = ({ animationsEnabled = true })
                       : "border-lavender-blue text-midnight-indigo hover:bg-mauve-rose/10 hover:text-mauve-rose hover:border-mauve-rose"}
                     onClick={() => setCustomTimeUnit('minutes')}
                   >
-                    Minutes
+                    <span className="text-xs">Minutes</span>
                   </Button>
                   <Button 
                     type="button"
@@ -156,7 +156,7 @@ const TimeoutTimer: React.FC<TimeoutTimerProps> = ({ animationsEnabled = true })
                       : "border-lavender-blue text-midnight-indigo hover:bg-mauve-rose/10 hover:text-mauve-rose hover:border-mauve-rose"}
                     onClick={() => setCustomTimeUnit('hours')}
                   >
-                    Hours
+                    <span className="text-xs">Hours</span>
                   </Button>
                 </div>
               </div>
@@ -164,7 +164,7 @@ const TimeoutTimer: React.FC<TimeoutTimerProps> = ({ animationsEnabled = true })
                 className="w-full bg-lavender-blue hover:bg-lavender-blue/90 text-white"
                 onClick={handleCustomTimerStart}
               >
-                Breathe
+                <span className="text-xs">Enter time</span>
               </Button>
             </div>
           </>

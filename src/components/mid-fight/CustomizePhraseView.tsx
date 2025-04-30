@@ -2,6 +2,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, MessageCircle } from 'lucide-react';
+import { Textarea } from '@/components/ui/textarea';
 
 interface CustomizePhraseViewProps {
   customPhrase: string;
@@ -24,7 +25,7 @@ const CustomizePhraseView: React.FC<CustomizePhraseViewProps> = ({
         </h3>
       </div>
       
-      <textarea
+      <Textarea
         value={customPhrase}
         onChange={(e) => onCustomPhraseChange(e.target.value)}
         className="w-full border border-lavender-blue/30 rounded-lg p-3 mb-6 h-32 focus:outline-none focus:ring-1 focus:ring-lavender-blue"
