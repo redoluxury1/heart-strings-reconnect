@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip, BarChart, Bar, XAxis, YAxis } from 'recharts';
+import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 import { LoveCodeResult } from '../../types/love-code-quiz';
 import { loveCodeDescriptions } from '../../data/love-code-quiz-data';
 import { Heart, ChevronDown, ChevronUp, UserPlus } from 'lucide-react';
@@ -57,102 +57,50 @@ const QuizResults: React.FC<QuizResultsProps> = ({ results, onRestart, onHome })
           Your Love Code is <span className="text-mauve-rose font-semibold block text-4xl md:text-5xl mt-2">{primaryDesc.title}!</span>
         </h1>
         
-        {/* Chart Section with responsive chart types */}
+        {/* Chart Section - now using pie chart for both mobile and desktop */}
         <div className="h-[300px] md:h-[400px] mb-10 w-full">
           <ResponsiveContainer width="100%" height="100%">
-            {isMobile ? (
-              // Bar Chart for mobile
-              <BarChart 
-                data={chartData} 
-                margin={{ top: 20, right: 10, left: 10, bottom: 50 }}
+            <PieChart margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
+              <Pie
+                data={chartData}
+                cx="50%"
+                cy="50%"
+                innerRadius={0}
+                outerRadius={isMobile ? "60%" : "70%"}
+                paddingAngle={2}
+                dataKey="value"
+                nameKey="name"
+                label={isMobile ? false : ({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                labelLine={!isMobile}
               >
-                <XAxis 
-                  dataKey="name" 
-                  tick={{ fill: '#4B5563', fontSize: 12 }}
-                  tickLine={false}
-                  axisLine={false}
-                  angle={-45}
-                  textAnchor="end"
-                  height={80}
-                />
-                <YAxis 
-                  unit="%" 
-                  tick={{ fill: '#4B5563' }}
-                  tickLine={false}
-                  axisLine={false}
-                  width={30}
-                />
-                <Tooltip
-                  formatter={(value) => `${value}%`}
-                  contentStyle={{ 
-                    backgroundColor: 'white',
-                    borderColor: '#E7D9C9',
-                    borderRadius: '8px',
-                    boxShadow: '0 4px 8px rgba(0,0,0,0.1)'
-                  }}
-                />
-                <Bar 
-                  dataKey="value" 
-                  radius={[4, 4, 0, 0]} 
-                  label={{ 
-                    position: 'top', 
-                    fill: '#4B5563', 
-                    fontSize: 12,
-                    formatter: (value: number) => `${value}%`
-                  }}
-                >
-                  {chartData.map((entry, index) => (
-                    <Cell 
-                      key={`cell-${index}`} 
-                      fill={COLORS[index % COLORS.length]} 
-                    />
-                  ))}
-                </Bar>
-              </BarChart>
-            ) : (
-              // Pie Chart for desktop
-              <PieChart margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
-                <Pie
-                  data={chartData}
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={0}
-                  outerRadius="70%"
-                  paddingAngle={2}
-                  dataKey="value"
-                  nameKey="name"
-                  label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                  labelLine={false}
-                >
-                  {chartData.map((entry, index) => (
-                    <Cell 
-                      key={`cell-${index}`} 
-                      fill={COLORS[index % COLORS.length]} 
-                      stroke="#fff"
-                      strokeWidth={2}
-                    />
-                  ))}
-                </Pie>
-                <Tooltip 
-                  formatter={(value) => `${value}%`}
-                  contentStyle={{ 
-                    backgroundColor: 'white',
-                    borderColor: '#E7D9C9',
-                    borderRadius: '8px',
-                    boxShadow: '0 4px 8px rgba(0,0,0,0.1)'
-                  }}
-                />
-                <Legend
-                  layout="horizontal"
-                  verticalAlign="bottom"
-                  align="center"
-                  wrapperStyle={{
-                    paddingTop: '20px',
-                    fontSize: '12px'
-                  }}
-                />
-              </PieChart>
-            )}
+                {chartData.map((entry, index) => (
+                  <Cell 
+                    key={`cell-${index}`} 
+                    fill={COLORS[index % COLORS.length]} 
+                    stroke="#fff"
+                    strokeWidth={2}
+                  />
+                ))}
+              </Pie>
+              <Tooltip 
+                formatter={(value) => `${value}%`}
+                contentStyle={{ 
+                  backgroundColor: 'white',
+                  borderColor: '#E7D9C9',
+                  borderRadius: '8px',
+                  boxShadow: '0 4px 8px rgba(0,0,0,0.1)'
+                }}
+              />
+              <Legend
+                layout="horizontal"
+                verticalAlign="bottom"
+                align="center"
+                wrapperStyle={{
+                  paddingTop: '20px',
+                  fontSize: '12px'
+                }}
+              />
+            </PieChart>
           </ResponsiveContainer>
         </div>
         
