@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
+import { formatDistanceToNow } from 'date-fns';
 import { 
   Card, 
   CardContent, 
@@ -10,6 +12,11 @@ import { Button } from "@/components/ui/button";
 import { Heart, Reply, Smile } from 'lucide-react';
 import { LoveNoteArchive } from '@/types/archive';
 import { format } from 'date-fns';
+import { LoveNote } from '../home/LoveNoteTimeline';
+
+interface LoveNotesArchiveProps {
+  newNote?: LoveNote;
+}
 
 // Sample data - in a real app, this would come from storage/database
 const sampleLoveNotes: LoveNoteArchive[] = [
@@ -39,10 +46,36 @@ const sampleLoveNotes: LoveNoteArchive[] = [
   }
 ];
 
-const LoveNotesArchive = () => {
-  const [loveNotes, setLoveNotes] = useState<LoveNoteArchive[]>(sampleLoveNotes);
+const LoveNotesArchive: React.FC<LoveNotesArchiveProps> = ({ newNote }) => {
+  const [loveNotes, setLoveNotes] = useState<LoveNoteArchive[]>([]);
   
-  // We're removing the favorite feature but keeping setReaction
+  // Initialize notes and add new note if provided
+  useEffect(() => {
+    // Start with sample notes (in a real app, this would fetch from storage/API)
+    setLoveNotes(sampleLoveNotes);
+    
+    // If a new note is provided, add it to the beginning of the list
+    if (newNote) {
+      const archiveNote: LoveNoteArchive = {
+        id: newNote.id,
+        prompt: newNote.prompt,
+        message: newNote.message,
+        timestamp: newNote.timestamp,
+        isFavorite: false,
+        reaction: null
+      };
+      
+      setLoveNotes(prevNotes => {
+        // Check if note with same ID already exists to prevent duplicates
+        if (!prevNotes.some(note => note.id === archiveNote.id)) {
+          return [archiveNote, ...prevNotes];
+        }
+        return prevNotes;
+      });
+    }
+  }, [newNote]);
+  
+  // Set reaction for a note
   const setReaction = (id: string, reaction: 'heart' | 'star' | 'smile' | null) => {
     setLoveNotes(loveNotes.map(note => 
       note.id === id 
@@ -58,54 +91,49 @@ const LoveNotesArchive = () => {
 
   return (
     <div>
-      <h3 className="text-xl font-cormorant font-medium text-midnight-indigo mb-4 text-center">
-        All the little things they said that mattered
-      </h3>
+      <h1 className="font-cormorant text-3xl md:text-4xl font-bold text-midnight-indigo mb-8 text-center">
+        Love Notes Received
+      </h1>
+          
+      <p className="text-center mb-10 max-w-lg mx-auto text-midnight-indigo">
+        This is your private collection of appreciation notes from your partner. 
+        Take time to revisit these moments when you need a reminder of your connection.
+      </p>
       
       {sortedNotes.length > 0 ? (
-        <div className="space-y-4">
+        <div className="max-w-md mx-auto space-y-4">
           {sortedNotes.map((note) => (
-            <Card key={note.id} className="bg-white">
-              <CardHeader className="pb-2">
-                <CardDescription className="text-sm text-rosewood-tint">
-                  {note.prompt}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-midnight-indigo">"{note.message}"</p>
-              </CardContent>
-              <CardFooter className="flex justify-between">
-                <div className="text-xs text-gray-500">
-                  {format(note.timestamp, 'PPp')}
-                </div>
+            <div 
+              key={note.id}
+              className="bg-white rounded-xl p-5 shadow-sm border border-opacity-10 border-midnight-indigo"
+            >
+              <p className="text-sm text-rosewood-tint mb-2">{note.prompt}</p>
+              <p className="text-midnight-indigo font-medium">{note.message}</p>
+              <div className="flex justify-between items-center mt-3">
+                <p className="text-xs text-gray-500">
+                  {formatDistanceToNow(note.timestamp, { addSuffix: true })}
+                </p>
                 
                 <div className="flex space-x-2">
-                  <div className="flex space-x-1">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className={`p-1 h-auto ${note.reaction === 'heart' ? 'text-red-500' : 'text-gray-400'}`}
-                      onClick={() => setReaction(note.id, note.reaction === 'heart' ? null : 'heart')}
-                    >
-                      <Heart className="h-4 w-4" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className={`p-1 h-auto ${note.reaction === 'smile' ? 'text-amber-500' : 'text-gray-400'}`}
-                      onClick={() => setReaction(note.id, note.reaction === 'smile' ? null : 'smile')}
-                    >
-                      <Smile className="h-4 w-4" />
-                    </Button>
-                  </div>
-                  
-                  <Button variant="ghost" size="sm" className="text-lavender-blue">
-                    <Reply className="h-4 w-4 mr-1" />
-                    Reply
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className={`p-1 h-auto ${note.reaction === 'heart' ? 'text-red-500' : 'text-gray-400'}`}
+                    onClick={() => setReaction(note.id, note.reaction === 'heart' ? null : 'heart')}
+                  >
+                    <Heart className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className={`p-1 h-auto ${note.reaction === 'smile' ? 'text-amber-500' : 'text-gray-400'}`}
+                    onClick={() => setReaction(note.id, note.reaction === 'smile' ? null : 'smile')}
+                  >
+                    <Smile className="h-4 w-4" />
                   </Button>
                 </div>
-              </CardFooter>
-            </Card>
+              </div>
+            </div>
           ))}
         </div>
       ) : (

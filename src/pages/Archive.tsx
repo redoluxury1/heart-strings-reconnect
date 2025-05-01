@@ -1,7 +1,8 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Book, Heart, BookOpen } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
 import Navbar from '../components/layout/Navbar';
 import ContentContainer from '../components/common/ContentContainer';
 import SavedRephrases from '../components/archive/SavedRephrases';
@@ -11,8 +12,16 @@ import JournalBubblesHero from '../components/archive/JournalBubblesHero';
 import { useIsMobile } from '../hooks/use-mobile';
 
 const Archive = () => {
+  const location = useLocation();
   const [activeTab, setActiveTab] = useState('saved-rephrases');
   const isMobile = useIsMobile();
+
+  // Set the active tab based on location state if provided
+  useEffect(() => {
+    if (location.state?.activeTab) {
+      setActiveTab(location.state.activeTab);
+    }
+  }, [location.state]);
 
   return (
     <div className="min-h-screen bg-[#F1ECE8]">
@@ -47,7 +56,7 @@ const Archive = () => {
                 >
                   <Heart className="h-4 w-4" />
                   <span>Love Notes</span>
-                  {activeTab !== 'love-notes' && (
+                  {activeTab !== 'love-notes' && location.state?.newNote && (
                     <div className="absolute -right-2 -top-2 bg-mauve-rose text-white text-xs px-2 py-1 rounded-full animate-pulse">
                       New
                     </div>
@@ -68,11 +77,11 @@ const Archive = () => {
             </TabsContent>
             
             <TabsContent value="love-notes">
-              <LoveNotesArchive />
+              <LoveNotesArchive newNote={location.state?.newNote} />
             </TabsContent>
             
-            <TabsContent value="thoughts">
-              <div className="text-center mb-8 pt-4 sm:pt-0">
+            <TabsContent value="thoughts" className="pt-4">
+              <div className="text-center mb-8">
                 <p className="text-midnight-indigo text-lg font-medium">Just need to get it out?</p>
                 <p className="text-midnight-indigo/70">This space is only for you.</p>
               </div>
