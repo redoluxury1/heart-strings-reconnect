@@ -1,17 +1,27 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Heart, MessageSquareHeart } from 'lucide-react';
+import { Heart, MessageSquareHeart, Gamepad2 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 interface EndSessionStepProps {
   onSendLoveNote: () => void;
-  onDone: () => void;
 }
 
 const EndSessionStep: React.FC<EndSessionStepProps> = ({ 
-  onSendLoveNote, 
-  onDone 
+  onSendLoveNote
 }) => {
+  const navigate = useNavigate();
+
+  const handleDone = () => {
+    navigate('/');
+  };
+
+  const handlePlayGame = () => {
+    // This will later link to the would you rather game
+    navigate('/games');
+  };
+
   return (
     <div className="text-center">
       <div className="flex justify-center mb-6">
@@ -29,7 +39,7 @@ const EndSessionStep: React.FC<EndSessionStepProps> = ({
         Conflict doesn't mean disconnection — and you just proved it. What would you like to do next?
       </p>
       
-      <div className="flex flex-col md:flex-row justify-center gap-4">
+      <div className="flex flex-col md:flex-row justify-center gap-4 mb-4">
         <Button 
           className="bg-mauve-rose hover:bg-mauve-rose/90 text-white flex items-center gap-2"
           onClick={onSendLoveNote}
@@ -39,13 +49,21 @@ const EndSessionStep: React.FC<EndSessionStepProps> = ({
         </Button>
         
         <Button 
-          variant="outline" 
-          className="border-gray-300 text-gray-700"
-          onClick={onDone}
+          className="bg-blue-500 hover:bg-blue-600 text-white flex items-center gap-2"
+          onClick={handlePlayGame}
         >
-          Done
+          <Gamepad2 size={18} />
+          Play Would You Rather
         </Button>
       </div>
+      
+      <Button 
+        variant="outline" 
+        className="border-gray-300 text-gray-700"
+        onClick={handleDone}
+      >
+        Done
+      </Button>
     </div>
   );
 };

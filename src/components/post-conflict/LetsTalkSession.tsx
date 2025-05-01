@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight, Heart, Send, Home } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import GroundingStep from './steps/GroundingStep';
 import ToneSettingStep from './steps/ToneSettingStep';
 import PerspectiveStep from './steps/PerspectiveStep';
@@ -157,7 +157,7 @@ const LetsTalkSession: React.FC<LetsTalkSessionProps> = ({ onExit }) => {
     },
     {
       id: 'end',
-      component: <EndSessionStep onSendLoveNote={onExit} onDone={onExit} />
+      component: <EndSessionStep onSendLoveNote={onExit} />
     }
   ];
   

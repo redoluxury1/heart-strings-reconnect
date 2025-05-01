@@ -1,8 +1,8 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Send, Mic, MicOff } from 'lucide-react';
+import { Mic, MicOff } from 'lucide-react';
 
 interface PerspectiveStepProps {
   onResponse: (response: string) => void;
@@ -10,131 +10,118 @@ interface PerspectiveStepProps {
   partner2Response: string | null;
 }
 
-const PerspectiveStep: React.FC<PerspectiveStepProps> = ({ 
-  onResponse, 
+const PerspectiveStep: React.FC<PerspectiveStepProps> = ({
+  onResponse,
   partner1Response,
-  partner2Response 
+  partner2Response
 }) => {
-  const [input, setInput] = useState(partner1Response || '');
-  const [isSubmitted, setIsSubmitted] = useState(!!partner1Response);
+  const [perspective, setPerspective] = useState(partner1Response || '');
   const [isRecording, setIsRecording] = useState(false);
-  const [speechRecognition, setSpeechRecognition] = useState<SpeechRecognition | null>(null);
-  
-  // Setup speech recognition
+  const recognitionRef = useRef<any>(null);
+
+  // Initialize speech recognition
   useEffect(() => {
-    if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
-      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-      const recognition = new SpeechRecognition();
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+      const SpeechRecognitionApi = window.webkitSpeechRecognition || window.SpeechRecognition;
+      recognitionRef.current = new SpeechRecognitionApi();
       
-      recognition.continuous = true;
-      recognition.interimResults = true;
+      recognitionRef.current.continuous = true;
+      recognitionRef.current.interimResults = true;
       
-      recognition.onresult = (event) => {
+      recognitionRef.current.onresult = (event: any) => {
         const transcript = Array.from(event.results)
-          .map(result => result[0])
-          .map(result => result.transcript)
+          .map((result: any) => result[0].transcript)
           .join('');
         
-        setInput(transcript);
+        setPerspective(prev => prev + ' ' + transcript);
       };
       
-      recognition.onend = () => {
+      recognitionRef.current.onerror = (event: any) => {
+        console.error('Speech recognition error', event.error);
         setIsRecording(false);
       };
       
-      setSpeechRecognition(recognition);
+      recognitionRef.current.onend = () => {
+        setIsRecording(false);
+      };
     }
     
     return () => {
-      if (speechRecognition) {
-        speechRecognition.stop();
+      if (recognitionRef.current) {
+        recognitionRef.current.stop();
       }
     };
   }, []);
   
   const toggleRecording = () => {
-    if (!speechRecognition) return;
-    
     if (isRecording) {
-      speechRecognition.stop();
+      recognitionRef.current?.stop();
       setIsRecording(false);
     } else {
-      setInput('');
-      speechRecognition.start();
+      recognitionRef.current?.start();
       setIsRecording(true);
     }
   };
   
   const handleSubmit = () => {
-    if (input.trim()) {
-      if (isRecording && speechRecognition) {
-        speechRecognition.stop();
-        setIsRecording(false);
-      }
-      onResponse(input);
-      setIsSubmitted(true);
+    if (perspective.trim()) {
+      onResponse(perspective.trim());
     }
   };
   
+  const speechRecognitionAvailable = 'webkitSpeechRecognition' in window || 'SpeechRecognition' in window;
+
   return (
-    <div>
-      <h2 className="text-2xl md:text-3xl font-cormorant font-medium text-midnight-indigo mb-3 text-center">
-        What Just Happened
+    <div className="text-center">
+      <h2 className="text-2xl md:text-3xl font-cormorant font-medium text-midnight-indigo mb-6">
+        What just happened?
       </h2>
       
-      <p className="text-center text-gray-700 mb-6">
-        Briefly describe what the argument was about from your perspective.
-      </p>
-      
-      {!isSubmitted ? (
-        <div className="max-w-lg mx-auto">
-          <Textarea 
-            placeholder="Write your perspective here..."
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            className="mb-4 min-h-[150px]"
-          />
+      <div className="mb-6">
+        <div className="flex items-center mb-2 justify-center">
+          <label htmlFor="perspective" className="text-sm text-gray-600 mr-2">
+            Share your perspective:
+          </label>
           
-          <div className="flex gap-2 mb-4">
-            {('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) && (
-              <Button
-                type="button"
-                onClick={toggleRecording}
-                variant="outline"
-                className={`${isRecording ? 'bg-red-100 text-red-800 border-red-300' : 'border-gray-300'}`}
-              >
-                {isRecording ? <MicOff className="mr-2" /> : <Mic className="mr-2" />}
-                {isRecording ? 'Stop Recording' : 'Speak Instead'}
-              </Button>
-            )}
-          </div>
-          
-          <Button 
-            onClick={handleSubmit}
-            className="bg-blue-500 hover:bg-blue-600 text-white w-full flex items-center justify-center gap-2"
-            disabled={!input.trim()}
-          >
-            <Send size={16} />
-            Share
-          </Button>
+          {speechRecognitionAvailable && (
+            <Button
+              type="button"
+              size="sm"
+              variant={isRecording ? "default" : "outline"}
+              className={isRecording ? "bg-red-500 hover:bg-red-600" : ""}
+              onClick={toggleRecording}
+            >
+              {isRecording ? <MicOff size={16} /> : <Mic size={16} />}
+              {isRecording ? "Stop" : "Record"}
+            </Button>
+          )}
         </div>
-      ) : (
-        <div className="mt-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-soft-blush/20 p-5 rounded-lg">
-              <h3 className="font-medium mb-3 text-midnight-indigo">Your perspective:</h3>
-              <p className="text-gray-700">{partner1Response}</p>
-            </div>
-            
-            {partner2Response && (
-              <div className="bg-soft-cream/30 p-5 rounded-lg animate-fade-in">
-                <h3 className="font-medium mb-3 text-midnight-indigo">Your partner's perspective:</h3>
-                <p className="text-gray-700">{partner2Response}</p>
-              </div>
-            )}
+        
+        <Textarea
+          id="perspective"
+          value={perspective}
+          onChange={(e) => setPerspective(e.target.value)}
+          placeholder="I feel like we had a misunderstanding about..."
+          className="w-full h-32"
+        />
+      </div>
+      
+      {partner2Response && (
+        <div className="mb-6">
+          <p className="text-sm text-gray-600 mb-2">Your partner's perspective:</p>
+          <div className="bg-gray-100 p-4 rounded-md">
+            <p className="text-gray-700">{partner2Response}</p>
           </div>
         </div>
       )}
+      
+      <Button 
+        className="bg-blue-500 hover:bg-blue-600 text-white px-8"
+        onClick={handleSubmit}
+        disabled={!perspective.trim()}
+      >
+        Continue
+      </Button>
     </div>
   );
 };
