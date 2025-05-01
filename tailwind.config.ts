@@ -22,6 +22,8 @@ export default {
 			fontFamily: {
 				'cormorant': ['Cormorant Garamond', 'Georgia', 'serif'],
 				'inter': ['Inter', 'system-ui', 'sans-serif'],
+				'heading-now-regular': ['Heading Now Regular', 'sans-serif'],
+				'heading-now-medium': ['Heading Now Medium', 'sans-serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',

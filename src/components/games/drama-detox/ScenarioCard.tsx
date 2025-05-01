@@ -57,19 +57,14 @@ const ScenarioCard = ({
               // Voting view with the scenario and options
               <div className="space-y-6">
                 {isFirstScenario && (
-                  <h4 className="font-medium text-lg text-[#F1EAE8] tracking-wider">Pick a side. No fence-sitting.</h4>
+                  <h4 className="font-medium text-lg text-[#F1EAE8] tracking-wider font-heading-now-medium">
+                    Pick a side. No fence-sitting.
+                  </h4>
                 )}
                 
-                {/* Title - using small caps */}
-                {scenario.title && (
-                  <h3 className="text-xl md:text-2xl text-[#F1EAE8] font-medium uppercase tracking-wide mb-4">
-                    {scenario.title}
-                  </h3>
-                )}
-                
-                {/* Scenario description with improved typography */}
-                <p className="mb-8 text-2xl md:text-3xl text-[#F1EAE8]/90 leading-relaxed tracking-wide font-medium" 
-                   style={{ fontFamily: 'Heading Now', lineHeight: '1.6' }}>
+                {/* Scenario description with improved typography - removed title */}
+                <p className="mb-8 text-2xl md:text-3xl text-[#F1EAE8]/90 leading-relaxed tracking-wider font-heading-now-regular" 
+                   style={{ lineHeight: '1.8', letterSpacing: '0.02em' }}>
                   {scenario.description}
                 </p>
                 
