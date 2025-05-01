@@ -10,6 +10,7 @@ import HowYouLoveSection from './HowYouLoveSection';
 import PartnerInviteSection from './PartnerInviteSection';
 import ActionButtons from './ActionButtons';
 import PartnerInvite from './PartnerInvite';
+import PDFDownloadButton from './PDFDownloadButton';
 
 interface QuizResultsProps {
   results: LoveCodeResult;
@@ -27,9 +28,10 @@ const QuizResults: React.FC<QuizResultsProps> = ({ results, onRestart, onHome })
   
   return (
     <div className="max-w-4xl mx-auto">
-      <div className="bg-white p-6 md:p-10 rounded-xl shadow-md">
-        <div className="flex justify-center mb-6">
+      <div className="bg-white p-6 md:p-10 rounded-xl shadow-md results-container">
+        <div className="flex justify-between items-center mb-6">
           <Heart className="h-12 w-12 text-mauve-rose" />
+          <PDFDownloadButton results={results} />
         </div>
         
         <h1 className="text-3xl md:text-4xl font-cormorant font-medium text-midnight-indigo text-center mb-4">
