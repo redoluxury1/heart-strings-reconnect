@@ -31,15 +31,11 @@ const Archive = () => {
         <ContentContainer>
           <JournalBubblesHero />
           
-          <p className="text-center mb-16 max-w-2xl mx-auto text-midnight-indigo/70 mt-24">
-            Everything worth holding onto—from the things you've said to the love you've received.
-          </p>
-          
           <Tabs
             defaultValue="saved-rephrases"
             value={activeTab}
             onValueChange={setActiveTab}
-            className="w-full"
+            className="w-full mt-24"
           >
             <TabsList className="flex flex-col sm:flex-row justify-center mb-8 bg-transparent p-1 gap-2">
               <div className="flex flex-col sm:flex-row justify-center w-full gap-2">
@@ -81,10 +77,6 @@ const Archive = () => {
             </TabsContent>
             
             <TabsContent value="thoughts" className="pt-4">
-              <div className="text-center mb-8">
-                <p className="text-midnight-indigo text-lg font-medium">Just need to get it out?</p>
-                <p className="text-midnight-indigo/70">This space is only for you.</p>
-              </div>
               <JournalEntries />
             </TabsContent>
           </Tabs>
