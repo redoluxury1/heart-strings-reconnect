@@ -53,17 +53,17 @@ const ScenarioCard = ({
         {/* Scenario content */}
         <div className="flex-grow overflow-y-auto pb-4 scrollbar-hide no-scrollbar">
           <div className="bg-[#4A448C] rounded-xl shadow-md p-6 md:p-8 mb-4 h-full">
-            {/* Larger scenario description, no title */}
-            <p className="mb-8 text-2xl md:text-3xl text-[#F1EAE8]/90 leading-relaxed font-medium">
-              {scenario.description}
-            </p>
-            
             {!userVote ? (
-              // Voting view with just the options, no "Cast Your Vote" button
+              // Voting view with the scenario and options
               <div className="space-y-6">
                 {isFirstScenario && (
                   <h4 className="font-medium text-lg text-[#F1EAE8]">Pick a side. No fence-sitting.</h4>
                 )}
+                
+                {/* Larger scenario description, no title */}
+                <p className="mb-8 text-2xl md:text-3xl text-[#F1EAE8]/90 leading-relaxed font-medium">
+                  {scenario.description}
+                </p>
                 
                 <div className="flex flex-col gap-3">
                   {scenario.options.map((option, idx) => (
@@ -78,10 +78,10 @@ const ScenarioCard = ({
                 </div>
               </div>
             ) : (
-              // Results view with large percentage
+              // Results view with large percentage - removed scenario, moved percentage up
               <div className="space-y-6 animate-fade-in flex flex-col items-center justify-center h-full">
-                <div className="text-center">
-                  <div className="text-[120px] font-bold text-[#F1EAE8] leading-none">
+                <div className="text-center mt-8">
+                  <div className="text-[140px] font-bold text-[#F1EAE8] leading-none">
                     {agreementPercentage}%
                   </div>
                   <p className="text-xl text-[#F1EAE8]/90 mt-2">
@@ -98,7 +98,7 @@ const ScenarioCard = ({
                 </div>
                 
                 {scenario.insight && (
-                  <div className="bg-[#C7747F]/20 p-4 rounded-lg mt-8 max-w-md mx-auto w-full">
+                  <div className="bg-[#C7747F] p-4 rounded-lg mt-8 max-w-md mx-auto w-full">
                     <h4 className="font-medium text-[#F1EAE8] mb-1 text-sm">How We See It:</h4>
                     <p className="text-[#F1EAE8]/90 text-base">{scenario.insight}</p>
                   </div>
