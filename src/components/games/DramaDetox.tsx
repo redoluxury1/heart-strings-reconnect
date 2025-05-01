@@ -25,7 +25,19 @@ const backgroundColors = [
   "#D946EF", // Magenta Pink
 ];
 
+// Function to shuffle array using Fisher-Yates algorithm
+const shuffleArray = <T,>(array: T[]): T[] => {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+};
+
 const DramaDetox = () => {
+  // Initialize with shuffled scenarios
+  const [scenarios] = useState(() => shuffleArray(dramaDetoxScenarios));
   const [currentScenarioIndex, setCurrentScenarioIndex] = useState(0);
   const [userVotes, setUserVotes] = useState<Record<string, string>>({});
   const [comments, setComments] = useState<Record<string, CommentType[]>>({});
@@ -33,7 +45,7 @@ const DramaDetox = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const isMobile = useIsMobile();
 
-  const currentScenario = dramaDetoxScenarios[currentScenarioIndex];
+  const currentScenario = scenarios[currentScenarioIndex];
   
   // Get a different background color for each scenario based on its index
   const getBackgroundColor = (index: number) => {
@@ -49,7 +61,7 @@ const DramaDetox = () => {
   
   const handleSwipe = (direction: 'up' | 'down') => {
     // Only allow swiping to next if the user has voted on the current scenario
-    if (direction === 'up' && currentScenarioIndex < dramaDetoxScenarios.length - 1) {
+    if (direction === 'up' && currentScenarioIndex < scenarios.length - 1) {
       if (userVotes[currentScenario.id]) {
         setCurrentScenarioIndex(prev => prev + 1);
       } else {
@@ -128,11 +140,11 @@ const DramaDetox = () => {
       className="w-full h-screen overflow-hidden relative text-[#F1EAE8] flex flex-col"
       style={{ backgroundColor: "#4A448C" }}
     >
-      {/* Simple header with just the logo */}
+      {/* Simple header with just the logo - updated to white version */}
       <div className="w-full p-4">
         <Link to="/" className="flex items-center">
           <img 
-            src="/lovable-uploads/80619689-94c4-43be-b585-6e9079eace63.png" 
+            src="/lovable-uploads/258c4a04-63bc-4f6b-a3eb-312b251ac758.png" 
             alt="Bridge For Couples" 
             className="h-12 w-auto"
           />
