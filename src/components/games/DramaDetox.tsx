@@ -1,10 +1,8 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { ArrowUp } from 'lucide-react';
 import ScenarioCard from './drama-detox/ScenarioCard';
 import dramaDetoxScenarios from '../../data/drama-detox';
 import { useIsMobile } from '../../hooks/use-mobile';
-import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 
 type CommentType = {
   id: string;
@@ -110,13 +108,7 @@ const DramaDetox = () => {
     <div 
       ref={containerRef}
       className="w-full h-[100vh] overflow-hidden relative bg-[#4A448C] text-[#F1EAE8]"
-    >
-      <div className="absolute top-0 left-0 right-0 bg-[#4A448C]/80 backdrop-blur-sm p-2 flex items-center justify-center z-10">
-        <h2 className="text-lg font-medium text-[#F1EAE8]">Drama Detox™</h2>
-        <span className="mx-2 text-xs text-[#F1EAE8]/60">•</span>
-        <p className="text-xs text-[#F1EAE8]/60">Who's wrong? Decide, then swipe for the next.</p>
-      </div>
-      
+    >      
       <div className="h-full w-full flex flex-col">
         <ScenarioCard
           key={currentScenario.id}

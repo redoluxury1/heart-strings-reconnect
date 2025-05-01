@@ -1,10 +1,9 @@
 
 import React, { useState } from 'react';
-import { MessageCircle, ArrowUp } from 'lucide-react';
+import { MessageCircle } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Scenario } from '../../../types/games';
 import { Input } from "@/components/ui/input";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 type CommentType = {
   id: string;
@@ -33,7 +32,6 @@ const ScenarioCard = ({
   onCommentChange,
   onAddComment
 }: ScenarioCardProps) => {
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [showComments, setShowComments] = useState(false);
 
   // Find user's option if they voted
@@ -43,91 +41,67 @@ const ScenarioCard = ({
   // Random agreement percentage between 30-80%
   const agreementPercentage = Math.floor(Math.random() * 50) + 30;
   
-  // Determine if this scenario is "controversial" (under 60% agreement)
+  // Determine if this scenario is "controversial" (under 60%)
   const isControversial = agreementPercentage < 60;
 
   return (
-    <div className="w-full h-full flex flex-col pt-14 pb-20 px-4 overflow-hidden">
+    <div className="w-full h-full flex flex-col py-6 px-4 overflow-hidden">
       {/* Full-screen card */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Scenario content */}
         <div className="flex-grow overflow-y-auto pb-4 scrollbar-hide no-scrollbar">
-          <div className="bg-[#4A448C] rounded-xl shadow-md p-6 md:p-8 mb-4">
-            <h3 className="text-2xl md:text-3xl font-medium text-[#F1EAE8] mb-6">
-              {scenario.title}
-            </h3>
-            
-            <p className="mb-8 text-lg md:text-xl text-[#F1EAE8]/90 leading-relaxed">
+          <div className="bg-[#4A448C] rounded-xl shadow-md p-6 md:p-8 mb-4 h-full">
+            {/* Larger scenario description, no title */}
+            <p className="mb-8 text-2xl md:text-3xl text-[#F1EAE8]/90 leading-relaxed font-medium">
               {scenario.description}
             </p>
             
             {!userVote ? (
-              // Voting view
+              // Voting view with just the options, no "Cast Your Vote" button
               <div className="space-y-6">
                 <h4 className="font-medium text-lg text-[#F1EAE8]">Pick a side. No fence-sitting.</h4>
                 
-                <ToggleGroup 
-                  type="single"
-                  className="w-full flex flex-col gap-3"
-                  value={selectedOption || ""}
-                  onValueChange={(value) => {
-                    if (value) setSelectedOption(value);
-                  }}
-                >
+                <div className="flex flex-col gap-3">
                   {scenario.options.map((option, idx) => (
-                    <ToggleGroupItem
+                    <button
                       key={idx}
-                      value={option.id}
-                      className="w-full p-4 rounded-full border border-[#F1EAE8]/30 bg-[#9b87f5]/10 text-left text-[#F1EAE8] hover:bg-[#9b87f5]/20 data-[state=on]:bg-[#9b87f5]/40"
+                      onClick={() => onVote(option.id)}
+                      className="w-full p-5 rounded-full border border-[#F1EAE8]/30 bg-[#9b87f5]/10 text-left text-lg text-[#F1EAE8] hover:bg-[#9b87f5]/20 active:bg-[#9b87f5]/40"
                     >
                       {option.label}
-                    </ToggleGroupItem>
+                    </button>
                   ))}
-                </ToggleGroup>
-                
-                <Button
-                  onClick={() => selectedOption && onVote(selectedOption)}
-                  disabled={!selectedOption}
-                  className="w-full bg-[#9b87f5] hover:bg-[#7E69AB] text-[#F1EAE8] flex items-center justify-center gap-2 py-6 text-lg"
-                >
-                  Cast Your Vote
-                </Button>
+                </div>
               </div>
             ) : (
-              // Results view
-              <div className="space-y-6 animate-fade-in">
-                <div className="bg-[#5D569B]/50 p-5 rounded-lg mb-4">
-                  <h4 className="font-medium text-[#F1EAE8] mb-2 text-lg">You voted:</h4>
-                  <p className="text-[#F1EAE8] font-medium text-xl">{userOption?.label}</p>
-                  
-                  {/* Community agreement percentage */}
-                  <div className="mt-4">
-                    <p className="text-[#F1EAE8] text-lg flex items-center">
-                      <span className="font-medium text-[#9b87f5]">
-                        {agreementPercentage}%
-                      </span>
-                      <span className="ml-2">of the community agrees with you</span>
-                    </p>
-                    
-                    {/* Controversy meter */}
-                    {isControversial && (
-                      <p className="flex items-center mt-2 text-[#F1EAE8]/90 text-sm">
-                        <span className="mr-1">🔥</span>
-                        <span>This one's causing drama—hot take alert!</span>
-                      </p>
-                    )}
+              // Results view with large percentage
+              <div className="space-y-6 animate-fade-in flex flex-col items-center justify-center h-full">
+                <div className="text-center">
+                  <div className="text-[120px] font-bold text-[#F1EAE8] leading-none">
+                    {agreementPercentage}%
                   </div>
+                  <p className="text-xl text-[#F1EAE8]/90 mt-2">
+                    of the community agrees with you
+                  </p>
+                  
+                  {/* Controversy meter */}
+                  {isControversial && (
+                    <p className="flex items-center justify-center mt-6 text-[#F1EAE8]/90 text-lg">
+                      <span className="mr-2 text-2xl">🔥</span>
+                      <span>This one's causing drama—hot take alert!</span>
+                    </p>
+                  )}
                 </div>
                 
                 {scenario.insight && (
-                  <div className="border-l-4 border-[#9b87f5] pl-4 py-2">
-                    <h4 className="font-medium text-[#F1EAE8] mb-2 text-lg">How We See It:</h4>
-                    <p className="text-[#F1EAE8]/90 text-lg">{scenario.insight}</p>
+                  <div className="bg-[#C7747F]/20 p-4 rounded-lg mt-8 max-w-md mx-auto w-full">
+                    <h4 className="font-medium text-[#F1EAE8] mb-1 text-sm">How We See It:</h4>
+                    <p className="text-[#F1EAE8]/90 text-base">{scenario.insight}</p>
                   </div>
                 )}
                 
                 {/* Comments section */}
-                <div className="mt-8">
+                <div className="mt-8 w-full">
                   <div 
                     className="flex justify-between items-center mb-4 cursor-pointer" 
                     onClick={() => setShowComments(!showComments)}
