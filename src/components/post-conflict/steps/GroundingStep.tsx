@@ -1,9 +1,10 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { MessageCircleHeart } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useSession } from '../context/SessionContext';
+import { useToast } from '@/hooks/use-toast';
 
 interface GroundingStepProps {
   onResponse: (response: boolean) => void;
@@ -13,7 +14,18 @@ interface GroundingStepProps {
 
 const GroundingStep: React.FC<GroundingStepProps> = ({ onResponse, onExit }) => {
   const navigate = useNavigate();
-  const { setCurrentStep } = useSession();
+  const { setCurrentStep, sessionData } = useSession();
+  const { toast } = useToast();
+
+  // Check if partner is ready when this component mounts or partner status changes
+  useEffect(() => {
+    if (sessionData.partner2.ready) {
+      toast({
+        title: "Your partner is ready",
+        description: "Your partner is ready to talk through what happened.",
+      });
+    }
+  }, [sessionData.partner2.ready, toast]);
 
   const handleNotYet = () => {
     onResponse(false);
@@ -23,6 +35,11 @@ const GroundingStep: React.FC<GroundingStepProps> = ({ onResponse, onExit }) => 
 
   const handleYes = () => {
     onResponse(true);
+    // Notify that you're ready (in a real app, this would send to the partner)
+    toast({
+      title: "You're ready",
+      description: "Your partner has been notified that you're ready to talk.",
+    });
     // Directly go to the next step
     setCurrentStep(1);
   };

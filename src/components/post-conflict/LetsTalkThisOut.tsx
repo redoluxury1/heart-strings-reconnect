@@ -12,7 +12,7 @@ const LetsTalkThisOut = () => {
   }
 
   return (
-    <div className="bg-gradient-to-br from-soft-cream/40 to-soft-cream/10 rounded-xl shadow-md p-6 md:p-8">
+    <div className="bg-gradient-to-br from-soft-cream/40 to-soft-cream/10 rounded-xl shadow-md p-6 md:p-8 mb-12">
       <div className="flex flex-col items-center">
         <MessageCircleHeart className="h-12 w-12 text-mauve-rose mb-4" />
         

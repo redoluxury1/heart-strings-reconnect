@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useSession } from '../context/SessionContext';
 
 interface StepsNavigationProps {
@@ -11,47 +10,40 @@ interface StepsNavigationProps {
 const StepsNavigation: React.FC<StepsNavigationProps> = ({ totalSteps }) => {
   const { currentStep, setCurrentStep, bothPartnersReady } = useSession();
   
-  const handleNextStep = () => {
-    if (currentStep < totalSteps - 1) {
-      setCurrentStep(currentStep + 1);
-    }
-  };
-  
-  const handlePrevStep = () => {
+  const goBack = () => {
     if (currentStep > 0) {
       setCurrentStep(currentStep - 1);
     }
   };
   
-  // Don't show navigation on the first and last steps
+  const goNext = () => {
+    if (currentStep < totalSteps - 1 && bothPartnersReady) {
+      setCurrentStep(currentStep + 1);
+    }
+  };
+  
+  // Don't show navigation on the first step (ready check) or final step
   if (currentStep === 0 || currentStep === totalSteps - 1) {
     return null;
   }
   
   return (
-    <div className="flex justify-between mt-8">
-      {currentStep > 0 && (
-        <Button 
-          variant="outline" 
-          onClick={handlePrevStep}
-          className="flex items-center gap-2 border-gray-300 text-midnight-indigo"
-        >
-          <ChevronLeft size={16} />
-          Go Back
-        </Button>
-      )}
+    <div className="flex justify-between mt-8 pt-4">
+      <Button 
+        onClick={goBack} 
+        variant="outline" 
+        className="border-gray-300 text-midnight-indigo bg-gray-50 hover:bg-gray-100"
+      >
+        Go Back
+      </Button>
       
-      <div className="ml-auto">
-        {bothPartnersReady && (
-          <Button 
-            onClick={handleNextStep}
-            className="bg-midnight-indigo hover:bg-midnight-indigo/90 text-white flex items-center gap-2"
-          >
-            Keep Going
-            <ChevronRight size={16} />
-          </Button>
-        )}
-      </div>
+      <Button 
+        onClick={goNext} 
+        className="bg-midnight-indigo hover:bg-midnight-indigo/90 text-white"
+        disabled={!bothPartnersReady}
+      >
+        Keep Going
+      </Button>
     </div>
   );
 };

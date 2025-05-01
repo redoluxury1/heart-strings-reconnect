@@ -11,12 +11,12 @@ const PostConflict = () => {
     <div className="min-h-screen bg-slate-50">
       <Navbar />
       
-      <main className="py-0">
+      <main className="py-0 pb-16">
         <FloatingTextBubbles />
         
         <ContentContainer maxWidth="lg">
-          <div className="max-w-3xl mx-auto mt-6">
-            <p className="text-center text-gray-600 mb-10 mt-4">
+          <div className="max-w-3xl mx-auto mt-12">
+            <p className="text-center text-gray-600 mb-10">
               Okay, take a breath. Let's talk about what went down- no judgment, just space to be honest and figure it out side by side.
             </p>
             

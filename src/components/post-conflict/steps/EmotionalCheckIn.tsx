@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Plus, Check } from 'lucide-react';
 import { Input } from '@/components/ui/input';
@@ -46,6 +46,47 @@ const EmotionalCheckIn: React.FC<EmotionalCheckInProps> = ({
       setIsSubmitted(true);
     }
   };
+
+  // Map emotions to insights
+  const emotionalInsight = useMemo(() => {
+    if (emotions.length === 0) return null;
+    
+    const insights: Record<string, string> = {
+      'anger': "Anger often masks hurt or fear. When we feel threatened or violated, anger can be our shield.",
+      'sadness': "Sadness helps us process loss and change. It's your heart's way of acknowledging what matters to you.",
+      'fear': "Fear signals that something important feels at risk. Behind it is often a deep care for what might be lost.",
+      'shame': "Shame can be a belief that we are fundamentally flawed. Sharing it often reveals we're more alike than different.",
+      'hurt': "Hurt often comes when something we value feels damaged. It shows how much you care.",
+      'overwhelmed': "Feeling overwhelmed happens when we've reached our capacity. It's your system asking for support or space.",
+      'rejected': "Feeling rejected can stem from a deep need for acceptance or closeness. It often signals a fear of not being chosen.",
+      'misunderstood': "Being misunderstood can feel isolating. It often reveals a desire to be truly seen by those who matter to us.",
+      'frustrated': "Frustration emerges when our efforts are blocked. It shows your determination to reach something valuable.",
+      'anxious': "Anxiety often points to how much you care about what might happen. It's protective in nature.",
+      'disappointed': "Disappointment reflects the gap between our hopes and reality. It reveals what matters most to you.",
+      'betrayed': "Feelings of betrayal reveal how deeply you trusted. The pain reflects the value of the trust that was broken.",
+      'guilty': "Guilt, while uncomfortable, can reflect your moral compass and desire to honor your values."
+    };
+
+    // Multiple emotions logic
+    if (emotions.length > 1) {
+      if (emotions.includes('hurt') && emotions.includes('frustrated')) {
+        return "Hurt often hides beneath frustration - it can mean you care more than you're letting on.";
+      }
+      if (emotions.includes('angry') && emotions.includes('sad')) {
+        return "When anger and sadness mix, it often means something very important to you has been damaged.";
+      }
+      if (emotions.includes('rejected') && emotions.includes('anxious')) {
+        return "The combination of feeling rejected and anxious often reveals a deep need for security and belonging.";
+      }
+      
+      // Default to the insight for the first emotion if we don't have a specific combo insight
+      return insights[emotions[0]] || null;
+    }
+    
+    // Single emotion
+    return insights[emotions[0]] || null;
+    
+  }, [emotions]);
   
   return (
     <div>
@@ -67,8 +108,8 @@ const EmotionalCheckIn: React.FC<EmotionalCheckInProps> = ({
                 type="button"
                 variant={emotions.includes(emotion) ? 'default' : 'outline'}
                 className={emotions.includes(emotion) 
-                  ? 'bg-mauve-rose text-white' 
-                  : 'border-gray-300 text-gray-700'
+                  ? 'bg-mauve-rose text-white hover:text-white' 
+                  : 'border-gray-300 text-gray-700 hover:text-gray-700'
                 }
                 onClick={() => handleEmotionToggle(emotion)}
               >
@@ -94,13 +135,19 @@ const EmotionalCheckIn: React.FC<EmotionalCheckInProps> = ({
             <Button
               onClick={handleAddCustom}
               variant="outline"
-              className="bg-midnight-indigo/20 hover:bg-midnight-indigo/30 text-midnight-indigo"
+              className="bg-midnight-indigo/20 hover:bg-midnight-indigo/30 text-midnight-indigo hover:text-midnight-indigo"
               disabled={!customEmotion.trim()}
             >
               <Plus size={16} className="mr-1" />
               Add
             </Button>
           </div>
+          
+          {emotions.length > 0 && emotionalInsight && (
+            <div className="mb-8 p-4 bg-soft-blush/60 rounded-lg text-center text-midnight-indigo italic">
+              {emotionalInsight}
+            </div>
+          )}
           
           <div className="text-center">
             <Button 
@@ -145,6 +192,12 @@ const EmotionalCheckIn: React.FC<EmotionalCheckInProps> = ({
               </div>
             )}
           </div>
+
+          {emotionalInsight && (
+            <div className="mt-6 p-4 bg-soft-blush/60 rounded-lg text-center text-midnight-indigo italic">
+              {emotionalInsight}
+            </div>
+          )}
         </div>
       )}
     </div>

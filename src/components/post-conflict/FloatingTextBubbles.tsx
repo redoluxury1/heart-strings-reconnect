@@ -37,8 +37,8 @@ const bubbleStyles = [
 const bubbleVariants = [
   { position: "left-[5%] top-[5%] -rotate-2 max-w-[200px]", tail: "after:left-4" }, // Top left
   { position: "right-[5%] top-[5%] rotate-2 max-w-[210px]", tail: "after:right-4" }, // Top right
-  { position: "left-[10%] bottom-[5%] -rotate-1 max-w-[190px]", tail: "after:left-6" }, // Bottom left
-  { position: "right-[10%] bottom-[5%] rotate-1 max-w-[220px]", tail: "after:right-6" }, // Bottom right
+  { position: "left-[10%] bottom-[15%] -rotate-1 max-w-[190px]", tail: "after:left-6" }, // Bottom left but higher
+  { position: "right-[10%] bottom-[15%] rotate-1 max-w-[220px]", tail: "after:right-6" }, // Bottom right but higher
   { position: "left-[25%] top-[40%] rotate-3 max-w-[180px]", tail: "after:left-10" }, // Middle left
   { position: "right-[25%] top-[40%] -rotate-3 max-w-[230px]", tail: "after:right-10" }, // Middle right
 ];
@@ -118,7 +118,7 @@ const FloatingTextBubbles = () => {
   }, [visibleBubbles.length, usedPositions]);
 
   return (
-    <div className="relative z-10 bg-gradient-to-b from-rose-50 via-white to-transparent py-20 overflow-visible">
+    <div className="relative z-10 bg-gradient-to-b from-rose-50 via-white to-transparent py-24 overflow-visible">
       {/* Message Bubbles Container - extending beyond its boundaries */}
       <div className="absolute inset-0 h-[220px] w-full overflow-visible">
         {visibleBubbles.map(bubble => (
