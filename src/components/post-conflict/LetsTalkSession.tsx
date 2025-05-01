@@ -26,6 +26,7 @@ const LetsTalkSessionContent: React.FC<{ onExit: () => void }> = ({ onExit }) =>
 };
 
 const LetsTalkSession: React.FC<LetsTalkSessionProps> = ({ onExit }) => {
+  // Wrap both the session content and parent PostConflict component
   return (
     <SessionProvider>
       <LetsTalkSessionContent onExit={onExit} />
