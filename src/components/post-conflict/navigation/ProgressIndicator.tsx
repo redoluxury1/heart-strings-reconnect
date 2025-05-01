@@ -12,7 +12,7 @@ const ProgressIndicator: React.FC<ProgressIndicatorProps> = ({ totalSteps }) => 
   return (
     <div className="bg-gray-100 h-1 w-full">
       <div 
-        className="bg-blue-500 h-1 transition-all duration-500"
+        className="bg-mauve-rose h-1 transition-all duration-500"
         style={{ width: `${((currentStep + 1) / totalSteps) * 100}%` }}
       ></div>
     </div>

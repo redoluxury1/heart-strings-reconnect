@@ -14,7 +14,7 @@ const LetsTalkThisOut = () => {
   return (
     <div className="bg-gradient-to-br from-soft-cream/40 to-soft-cream/10 rounded-xl shadow-md p-6 md:p-8">
       <div className="flex flex-col items-center">
-        <MessageCircleHeart className="h-12 w-12 text-blue-500 mb-4" />
+        <MessageCircleHeart className="h-12 w-12 text-mauve-rose mb-4" />
         
         <h2 className="text-2xl md:text-3xl font-cormorant font-medium text-midnight-indigo mb-3 text-center">
           Let's Talk This Out
@@ -26,9 +26,9 @@ const LetsTalkThisOut = () => {
         
         <Button 
           onClick={() => setIsSessionStarted(true)}
-          className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-2"
+          className="bg-midnight-indigo hover:bg-midnight-indigo/90 text-white px-8 py-2"
         >
-          Get to the bottom of it
+          Let's get to the bottom of it
         </Button>
       </div>
     </div>

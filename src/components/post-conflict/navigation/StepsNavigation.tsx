@@ -34,10 +34,10 @@ const StepsNavigation: React.FC<StepsNavigationProps> = ({ totalSteps }) => {
         <Button 
           variant="outline" 
           onClick={handlePrevStep}
-          className="flex items-center gap-2"
+          className="flex items-center gap-2 border-gray-300 text-midnight-indigo"
         >
           <ChevronLeft size={16} />
-          Back
+          Go Back
         </Button>
       )}
       
@@ -45,9 +45,9 @@ const StepsNavigation: React.FC<StepsNavigationProps> = ({ totalSteps }) => {
         {bothPartnersReady && (
           <Button 
             onClick={handleNextStep}
-            className="bg-blue-500 hover:bg-blue-600 text-white flex items-center gap-2"
+            className="bg-midnight-indigo hover:bg-midnight-indigo/90 text-white flex items-center gap-2"
           >
-            Next
+            Keep Going
             <ChevronRight size={16} />
           </Button>
         )}

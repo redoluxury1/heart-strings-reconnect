@@ -15,13 +15,9 @@ const PostConflict = () => {
         <FloatingTextBubbles />
         
         <ContentContainer maxWidth="lg">
-          <div className="max-w-3xl mx-auto">
-            <h1 className="text-3xl md:text-4xl font-cormorant font-medium text-midnight-indigo text-center mb-4">
-              Post-Fight Reflection
-            </h1>
-            
-            <p className="text-center text-gray-600 mb-10">
-              Tools to help process what happened and understand underlying needs and emotions.
+          <div className="max-w-3xl mx-auto mt-6">
+            <p className="text-center text-gray-600 mb-10 mt-4">
+              Okay, take a breath. Let's talk about what went down- no judgment, just space to be honest and figure it out side by side.
             </p>
             
             <LetsTalkThisOut />

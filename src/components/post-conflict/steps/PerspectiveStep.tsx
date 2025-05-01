@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Mic, MicOff } from 'lucide-react';
+import { Mic, MicOff, Send } from 'lucide-react';
 
 interface PerspectiveStepProps {
   onResponse: (response: string) => void;
@@ -118,10 +118,10 @@ const PerspectiveStep: React.FC<PerspectiveStepProps> = ({
                 key={index}
                 variant="outline"
                 size="sm"
-                className="bg-white border-gray-300 hover:bg-gray-100 text-gray-700"
+                className="bg-white border-gray-300 hover:bg-gray-100 text-gray-700 whitespace-normal h-auto py-1"
                 onClick={() => handleStarterPrompt(prompt)}
               >
-                {prompt.length > 20 ? `${prompt.substring(0, 20)}...` : prompt}
+                {prompt}
               </Button>
             ))}
           </div>
@@ -134,6 +134,17 @@ const PerspectiveStep: React.FC<PerspectiveStepProps> = ({
           placeholder="Type your perspective here..."
           className="w-full h-32"
         />
+        
+        {!hasSubmitted && (
+          <Button 
+            className="bg-midnight-indigo hover:bg-midnight-indigo/90 text-white px-8 mt-4"
+            onClick={handleSubmit}
+            disabled={!perspective.trim()}
+          >
+            <Send size={16} className="mr-2" />
+            Share
+          </Button>
+        )}
       </div>
       
       {/* Only show partner's perspective after submission */}
@@ -144,16 +155,6 @@ const PerspectiveStep: React.FC<PerspectiveStepProps> = ({
             <p className="text-gray-700">{partner2Response}</p>
           </div>
         </div>
-      )}
-      
-      {!hasSubmitted && (
-        <Button 
-          className="bg-blue-500 hover:bg-blue-600 text-white px-8"
-          onClick={handleSubmit}
-          disabled={!perspective.trim()}
-        >
-          Continue
-        </Button>
       )}
     </div>
   );

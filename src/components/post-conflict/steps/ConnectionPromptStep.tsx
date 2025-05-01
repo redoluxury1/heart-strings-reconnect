@@ -45,7 +45,7 @@ const ConnectionPromptStep: React.FC<ConnectionPromptStepProps> = ({
       
       <div className="max-w-2xl mx-auto">
         <p className="text-center text-gray-700 mb-6">
-          Even though we fought, I still care about you. Let's say one small thing we appreciate about each other.
+          Even though we fought, I still care about you. Let's say something kind to help us repair our love.
         </p>
         
         {!isSubmitted ? (
@@ -56,10 +56,10 @@ const ConnectionPromptStep: React.FC<ConnectionPromptStepProps> = ({
                   key={index}
                   variant="outline"
                   size="sm"
-                  className="bg-white border-gray-300 hover:bg-gray-100 text-gray-700"
+                  className="bg-white border-gray-300 hover:bg-gray-100 text-gray-700 whitespace-normal h-auto py-1"
                   onClick={() => handleStarterPrompt(prompt)}
                 >
-                  {prompt.length > 20 ? `${prompt.substring(0, 20)}...` : prompt}
+                  {prompt}
                 </Button>
               ))}
             </div>
@@ -73,7 +73,7 @@ const ConnectionPromptStep: React.FC<ConnectionPromptStepProps> = ({
             
             <Button 
               onClick={handleSubmit}
-              className="bg-blue-500 hover:bg-blue-600 text-white w-full flex items-center justify-center gap-2"
+              className="bg-midnight-indigo hover:bg-midnight-indigo/90 text-white w-full flex items-center justify-center gap-2"
               disabled={!input.trim()}
             >
               <Send size={16} />

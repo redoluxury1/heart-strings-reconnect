@@ -29,7 +29,7 @@ const GroundingStep: React.FC<GroundingStepProps> = ({ onResponse, onExit }) => 
 
   return (
     <div className="text-center">
-      <MessageCircleHeart className="h-12 w-12 mx-auto text-blue-500 mb-4" />
+      <MessageCircleHeart className="h-12 w-12 mx-auto text-mauve-rose mb-4" />
       
       <h2 className="text-2xl md:text-3xl font-cormorant font-medium text-midnight-indigo mb-6">
         Are you both ready to talk?
@@ -37,18 +37,18 @@ const GroundingStep: React.FC<GroundingStepProps> = ({ onResponse, onExit }) => 
       
       <div className="flex flex-col md:flex-row justify-center gap-4 max-w-sm mx-auto">
         <Button 
-          className="bg-blue-500 hover:bg-blue-600 text-white py-6"
+          className="bg-midnight-indigo hover:bg-midnight-indigo/90 text-white py-6"
           onClick={handleYes}
         >
-          Yes
+          Yes - I want to move forward
         </Button>
         
         <Button 
           variant="outline" 
-          className="border-gray-300 text-gray-700 py-6"
+          className="border-gray-300 text-midnight-indigo bg-gray-50 py-6 hover:bg-gray-100"
           onClick={handleNotYet}
         >
-          Not yet
+          Not yet, I need to decompress
         </Button>
       </div>
       

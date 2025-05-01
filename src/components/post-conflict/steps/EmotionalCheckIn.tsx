@@ -67,7 +67,7 @@ const EmotionalCheckIn: React.FC<EmotionalCheckInProps> = ({
                 type="button"
                 variant={emotions.includes(emotion) ? 'default' : 'outline'}
                 className={emotions.includes(emotion) 
-                  ? 'bg-blue-500 text-white' 
+                  ? 'bg-mauve-rose text-white' 
                   : 'border-gray-300 text-gray-700'
                 }
                 onClick={() => handleEmotionToggle(emotion)}
@@ -94,7 +94,7 @@ const EmotionalCheckIn: React.FC<EmotionalCheckInProps> = ({
             <Button
               onClick={handleAddCustom}
               variant="outline"
-              className="bg-blue-500 hover:bg-blue-600 text-white"
+              className="bg-midnight-indigo/20 hover:bg-midnight-indigo/30 text-midnight-indigo"
               disabled={!customEmotion.trim()}
             >
               <Plus size={16} className="mr-1" />
@@ -105,10 +105,10 @@ const EmotionalCheckIn: React.FC<EmotionalCheckInProps> = ({
           <div className="text-center">
             <Button 
               onClick={handleSubmit}
-              className="bg-blue-500 hover:bg-blue-600 text-white px-8"
+              className="bg-midnight-indigo hover:bg-midnight-indigo/90 text-white px-8"
               disabled={emotions.length === 0}
             >
-              Share
+              Continue
             </Button>
           </div>
         </>
