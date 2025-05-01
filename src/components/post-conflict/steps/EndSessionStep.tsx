@@ -1,15 +1,17 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Heart, MessageSquareHeart, Gamepad2 } from 'lucide-react';
+import { Heart, MessageSquareHeart, Gamepad2, RefreshCw } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 interface EndSessionStepProps {
   onSendLoveNote: () => void;
+  onRestart?: () => void;
 }
 
 const EndSessionStep: React.FC<EndSessionStepProps> = ({ 
-  onSendLoveNote
+  onSendLoveNote,
+  onRestart
 }) => {
   const navigate = useNavigate();
 
@@ -56,6 +58,16 @@ const EndSessionStep: React.FC<EndSessionStepProps> = ({
           Play Would You Rather
         </Button>
       </div>
+      
+      {onRestart && (
+        <Button 
+          className="mb-4 bg-green-500 hover:bg-green-600 text-white flex items-center gap-2 mx-auto"
+          onClick={onRestart}
+        >
+          <RefreshCw size={18} />
+          Talk through something else
+        </Button>
+      )}
       
       <Button 
         variant="outline" 

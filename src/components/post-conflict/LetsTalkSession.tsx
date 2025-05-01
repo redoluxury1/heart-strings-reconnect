@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
@@ -104,6 +105,29 @@ const LetsTalkSession: React.FC<LetsTalkSessionProps> = ({ onExit }) => {
     }
   };
   
+  const handleRestart = () => {
+    // Clear session storage
+    sessionStorage.removeItem('letsTalkSession');
+    
+    // Reset to initial state
+    setCurrentStep(0);
+    setSessionData({
+      partner1: {
+        responses: {},
+        ready: false
+      },
+      partner2: {
+        responses: {},
+        ready: false
+      }
+    });
+    
+    toast({
+      title: "Starting new session",
+      description: "Let's talk through something else.",
+    });
+  };
+  
   const bothPartnersReady = sessionData.partner1.ready && sessionData.partner2.ready;
   
   const steps = [
@@ -160,6 +184,11 @@ const LetsTalkSession: React.FC<LetsTalkSessionProps> = ({ onExit }) => {
       component: <EndSessionStep onSendLoveNote={onExit} />
     }
   ];
+  
+  steps[steps.length - 1] = {
+    id: 'end',
+    component: <EndSessionStep onSendLoveNote={onExit} onRestart={handleRestart} />
+  };
   
   const currentStepContent = steps[currentStep].component;
   
