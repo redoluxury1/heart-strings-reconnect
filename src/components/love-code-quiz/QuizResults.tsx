@@ -4,8 +4,9 @@ import { Button } from '@/components/ui/button';
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip, BarChart, Bar, XAxis, YAxis } from 'recharts';
 import { LoveCodeResult } from '../../types/love-code-quiz';
 import { loveCodeDescriptions } from '../../data/love-code-quiz-data';
-import { Heart, ChevronDown, ChevronUp } from 'lucide-react';
+import { Heart, ChevronDown, ChevronUp, UserPlus } from 'lucide-react';
 import { useIsMobile } from '../../hooks/use-mobile';
+import PartnerInvite from './PartnerInvite';
 
 interface QuizResultsProps {
   results: LoveCodeResult;
@@ -31,6 +32,7 @@ const QuizResults: React.FC<QuizResultsProps> = ({ results, onRestart, onHome })
   const primaryDesc = loveCodeDescriptions[results.primaryCode];
   const secondaryDesc = loveCodeDescriptions[results.secondaryCode];
   const [showDetailedDescription, setShowDetailedDescription] = useState(false);
+  const [isInviteOpen, setIsInviteOpen] = useState(false);
   const isMobile = useIsMobile();
   
   // Format data for the charts
@@ -40,6 +42,9 @@ const QuizResults: React.FC<QuizResultsProps> = ({ results, onRestart, onHome })
     code,
     fill: COLORS[index % COLORS.length]
   }));
+
+  const openInviteModal = () => setIsInviteOpen(true);
+  const closeInviteModal = () => setIsInviteOpen(false);
   
   return (
     <div className="max-w-4xl mx-auto">
@@ -250,7 +255,7 @@ const QuizResults: React.FC<QuizResultsProps> = ({ results, onRestart, onHome })
           </p>
         </div>
         
-        {/* Invite Partner Section */}
+        {/* Partner Invite Section (Updated) */}
         <div className="bg-mauve-rose/10 rounded-lg p-6 mb-8 text-center">
           <h3 className="font-cormorant font-medium text-xl text-midnight-indigo mb-3">
             Invite Your Partner to Take the Quiz
@@ -258,8 +263,12 @@ const QuizResults: React.FC<QuizResultsProps> = ({ results, onRestart, onHome })
           <p className="text-midnight-indigo/80 mb-4">
             When both partners understand each other's Love Codes, connection deepens and miscommunication decreases.
           </p>
-          <Button className="bg-mauve-rose hover:bg-mauve-rose/90 text-white">
-            Share the Quiz
+          <Button 
+            className="bg-mauve-rose hover:bg-mauve-rose/90 text-white"
+            onClick={openInviteModal}
+          >
+            <UserPlus className="mr-2 h-4 w-4" />
+            Invite Partner
           </Button>
         </div>
         
@@ -270,6 +279,9 @@ const QuizResults: React.FC<QuizResultsProps> = ({ results, onRestart, onHome })
           </Button>
         </div>
       </div>
+      
+      {/* Partner Invite Modal */}
+      <PartnerInvite isOpen={isInviteOpen} onClose={closeInviteModal} />
     </div>
   );
 };
