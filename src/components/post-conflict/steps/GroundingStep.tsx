@@ -3,6 +3,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { MessageCircleHeart } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useSession } from '../context/SessionContext';
 
 interface GroundingStepProps {
   onResponse: (response: boolean) => void;
@@ -10,8 +11,9 @@ interface GroundingStepProps {
   onNext: () => void;
 }
 
-const GroundingStep: React.FC<GroundingStepProps> = ({ onResponse, onExit, onNext }) => {
+const GroundingStep: React.FC<GroundingStepProps> = ({ onResponse, onExit }) => {
   const navigate = useNavigate();
+  const { setCurrentStep } = useSession();
 
   const handleNotYet = () => {
     onResponse(false);
@@ -22,7 +24,7 @@ const GroundingStep: React.FC<GroundingStepProps> = ({ onResponse, onExit, onNex
   const handleYes = () => {
     onResponse(true);
     // Directly go to the next step
-    onNext();
+    setCurrentStep(1);
   };
 
   return (
