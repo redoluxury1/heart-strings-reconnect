@@ -4,13 +4,16 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import ContentContainer from '@/components/common/ContentContainer';
 import LetsTalkThisOut from '@/components/post-conflict/LetsTalkThisOut';
+import FloatingTextBubbles from '@/components/post-conflict/FloatingTextBubbles';
 
 const PostConflict = () => {
   return (
     <div className="min-h-screen bg-slate-50">
       <Navbar />
       
-      <main className="py-10">
+      <main className="py-0">
+        <FloatingTextBubbles />
+        
         <ContentContainer maxWidth="lg">
           <div className="max-w-3xl mx-auto">
             <h1 className="text-3xl md:text-4xl font-cormorant font-medium text-midnight-indigo text-center mb-4">
