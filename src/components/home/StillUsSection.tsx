@@ -17,13 +17,13 @@ const StillUsSection = () => {
   }, [isMobile]);
   
   return (
-    <section className="py-20 bg-soft-blush relative overflow-hidden">
+    <section className="py-12 bg-soft-blush relative overflow-hidden">
       {/* Floating hearts */}
       <FloatingHearts count={floatingHeartsCount} />
       
       <ContentContainer>
         <div className="text-center mb-14 relative z-10">
-          <h2 className="font-heading-now-medium text-3xl md:text-4xl font-medium italic text-midnight-indigo mb-4">
+          <h2 className="font-cormorant text-3xl md:text-4xl font-medium italic text-midnight-indigo mb-4">
             We're still US
           </h2>
           <p className="text-center text-midnight-indigo font-inter font-light max-w-2xl mx-auto">
