@@ -17,7 +17,7 @@ const LoveCodeQuizSection = () => {
             </div>
           </div>
           
-          <h2 className="font-cormorant text-3xl md:text-4xl font-medium text-midnight-indigo text-center mb-4">
+          <h2 className="font-heading-now-medium text-3xl md:text-4xl font-medium text-midnight-indigo text-center mb-4">
             Discover Your Love Code™
           </h2>
           

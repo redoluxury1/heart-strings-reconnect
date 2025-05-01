@@ -13,7 +13,7 @@ const PrimaryLoveCode: React.FC<PrimaryLoveCodeProps> = ({ primaryDesc }) => {
 
   return (
     <div className="border-t border-b border-lavender-blue/20 py-8 mb-8">
-      <h2 className="text-2xl md:text-3xl font-cormorant font-medium text-mauve-rose mb-4">
+      <h2 className="text-2xl md:text-3xl font-heading-now-medium font-medium text-mauve-rose mb-4">
         Your Primary Love Code: {primaryDesc.title}
       </h2>
       

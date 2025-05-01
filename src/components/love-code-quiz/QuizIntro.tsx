@@ -14,7 +14,7 @@ const QuizIntro: React.FC<QuizIntroProps> = ({ onStart }) => {
         <Heart className="h-16 w-16 text-mauve-rose" />
       </div>
       
-      <h1 className="text-3xl md:text-4xl font-cormorant font-medium text-midnight-indigo mb-4">
+      <h1 className="text-3xl md:text-4xl font-heading-now-medium font-medium text-midnight-indigo mb-4">
         Discover Your Love Code™
       </h1>
       

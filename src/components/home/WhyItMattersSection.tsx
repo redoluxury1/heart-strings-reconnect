@@ -93,7 +93,7 @@ const WhyItMattersSection: React.FC = () => {
     <section className="py-16 bg-soft-blush">
       <ContentContainer>
         <div className="text-center mb-0">
-          <h2 className="font-cormorant text-3xl md:text-4xl font-medium text-midnight-indigo mb-1">
+          <h2 className="font-heading-now-medium text-3xl md:text-4xl font-medium text-midnight-indigo mb-1">
             Why It Matters
           </h2>
           <p className="text-base text-midnight-indigo/90 max-w-3xl mx-auto font-inter mb-0">

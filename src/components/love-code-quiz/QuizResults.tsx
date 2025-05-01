@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Heart } from 'lucide-react';
 import { LoveCodeResult } from '../../types/love-code-quiz';
@@ -34,7 +33,7 @@ const QuizResults: React.FC<QuizResultsProps> = ({ results, onRestart, onHome })
           <PDFDownloadButton results={results} />
         </div>
         
-        <h1 className="text-3xl md:text-4xl font-cormorant font-medium text-midnight-indigo text-center mb-4">
+        <h1 className="text-3xl md:text-4xl font-heading-now-medium font-medium text-midnight-indigo text-center mb-4">
           Your Love Code is <span className="text-mauve-rose font-semibold block text-4xl md:text-5xl mt-2">{primaryDesc.title}!</span>
         </h1>
         
