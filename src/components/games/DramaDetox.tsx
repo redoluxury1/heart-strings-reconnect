@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { ArrowUp } from 'lucide-react';
 import ScenarioCard from './drama-detox/ScenarioCard';
@@ -119,6 +120,7 @@ const DramaDetox = () => {
           newComment={newComment}
           onCommentChange={setNewComment}
           onAddComment={() => handleAddComment(currentScenario.id)}
+          isFirstScenario={currentScenarioIndex === 0} // Pass true only for the first scenario
         />
       </div>
       

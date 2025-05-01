@@ -21,6 +21,7 @@ interface ScenarioCardProps {
   newComment: string;
   onCommentChange: (comment: string) => void;
   onAddComment: () => void;
+  isFirstScenario?: boolean;
 }
 
 const ScenarioCard = ({ 
@@ -30,7 +31,8 @@ const ScenarioCard = ({
   comments,
   newComment,
   onCommentChange,
-  onAddComment
+  onAddComment,
+  isFirstScenario = false
 }: ScenarioCardProps) => {
   const [showComments, setShowComments] = useState(false);
 
@@ -59,7 +61,9 @@ const ScenarioCard = ({
             {!userVote ? (
               // Voting view with just the options, no "Cast Your Vote" button
               <div className="space-y-6">
-                <h4 className="font-medium text-lg text-[#F1EAE8]">Pick a side. No fence-sitting.</h4>
+                {isFirstScenario && (
+                  <h4 className="font-medium text-lg text-[#F1EAE8]">Pick a side. No fence-sitting.</h4>
+                )}
                 
                 <div className="flex flex-col gap-3">
                   {scenario.options.map((option, idx) => (
