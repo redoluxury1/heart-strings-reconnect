@@ -38,7 +38,6 @@ const ScenarioCard = ({
   isFirstScenario = false,
   backgroundColor = "#4A448C"
 }: ScenarioCardProps) => {
-  const [showComments, setShowComments] = useState(false);
   const [showCommunityComments, setShowCommunityComments] = useState(false);
 
   // Find user's option if they voted
@@ -109,14 +108,14 @@ const ScenarioCard = ({
                   )}
                 </div>
                 
+                {/* How We See It box - removed title as requested */}
                 {scenario.insight && (
                   <div className="bg-[#C7747F] p-3 rounded-lg mt-3 max-w-md mx-auto w-full">
-                    <h4 className="font-medium text-[#F1EAE8] mb-1 text-sm">How We See It:</h4>
                     <p className="text-[#F1EAE8]/90 text-sm">{scenario.insight}</p>
                   </div>
                 )}
                 
-                {/* Community Comments Section */}
+                {/* Community Comments Section - now includes user commenting functionality */}
                 <div className="mt-2 w-full">
                   <div 
                     className="flex justify-between items-center mb-2 cursor-pointer" 
@@ -124,7 +123,7 @@ const ScenarioCard = ({
                   >
                     <h4 className="font-medium text-[#F1EAE8] text-base flex items-center">
                       <MessageCircle className="h-4 w-4 mr-2" /> 
-                      <span>Community Takes ({communityComments.length})</span>
+                      <span>Community Takes ({communityComments.length + comments.length})</span>
                     </h4>
                     <Button 
                       variant="ghost" 
@@ -135,40 +134,22 @@ const ScenarioCard = ({
                     </Button>
                   </div>
 
-                  {showCommunityComments && communityComments.length > 0 && (
-                    <div className="space-y-2 mb-4">
-                      {communityComments.map((comment, index) => (
-                        <div key={index} className="bg-black/20 p-2 rounded-lg">
-                          <p className="text-[#F1EAE8]/90 text-sm">{comment}</p>
+                  {showCommunityComments && (
+                    <div className="space-y-4 mb-4">
+                      {/* Display pre-populated community comments */}
+                      {communityComments.length > 0 && (
+                        <div className="space-y-2 mb-4">
+                          {communityComments.map((comment, index) => (
+                            <div key={`community-${index}`} className="bg-black/20 p-2 rounded-lg">
+                              <p className="text-[#F1EAE8]/90 text-sm">{comment}</p>
+                            </div>
+                          ))}
                         </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-                
-                {/* User Comments section */}
-                <div className="mt-2 w-full">
-                  <div 
-                    className="flex justify-between items-center mb-2 cursor-pointer" 
-                    onClick={() => setShowComments(!showComments)}
-                  >
-                    <h4 className="font-medium text-[#F1EAE8] text-base flex items-center">
-                      <MessageCircle className="h-4 w-4 mr-2" /> 
-                      Your Comments ({comments.length})
-                    </h4>
-                    <Button 
-                      variant="ghost" 
-                      size="sm" 
-                      className="text-xs text-[#9b87f5]"
-                    >
-                      {showComments ? "Hide" : "Show"}
-                    </Button>
-                  </div>
-
-                  {showComments && (
-                    <>
-                      {comments.length > 0 ? (
-                        <div className="space-y-4 mb-4">
+                      )}
+                      
+                      {/* Display user comments */}
+                      {comments.length > 0 && (
+                        <div className="space-y-2 mb-4">
                           {comments.map(comment => (
                             <div key={comment.id} className="border-b border-[#F1EAE8]/20 pb-3">
                               <div className="flex justify-between">
@@ -181,10 +162,9 @@ const ScenarioCard = ({
                             </div>
                           ))}
                         </div>
-                      ) : (
-                        <p className="text-[#F1EAE8]/60 italic mb-4">No comments yet. Be the first to add your take!</p>
                       )}
 
+                      {/* Comment input */}
                       <div className="flex gap-2 mt-4">
                         <Input 
                           value={newComment}
@@ -200,7 +180,7 @@ const ScenarioCard = ({
                           Post
                         </Button>
                       </div>
-                    </>
+                    </div>
                   )}
                 </div>
               </div>
