@@ -1,96 +1,97 @@
-import React, { useState } from 'react';
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Gamepad } from 'lucide-react';
+
+import React, { useState, useRef, useEffect } from 'react';
+import { Info } from 'lucide-react';
 import ScenarioCard from './drama-detox/ScenarioCard';
-import VotingResultsCard from './drama-detox/VotingResultsCard';
 import dramaDetoxScenarios from '../../data/drama-detox';
 
 const DramaDetox = () => {
   const [currentScenarioIndex, setCurrentScenarioIndex] = useState(0);
-  const [showResults, setShowResults] = useState(false);
-  const [userVote, setUserVote] = useState<string | null>(null);
+  const [userVotes, setUserVotes] = useState<Record<string, string>>({});
+  const containerRef = useRef<HTMLDivElement>(null);
   
   const currentScenario = dramaDetoxScenarios[currentScenarioIndex];
-  
-  const handleVote = (option: string) => {
-    setUserVote(option);
-    setShowResults(true);
+
+  const handleVote = (scenarioId: string, option: string) => {
+    setUserVotes(prev => ({
+      ...prev,
+      [scenarioId]: option
+    }));
   };
   
-  const handleNextScenario = () => {
-    if (currentScenarioIndex < dramaDetoxScenarios.length - 1) {
+  const handleSwipe = (direction: 'up' | 'down') => {
+    if (direction === 'up' && currentScenarioIndex < dramaDetoxScenarios.length - 1) {
       setCurrentScenarioIndex(prev => prev + 1);
-      setShowResults(false);
-      setUserVote(null);
-      // Scroll to top when going to next scenario
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
-    }
-  };
-  
-  const handlePrevScenario = () => {
-    if (currentScenarioIndex > 0) {
+    } else if (direction === 'down' && currentScenarioIndex > 0) {
       setCurrentScenarioIndex(prev => prev - 1);
-      setShowResults(false);
-      setUserVote(null);
-      // Scroll to top when going to previous scenario as well
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
     }
   };
 
+  // Touch handling for swipe gestures
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    let touchStartY = 0;
+    let touchEndY = 0;
+    
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartY = e.touches[0].clientY;
+    };
+    
+    const handleTouchMove = (e: TouchEvent) => {
+      touchEndY = e.touches[0].clientY;
+    };
+    
+    const handleTouchEnd = () => {
+      const diffY = touchStartY - touchEndY;
+      const THRESHOLD = 50; // Minimum swipe distance
+      
+      if (Math.abs(diffY) > THRESHOLD) {
+        if (diffY > 0) {
+          // Swiped up
+          handleSwipe('up');
+        } else {
+          // Swiped down
+          handleSwipe('down');
+        }
+      }
+    };
+    
+    container.addEventListener('touchstart', handleTouchStart);
+    container.addEventListener('touchmove', handleTouchMove);
+    container.addEventListener('touchend', handleTouchEnd);
+    
+    return () => {
+      container.removeEventListener('touchstart', handleTouchStart);
+      container.removeEventListener('touchmove', handleTouchMove);
+      container.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, [currentScenarioIndex]);
+
   return (
-    <div className="max-w-3xl mx-auto">
-      <Card className="bg-white p-6 rounded-xl shadow-md">
-        <div className="flex items-center justify-center mb-6">
-          <div className="bg-[#9b87f5]/20 p-3 rounded-full mr-3">
-            <Gamepad className="h-6 w-6 text-[#7E69AB]" />
-          </div>
-          <h2 className="text-2xl font-cormorant font-medium text-midnight-indigo">Drama Detox™</h2>
-        </div>
-        
-        <p className="text-center mb-8 text-midnight-indigo/80">
-          Read each scenario, vote on who's the problem, and see how the community voted!
-        </p>
-        
-        {!showResults ? (
-          <ScenarioCard 
-            scenario={currentScenario} 
-            onVote={handleVote}
-          />
-        ) : (
-          <VotingResultsCard 
-            scenario={currentScenario} 
-            userVote={userVote || ''} 
-          />
-        )}
-        
-        <div className="flex justify-between mt-6">
-          <Button
-            variant="outline"
-            onClick={handlePrevScenario}
-            disabled={currentScenarioIndex === 0}
-            className="border-midnight-indigo text-midnight-indigo"
-          >
-            Previous
-          </Button>
-          
-          {showResults && (
-            <Button
-              onClick={handleNextScenario}
-              disabled={currentScenarioIndex === dramaDetoxScenarios.length - 1}
-              className="bg-[#9b87f5] hover:bg-[#7E69AB] text-white"
-            >
-              Next Scenario
-            </Button>
-          )}
-        </div>
-      </Card>
+    <div 
+      ref={containerRef}
+      className="w-full h-[85vh] overflow-hidden relative"
+    >
+      <div className="absolute top-0 left-0 right-0 bg-white/80 backdrop-blur-sm p-2 flex items-center justify-center z-10">
+        <h2 className="text-lg font-medium text-midnight-indigo">Drama Detox™</h2>
+        <span className="mx-2 text-xs text-midnight-indigo/60">•</span>
+        <p className="text-xs text-midnight-indigo/60">Who's wrong? Decide, then swipe for the next.</p>
+      </div>
+      
+      <div className="h-full w-full flex items-center justify-center pt-12">
+        <ScenarioCard
+          key={currentScenario.id}
+          scenario={currentScenario}
+          userVote={userVotes[currentScenario.id]}
+          onVote={(option) => handleVote(currentScenario.id, option)}
+        />
+      </div>
+      
+      <div className="absolute bottom-4 left-0 right-0 flex justify-center items-center text-xs text-midnight-indigo/60">
+        <Info className="h-3 w-3 mr-1" />
+        <span>Swipe up for next scenario, down for previous</span>
+      </div>
     </div>
   );
 };
