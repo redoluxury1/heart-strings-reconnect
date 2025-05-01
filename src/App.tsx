@@ -9,6 +9,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import LoveNotesReceived from "./pages/LoveNotesReceived";
 import MidFight from "./pages/MidFight";
+import PostConflict from "./pages/PostConflict";
 import LoveCodeQuiz from "./pages/LoveCodeQuiz";
 import Archive from "./pages/Archive";
 import Games from "./pages/Games";
@@ -37,7 +38,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/during-conflict" element={<MidFight />} />
-          <Route path="/post-conflict" element={<NotFound />} />
+          <Route path="/post-conflict" element={<PostConflict />} />
           <Route path="/reconnect" element={<NotFound />} />
           <Route path="/love-notes" element={<LoveNotesReceived />} />
           <Route path="/love-code-quiz" element={<LoveCodeQuiz />} />

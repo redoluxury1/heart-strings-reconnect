@@ -1,8 +1,8 @@
 
-import React, { useRef } from 'react';
+import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Download } from 'lucide-react';
-import { generatePDF } from 'react-to-pdf';
+import { usePDF } from 'react-to-pdf';
 import { toast } from '@/hooks/use-toast';
 import { LoveCodeResult } from '../../types/love-code-quiz';
 import { loveCodeDescriptions } from '../../data/love-code-quiz-data';
@@ -13,32 +13,17 @@ interface PDFDownloadButtonProps {
 
 const PDFDownloadButton: React.FC<PDFDownloadButtonProps> = ({ results }) => {
   const primaryDesc = loveCodeDescriptions[results.primaryCode];
-  const secondaryDesc = loveCodeDescriptions[results.secondaryCode];
+  const { toPDF, targetRef } = usePDF({
+    filename: `love-code-${primaryDesc.title.replace(/\s+/g, '-').toLowerCase()}.pdf`,
+  });
   
   const handleDownload = async () => {
     try {
-      // Target the results content for PDF generation
-      const options = {
-        filename: `love-code-${primaryDesc.title.replace(/\s+/g, '-').toLowerCase()}.pdf`,
-        page: { 
-          margin: 20,
-          format: 'letter',
-          orientation: 'portrait'
-        }
-      };
-      
-      // Get the element with class .results-container
-      const element = document.querySelector('.results-container');
-      
-      if (element) {
-        await generatePDF(() => element, options);
-        toast({
-          title: "Success!",
-          description: "Your Love Code results have been downloaded.",
-        });
-      } else {
-        throw new Error("Could not find results container element");
-      }
+      toPDF();
+      toast({
+        title: "Success!",
+        description: "Your Love Code results have been downloaded.",
+      });
     } catch (error) {
       console.error("Error generating PDF:", error);
       toast({
