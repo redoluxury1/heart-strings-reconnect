@@ -109,12 +109,12 @@ const DramaDetox = () => {
   return (
     <div 
       ref={containerRef}
-      className="w-full h-[100vh] overflow-hidden relative bg-[#F1ECE8]"
+      className="w-full h-[100vh] overflow-hidden relative bg-[#4A448C] text-[#F1EAE8]"
     >
-      <div className="absolute top-0 left-0 right-0 bg-white/80 backdrop-blur-sm p-2 flex items-center justify-center z-10">
-        <h2 className="text-lg font-medium text-midnight-indigo">Drama Detox™</h2>
-        <span className="mx-2 text-xs text-midnight-indigo/60">•</span>
-        <p className="text-xs text-midnight-indigo/60">Who's wrong? Decide, then swipe for the next.</p>
+      <div className="absolute top-0 left-0 right-0 bg-[#4A448C]/80 backdrop-blur-sm p-2 flex items-center justify-center z-10">
+        <h2 className="text-lg font-medium text-[#F1EAE8]">Drama Detox™</h2>
+        <span className="mx-2 text-xs text-[#F1EAE8]/60">•</span>
+        <p className="text-xs text-[#F1EAE8]/60">Who's wrong? Decide, then swipe for the next.</p>
       </div>
       
       <div className="h-full w-full flex flex-col">
@@ -131,11 +131,11 @@ const DramaDetox = () => {
       </div>
       
       {!userVotes[currentScenario.id] ? (
-        <div className="absolute bottom-4 left-0 right-0 flex justify-center items-center text-xs text-midnight-indigo/60">
+        <div className="absolute bottom-4 left-0 right-0 flex justify-center items-center text-xs text-[#F1EAE8]/60">
           <span>Vote to continue</span>
         </div>
       ) : (
-        <div className="absolute bottom-4 left-0 right-0 flex justify-center items-center text-xs text-white bg-[#9b87f5]/80 py-2 px-4 rounded-full mx-auto w-fit">
+        <div className="absolute bottom-4 left-0 right-0 flex justify-center items-center text-xs text-[#F1EAE8] bg-[#9b87f5]/80 py-2 px-4 rounded-full mx-auto w-fit">
           <ArrowUp className="h-3 w-3 mr-1" />
           <span>Swipe up for next drama</span>
         </div>
