@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Send } from 'lucide-react';
 
 interface ToneSettingStepProps {
   onResponse: (response: string) => void;
@@ -55,7 +54,7 @@ const ToneSettingStep: React.FC<ToneSettingStepProps> = ({
                 key={index}
                 variant="outline"
                 size="sm"
-                className="bg-white border-gray-300 hover:bg-gray-100 text-gray-700 whitespace-normal h-auto py-1"
+                className="bg-white border-gray-300 hover:bg-gray-100 hover:text-mauve-rose text-gray-700 whitespace-normal h-auto py-1"
                 onClick={() => handleStarterPrompt(prompt)}
               >
                 {prompt}
@@ -72,11 +71,10 @@ const ToneSettingStep: React.FC<ToneSettingStepProps> = ({
           
           <Button 
             onClick={handleSubmit}
-            className="bg-midnight-indigo hover:bg-midnight-indigo/90 text-white w-full flex items-center justify-center gap-2"
+            className="bg-midnight-indigo hover:bg-midnight-indigo/90 text-white w-full flex items-center justify-center"
             disabled={!input.trim()}
           >
-            <Send size={16} />
-            Share
+            Continue
           </Button>
         </div>
       ) : (

@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Mic, MicOff, Send } from 'lucide-react';
+import { Mic, MicOff } from 'lucide-react';
 
 interface PerspectiveStepProps {
   onResponse: (response: string) => void;
@@ -118,7 +118,7 @@ const PerspectiveStep: React.FC<PerspectiveStepProps> = ({
                 key={index}
                 variant="outline"
                 size="sm"
-                className="bg-white border-gray-300 hover:bg-gray-100 text-gray-700 whitespace-normal h-auto py-1"
+                className="bg-white border-gray-300 hover:bg-gray-100 hover:text-mauve-rose text-gray-700 whitespace-normal h-auto py-1"
                 onClick={() => handleStarterPrompt(prompt)}
               >
                 {prompt}
@@ -141,8 +141,7 @@ const PerspectiveStep: React.FC<PerspectiveStepProps> = ({
             onClick={handleSubmit}
             disabled={!perspective.trim()}
           >
-            <Send size={16} className="mr-2" />
-            Share
+            Continue
           </Button>
         )}
       </div>

@@ -18,13 +18,13 @@ const PostConflictContent = () => {
     <div className="min-h-screen bg-slate-50">
       <Navbar />
       
-      <main className="py-0 pb-16">
+      <main className="py-0 pb-24">
         {showIntro && <FloatingTextBubbles />}
         
         <ContentContainer maxWidth="lg">
           <div className="max-w-3xl mx-auto mt-12">
             {showIntro && (
-              <p className="text-center text-gray-600 mb-10">
+              <p className="text-center text-gray-600 mb-10 mt-12 pt-6">
                 Okay, take a breath. Let's talk about what went down- no judgment, just space to be honest and figure it out side by side.
               </p>
             )}

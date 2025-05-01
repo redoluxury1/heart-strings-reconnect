@@ -109,7 +109,7 @@ const EmotionalCheckIn: React.FC<EmotionalCheckInProps> = ({
                 variant={emotions.includes(emotion) ? 'default' : 'outline'}
                 className={emotions.includes(emotion) 
                   ? 'bg-mauve-rose text-white hover:text-white' 
-                  : 'border-gray-300 text-gray-700 hover:text-gray-700'
+                  : 'border-gray-300 text-gray-700 hover:text-mauve-rose'
                 }
                 onClick={() => handleEmotionToggle(emotion)}
               >

@@ -17,10 +17,6 @@ const EndSessionStep: React.FC<EndSessionStepProps> = ({
   const navigate = useNavigate();
   const [moodValue, setMoodValue] = useState([50]); // Default to middle of scale
 
-  const handleDone = () => {
-    navigate('/');
-  };
-
   const handleSendLoveNote = () => {
     // Navigate to home page and scroll to daily love note section
     navigate('/#daily-love-note');
@@ -72,7 +68,7 @@ const EndSessionStep: React.FC<EndSessionStepProps> = ({
         </Button>
         
         <Button 
-          className="bg-blue-500 hover:bg-blue-600 text-white flex items-center gap-2"
+          className="bg-midnight-indigo hover:bg-midnight-indigo/90 text-white flex items-center gap-2"
           onClick={handlePlayGame}
         >
           <Gamepad2 size={18} />
@@ -82,21 +78,13 @@ const EndSessionStep: React.FC<EndSessionStepProps> = ({
       
       {onRestart && (
         <Button 
-          className="mb-4 bg-green-500 hover:bg-green-600 text-white flex items-center gap-2 mx-auto"
+          className="mb-4 bg-mauve-rose/30 hover:bg-mauve-rose/40 text-midnight-indigo flex items-center gap-2 mx-auto"
           onClick={onRestart}
         >
           <RefreshCw size={18} />
           Talk through something else
         </Button>
       )}
-      
-      <Button 
-        variant="outline" 
-        className="border-gray-300 text-gray-700"
-        onClick={handleDone}
-      >
-        Done
-      </Button>
     </div>
   );
 };
