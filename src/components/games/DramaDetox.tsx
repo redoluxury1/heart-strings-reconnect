@@ -1,6 +1,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { ArrowUp } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import ScenarioCard from './drama-detox/ScenarioCard';
 import dramaDetoxScenarios from '../../data/drama-detox';
 import { useIsMobile } from '../../hooks/use-mobile';
@@ -124,10 +125,22 @@ const DramaDetox = () => {
   return (
     <div 
       ref={containerRef}
-      className="w-full h-[100vh] overflow-hidden relative text-[#F1EAE8] flex flex-col justify-center"
+      className="w-full h-screen overflow-hidden relative text-[#F1EAE8] flex flex-col"
       style={{ backgroundColor: "#4A448C" }}
-    >      
-      <div className="h-full w-full flex flex-col">
+    >
+      {/* Simple header with just the logo */}
+      <div className="w-full p-4">
+        <Link to="/" className="flex items-center">
+          <img 
+            src="/lovable-uploads/80619689-94c4-43be-b585-6e9079eace63.png" 
+            alt="Bridge For Couples" 
+            className="h-12 w-auto"
+          />
+          <span className="sr-only">Bridge For Couples</span>
+        </Link>
+      </div>
+      
+      <div className="flex-1 flex flex-col">
         <ScenarioCard
           key={currentScenario.id}
           scenario={currentScenario}
