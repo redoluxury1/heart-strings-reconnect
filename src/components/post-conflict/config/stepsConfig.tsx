@@ -6,6 +6,7 @@ import PerspectiveStep from '../steps/PerspectiveStep';
 import EmotionalCheckIn from '../steps/EmotionalCheckIn';
 import NeedsRepairStep from '../steps/NeedsRepairStep';
 import ConnectionPromptStep from '../steps/ConnectionPromptStep';
+import ReflectionSummaryStep from '../steps/ReflectionSummaryStep';
 import EndSessionStep from '../steps/EndSessionStep';
 import { useSession } from '../context/SessionContext';
 
@@ -65,6 +66,25 @@ export const useSteps = (onExit: () => void) => {
           onResponse={(response) => handleResponse('partner1', 'connection', response)}
           partner1Response={sessionData.partner1.responses.connection}
           partner2Response={sessionData.partner2.ready ? "I appreciate how you always try to make things right, even when it's hard." : null}
+        />
+    },
+    {
+      id: 'reflection',
+      component: 
+        <ReflectionSummaryStep
+          partner1Data={{
+            perspective: sessionData.partner1.responses.perspective,
+            emotions: sessionData.partner1.responses.emotions,
+            needs: sessionData.partner1.responses.needs,
+            connection: sessionData.partner1.responses.connection
+          }}
+          partner2Data={{
+            perspective: sessionData.partner2.ready ? "I felt like you weren't listening to me when I tried to explain how I was feeling." : undefined,
+            emotions: sessionData.partner2.ready ? ["hurt", "misunderstood", "frustrated"] : undefined,
+            needs: sessionData.partner2.ready ? "I need reassurance that we can talk about difficult topics without things escalating." : undefined,
+            connection: sessionData.partner2.ready ? "I appreciate how you always try to make things right, even when it's hard." : undefined
+          }}
+          onContinue={() => {}} // This is handled by the navigation buttons
         />
     },
     {
