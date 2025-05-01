@@ -6,11 +6,7 @@ import DramaDetox from '../components/games/DramaDetox';
 const Games = () => {
   return (
     <div className="min-h-screen bg-[#F1ECE8]">
-      <Navbar />
-      
-      <div className="py-0">
-        <DramaDetox />
-      </div>
+      <DramaDetox />
     </div>
   );
 };
