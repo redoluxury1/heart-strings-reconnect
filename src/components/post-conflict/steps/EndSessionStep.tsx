@@ -19,6 +19,11 @@ const EndSessionStep: React.FC<EndSessionStepProps> = ({
     navigate('/');
   };
 
+  const handleSendLoveNote = () => {
+    // Navigate to home page and scroll to daily love note section
+    navigate('/#daily-love-note');
+  };
+
   const handlePlayGame = () => {
     // This will later link to the would you rather game
     navigate('/games');
@@ -44,7 +49,7 @@ const EndSessionStep: React.FC<EndSessionStepProps> = ({
       <div className="flex flex-col md:flex-row justify-center gap-4 mb-4">
         <Button 
           className="bg-mauve-rose hover:bg-mauve-rose/90 text-white flex items-center gap-2"
-          onClick={onSendLoveNote}
+          onClick={handleSendLoveNote}
         >
           <MessageSquareHeart size={18} />
           Send a Love Note

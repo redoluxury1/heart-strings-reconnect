@@ -17,6 +17,7 @@ const PerspectiveStep: React.FC<PerspectiveStepProps> = ({
 }) => {
   const [perspective, setPerspective] = useState(partner1Response || '');
   const [isRecording, setIsRecording] = useState(false);
+  const [hasSubmitted, setHasSubmitted] = useState(!!partner1Response);
   const recognitionRef = useRef<any>(null);
 
   // Initialize speech recognition
@@ -66,6 +67,7 @@ const PerspectiveStep: React.FC<PerspectiveStepProps> = ({
   const handleSubmit = () => {
     if (perspective.trim()) {
       onResponse(perspective.trim());
+      setHasSubmitted(true);
     }
   };
   
@@ -106,7 +108,8 @@ const PerspectiveStep: React.FC<PerspectiveStepProps> = ({
         />
       </div>
       
-      {partner2Response && (
+      {/* Only show partner's perspective after submission */}
+      {hasSubmitted && partner2Response && (
         <div className="mb-6">
           <p className="text-sm text-gray-600 mb-2">Your partner's perspective:</p>
           <div className="bg-gray-100 p-4 rounded-md">
@@ -115,13 +118,15 @@ const PerspectiveStep: React.FC<PerspectiveStepProps> = ({
         </div>
       )}
       
-      <Button 
-        className="bg-blue-500 hover:bg-blue-600 text-white px-8"
-        onClick={handleSubmit}
-        disabled={!perspective.trim()}
-      >
-        Continue
-      </Button>
+      {!hasSubmitted && (
+        <Button 
+          className="bg-blue-500 hover:bg-blue-600 text-white px-8"
+          onClick={handleSubmit}
+          disabled={!perspective.trim()}
+        >
+          Continue
+        </Button>
+      )}
     </div>
   );
 };
