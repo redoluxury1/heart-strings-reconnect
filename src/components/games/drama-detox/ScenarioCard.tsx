@@ -57,11 +57,19 @@ const ScenarioCard = ({
               // Voting view with the scenario and options
               <div className="space-y-6">
                 {isFirstScenario && (
-                  <h4 className="font-medium text-lg text-[#F1EAE8]">Pick a side. No fence-sitting.</h4>
+                  <h4 className="font-medium text-lg text-[#F1EAE8] tracking-wider">Pick a side. No fence-sitting.</h4>
                 )}
                 
-                {/* Larger scenario description, no title */}
-                <p className="mb-8 text-2xl md:text-3xl text-[#F1EAE8]/90 leading-relaxed font-medium">
+                {/* Title - using small caps */}
+                {scenario.title && (
+                  <h3 className="text-xl md:text-2xl text-[#F1EAE8] font-medium uppercase tracking-wide mb-4">
+                    {scenario.title}
+                  </h3>
+                )}
+                
+                {/* Scenario description with improved typography */}
+                <p className="mb-8 text-2xl md:text-3xl text-[#F1EAE8]/90 leading-relaxed tracking-wide font-medium" 
+                   style={{ fontFamily: 'Heading Now', lineHeight: '1.6' }}>
                   {scenario.description}
                 </p>
                 
@@ -70,7 +78,7 @@ const ScenarioCard = ({
                     <button
                       key={idx}
                       onClick={() => onVote(option.id)}
-                      className="w-full p-5 rounded-full border border-[#F1EAE8]/30 bg-[#9b87f5]/10 text-left text-lg text-[#F1EAE8] hover:bg-[#9b87f5]/20 active:bg-[#9b87f5]/40"
+                      className="w-full p-5 rounded-full border border-[#F1EAE8]/30 bg-[#9b87f5]/10 text-left text-lg text-[#F1EAE8] hover:bg-[#9b87f5]/20 active:bg-[#9b87f5]/40 font-medium"
                     >
                       {option.label}
                     </button>
