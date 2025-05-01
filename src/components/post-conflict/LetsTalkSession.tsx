@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight, Heart, Send, Home } from 'lucide-react';
@@ -113,6 +112,7 @@ const LetsTalkSession: React.FC<LetsTalkSessionProps> = ({ onExit }) => {
       component: <GroundingStep 
         onResponse={(response) => handleResponse('partner1', 'grounding', response)} 
         onExit={onExit}
+        onNext={handleNextStep}
       />
     },
     {
@@ -177,7 +177,7 @@ const LetsTalkSession: React.FC<LetsTalkSessionProps> = ({ onExit }) => {
         {currentStepContent}
         
         {/* Navigation buttons */}
-        {currentStep < steps.length - 1 && (
+        {currentStep < steps.length - 1 && currentStep > 0 && (
           <div className="flex justify-between mt-8">
             {currentStep > 0 && (
               <Button 
@@ -190,22 +190,15 @@ const LetsTalkSession: React.FC<LetsTalkSessionProps> = ({ onExit }) => {
               </Button>
             )}
             
-            <div className="ml-auto flex items-center gap-3">
+            <div className="ml-auto">
               {bothPartnersReady && (
-                <>
-                  <div className="flex items-center text-green-600 text-sm">
-                    <Heart className="h-4 w-4 mr-1 fill-green-600" />
-                    <Heart className="h-4 w-4 mr-1 fill-green-600" />
-                    Both ready
-                  </div>
-                  <Button 
-                    onClick={handleNextStep}
-                    className="bg-blue-500 hover:bg-blue-600 text-white flex items-center gap-2"
-                  >
-                    Next
-                    <ChevronRight size={16} />
-                  </Button>
-                </>
+                <Button 
+                  onClick={handleNextStep}
+                  className="bg-blue-500 hover:bg-blue-600 text-white flex items-center gap-2"
+                >
+                  Next
+                  <ChevronRight size={16} />
+                </Button>
               )}
             </div>
           </div>

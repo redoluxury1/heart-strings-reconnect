@@ -60,7 +60,8 @@ const EmotionalCheckIn: React.FC<EmotionalCheckInProps> = ({
       {!isSubmitted ? (
         <>
           <div className="flex flex-wrap gap-2 mb-6 max-w-2xl mx-auto">
-            {emotionOptions.map(emotion => (
+            {/* Standard emotion buttons and custom emotions that have been added */}
+            {[...emotionOptions, ...emotions.filter(e => !emotionOptions.includes(e))].map(emotion => (
               <Button
                 key={emotion}
                 type="button"
@@ -83,10 +84,17 @@ const EmotionalCheckIn: React.FC<EmotionalCheckInProps> = ({
               value={customEmotion}
               onChange={(e) => setCustomEmotion(e.target.value)}
               className="flex-grow"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                  handleAddCustom();
+                }
+              }}
             />
             <Button
               onClick={handleAddCustom}
               variant="outline"
+              className="bg-blue-500 hover:bg-blue-600 text-white"
               disabled={!customEmotion.trim()}
             >
               <Plus size={16} className="mr-1" />
