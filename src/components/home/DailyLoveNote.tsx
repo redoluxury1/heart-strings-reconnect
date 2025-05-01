@@ -40,7 +40,7 @@ const DailyLoveNote = () => {
     // For this MVP, we'll simulate with a timeout and success message
     setTimeout(() => {
       toast("Love note sent!", {
-        description: "Your partner will receive this in their private timeline."
+        description: "Your partner will receive a notification about your love note."
       });
       setLoveNote('');
       setIsSubmitting(false);
