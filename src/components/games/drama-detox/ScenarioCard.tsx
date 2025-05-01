@@ -55,23 +55,24 @@ const ScenarioCard = ({
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Scenario content */}
         <div className="flex-grow overflow-y-auto pb-2 scrollbar-hide no-scrollbar">
-          <div className={`rounded-xl shadow-md p-5 md:p-6 mb-2 h-full`} style={{ backgroundColor }}>
+          <div className={`rounded-xl shadow-md p-5 md:p-6 mb-2 h-full flex flex-col justify-between`} style={{ backgroundColor }}>
             {!userVote ? (
               // Voting view with the scenario and options
-              <div className="space-y-4">
+              <div className="space-y-6 flex flex-col h-full">
                 {isFirstScenario && (
                   <h4 className="font-medium text-base text-[#F1EAE8] tracking-wider font-heading-now-medium">
                     Pick a side. No fence-sitting.
                   </h4>
                 )}
                 
-                {/* Scenario description with improved typography */}
-                <p className="mb-4 text-xl md:text-2xl text-[#F1EAE8]/90 leading-relaxed tracking-wider font-heading-now-regular" 
-                   style={{ lineHeight: '1.6', letterSpacing: '0.02em' }}>
+                {/* Scenario description with improved typography and larger font size */}
+                <p className="flex-grow mb-6 text-2xl md:text-3xl text-[#F1EAE8]/90 leading-relaxed tracking-wide font-heading-now-regular" 
+                   style={{ lineHeight: '1.4', letterSpacing: '0.02em' }}>
                   {scenario.description}
                 </p>
                 
-                <div className="flex flex-wrap gap-2 justify-center">
+                {/* Answer buttons pushed down with some margin-top */}
+                <div className="flex flex-wrap gap-2 justify-center mt-auto">
                   {scenario.options.map((option, idx) => (
                     <button
                       key={idx}

@@ -142,11 +142,15 @@ const DramaDetox = () => {
         />
       </div>
       
-      {!userVotes[currentScenario.id] ? (
+      {/* Only show "Vote to continue" text on the first scenario when not voted yet */}
+      {currentScenarioIndex === 0 && !userVotes[currentScenario.id] && (
         <div className="absolute bottom-4 left-0 right-0 flex justify-center items-center text-xs text-[#F1EAE8]/60">
           <span>Vote to continue</span>
         </div>
-      ) : (
+      )}
+      
+      {/* Only show "Swipe up for next drama" on the first scenario after voting */}
+      {currentScenarioIndex === 0 && userVotes[currentScenario.id] && (
         <div className="absolute bottom-4 left-0 right-0 flex justify-center items-center text-xs text-[#F1EAE8] bg-[#C7747F] py-2 px-4 rounded-full mx-auto w-fit">
           <ArrowUp className="h-3 w-3 mr-1" />
           <span>Swipe up for next drama</span>
