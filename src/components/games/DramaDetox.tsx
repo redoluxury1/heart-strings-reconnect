@@ -13,6 +13,17 @@ type CommentType = {
   likes: number;
 };
 
+// Array of background colors to cycle through for scenarios
+const backgroundColors = [
+  "#4A448C", // Midnight Indigo
+  "#8A8AC9", // Lavender Blue 
+  "#C7747F", // Mauve Rose
+  "#7E69AB", // Secondary Purple
+  "#6E59A5", // Tertiary Purple
+  "#8B5CF6", // Vivid Purple
+  "#D946EF", // Magenta Pink
+];
+
 const DramaDetox = () => {
   const [currentScenarioIndex, setCurrentScenarioIndex] = useState(0);
   const [userVotes, setUserVotes] = useState<Record<string, string>>({});
@@ -22,6 +33,11 @@ const DramaDetox = () => {
   const isMobile = useIsMobile();
 
   const currentScenario = dramaDetoxScenarios[currentScenarioIndex];
+  
+  // Get a different background color for each scenario based on its index
+  const getBackgroundColor = (index: number) => {
+    return backgroundColors[index % backgroundColors.length];
+  };
 
   const handleVote = (scenarioId: string, option: string) => {
     setUserVotes(prev => ({
@@ -108,7 +124,8 @@ const DramaDetox = () => {
   return (
     <div 
       ref={containerRef}
-      className="w-full h-[100vh] overflow-hidden relative bg-[#4A448C] text-[#F1EAE8]"
+      className="w-full h-[100vh] overflow-hidden relative text-[#F1EAE8] flex flex-col justify-center"
+      style={{ backgroundColor: "#4A448C" }}
     >      
       <div className="h-full w-full flex flex-col">
         <ScenarioCard
@@ -120,7 +137,8 @@ const DramaDetox = () => {
           newComment={newComment}
           onCommentChange={setNewComment}
           onAddComment={() => handleAddComment(currentScenario.id)}
-          isFirstScenario={currentScenarioIndex === 0} // Pass true only for the first scenario
+          isFirstScenario={currentScenarioIndex === 0}
+          backgroundColor={getBackgroundColor(currentScenarioIndex)}
         />
       </div>
       
@@ -129,7 +147,7 @@ const DramaDetox = () => {
           <span>Vote to continue</span>
         </div>
       ) : (
-        <div className="absolute bottom-4 left-0 right-0 flex justify-center items-center text-xs text-[#F1EAE8] bg-[#9b87f5]/80 py-2 px-4 rounded-full mx-auto w-fit">
+        <div className="absolute bottom-4 left-0 right-0 flex justify-center items-center text-xs text-[#F1EAE8] bg-[#C7747F] py-2 px-4 rounded-full mx-auto w-fit">
           <ArrowUp className="h-3 w-3 mr-1" />
           <span>Swipe up for next drama</span>
         </div>

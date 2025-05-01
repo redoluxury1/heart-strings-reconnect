@@ -4,6 +4,7 @@ import { MessageCircle } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Scenario } from '../../../types/games';
 import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
 
 type CommentType = {
   id: string;
@@ -22,6 +23,7 @@ interface ScenarioCardProps {
   onCommentChange: (comment: string) => void;
   onAddComment: () => void;
   isFirstScenario?: boolean;
+  backgroundColor?: string;
 }
 
 const ScenarioCard = ({ 
@@ -32,7 +34,8 @@ const ScenarioCard = ({
   newComment,
   onCommentChange,
   onAddComment,
-  isFirstScenario = false
+  isFirstScenario = false,
+  backgroundColor = "#4A448C"
 }: ScenarioCardProps) => {
   const [showComments, setShowComments] = useState(false);
 
@@ -47,33 +50,33 @@ const ScenarioCard = ({
   const isControversial = agreementPercentage < 60;
 
   return (
-    <div className="w-full h-full flex flex-col py-6 px-4 overflow-hidden">
-      {/* Full-screen card */}
+    <div className="w-full h-full flex flex-col pt-2 pb-4 px-4 overflow-hidden">
+      {/* Compact card to fit on one screen */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Scenario content */}
-        <div className="flex-grow overflow-y-auto pb-4 scrollbar-hide no-scrollbar">
-          <div className="bg-[#4A448C] rounded-xl shadow-md p-6 md:p-8 mb-4 h-full">
+        <div className="flex-grow overflow-y-auto pb-2 scrollbar-hide no-scrollbar">
+          <div className={`rounded-xl shadow-md p-5 md:p-6 mb-2 h-full`} style={{ backgroundColor }}>
             {!userVote ? (
               // Voting view with the scenario and options
-              <div className="space-y-6">
+              <div className="space-y-4">
                 {isFirstScenario && (
-                  <h4 className="font-medium text-lg text-[#F1EAE8] tracking-wider font-heading-now-medium">
+                  <h4 className="font-medium text-base text-[#F1EAE8] tracking-wider font-heading-now-medium">
                     Pick a side. No fence-sitting.
                   </h4>
                 )}
                 
-                {/* Scenario description with improved typography - removed title */}
-                <p className="mb-8 text-2xl md:text-3xl text-[#F1EAE8]/90 leading-relaxed tracking-wider font-heading-now-regular" 
-                   style={{ lineHeight: '1.8', letterSpacing: '0.02em' }}>
+                {/* Scenario description with improved typography */}
+                <p className="mb-4 text-xl md:text-2xl text-[#F1EAE8]/90 leading-relaxed tracking-wider font-heading-now-regular" 
+                   style={{ lineHeight: '1.6', letterSpacing: '0.02em' }}>
                   {scenario.description}
                 </p>
                 
-                <div className="flex flex-col gap-3">
+                <div className="flex flex-wrap gap-2 justify-center">
                   {scenario.options.map((option, idx) => (
                     <button
                       key={idx}
                       onClick={() => onVote(option.id)}
-                      className="w-full p-5 rounded-full border border-[#F1EAE8]/30 bg-[#9b87f5]/10 text-left text-lg text-[#F1EAE8] hover:bg-[#9b87f5]/20 active:bg-[#9b87f5]/40 font-medium"
+                      className="px-5 py-3 rounded-full bg-[#C7747F] text-[#F1EAE8] hover:bg-[#C7747F]/80 active:bg-[#C7747F]/90 font-medium text-sm transition-all"
                     >
                       {option.label}
                     </button>
@@ -81,46 +84,46 @@ const ScenarioCard = ({
                 </div>
               </div>
             ) : (
-              // Results view with large percentage - removed scenario, moved percentage up
-              <div className="space-y-6 animate-fade-in flex flex-col items-center justify-center h-full">
-                <div className="text-center mt-8">
-                  <div className="text-[140px] font-bold text-[#F1EAE8] leading-none">
+              // Results view with large percentage
+              <div className="space-y-4 animate-fade-in flex flex-col items-center justify-center h-full">
+                <div className="text-center mt-4">
+                  <div className="text-[120px] font-bold text-[#F1EAE8] leading-none">
                     {agreementPercentage}%
                   </div>
-                  <p className="text-xl text-[#F1EAE8]/90 mt-2">
+                  <p className="text-lg text-[#F1EAE8]/90 mt-1">
                     of the community agrees with you
                   </p>
                   
                   {/* Controversy meter */}
                   {isControversial && (
-                    <p className="flex items-center justify-center mt-6 text-[#F1EAE8]/90 text-lg">
-                      <span className="mr-2 text-2xl">🔥</span>
+                    <p className="flex items-center justify-center mt-3 text-[#F1EAE8]/90 text-base">
+                      <span className="mr-2 text-xl">🔥</span>
                       <span>This one's causing drama—hot take alert!</span>
                     </p>
                   )}
                 </div>
                 
                 {scenario.insight && (
-                  <div className="bg-[#C7747F] p-4 rounded-lg mt-8 max-w-md mx-auto w-full">
+                  <div className="bg-[#C7747F] p-3 rounded-lg mt-3 max-w-md mx-auto w-full">
                     <h4 className="font-medium text-[#F1EAE8] mb-1 text-sm">How We See It:</h4>
-                    <p className="text-[#F1EAE8]/90 text-base">{scenario.insight}</p>
+                    <p className="text-[#F1EAE8]/90 text-sm">{scenario.insight}</p>
                   </div>
                 )}
                 
                 {/* Comments section */}
-                <div className="mt-8 w-full">
+                <div className="mt-4 w-full">
                   <div 
-                    className="flex justify-between items-center mb-4 cursor-pointer" 
+                    className="flex justify-between items-center mb-2 cursor-pointer" 
                     onClick={() => setShowComments(!showComments)}
                   >
-                    <h4 className="font-medium text-[#F1EAE8] text-lg flex items-center">
-                      <MessageCircle className="h-5 w-5 mr-2" /> 
+                    <h4 className="font-medium text-[#F1EAE8] text-base flex items-center">
+                      <MessageCircle className="h-4 w-4 mr-2" /> 
                       Comments ({comments.length})
                     </h4>
                     <Button 
                       variant="ghost" 
                       size="sm" 
-                      className="text-sm text-[#9b87f5]"
+                      className="text-xs text-[#9b87f5]"
                     >
                       {showComments ? "Hide" : "Show"}
                     </Button>
@@ -169,7 +172,7 @@ const ScenarioCard = ({
           </div>
 
           {scenario.submittedBy && (
-            <p className="text-xs text-[#F1EAE8]/60 text-right mb-4">
+            <p className="text-xs text-[#F1EAE8]/60 text-right mb-2">
               Submitted by a BFC community member
             </p>
           )}
