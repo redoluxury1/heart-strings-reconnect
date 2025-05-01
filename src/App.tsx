@@ -3,8 +3,9 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { useEffect } from "react";
+import { InterfaceProvider } from "./components/common/InterfaceProvider";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import LoveNotesReceived from "./pages/LoveNotesReceived";
@@ -14,6 +15,7 @@ import LoveCodeQuiz from "./pages/LoveCodeQuiz";
 import Archive from "./pages/Archive";
 import Games from "./pages/Games";
 import PartnerInvite from "./pages/PartnerInvite";
+import Onboarding from "./pages/Onboarding";
 
 // Scroll to top on route change
 function ScrollToTop() {
@@ -26,30 +28,48 @@ function ScrollToTop() {
   return null;
 }
 
+// Check if user has completed onboarding
+function RequireOnboarding({ children }: { children: JSX.Element }) {
+  const hasCompletedOnboarding = localStorage.getItem('bridge-interface-style') !== null;
+  
+  if (!hasCompletedOnboarding) {
+    return <Navigate to="/onboarding" replace />;
+  }
+  
+  return children;
+}
+
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner position="top-right" closeButton={true} />
-      <BrowserRouter>
-        <ScrollToTop />
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/during-conflict" element={<MidFight />} />
-          <Route path="/post-conflict" element={<PostConflict />} />
-          <Route path="/reconnect" element={<NotFound />} />
-          <Route path="/love-notes" element={<LoveNotesReceived />} />
-          <Route path="/love-code-quiz" element={<LoveCodeQuiz />} />
-          <Route path="/archive" element={<Archive />} />
-          <Route path="/games" element={<Games />} />
-          <Route path="/invite" element={<PartnerInvite />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
+    <InterfaceProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner position="top-right" closeButton={true} />
+        <BrowserRouter>
+          <ScrollToTop />
+          <Routes>
+            <Route path="/onboarding" element={<Onboarding />} />
+            <Route path="/" element={
+              <RequireOnboarding>
+                <Index />
+              </RequireOnboarding>
+            } />
+            <Route path="/during-conflict" element={<MidFight />} />
+            <Route path="/post-conflict" element={<PostConflict />} />
+            <Route path="/reconnect" element={<NotFound />} />
+            <Route path="/love-notes" element={<LoveNotesReceived />} />
+            <Route path="/love-code-quiz" element={<LoveCodeQuiz />} />
+            <Route path="/archive" element={<Archive />} />
+            <Route path="/games" element={<Games />} />
+            <Route path="/invite" element={<PartnerInvite />} />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </InterfaceProvider>
   </QueryClientProvider>
 );
 
