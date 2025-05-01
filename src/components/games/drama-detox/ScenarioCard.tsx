@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Scenario } from '../../../types/games';
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { getCommentsForScenario } from '../../../data/drama-detox/scenario-comments';
 
 type CommentType = {
   id: string;
@@ -38,6 +39,7 @@ const ScenarioCard = ({
   backgroundColor = "#4A448C"
 }: ScenarioCardProps) => {
   const [showComments, setShowComments] = useState(false);
+  const [showCommunityComments, setShowCommunityComments] = useState(false);
 
   // Find user's option if they voted
   const userOption = userVote ? 
@@ -48,6 +50,9 @@ const ScenarioCard = ({
   
   // Determine if this scenario is "controversial" (under 60%)
   const isControversial = agreementPercentage < 60;
+  
+  // Get pre-populated community comments for this scenario
+  const communityComments = getCommentsForScenario(scenario.title || scenario.description);
 
   return (
     <div className="w-full h-full flex flex-col pt-2 pb-4 px-4 overflow-hidden">
@@ -111,15 +116,45 @@ const ScenarioCard = ({
                   </div>
                 )}
                 
-                {/* Comments section */}
-                <div className="mt-4 w-full">
+                {/* Community Comments Section */}
+                <div className="mt-2 w-full">
+                  <div 
+                    className="flex justify-between items-center mb-2 cursor-pointer" 
+                    onClick={() => setShowCommunityComments(!showCommunityComments)}
+                  >
+                    <h4 className="font-medium text-[#F1EAE8] text-base flex items-center">
+                      <MessageCircle className="h-4 w-4 mr-2" /> 
+                      <span>Community Takes ({communityComments.length})</span>
+                    </h4>
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      className="text-xs text-[#9b87f5]"
+                    >
+                      {showCommunityComments ? "Hide" : "Show"}
+                    </Button>
+                  </div>
+
+                  {showCommunityComments && communityComments.length > 0 && (
+                    <div className="space-y-2 mb-4">
+                      {communityComments.map((comment, index) => (
+                        <div key={index} className="bg-black/20 p-2 rounded-lg">
+                          <p className="text-[#F1EAE8]/90 text-sm">{comment}</p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                
+                {/* User Comments section */}
+                <div className="mt-2 w-full">
                   <div 
                     className="flex justify-between items-center mb-2 cursor-pointer" 
                     onClick={() => setShowComments(!showComments)}
                   >
                     <h4 className="font-medium text-[#F1EAE8] text-base flex items-center">
                       <MessageCircle className="h-4 w-4 mr-2" /> 
-                      Comments ({comments.length})
+                      Your Comments ({comments.length})
                     </h4>
                     <Button 
                       variant="ghost" 
