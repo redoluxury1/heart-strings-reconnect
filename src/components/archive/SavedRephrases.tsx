@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { SavedRephrase } from '@/types/archive';
 import RephraseList from './rephrases/RephraseList';
@@ -20,11 +19,7 @@ const SavedRephrases = () => {
   });
 
   return (
-    <div>
-      <h1 className="font-cormorant text-3xl md:text-4xl font-bold text-midnight-indigo mb-8 text-center">
-        Communication Archive
-      </h1>
-      
+    <div>      
       <p className="text-center mb-10 max-w-lg mx-auto text-midnight-indigo">
         Your collection of improved communication phrases. 
         Review these alternatives when you need inspiration for better conversations.
