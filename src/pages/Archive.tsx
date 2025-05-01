@@ -31,7 +31,7 @@ const Archive = () => {
         <ContentContainer>
           <JournalBubblesHero />
           
-          <p className="text-center mb-10 max-w-2xl mx-auto text-midnight-indigo/70 mt-16">
+          <p className="text-center mb-16 max-w-2xl mx-auto text-midnight-indigo/70 mt-24">
             Everything worth holding onto—from the things you've said to the love you've received.
           </p>
           
