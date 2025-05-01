@@ -18,6 +18,18 @@ const ToneSettingStep: React.FC<ToneSettingStepProps> = ({
   const [input, setInput] = useState(partner1Response || '');
   const [isSubmitted, setIsSubmitted] = useState(!!partner1Response);
   
+  const starterPrompts = [
+    "I want us to work together to...",
+    "We're on the same team. Let's...",
+    "I want to stay open even if it's hard...",
+    "I'm here to listen, not fight...",
+    "I care about you, even if I'm upset..."
+  ];
+  
+  const handleStarterPrompt = (prompt: string) => {
+    setInput(prompt);
+  };
+  
   const handleSubmit = () => {
     if (input.trim()) {
       onResponse(input);
@@ -37,6 +49,20 @@ const ToneSettingStep: React.FC<ToneSettingStepProps> = ({
       
       {!isSubmitted ? (
         <div className="max-w-lg mx-auto">
+          <div className="flex flex-wrap gap-2 justify-center mb-3">
+            {starterPrompts.map((prompt, index) => (
+              <Button
+                key={index}
+                variant="outline"
+                size="sm"
+                className="bg-white border-gray-300 hover:bg-gray-100 text-gray-700"
+                onClick={() => handleStarterPrompt(prompt)}
+              >
+                {prompt.length > 20 ? `${prompt.substring(0, 20)}...` : prompt}
+              </Button>
+            ))}
+          </div>
+          
           <Textarea 
             placeholder="Write your reflection here..."
             value={input}

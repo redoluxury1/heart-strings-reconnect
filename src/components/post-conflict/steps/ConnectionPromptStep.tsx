@@ -18,6 +18,18 @@ const ConnectionPromptStep: React.FC<ConnectionPromptStepProps> = ({
   const [input, setInput] = useState(partner1Response || '');
   const [isSubmitted, setIsSubmitted] = useState(!!partner1Response);
   
+  const starterPrompts = [
+    "I appreciate when you...",
+    "I love you. You...",
+    "I really respect you when...",
+    "Even when we're fighting, I...",
+    "One thing I admire about you is..."
+  ];
+  
+  const handleStarterPrompt = (prompt: string) => {
+    setInput(prompt);
+  };
+  
   const handleSubmit = () => {
     if (input.trim()) {
       onResponse(input);
@@ -28,7 +40,7 @@ const ConnectionPromptStep: React.FC<ConnectionPromptStepProps> = ({
   return (
     <div>
       <h2 className="text-2xl md:text-3xl font-cormorant font-medium text-midnight-indigo mb-3 text-center">
-        Connection Prompt
+        Let's Move Forward
       </h2>
       
       <div className="max-w-2xl mx-auto">
@@ -38,6 +50,20 @@ const ConnectionPromptStep: React.FC<ConnectionPromptStepProps> = ({
         
         {!isSubmitted ? (
           <div className="max-w-lg mx-auto">
+            <div className="flex flex-wrap gap-2 justify-center mb-3">
+              {starterPrompts.map((prompt, index) => (
+                <Button
+                  key={index}
+                  variant="outline"
+                  size="sm"
+                  className="bg-white border-gray-300 hover:bg-gray-100 text-gray-700"
+                  onClick={() => handleStarterPrompt(prompt)}
+                >
+                  {prompt.length > 20 ? `${prompt.substring(0, 20)}...` : prompt}
+                </Button>
+              ))}
+            </div>
+            
             <Textarea 
               placeholder="I appreciate..."
               value={input}

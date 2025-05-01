@@ -19,6 +19,14 @@ const PerspectiveStep: React.FC<PerspectiveStepProps> = ({
   const [isRecording, setIsRecording] = useState(false);
   const [hasSubmitted, setHasSubmitted] = useState(!!partner1Response);
   const recognitionRef = useRef<any>(null);
+  
+  const starterPrompts = [
+    "I feel like you misunderstood me when...",
+    "I got really frustrated because...",
+    "I didn't feel like I could explain myself...",
+    "I shut down because I felt...",
+    "What I was trying to say was..."
+  ];
 
   // Initialize speech recognition
   useEffect(() => {
@@ -63,6 +71,10 @@ const PerspectiveStep: React.FC<PerspectiveStepProps> = ({
       setIsRecording(true);
     }
   };
+
+  const handleStarterPrompt = (prompt: string) => {
+    setPerspective(prompt);
+  };
   
   const handleSubmit = () => {
     if (perspective.trim()) {
@@ -99,11 +111,27 @@ const PerspectiveStep: React.FC<PerspectiveStepProps> = ({
           )}
         </div>
         
+        {!hasSubmitted && (
+          <div className="flex flex-wrap gap-2 justify-center mb-3">
+            {starterPrompts.map((prompt, index) => (
+              <Button
+                key={index}
+                variant="outline"
+                size="sm"
+                className="bg-white border-gray-300 hover:bg-gray-100 text-gray-700"
+                onClick={() => handleStarterPrompt(prompt)}
+              >
+                {prompt.length > 20 ? `${prompt.substring(0, 20)}...` : prompt}
+              </Button>
+            ))}
+          </div>
+        )}
+        
         <Textarea
           id="perspective"
           value={perspective}
           onChange={(e) => setPerspective(e.target.value)}
-          placeholder="I feel like we had a misunderstanding about..."
+          placeholder="Type your perspective here..."
           className="w-full h-32"
         />
       </div>
