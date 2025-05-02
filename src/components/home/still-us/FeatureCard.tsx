@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Link } from 'react-router-dom';
@@ -16,18 +15,16 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
   
   // Determine text color based on card type
   const getTextColor = () => {
-    if (card.gradientClass.includes("#543544")) {
-      return "text-white";
-    } else if (card.gradientClass.includes("#15283f")) {
-      return "text-white";
+    if (card.gradientClass.includes("#543544") || card.gradientClass.includes("#15283f")) {
+      return "text-[#221F26]"; // Dark charcoal color for Mid-Fight and Post-Fight
     } else {
       return "text-midnight-indigo";
     }
   };
 
   const textColor = getTextColor();
-  const textColorMuted = textColor === "text-white" ? "text-white/80" : "text-midnight-indigo/80";
-  const bulletColor = textColor === "text-white" ? "bg-white/50" : "bg-midnight-indigo/50";
+  const textColorMuted = textColor === "text-[#221F26]" ? "text-[#221F26]/80" : "text-midnight-indigo/80";
+  const bulletColor = textColor === "text-[#221F26]" ? "bg-[#221F26]/50" : "bg-midnight-indigo/50";
 
   return (
     <div className="transition-all duration-300 hover:scale-[1.02] focus-within:scale-[1.02]">
@@ -121,8 +118,8 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
               <Button 
                 variant="outline" 
                 className={`w-full ${
-                  textColor === "text-white" 
-                    ? "border-white text-white hover:bg-white/10" 
+                  card.gradientClass.includes("#543544") || card.gradientClass.includes("#15283f")
+                    ? "border-[#221F26] text-[#221F26] hover:bg-[#221F26]/10" 
                     : "border-midnight-indigo text-midnight-indigo hover:bg-midnight-indigo/10"
                 } transition-colors`}
               >
