@@ -14,18 +14,31 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
   const isMobile = useIsMobile();
   const { isEmotional } = useInterface();
   
-  // Determine text color based on card type
+  // Determine text color based on card type and interface
   const getTextColor = () => {
-    if (card.gradientClass.includes("#543544") || card.gradientClass.includes("#15283f")) {
-      return "text-[#221F26]"; // Dark charcoal color for Mid-Fight and Post-Fight
+    if (!isEmotional && (card.gradientClass.includes("#543544") || card.gradientClass.includes("#15283f"))) {
+      return "text-[#221F26]"; // Dark charcoal color for Mid-Fight and Post-Fight in solution-focused mode
+    } else if (isEmotional) {
+      return "text-midnight-indigo"; // Default for emotional interface
     } else {
-      return "text-midnight-indigo";
+      return "text-midnight-indigo"; // Default for solution-focused reconnecting card
     }
   };
 
   const textColor = getTextColor();
   const textColorMuted = textColor === "text-[#221F26]" ? "text-[#221F26]/80" : "text-midnight-indigo/80";
   const bulletColor = textColor === "text-[#221F26]" ? "bg-[#221F26]/50" : "bg-midnight-indigo/50";
+
+  // Button styling based on card type and interface
+  const getButtonStyles = () => {
+    if (!isEmotional && (card.gradientClass.includes("#543544") || card.gradientClass.includes("#15283f"))) {
+      return "border-[#221F26] text-[#221F26] hover:bg-[#221F26]/10";
+    } else {
+      return "border-midnight-indigo text-midnight-indigo hover:bg-midnight-indigo/10";
+    }
+  };
+
+  const buttonStyles = getButtonStyles();
 
   return (
     <div className="transition-all duration-300 hover:scale-[1.02] focus-within:scale-[1.02]">
@@ -67,11 +80,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
             <Link to={card.link} className="block mt-auto">
               <Button 
                 variant="outline" 
-                className={`w-full ${
-                  card.gradientClass.includes("#543544") || card.gradientClass.includes("#15283f")
-                    ? "border-[#221F26] text-[#221F26] hover:bg-[#221F26]/10" 
-                    : "border-midnight-indigo text-midnight-indigo hover:bg-midnight-indigo/10"
-                } transition-colors`}
+                className={`w-full ${buttonStyles} transition-colors`}
               >
                 {card.buttonText}
               </Button>
@@ -118,11 +127,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
             <Link to={card.link} className="block">
               <Button 
                 variant="outline" 
-                className={`w-full ${
-                  card.gradientClass.includes("#543544") || card.gradientClass.includes("#15283f")
-                    ? "border-[#221F26] text-[#221F26] hover:bg-[#221F26]/10" 
-                    : "border-midnight-indigo text-midnight-indigo hover:bg-midnight-indigo/10"
-                } transition-colors`}
+                className={`w-full ${buttonStyles} transition-colors`}
               >
                 {card.buttonText}
               </Button>

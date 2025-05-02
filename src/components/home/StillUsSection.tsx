@@ -32,7 +32,7 @@ const StillUsSection = () => {
         </div>
 
         <div className="grid grid-cols-1 gap-8 relative z-10">
-          {getCardData().map((card, index) => (
+          {getCardData(isEmotional).map((card, index) => (
             <FeatureCard key={index} card={card} />
           ))}
         </div>
