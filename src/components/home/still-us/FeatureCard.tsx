@@ -1,10 +1,9 @@
-
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Link } from 'react-router-dom';
 import { CardContent } from './types';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useInterface } from '@/components/common/InterfaceProvider';
+import { useInterface } from '@/hooks/useInterfaceContext';
 
 interface FeatureCardProps {
   card: CardContent;
