@@ -16,14 +16,14 @@ const NotificationActions: React.FC<NotificationActionsProps> = ({ onClose, onVi
       <Button 
         variant="outline" 
         onClick={onClose}
-        className={!isEmotional ? "border-[#589391] text-[#2C3E50]" : ""}
+        className={!isEmotional ? "border-[#543544] text-[#2C3E50]" : ""}
       >
         Close
       </Button>
       <Button 
         className={isEmotional
           ? "bg-rosewood-tint hover:bg-rosewood-tint/90 text-white"
-          : "bg-[#E51D2C] hover:bg-[#E51D2C]/90 text-white"
+          : "bg-[#543544] hover:bg-[#543544]/90 text-white"
         }
         onClick={onViewAll}
       >

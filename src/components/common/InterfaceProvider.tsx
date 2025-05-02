@@ -1,4 +1,3 @@
-
 import React, { createContext, useState, useEffect, useContext, ReactNode } from 'react';
 import { InterfaceStyle, PartnerStatus } from '../../pages/Onboarding';
 
@@ -8,7 +7,7 @@ export const SolutionFocusedColors = {
   text: '#2C3E50',        // Deep Charcoal
   primary: '#543544',     // Updated to #543544 (primary button)
   accent: '#4f6572',      // Updated to #4f6572 (secondary button)
-  highlight: '#A03D3E',   // Muted Crimson (optional)
+  highlight: '#543544',   // Updated to #543544 (burgundy)
 };
 
 type InterfaceContextType = {

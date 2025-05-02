@@ -19,7 +19,7 @@ const NotificationPrompt: React.FC<NotificationPromptProps> = ({ loveNote }) => 
       <p className={`text-sm mb-2 ${
         isEmotional 
           ? "text-rosewood-tint" 
-          : "text-[#589391]"
+          : "text-[#543544]"
       }`}>
         {loveNote.prompt}
       </p>

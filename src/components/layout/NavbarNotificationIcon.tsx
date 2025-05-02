@@ -26,11 +26,11 @@ const NavbarNotificationIcon: React.FC<NavbarNotificationIconProps> = ({
         className={`h-5 w-5 ${
           isEmotional 
             ? "text-mauve-rose animate-pulse" 
-            : "text-[#C7747F] animate-pulse"
+            : "text-[#543544] animate-pulse"
         }`} 
       />
       <span className={`absolute -top-1 -right-1 flex h-2 w-2 rounded-full ${
-        isEmotional ? "bg-mauve-rose" : "bg-[#C7747F]"
+        isEmotional ? "bg-mauve-rose" : "bg-[#543544]"
       }`}></span>
     </button>
   );

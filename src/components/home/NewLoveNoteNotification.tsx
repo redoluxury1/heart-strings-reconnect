@@ -55,7 +55,7 @@ const NewLoveNoteNotification: React.FC<NewLoveNoteNotificationProps> = ({
       <DialogContent className={`max-w-md ${
         isEmotional 
           ? "bg-white border border-lavender-blue/20" 
-          : "bg-white border border-[#589391]/20"
+          : "bg-white border border-[#543544]/20"
       }`}>
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">

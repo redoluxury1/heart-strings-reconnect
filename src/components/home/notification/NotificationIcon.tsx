@@ -15,7 +15,7 @@ const NotificationIcon: React.FC<NotificationIconProps> = ({ size = 5 }) => {
       className={`h-${size} w-${size} ${
         isEmotional 
           ? "text-rosewood-tint" 
-          : "text-[#C7747F]"
+          : "text-[#543544]"
       }`} 
     />
   );
