@@ -29,7 +29,7 @@ const Index = () => {
   }, []);
   
   return (
-    <div className={`min-h-screen ${isEmotional ? 'bg-slate-50' : 'bg-[#D1E5F4]'}`}>
+    <div className={`min-h-screen ${isEmotional ? 'bg-slate-50' : 'bg-[#6a8cb3]'}`}>
       <Navbar />
       
       {/* New love note notification */}

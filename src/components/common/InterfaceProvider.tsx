@@ -4,10 +4,10 @@ import { InterfaceStyle, PartnerStatus } from '../../pages/Onboarding';
 
 // Define solution-focused color palette
 export const SolutionFocusedColors = {
-  background: '#D1E5F4',   // Updated from #F4F1EC to #D1E5F4
+  background: '#6a8cb3',   // Updated to #6a8cb3
   text: '#2C3E50',        // Deep Charcoal
-  primary: '#E51D2C',     // Updated from #4B6D8C to #E51D2C (primary button)
-  accent: '#589391',      // Updated from #9BAA9E to #589391 (secondary button)
+  primary: '#543544',     // Updated to #543544 (primary button)
+  accent: '#4f6572',      // Updated to #4f6572 (secondary button)
   highlight: '#A03D3E',   // Muted Crimson (optional)
 };
 

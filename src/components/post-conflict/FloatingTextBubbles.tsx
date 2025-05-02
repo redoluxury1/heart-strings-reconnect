@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { cn } from "@/lib/utils";
 import { useInterface } from '../common/InterfaceProvider';
@@ -32,11 +33,11 @@ const getBubbleStyles = (isEmotional) => isEmotional ? [
   { bgColor: "bg-soft-cream", textColor: "text-midnight-indigo", position: "after:border-t-soft-cream" },
   { bgColor: "bg-soft-blush", textColor: "text-midnight-indigo", position: "after:border-t-soft-blush" },
 ] : [
-  { bgColor: "bg-[#E51D2C]", textColor: "text-white", position: "after:border-t-[#E51D2C]" },
-  { bgColor: "bg-[#589391]", textColor: "text-white", position: "after:border-t-[#589391]" },
-  { bgColor: "bg-[#2C3E50]", textColor: "text-white", position: "after:border-t-[#2C3E50]" },
+  { bgColor: "bg-[#543544]", textColor: "text-white", position: "after:border-t-[#543544]" },
+  { bgColor: "bg-[#4f6572]", textColor: "text-white", position: "after:border-t-[#4f6572]" },
   { bgColor: "bg-white", textColor: "text-[#2C3E50]", position: "after:border-t-white" },
-  { bgColor: "bg-[#D1E5F4]/80", textColor: "text-[#2C3E50]", position: "after:border-t-[#D1E5F4]" },
+  { bgColor: "bg-slate-200", textColor: "text-[#2C3E50]", position: "after:border-t-slate-200" },
+  { bgColor: "bg-[#6a8cb3]", textColor: "text-white", position: "after:border-t-[#6a8cb3]" },
 ];
 
 // Text bubble positions and tails (for variety, coming from different corners)
@@ -130,7 +131,7 @@ const FloatingTextBubbles = () => {
     <div className={`relative z-10 bg-gradient-to-b ${
       isEmotional 
         ? "from-rose-50 via-white to-transparent" 
-        : "from-[#D1E5F4] via-white to-transparent"
+        : "from-[#6a8cb3] via-white to-transparent"
     } py-24 overflow-visible`}>
       {/* Message Bubbles Container - extending beyond its boundaries */}
       <div className="absolute inset-0 h-[220px] w-full overflow-visible">

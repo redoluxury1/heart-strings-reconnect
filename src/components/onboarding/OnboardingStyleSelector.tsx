@@ -38,13 +38,13 @@ const OnboardingStyleSelector: React.FC<OnboardingStyleSelectorProps> = ({
         <label className={`flex cursor-pointer overflow-hidden ${
           isEmotional 
             ? 'rounded-xl border-2 border-mauve-rose bg-soft-cream/30' 
-            : 'rounded-md border-2 border-[#4B6D8C] bg-slate-800'
+            : 'rounded-md border-2 border-[#4f6572] bg-slate-800'
         } ${interfaceStyle === 'emotionally-reflective' ? 'ring-2 ring-mauve-rose' : ''}`}>
           <div className="p-6">
             <RadioGroupItem 
               value="emotionally-reflective" 
               id="emotionally-reflective"
-              className={isEmotional ? 'text-mauve-rose border-mauve-rose' : 'text-[#4B6D8C] border-[#4B6D8C]'}
+              className={isEmotional ? 'text-mauve-rose border-mauve-rose' : 'text-[#4f6572] border-[#4f6572]'}
             />
           </div>
           <div className="flex-1 p-6">
@@ -63,13 +63,13 @@ const OnboardingStyleSelector: React.FC<OnboardingStyleSelectorProps> = ({
         <label className={`flex cursor-pointer overflow-hidden ${
           isEmotional 
             ? 'rounded-xl border-2 border-midnight-indigo bg-soft-cream/30' 
-            : 'rounded-md border-2 border-[#4B6D8C] bg-slate-800'
-        } ${interfaceStyle === 'solution-focused' ? 'ring-2 ring-[#4B6D8C]' : ''}`}>
+            : 'rounded-md border-2 border-[#543544] bg-slate-800'
+        } ${interfaceStyle === 'solution-focused' ? 'ring-2 ring-[#543544]' : ''}`}>
           <div className="p-6">
             <RadioGroupItem 
               value="solution-focused" 
               id="solution-focused" 
-              className={isEmotional ? 'text-midnight-indigo border-midnight-indigo' : 'text-[#4B6D8C] border-[#4B6D8C]'}
+              className={isEmotional ? 'text-midnight-indigo border-midnight-indigo' : 'text-[#543544] border-[#543544]'}
             />
           </div>
           <div className="flex-1 p-6">
@@ -92,7 +92,7 @@ const OnboardingStyleSelector: React.FC<OnboardingStyleSelectorProps> = ({
           className={`px-8 py-2 ${
             isEmotional 
               ? 'rounded-full bg-mauve-rose hover:bg-mauve-rose/90 text-white' 
-              : 'rounded-md bg-[#4B6D8C] hover:bg-[#4B6D8C]/90 text-[#F4F1EC]'
+              : 'rounded-md bg-[#543544] hover:bg-[#543544]/90 text-white'
           }`}
           size="lg"
         >

@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { cn } from "@/lib/utils";
 import { useInterface } from '../common/InterfaceProvider';
@@ -44,13 +43,19 @@ const messages = [
   "Let's lead with love, even now."
 ];
 
-// Color schemes for bubbles
-const bubbleStyles = [
+// Color schemes for bubbles - emotional and solution-focused versions
+const getBubbleStyles = (isEmotional) => isEmotional ? [
   { bgColor: "bg-rosewood-tint", textColor: "text-white", position: "after:border-t-rosewood-tint" },
   { bgColor: "bg-mauve-rose", textColor: "text-white", position: "after:border-t-mauve-rose" },
   { bgColor: "bg-lavender-blue", textColor: "text-white", position: "after:border-t-lavender-blue" },
   { bgColor: "bg-soft-cream", textColor: "text-midnight-indigo", position: "after:border-t-soft-cream" },
   { bgColor: "bg-soft-blush", textColor: "text-midnight-indigo", position: "after:border-t-soft-blush" },
+] : [
+  { bgColor: "bg-[#543544]", textColor: "text-white", position: "after:border-t-[#543544]" },
+  { bgColor: "bg-[#4f6572]", textColor: "text-white", position: "after:border-t-[#4f6572]" },
+  { bgColor: "bg-white", textColor: "text-[#2C3E50]", position: "after:border-t-white" },
+  { bgColor: "bg-slate-200", textColor: "text-[#2C3E50]", position: "after:border-t-slate-200" },
+  { bgColor: "bg-slate-300", textColor: "text-[#2C3E50]", position: "after:border-t-slate-300" },
 ];
 
 // Text bubble positions and tails (for variety, coming from different corners)
@@ -67,6 +72,8 @@ const Hero = () => {
   const { isEmotional } = useInterface();
   const [visibleBubbles, setVisibleBubbles] = useState([]);
   const [usedPositions, setUsedPositions] = useState([]);
+  
+  const bubbleStyles = getBubbleStyles(isEmotional);
 
   // Function to create a new bubble
   const createBubble = () => {
@@ -139,7 +146,11 @@ const Hero = () => {
   }, [visibleBubbles.length, usedPositions]);
 
   return (
-    <div className="relative z-10 bg-gradient-to-b from-rose-50 via-white to-transparent py-20 pb-28 overflow-visible">
+    <div className={`relative z-10 bg-gradient-to-b ${
+      isEmotional 
+        ? "from-rose-50 via-white to-transparent" 
+        : "from-[#6a8cb3]/90 via-white to-transparent"
+    } py-20 pb-28 overflow-visible`}>
       {/* Message Bubbles Container - extending beyond its boundaries */}
       <div className="absolute inset-0 h-[220px] w-full overflow-visible">
         {visibleBubbles.map(bubble => (
@@ -147,7 +158,7 @@ const Hero = () => {
             id={`bubble-${bubble.id}`}
             key={bubble.id}
             className={cn(
-              "absolute px-4 py-2 rounded-xl shadow-sm font-inter font-semibold text-center",
+              `absolute px-4 py-2 ${isEmotional ? "rounded-xl" : "rounded-md"} shadow-sm font-inter font-semibold text-center`,
               bubble.style.bgColor,
               bubble.style.textColor,
               bubble.positionStyle,

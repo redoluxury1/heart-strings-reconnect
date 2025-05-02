@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Heart, BrainCog } from 'lucide-react';
+import { BrainCog } from 'lucide-react';
 import { InterfaceStyle } from '../../pages/Onboarding';
 
 interface OnboardingWelcomeProps {
@@ -19,9 +19,20 @@ const OnboardingWelcome: React.FC<OnboardingWelcomeProps> = ({
     <div className="text-center">
       <div className="flex justify-center mb-6">
         {isEmotional ? (
-          <Heart size={60} className="text-mauve-rose" />
+          <img 
+            src="/lovable-uploads/f11235c1-f453-4752-bb91-b9417445b517.png"
+            alt="Bridge For Couples"
+            className="h-16 w-auto"
+          />
         ) : (
-          <BrainCog size={60} className="text-[#589391]" />
+          <div className="flex items-center justify-center">
+            <BrainCog size={60} className="text-[#4f6572] mr-2" />
+            <img 
+              src="/lovable-uploads/f11235c1-f453-4752-bb91-b9417445b517.png"
+              alt="Bridge For Couples"
+              className="h-16 w-auto"
+            />
+          </div>
         )}
       </div>
       
@@ -36,7 +47,7 @@ const OnboardingWelcome: React.FC<OnboardingWelcomeProps> = ({
         className={`mt-8 px-8 py-3 text-lg ${
           isEmotional 
             ? 'rounded-full bg-mauve-rose hover:bg-mauve-rose/90 text-white' 
-            : 'rounded-md bg-[#E51D2C] hover:bg-[#E51D2C]/90 text-[#F4F1EC]'
+            : 'rounded-md bg-[#543544] hover:bg-[#543544]/90 text-white'
         }`}
         size="lg"
       >
