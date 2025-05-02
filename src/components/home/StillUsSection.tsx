@@ -3,20 +3,12 @@ import React, { useEffect, useState } from 'react';
 import ContentContainer from '../common/ContentContainer';
 import { useIsMobile } from '@/hooks/use-mobile';
 import FeatureCard from './still-us/FeatureCard';
-import { FloatingHearts } from './still-us/FloatingHearts';
 import getCardData from './still-us/CardData';
 import { useInterface } from '../common/InterfaceProvider';
 
 const StillUsSection = () => {
   const isMobile = useIsMobile();
   const { isEmotional } = useInterface();
-  const [floatingHeartsCount, setFloatingHeartsCount] = useState<number>(15);
-  const cards = getCardData();
-  
-  // Set number of hearts based on screen size
-  useEffect(() => {
-    setFloatingHeartsCount(isMobile ? 8 : 15);
-  }, [isMobile]);
   
   return (
     <section className={`py-12 ${
@@ -24,8 +16,6 @@ const StillUsSection = () => {
         ? "bg-soft-blush" 
         : "bg-white bg-gradient-to-b from-white to-[#e8edf3]"
     } relative overflow-hidden`}>
-      {/* Floating hearts */}
-      <FloatingHearts count={floatingHeartsCount} />
       
       <ContentContainer>
         <div className="text-center mb-14 relative z-10">
@@ -42,7 +32,7 @@ const StillUsSection = () => {
         </div>
 
         <div className="grid grid-cols-1 gap-8 relative z-10">
-          {cards.map((card, index) => (
+          {getCardData().map((card, index) => (
             <FeatureCard key={index} card={card} />
           ))}
         </div>
