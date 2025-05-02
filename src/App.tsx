@@ -16,6 +16,7 @@ import Archive from "./pages/Archive";
 import Games from "./pages/Games";
 import PartnerInvite from "./pages/PartnerInvite";
 import Onboarding from "./pages/Onboarding";
+import Reconnect from "./pages/Reconnect";
 
 // Scroll to top on route change
 function ScrollToTop() {
@@ -43,7 +44,7 @@ const App = () => (
             <Route path="/onboarding" element={<Onboarding />} />
             <Route path="/during-conflict" element={<MidFight />} />
             <Route path="/post-conflict" element={<PostConflict />} />
-            <Route path="/reconnect" element={<NotFound />} />
+            <Route path="/reconnect" element={<Reconnect />} />
             <Route path="/love-notes" element={<LoveNotesReceived />} />
             <Route path="/love-code-quiz" element={<LoveCodeQuiz />} />
             <Route path="/archive" element={<Archive />} />

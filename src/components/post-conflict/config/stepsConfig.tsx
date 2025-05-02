@@ -37,6 +37,7 @@ export const useSteps = (onExit: () => void) => {
         <PerspectiveStep 
           onResponse={(response) => handleResponse('partner1', 'perspective', response)}
           partner1Response={sessionData.partner1.responses.perspective}
+          partner2Response={sessionData.partner2.responses.perspective}
         />
     },
     {
@@ -45,6 +46,7 @@ export const useSteps = (onExit: () => void) => {
         <EmotionalCheckIn 
           onResponse={(response) => handleResponse('partner1', 'emotions', response)}
           selectedEmotions={sessionData.partner1.responses.emotions}
+          partner2Emotions={sessionData.partner2.responses.emotions}
         />
     },
     {
@@ -53,6 +55,7 @@ export const useSteps = (onExit: () => void) => {
         <NeedsRepairStep 
           onResponse={(response) => handleResponse('partner1', 'needs', response)}
           partner1Response={sessionData.partner1.responses.needs}
+          partner2Response={sessionData.partner2.responses.needs}
         />
     },
     {
@@ -61,6 +64,7 @@ export const useSteps = (onExit: () => void) => {
         <ConnectionPromptStep 
           onResponse={(response) => handleResponse('partner1', 'connection', response)}
           partner1Response={sessionData.partner1.responses.connection}
+          partner2Response={sessionData.partner2.responses.connection}
         />
     },
     {
