@@ -2,7 +2,7 @@
 import React from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Mail, ArrowUp } from "lucide-react";
+import { Mail } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
 import { LoveNote } from '../home/LoveNoteTimeline';
@@ -62,7 +62,7 @@ const NewLoveNoteNotification: React.FC<NewLoveNoteNotificationProps> = ({
             {isEmotional ? (
               <Mail className="h-5 w-5 text-mauve-rose" />
             ) : (
-              <Mail className="h-5 w-5 text-[#E51D2C]" />
+              <Mail className="h-5 w-5 text-[#C7747F]" />
             )}
             <span>{isEmotional ? "New Love Note" : "New Note"}</span>
           </DialogTitle>

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from 'react-router-dom';
@@ -107,11 +106,11 @@ const Navbar = ({ hasNewLoveNote = false, onViewLoveNote }: NavbarProps) => {
                     className={`h-5 w-5 ${
                       isEmotional 
                         ? "text-mauve-rose animate-pulse" 
-                        : "text-[#E51D2C] animate-pulse"
+                        : "text-[#C7747F] animate-pulse"
                     }`} 
                   />
                   <span className={`absolute -top-1 -right-1 flex h-2 w-2 rounded-full ${
-                    isEmotional ? "bg-mauve-rose" : "bg-[#E51D2C]"
+                    isEmotional ? "bg-mauve-rose" : "bg-[#C7747F]"
                   }`}></span>
                 </button>
               </NavigationMenuItem>
@@ -139,11 +138,11 @@ const Navbar = ({ hasNewLoveNote = false, onViewLoveNote }: NavbarProps) => {
               className={`h-5 w-5 ${
                 isEmotional 
                   ? "text-mauve-rose animate-pulse" 
-                  : "text-[#E51D2C] animate-pulse"
+                  : "text-[#C7747F] animate-pulse"
               }`} 
             />
             <span className={`absolute -top-1 -right-1 flex h-2 w-2 rounded-full ${
-              isEmotional ? "bg-mauve-rose" : "bg-[#E51D2C]"
+              isEmotional ? "bg-mauve-rose" : "bg-[#C7747F]"
             }`}></span>
           </button>
         )}
