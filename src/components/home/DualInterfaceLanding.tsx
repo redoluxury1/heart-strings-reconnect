@@ -11,7 +11,7 @@ const DualInterfaceLanding = () => {
         isEmotional ? 'text-midnight-indigo' : 'text-white'
       }`}>
         {isEmotional 
-          ? "Finally, an app that teaches you when to feed her and tell her she's pretty."
+          ? "Finally, an app that teaches him when to feed her and tell her she's pretty."
           : "Finally, an app that helps her understand I don't hate her. I'm just hungry."
         }
       </h1>

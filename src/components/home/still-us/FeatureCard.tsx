@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Link } from 'react-router-dom';
@@ -67,8 +68,8 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
               <Button 
                 variant="outline" 
                 className={`w-full ${
-                  textColor === "text-white" 
-                    ? "border-white text-white hover:bg-white/10" 
+                  card.gradientClass.includes("#543544") || card.gradientClass.includes("#15283f")
+                    ? "border-[#221F26] text-[#221F26] hover:bg-[#221F26]/10" 
                     : "border-midnight-indigo text-midnight-indigo hover:bg-midnight-indigo/10"
                 } transition-colors`}
               >
