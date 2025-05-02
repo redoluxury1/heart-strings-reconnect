@@ -4,8 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Send } from "lucide-react";
 import { toast } from "sonner";
+import { useInterface } from '../common/InterfaceProvider';
 
 const DailyLoveNote = () => {
+  const { isEmotional } = useInterface();
   const [loveNote, setLoveNote] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [hasSubmitted, setHasSubmitted] = useState(false);
@@ -54,13 +56,23 @@ const DailyLoveNote = () => {
   };
 
   return (
-    <div id="daily-love-note" className="relative z-0 mt-[-50px] pt-[120px] bg-gradient-to-b from-white to-soft-blush px-4 pb-10">
+    <div 
+      id="daily-love-note" 
+      className={`relative z-0 mt-[-50px] pt-[120px] ${
+        isEmotional 
+          ? "bg-gradient-to-b from-white to-soft-blush" 
+          : "bg-gradient-to-b from-[#6a8cb3] via-[#a2bdda] to-white"
+      } px-4 pb-10`}>
       <div className="max-w-xl mx-auto">
-        <h2 className="font-cormorant text-2xl md:text-3xl font-medium text-midnight-indigo mb-4 text-center">
+        <h2 className={`font-cormorant text-2xl md:text-3xl font-medium ${
+          isEmotional ? 'text-midnight-indigo' : 'text-[#2C3E50]'
+        } mb-4 text-center`}>
           Daily Love Note
         </h2>
         
-        <p className="text-center text-midnight-indigo font-inter mb-6">
+        <p className={`text-center ${
+          isEmotional ? 'text-midnight-indigo' : 'text-[#2C3E50]'
+        } font-inter mb-6`}>
           What is one thing your partner did today to make you feel special?
         </p>
         
@@ -70,12 +82,20 @@ const DailyLoveNote = () => {
             value={loveNote}
             onChange={(e) => setLoveNote(e.target.value)}
             placeholder="Write your love note here..."
-            className="w-full border-midnight-indigo bg-white text-midnight-indigo"
+            className={`w-full ${
+              isEmotional 
+                ? "border-midnight-indigo bg-white text-midnight-indigo" 
+                : "border-[#4f6572] bg-white text-[#2C3E50]"
+            }`}
           />
           
           <Button 
             type="submit" 
-            className="w-full bg-rosewood-tint text-white font-semibold hover:bg-opacity-90 transition-colors"
+            className={`w-full ${
+              isEmotional
+                ? "bg-rosewood-tint text-white font-semibold hover:bg-opacity-90"
+                : "bg-[#543544] text-white font-semibold hover:bg-opacity-90"
+            } transition-colors`}
             disabled={isSubmitting}
           >
             <Send className="mr-2 h-4 w-4" /> Send Love Note

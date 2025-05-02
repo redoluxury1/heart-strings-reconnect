@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { cn } from "@/lib/utils";
 import { useInterface } from '../common/InterfaceProvider';
@@ -149,7 +150,7 @@ const Hero = () => {
     <div className={`relative z-10 bg-gradient-to-b ${
       isEmotional 
         ? "from-rose-50 via-white to-transparent" 
-        : "from-[#6a8cb3]/90 via-white to-transparent"
+        : "from-[#6a8cb3] via-[#6a8cb3] to-[#6a8cb3]"
     } py-20 pb-28 overflow-visible`}>
       {/* Message Bubbles Container - extending beyond its boundaries */}
       <div className="absolute inset-0 h-[220px] w-full overflow-visible">
