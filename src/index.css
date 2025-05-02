@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
@@ -90,7 +91,7 @@
     @apply font-cormorant;
   }
 
-  /* Message bubble animations */
+  /* Message bubble animations - UPDATED with slower timing */
   @keyframes fadeIn {
     0% {
       opacity: 0;

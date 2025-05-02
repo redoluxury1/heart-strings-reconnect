@@ -112,14 +112,14 @@ const JournalBubblesHero = () => {
     setTimeout(() => {
       const bubbleElement = document.getElementById(`bubble-${newBubble.id}`);
       if (bubbleElement) {
-        bubbleElement.style.animation = 'fadeOut 1s forwards';
+        bubbleElement.style.animation = 'fadeOut 1.5s forwards'; // Slower fade out
         bubbleElement.addEventListener('animationend', () => {
           setVisibleBubbles(prev => prev.filter(bubble => bubble.id !== newBubble.id));
           // Free up this position
           setUsedPositions(prev => prev.filter(pos => pos !== selectedVariantIndex));
         });
       }
-    }, 3000); // Display time - 3 seconds before fade out starts
+    }, 4500); // Increased display time from 3s to 4.5s
   };
 
   // Create special bubbles for "Love Notes" and "Thoughts"
@@ -146,14 +146,14 @@ const JournalBubblesHero = () => {
     // Initial bubble on load with delay
     const initialTimer = setTimeout(() => {
       createBubble();
-    }, 600);
+    }, 800); // Longer initial delay
     
     // Set interval to add new bubbles at staggered times
     const interval = setInterval(() => {
       if (Math.random() > 0.3) { // 70% chance to create a new bubble each interval
         createBubble();
       }
-    }, 1500); // Check every 1.5s if we should add a new bubble
+    }, 2000); // Slower interval between bubble creation attempts (from 1.5s to 2s)
     
     return () => {
       clearTimeout(initialTimer);
@@ -173,8 +173,8 @@ const JournalBubblesHero = () => {
             
           // Don't fade out special bubbles
           const animationStyle = bubble.isSpecial 
-            ? { animation: 'fadeIn 0.8s forwards, pulse 3s infinite' } 
-            : { animation: 'fadeIn 1s forwards' };
+            ? { animation: 'fadeIn 1.2s forwards, pulse 3s infinite' } // Slower fade in for special bubbles
+            : { animation: 'fadeIn 1.2s forwards' }; // Slower fade in for regular bubbles
             
           return (
             <div 

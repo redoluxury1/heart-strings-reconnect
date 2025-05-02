@@ -1,7 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
 import { cn } from "@/lib/utils";
-import { useInterface } from '../common/InterfaceProvider';
 
 // Messages to cycle through in the bubbles
 const messages = [
@@ -25,19 +24,13 @@ const messages = [
   "Even if it's messy, it's progress"
 ];
 
-// Color schemes for bubbles - emotional and solution-focused versions
-const getBubbleStyles = (isEmotional) => isEmotional ? [
+// Color schemes for bubbles
+const getBubbleStyles = () => [
   { bgColor: "bg-rosewood-tint", textColor: "text-white", position: "after:border-t-rosewood-tint" },
   { bgColor: "bg-mauve-rose", textColor: "text-white", position: "after:border-t-mauve-rose" },
   { bgColor: "bg-lavender-blue", textColor: "text-white", position: "after:border-t-lavender-blue" },
   { bgColor: "bg-soft-cream", textColor: "text-midnight-indigo", position: "after:border-t-soft-cream" },
   { bgColor: "bg-soft-blush", textColor: "text-midnight-indigo", position: "after:border-t-soft-blush" },
-] : [
-  { bgColor: "bg-[#543544]", textColor: "text-white", position: "after:border-t-[#543544]" },
-  { bgColor: "bg-[#4f6572]", textColor: "text-white", position: "after:border-t-[#4f6572]" },
-  { bgColor: "bg-white", textColor: "text-[#2C3E50]", position: "after:border-t-white" },
-  { bgColor: "bg-slate-200", textColor: "text-[#2C3E50]", position: "after:border-t-slate-200" },
-  { bgColor: "bg-[#6a8cb3]", textColor: "text-white", position: "after:border-t-[#6a8cb3]" },
 ];
 
 // Text bubble positions and tails (for variety, coming from different corners)
@@ -53,9 +46,8 @@ const bubbleVariants = [
 const FloatingTextBubbles = () => {
   const [visibleBubbles, setVisibleBubbles] = useState([]);
   const [usedPositions, setUsedPositions] = useState([]);
-  const { isEmotional } = useInterface();
   
-  const bubbleStyles = getBubbleStyles(isEmotional);
+  const bubbleStyles = getBubbleStyles();
 
   // Function to create a new bubble
   const createBubble = () => {
@@ -97,14 +89,14 @@ const FloatingTextBubbles = () => {
     setTimeout(() => {
       const bubbleElement = document.getElementById(`bubble-${newBubble.id}`);
       if (bubbleElement) {
-        bubbleElement.style.animation = 'fadeOut 1s forwards';
+        bubbleElement.style.animation = 'fadeOut 1.5s forwards'; // Slower fade out
         bubbleElement.addEventListener('animationend', () => {
           setVisibleBubbles(prev => prev.filter(bubble => bubble.id !== newBubble.id));
           // Free up this position
           setUsedPositions(prev => prev.filter(pos => pos !== selectedVariantIndex));
         });
       }
-    }, 2500); // Display time - 2.5 seconds before fade out starts
+    }, 4000); // Increased display time from 2.5s to 4s
   };
 
   // Effect to periodically add new bubbles
@@ -112,14 +104,14 @@ const FloatingTextBubbles = () => {
     // Initial bubble on load with delay
     const initialTimer = setTimeout(() => {
       createBubble();
-    }, 600);
+    }, 800); // Slightly longer initial delay
     
     // Set interval to add new bubbles at staggered times
     const interval = setInterval(() => {
       if (Math.random() > 0.3) { // 70% chance to create a new bubble each interval
         createBubble();
       }
-    }, 800); // Check every 800ms if we should add a new bubble
+    }, 1200); // Slower interval between bubble creation attempts (from 800ms to 1200ms)
     
     return () => {
       clearTimeout(initialTimer);
@@ -128,11 +120,7 @@ const FloatingTextBubbles = () => {
   }, [visibleBubbles.length, usedPositions]);
 
   return (
-    <div className={`relative z-10 bg-gradient-to-b ${
-      isEmotional 
-        ? "from-rose-50 via-white to-transparent" 
-        : "from-[#6a8cb3] via-white to-transparent"
-    } py-24 overflow-visible`}>
+    <div className="relative z-10 bg-gradient-to-b from-rose-50 via-white to-transparent py-24 overflow-visible">
       {/* Message Bubbles Container - extending beyond its boundaries */}
       <div className="absolute inset-0 h-[220px] w-full overflow-visible">
         {visibleBubbles.map(bubble => (
@@ -140,7 +128,7 @@ const FloatingTextBubbles = () => {
             id={`bubble-${bubble.id}`}
             key={bubble.id}
             className={cn(
-              `absolute px-4 py-2 ${isEmotional ? "rounded-xl" : "rounded-md"} shadow-sm font-inter font-semibold text-center`,
+              `absolute px-4 py-2 rounded-xl shadow-sm font-inter font-semibold text-center`,
               bubble.style.bgColor,
               bubble.style.textColor,
               bubble.positionStyle,
@@ -149,7 +137,7 @@ const FloatingTextBubbles = () => {
               bubble.style.position
             )}
             style={{ 
-              animation: 'fadeIn 1s forwards',
+              animation: 'fadeIn 1.2s forwards', // Slower fade in
             }}
           >
             {bubble.message}
