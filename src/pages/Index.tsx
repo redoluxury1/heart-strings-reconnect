@@ -9,7 +9,6 @@ import DailyLoveNote from '../components/home/DailyLoveNote';
 import StillUsSection from '../components/home/StillUsSection';
 import WhyItMattersSection from '../components/home/WhyItMattersSection';
 import LoveCodeQuizSection from '../components/home/LoveCodeQuizSection';
-import NewLoveNoteNotification from '../components/home/NewLoveNoteNotification';
 import DualInterfaceLanding from '../components/home/DualInterfaceLanding';
 
 const Index = () => {
@@ -30,10 +29,7 @@ const Index = () => {
   
   return (
     <div className={`min-h-screen ${isEmotional ? 'bg-slate-50' : 'bg-[#6a8cb3]'}`}>
-      <Navbar />
-      
-      {/* New love note notification */}
-      {hasNewLoveNote && <NewLoveNoteNotification onClose={() => setHasNewLoveNote(false)} />}
+      <Navbar hasNewLoveNote={hasNewLoveNote} onViewLoveNote={() => setHasNewLoveNote(false)} />
       
       <main>
         <div className="relative">

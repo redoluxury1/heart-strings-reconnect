@@ -1,9 +1,9 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { Button } from "@/components/ui/button";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { cn } from "@/lib/utils";
-import { Menu, X, Book, Gamepad } from 'lucide-react';
+import { Menu, X, Book, Gamepad, Mail } from 'lucide-react';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -11,10 +11,18 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
+import { useInterface } from '../common/InterfaceProvider';
 
-const Navbar = () => {
+interface NavbarProps {
+  hasNewLoveNote?: boolean;
+  onViewLoveNote?: () => void;
+}
+
+const Navbar = ({ hasNewLoveNote = false, onViewLoveNote }: NavbarProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
+  const { isEmotional } = useInterface();
 
   // Close menu when clicking outside
   useEffect(() => {
@@ -30,6 +38,13 @@ const Navbar = () => {
     };
   }, [mobileMenuOpen]);
 
+  const handleViewLoveNote = () => {
+    if (onViewLoveNote) {
+      onViewLoveNote();
+    }
+    navigate('/love-notes');
+  };
+
   return (
     <nav className="w-full py-4 px-6 md:px-12 flex items-center justify-between border-b border-slate-200">
       <div className="flex items-center space-x-2">
@@ -44,7 +59,7 @@ const Navbar = () => {
       </div>
       
       {/* Desktop navigation */}
-      <div className="hidden md:block">
+      <div className="hidden md:flex items-center">
         <NavigationMenu>
           <NavigationMenuList>
             <NavigationMenuItem>
@@ -79,6 +94,29 @@ const Navbar = () => {
                 Archive
               </Link>
             </NavigationMenuItem>
+            
+            {/* Notification envelope icon */}
+            {hasNewLoveNote && (
+              <NavigationMenuItem>
+                <button 
+                  onClick={handleViewLoveNote}
+                  className="relative mr-2 flex items-center justify-center"
+                  aria-label="View new love note"
+                >
+                  <Mail 
+                    className={`h-5 w-5 ${
+                      isEmotional 
+                        ? "text-mauve-rose animate-pulse" 
+                        : "text-[#E51D2C] animate-pulse"
+                    }`} 
+                  />
+                  <span className={`absolute -top-1 -right-1 flex h-2 w-2 rounded-full ${
+                    isEmotional ? "bg-mauve-rose" : "bg-[#E51D2C]"
+                  }`}></span>
+                </button>
+              </NavigationMenuItem>
+            )}
+            
             <NavigationMenuItem>
               <Button variant="outline" className="text-midnight-indigo border-midnight-indigo hover:bg-soft-blush rounded-full">
                 Get Started
@@ -88,8 +126,29 @@ const Navbar = () => {
         </NavigationMenu>
       </div>
       
-      {/* Mobile menu button */}
-      <div className="md:hidden">
+      {/* Mobile notification and menu */}
+      <div className="md:hidden flex items-center">
+        {/* Mobile notification icon */}
+        {hasNewLoveNote && (
+          <button 
+            onClick={handleViewLoveNote}
+            className="relative mr-4 flex items-center justify-center"
+            aria-label="View new love note"
+          >
+            <Mail 
+              className={`h-5 w-5 ${
+                isEmotional 
+                  ? "text-mauve-rose animate-pulse" 
+                  : "text-[#E51D2C] animate-pulse"
+              }`} 
+            />
+            <span className={`absolute -top-1 -right-1 flex h-2 w-2 rounded-full ${
+              isEmotional ? "bg-mauve-rose" : "bg-[#E51D2C]"
+            }`}></span>
+          </button>
+        )}
+        
+        {/* Mobile menu button */}
         <Button
           variant="ghost"
           size="icon"
