@@ -4,6 +4,7 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import ContentContainer from '@/components/common/ContentContainer';
 import LetsTalkThisOut from '@/components/post-conflict/LetsTalkThisOut';
+import OkayButNowWhat from '@/components/post-conflict/OkayButNowWhat';
 import FloatingTextBubbles from '@/components/post-conflict/FloatingTextBubbles';
 import { SessionProvider, useSession } from '@/components/post-conflict/context/SessionContext';
 
@@ -30,6 +31,8 @@ const PostConflictContent = () => {
             )}
             
             <LetsTalkThisOut />
+
+            <OkayButNowWhat />
           </div>
         </ContentContainer>
       </main>
