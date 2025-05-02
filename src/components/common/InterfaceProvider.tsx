@@ -2,13 +2,13 @@
 import React, { createContext, useState, useEffect, useContext, ReactNode } from 'react';
 import { InterfaceStyle, PartnerStatus } from '../../pages/Onboarding';
 
-// Define solution-focused color palette
+// Define solution-focused color palette with slate blue/crimson
 export const SolutionFocusedColors = {
-  background: '#6a8cb3',   // Updated to #6a8cb3
+  background: '#6a8cb3',   // Slate blue
   text: '#2C3E50',        // Deep Charcoal
-  primary: '#543544',     // Updated to #543544 (primary button)
-  accent: '#4f6572',      // Updated to #4f6572 (secondary button)
-  highlight: '#543544',   // Updated to #543544 (burgundy)
+  primary: '#543544',     // Crimson
+  accent: '#4f6572',      // Slate accent
+  highlight: '#543544',   // Crimson highlight
 };
 
 type InterfaceContextType = {
@@ -47,10 +47,12 @@ export const InterfaceProvider: React.FC<InterfaceProviderProps> = ({ children }
       const interfaceParam = params.get('interface');
       
       if (interfaceParam === 'emotional' || interfaceParam === 'emotionally-reflective') {
+        console.log('Setting emotional interface from URL parameter');
         setInterfaceStyle('emotionally-reflective');
         localStorage.setItem('bridge-interface-style', 'emotionally-reflective');
         return true;
       } else if (interfaceParam === 'solution' || interfaceParam === 'solution-focused') {
+        console.log('Setting solution interface from URL parameter');
         setInterfaceStyle('solution-focused');
         localStorage.setItem('bridge-interface-style', 'solution-focused');
         return true;
@@ -59,30 +61,46 @@ export const InterfaceProvider: React.FC<InterfaceProviderProps> = ({ children }
       return false;
     };
     
-    // Load user preferences from localStorage
+    // Function to try getting interface style from localStorage
+    const getFromLocalStorage = () => {
+      const storedStyle = localStorage.getItem('bridge-interface-style') as InterfaceStyle;
+      if (storedStyle) {
+        console.log('Loading stored interface style:', storedStyle);
+        setInterfaceStyle(storedStyle);
+        return true;
+      }
+      return false;
+    };
+    
+    // Load user preferences
     const loadPreferences = () => {
-      // First check URL parameters
+      // First check URL parameters (highest priority)
       const urlParamApplied = checkUrlParameters();
       
       // If no URL parameters, try to get from localStorage
       if (!urlParamApplied) {
-        const storedStyle = localStorage.getItem('bridge-interface-style') as InterfaceStyle;
-        const storedStatus = localStorage.getItem('bridge-partner-status') as PartnerStatus;
-        const storedPartnerInvited = localStorage.getItem('bridge-partner-invited');
+        const localStorageApplied = getFromLocalStorage();
         
-        console.log('Loading stored interface style:', storedStyle);
-        
-        if (storedStyle) setInterfaceStyle(storedStyle);
-        if (storedStatus) setPartnerStatus(storedStatus);
-        if (storedPartnerInvited === 'true') setIsPartnerInvited(true);
+        if (!localStorageApplied) {
+          // Default to emotional if nothing is specified
+          console.log('No interface preference found, defaulting to emotional');
+          setInterfaceStyle('emotionally-reflective');
+        }
       }
+      
+      // Load partner status
+      const storedStatus = localStorage.getItem('bridge-partner-status') as PartnerStatus;
+      if (storedStatus) setPartnerStatus(storedStatus);
+      
+      // Load partner invited status
+      const storedPartnerInvited = localStorage.getItem('bridge-partner-invited');
+      if (storedPartnerInvited === 'true') setIsPartnerInvited(true);
     };
     
-    // Load preferences immediately
+    // Load preferences immediately on mount
     loadPreferences();
     
-    // Also set up an event listener for storage changes
-    // This ensures interface updates when localStorage changes in another window/tab
+    // Set up storage event listener for changes in other windows/tabs
     const handleStorageChange = (event: StorageEvent) => {
       console.log('Storage event detected:', event.key, event.newValue);
       
@@ -104,7 +122,7 @@ export const InterfaceProvider: React.FC<InterfaceProviderProps> = ({ children }
     
     window.addEventListener('storage', handleStorageChange);
 
-    // Handle communication between windows if this is a fullscreen view
+    // Handle message events for iframe communication
     const handleMessage = (event: MessageEvent) => {
       if (event.data && event.data.type === 'bridge-interface-update') {
         console.log('Received message event:', event.data);
@@ -116,7 +134,7 @@ export const InterfaceProvider: React.FC<InterfaceProviderProps> = ({ children }
 
     window.addEventListener('message', handleMessage);
     
-    // Set up an interval to check localStorage for changes (for iframe scenarios)
+    // Sync interface style with localStorage on an interval (for iframe scenarios)
     const checkInterval = setInterval(() => {
       const currentStyle = localStorage.getItem('bridge-interface-style') as InterfaceStyle;
       if (currentStyle && currentStyle !== interfaceStyle) {
@@ -125,10 +143,35 @@ export const InterfaceProvider: React.FC<InterfaceProviderProps> = ({ children }
       }
     }, 1000);
     
-    // Add fullscreen change event listener
+    // Handle fullscreen events
     const handleFullScreenChange = () => {
-      // When entering or exiting fullscreen, check preferences again
-      setTimeout(loadPreferences, 100);
+      console.log('Fullscreen change detected');
+      
+      // Check URL parameters when entering/exiting fullscreen
+      // This ensures the correct interface is maintained
+      setTimeout(() => {
+        const isFullscreen = document.fullscreenElement !== null;
+        console.log('Is fullscreen:', isFullscreen);
+        
+        // Force recheck of preferences
+        loadPreferences();
+        
+        // If entering fullscreen, make sure we apply the current interface style
+        if (isFullscreen) {
+          // Get the current style from localStorage to ensure consistency
+          const currentStyle = localStorage.getItem('bridge-interface-style') as InterfaceStyle;
+          if (currentStyle) {
+            console.log('Applying interface style in fullscreen:', currentStyle);
+            setInterfaceStyle(currentStyle);
+            
+            // Force a refresh if needed by toggling a class on the body
+            document.body.classList.add('interface-refresh');
+            setTimeout(() => {
+              document.body.classList.remove('interface-refresh');
+            }, 50);
+          }
+        }
+      }, 100);
     };
     
     document.addEventListener('fullscreenchange', handleFullScreenChange);
@@ -139,7 +182,7 @@ export const InterfaceProvider: React.FC<InterfaceProviderProps> = ({ children }
       document.removeEventListener('fullscreenchange', handleFullScreenChange);
       clearInterval(checkInterval);
     };
-  }, [interfaceStyle]);
+  }, []);
   
   // Save preferences when they change
   useEffect(() => {
@@ -193,11 +236,11 @@ export const InterfaceProvider: React.FC<InterfaceProviderProps> = ({ children }
         primary: '#C7747F',     // mauve-rose
         accent: '#8A8AC9',      // lavender-blue
         highlight: '#E69999',   // rosewood-tint
-        plum: '#6A4A74',        // new plum accent color
+        plum: '#6A4A74',        // plum accent color
       }
     : {
         ...SolutionFocusedColors,
-        plum: '#543544',        // using a similar color for solution-focused
+        plum: '#543544',        // using crimson for solution-focused
       };
   
   return (

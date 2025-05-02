@@ -16,55 +16,62 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
   
   // Determine text color based on card type and interface
   const getTextColor = () => {
-    if (!isEmotional && (card.gradientClass.includes("#543544") || card.gradientClass.includes("#15283f"))) {
-      return "text-[#221F26]"; // Dark charcoal color for Mid-Fight and Post-Fight in solution-focused mode
-    } else if (isEmotional) {
-      return "text-[#6A4A74]"; // New plum color for emotional interface
+    if (!isEmotional) {
+      if (card.gradientClass.includes("#543544") || card.gradientClass.includes("#15283f")) {
+        return "text-[#221F26]"; // Dark charcoal color for Mid-Fight and Post-Fight in solution-focused mode
+      } else {
+        return "text-[#2C3E50]"; // Dark blue for solution-focused reconnecting card
+      }
     } else {
-      return "text-midnight-indigo"; // Default for solution-focused reconnecting card
+      return "text-[#6A4A74]"; // Plum color for emotional interface
     }
   };
 
   const textColor = getTextColor();
-  const textColorMuted = textColor === "text-[#221F26]" ? "text-[#221F26]/80" : "text-midnight-indigo/80";
-  const bulletColor = textColor === "text-[#221F26]" ? "bg-[#221F26]/50" : "bg-[#6A4A74]/70";
+  const textColorMuted = isEmotional 
+    ? "text-midnight-indigo/80" 
+    : "text-[#2C3E50]/80";
+  
+  const bulletColor = isEmotional 
+    ? "bg-[#6A4A74]/70" 
+    : "bg-[#543544]/70"; // Using crimson color for solution-focused
 
   // Button styling based on card type and interface
   const getButtonStyles = () => {
-    if (!isEmotional && (card.gradientClass.includes("#543544") || card.gradientClass.includes("#15283f"))) {
-      return "border-[#221F26] text-[#221F26] hover:bg-[#221F26]/10";
-    } else if (isEmotional) {
-      return "border-2 border-[#6A4A74] text-[#6A4A74] hover:bg-[#6A4A74]/10 font-medium";
+    if (!isEmotional) {
+      if (card.gradientClass.includes("#543544") || card.gradientClass.includes("#15283f")) {
+        return "border-[#543544] text-[#543544] hover:bg-[#543544]/10"; // Crimson for solution-focused
+      } else {
+        return "border-[#4f6572] text-[#4f6572] hover:bg-[#4f6572]/10"; // Slate blue for solution-focused
+      }
     } else {
-      return "border-midnight-indigo text-midnight-indigo hover:bg-midnight-indigo/10";
+      return "border-2 border-[#6A4A74] text-[#6A4A74] hover:bg-[#6A4A74]/10 font-medium"; // For emotional
     }
   };
 
   const buttonStyles = getButtonStyles();
 
-  // Render the icon with proper class name based on interface type
+  // Safely render the icon
   const renderIcon = () => {
     if (React.isValidElement(card.icon)) {
-      // Only apply className if it's a React element
-      return React.cloneElement(card.icon, { 
-        className: isEmotional ? "text-[#6A4A74]" : card.icon.props.className 
+      return React.cloneElement(card.icon as React.ReactElement, { 
+        className: isEmotional ? "text-[#6A4A74]" : "text-[#543544]" 
       });
     }
-    // Fallback in case it's not a valid element
     return card.icon;
   };
 
   return (
     <div className="transition-all duration-300 hover:scale-[1.02] focus-within:scale-[1.02]">
       <div className={`h-full rounded-xl shadow-md p-6 md:p-7 bg-gradient-to-b ${card.gradientClass} ${
-        isEmotional ? "border-2 border-[#6A4A74]/30" : "border border-white/20"
+        isEmotional ? "border-2 border-[#6A4A74]/30" : "border border-[#543544]/20"
       }`}>
         {isMobile ? (
           // Mobile layout (vertical)
           <>
             <div className="mb-5 flex items-center">
               <div className={`p-3 rounded-full ${
-                isEmotional ? "bg-[#6A4A74]/20" : card.iconBgClass
+                isEmotional ? "bg-[#6A4A74]/20" : "bg-[#543544]/20"
               }`}>
                 {renderIcon()}
               </div>
@@ -110,7 +117,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
             {/* Header with icon and title together */}
             <div className="flex items-center mb-2">
               <div className={`p-3 rounded-full ${
-                isEmotional ? "bg-[#6A4A74]/20" : card.iconBgClass
+                isEmotional ? "bg-[#6A4A74]/20" : "bg-[#543544]/20"
               } mr-2`}>
                 {renderIcon()}
               </div>
