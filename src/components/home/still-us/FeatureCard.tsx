@@ -12,50 +12,19 @@ interface FeatureCardProps {
 
 const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
   const isMobile = useIsMobile();
-  const { isEmotional, colors } = useInterface();
+  const { colors } = useInterface();
   
-  // Determine text color based on card type and interface
-  const getTextColor = () => {
-    if (!isEmotional) {
-      if (card.gradientClass.includes("#543544") || card.gradientClass.includes("#15283f")) {
-        return "text-[#221F26]"; // Dark charcoal color for Mid-Fight and Post-Fight in solution-focused mode
-      } else {
-        return "text-[#221F26]"; // Updated to darker charcoal for solution-focused reconnecting card
-      }
-    } else {
-      return "text-[#6A4A74]"; // Plum color for emotional interface
-    }
-  };
-
-  const textColor = getTextColor();
-  const textColorMuted = isEmotional 
-    ? "text-midnight-indigo/80" 
-    : "text-[#403E43]"; // Updated to a darker text color for better visibility
-  
-  const bulletColor = isEmotional 
-    ? "bg-[#6A4A74]/70" 
-    : "bg-[#543544]/70"; // Using crimson color for solution-focused
-
-  // Button styling based on card type and interface
-  const getButtonStyles = () => {
-    if (!isEmotional) {
-      if (card.gradientClass.includes("#543544") || card.gradientClass.includes("#15283f")) {
-        return "border-[#543544] text-[#543544] hover:bg-[#543544]/10"; // Crimson for solution-focused
-      } else {
-        return "border-[#4f6572] text-[#4f6572] hover:bg-[#4f6572]/10"; // Slate blue for solution-focused
-      }
-    } else {
-      return "border-2 border-[#6A4A74] text-[#6A4A74] hover:bg-[#6A4A74]/10 font-medium"; // For emotional
-    }
-  };
-
-  const buttonStyles = getButtonStyles();
+  // Text colors for the emotional interface
+  const textColor = "text-[#6A4A74]"; // Plum color
+  const textColorMuted = "text-midnight-indigo/80";
+  const bulletColor = "bg-[#6A4A74]/70";
+  const buttonStyles = "border-2 border-[#6A4A74] text-[#6A4A74] hover:bg-[#6A4A74]/10 font-medium";
 
   // Safely render the icon
   const renderIcon = () => {
     if (React.isValidElement(card.icon)) {
       return React.cloneElement(card.icon as React.ReactElement, { 
-        className: isEmotional ? "text-[#6A4A74]" : "text-[#543544]" 
+        className: "text-[#6A4A74]"
       });
     }
     return card.icon;
@@ -63,16 +32,12 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
 
   return (
     <div className="transition-all duration-300 hover:scale-[1.02] focus-within:scale-[1.02]">
-      <div className={`h-full rounded-xl shadow-md p-6 md:p-7 bg-gradient-to-b ${card.gradientClass} ${
-        isEmotional ? "border-2 border-[#6A4A74]/30" : "border border-[#543544]/20"
-      }`}>
+      <div className={`h-full rounded-xl shadow-md p-6 md:p-7 bg-gradient-to-b ${card.gradientClass} border-2 border-[#6A4A74]/30`}>
         {isMobile ? (
           // Mobile layout (vertical)
           <>
             <div className="mb-5 flex items-center">
-              <div className={`p-3 rounded-full ${
-                isEmotional ? "bg-[#6A4A74]/20" : "bg-[#543544]/20"
-              }`}>
+              <div className="p-3 rounded-full bg-[#6A4A74]/20">
                 {renderIcon()}
               </div>
               <h3 className={`ml-3 text-2xl md:text-3xl font-cormorant font-semibold ${textColor}`}>
@@ -116,9 +81,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
           <div className="flex flex-col">
             {/* Header with icon and title together */}
             <div className="flex items-center mb-2">
-              <div className={`p-3 rounded-full ${
-                isEmotional ? "bg-[#6A4A74]/20" : "bg-[#543544]/20"
-              } mr-2`}>
+              <div className="p-3 rounded-full bg-[#6A4A74]/20 mr-2">
                 {renderIcon()}
               </div>
               <h3 className={`text-2xl md:text-3xl font-cormorant font-semibold ${textColor}`}>

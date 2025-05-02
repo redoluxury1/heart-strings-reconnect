@@ -1,12 +1,13 @@
+
 import React, { useState, useEffect } from 'react';
 import { useInterface } from '@/hooks/useInterfaceContext';
-import { Lightbulb, Heart, ThumbsUp, ThumbsDown, RefreshCw } from 'lucide-react';
+import { Heart, ThumbsUp, ThumbsDown, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { reconnectionTips, ReconnectionTip } from '@/data/reconnection-tips';
 import { toast } from '@/hooks/use-toast';
 
 const OkayButNowWhat = () => {
-  const { isEmotional } = useInterface();
+  const { colors } = useInterface();
   const [currentTip, setCurrentTip] = useState<ReconnectionTip | null>(null);
   const [hasVoted, setHasVoted] = useState(false);
 
@@ -48,43 +49,24 @@ const OkayButNowWhat = () => {
     setHasVoted(true);
   };
 
-  // Determine background colors based on interface style
-  const bgColor = isEmotional
-    ? "bg-gradient-to-br from-[#F1E5FF]/80 to-[#F1E5FF]/30" // Soft purple for emotional
-    : "bg-gradient-to-br from-[#D1E5F4]/90 to-[#D1E5F4]/50"; // Soft blue for solution-focused
-
-  // Button styling based on interface
-  const primaryBtnClass = isEmotional
-    ? "bg-midnight-indigo hover:bg-midnight-indigo/90 text-white"
-    : "bg-[#589391] hover:bg-[#589391]/90 text-white";
-
-  const secondaryBtnClass = isEmotional
-    ? "bg-mauve-rose/30 hover:bg-mauve-rose/40 text-midnight-indigo"
-    : "bg-[#589391]/20 hover:bg-[#589391]/30 text-[#2C3E50]";
+  // Emotions-focused styling (our only style now)
+  const bgColor = "bg-gradient-to-br from-[#F1E5FF]/80 to-[#F1E5FF]/30";
+  const primaryBtnClass = "bg-midnight-indigo hover:bg-midnight-indigo/90 text-white";
+  const secondaryBtnClass = "bg-mauve-rose/30 hover:bg-mauve-rose/40 text-midnight-indigo";
 
   return (
     <div className={`${bgColor} rounded-xl shadow-md p-6 md:p-8 mb-12`}>
       <div className="flex flex-col items-center">
-        {/* Icon based on interface style */}
-        {isEmotional ? (
-          <Heart className="h-12 w-12 text-mauve-rose mb-4" />
-        ) : (
-          <Lightbulb className="h-12 w-12 text-[#589391] mb-4" />
-        )}
+        <Heart className="h-12 w-12 text-mauve-rose mb-4" />
         
-        {/* Section Title */}
-        <h2 className={`text-3xl md:text-4xl ${isEmotional ? "font-cormorant" : ""} font-medium mb-3 text-center ${
-          isEmotional ? "text-midnight-indigo" : "text-[#221F26]"
-        }`}>
+        <h2 className="text-3xl md:text-4xl font-cormorant font-medium mb-3 text-center text-midnight-indigo">
           Okay, but now what?
         </h2>
         
-        {/* Description */}
         <p className="text-center text-gray-700 mb-6 max-w-xl">
           A small step to help you reconnect after a tough moment.
         </p>
         
-        {/* Tip Card */}
         {currentTip && (
           <div className="bg-white/60 p-6 rounded-lg shadow-sm mb-6 max-w-lg w-full">
             <p className="text-lg text-center font-medium text-gray-800">
@@ -93,7 +75,6 @@ const OkayButNowWhat = () => {
           </div>
         )}
         
-        {/* Feedback and Refresh Buttons */}
         <div className="flex flex-wrap justify-center gap-4">
           {!hasVoted && (
             <>

@@ -1,6 +1,5 @@
 
 import React, { useEffect, useState } from 'react';
-import { useInterface } from '../hooks/useInterfaceContext';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import Hero from '../components/home/Hero';
@@ -9,10 +8,9 @@ import DailyLoveNote from '../components/home/DailyLoveNote';
 import StillUsSection from '../components/home/StillUsSection';
 import WhyItMattersSection from '../components/home/WhyItMattersSection';
 import LoveCodeQuizSection from '../components/home/LoveCodeQuizSection';
-import DualInterfaceLanding from '../components/home/DualInterfaceLanding';
+import HomeLanding from '../components/home/HomeLanding';
 
 const Index = () => {
-  const { isEmotional } = useInterface();
   const [hasNewLoveNote, setHasNewLoveNote] = useState(false);
   
   // Simulate checking for new love notes when the component mounts
@@ -28,18 +26,14 @@ const Index = () => {
   }, []);
   
   return (
-    <div className={`min-h-screen ${
-      isEmotional 
-        ? 'bg-slate-50' 
-        : 'bg-gradient-to-b from-[#15283f] to-[#6a8cb3]'
-    }`}>
+    <div className="min-h-screen bg-slate-50">
       <Navbar hasNewLoveNote={hasNewLoveNote} onViewLoveNote={() => setHasNewLoveNote(false)} />
       
       <main>
         <div className="relative">
           <Hero />
           <ContentContainer>
-            <DualInterfaceLanding />
+            <HomeLanding />
           </ContentContainer>
           <DailyLoveNote />
         </div>
