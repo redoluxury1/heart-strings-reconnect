@@ -2,7 +2,7 @@
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Plus } from 'lucide-react';
-import { useInterface } from '../../common/InterfaceProvider';
+import { useInterface } from '../../../hooks/useInterfaceContext';
 
 interface AddEntryButtonProps {
   onClick: () => void;

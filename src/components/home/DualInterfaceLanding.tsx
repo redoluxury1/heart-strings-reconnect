@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { useInterface } from '../common/InterfaceProvider';
+import { useInterface } from '../../hooks/useInterfaceContext';
 
 const DualInterfaceLanding = () => {
   const { isEmotional } = useInterface();

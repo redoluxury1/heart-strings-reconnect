@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { useInterface } from '../../common/InterfaceProvider';
+import { useInterface } from '../../../hooks/useInterfaceContext';
 import { LoveNote } from '../../home/LoveNoteTimeline';
 
 interface NotificationPromptProps {

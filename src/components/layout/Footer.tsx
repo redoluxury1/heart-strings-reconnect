@@ -1,8 +1,7 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import ContentContainer from '../common/ContentContainer';
-import { useInterface } from '../common/InterfaceProvider';
+import { useInterface } from '../../hooks/useInterfaceContext';
 
 interface FooterProps {
   showCTA?: boolean;

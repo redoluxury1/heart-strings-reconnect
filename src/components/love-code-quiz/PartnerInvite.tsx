@@ -1,11 +1,10 @@
-
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { toast } from "@/hooks/use-toast";
 import { Mail, UserPlus } from "lucide-react";
-import { useInterface } from '../common/InterfaceProvider';
+import { useInterface } from '../../hooks/useInterfaceContext';
 
 interface PartnerInviteProps {
   isOpen: boolean;

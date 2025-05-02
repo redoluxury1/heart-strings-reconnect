@@ -4,7 +4,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
 import { LoveNote } from '../home/LoveNoteTimeline';
-import { useInterface } from '../common/InterfaceProvider';
+import { useInterface } from '../../hooks/useInterfaceContext';
 import NotificationIcon from './notification/NotificationIcon';
 import NotificationPrompt from './notification/NotificationPrompt';
 import NotificationActions from './notification/NotificationActions';

@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Button } from "@/components/ui/button";
-import { useInterface } from '../../common/InterfaceProvider';
+import { useInterface } from '../../../hooks/useInterfaceContext';
 
 interface NotificationActionsProps {
   onClose: () => void;

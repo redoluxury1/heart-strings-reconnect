@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { BrainCog, Scale } from 'lucide-react';
-import { useInterface } from '../common/InterfaceProvider';
+import { useInterface } from '../../hooks/useInterfaceContext';
 import LetsTalkSession from './LetsTalkSession';
 
 const LetsTalkThisOut = () => {

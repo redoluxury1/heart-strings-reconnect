@@ -1,10 +1,9 @@
-
 import React, { useEffect, useState } from 'react';
 import ContentContainer from '../common/ContentContainer';
 import { useIsMobile } from '@/hooks/use-mobile';
 import FeatureCard from './still-us/FeatureCard';
 import getCardData from './still-us/CardData';
-import { useInterface } from '../common/InterfaceProvider';
+import { useInterface } from '../../hooks/useInterfaceContext';
 
 const StillUsSection = () => {
   const isMobile = useIsMobile();

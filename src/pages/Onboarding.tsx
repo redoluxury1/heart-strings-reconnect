@@ -7,7 +7,7 @@ import OnboardingStyleSelector from '../components/onboarding/OnboardingStyleSel
 import OnboardingPartnerStatus from '../components/onboarding/OnboardingPartnerStatus';
 import PartnerInvite from '../components/onboarding/PartnerInvite';
 import { useToast } from '../hooks/use-toast';
-import { useInterface } from '../components/common/InterfaceProvider';
+import { useInterface } from '../hooks/useInterfaceContext';
 
 export type InterfaceStyle = 'emotionally-reflective' | 'solution-focused';
 export type PartnerStatus = 'solo' | 'couple';

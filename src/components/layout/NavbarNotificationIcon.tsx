@@ -1,7 +1,6 @@
-
 import React from 'react';
 import { Mail } from 'lucide-react';
-import { useInterface } from '../common/InterfaceProvider';
+import { useInterface } from '../../hooks/useInterfaceContext';
 
 interface NavbarNotificationIconProps {
   hasNewLoveNote: boolean;
