@@ -17,6 +17,8 @@ type InterfaceContextType = {
   partnerStatus: PartnerStatus;
   setPartnerStatus: (status: PartnerStatus) => void;
   isEmotional: boolean;
+  isPartnerInvited: boolean;
+  setIsPartnerInvited: (invited: boolean) => void;
   colors: {
     background: string;
     text: string;
@@ -35,14 +37,17 @@ interface InterfaceProviderProps {
 export const InterfaceProvider: React.FC<InterfaceProviderProps> = ({ children }) => {
   const [interfaceStyle, setInterfaceStyle] = useState<InterfaceStyle>('emotionally-reflective');
   const [partnerStatus, setPartnerStatus] = useState<PartnerStatus>('solo');
+  const [isPartnerInvited, setIsPartnerInvited] = useState(false);
   
   useEffect(() => {
     // Load user preferences from localStorage
     const storedStyle = localStorage.getItem('bridge-interface-style') as InterfaceStyle;
     const storedStatus = localStorage.getItem('bridge-partner-status') as PartnerStatus;
+    const storedPartnerInvited = localStorage.getItem('bridge-partner-invited');
     
     if (storedStyle) setInterfaceStyle(storedStyle);
     if (storedStatus) setPartnerStatus(storedStatus);
+    if (storedPartnerInvited === 'true') setIsPartnerInvited(true);
   }, []);
   
   // Save preferences when they change
@@ -50,6 +55,11 @@ export const InterfaceProvider: React.FC<InterfaceProviderProps> = ({ children }
     localStorage.setItem('bridge-interface-style', interfaceStyle);
     localStorage.setItem('bridge-partner-status', partnerStatus);
   }, [interfaceStyle, partnerStatus]);
+  
+  // Save partner invited status when it changes
+  useEffect(() => {
+    localStorage.setItem('bridge-partner-invited', isPartnerInvited.toString());
+  }, [isPartnerInvited]);
   
   const isEmotional = interfaceStyle === 'emotionally-reflective';
   
@@ -71,6 +81,8 @@ export const InterfaceProvider: React.FC<InterfaceProviderProps> = ({ children }
       partnerStatus,
       setPartnerStatus,
       isEmotional,
+      isPartnerInvited,
+      setIsPartnerInvited,
       colors
     }}>
       {children}

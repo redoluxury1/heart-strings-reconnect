@@ -10,6 +10,8 @@ interface OnboardingPartnerStatusProps {
   partnerStatus: PartnerStatus;
   setPartnerStatus: (status: PartnerStatus) => void;
   onContinue: () => void;
+  onAddPartner: () => void;
+  isPartnerInvited: boolean;
 }
 
 const OnboardingPartnerStatus: React.FC<OnboardingPartnerStatusProps> = ({
@@ -17,6 +19,8 @@ const OnboardingPartnerStatus: React.FC<OnboardingPartnerStatusProps> = ({
   partnerStatus,
   setPartnerStatus,
   onContinue,
+  onAddPartner,
+  isPartnerInvited,
 }) => {
   const isEmotional = interfaceStyle === 'emotionally-reflective';
   
@@ -25,7 +29,7 @@ const OnboardingPartnerStatus: React.FC<OnboardingPartnerStatusProps> = ({
       <h1 className={`font-cormorant text-3xl md:text-4xl font-medium text-center mb-10 ${
         isEmotional ? 'text-midnight-indigo' : 'text-white'
       }`}>
-        Who's using Bridge right now?
+        Who's using Bridge For Couples right now?
       </h1>
       
       <RadioGroup 
@@ -83,7 +87,7 @@ const OnboardingPartnerStatus: React.FC<OnboardingPartnerStatusProps> = ({
       
       <div className="flex justify-center mt-10">
         <Button
-          onClick={onContinue}
+          onClick={partnerStatus === 'couple' && !isPartnerInvited ? onAddPartner : onContinue}
           className={`px-8 py-2 ${
             isEmotional 
               ? 'rounded-full bg-mauve-rose hover:bg-mauve-rose/90 text-white' 
@@ -91,7 +95,7 @@ const OnboardingPartnerStatus: React.FC<OnboardingPartnerStatusProps> = ({
           }`}
           size="lg"
         >
-          Complete Setup
+          {partnerStatus === 'couple' && !isPartnerInvited ? 'Add Partner' : 'Complete Setup'}
         </Button>
       </div>
     </div>
