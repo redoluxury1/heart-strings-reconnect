@@ -26,8 +26,8 @@ const LetsTalkThisOut = () => {
           <Scale className="h-12 w-12 text-[#589391] mb-4" />
         )}
         
-        <h2 className={`text-2xl md:text-3xl ${isEmotional ? "font-cormorant" : ""} font-medium mb-3 text-center ${
-          isEmotional ? "text-midnight-indigo" : "text-[#2C3E50]"
+        <h2 className={`text-3xl md:text-4xl ${isEmotional ? "font-cormorant" : ""} font-medium mb-3 text-center ${
+          isEmotional ? "text-midnight-indigo" : "text-[#221F26]"
         }`}>
           {isEmotional ? "Let's Talk This Out" : "Get to the Bottom of It"}
         </h2>

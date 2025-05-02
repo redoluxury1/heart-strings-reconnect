@@ -60,8 +60,8 @@ const ConflictStages = () => {
                   </div>
                 </div>
                 
-                <h3 className="text-xl font-semibold mb-3">{stage.title}</h3>
-                <p className="text-slate-600 mb-6 flex-1">{stage.description}</p>
+                <h3 className="text-2xl md:text-3xl font-semibold mb-3 text-[#221F26]">{stage.title}</h3>
+                <p className="text-[#403E43] mb-6 flex-1">{stage.description}</p>
                 
                 <Link to={stage.link}>
                   <Button variant="outline" className="w-full border-slate-200 hover:border-slate-300">

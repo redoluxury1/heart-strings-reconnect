@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { useInterface } from '../components/common/InterfaceProvider';
+import { useInterface } from '../hooks/useInterfaceContext';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import Hero from '../components/home/Hero';
@@ -28,7 +28,11 @@ const Index = () => {
   }, []);
   
   return (
-    <div className={`min-h-screen ${isEmotional ? 'bg-slate-50' : 'bg-[#6a8cb3]'}`}>
+    <div className={`min-h-screen ${
+      isEmotional 
+        ? 'bg-slate-50' 
+        : 'bg-gradient-to-b from-[#15283f] to-[#6a8cb3]'
+    }`}>
       <Navbar hasNewLoveNote={hasNewLoveNote} onViewLoveNote={() => setHasNewLoveNote(false)} />
       
       <main>

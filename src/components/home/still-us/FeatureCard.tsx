@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Link } from 'react-router-dom';
@@ -19,7 +20,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
       if (card.gradientClass.includes("#543544") || card.gradientClass.includes("#15283f")) {
         return "text-[#221F26]"; // Dark charcoal color for Mid-Fight and Post-Fight in solution-focused mode
       } else {
-        return "text-[#2C3E50]"; // Dark blue for solution-focused reconnecting card
+        return "text-[#221F26]"; // Updated to darker charcoal for solution-focused reconnecting card
       }
     } else {
       return "text-[#6A4A74]"; // Plum color for emotional interface
@@ -29,7 +30,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
   const textColor = getTextColor();
   const textColorMuted = isEmotional 
     ? "text-midnight-indigo/80" 
-    : "text-[#2C3E50]/80";
+    : "text-[#403E43]"; // Updated to a darker text color for better visibility
   
   const bulletColor = isEmotional 
     ? "bg-[#6A4A74]/70" 
@@ -74,7 +75,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
               }`}>
                 {renderIcon()}
               </div>
-              <h3 className={`ml-3 text-xl font-cormorant font-semibold ${textColor}`}>
+              <h3 className={`ml-3 text-2xl md:text-3xl font-cormorant font-semibold ${textColor}`}>
                 {card.title}
               </h3>
             </div>
@@ -120,7 +121,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
               } mr-2`}>
                 {renderIcon()}
               </div>
-              <h3 className={`text-xl font-cormorant font-semibold ${textColor}`}>
+              <h3 className={`text-2xl md:text-3xl font-cormorant font-semibold ${textColor}`}>
                 {card.title}
               </h3>
             </div>
