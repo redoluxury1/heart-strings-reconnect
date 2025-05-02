@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect, ReactNode } from 'react';
 import InterfaceContext, { PartnerStatus } from '../contexts/InterfaceContext';
+import { getColors } from '../utils/interfaceUtils';
 
 interface InterfaceProviderProps {
   children: ReactNode;
@@ -32,15 +33,8 @@ export const InterfaceProvider: React.FC<InterfaceProviderProps> = ({ children }
     localStorage.setItem('bridge-partner-invited', isPartnerInvited.toString());
   }, [isPartnerInvited]);
   
-  // Define the colors of our interface - now we only have one style
-  const colors = {
-    background: '#F1EAE8',  // soft-blush
-    text: '#4A448C',        // midnight-indigo
-    primary: '#C7747F',     // mauve-rose
-    accent: '#8A8AC9',      // lavender-blue
-    highlight: '#E69999',   // rosewood-tint
-    plum: '#6A4A74',        // plum accent color
-  };
+  // Get colors from the utils function
+  const colors = getColors();
   
   return (
     <InterfaceContext.Provider value={{

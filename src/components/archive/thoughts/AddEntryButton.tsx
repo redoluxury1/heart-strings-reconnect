@@ -2,22 +2,16 @@
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Plus } from 'lucide-react';
-import { useInterface } from '../../../hooks/useInterfaceContext';
 
 interface AddEntryButtonProps {
   onClick: () => void;
 }
 
 const AddEntryButton = ({ onClick }: AddEntryButtonProps) => {
-  const { isEmotional } = useInterface();
-  
   return (
     <div className="flex justify-center mb-6">
       <Button 
-        className={isEmotional
-          ? "bg-lavender-blue hover:bg-lavender-blue/90 text-white"
-          : "bg-[#543544] hover:bg-[#543544]/90 text-white"
-        }
+        className="bg-lavender-blue hover:bg-lavender-blue/90 text-white"
         onClick={onClick}
       >
         <Plus className="h-4 w-4 mr-2" />

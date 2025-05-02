@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,7 +7,7 @@ import { toast } from "sonner";
 import { useInterface } from '../../hooks/useInterfaceContext';
 
 const DailyLoveNote = () => {
-  const { isEmotional, colors } = useInterface();
+  const { colors } = useInterface();
   const [loveNote, setLoveNote] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [hasSubmitted, setHasSubmitted] = useState(false);
@@ -57,21 +58,13 @@ const DailyLoveNote = () => {
   return (
     <div 
       id="daily-love-note" 
-      className={`relative z-0 mt-[-50px] pt-[120px] ${
-        isEmotional 
-          ? "bg-gradient-to-b from-white to-soft-blush" 
-          : "bg-gradient-to-b from-[#6a8cb3] via-[#a2bdda] to-white"
-      } px-4 pb-10`}>
+      className="relative z-0 mt-[-50px] pt-[120px] bg-gradient-to-b from-white to-soft-blush px-4 pb-10">
       <div className="max-w-xl mx-auto">
-        <h2 className={`font-cormorant text-2xl md:text-3xl font-semibold ${
-          isEmotional ? 'text-[#6A4A74]' : 'text-[#2C3E50]'
-        } mb-4 text-center`}>
+        <h2 className="font-cormorant text-2xl md:text-3xl font-semibold text-[#6A4A74] mb-4 text-center">
           Daily Love Note
         </h2>
         
-        <p className={`text-center ${
-          isEmotional ? 'text-midnight-indigo' : 'text-[#2C3E50]'
-        } font-inter mb-6`}>
+        <p className="text-center text-midnight-indigo font-inter mb-6">
           What is one thing your partner did today to make you feel special?
         </p>
         
@@ -81,20 +74,12 @@ const DailyLoveNote = () => {
             value={loveNote}
             onChange={(e) => setLoveNote(e.target.value)}
             placeholder="Write your love note here..."
-            className={`w-full shadow-sm ${
-              isEmotional 
-                ? "border-2 border-[#6A4A74]/40 bg-white text-midnight-indigo focus:border-[#6A4A74] focus:ring-[#6A4A74]/20" 
-                : "border-[#4f6572] bg-white text-[#2C3E50]"
-            }`}
+            className="w-full shadow-sm border-2 border-[#6A4A74]/40 bg-white text-midnight-indigo focus:border-[#6A4A74] focus:ring-[#6A4A74]/20"
           />
           
           <Button 
             type="submit" 
-            className={`w-full ${
-              isEmotional
-                ? "bg-[#6A4A74] text-white font-semibold hover:bg-[#6A4A74]/90"
-                : "bg-[#543544] text-white font-semibold hover:bg-opacity-90"
-            } transition-colors`}
+            className="w-full bg-[#6A4A74] text-white font-semibold hover:bg-[#6A4A74]/90 transition-colors"
             disabled={isSubmitting}
           >
             <Send className="mr-2 h-4 w-4" /> Send Love Note
@@ -109,7 +94,7 @@ const DailyLoveNote = () => {
           {hasSubmitted && (
             <button 
               onClick={handleReset}
-              className={`text-sm ${isEmotional ? 'text-[#6A4A74]' : 'text-blue-600'} underline cursor-pointer`}
+              className="text-sm text-[#6A4A74] underline cursor-pointer"
             >
               Want to send another?
             </button>

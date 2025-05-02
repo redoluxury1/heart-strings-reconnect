@@ -17,7 +17,6 @@ const EndSessionStep: React.FC<EndSessionStepProps> = ({
 }) => {
   const navigate = useNavigate();
   const [moodValue, setMoodValue] = useState([50]); // Default to middle of scale
-  const { isEmotional } = useInterface();
 
   const handleSendLoveNote = () => {
     // Navigate to home page and scroll to daily love note section
@@ -32,63 +31,45 @@ const EndSessionStep: React.FC<EndSessionStepProps> = ({
   return (
     <div className="text-center">
       <div className="flex justify-center mb-6">
-        {isEmotional ? (
-          <div className="flex items-center">
-            <Heart className="h-8 w-8 text-red-500 fill-red-500 mr-2" />
-            <Heart className="h-8 w-8 text-red-500 fill-red-500" />
-          </div>
-        ) : (
-          <div className="flex items-center">
-            <RefreshCw className="h-8 w-8 text-[#589391] mr-2" />
-          </div>
-        )}
+        <div className="flex items-center">
+          <Heart className="h-8 w-8 text-red-500 fill-red-500 mr-2" />
+          <Heart className="h-8 w-8 text-red-500 fill-red-500" />
+        </div>
       </div>
       
-      <h2 className={`text-2xl md:text-3xl ${isEmotional ? "font-cormorant" : ""} font-medium ${
-        isEmotional ? "text-midnight-indigo" : "text-[#2C3E50]"
-      } mb-4`}>
-        {isEmotional ? "Phew! How do you feel?" : "Progress Made. How are you feeling?"}
+      <h2 className="text-2xl md:text-3xl font-cormorant font-medium text-midnight-indigo mb-4">
+        Phew! How do you feel?
       </h2>
       
-      <p className={`${isEmotional ? "text-gray-700" : "text-[#2C3E50]"} mb-8 max-w-md mx-auto`}>
-        {isEmotional 
-          ? "Conflict doesn't mean disconnection — and you just proved it. What would you like to do next?"
-          : "You've addressed the issue constructively. What's your next step?"}
+      <p className="text-gray-700 mb-8 max-w-md mx-auto">
+        Conflict doesn't mean disconnection — and you just proved it. What would you like to do next?
       </p>
       
       <div className="max-w-md mx-auto mb-10">
         <div className="flex justify-between text-sm text-gray-600 mb-2">
-          <span>{isEmotional ? "Still Hurting" : "Needs Work"}</span>
-          <span>{isEmotional ? "Feeling Hopeful" : "Resolved"}</span>
+          <span>Still Hurting</span>
+          <span>Feeling Hopeful</span>
         </div>
         <Slider 
           value={moodValue} 
           onValueChange={setMoodValue} 
           max={100} 
           step={1} 
-          className={`mb-2 ${!isEmotional && "accent-[#589391]"}`}
+          className="mb-2"
         />
       </div>
       
       <div className="flex flex-col md:flex-row justify-center gap-4 mb-4">
         <Button 
-          className={`flex items-center gap-2 ${
-            isEmotional 
-              ? "bg-mauve-rose hover:bg-mauve-rose/90 text-white" 
-              : "bg-[#E51D2C] hover:bg-[#E51D2C]/90 text-white"
-          }`}
+          className="flex items-center gap-2 bg-mauve-rose hover:bg-mauve-rose/90 text-white" 
           onClick={handleSendLoveNote}
         >
           <MessageSquareHeart size={18} />
-          {isEmotional ? "Send a Love Note" : "Send a Note"}
+          Send a Love Note
         </Button>
         
         <Button 
-          className={`flex items-center gap-2 ${
-            isEmotional 
-              ? "bg-midnight-indigo hover:bg-midnight-indigo/90 text-white" 
-              : "bg-[#589391] hover:bg-[#589391]/90 text-white"
-          }`}
+          className="flex items-center gap-2 bg-midnight-indigo hover:bg-midnight-indigo/90 text-white" 
           onClick={handlePlayGame}
         >
           <Gamepad2 size={18} />
@@ -98,15 +79,11 @@ const EndSessionStep: React.FC<EndSessionStepProps> = ({
       
       {onRestart && (
         <Button 
-          className={`mb-4 flex items-center gap-2 mx-auto ${
-            isEmotional
-              ? "bg-mauve-rose/30 hover:bg-mauve-rose/40 text-midnight-indigo" 
-              : "bg-[#589391]/20 hover:bg-[#589391]/30 text-[#2C3E50]"
-          }`}
+          className="mb-4 flex items-center gap-2 mx-auto bg-mauve-rose/30 hover:bg-mauve-rose/40 text-midnight-indigo"
           onClick={onRestart}
         >
           <RefreshCw size={18} />
-          {isEmotional ? "Talk through something else" : "Address another issue"}
+          Talk through something else
         </Button>
       )}
     </div>
