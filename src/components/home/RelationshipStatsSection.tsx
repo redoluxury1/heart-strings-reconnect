@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import ContentContainer from '../common/ContentContainer';
-import { useInterface } from '../common/InterfaceProvider';
+import { useInterface } from '../../hooks/useInterfaceContext';
 import { 
   Carousel,
   CarouselContent,
@@ -41,11 +41,41 @@ const communicationStats = [
     stat: "92%",
     description: "of relationship conflicts are not about the subject being discussed, but how it's communicated",
     source: "Relationship Research Institute"
+  },
+  {
+    id: 6,
+    stat: "78%",
+    description: "of couples who focus on improving communication report higher overall relationship happiness",
+    source: "Journal of Couple and Relationship Therapy"
+  },
+  {
+    id: 7,
+    stat: "54%",
+    description: "reduction in relationship stress reported by couples who practice weekly communication exercises",
+    source: "Relationship Science Institute"
+  },
+  {
+    id: 8,
+    stat: "2.5x",
+    description: "increase in emotional intimacy when couples practice vulnerability in communication",
+    source: "Contemporary Family Therapy"
+  },
+  {
+    id: 9,
+    stat: "81%",
+    description: "of therapists identify poor communication as the number one factor in relationship breakdown",
+    source: "American Association for Marriage and Family Therapy"
+  },
+  {
+    id: 10,
+    stat: "74%",
+    description: "of couples report that learning new communication skills had the biggest positive impact on their relationship",
+    source: "International Journal of Communication Studies"
   }
 ];
 
 const RelationshipStatsSection = () => {
-  const { isEmotional } = useInterface();
+  const { isEmotional, colors } = useInterface();
   
   return (
     <section className={`py-16 ${
@@ -84,9 +114,7 @@ const RelationshipStatsSection = () => {
                       : "bg-white/90 shadow-sm"
                   }`}>
                     <div className="mb-4">
-                      <span className={`text-7xl md:text-8xl font-bold ${
-                        isEmotional ? "text-mauve-rose" : "text-[#E51D2C]"
-                      }`}>
+                      <span className="text-7xl md:text-8xl font-bold text-[#6A4A74]">
                         {item.stat}
                       </span>
                     </div>
