@@ -6,7 +6,7 @@ import ContentContainer from '../common/ContentContainer';
 import { useInterface } from '../common/InterfaceProvider';
 
 const WhyItMattersSection = () => {
-  const { isEmotional } = useInterface();
+  const { isEmotional, colors } = useInterface();
   
   return (
     <section className={`py-16 ${
@@ -16,8 +16,8 @@ const WhyItMattersSection = () => {
     }`}>
       <ContentContainer>
         <div className="text-center mb-12">
-          <h2 className={`font-cormorant text-3xl md:text-4xl lg:text-5xl font-medium mb-4 ${
-            isEmotional ? "text-midnight-indigo" : "text-[#2C3E50]"
+          <h2 className={`font-cormorant text-3xl md:text-4xl lg:text-5xl font-semibold mb-4 ${
+            isEmotional ? "text-[#6A4A74]" : "text-[#2C3E50]"
           }`}>
             Why Communication Matters
           </h2>
@@ -32,11 +32,11 @@ const WhyItMattersSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-10">
           <div className={`p-6 rounded-xl ${
             isEmotional
-              ? "bg-white shadow-sm"
+              ? "bg-white shadow-sm border-2 border-[#6A4A74]/20"
               : "bg-white/80 backdrop-blur-sm shadow-sm"
           }`}>
-            <h3 className={`font-cormorant text-xl font-medium mb-3 ${
-              isEmotional ? "text-midnight-indigo" : "text-[#2C3E50]"
+            <h3 className={`font-cormorant text-xl font-semibold mb-3 ${
+              isEmotional ? "text-[#6A4A74]" : "text-[#2C3E50]"
             }`}>
               During Conflict
             </h3>
@@ -48,9 +48,9 @@ const WhyItMattersSection = () => {
             <Link to="/during-conflict">
               <Button 
                 variant="outline" 
-                className={`w-full border ${
+                className={`w-full border-2 ${
                   isEmotional 
-                    ? "border-midnight-indigo text-midnight-indigo hover:bg-midnight-indigo/5"
+                    ? "border-[#6A4A74] text-[#6A4A74] hover:bg-[#6A4A74]/5 font-medium"
                     : "border-[#4f6572] text-[#4f6572] hover:bg-[#4f6572]/5"
                 }`}
               >
@@ -61,11 +61,11 @@ const WhyItMattersSection = () => {
           
           <div className={`p-6 rounded-xl ${
             isEmotional
-              ? "bg-white shadow-sm"
+              ? "bg-white shadow-sm border-2 border-[#6A4A74]/20"
               : "bg-white/80 backdrop-blur-sm shadow-sm"
           }`}>
-            <h3 className={`font-cormorant text-xl font-medium mb-3 ${
-              isEmotional ? "text-midnight-indigo" : "text-[#2C3E50]"
+            <h3 className={`font-cormorant text-xl font-semibold mb-3 ${
+              isEmotional ? "text-[#6A4A74]" : "text-[#2C3E50]"
             }`}>
               After Disagreements
             </h3>
@@ -77,9 +77,9 @@ const WhyItMattersSection = () => {
             <Link to="/post-conflict">
               <Button 
                 variant="outline" 
-                className={`w-full border ${
+                className={`w-full border-2 ${
                   isEmotional 
-                    ? "border-midnight-indigo text-midnight-indigo hover:bg-midnight-indigo/5"
+                    ? "border-[#6A4A74] text-[#6A4A74] hover:bg-[#6A4A74]/5 font-medium"
                     : "border-[#543544] text-[#543544] hover:bg-[#543544]/5"
                 }`}
               >
@@ -90,11 +90,11 @@ const WhyItMattersSection = () => {
           
           <div className={`p-6 rounded-xl ${
             isEmotional
-              ? "bg-white shadow-sm"
+              ? "bg-white shadow-sm border-2 border-[#6A4A74]/20"
               : "bg-white/80 backdrop-blur-sm shadow-sm"
           }`}>
-            <h3 className={`font-cormorant text-xl font-medium mb-3 ${
-              isEmotional ? "text-midnight-indigo" : "text-[#2C3E50]"
+            <h3 className={`font-cormorant text-xl font-semibold mb-3 ${
+              isEmotional ? "text-[#6A4A74]" : "text-[#2C3E50]"
             }`}>
               Daily Connection
             </h3>
@@ -106,9 +106,9 @@ const WhyItMattersSection = () => {
             <a href="#daily-love-note">
               <Button 
                 variant="outline" 
-                className={`w-full border ${
+                className={`w-full border-2 ${
                   isEmotional 
-                    ? "border-midnight-indigo text-midnight-indigo hover:bg-midnight-indigo/5"
+                    ? "border-[#6A4A74] text-[#6A4A74] hover:bg-[#6A4A74]/5 font-medium"
                     : "border-[#4f6572] text-[#4f6572] hover:bg-[#4f6572]/5"
                 }`}
               >

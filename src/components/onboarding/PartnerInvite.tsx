@@ -73,8 +73,8 @@ const PartnerInvite: React.FC<PartnerInviteProps> = ({
         Back
       </Button>
 
-      <h1 className={`font-cormorant text-3xl md:text-4xl font-medium text-center mb-8 ${
-        isEmotional ? 'text-midnight-indigo' : 'text-white'
+      <h1 className={`font-cormorant text-3xl md:text-4xl font-semibold text-center mb-8 ${
+        isEmotional ? 'text-[#6A4A74]' : 'text-white'
       }`}>
         Invite your partner to join you on Bridge For Couples
       </h1>
@@ -87,7 +87,7 @@ const PartnerInvite: React.FC<PartnerInviteProps> = ({
       
       <div className="space-y-6 max-w-md mx-auto">
         <div className="space-y-2">
-          <Label htmlFor="partnerEmail" className={isEmotional ? "text-midnight-indigo" : "text-white"}>
+          <Label htmlFor="partnerEmail" className={isEmotional ? "text-midnight-indigo font-medium" : "text-white"}>
             Partner's Email
           </Label>
           <Input
@@ -96,7 +96,9 @@ const PartnerInvite: React.FC<PartnerInviteProps> = ({
             placeholder="partner@example.com"
             value={partnerEmail}
             onChange={(e) => setPartnerEmail(e.target.value)}
-            className={isEmotional ? "border-lavender-blue/30" : "border-gray-700 bg-slate-800 text-white"}
+            className={isEmotional ? 
+              "border-2 border-[#6A4A74]/30 focus:border-[#6A4A74] focus:ring-[#6A4A74]/20" : 
+              "border-gray-700 bg-slate-800 text-white"}
           />
         </div>
         
@@ -107,7 +109,7 @@ const PartnerInvite: React.FC<PartnerInviteProps> = ({
         </div>
         
         <div className="space-y-2">
-          <Label htmlFor="partnerPhone" className={isEmotional ? "text-midnight-indigo" : "text-white"}>
+          <Label htmlFor="partnerPhone" className={isEmotional ? "text-midnight-indigo font-medium" : "text-white"}>
             Partner's Phone Number
           </Label>
           <Input
@@ -116,7 +118,9 @@ const PartnerInvite: React.FC<PartnerInviteProps> = ({
             placeholder="+1 (555) 123-4567"
             value={partnerPhone}
             onChange={(e) => setPartnerPhone(e.target.value)}
-            className={isEmotional ? "border-lavender-blue/30" : "border-gray-700 bg-slate-800 text-white"}
+            className={isEmotional ? 
+              "border-2 border-[#6A4A74]/30 focus:border-[#6A4A74] focus:ring-[#6A4A74]/20" : 
+              "border-gray-700 bg-slate-800 text-white"}
           />
         </div>
         
@@ -125,7 +129,7 @@ const PartnerInvite: React.FC<PartnerInviteProps> = ({
           disabled={isSending}
           className={`w-full mt-4 ${
             isEmotional 
-              ? 'rounded-full bg-mauve-rose hover:bg-mauve-rose/90 text-white' 
+              ? 'rounded-full bg-[#6A4A74] hover:bg-[#6A4A74]/90 text-white font-medium' 
               : 'rounded-md bg-[#4f6572] hover:bg-[#4f6572]/90 text-white'
           }`}
         >

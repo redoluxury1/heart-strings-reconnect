@@ -8,19 +8,19 @@ import { useInterface } from '../common/InterfaceProvider';
 
 const StillUsSection = () => {
   const isMobile = useIsMobile();
-  const { isEmotional } = useInterface();
+  const { isEmotional, colors } = useInterface();
   
   return (
     <section className={`py-12 ${
       isEmotional 
-        ? "bg-soft-blush" 
+        ? "bg-soft-blush border-t-2 border-b-2 border-[#6A4A74]/20" 
         : "bg-white bg-gradient-to-b from-white to-[#e8edf3]"
     } relative overflow-hidden`}>
       
       <ContentContainer>
         <div className="text-center mb-14 relative z-10">
-          <h2 className={`font-cormorant text-3xl md:text-4xl font-medium italic ${
-            isEmotional ? "text-midnight-indigo" : "text-[#2C3E50]"
+          <h2 className={`font-cormorant text-3xl md:text-4xl font-semibold italic ${
+            isEmotional ? "text-[#6A4A74]" : "text-[#2C3E50]"
           } mb-4`}>
             We're still US
           </h2>

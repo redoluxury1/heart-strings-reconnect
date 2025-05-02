@@ -25,6 +25,7 @@ type InterfaceContextType = {
     primary: string;
     accent: string;
     highlight: string;
+    plum: string; // Added plum accent color
   };
 };
 
@@ -71,8 +72,12 @@ export const InterfaceProvider: React.FC<InterfaceProviderProps> = ({ children }
         primary: '#C7747F',     // mauve-rose
         accent: '#8A8AC9',      // lavender-blue
         highlight: '#E69999',   // rosewood-tint
+        plum: '#6A4A74',        // new plum accent color
       }
-    : SolutionFocusedColors;
+    : {
+        ...SolutionFocusedColors,
+        plum: '#543544',        // using a similar color for solution-focused
+      };
   
   return (
     <InterfaceContext.Provider value={{

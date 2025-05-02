@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { useInterface } from '../common/InterfaceProvider';
 
 const DailyLoveNote = () => {
-  const { isEmotional } = useInterface();
+  const { isEmotional, colors } = useInterface();
   const [loveNote, setLoveNote] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [hasSubmitted, setHasSubmitted] = useState(false);
@@ -64,8 +64,8 @@ const DailyLoveNote = () => {
           : "bg-gradient-to-b from-[#6a8cb3] via-[#a2bdda] to-white"
       } px-4 pb-10`}>
       <div className="max-w-xl mx-auto">
-        <h2 className={`font-cormorant text-2xl md:text-3xl font-medium ${
-          isEmotional ? 'text-midnight-indigo' : 'text-[#2C3E50]'
+        <h2 className={`font-cormorant text-2xl md:text-3xl font-semibold ${
+          isEmotional ? 'text-[#6A4A74]' : 'text-[#2C3E50]'
         } mb-4 text-center`}>
           Daily Love Note
         </h2>
@@ -82,9 +82,9 @@ const DailyLoveNote = () => {
             value={loveNote}
             onChange={(e) => setLoveNote(e.target.value)}
             placeholder="Write your love note here..."
-            className={`w-full ${
+            className={`w-full shadow-sm ${
               isEmotional 
-                ? "border-midnight-indigo bg-white text-midnight-indigo" 
+                ? "border-2 border-[#6A4A74]/40 bg-white text-midnight-indigo focus:border-[#6A4A74] focus:ring-[#6A4A74]/20" 
                 : "border-[#4f6572] bg-white text-[#2C3E50]"
             }`}
           />
@@ -93,7 +93,7 @@ const DailyLoveNote = () => {
             type="submit" 
             className={`w-full ${
               isEmotional
-                ? "bg-rosewood-tint text-white font-semibold hover:bg-opacity-90"
+                ? "bg-[#6A4A74] text-white font-semibold hover:bg-[#6A4A74]/90"
                 : "bg-[#543544] text-white font-semibold hover:bg-opacity-90"
             } transition-colors`}
             disabled={isSubmitting}
@@ -110,7 +110,7 @@ const DailyLoveNote = () => {
           {hasSubmitted && (
             <button 
               onClick={handleReset}
-              className="text-sm text-blue-600 underline cursor-pointer"
+              className={`text-sm ${isEmotional ? 'text-[#6A4A74]' : 'text-blue-600'} underline cursor-pointer`}
             >
               Want to send another?
             </button>

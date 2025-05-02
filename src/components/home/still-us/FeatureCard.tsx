@@ -12,14 +12,14 @@ interface FeatureCardProps {
 
 const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
   const isMobile = useIsMobile();
-  const { isEmotional } = useInterface();
+  const { isEmotional, colors } = useInterface();
   
   // Determine text color based on card type and interface
   const getTextColor = () => {
     if (!isEmotional && (card.gradientClass.includes("#543544") || card.gradientClass.includes("#15283f"))) {
       return "text-[#221F26]"; // Dark charcoal color for Mid-Fight and Post-Fight in solution-focused mode
     } else if (isEmotional) {
-      return "text-midnight-indigo"; // Default for emotional interface
+      return "text-[#6A4A74]"; // New plum color for emotional interface
     } else {
       return "text-midnight-indigo"; // Default for solution-focused reconnecting card
     }
@@ -27,12 +27,14 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
 
   const textColor = getTextColor();
   const textColorMuted = textColor === "text-[#221F26]" ? "text-[#221F26]/80" : "text-midnight-indigo/80";
-  const bulletColor = textColor === "text-[#221F26]" ? "bg-[#221F26]/50" : "bg-midnight-indigo/50";
+  const bulletColor = textColor === "text-[#221F26]" ? "bg-[#221F26]/50" : "bg-[#6A4A74]/70";
 
   // Button styling based on card type and interface
   const getButtonStyles = () => {
     if (!isEmotional && (card.gradientClass.includes("#543544") || card.gradientClass.includes("#15283f"))) {
       return "border-[#221F26] text-[#221F26] hover:bg-[#221F26]/10";
+    } else if (isEmotional) {
+      return "border-2 border-[#6A4A74] text-[#6A4A74] hover:bg-[#6A4A74]/10 font-medium";
     } else {
       return "border-midnight-indigo text-midnight-indigo hover:bg-midnight-indigo/10";
     }
@@ -42,15 +44,21 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
 
   return (
     <div className="transition-all duration-300 hover:scale-[1.02] focus-within:scale-[1.02]">
-      <div className={`h-full rounded-xl shadow-md p-6 md:p-7 bg-gradient-to-b ${card.gradientClass} border border-white/20`}>
+      <div className={`h-full rounded-xl shadow-md p-6 md:p-7 bg-gradient-to-b ${card.gradientClass} ${
+        isEmotional ? "border-2 border-[#6A4A74]/30" : "border border-white/20"
+      }`}>
         {isMobile ? (
           // Mobile layout (vertical)
           <>
             <div className="mb-5 flex items-center">
-              <div className={`p-3 rounded-full ${card.iconBgClass}`}>
-                {card.icon}
+              <div className={`p-3 rounded-full ${
+                isEmotional ? "bg-[#6A4A74]/20" : card.iconBgClass
+              }`}>
+                {React.cloneElement(card.icon, { 
+                  className: isEmotional ? "text-[#6A4A74]" : card.icon.props.className
+                })}
               </div>
-              <h3 className={`ml-3 text-xl font-cormorant font-medium ${textColor}`}>
+              <h3 className={`ml-3 text-xl font-cormorant font-semibold ${textColor}`}>
                 {card.title}
               </h3>
             </div>
@@ -60,7 +68,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
             </p>
             
             <div className="mb-6">
-              <p className={`font-medium text-sm ${textColor} mb-2`}>{card.sectionHeader}</p>
+              <p className={`font-semibold text-sm ${textColor} mb-2`}>{card.sectionHeader}</p>
               <ul className="text-sm space-y-1.5">
                 {card.tools.map((tool, idx) => (
                   <li key={idx} className="flex items-center">
@@ -91,10 +99,14 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
           <div className="flex flex-col">
             {/* Header with icon and title together */}
             <div className="flex items-center mb-2">
-              <div className={`p-2 rounded-full ${card.iconBgClass} mr-2`}>
-                {card.icon}
+              <div className={`p-3 rounded-full ${
+                isEmotional ? "bg-[#6A4A74]/20" : card.iconBgClass
+              } mr-2`}>
+                {React.cloneElement(card.icon, { 
+                  className: isEmotional ? "text-[#6A4A74]" : card.icon.props.className
+                })}
               </div>
-              <h3 className={`text-xl font-cormorant font-medium ${textColor}`}>
+              <h3 className={`text-xl font-cormorant font-semibold ${textColor}`}>
                 {card.title}
               </h3>
             </div>
@@ -106,7 +118,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
             
             {/* Tools list */}
             <div className="mb-5 flex-grow">
-              <p className={`font-medium text-sm ${textColor} mb-2`}>{card.sectionHeader}</p>
+              <p className={`font-semibold text-sm ${textColor} mb-2`}>{card.sectionHeader}</p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-1.5">
                 {card.tools.map((tool, idx) => (
                   <div key={idx} className="flex items-center">
