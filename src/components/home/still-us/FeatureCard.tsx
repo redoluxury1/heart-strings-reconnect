@@ -44,10 +44,9 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
 
   // Render the icon with proper class name based on interface type
   const renderIcon = () => {
-    // Only clone the element if it's a valid React element
     if (React.isValidElement(card.icon)) {
       return React.cloneElement(card.icon, { 
-        className: isEmotional ? "text-[#6A4A74]" : card.icon.props.className
+        className: isEmotional ? "text-[#6A4A74]" : card.icon.props.className 
       });
     }
     // Fallback in case it's not a valid element

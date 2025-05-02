@@ -42,13 +42,40 @@ export const InterfaceProvider: React.FC<InterfaceProviderProps> = ({ children }
   
   useEffect(() => {
     // Load user preferences from localStorage
-    const storedStyle = localStorage.getItem('bridge-interface-style') as InterfaceStyle;
-    const storedStatus = localStorage.getItem('bridge-partner-status') as PartnerStatus;
-    const storedPartnerInvited = localStorage.getItem('bridge-partner-invited');
+    const loadPreferences = () => {
+      const storedStyle = localStorage.getItem('bridge-interface-style') as InterfaceStyle;
+      const storedStatus = localStorage.getItem('bridge-partner-status') as PartnerStatus;
+      const storedPartnerInvited = localStorage.getItem('bridge-partner-invited');
+      
+      if (storedStyle) setInterfaceStyle(storedStyle);
+      if (storedStatus) setPartnerStatus(storedStatus);
+      if (storedPartnerInvited === 'true') setIsPartnerInvited(true);
+    };
     
-    if (storedStyle) setInterfaceStyle(storedStyle);
-    if (storedStatus) setPartnerStatus(storedStatus);
-    if (storedPartnerInvited === 'true') setIsPartnerInvited(true);
+    // Load preferences immediately
+    loadPreferences();
+    
+    // Also set up an event listener for storage changes
+    // This ensures interface updates when localStorage changes in another window/tab
+    const handleStorageChange = (event: StorageEvent) => {
+      if (event.key === 'bridge-interface-style') {
+        const newStyle = event.newValue as InterfaceStyle;
+        if (newStyle) setInterfaceStyle(newStyle);
+      }
+      if (event.key === 'bridge-partner-status') {
+        const newStatus = event.newValue as PartnerStatus;
+        if (newStatus) setPartnerStatus(newStatus);
+      }
+      if (event.key === 'bridge-partner-invited') {
+        setIsPartnerInvited(event.newValue === 'true');
+      }
+    };
+    
+    window.addEventListener('storage', handleStorageChange);
+    
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
   }, []);
   
   // Save preferences when they change
