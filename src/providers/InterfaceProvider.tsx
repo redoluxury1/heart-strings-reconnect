@@ -1,19 +1,21 @@
 
 import React, { useState, useEffect, ReactNode } from 'react';
-import InterfaceContext from '../contexts/InterfaceContext';
+import InterfaceContext, { PartnerStatus } from '../contexts/InterfaceContext';
 
 interface InterfaceProviderProps {
   children: ReactNode;
 }
 
 export const InterfaceProvider: React.FC<InterfaceProviderProps> = ({ children }) => {
-  const [partnerStatus, setPartnerStatus] = useState('solo');
+  const [partnerStatus, setPartnerStatus] = useState<PartnerStatus>('solo');
   const [isPartnerInvited, setIsPartnerInvited] = useState(false);
   
   useEffect(() => {
     // Load partner status
     const storedStatus = localStorage.getItem('bridge-partner-status');
-    if (storedStatus) setPartnerStatus(storedStatus);
+    if (storedStatus === 'solo' || storedStatus === 'couple') {
+      setPartnerStatus(storedStatus as PartnerStatus);
+    }
     
     // Load partner invited status
     const storedPartnerInvited = localStorage.getItem('bridge-partner-invited');
@@ -30,7 +32,7 @@ export const InterfaceProvider: React.FC<InterfaceProviderProps> = ({ children }
     localStorage.setItem('bridge-partner-invited', isPartnerInvited.toString());
   }, [isPartnerInvited]);
   
-  // Define the colors of our interface
+  // Define the colors of our interface - now we only have one style
   const colors = {
     background: '#F1EAE8',  // soft-blush
     text: '#4A448C',        // midnight-indigo
@@ -46,8 +48,7 @@ export const InterfaceProvider: React.FC<InterfaceProviderProps> = ({ children }
       setPartnerStatus,
       isPartnerInvited,
       setIsPartnerInvited,
-      colors,
-      isEmotional: true // Always true now
+      colors
     }}>
       {children}
     </InterfaceContext.Provider>

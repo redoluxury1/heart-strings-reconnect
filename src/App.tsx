@@ -15,6 +15,7 @@ import LoveCodeQuiz from "./pages/LoveCodeQuiz";
 import Archive from "./pages/Archive";
 import Games from "./pages/Games";
 import PartnerInvite from "./pages/PartnerInvite";
+import Onboarding from "./pages/Onboarding";
 
 // Scroll to top on route change
 function ScrollToTop() {
@@ -39,6 +40,7 @@ const App = () => (
           <ScrollToTop />
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/onboarding" element={<Onboarding />} />
             <Route path="/during-conflict" element={<MidFight />} />
             <Route path="/post-conflict" element={<PostConflict />} />
             <Route path="/reconnect" element={<NotFound />} />

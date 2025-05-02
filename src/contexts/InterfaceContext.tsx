@@ -8,7 +8,6 @@ export type InterfaceContextType = {
   setPartnerStatus: (status: PartnerStatus) => void;
   isPartnerInvited: boolean;
   setIsPartnerInvited: (invited: boolean) => void;
-  isEmotional: boolean; // Kept for backward compatibility but always true now
   colors: {
     background: string;
     text: string;
