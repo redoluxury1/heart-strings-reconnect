@@ -1,12 +1,13 @@
 
 import React from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Mail } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
 import { LoveNote } from '../home/LoveNoteTimeline';
 import { useInterface } from '../common/InterfaceProvider';
+import NotificationIcon from './notification/NotificationIcon';
+import NotificationPrompt from './notification/NotificationPrompt';
+import NotificationActions from './notification/NotificationActions';
 
 interface NewLoveNoteNotificationProps {
   onClose: () => void;
@@ -14,7 +15,6 @@ interface NewLoveNoteNotificationProps {
   isOpen: boolean;
 }
 
-// This component now only shows the dialog when clicked on the envelope
 const NewLoveNoteNotification: React.FC<NewLoveNoteNotificationProps> = ({ 
   onClose, 
   loveNote,
@@ -59,11 +59,7 @@ const NewLoveNoteNotification: React.FC<NewLoveNoteNotificationProps> = ({
       }`}>
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            {isEmotional ? (
-              <Mail className="h-5 w-5 text-mauve-rose" />
-            ) : (
-              <Mail className="h-5 w-5 text-[#C7747F]" />
-            )}
+            <NotificationIcon />
             <span>{isEmotional ? "New Love Note" : "New Note"}</span>
           </DialogTitle>
           <DialogDescription>
@@ -71,45 +67,12 @@ const NewLoveNoteNotification: React.FC<NewLoveNoteNotificationProps> = ({
           </DialogDescription>
         </DialogHeader>
         
-        <div className={`p-4 rounded-lg my-4 ${
-          isEmotional 
-            ? "bg-soft-blush/30" 
-            : "bg-[#D1E5F4]/50"
-        }`}>
-          <p className={`text-sm mb-2 ${
-            isEmotional 
-              ? "text-rosewood-tint" 
-              : "text-[#589391]"
-          }`}>
-            {newLoveNote.prompt}
-          </p>
-          <p className={`italic ${
-            isEmotional 
-              ? "text-midnight-indigo" 
-              : "text-[#2C3E50]"
-          }`}>
-            "{newLoveNote.message}"
-          </p>
-        </div>
+        <NotificationPrompt loveNote={newLoveNote} />
         
-        <div className="flex justify-between mt-4">
-          <Button 
-            variant="outline" 
-            onClick={handleClose}
-            className={!isEmotional ? "border-[#589391] text-[#2C3E50]" : ""}
-          >
-            Close
-          </Button>
-          <Button 
-            className={isEmotional
-              ? "bg-rosewood-tint hover:bg-rosewood-tint/90 text-white"
-              : "bg-[#E51D2C] hover:bg-[#E51D2C]/90 text-white"
-            }
-            onClick={viewAllNotes}
-          >
-            View All Notes
-          </Button>
-        </div>
+        <NotificationActions 
+          onClose={handleClose}
+          onViewAll={viewAllNotes}
+        />
       </DialogContent>
     </Dialog>
   );
