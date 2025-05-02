@@ -60,5 +60,55 @@ export const reconnectionTips: ReconnectionTip[] = [
     id: 10,
     text: "Ask an open question about something they're interested in, unrelated to the disagreement.",
     category: 'communication'
+  },
+  {
+    id: 11,
+    text: "Suggest getting takeout from a restaurant you both love.",
+    category: 'activity'
+  },
+  {
+    id: 12,
+    text: "Listen to a song that holds a special meaning for both of you.",
+    category: 'emotional'
+  },
+  {
+    id: 13,
+    text: "Create a small gratitude list about your relationship and share it.",
+    category: 'emotional'
+  },
+  {
+    id: 14,
+    text: "Take five minutes to just sit together quietly without phones.",
+    category: 'physical'
+  },
+  {
+    id: 15,
+    text: "Offer a genuine compliment about something you admire in them.",
+    category: 'communication'
+  },
+  {
+    id: 16,
+    text: "Suggest working on a small household task together.",
+    category: 'activity'
+  },
+  {
+    id: 17,
+    text: "Take turns naming three things you love about each other.",
+    category: 'emotional'
+  },
+  {
+    id: 18,
+    text: "Make a small future plan for something to look forward to together.",
+    category: 'communication'
+  },
+  {
+    id: 19,
+    text: "Share a funny meme or video you know they'd appreciate.",
+    category: 'emotional'
+  },
+  {
+    id: 20,
+    text: "Ask if they need anything right now - a glass of water, some space, or comfort.",
+    category: 'physical'
   }
 ];

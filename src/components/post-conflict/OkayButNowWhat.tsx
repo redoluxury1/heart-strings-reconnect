@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useInterface } from '@/hooks/useInterfaceContext';
 import { Lightbulb, Heart, ThumbsUp, ThumbsDown, RefreshCw } from 'lucide-react';
@@ -45,7 +44,6 @@ const OkayButNowWhat = () => {
       title: helpful ? "Thanks for your feedback!" : "We'll try to improve our suggestions",
       description: helpful ? "We're glad this suggestion was helpful." : "We'll note that this wasn't as useful.",
       duration: 3000,
-      position: "bottom",
     });
     setHasVoted(true);
   };
