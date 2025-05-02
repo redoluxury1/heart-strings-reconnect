@@ -74,7 +74,7 @@ const HomeLanding = () => {
   };
   
   return (
-    <div className="text-center pt-24 pb-12 md:py-24">
+    <div className="text-center pt-24 pb-4 md:py-16">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <div className="cursor-pointer group">

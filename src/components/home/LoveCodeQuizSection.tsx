@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -9,7 +8,7 @@ import { useInterface } from '../common/InterfaceProvider';
 import { HeartHandshake, Heart, Compass, UserPlus } from 'lucide-react';
 
 const LoveCodeQuizSection = () => {
-  const { isEmotional, colors } = useInterface();
+  const { isEmotional } = useInterface();
   
   return (
     <section className={`py-16 ${

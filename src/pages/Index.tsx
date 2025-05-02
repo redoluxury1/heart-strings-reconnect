@@ -6,7 +6,7 @@ import Hero from '../components/home/Hero';
 import ContentContainer from '../components/common/ContentContainer';
 import DailyLoveNote from '../components/home/DailyLoveNote';
 import StillUsSection from '../components/home/StillUsSection';
-import WhyItMattersSection from '../components/home/WhyItMattersSection';
+import RelationshipStatsSection from '../components/home/RelationshipStatsSection';
 import LoveCodeQuizSection from '../components/home/LoveCodeQuizSection';
 import HomeLanding from '../components/home/HomeLanding';
 
@@ -42,7 +42,7 @@ const Index = () => {
         
         <LoveCodeQuizSection />
         
-        <WhyItMattersSection />
+        <RelationshipStatsSection />
       </main>
       
       <Footer showCTA={true} />
