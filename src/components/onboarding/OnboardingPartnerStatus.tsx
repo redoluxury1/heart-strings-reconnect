@@ -36,13 +36,13 @@ const OnboardingPartnerStatus: React.FC<OnboardingPartnerStatusProps> = ({
         <label className={`flex cursor-pointer rounded-xl overflow-hidden ${
           isEmotional 
             ? 'border-2 border-mauve-rose bg-soft-cream/30' 
-            : 'border-2 border-emerald-700 bg-slate-800'
-        } ${partnerStatus === 'solo' ? 'ring-2 ring-mauve-rose' : ''}`}>
+            : 'border-2 border-[#4B6D8C] bg-slate-800'
+        } ${partnerStatus === 'solo' ? `ring-2 ${isEmotional ? 'ring-mauve-rose' : 'ring-[#4B6D8C]'}` : ''}`}>
           <div className="p-6">
             <RadioGroupItem 
               value="solo" 
               id="solo"
-              className={isEmotional ? 'text-mauve-rose border-mauve-rose' : 'text-emerald-500 border-emerald-500'} 
+              className={isEmotional ? 'text-mauve-rose border-mauve-rose' : 'text-[#4B6D8C] border-[#4B6D8C]'} 
             />
           </div>
           <div className="flex-1 p-6">
@@ -61,13 +61,13 @@ const OnboardingPartnerStatus: React.FC<OnboardingPartnerStatusProps> = ({
         <label className={`flex cursor-pointer rounded-xl overflow-hidden ${
           isEmotional 
             ? 'border-2 border-midnight-indigo bg-soft-cream/30' 
-            : 'border-2 border-emerald-600 bg-slate-800'
-        } ${partnerStatus === 'couple' ? 'ring-2 ring-emerald-500' : ''}`}>
+            : 'border-2 border-[#4B6D8C] bg-slate-800'
+        } ${partnerStatus === 'couple' ? `ring-2 ${isEmotional ? 'ring-midnight-indigo' : 'ring-[#4B6D8C]'}` : ''}`}>
           <div className="p-6">
             <RadioGroupItem 
               value="couple" 
               id="couple"
-              className={isEmotional ? 'text-midnight-indigo border-midnight-indigo' : 'text-emerald-500 border-emerald-500'} 
+              className={isEmotional ? 'text-midnight-indigo border-midnight-indigo' : 'text-[#4B6D8C] border-[#4B6D8C]'} 
             />
           </div>
           <div className="flex-1 p-6">
@@ -84,10 +84,10 @@ const OnboardingPartnerStatus: React.FC<OnboardingPartnerStatusProps> = ({
       <div className="flex justify-center mt-10">
         <Button
           onClick={onContinue}
-          className={`px-8 py-2 rounded-full ${
+          className={`px-8 py-2 ${
             isEmotional 
-              ? 'bg-mauve-rose hover:bg-mauve-rose/90 text-white' 
-              : 'bg-emerald-700 hover:bg-emerald-600 text-white'
+              ? 'rounded-full bg-mauve-rose hover:bg-mauve-rose/90 text-white' 
+              : 'rounded-md bg-[#4B6D8C] hover:bg-[#4B6D8C]/90 text-white'
           }`}
           size="lg"
         >

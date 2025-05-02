@@ -6,6 +6,7 @@ import OnboardingWelcome from '../components/onboarding/OnboardingWelcome';
 import OnboardingStyleSelector from '../components/onboarding/OnboardingStyleSelector';
 import OnboardingPartnerStatus from '../components/onboarding/OnboardingPartnerStatus';
 import { useToast } from '../hooks/use-toast';
+import { useInterface } from '../components/common/InterfaceProvider';
 
 export type InterfaceStyle = 'emotionally-reflective' | 'solution-focused';
 export type PartnerStatus = 'solo' | 'couple';
@@ -13,9 +14,16 @@ export type PartnerStatus = 'solo' | 'couple';
 const Onboarding = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { setInterfaceStyle: updateGlobalInterfaceStyle } = useInterface();
   const [step, setStep] = useState<number>(1);
   const [interfaceStyle, setInterfaceStyle] = useState<InterfaceStyle>('emotionally-reflective');
   const [partnerStatus, setPartnerStatus] = useState<PartnerStatus>('solo');
+  
+  // Update interface style both locally and globally
+  const handleInterfaceStyleChange = (style: InterfaceStyle) => {
+    setInterfaceStyle(style);
+    updateGlobalInterfaceStyle(style);
+  };
   
   const handleNextStep = () => {
     if (step < 3) {
@@ -54,7 +62,7 @@ const Onboarding = () => {
           {step === 2 && (
             <OnboardingStyleSelector
               interfaceStyle={interfaceStyle}
-              setInterfaceStyle={setInterfaceStyle}
+              setInterfaceStyle={handleInterfaceStyleChange}
               onContinue={handleNextStep}
             />
           )}
