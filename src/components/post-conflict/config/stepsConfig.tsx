@@ -29,7 +29,6 @@ export const useSteps = (onExit: () => void) => {
         <ToneSettingStep 
           onResponse={(response) => handleResponse('partner1', 'tone', response)}
           partner1Response={sessionData.partner1.responses.tone}
-          partner2Response={sessionData.partner2.ready ? "I want to listen more and react less" : null}
         />
     },
     {
@@ -38,7 +37,6 @@ export const useSteps = (onExit: () => void) => {
         <PerspectiveStep 
           onResponse={(response) => handleResponse('partner1', 'perspective', response)}
           partner1Response={sessionData.partner1.responses.perspective}
-          partner2Response={sessionData.partner2.ready ? "I felt like you weren't listening to me when I tried to explain how I was feeling." : null}
         />
     },
     {
@@ -47,7 +45,6 @@ export const useSteps = (onExit: () => void) => {
         <EmotionalCheckIn 
           onResponse={(response) => handleResponse('partner1', 'emotions', response)}
           selectedEmotions={sessionData.partner1.responses.emotions}
-          partner2Emotions={sessionData.partner2.ready ? ["hurt", "misunderstood", "frustrated"] : null}
         />
     },
     {
@@ -56,7 +53,6 @@ export const useSteps = (onExit: () => void) => {
         <NeedsRepairStep 
           onResponse={(response) => handleResponse('partner1', 'needs', response)}
           partner1Response={sessionData.partner1.responses.needs}
-          partner2Response={sessionData.partner2.ready ? "I need reassurance that we can talk about difficult topics without things escalating." : null}
         />
     },
     {
@@ -65,7 +61,6 @@ export const useSteps = (onExit: () => void) => {
         <ConnectionPromptStep 
           onResponse={(response) => handleResponse('partner1', 'connection', response)}
           partner1Response={sessionData.partner1.responses.connection}
-          partner2Response={sessionData.partner2.ready ? "I appreciate how you always try to make things right, even when it's hard." : null}
         />
     },
     {

@@ -42,7 +42,7 @@ const PostConflictContent = () => {
   );
 };
 
-// Wrap the main component with SessionProvider
+// Use a single SessionProvider for the whole page
 const PostConflict = () => {
   return (
     <SessionProvider>
