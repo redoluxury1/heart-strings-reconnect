@@ -13,7 +13,7 @@ import NewLoveNoteNotification from '../components/home/NewLoveNoteNotification'
 import DualInterfaceLanding from '../components/home/DualInterfaceLanding';
 
 const Index = () => {
-  const { isEmotional } = useInterface();
+  const { isEmotional, colors } = useInterface();
   const [hasNewLoveNote, setHasNewLoveNote] = useState(false);
   
   // Simulate checking for new love notes when the component mounts
@@ -29,7 +29,7 @@ const Index = () => {
   }, []);
   
   return (
-    <div className={`min-h-screen ${isEmotional ? 'bg-slate-50' : 'bg-gray-100'}`}>
+    <div className={`min-h-screen ${isEmotional ? 'bg-slate-50' : 'bg-[#D1E5F4]'}`}>
       <Navbar />
       
       {/* New love note notification */}

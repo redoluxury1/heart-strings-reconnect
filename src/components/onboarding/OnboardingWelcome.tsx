@@ -21,7 +21,7 @@ const OnboardingWelcome: React.FC<OnboardingWelcomeProps> = ({
         {isEmotional ? (
           <Heart size={60} className="text-mauve-rose" />
         ) : (
-          <BrainCog size={60} className="text-[#4B6D8C]" />
+          <BrainCog size={60} className="text-[#589391]" />
         )}
       </div>
       
@@ -36,7 +36,7 @@ const OnboardingWelcome: React.FC<OnboardingWelcomeProps> = ({
         className={`mt-8 px-8 py-3 text-lg ${
           isEmotional 
             ? 'rounded-full bg-mauve-rose hover:bg-mauve-rose/90 text-white' 
-            : 'rounded-md bg-[#4B6D8C] hover:bg-[#4B6D8C]/90 text-[#F4F1EC]'
+            : 'rounded-md bg-[#E51D2C] hover:bg-[#E51D2C]/90 text-[#F4F1EC]'
         }`}
         size="lg"
       >

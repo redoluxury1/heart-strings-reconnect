@@ -1,6 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { cn } from "@/lib/utils";
+import { useInterface } from '../common/InterfaceProvider';
 
 // Messages to cycle through in the bubbles
 const messages = [
@@ -24,13 +25,19 @@ const messages = [
   "Even if it's messy, it's progress"
 ];
 
-// Color schemes for bubbles
-const bubbleStyles = [
+// Color schemes for bubbles - emotional and solution-focused versions
+const getBubbleStyles = (isEmotional) => isEmotional ? [
   { bgColor: "bg-rosewood-tint", textColor: "text-white", position: "after:border-t-rosewood-tint" },
   { bgColor: "bg-mauve-rose", textColor: "text-white", position: "after:border-t-mauve-rose" },
   { bgColor: "bg-lavender-blue", textColor: "text-white", position: "after:border-t-lavender-blue" },
   { bgColor: "bg-soft-cream", textColor: "text-midnight-indigo", position: "after:border-t-soft-cream" },
   { bgColor: "bg-soft-blush", textColor: "text-midnight-indigo", position: "after:border-t-soft-blush" },
+] : [
+  { bgColor: "bg-[#E51D2C]", textColor: "text-white", position: "after:border-t-[#E51D2C]" },
+  { bgColor: "bg-[#589391]", textColor: "text-white", position: "after:border-t-[#589391]" },
+  { bgColor: "bg-[#2C3E50]", textColor: "text-white", position: "after:border-t-[#2C3E50]" },
+  { bgColor: "bg-white", textColor: "text-[#2C3E50]", position: "after:border-t-white" },
+  { bgColor: "bg-[#D1E5F4]/80", textColor: "text-[#2C3E50]", position: "after:border-t-[#D1E5F4]" },
 ];
 
 // Text bubble positions and tails (for variety, coming from different corners)
@@ -46,6 +53,9 @@ const bubbleVariants = [
 const FloatingTextBubbles = () => {
   const [visibleBubbles, setVisibleBubbles] = useState([]);
   const [usedPositions, setUsedPositions] = useState([]);
+  const { isEmotional } = useInterface();
+  
+  const bubbleStyles = getBubbleStyles(isEmotional);
 
   // Function to create a new bubble
   const createBubble = () => {
@@ -118,7 +128,11 @@ const FloatingTextBubbles = () => {
   }, [visibleBubbles.length, usedPositions]);
 
   return (
-    <div className="relative z-10 bg-gradient-to-b from-rose-50 via-white to-transparent py-24 overflow-visible">
+    <div className={`relative z-10 bg-gradient-to-b ${
+      isEmotional 
+        ? "from-rose-50 via-white to-transparent" 
+        : "from-[#D1E5F4] via-white to-transparent"
+    } py-24 overflow-visible`}>
       {/* Message Bubbles Container - extending beyond its boundaries */}
       <div className="absolute inset-0 h-[220px] w-full overflow-visible">
         {visibleBubbles.map(bubble => (
@@ -126,7 +140,7 @@ const FloatingTextBubbles = () => {
             id={`bubble-${bubble.id}`}
             key={bubble.id}
             className={cn(
-              "absolute px-4 py-2 rounded-xl shadow-sm font-inter font-semibold text-center",
+              `absolute px-4 py-2 ${isEmotional ? "rounded-xl" : "rounded-md"} shadow-sm font-inter font-semibold text-center`,
               bubble.style.bgColor,
               bubble.style.textColor,
               bubble.positionStyle,

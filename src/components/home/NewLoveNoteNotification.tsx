@@ -16,7 +16,7 @@ const NewLoveNoteNotification: React.FC<NewLoveNoteNotificationProps> = ({ onClo
   const [isOpen, setIsOpen] = useState(true);
   const { toast } = useToast();
   const navigate = useNavigate();
-  const { isEmotional } = useInterface();
+  const { isEmotional, colors } = useInterface();
   
   // In a real app, this would come from an API
   // For this demo, we'll create a sample love note
@@ -53,14 +53,14 @@ const NewLoveNoteNotification: React.FC<NewLoveNoteNotificationProps> = ({ onClo
         className={`fixed top-20 right-4 shadow-lg rounded-lg p-4 z-50 animate-fade-in cursor-pointer flex items-center gap-2 ${
           isEmotional 
             ? "bg-white border border-lavender-blue" 
-            : "bg-[#F4F1EC] border border-[#9BAA9E]"
+            : "bg-white border border-[#589391]"
         }`}
         onClick={() => setIsOpen(true)}
       >
         {isEmotional ? (
           <Mail className="h-5 w-5 text-mauve-rose" />
         ) : (
-          <Mail className="h-5 w-5 text-[#4B6D8C]" />
+          <Mail className="h-5 w-5 text-[#E51D2C]" />
         )}
         <span className={`text-sm ${
           isEmotional 
@@ -76,14 +76,14 @@ const NewLoveNoteNotification: React.FC<NewLoveNoteNotificationProps> = ({ onClo
         <DialogContent className={`max-w-md ${
           isEmotional 
             ? "bg-white border border-lavender-blue/20" 
-            : "bg-[#F4F1EC] border border-[#9BAA9E]/20"
+            : "bg-white border border-[#589391]/20"
         }`}>
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               {isEmotional ? (
                 <Mail className="h-5 w-5 text-mauve-rose" />
               ) : (
-                <Mail className="h-5 w-5 text-[#4B6D8C]" />
+                <Mail className="h-5 w-5 text-[#E51D2C]" />
               )}
               <span>{isEmotional ? "New Love Note" : "New Note"}</span>
             </DialogTitle>
@@ -95,12 +95,12 @@ const NewLoveNoteNotification: React.FC<NewLoveNoteNotificationProps> = ({ onClo
           <div className={`p-4 rounded-lg my-4 ${
             isEmotional 
               ? "bg-soft-blush/30" 
-              : "bg-[#F4F1EC]/80"
+              : "bg-[#D1E5F4]/50"
           }`}>
             <p className={`text-sm mb-2 ${
               isEmotional 
                 ? "text-rosewood-tint" 
-                : "text-[#4B6D8C]"
+                : "text-[#589391]"
             }`}>
               {newLoveNote.prompt}
             </p>
@@ -117,14 +117,14 @@ const NewLoveNoteNotification: React.FC<NewLoveNoteNotificationProps> = ({ onClo
             <Button 
               variant="outline" 
               onClick={handleClose}
-              className={!isEmotional ? "border-[#9BAA9E] text-[#2C3E50]" : ""}
+              className={!isEmotional ? "border-[#589391] text-[#2C3E50]" : ""}
             >
               Close
             </Button>
             <Button 
               className={isEmotional
                 ? "bg-rosewood-tint hover:bg-rosewood-tint/90 text-white"
-                : "bg-[#4B6D8C] hover:bg-[#4B6D8C]/90 text-[#F4F1EC]"
+                : "bg-[#E51D2C] hover:bg-[#E51D2C]/90 text-white"
               }
               onClick={viewAllNotes}
             >

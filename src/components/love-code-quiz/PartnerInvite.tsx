@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { toast } from "@/hooks/use-toast";
 import { Mail, UserPlus } from "lucide-react";
+import { useInterface } from '../common/InterfaceProvider';
 
 interface PartnerInviteProps {
   isOpen: boolean;
@@ -18,6 +19,7 @@ const PartnerInvite: React.FC<PartnerInviteProps> = ({
   const [partnerEmail, setPartnerEmail] = useState('');
   const [partnerName, setPartnerName] = useState('');
   const [isSending, setIsSending] = useState(false);
+  const { isEmotional } = useInterface();
   
   const handleInvite = () => {
     if (!partnerEmail) {
@@ -62,20 +64,28 @@ const PartnerInvite: React.FC<PartnerInviteProps> = ({
   
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="bg-white p-6 sm:max-w-md">
+      <DialogContent className={`p-6 sm:max-w-md ${
+        isEmotional ? "bg-white" : "bg-white"
+      }`}>
         <DialogHeader>
-          <DialogTitle className="text-2xl font-cormorant text-midnight-indigo flex items-center gap-2">
-            <UserPlus className="h-5 w-5 text-mauve-rose" />
+          <DialogTitle className={`text-2xl ${isEmotional ? "font-cormorant" : ""} ${
+            isEmotional ? "text-midnight-indigo" : "text-[#2C3E50]"
+          } flex items-center gap-2`}>
+            <UserPlus className={`h-5 w-5 ${isEmotional ? "text-mauve-rose" : "text-[#E51D2C]"}`} />
             Invite Your Partner
           </DialogTitle>
-          <DialogDescription className="text-midnight-indigo/70">
-            Share your Love Code results and invite them to discover theirs!
+          <DialogDescription className={isEmotional ? "text-midnight-indigo/70" : "text-[#2C3E50]/70"}>
+            {isEmotional 
+              ? "Share your Love Code results and invite them to discover theirs!" 
+              : "Share your results and invite them to take the quiz too."}
           </DialogDescription>
         </DialogHeader>
         
         <div className="space-y-4 py-4">
           <div className="space-y-2">
-            <label htmlFor="partnerName" className="text-sm font-medium text-midnight-indigo">
+            <label htmlFor="partnerName" className={`text-sm font-medium ${
+              isEmotional ? "text-midnight-indigo" : "text-[#2C3E50]"
+            }`}>
               Partner's Name (Optional)
             </label>
             <Input
@@ -83,13 +93,18 @@ const PartnerInvite: React.FC<PartnerInviteProps> = ({
               value={partnerName}
               onChange={(e) => setPartnerName(e.target.value)}
               placeholder="Enter their name"
-              className="border-lavender-blue/30 focus:border-mauve-rose"
+              className={isEmotional 
+                ? "border-lavender-blue/30 focus:border-mauve-rose" 
+                : "border-[#589391]/30 focus:border-[#E51D2C]"
+              }
             />
           </div>
           
           <div className="space-y-2">
-            <label htmlFor="partnerEmail" className="text-sm font-medium text-midnight-indigo">
-              Partner's Email <span className="text-mauve-rose">*</span>
+            <label htmlFor="partnerEmail" className={`text-sm font-medium ${
+              isEmotional ? "text-midnight-indigo" : "text-[#2C3E50]"
+            }`}>
+              Partner's Email <span className={isEmotional ? "text-mauve-rose" : "text-[#E51D2C]"}>*</span>
             </label>
             <Input
               id="partnerEmail"
@@ -97,7 +112,10 @@ const PartnerInvite: React.FC<PartnerInviteProps> = ({
               onChange={(e) => setPartnerEmail(e.target.value)}
               type="email"
               placeholder="example@email.com"
-              className="border-lavender-blue/30 focus:border-mauve-rose"
+              className={isEmotional 
+                ? "border-lavender-blue/30 focus:border-mauve-rose" 
+                : "border-[#589391]/30 focus:border-[#E51D2C]"
+              }
               required
             />
           </div>
@@ -107,14 +125,20 @@ const PartnerInvite: React.FC<PartnerInviteProps> = ({
           <Button 
             variant="outline" 
             onClick={onClose}
-            className="border-lavender-blue/30 text-midnight-indigo"
+            className={isEmotional 
+              ? "border-lavender-blue/30 text-midnight-indigo"
+              : "border-[#589391]/30 text-[#2C3E50]"
+            }
           >
             Cancel
           </Button>
           <Button 
             onClick={handleInvite}
             disabled={isSending}
-            className="bg-mauve-rose hover:bg-mauve-rose/90 text-white"
+            className={isEmotional
+              ? "bg-mauve-rose hover:bg-mauve-rose/90 text-white"
+              : "bg-[#E51D2C] hover:bg-[#E51D2C]/90 text-white"
+            }
           >
             <Mail className="mr-2 h-4 w-4" />
             {isSending ? 'Sending...' : 'Send Invitation'}
