@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Share, Facebook, Twitter, Mail, Instagram } from "lucide-react";
+import { Share, Facebook, Twitter, Mail, Instagram, MessageSquare } from "lucide-react";
 import { toast } from "@/components/ui/sonner";
 
 const HomeLanding = () => {
@@ -29,7 +29,7 @@ const HomeLanding = () => {
   // Get the daily quote
   const dailyQuote = getDailyQuote();
   
-  const handleShareClick = (platform: 'facebook' | 'twitter' | 'email' | 'instagram') => {
+  const handleShareClick = (platform: 'facebook' | 'twitter' | 'email' | 'instagram' | 'text') => {
     const text = `"${dailyQuote.headline}" - ${window.location.href}`;
     
     switch (platform) {
@@ -55,11 +55,50 @@ const HomeLanding = () => {
             toast.error("Failed to copy link");
           });
         break;
+      case 'text':
+        // SMS sharing via Web Share API if available, fallback to SMS scheme
+        if (navigator.share) {
+          navigator.share({
+            title: 'Check out this relationship app',
+            text: dailyQuote.headline,
+            url: window.location.href
+          })
+            .then(() => {
+              toast.success("Shared successfully");
+            })
+            .catch((error) => {
+              if (error.name !== 'AbortError') {
+                // Only show error if not user-cancelled
+                useTextMessageFallback(text);
+              }
+            });
+        } else {
+          useTextMessageFallback(text);
+        }
+        break;
     }
     
     toast("Thanks for sharing!", {
       description: "You're helping others build healthier relationships too."
     });
+  };
+  
+  const useTextMessageFallback = (text: string) => {
+    // Try to use the SMS scheme (works on mobile devices)
+    const smsUri = `sms:?body=${encodeURIComponent(text)}`;
+    
+    // On mobile, this will open the messaging app
+    // On desktop, this may not work, so we'll provide a backup
+    window.location.href = smsUri;
+    
+    // For desktop users, also copy to clipboard as fallback
+    navigator.clipboard.writeText(text)
+      .then(() => {
+        toast("Text Message", {
+          description: "Text copied to clipboard for sharing via your messaging app."
+        });
+      })
+      .catch(() => {});
   };
   
   const handleSubmitQuote = () => {
@@ -102,6 +141,9 @@ const HomeLanding = () => {
           </DropdownMenuItem>
           <DropdownMenuItem className="flex items-center cursor-pointer" onClick={() => handleShareClick('email')}>
             <Mail className="mr-2 h-4 w-4" /> Share via Email
+          </DropdownMenuItem>
+          <DropdownMenuItem className="flex items-center cursor-pointer" onClick={() => handleShareClick('text')}>
+            <MessageSquare className="mr-2 h-4 w-4" /> Share via Text
           </DropdownMenuItem>
           <DropdownMenuItem className="flex items-center cursor-pointer" onClick={() => handleShareClick('instagram')}>
             <Instagram className="mr-2 h-4 w-4" /> Share on Instagram
