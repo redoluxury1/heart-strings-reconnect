@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Share, Facebook, Twitter, Mail } from "lucide-react";
+import { Share, Facebook, Twitter, Mail, Instagram } from "lucide-react";
 import { toast } from "@/components/ui/sonner";
 
 const HomeLanding = () => {
@@ -29,7 +29,7 @@ const HomeLanding = () => {
   // Get the daily quote
   const dailyQuote = getDailyQuote();
   
-  const handleShareClick = (platform: 'facebook' | 'twitter' | 'email') => {
+  const handleShareClick = (platform: 'facebook' | 'twitter' | 'email' | 'instagram') => {
     const text = `"${dailyQuote.headline}" - ${window.location.href}`;
     
     switch (platform) {
@@ -41,6 +41,19 @@ const HomeLanding = () => {
         break;
       case 'email':
         window.open(`mailto:?subject=Check out this relationship app&body=${encodeURIComponent(text)}`, '_blank');
+        break;
+      case 'instagram':
+        // Instagram doesn't have a direct web share API, but we'll show a toast with instructions
+        toast("Instagram Sharing", {
+          description: "Copy the link and share it on your Instagram story or post."
+        });
+        navigator.clipboard.writeText(window.location.href)
+          .then(() => {
+            toast.success("Link copied to clipboard");
+          })
+          .catch(() => {
+            toast.error("Failed to copy link");
+          });
         break;
     }
     
@@ -89,6 +102,9 @@ const HomeLanding = () => {
           </DropdownMenuItem>
           <DropdownMenuItem className="flex items-center cursor-pointer" onClick={() => handleShareClick('email')}>
             <Mail className="mr-2 h-4 w-4" /> Share via Email
+          </DropdownMenuItem>
+          <DropdownMenuItem className="flex items-center cursor-pointer" onClick={() => handleShareClick('instagram')}>
+            <Instagram className="mr-2 h-4 w-4" /> Share on Instagram
           </DropdownMenuItem>
           <DropdownMenuItem className="cursor-pointer" onClick={() => setDialogOpen(true)}>
             Submit your own quote

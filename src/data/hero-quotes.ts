@@ -99,7 +99,9 @@ export const getDailyQuote = (): HeroQuote => {
   
   // Use the day of year to deterministically select a quote
   // This ensures the same quote appears on the same day each year (unless it's a holiday)
-  const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+  const startOfYear = new Date(today.getFullYear(), 0, 0);
+  const diff = Number(today) - Number(startOfYear);
+  const dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24));
   const quoteIndex = dayOfYear % generalQuotes.length;
   
   return generalQuotes[quoteIndex];
