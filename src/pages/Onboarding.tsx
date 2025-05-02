@@ -38,7 +38,7 @@ const Onboarding = () => {
 
   return (
     <div className={`min-h-screen flex items-center justify-center ${
-      interfaceStyle === 'emotionally-reflective' ? 'bg-soft-blush' : 'bg-slate-200'
+      interfaceStyle === 'emotionally-reflective' ? 'bg-soft-blush' : 'bg-[#90A3B0]'
     }`}>
       <ContentContainer className="max-w-xl">
         <div className={`rounded-xl p-8 ${
