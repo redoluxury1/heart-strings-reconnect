@@ -91,7 +91,7 @@ const LoveNotesArchive: React.FC<LoveNotesArchiveProps> = ({ newNote }) => {
 
   return (
     <div>
-      <p className="text-center mb-10 max-w-lg mx-auto text-midnight-indigo">
+      <p className="text-center mb-10 mt-6 max-w-lg mx-auto text-midnight-indigo">
         This is your private collection of appreciation notes from your partner. 
         Take time to revisit these moments when you need a reminder of your connection.
       </p>
