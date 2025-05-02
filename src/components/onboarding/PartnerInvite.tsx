@@ -76,13 +76,13 @@ const PartnerInvite: React.FC<PartnerInviteProps> = ({
       <h1 className={`font-cormorant text-3xl md:text-4xl font-medium text-center mb-8 ${
         isEmotional ? 'text-midnight-indigo' : 'text-white'
       }`}>
-        Invite your partner to Bridge
+        Invite your partner to join you on Bridge For Couples
       </h1>
       
       <p className={`text-center mb-8 ${
         isEmotional ? 'text-midnight-indigo/80' : 'text-gray-300'
       }`}>
-        Send your partner a link to download Bridge and sync with your account
+        We will send your partner a link to download Bridge For Couples and sync with your account
       </p>
       
       <div className="space-y-6 max-w-md mx-auto">
