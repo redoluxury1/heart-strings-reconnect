@@ -3,7 +3,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Heart, BrainCog } from 'lucide-react';
-import { InterfaceStyle } from '../../pages/Onboarding';
+import { InterfaceStyle } from '../../contexts/InterfaceContext';
 
 interface OnboardingStyleSelectorProps {
   interfaceStyle: InterfaceStyle;

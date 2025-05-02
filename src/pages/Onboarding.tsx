@@ -4,19 +4,20 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import ContentContainer from '../components/common/ContentContainer';
 import OnboardingWelcome from '../components/onboarding/OnboardingWelcome';
 import OnboardingPartnerStatus from '../components/onboarding/OnboardingPartnerStatus';
+import OnboardingStyleSelector from '../components/onboarding/OnboardingStyleSelector';
 import PartnerInvite from '../components/onboarding/PartnerInvite';
 import { useToast } from '../hooks/use-toast';
 import { useInterface } from '../hooks/useInterfaceContext';
-
-export type PartnerStatus = 'solo' | 'couple';
+import { PartnerStatus, InterfaceStyle } from '../contexts/InterfaceContext';
 
 const Onboarding = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { toast } = useToast();
-  const { setPartnerStatus: updateGlobalPartnerStatus } = useInterface();
+  const { setPartnerStatus: updateGlobalPartnerStatus, setInterfaceStyle: updateGlobalInterfaceStyle } = useInterface();
   const [step, setStep] = useState<number>(1);
   const [partnerStatus, setPartnerStatus] = useState<PartnerStatus>('solo');
+  const [interfaceStyle, setInterfaceStyle] = useState<InterfaceStyle>('emotionally-reflective');
   const [isPartnerInvited, setIsPartnerInvited] = useState(false);
   const [isPartnerFlow, setIsPartnerFlow] = useState(false);
   
@@ -32,12 +33,14 @@ const Onboarding = () => {
   }, [location.search]);
   
   const handleNextStep = () => {
-    if (step < 2) {
+    if (step < 3) {  // Updated to include style selection step
       setStep(step + 1);
     } else {
       // Save preferences to localStorage
       localStorage.setItem('bridge-partner-status', partnerStatus);
+      localStorage.setItem('bridge-interface-style', interfaceStyle);
       updateGlobalPartnerStatus(partnerStatus);
+      updateGlobalInterfaceStyle(interfaceStyle);
       
       // Notify user of success
       toast({
@@ -51,7 +54,7 @@ const Onboarding = () => {
   };
   
   const handleAddPartner = () => {
-    setStep(3); // Go to partner invite step
+    setStep(4); // Go to partner invite step
   };
   
   const handleBackFromPartnerInvite = () => {
@@ -88,6 +91,14 @@ const Onboarding = () => {
           )}
           
           {step === 3 && (
+            <OnboardingStyleSelector
+              interfaceStyle={interfaceStyle}
+              setInterfaceStyle={setInterfaceStyle}
+              onContinue={handleNextStep}
+            />
+          )}
+          
+          {step === 4 && (
             <PartnerInvite
               onBack={handleBackFromPartnerInvite}
               onComplete={handlePartnerInviteComplete}
