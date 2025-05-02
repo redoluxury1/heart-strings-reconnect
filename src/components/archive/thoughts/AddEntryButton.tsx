@@ -16,7 +16,7 @@ const AddEntryButton = ({ onClick }: AddEntryButtonProps) => {
       <Button 
         className={isEmotional
           ? "bg-lavender-blue hover:bg-lavender-blue/90 text-white"
-          : "bg-[#589391] hover:bg-[#589391]/90 text-white"
+          : "bg-[#E51D2C] hover:bg-[#E51D2C]/90 text-white"
         }
         onClick={onClick}
       >

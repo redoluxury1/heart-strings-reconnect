@@ -1,6 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { cn } from "@/lib/utils";
+import { useInterface } from '../common/InterfaceProvider';
 
 // Messages to cycle through
 const messages = [
@@ -63,6 +64,7 @@ const bubbleVariants = [
 ];
 
 const Hero = () => {
+  const { isEmotional } = useInterface();
   const [visibleBubbles, setVisibleBubbles] = useState([]);
   const [usedPositions, setUsedPositions] = useState([]);
 
@@ -137,7 +139,7 @@ const Hero = () => {
   }, [visibleBubbles.length, usedPositions]);
 
   return (
-    <div className="relative z-10 bg-gradient-to-b from-rose-50 via-white to-transparent py-20 overflow-visible">
+    <div className="relative z-10 bg-gradient-to-b from-rose-50 via-white to-transparent py-20 pb-28 overflow-visible">
       {/* Message Bubbles Container - extending beyond its boundaries */}
       <div className="absolute inset-0 h-[220px] w-full overflow-visible">
         {visibleBubbles.map(bubble => (

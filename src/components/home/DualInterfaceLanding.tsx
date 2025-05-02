@@ -6,7 +6,7 @@ const DualInterfaceLanding = () => {
   const { isEmotional } = useInterface();
   
   return (
-    <div className="text-center py-12 md:py-16">
+    <div className="text-center pt-20 pb-12 md:py-20">
       <h1 className={`font-cormorant text-4xl md:text-5xl lg:text-6xl font-medium mb-5 ${
         isEmotional ? 'text-midnight-indigo' : 'text-slate-800'
       }`}>
