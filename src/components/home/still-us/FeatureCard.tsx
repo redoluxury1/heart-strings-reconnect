@@ -42,6 +42,18 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
 
   const buttonStyles = getButtonStyles();
 
+  // Render the icon with proper class name based on interface type
+  const renderIcon = () => {
+    // Only clone the element if it's a valid React element
+    if (React.isValidElement(card.icon)) {
+      return React.cloneElement(card.icon, { 
+        className: isEmotional ? "text-[#6A4A74]" : card.icon.props.className
+      });
+    }
+    // Fallback in case it's not a valid element
+    return card.icon;
+  };
+
   return (
     <div className="transition-all duration-300 hover:scale-[1.02] focus-within:scale-[1.02]">
       <div className={`h-full rounded-xl shadow-md p-6 md:p-7 bg-gradient-to-b ${card.gradientClass} ${
@@ -54,9 +66,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
               <div className={`p-3 rounded-full ${
                 isEmotional ? "bg-[#6A4A74]/20" : card.iconBgClass
               }`}>
-                {React.cloneElement(card.icon, { 
-                  className: isEmotional ? "text-[#6A4A74]" : card.icon.props.className
-                })}
+                {renderIcon()}
               </div>
               <h3 className={`ml-3 text-xl font-cormorant font-semibold ${textColor}`}>
                 {card.title}
@@ -102,9 +112,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
               <div className={`p-3 rounded-full ${
                 isEmotional ? "bg-[#6A4A74]/20" : card.iconBgClass
               } mr-2`}>
-                {React.cloneElement(card.icon, { 
-                  className: isEmotional ? "text-[#6A4A74]" : card.icon.props.className
-                })}
+                {renderIcon()}
               </div>
               <h3 className={`text-xl font-cormorant font-semibold ${textColor}`}>
                 {card.title}
