@@ -2,7 +2,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Heart, Target } from 'lucide-react';
+import { Heart, BrainCog } from 'lucide-react';
 import { InterfaceStyle } from '../../pages/Onboarding';
 
 interface OnboardingStyleSelectorProps {
@@ -35,16 +35,16 @@ const OnboardingStyleSelector: React.FC<OnboardingStyleSelectorProps> = ({
         onValueChange={(value) => setInterfaceStyle(value as InterfaceStyle)}
         className="gap-6"
       >
-        <label className={`flex cursor-pointer rounded-xl overflow-hidden ${
+        <label className={`flex cursor-pointer overflow-hidden ${
           isEmotional 
-            ? 'border-2 border-mauve-rose bg-soft-cream/30' 
-            : 'border-2 border-emerald-700 bg-slate-800'
+            ? 'rounded-xl border-2 border-mauve-rose bg-soft-cream/30' 
+            : 'rounded-md border-2 border-[#4B6D8C] bg-slate-800'
         } ${interfaceStyle === 'emotionally-reflective' ? 'ring-2 ring-mauve-rose' : ''}`}>
           <div className="p-6">
             <RadioGroupItem 
               value="emotionally-reflective" 
               id="emotionally-reflective"
-              className={isEmotional ? 'text-mauve-rose border-mauve-rose' : 'text-emerald-500 border-emerald-500'}
+              className={isEmotional ? 'text-mauve-rose border-mauve-rose' : 'text-[#4B6D8C] border-[#4B6D8C]'}
             />
           </div>
           <div className="flex-1 p-6">
@@ -60,21 +60,21 @@ const OnboardingStyleSelector: React.FC<OnboardingStyleSelectorProps> = ({
           </div>
         </label>
         
-        <label className={`flex cursor-pointer rounded-xl overflow-hidden ${
+        <label className={`flex cursor-pointer overflow-hidden ${
           isEmotional 
-            ? 'border-2 border-midnight-indigo bg-soft-cream/30' 
-            : 'border-2 border-emerald-600 bg-slate-800'
-        } ${interfaceStyle === 'solution-focused' ? 'ring-2 ring-emerald-500' : ''}`}>
+            ? 'rounded-xl border-2 border-midnight-indigo bg-soft-cream/30' 
+            : 'rounded-md border-2 border-[#4B6D8C] bg-slate-800'
+        } ${interfaceStyle === 'solution-focused' ? 'ring-2 ring-[#4B6D8C]' : ''}`}>
           <div className="p-6">
             <RadioGroupItem 
               value="solution-focused" 
               id="solution-focused" 
-              className={isEmotional ? 'text-midnight-indigo border-midnight-indigo' : 'text-emerald-500 border-emerald-500'}
+              className={isEmotional ? 'text-midnight-indigo border-midnight-indigo' : 'text-[#4B6D8C] border-[#4B6D8C]'}
             />
           </div>
           <div className="flex-1 p-6">
             <div className="flex items-center gap-4 mb-3">
-              <Target className={`${isEmotional ? 'text-midnight-indigo' : 'text-white'}`} />
+              <BrainCog className={`${isEmotional ? 'text-midnight-indigo' : 'text-white'}`} />
               <h3 className={`font-medium text-lg ${isEmotional ? 'text-midnight-indigo' : 'text-white'}`}>
                 Clear + Solution-Focused
               </h3>
@@ -89,10 +89,10 @@ const OnboardingStyleSelector: React.FC<OnboardingStyleSelectorProps> = ({
       <div className="flex justify-center mt-10">
         <Button
           onClick={onContinue}
-          className={`px-8 py-2 rounded-full ${
+          className={`px-8 py-2 ${
             isEmotional 
-              ? 'bg-mauve-rose hover:bg-mauve-rose/90 text-white' 
-              : 'bg-emerald-700 hover:bg-emerald-600 text-white'
+              ? 'rounded-full bg-mauve-rose hover:bg-mauve-rose/90 text-white' 
+              : 'rounded-md bg-[#4B6D8C] hover:bg-[#4B6D8C]/90 text-[#F4F1EC]'
           }`}
           size="lg"
         >

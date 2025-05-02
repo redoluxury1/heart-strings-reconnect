@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { HeartHandshake } from 'lucide-react';
+import { Heart, BrainCog } from 'lucide-react';
 import { InterfaceStyle } from '../../pages/Onboarding';
 
 interface OnboardingWelcomeProps {
@@ -18,7 +18,11 @@ const OnboardingWelcome: React.FC<OnboardingWelcomeProps> = ({
   return (
     <div className="text-center">
       <div className="flex justify-center mb-6">
-        <HeartHandshake size={60} className={isEmotional ? "text-mauve-rose" : "text-emerald-600"} />
+        {isEmotional ? (
+          <Heart size={60} className="text-mauve-rose" />
+        ) : (
+          <BrainCog size={60} className="text-[#4B6D8C]" />
+        )}
       </div>
       
       <h1 className={`font-cormorant text-3xl md:text-4xl font-medium mb-6 ${
@@ -29,10 +33,10 @@ const OnboardingWelcome: React.FC<OnboardingWelcomeProps> = ({
       
       <Button
         onClick={onContinue}
-        className={`mt-8 px-8 py-3 rounded-full text-lg ${
+        className={`mt-8 px-8 py-3 text-lg ${
           isEmotional 
-            ? 'bg-mauve-rose hover:bg-mauve-rose/90 text-white' 
-            : 'bg-emerald-700 hover:bg-emerald-600 text-white'
+            ? 'rounded-full bg-mauve-rose hover:bg-mauve-rose/90 text-white' 
+            : 'rounded-md bg-[#4B6D8C] hover:bg-[#4B6D8C]/90 text-[#F4F1EC]'
         }`}
         size="lg"
       >

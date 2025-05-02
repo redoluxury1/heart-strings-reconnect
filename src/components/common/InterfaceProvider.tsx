@@ -2,12 +2,28 @@
 import React, { createContext, useState, useEffect, useContext, ReactNode } from 'react';
 import { InterfaceStyle, PartnerStatus } from '../../pages/Onboarding';
 
+// Define solution-focused color palette
+export const SolutionFocusedColors = {
+  background: '#F4F1EC',  // Soft Beige
+  text: '#2C3E50',        // Deep Charcoal
+  primary: '#4B6D8C',     // Slate Blue
+  accent: '#9BAA9E',      // Sage Gray
+  highlight: '#A03D3E',   // Muted Crimson (optional)
+};
+
 type InterfaceContextType = {
   interfaceStyle: InterfaceStyle;
   setInterfaceStyle: (style: InterfaceStyle) => void;
   partnerStatus: PartnerStatus;
   setPartnerStatus: (status: PartnerStatus) => void;
   isEmotional: boolean;
+  colors: {
+    background: string;
+    text: string;
+    primary: string;
+    accent: string;
+    highlight: string;
+  };
 };
 
 const InterfaceContext = createContext<InterfaceContextType | undefined>(undefined);
@@ -37,13 +53,25 @@ export const InterfaceProvider: React.FC<InterfaceProviderProps> = ({ children }
   
   const isEmotional = interfaceStyle === 'emotionally-reflective';
   
+  // Define colors based on interface style
+  const colors = isEmotional 
+    ? {
+        background: '#F1EAE8',  // soft-blush
+        text: '#4A448C',        // midnight-indigo
+        primary: '#C7747F',     // mauve-rose
+        accent: '#8A8AC9',      // lavender-blue
+        highlight: '#E69999',   // rosewood-tint
+      }
+    : SolutionFocusedColors;
+  
   return (
     <InterfaceContext.Provider value={{
       interfaceStyle,
       setInterfaceStyle,
       partnerStatus,
       setPartnerStatus,
-      isEmotional
+      isEmotional,
+      colors
     }}>
       {children}
     </InterfaceContext.Provider>

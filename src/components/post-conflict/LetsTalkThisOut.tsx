@@ -1,12 +1,12 @@
 
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { MessageCircleHeart, Target } from 'lucide-react';
+import { BrainCog, Scale } from 'lucide-react';
 import { useInterface } from '../common/InterfaceProvider';
 import LetsTalkSession from './LetsTalkSession';
 
 const LetsTalkThisOut = () => {
-  const { isEmotional } = useInterface();
+  const { isEmotional, colors } = useInterface();
   const [isSessionStarted, setIsSessionStarted] = useState(false);
   
   if (isSessionStarted) {
@@ -16,18 +16,18 @@ const LetsTalkThisOut = () => {
   return (
     <div className={`${
       isEmotional
-        ? "bg-gradient-to-br from-soft-cream/40 to-soft-cream/10"
-        : "bg-gradient-to-br from-slate-200 to-slate-100"
-    } rounded-xl shadow-md p-6 md:p-8 mb-12`}>
+        ? "bg-gradient-to-br from-soft-cream/40 to-soft-cream/10 rounded-xl"
+        : "bg-gradient-to-br from-[#F4F1EC] to-[#F4F1EC]/80 rounded-md"
+    } shadow-md p-6 md:p-8 mb-12`}>
       <div className="flex flex-col items-center">
         {isEmotional ? (
-          <MessageCircleHeart className="h-12 w-12 text-mauve-rose mb-4" />
+          <BrainCog className="h-12 w-12 text-mauve-rose mb-4" />
         ) : (
-          <Target className="h-12 w-12 text-emerald-600 mb-4" />
+          <Scale className="h-12 w-12 text-[#4B6D8C] mb-4" />
         )}
         
-        <h2 className={`text-2xl md:text-3xl font-cormorant font-medium mb-3 text-center ${
-          isEmotional ? "text-midnight-indigo" : "text-slate-800"
+        <h2 className={`text-2xl md:text-3xl ${isEmotional ? "font-cormorant" : ""} font-medium mb-3 text-center ${
+          isEmotional ? "text-midnight-indigo" : "text-[#2C3E50]"
         }`}>
           {isEmotional ? "Let's Talk This Out" : "Get to the Bottom of It"}
         </h2>
@@ -44,7 +44,7 @@ const LetsTalkThisOut = () => {
           className={
             isEmotional
               ? "bg-midnight-indigo hover:bg-midnight-indigo/90 text-white px-8 py-2"
-              : "bg-emerald-700 hover:bg-emerald-600 text-white px-8 py-2"
+              : "bg-[#4B6D8C] hover:bg-[#4B6D8C]/90 text-[#F4F1EC] px-8 py-2"
           }
         >
           {isEmotional ? "Let's get to the bottom of it" : "Solve it now"}
