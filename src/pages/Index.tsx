@@ -13,7 +13,7 @@ import NewLoveNoteNotification from '../components/home/NewLoveNoteNotification'
 import DualInterfaceLanding from '../components/home/DualInterfaceLanding';
 
 const Index = () => {
-  const { isEmotional, colors } = useInterface();
+  const { isEmotional } = useInterface();
   const [hasNewLoveNote, setHasNewLoveNote] = useState(false);
   
   // Simulate checking for new love notes when the component mounts

@@ -2,18 +2,26 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import ContentContainer from '../common/ContentContainer';
+import { useInterface } from '../common/InterfaceProvider';
 
 interface FooterProps {
   showCTA?: boolean;
 }
 
 const Footer = ({ showCTA = false }: FooterProps) => {
+  const { isEmotional } = useInterface();
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-midnight-indigo pt-9 pb-12 md:pb-16 relative z-10">
+    <footer className={`${
+      isEmotional 
+        ? "bg-midnight-indigo" 
+        : "bg-gradient-to-b from-[#e8edf3] via-[#6a8cb3]/70 to-[#543544]"
+    } pt-9 pb-12 md:pb-16 relative z-10`}>
       {/* Using a solid background color with no transparency */}
-      <div className="absolute inset-0 bg-midnight-indigo z-0"></div>
+      <div className={`absolute inset-0 ${
+        isEmotional ? "bg-midnight-indigo" : "bg-transparent"
+      } z-0`}></div>
       <ContentContainer>
         <div className="flex flex-col items-center relative z-20">
           <div className="mb-6">

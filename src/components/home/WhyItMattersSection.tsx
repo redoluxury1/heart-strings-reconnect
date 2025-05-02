@@ -1,151 +1,121 @@
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { Button } from "@/components/ui/button";
+import { Link } from 'react-router-dom';
 import ContentContainer from '../common/ContentContainer';
-import { 
-  Carousel, 
-  CarouselContent, 
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious 
-} from '@/components/ui/carousel';
-import { useIsMobile } from '@/hooks/use-mobile';
-import { cn } from '@/lib/utils';
+import { useInterface } from '../common/InterfaceProvider';
 
-interface StatSlideProps {
-  statistic: string;
-  explanation: string;
-  punchline: string;
-}
-
-const StatSlide: React.FC<StatSlideProps> = ({ statistic, explanation, punchline }) => {
-  return (
-    <div className="flex flex-col items-center justify-center text-center min-h-[280px] p-6">
-      <div>
-        {/* Removed the icon here */}
-        <h3 
-          className="font-inter font-bold text-7xl md:text-8xl lg:text-9xl text-mauve-rose mb-0 tracking-tight leading-none"
-          aria-label={`${statistic} ${explanation}`}
-        >
-          {statistic}
-        </h3>
-        <p className="text-base md:text-lg lg:text-xl mb-2 text-midnight-indigo font-medium max-w-lg mx-auto leading-tight">
-          {explanation}
-        </p>
-        <p className="italic text-sm md:text-base tracking-wide text-midnight-indigo/70 font-light">
-          {punchline}
-        </p>
-      </div>
-    </div>
-  );
-};
-
-const WhyItMattersSection: React.FC = () => {
-  const isMobile = useIsMobile();
-  const [autoPlay, setAutoPlay] = useState<boolean>(true);
-  const [currentSlide, setCurrentSlide] = useState<number>(0);
+const WhyItMattersSection = () => {
+  const { isEmotional } = useInterface();
   
-  const statistics = [
-    {
-      statistic: "72%",
-      explanation: "of couples say communication is the biggest reason they fight.",
-      punchline: "It's not just what you say — it's how you say it.",
-    },
-    {
-      statistic: "80%",
-      explanation: "of Millennials say emotional intelligence is a top priority in relationships.",
-      punchline: "We're not just falling in love — we're learning how to stay in it.",
-    },
-    {
-      statistic: "65%",
-      explanation: "of couples avoid hard conversations out of fear it will make things worse.",
-      punchline: "But silence isn't safety — it's distance.",
-    },
-    {
-      statistic: "1 in 2",
-      explanation: "couples say they don't feel truly heard by their partner.",
-      punchline: "Bridge For Couples helps turn misunderstandings into moments of connection.",
-    },
-    {
-      statistic: "83%",
-      explanation: "of people believe better conflict tools would improve their relationship.",
-      punchline: "No one teaches us how to fight fair — until now.",
-    },
-    {
-      statistic: "71%",
-      explanation: "of couples say they want to reconnect but don't know how.",
-      punchline: "Bridge For Couples makes that first step easier.",
-    }
-  ];
-  
-  useEffect(() => {
-    let timer: ReturnType<typeof setTimeout>;
-    
-    if (autoPlay) {
-      timer = setTimeout(() => {
-        setCurrentSlide((prev) => (prev + 1) % statistics.length);
-      }, 5500); // Rotate every 5.5 seconds
-    }
-    
-    return () => clearTimeout(timer);
-  }, [currentSlide, autoPlay, statistics.length]);
-
   return (
-    <section className="py-16 bg-soft-blush">
+    <section className={`py-16 ${
+      isEmotional
+        ? "bg-[#fcfcfc]"
+        : "bg-gradient-to-b from-[#e8edf3] to-[#6a8cb3]/70"
+    }`}>
       <ContentContainer>
-        <div className="text-center mb-0">
-          <h2 className="font-heading-now-medium text-3xl md:text-4xl font-medium text-midnight-indigo mb-1">
-            Why It Matters
+        <div className="text-center mb-12">
+          <h2 className={`font-cormorant text-3xl md:text-4xl lg:text-5xl font-medium mb-4 ${
+            isEmotional ? "text-midnight-indigo" : "text-[#2C3E50]"
+          }`}>
+            Why Communication Matters
           </h2>
-          <p className="text-base text-midnight-indigo/90 max-w-3xl mx-auto font-inter mb-0">
-            Real stats. Real struggles. Let's rewrite the story — with better tools, calmer conversations, and deeper connection
+          <p className={`text-lg max-w-2xl mx-auto ${
+            isEmotional ? "text-midnight-indigo/80" : "text-[#2C3E50]/80"
+          }`}>
+            We've built tools to help you navigate emotional moments because the way we communicate
+            shapes the quality of our connections.
           </p>
         </div>
-
-        <div className="mt-0 relative">
-          {/* Reduced the mt-1 to mt-0 to decrease the padding */}
-          <Carousel
-            opts={{
-              align: "center",
-              loop: true,
-            }}
-            className="w-full"
-            setApi={(api) => {
-              if (api) {
-                api.on('select', () => {
-                  // Pause autoplay when manually navigating
-                  setAutoPlay(false);
-                  // Resume autoplay after 10 seconds of inactivity
-                  setTimeout(() => setAutoPlay(true), 10000);
-                });
-              }
-            }}
-          >
-            <CarouselContent>
-              {statistics.map((stat, index) => (
-                <CarouselItem key={index} className="basis-full">
-                  <StatSlide 
-                    statistic={stat.statistic}
-                    explanation={stat.explanation}
-                    punchline={stat.punchline}
-                  />
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <div className="flex justify-center -mt-6">
-              <div className="flex items-center gap-3">
-                <CarouselPrevious className={cn(
-                  "static relative h-8 w-8 md:h-10 md:w-10 bg-transparent hover:bg-transparent border-none shadow-none"
-                )}>
-                  <span className="text-2xl font-bold text-midnight-indigo">&lt;</span>
-                </CarouselPrevious>
-                <CarouselNext className={cn(
-                  "static relative h-8 w-8 md:h-10 md:w-10 bg-transparent hover:bg-transparent border-none shadow-none"
-                )}>
-                  <span className="text-2xl font-bold text-midnight-indigo">&gt;</span>
-                </CarouselNext>
-              </div>
-            </div>
-          </Carousel>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-10">
+          <div className={`p-6 rounded-xl ${
+            isEmotional
+              ? "bg-white shadow-sm"
+              : "bg-white/80 backdrop-blur-sm shadow-sm"
+          }`}>
+            <h3 className={`font-cormorant text-xl font-medium mb-3 ${
+              isEmotional ? "text-midnight-indigo" : "text-[#2C3E50]"
+            }`}>
+              During Conflict
+            </h3>
+            <p className={`mb-4 ${
+              isEmotional ? "text-midnight-indigo/80" : "text-[#2C3E50]/80"
+            }`}>
+              Access tools right in the heat of an argument to help you pause, rephrase, and reconnect.
+            </p>
+            <Link to="/during-conflict">
+              <Button 
+                variant="outline" 
+                className={`w-full border ${
+                  isEmotional 
+                    ? "border-midnight-indigo text-midnight-indigo hover:bg-midnight-indigo/5"
+                    : "border-[#4f6572] text-[#4f6572] hover:bg-[#4f6572]/5"
+                }`}
+              >
+                Explore Tools
+              </Button>
+            </Link>
+          </div>
+          
+          <div className={`p-6 rounded-xl ${
+            isEmotional
+              ? "bg-white shadow-sm"
+              : "bg-white/80 backdrop-blur-sm shadow-sm"
+          }`}>
+            <h3 className={`font-cormorant text-xl font-medium mb-3 ${
+              isEmotional ? "text-midnight-indigo" : "text-[#2C3E50]"
+            }`}>
+              After Disagreements
+            </h3>
+            <p className={`mb-4 ${
+              isEmotional ? "text-midnight-indigo/80" : "text-[#2C3E50]/80"
+            }`}>
+              Learn how to repair and reconnect in a meaningful way when tensions have eased.
+            </p>
+            <Link to="/post-conflict">
+              <Button 
+                variant="outline" 
+                className={`w-full border ${
+                  isEmotional 
+                    ? "border-midnight-indigo text-midnight-indigo hover:bg-midnight-indigo/5"
+                    : "border-[#543544] text-[#543544] hover:bg-[#543544]/5"
+                }`}
+              >
+                Repair & Connect
+              </Button>
+            </Link>
+          </div>
+          
+          <div className={`p-6 rounded-xl ${
+            isEmotional
+              ? "bg-white shadow-sm"
+              : "bg-white/80 backdrop-blur-sm shadow-sm"
+          }`}>
+            <h3 className={`font-cormorant text-xl font-medium mb-3 ${
+              isEmotional ? "text-midnight-indigo" : "text-[#2C3E50]"
+            }`}>
+              Daily Connection
+            </h3>
+            <p className={`mb-4 ${
+              isEmotional ? "text-midnight-indigo/80" : "text-[#2C3E50]/80"
+            }`}>
+              Small, consistent moments of connection help create a foundation of trust and intimacy.
+            </p>
+            <a href="#daily-love-note">
+              <Button 
+                variant="outline" 
+                className={`w-full border ${
+                  isEmotional 
+                    ? "border-midnight-indigo text-midnight-indigo hover:bg-midnight-indigo/5"
+                    : "border-[#4f6572] text-[#4f6572] hover:bg-[#4f6572]/5"
+                }`}
+              >
+                Send a Note
+              </Button>
+            </a>
+          </div>
         </div>
       </ContentContainer>
     </section>
