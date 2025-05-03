@@ -112,6 +112,16 @@ const femaleBehaviorsData: Behavior[] = [
       title: "Yearning for Understanding",
       description: "She feels misunderstood and wants you to make an effort to see the world through her eyes."
     }
+  },
+  {
+    id: 'female-11',
+    gender: 'female',
+    phrase: "Ok... *eye roll*",
+    response: "I sense you're upset but holding back. Can we talk about what's really bothering you?",
+    explanation: {
+      title: "Passive Disappointment",
+      description: "She's frustrated but avoiding direct confrontation. The eye roll signals unresolved feelings and disagreement."
+    }
   }
 ];
 
