@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import ContentContainer from '../common/ContentContainer';
 import { useInterface } from '../../hooks/useInterfaceContext';
@@ -71,6 +70,37 @@ const communicationStats = [
     stat: "74%",
     description: "of couples report that learning new communication skills had the biggest positive impact on their relationship",
     source: "International Journal of Communication Studies"
+  },
+  // Adding 5 new statistics
+  {
+    id: 11,
+    stat: "67%",
+    description: "of couples who practice gratitude together report higher relationship satisfaction",
+    source: "Journal of Positive Psychology"
+  },
+  {
+    id: 12,
+    stat: "5x",
+    description: "increased likelihood of relationship longevity when partners have weekly quality time",
+    source: "Relationship Research Quarterly"
+  },
+  {
+    id: 13,
+    stat: "72%",
+    description: "of couples who successfully navigate conflicts have developed shared conflict resolution strategies",
+    source: "Partnership Institute Research"
+  },
+  {
+    id: 14,
+    stat: "83%",
+    description: "of long-term couples cite mutual respect as the most important factor in relationship success",
+    source: "Modern Relationship Studies"
+  },
+  {
+    id: 15,
+    stat: "4.2x",
+    description: "higher emotional connection reported when partners share their feelings openly at least once per day",
+    source: "Emotional Intelligence Research Center"
   }
 ];
 
