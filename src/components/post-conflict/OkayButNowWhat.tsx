@@ -3,30 +3,22 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useInterface } from '../../hooks/useInterfaceContext';
 import { useSession } from './context/SessionContext';
-import { useToast } from '@/hooks/use-toast';
 import PatternRecognitionFlow from './pattern-recognition/PatternRecognitionFlow';
 import RepairPlanFlow from './repair-plan/RepairPlanFlow';
 
 const OkayButNowWhat = () => {
   const { colors } = useInterface();
   const { sessionData } = useSession();
-  const { toast } = useToast();
   const [activeFlow, setActiveFlow] = useState<'pattern' | 'repair' | null>(null);
   
   const handleFindPattern = () => {
     setActiveFlow('pattern');
-    toast({
-      title: "Pattern Recognition",
-      description: "This feature will help you identify recurring conflict patterns.",
-    });
+    // Removed toast notification
   };
   
   const handleCreateRepairPlan = () => {
     setActiveFlow('repair');
-    toast({
-      title: "Repair Plan",
-      description: "This feature will help you create a custom repair plan.",
-    });
+    // Removed toast notification
   };
   
   // Show the initial view if no flow is active

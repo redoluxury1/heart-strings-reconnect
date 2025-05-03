@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
 import { useSession } from '../context/SessionContext';
 import { reconnectionTips, ReconnectionTip } from '@/data/reconnection-tips';
 
@@ -111,19 +110,12 @@ const PatternRecognitionFlow: React.FC = () => {
   const [quizAnswers, setQuizAnswers] = useState<QuizAnswer[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const { sessionData } = useSession();
-  const { toast } = useToast();
   
   const handlePatternSelect = (patternId: number) => {
     setSelectedPattern(patternId);
     setIsShowingQuiz(true);
     setQuizAnswers([]);
     setCurrentQuestionIndex(0);
-    
-    // In a real app, this would save the pattern to the user's data
-    toast({
-      title: "Pattern identified",
-      description: "Let's explore this pattern with a few questions."
-    });
   };
 
   const handleAnswerSelect = (questionId: number, answer: string) => {
@@ -139,11 +131,6 @@ const PatternRecognitionFlow: React.FC = () => {
     if (currentQuestionIndex >= quizQuestions.length - 1) {
       setIsShowingQuiz(false);
       setIsShowingTips(true);
-      
-      toast({
-        title: "Quiz completed",
-        description: "Here are some specific reconnection activities for your pattern."
-      });
     } else {
       // Otherwise, move to the next question
       setCurrentQuestionIndex(currentQuestionIndex + 1);
