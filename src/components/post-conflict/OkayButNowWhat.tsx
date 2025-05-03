@@ -1,10 +1,9 @@
 
 import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
 import { useInterface } from '../../hooks/useInterfaceContext';
 import { useSession } from './context/SessionContext';
-import PatternRecognitionFlow from './pattern-recognition/PatternRecognitionFlow';
-import RepairPlanFlow from './repair-plan/RepairPlanFlow';
+import InitialOptionsView from './okay-but-now-what/InitialOptionsView';
+import FlowContentView from './okay-but-now-what/FlowContentView';
 
 const OkayButNowWhat = () => {
   const { colors } = useInterface();
@@ -13,67 +12,28 @@ const OkayButNowWhat = () => {
   
   const handleFindPattern = () => {
     setActiveFlow('pattern');
-    // Removed toast notification
   };
   
   const handleCreateRepairPlan = () => {
     setActiveFlow('repair');
-    // Removed toast notification
   };
   
-  // Show the initial view if no flow is active
-  if (activeFlow === null) {
-    return (
-      <div id="okay-but-now-what" className="bg-gradient-to-br from-soft-cream/40 to-soft-cream/10 rounded-xl shadow-md p-6 md:p-8">
-        <h2 className="text-3xl md:text-4xl font-cormorant font-medium mb-4 text-center text-midnight-indigo">
-          Okay... But Now What?
-        </h2>
-        
-        <p className="text-center text-gray-700 mb-6 max-w-xl mx-auto">
-          This is where we help you get back to being less annoyed.
-        </p>
-        
-        <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:space-x-4 justify-center mb-4">
-          <Button 
-            className="bg-midnight-indigo hover:bg-midnight-indigo/90 text-white px-6"
-            onClick={handleFindPattern}
-          >
-            Find Our Pattern
-          </Button>
-          
-          <Button 
-            variant="outline" 
-            className="border-gray-300 text-midnight-indigo bg-white/70 hover:bg-gray-100"
-            onClick={handleCreateRepairPlan}
-          >
-            Send a White Flag
-          </Button>
-        </div>
-        
-        <p className="text-center text-gray-500 text-sm mt-4">
-          Tap here to unsay the stupid thing.
-        </p>
-      </div>
-    );
-  }
+  const handleBackToOptions = () => {
+    setActiveFlow(null);
+  };
   
-  // Show the active flow and provide a way to go back
   return (
-    <div id="okay-but-now-what" className="rounded-xl shadow-md">
-      <div className="mb-4">
-        <Button 
-          variant="ghost" 
-          className="text-midnight-indigo hover:bg-transparent hover:text-midnight-indigo/70"
-          onClick={() => setActiveFlow(null)}
-        >
-          ← Back to options
-        </Button>
-      </div>
-      
-      {activeFlow === 'pattern' ? (
-        <PatternRecognitionFlow />
+    <div id="okay-but-now-what" className="bg-gradient-to-br from-soft-cream/40 to-soft-cream/10 rounded-xl shadow-md">
+      {activeFlow === null ? (
+        <InitialOptionsView 
+          onFindPattern={handleFindPattern}
+          onCreateRepairPlan={handleCreateRepairPlan}
+        />
       ) : (
-        <RepairPlanFlow />
+        <FlowContentView 
+          activeFlow={activeFlow} 
+          onBack={handleBackToOptions} 
+        />
       )}
     </div>
   );
