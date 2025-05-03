@@ -68,7 +68,7 @@ const GameCard: React.FC<GameCardProps> = ({
       <div className="space-y-4">
         <Button
           variant="outline"
-          className={`w-full py-6 h-auto text-left justify-start px-4 ${optionAStyle} transition-all`}
+          className={`w-full py-6 h-auto text-left justify-start px-4 ${optionAStyle} transition-all break-words whitespace-normal`}
           onClick={() => !selectedOption && handleSelectOption('optionA')}
           disabled={!!selectedOption}
         >
@@ -79,7 +79,7 @@ const GameCard: React.FC<GameCardProps> = ({
         
         <Button
           variant="outline"
-          className={`w-full py-6 h-auto text-left justify-start px-4 ${optionBStyle} transition-all`}
+          className={`w-full py-6 h-auto text-left justify-start px-4 ${optionBStyle} transition-all break-words whitespace-normal`}
           onClick={() => !selectedOption && handleSelectOption('optionB')}
           disabled={!!selectedOption}
         >

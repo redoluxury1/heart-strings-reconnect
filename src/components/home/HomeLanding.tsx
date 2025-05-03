@@ -116,19 +116,23 @@ const HomeLanding = () => {
     <div className="text-center pt-24 pb-4 md:py-16">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <div className="cursor-pointer group">
-            <h1 className="font-cormorant text-4xl md:text-5xl lg:text-6xl font-medium mb-5 text-midnight-indigo group-hover:text-midnight-indigo/90 transition-colors">
+          <div className="cursor-pointer">
+            {/* Changed from group hover to explicit click target */}
+            <h1 className="font-cormorant text-4xl md:text-5xl lg:text-6xl font-medium mb-5 text-midnight-indigo">
               {dailyQuote.headline}
             </h1>
             
-            <p className="text-xl max-w-2xl mx-auto text-midnight-indigo/80 group-hover:text-midnight-indigo/70 transition-colors">
+            <p className="text-xl max-w-2xl mx-auto text-midnight-indigo/80">
               {dailyQuote.subtext}
             </p>
             
-            <div className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
-              <Share className="h-5 w-5 mx-auto text-lavender-blue" />
-              <span className="text-sm text-lavender-blue">Click to share or submit your own</span>
-            </div>
+            <button 
+              className="mt-4 py-2 px-4 flex items-center justify-center mx-auto"
+              aria-label="Share this quote"
+            >
+              <Share className="h-5 w-5 mr-2 text-lavender-blue" />
+              <span className="text-sm text-lavender-blue">Share or submit your own</span>
+            </button>
           </div>
         </DropdownMenuTrigger>
         
