@@ -31,13 +31,13 @@ const WhatsReallyGoingOn = () => {
         >
           <TabsList className="grid grid-cols-3 w-full">
             <TabsTrigger value="translator" className="text-xs md:text-sm">
-              What She Heard
+              Say It Better
             </TabsTrigger>
             <TabsTrigger value="realfight" className="text-xs md:text-sm">
-              Real Fight About
+              Cut to the Point
             </TabsTrigger>
             <TabsTrigger value="behaviors" className="text-xs md:text-sm">
-              She's Not Mad, She's...
+              Decode Their Behavior
             </TabsTrigger>
           </TabsList>
           <TabsContent value="translator" className="p-4">

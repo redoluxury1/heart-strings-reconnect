@@ -18,10 +18,10 @@ const RealFightAbout = () => {
     <div className="space-y-4">
       <div className="mb-3">
         <h3 className="text-lg font-medium text-midnight-indigo mb-2">
-          What's Really Bothering You?
+          Cut to the Point
         </h3>
         <p className="text-sm text-midnight-indigo/70">
-          Tap the option that feels closest to what's really going on
+          Tap what's actually bothering you underneath it all
         </p>
       </div>
       
@@ -52,7 +52,7 @@ const RealFightAbout = () => {
           </div>
           
           <div>
-            <h4 className="text-md font-medium text-lavender-blue mb-1">Try Expressing It This Way:</h4>
+            <h4 className="text-md font-medium text-lavender-blue mb-1">Express It This Way:</h4>
             <p className="bg-white p-3 rounded border border-lavender-blue/30 text-midnight-indigo/90">
               "{selectedIssue.suggestion}"
             </p>

@@ -7,7 +7,7 @@ export const translateStatement = (statement: string) => {
   // Sample translations based on common phrases
   if (statementLower.includes('not a big deal') || statementLower.includes('overreacting')) {
     return {
-      heardAs: "You don't care about how I feel.",
+      heardAs: "You don't care about how I feel or what matters to me.",
       trySaying: "I know this feels big for you — I want to understand why."
     };
   }
