@@ -1,31 +1,32 @@
 
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Heart, MessageSquareHeart, Gamepad2, RefreshCw } from 'lucide-react';
+import { Heart, Gamepad2, RefreshCw } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Slider } from '@/components/ui/slider';
-import { useInterface } from '../../common/InterfaceProvider';
 
 interface EndSessionStepProps {
-  onSendLoveNote: () => void;
+  onSendLoveNote?: () => void;
   onRestart?: () => void;
 }
 
 const EndSessionStep: React.FC<EndSessionStepProps> = ({ 
-  onSendLoveNote,
   onRestart
 }) => {
   const navigate = useNavigate();
   const [moodValue, setMoodValue] = useState([50]); // Default to middle of scale
 
-  const handleSendLoveNote = () => {
-    // Navigate to home page and scroll to daily love note section
-    navigate('/#daily-love-note');
-  };
-
   const handlePlayGame = () => {
     // This will later link to the would you rather game
     navigate('/games');
+  };
+
+  const handleNextSteps = () => {
+    // Navigate to the "Okay, but what's next" section
+    const okayButNowWhatSection = document.getElementById('okay-but-now-what');
+    if (okayButNowWhatSection) {
+      okayButNowWhatSection.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
@@ -61,15 +62,14 @@ const EndSessionStep: React.FC<EndSessionStepProps> = ({
       
       <div className="flex flex-col md:flex-row justify-center gap-4 mb-4">
         <Button 
-          className="flex items-center gap-2 bg-mauve-rose hover:bg-mauve-rose/90 text-white" 
-          onClick={handleSendLoveNote}
+          className="flex items-center gap-2 bg-midnight-indigo hover:bg-midnight-indigo/90 text-white" 
+          onClick={handleNextSteps}
         >
-          <MessageSquareHeart size={18} />
-          Send a Love Note
+          What's next for us?
         </Button>
         
         <Button 
-          className="flex items-center gap-2 bg-midnight-indigo hover:bg-midnight-indigo/90 text-white" 
+          className="flex items-center gap-2 bg-mauve-rose hover:bg-mauve-rose/90 text-white" 
           onClick={handlePlayGame}
         >
           <Gamepad2 size={18} />

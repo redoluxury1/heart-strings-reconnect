@@ -2,6 +2,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ChevronRight } from 'lucide-react';
+import { useSession } from '../context/SessionContext';
 import { 
   Table,
   TableBody,
@@ -30,6 +31,9 @@ const ReflectionSummaryStep: React.FC<ReflectionSummaryStepProps> = ({
   partner2Data,
   onContinue
 }) => {
+  const { sessionData } = useSession();
+  const partnerReady = sessionData.partner2.ready;
+  
   // Generate emotional insight based on the combined emotions
   const getEmotionalInsight = () => {
     const p1Emotions = partner1Data.emotions || [];
@@ -56,6 +60,34 @@ const ReflectionSummaryStep: React.FC<ReflectionSummaryStepProps> = ({
     return "Your emotions reflect how much you care about each other and this relationship. Different emotional responses don't mean incompatibility—they're opportunities to understand each other more deeply.";
   };
 
+  // If partner hasn't completed the process yet
+  if (!partnerReady) {
+    return (
+      <div className="text-center py-8">
+        <h2 className="text-2xl md:text-3xl font-cormorant font-medium text-midnight-indigo mb-6">
+          You've completed your part
+        </h2>
+        
+        <div className="bg-lavender-blue/10 rounded-lg p-6 mb-8 max-w-md mx-auto">
+          <p className="text-midnight-indigo mb-4">
+            Hang tight! We'll send you a notification when your partner has finished the discussion.
+          </p>
+          <p className="text-sm text-midnight-indigo/70 italic">
+            In the meantime, try to do something calming or grounding.
+          </p>
+        </div>
+        
+        <Button
+          onClick={onContinue}
+          className="bg-mauve-rose hover:bg-mauve-rose/90 text-white"
+        >
+          See what's next
+        </Button>
+      </div>
+    );
+  }
+
+  // If both partners have completed the process
   return (
     <div>
       <h2 className="text-2xl md:text-3xl font-cormorant font-medium text-midnight-indigo mb-4 text-center">

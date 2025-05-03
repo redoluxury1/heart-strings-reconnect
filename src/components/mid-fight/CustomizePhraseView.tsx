@@ -55,7 +55,7 @@ const CustomizePhraseView: React.FC<CustomizePhraseViewProps> = ({
         {showSaveOption && onSaveToLibrary && (
           <Button
             variant="outline"
-            className="border-lavender-blue text-lavender-blue hover:bg-lavender-blue/10"
+            className="border-lavender-blue text-lavender-blue hover:bg-lavender-blue/10 hover:text-lavender-blue"
             onClick={onSaveToLibrary}
           >
             <BookmarkPlus className="h-4 w-4 mr-1" />

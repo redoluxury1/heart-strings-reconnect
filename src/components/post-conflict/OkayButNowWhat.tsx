@@ -1,113 +1,40 @@
 
-import React, { useState, useEffect } from 'react';
-import { useInterface } from '@/hooks/useInterfaceContext';
-import { Heart, ThumbsUp, ThumbsDown, RefreshCw } from 'lucide-react';
+import React from 'react';
 import { Button } from '@/components/ui/button';
-import { reconnectionTips, ReconnectionTip } from '@/data/reconnection-tips';
-import { toast } from '@/hooks/use-toast';
+import { useInterface } from '../../hooks/useInterfaceContext';
 
 const OkayButNowWhat = () => {
   const { colors } = useInterface();
-  const [currentTip, setCurrentTip] = useState<ReconnectionTip | null>(null);
-  const [hasVoted, setHasVoted] = useState(false);
-
-  // Randomly select a tip when the component mounts or when refreshing
-  useEffect(() => {
-    showRandomTip();
-  }, []);
-
-  // Get a random tip that's different from the current one
-  const showRandomTip = () => {
-    // If we have no tips, return early
-    if (reconnectionTips.length === 0) return;
-    
-    // If we only have one tip, just show that
-    if (reconnectionTips.length === 1) {
-      setCurrentTip(reconnectionTips[0]);
-      return;
-    }
-    
-    let randomTip;
-    // Make sure we get a different tip than the current one
-    do {
-      const randomIndex = Math.floor(Math.random() * reconnectionTips.length);
-      randomTip = reconnectionTips[randomIndex];
-    } while (currentTip && randomTip.id === currentTip.id);
-    
-    setCurrentTip(randomTip);
-    setHasVoted(false);
-  };
-
-  // Handle feedback submission
-  const handleFeedback = (helpful: boolean) => {
-    // In a real app, this would send the feedback to a backend
-    toast({
-      title: helpful ? "Thanks for your feedback!" : "We'll try to improve our suggestions",
-      description: helpful ? "We're glad this suggestion was helpful." : "We'll note that this wasn't as useful.",
-      duration: 3000,
-    });
-    setHasVoted(true);
-  };
-
-  // Emotions-focused styling (our only style now)
-  const bgColor = "bg-gradient-to-br from-[#F1E5FF]/80 to-[#F1E5FF]/30";
-  const primaryBtnClass = "bg-midnight-indigo hover:bg-midnight-indigo/90 text-white";
-  const secondaryBtnClass = "bg-mauve-rose/30 hover:bg-mauve-rose/40 text-midnight-indigo";
-
+  
   return (
-    <div className={`${bgColor} rounded-xl shadow-md p-6 md:p-8 mb-12`}>
-      <div className="flex flex-col items-center">
-        <Heart className="h-12 w-12 text-mauve-rose mb-4" />
+    <div id="okay-but-now-what" className="bg-gradient-to-br from-soft-cream/40 to-soft-cream/10 rounded-xl shadow-md p-6 md:p-8">
+      <h2 className="text-3xl md:text-4xl font-cormorant font-medium mb-4 text-center text-midnight-indigo">
+        Okay... But Now What?
+      </h2>
+      
+      <p className="text-center text-gray-700 mb-6 max-w-xl mx-auto">
+        Uncovering the patterns in your relationship helps you both break free from them.
+        Let's understand what's really happening.
+      </p>
+      
+      <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:space-x-4 justify-center mb-4">
+        <Button 
+          className="bg-midnight-indigo hover:bg-midnight-indigo/90 text-white px-6"
+        >
+          Find Our Pattern
+        </Button>
         
-        <h2 className="text-3xl md:text-4xl font-cormorant font-medium mb-3 text-center text-midnight-indigo">
-          Okay, but now what?
-        </h2>
-        
-        <p className="text-center text-gray-700 mb-6 max-w-xl">
-          A small step to help you reconnect after a tough moment.
-        </p>
-        
-        {currentTip && (
-          <div className="bg-white/60 p-6 rounded-lg shadow-sm mb-6 max-w-lg w-full">
-            <p className="text-lg text-center font-medium text-gray-800">
-              {currentTip.text}
-            </p>
-          </div>
-        )}
-        
-        <div className="flex flex-wrap justify-center gap-4">
-          {!hasVoted && (
-            <>
-              <Button 
-                onClick={() => handleFeedback(true)}
-                className={`${primaryBtnClass} flex items-center gap-2`}
-                size="sm"
-              >
-                <ThumbsUp size={16} />
-                Helpful
-              </Button>
-              
-              <Button 
-                onClick={() => handleFeedback(false)}
-                className={`${secondaryBtnClass} flex items-center gap-2`}
-                size="sm"
-              >
-                <ThumbsDown size={16} />
-                Not Helpful
-              </Button>
-            </>
-          )}
-          
-          <Button 
-            onClick={showRandomTip}
-            className={`${primaryBtnClass} flex items-center gap-2 ${hasVoted ? 'mt-2' : ''}`}
-            size="sm"
-          >
-            <RefreshCw size={16} />
-            Show Another Tip
-          </Button>
-        </div>
+        <Button 
+          variant="outline" 
+          className="border-gray-300 text-midnight-indigo bg-white/70 hover:bg-gray-100"
+        >
+          Create a Repair Plan
+        </Button>
       </div>
+      
+      <p className="text-center text-gray-500 text-sm mt-4">
+        Conflict is natural. How we repair is what matters.
+      </p>
     </div>
   );
 };

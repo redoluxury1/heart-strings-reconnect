@@ -108,7 +108,7 @@ const ConversationDialog: React.FC<ConversationDialogProps> = ({
                 variant="default"
                 className={isEmotional
                   ? "bg-lavender-blue hover:bg-lavender-blue/90" 
-                  : "bg-[#E51D2C] hover:bg-[#E51D2C]/90"
+                  : "bg-midnight-indigo hover:bg-midnight-indigo/90 text-white"
                 }
                 onClick={handleSendInvite}
               >
@@ -150,7 +150,7 @@ const ConversationDialog: React.FC<ConversationDialogProps> = ({
               variant="default"
               className={isEmotional
                 ? "bg-lavender-blue hover:bg-lavender-blue/90" 
-                : "bg-[#589391] hover:bg-[#589391]/90"
+                : "bg-midnight-indigo hover:bg-midnight-indigo/90 text-white"
               }
               onClick={handleReturnToToolkit}
             >
