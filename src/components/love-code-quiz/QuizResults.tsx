@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Heart } from 'lucide-react';
 import { LoveCodeResult } from '../../types/love-code-quiz';
@@ -53,7 +54,7 @@ const QuizResults: React.FC<QuizResultsProps> = ({ results, onRestart, onHome })
         <PartnerInviteSection onOpenInvite={openInviteModal} />
         
         {/* Action Buttons */}
-        <ActionButtons onHome={onHome} />
+        <ActionButtons onHome={onHome} onRestart={onRestart} />
       </div>
       
       {/* Partner Invite Modal */}
