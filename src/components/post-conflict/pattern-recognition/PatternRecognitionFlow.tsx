@@ -5,6 +5,61 @@ import { useToast } from '@/hooks/use-toast';
 import { useSession } from '../context/SessionContext';
 import { reconnectionTips, ReconnectionTip } from '@/data/reconnection-tips';
 
+// Define quiz questions for each pattern
+const patternQuizzes = {
+  "criticism-defensiveness": [
+    {
+      id: 1,
+      question: "During disagreements, does one of you often point out what the other is doing wrong?",
+      options: ["Almost always", "Sometimes", "Rarely"],
+    },
+    {
+      id: 2,
+      question: "How often do you feel the need to explain yourself or defend your actions?",
+      options: ["Almost always", "Sometimes", "Rarely"],
+    },
+    {
+      id: 3,
+      question: "Do conversations about problems often turn into accusations?",
+      options: ["Almost always", "Sometimes", "Rarely"],
+    }
+  ],
+  "stonewalling-pursuit": [
+    {
+      id: 1,
+      question: "During conflicts, does one of you tend to shut down or go quiet?",
+      options: ["Almost always", "Sometimes", "Rarely"],
+    },
+    {
+      id: 2,
+      question: "How often does one of you push to resolve things immediately while the other needs space?",
+      options: ["Almost always", "Sometimes", "Rarely"],
+    },
+    {
+      id: 3,
+      question: "Do you find yourselves in a pattern where one person withdraws and the other keeps pursuing?",
+      options: ["Almost always", "Sometimes", "Rarely"],
+    }
+  ],
+  "contempt-contempt": [
+    {
+      id: 1,
+      question: "How often do eye-rolls, sarcasm, or mockery show up in your disagreements?",
+      options: ["Almost always", "Sometimes", "Rarely"],
+    },
+    {
+      id: 2,
+      question: "Do you sometimes feel like your partner doesn't respect your perspective?",
+      options: ["Almost always", "Sometimes", "Rarely"],
+    },
+    {
+      id: 3,
+      question: "During arguments, do either of you make comments that feel dismissive or belittling?",
+      options: ["Almost always", "Sometimes", "Rarely"],
+    }
+  ]
+};
+
 const commonPatterns = [
   {
     id: 1,
@@ -44,20 +99,55 @@ const commonPatterns = [
   }
 ];
 
+interface QuizAnswer {
+  questionId: number;
+  answer: string;
+}
+
 const PatternRecognitionFlow: React.FC = () => {
   const [selectedPattern, setSelectedPattern] = useState<number | null>(null);
+  const [isShowingQuiz, setIsShowingQuiz] = useState(false);
   const [isShowingTips, setIsShowingTips] = useState(false);
+  const [quizAnswers, setQuizAnswers] = useState<QuizAnswer[]>([]);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const { sessionData } = useSession();
   const { toast } = useToast();
   
   const handlePatternSelect = (patternId: number) => {
     setSelectedPattern(patternId);
+    setIsShowingQuiz(true);
+    setQuizAnswers([]);
+    setCurrentQuestionIndex(0);
     
     // In a real app, this would save the pattern to the user's data
     toast({
       title: "Pattern identified",
-      description: "We've noted this pattern in your relationship."
+      description: "Let's explore this pattern with a few questions."
     });
+  };
+
+  const handleAnswerSelect = (questionId: number, answer: string) => {
+    setQuizAnswers([...quizAnswers, { questionId, answer }]);
+    
+    const selectedPatternData = selectedPattern !== null 
+      ? commonPatterns.find(p => p.id === selectedPattern)
+      : null;
+      
+    const quizQuestions = selectedPatternData ? patternQuizzes[selectedPatternData.patternType as keyof typeof patternQuizzes] : [];
+    
+    // If we've answered all questions, show reconnection tips
+    if (currentQuestionIndex >= quizQuestions.length - 1) {
+      setIsShowingQuiz(false);
+      setIsShowingTips(true);
+      
+      toast({
+        title: "Quiz completed",
+        description: "Here are some specific reconnection activities for your pattern."
+      });
+    } else {
+      // Otherwise, move to the next question
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+    }
   };
   
   const handleShowReconnectionTips = () => {
@@ -67,6 +157,20 @@ const PatternRecognitionFlow: React.FC = () => {
   const handleGoBack = () => {
     if (isShowingTips) {
       setIsShowingTips(false);
+      if (isShowingQuiz) {
+        setIsShowingQuiz(true);
+      } else {
+        setSelectedPattern(null);
+      }
+    } else if (isShowingQuiz) {
+      if (currentQuestionIndex > 0) {
+        setCurrentQuestionIndex(currentQuestionIndex - 1);
+        // Remove the last answer
+        setQuizAnswers(quizAnswers.slice(0, quizAnswers.length - 1));
+      } else {
+        setIsShowingQuiz(false);
+        setSelectedPattern(null);
+      }
     } else if (selectedPattern !== null) {
       setSelectedPattern(null);
     }
@@ -97,6 +201,9 @@ const PatternRecognitionFlow: React.FC = () => {
     ? commonPatterns.find(p => p.id === selectedPattern)
     : null;
   
+  const quizQuestions = selectedPatternData ? patternQuizzes[selectedPatternData.patternType as keyof typeof patternQuizzes] : [];
+  const currentQuestion = quizQuestions[currentQuestionIndex];
+  
   const tipsToDisplay = selectedPatternData 
     ? getPatternSpecificTips(selectedPatternData.patternType)
     : reconnectionTips.sort(() => 0.5 - Math.random()).slice(0, 3);
@@ -104,7 +211,7 @@ const PatternRecognitionFlow: React.FC = () => {
   return (
     <div className="bg-white rounded-xl shadow-md overflow-hidden">
       <div className="p-6 md:p-8">
-        {(selectedPattern !== null || isShowingTips) && (
+        {(selectedPattern !== null || isShowingQuiz || isShowingTips) && (
           <Button
             variant="ghost"
             className="mb-4"
@@ -118,12 +225,27 @@ const PatternRecognitionFlow: React.FC = () => {
         {isShowingTips ? (
           <div className="animate-fade-in">
             <h2 className="text-2xl md:text-3xl font-cormorant font-medium text-midnight-indigo mb-6">
-              Reconnection Tips
+              Reconnection Activities
             </h2>
+            
+            {selectedPatternData && (
+              <div className="bg-soft-cream/20 p-4 rounded-lg mb-6">
+                <h3 className="font-medium text-mauve-rose mb-2">Your Pattern: {selectedPatternData.name}</h3>
+                <p className="text-gray-700 mb-2">{selectedPatternData.description}</p>
+                <div className="mt-3">
+                  <h4 className="font-medium text-gray-700">Tips to Break This Pattern:</h4>
+                  <ul className="list-disc pl-5 mt-1">
+                    {selectedPatternData.breakingTips.map((tip, index) => (
+                      <li key={index} className="text-gray-600 text-sm">{tip}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            )}
             
             <p className="text-gray-700 mb-6">
               {selectedPatternData 
-                ? `Try these activities to help break the ${selectedPatternData.name.toLowerCase()}:` 
+                ? `Try these specific activities to help break the ${selectedPatternData.name.toLowerCase()}:` 
                 : "Try one of these activities together to help rebuild connection:"}
             </p>
             
@@ -137,6 +259,29 @@ const PatternRecognitionFlow: React.FC = () => {
                 </li>
               ))}
             </ul>
+          </div>
+        ) : isShowingQuiz && currentQuestion ? (
+          <div className="animate-fade-in">
+            <h2 className="text-2xl md:text-3xl font-cormorant font-medium text-midnight-indigo mb-6">
+              Understanding Your Pattern
+            </h2>
+            
+            <div className="bg-soft-cream/20 p-5 rounded-lg mb-6">
+              <h3 className="font-medium text-mauve-rose mb-4">Question {currentQuestionIndex + 1} of {quizQuestions.length}</h3>
+              <p className="text-gray-800 mb-5">{currentQuestion.question}</p>
+              
+              <div className="space-y-3">
+                {currentQuestion.options.map(option => (
+                  <button
+                    key={option}
+                    className="w-full text-left p-3 rounded-lg border border-gray-200 hover:bg-mauve-rose/10 transition-colors"
+                    onClick={() => handleAnswerSelect(currentQuestion.id, option)}
+                  >
+                    {option}
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
         ) : (
           <div>
