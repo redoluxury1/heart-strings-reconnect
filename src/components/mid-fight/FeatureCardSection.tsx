@@ -1,11 +1,9 @@
-
 import React from 'react';
 import { Book, Puzzle, Hand } from 'lucide-react';
 import ThoughtBubble from '@/components/icons/ThoughtBubble';
 import FeatureCard, { Feature } from './FeatureCard';
 import ContentContainer from '@/components/common/ContentContainer';
 import PausePhraseTool from './PausePhraseTool';
-import SayThisInsteadTool from './SayThisInsteadTool';
 import WhatsReallyGoingOn from './WhatsReallyGoingOn';
 
 // Feature data for other features (not including "say-instead" which will be displayed directly)
@@ -49,15 +47,6 @@ const FeatureCardSection: React.FC<FeatureCardSectionProps> = ({
               <Hand className="h-16 md:h-24 w-16 md:w-24 text-mauve-rose mb-3 md:mb-4" />
             </div>
             <PausePhraseTool onClose={() => {}} />
-          </div>
-        </ContentContainer>
-      </section>
-      
-      {/* Say This Instead - Always visible */}
-      <section className="py-6 md:py-8 bg-soft-blush/30">
-        <ContentContainer maxWidth="lg">
-          <div className="bg-white rounded-lg shadow-md p-5 md:p-6 border border-lavender-blue/20">
-            <SayThisInsteadTool />
           </div>
         </ContentContainer>
       </section>
