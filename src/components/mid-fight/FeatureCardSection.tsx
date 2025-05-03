@@ -1,13 +1,24 @@
 
 import React from 'react';
 import { Book, Puzzle, Hand } from 'lucide-react';
+import ThoughtBubble from '@/components/icons/ThoughtBubble';
 import FeatureCard, { Feature } from './FeatureCard';
 import ContentContainer from '@/components/common/ContentContainer';
 import PausePhraseTool from './PausePhraseTool';
 import SayThisInsteadTool from './SayThisInsteadTool';
+import WhatsReallyGoingOn from './WhatsReallyGoingOn';
 
 // Feature data for other features (not including "say-instead" which will be displayed directly)
 const features: Feature[] = [
+  {
+    id: 'whats-going-on',
+    title: "What's Really Going On?",
+    description: "Decode what's happening when emotions are high with tools that translate intent, unpack real issues, and explain behaviors.",
+    icon: <ThoughtBubble className="h-6 w-6 text-mauve-rose" />,
+    comingSoon: false,
+    alwaysVisible: false,
+    microtext: ""
+  },
   {
     id: 'build-bridge',
     title: 'Build a Bridge',
@@ -62,7 +73,11 @@ const FeatureCardSection: React.FC<FeatureCardSectionProps> = ({
                   feature={feature}
                   isSelected={selectedFeature === feature.id}
                   toggleFeature={toggleFeature}
-                  customContent={null}
+                  customContent={
+                    feature.id === 'whats-going-on' && selectedFeature === 'whats-going-on' 
+                      ? <WhatsReallyGoingOn /> 
+                      : null
+                  }
                 />
               ))}
             </div>
