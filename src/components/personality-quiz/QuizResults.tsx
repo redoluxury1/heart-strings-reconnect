@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { personalityDescriptions } from '@/data/personality-quiz-data';
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
-import { ArrowRight, Download, Home, RefreshCcw } from 'lucide-react';
+import { ArrowRight, Download, Home, RefreshCcw, UserPlus, Heart } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 interface QuizResultsProps {
@@ -29,17 +29,54 @@ const QuizResults: React.FC<QuizResultsProps> = ({ results, onRestart }) => {
     // In a real implementation, this would generate a PDF
     console.log('Downloading results...');
   };
+
+  const navigateToLoveCodeQuiz = () => {
+    navigate('/love-code-quiz');
+  };
+  
+  const handlePartnerInvite = () => {
+    // For now, just log
+    console.log('Invite partner flow would start here');
+  };
   
   return (
     <div className="max-w-4xl mx-auto">
-      <div className="text-center mb-10">
+      <div className="text-center mb-8">
         <h1 className="text-3xl md:text-4xl font-medium text-midnight-indigo mb-4">
           Your Personality Blueprint
         </h1>
-        <p className="text-midnight-indigo/70 max-w-2xl mx-auto">
+        <p className="text-midnight-indigo/70 max-w-2xl mx-auto mb-6">
           Based on your responses, we've identified your primary and secondary personality types.
           These influence how you communicate, process emotions, and navigate conflicts in relationships.
         </p>
+        
+        {/* Type Breakdown Chart - Moved to top */}
+        <Card className="mb-8 mx-auto max-w-lg">
+          <CardContent className="p-4 h-[280px]">
+            <h3 className="text-xl font-medium text-midnight-indigo mb-2">Your Type Breakdown</h3>
+            <ResponsiveContainer width="100%" height="90%">
+              <PieChart>
+                <Pie
+                  data={chartData}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={60}
+                  outerRadius={90}
+                  paddingAngle={2}
+                  dataKey="value"
+                  label={({ name, percent }) => 
+                    `${personalityDescriptions[name as keyof typeof personalityDescriptions].title} ${(percent * 100).toFixed(0)}%`
+                  }
+                  labelLine={false}
+                >
+                  {chartData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
+                </Pie>
+              </PieChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
       </div>
       
       {/* Primary Type Card */}
@@ -140,36 +177,26 @@ const QuizResults: React.FC<QuizResultsProps> = ({ results, onRestart }) => {
         </div>
         
         <div>
-          <h3 className="text-xl font-medium text-midnight-indigo mb-4">Your Type Breakdown</h3>
-          <Card className="h-[280px]">
-            <CardContent className="p-4 h-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={chartData}
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={60}
-                    outerRadius={90}
-                    paddingAngle={2}
-                    dataKey="value"
-                    label={({ name, percent }) => 
-                      `${personalityDescriptions[name as keyof typeof personalityDescriptions].title} ${(percent * 100).toFixed(0)}%`
-                    }
-                    labelLine={false}
-                  >
-                    {chartData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
-                  </Pie>
-                </PieChart>
-              </ResponsiveContainer>
+          <h3 className="text-xl font-medium text-midnight-indigo mb-4">Growth Opportunities</h3>
+          <Card className="h-full">
+            <CardContent className="p-6 h-full">
+              <p className="text-midnight-indigo/80">
+                Learning to balance your {primaryType.title.toLowerCase()} tendencies with elements of other personality 
+                types can help you grow. Consider exploring how you might benefit from:
+              </p>
+              <ul className="mt-4 space-y-2 list-disc pl-5 text-midnight-indigo/80">
+                <li>The emotional expression of a Spark</li>
+                <li>The calming presence of an Anchor</li>
+                <li>The analytical approach of a Strategist</li>
+                <li>The depth of understanding of a Reflector</li>
+              </ul>
             </CardContent>
           </Card>
         </div>
       </div>
       
-      <div className="flex flex-wrap gap-4 justify-center mb-6">
+      {/* Action Buttons */}
+      <div className="flex flex-wrap gap-4 justify-center mb-10">
         <Button
           variant="outline"
           onClick={handleDownload}
@@ -178,6 +205,43 @@ const QuizResults: React.FC<QuizResultsProps> = ({ results, onRestart }) => {
           <Download className="mr-2 h-4 w-4" />
           Download Results
         </Button>
+        
+        <Button
+          variant="outline"
+          onClick={onRestart}
+          className="flex-1 max-w-[200px]"
+        >
+          <RefreshCcw className="mr-2 h-4 w-4" />
+          Retake Quiz
+        </Button>
+      </div>
+      
+      {/* New Buttons */}
+      <div className="bg-gray-50 p-6 rounded-lg mb-8 text-center">
+        <h3 className="text-xl font-medium text-midnight-indigo mb-3">
+          Continue Your Relationship Journey
+        </h3>
+        <p className="text-midnight-indigo/70 mb-6 max-w-2xl mx-auto">
+          Deepen your connection by inviting your partner to take the quiz or discover your Love Code for even more insights.
+        </p>
+        
+        <div className="flex flex-wrap gap-4 justify-center">
+          <Button 
+            onClick={handlePartnerInvite}
+            className="bg-lavender-blue hover:bg-lavender-blue/90 text-white"
+          >
+            <UserPlus className="mr-2 h-4 w-4" />
+            Invite Your Partner
+          </Button>
+          
+          <Button 
+            onClick={navigateToLoveCodeQuiz}
+            className="bg-mauve-rose hover:bg-mauve-rose/90 text-white"
+          >
+            <Heart className="mr-2 h-4 w-4" />
+            Take Love Code Quiz
+          </Button>
+        </div>
       </div>
     </div>
   );
