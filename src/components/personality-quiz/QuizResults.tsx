@@ -2,7 +2,7 @@
 import React from 'react';
 import { QuizResult, PersonalityTypeDescription } from '@/types/personality-quiz';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { personalityDescriptions } from '@/data/personality-quiz-data';
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 import { ArrowRight, Download, Home, RefreshCcw } from 'lucide-react';
@@ -28,10 +28,6 @@ const QuizResults: React.FC<QuizResultsProps> = ({ results, onRestart }) => {
   const handleDownload = () => {
     // In a real implementation, this would generate a PDF
     console.log('Downloading results...');
-  };
-  
-  const handleHome = () => {
-    navigate('/');
   };
   
   return (
@@ -61,19 +57,49 @@ const QuizResults: React.FC<QuizResultsProps> = ({ results, onRestart }) => {
             </div>
           </div>
           
-          <div className="mt-6 space-y-4">
-            <p className="text-lg font-medium text-midnight-indigo">{primaryType.shortDescription}</p>
-            <p className="text-midnight-indigo/80">{primaryType.fullDescription}</p>
+          <div className="mt-6 space-y-6">
+            <div>
+              <h3 className="text-lg font-medium text-midnight-indigo mb-2">Personality Overview:</h3>
+              <p className="text-midnight-indigo/80">{primaryType.fullDescription}</p>
+            </div>
+            
+            <div>
+              <h3 className="text-lg font-medium text-midnight-indigo mb-2">How You Respond Best to Support:</h3>
+              <p className="text-midnight-indigo/80">
+                {primaryType.supportNeeds || "You appreciate having your feelings acknowledged and respected, even when they're complex."}
+              </p>
+            </div>
+            
+            <div>
+              <h3 className="text-lg font-medium text-midnight-indigo mb-2">Common Misunderstandings:</h3>
+              <p className="text-midnight-indigo/80">
+                {primaryType.commonMisunderstandings || "Others may misread your communication style, but this isn't a reflection of your intentions or care."}
+              </p>
+            </div>
+            
+            <div>
+              <h3 className="text-lg font-medium text-midnight-indigo mb-2">Compatibility:</h3>
+              <div className="space-y-3">
+                <div>
+                  <h4 className="font-medium text-midnight-indigo">Most Compatible With:</h4>
+                  <p className="text-midnight-indigo/80">{primaryType.mostCompatibleWith || "Each personality type offers unique strengths in relationships."}</p>
+                </div>
+                <div>
+                  <h4 className="font-medium text-midnight-indigo">Potential Clashes With:</h4>
+                  <p className="text-midnight-indigo/80">{primaryType.potentialClashesWith || "Every relationship has challenges that can be overcome with understanding."}</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </Card>
       
       {/* Secondary Type Card */}
       <Card className="mb-10 border-l-4" style={{ borderLeftColor: secondaryType.color }}>
-        <div className="p-6">
+        <div className="p-6 md:p-8">
           <div className="flex justify-between items-start">
             <div>
-              <h3 className="text-xl font-medium mb-1">
+              <h3 className="text-xl font-medium mb-2">
                 {secondaryType.title}
               </h3>
               <p className="text-gray-500">Your Secondary Type</p>
@@ -83,8 +109,12 @@ const QuizResults: React.FC<QuizResultsProps> = ({ results, onRestart }) => {
             </div>
           </div>
           
-          <div className="mt-4">
+          <div className="mt-4 space-y-4">
             <p className="text-midnight-indigo/80">{secondaryType.shortDescription}</p>
+            <div>
+              <h4 className="font-medium text-midnight-indigo mb-1">Mini Overview:</h4>
+              <p className="text-midnight-indigo/80">{secondaryType.fullDescription.split('.')[0] + '.'}</p>
+            </div>
           </div>
         </div>
       </Card>
@@ -140,14 +170,6 @@ const QuizResults: React.FC<QuizResultsProps> = ({ results, onRestart }) => {
       </div>
       
       <div className="flex flex-wrap gap-4 justify-center mb-6">
-        <Button 
-          variant="outline"
-          onClick={onRestart}
-          className="flex-1 max-w-[200px]"
-        >
-          <RefreshCcw className="mr-2 h-4 w-4" />
-          Retake Quiz
-        </Button>
         <Button
           variant="outline"
           onClick={handleDownload}
@@ -155,13 +177,6 @@ const QuizResults: React.FC<QuizResultsProps> = ({ results, onRestart }) => {
         >
           <Download className="mr-2 h-4 w-4" />
           Download Results
-        </Button>
-        <Button 
-          onClick={handleHome}
-          className="flex-1 max-w-[200px] bg-mauve-rose hover:bg-mauve-rose/90"
-        >
-          <Home className="mr-2 h-4 w-4" />
-          Go to Home
         </Button>
       </div>
     </div>

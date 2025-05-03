@@ -32,6 +32,10 @@ export interface PersonalityTypeDescription {
   color: string;
   expressionStrengths: string;
   expressionChallenges: string;
+  supportNeeds?: string;
+  commonMisunderstandings?: string;
+  mostCompatibleWith?: string;
+  potentialClashesWith?: string;
 }
 
 export interface PersonalityDescriptions {

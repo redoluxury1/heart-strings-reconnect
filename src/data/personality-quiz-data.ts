@@ -398,34 +398,50 @@ export const personalityDescriptions: PersonalityDescriptions = {
   anchor: {
     title: "The Anchor",
     shortDescription: "Steady, calm, and grounding. You're the emotional rock in relationships.",
-    fullDescription: "As an Anchor, you bring stability and calm to your relationships. You tend to be the steadying force during conflicts, prioritizing peace and harmony. You value emotional consistency and security above all else, which helps those around you feel safe. Your natural ability to remain level-headed in challenging situations is your superpower, though sometimes you might hold back your own emotions to keep the peace.",
+    fullDescription: "As an Anchor, you're the emotional stabilizer in relationships. You value peace, reliability, and comfort over drama or chaos. When conflict arises, you often shut down or try to keep things smooth, even at the cost of your own needs. Your strength is consistency—but your growth comes from learning to voice your emotions instead of just keeping them in.",
     color: "#33c3f0",
     expressionStrengths: "Creating a sense of safety and calm",
-    expressionChallenges: "Expressing intense emotions or vulnerability"
+    expressionChallenges: "Expressing intense emotions or vulnerability",
+    supportNeeds: "You appreciate calm, non-reactive connection. You feel most loved when someone simply sits beside you during tense moments without pressuring you to talk. Patience and gentle encouragement help you open up.",
+    commonMisunderstandings: "People may assume you don't care or aren't affected because you appear unbothered—but inside, you're deeply impacted. You may be accused of being passive or avoidant when in truth you're just trying to preserve peace.",
+    mostCompatibleWith: "The Strategist, who brings clear structure and a logical calm you respect; The Reflector, who helps you go inward without judgment.",
+    potentialClashesWith: "The Spark, whose high emotion can feel overwhelming or dramatic to you."
   },
   spark: {
     title: "The Spark",
     shortDescription: "Passionate, expressive, and energetic. You bring intensity and authenticity.",
-    fullDescription: "As a Spark, you lead with your heart in relationships. Your emotional honesty and expressiveness create deep, authentic connections. You're not afraid to show your feelings, whether joy, anger, or love—and this transparency helps others feel permission to be their true selves. Your passion and intensity make relationships exciting and meaningful, though sometimes your strong emotions might overwhelm others who process feelings differently.",
+    fullDescription: "You bring intensity, connection, and fire to your relationship. You don't just feel emotions—you broadcast them. Your instinct is to talk it out, cry it out, or shout it out—anything but silence. You love hard and fight hard. You want to be seen and felt in real time.",
     color: "#f97316",
     expressionStrengths: "Authentic emotional expression and passion",
-    expressionChallenges: "Managing emotional intensity in sensitive situations"
+    expressionChallenges: "Managing emotional intensity in sensitive situations",
+    supportNeeds: "You need responsiveness. Even a simple 'I hear you' or a hug during a blow-up calms your system. You feel safest when your intensity isn't judged—but received.",
+    commonMisunderstandings: "You're often called 'too much' or 'dramatic,' but you're not trying to pick a fight—you're trying to connect. You sometimes fear that if you don't express yourself loudly, you won't be taken seriously.",
+    mostCompatibleWith: "The Reflector, who sees beneath your emotions and helps you process; The Anchor, who brings grounding and calm to your storms.",
+    potentialClashesWith: "The Strategist, who may dismiss your emotions as irrational or too much."
   },
   strategist: {
     title: "The Strategist",
     shortDescription: "Practical, solution-focused, and clear. You bring logic to emotional situations.",
-    fullDescription: "As a Strategist, you approach relationships with thoughtful analysis and practicality. You excel at problem-solving and finding clear paths forward during conflicts. Your logical mind helps cut through emotional fog to identify what actually needs to be addressed. While you might sometimes seem detached, your intentions are to improve situations efficiently. Your gift is turning emotional chaos into manageable action steps.",
+    fullDescription: "You're driven by logic and clarity. Emotions aren't your default mode—you're more focused on fixing the problem than sitting in it. In conflict, you try to get to the point and move on. You care deeply, but you show it by solving, not emoting.",
     color: "#9b87f5",
     expressionStrengths: "Finding practical solutions to relationship challenges",
-    expressionChallenges: "Connecting with and expressing deeper emotions"
+    expressionChallenges: "Connecting with and expressing deeper emotions",
+    supportNeeds: "You thrive when communication is clear and goal-oriented. You appreciate when your partner tells you what they need instead of expecting you to read between the lines. Emotional chaos makes you freeze—structure brings you peace.",
+    commonMisunderstandings: "You may be seen as cold or disconnected, but you're trying to reduce harm, not ignore feelings. You might unintentionally shut your partner down by skipping straight to solutions.",
+    mostCompatibleWith: "The Anchor, who helps keep things steady without getting overly emotional; The Spark, who brings passion and expression you often suppress (if you can handle the heat).",
+    potentialClashesWith: "The Reflector, whose emotional depth can overwhelm your straightforward approach."
   },
   reflector: {
     title: "The Reflector",
     shortDescription: "Thoughtful, perceptive, and deep. You see below the surface in relationships.",
-    fullDescription: "As a Reflector, you bring depth and insight to your relationships. You have a natural ability to understand emotional undercurrents and unspoken feelings. Your thoughtful nature means you process experiences deeply and seek meaningful connection. You value authenticity and are often the one who notices when something feels off in a relationship. While you might sometimes overthink interactions, your sensitivity allows for profound understanding of others.",
+    fullDescription: "You feel everything. You sense shifts in tone, body language, and unspoken tension. You process deeply and need time to sort out your thoughts before responding. You don't like surface-level fixes—you want to understand what's really happening underneath.",
     color: "#d946ef",
     expressionStrengths: "Deep emotional understanding and empathy",
-    expressionChallenges: "Overthinking interactions or getting lost in analysis"
+    expressionChallenges: "Overthinking interactions or getting lost in analysis",
+    supportNeeds: "You appreciate presence and curiosity more than fast answers. When someone gently asks how you're really doing—and truly listens—you feel safe and loved. Rushed conflict or being dismissed is deeply painful to you.",
+    commonMisunderstandings: "You may be seen as 'too sensitive' or accused of overthinking. In reality, you're trying to protect your heart and understand the full picture before reacting.",
+    mostCompatibleWith: "The Spark, who helps you express the depth you often internalize; The Anchor, who respects your inner world and doesn't rush you.",
+    potentialClashesWith: "The Strategist, who might seem emotionally unavailable or dismissive of your inner process."
   }
 };
 
