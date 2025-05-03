@@ -23,10 +23,10 @@ const WhatsReallyGoingOn = () => {
   };
 
   return (
-    <div className="space-y-8 py-6">
-      <div className="flex flex-col items-center mb-6">
-        <Puzzle className="h-16 md:h-20 w-16 md:w-20 text-mauve-rose mb-4" />
-        <h3 className="text-2xl font-cormorant font-medium text-midnight-indigo mb-4 text-center">
+    <div className="space-y-10 py-8">
+      <div className="flex flex-col items-center mb-8">
+        <Puzzle className="h-16 md:h-20 w-16 md:w-20 text-mauve-rose mb-5" />
+        <h3 className="text-2xl font-cormorant font-medium text-midnight-indigo mb-5 text-center">
           What's Really Going On?
         </h3>
         <p className="text-midnight-indigo/80 text-center max-w-2xl px-4">
@@ -38,49 +38,49 @@ const WhatsReallyGoingOn = () => {
         <CollapsibleTrigger asChild>
           <Button 
             variant="outline" 
-            className="w-full mb-6 justify-between"
+            className="w-full mb-6 justify-between py-3"
           >
-            <span>{tabNames[activeTab as keyof typeof tabNames]}</span>
+            <span className="font-medium">{tabNames[activeTab as keyof typeof tabNames]}</span>
             <span>{isCollapsed ? "▼ Show Tool" : "▲ Hide Tool"}</span>
           </Button>
         </CollapsibleTrigger>
         
-        <CollapsibleContent className="pt-6">
-          <Card className="border-lavender-blue/20">
+        <CollapsibleContent className="pt-8">
+          <Card className="border-lavender-blue/20 shadow-md">
             <Tabs 
               defaultValue="translator" 
               value={activeTab} 
               onValueChange={setActiveTab}
               className="w-full"
             >
-              <TabsList className={`grid ${isMobile ? 'grid-cols-1 gap-3 p-4 mb-4' : 'grid-cols-3 mb-6'} w-full`}>
+              <TabsList className={`grid ${isMobile ? 'grid-cols-1 gap-4 p-5 mb-5' : 'grid-cols-3 gap-2 p-3 mb-6'} w-full`}>
                 {isMobile ? (
                   <>
-                    <TabsTrigger value="translator" className="text-xs md:text-sm py-3 px-2">
+                    <TabsTrigger value="translator" className="text-sm md:text-sm py-3 px-4">
                       Say It Better
                     </TabsTrigger>
-                    <TabsTrigger value="realfight" className="text-xs md:text-sm py-3 px-2">
+                    <TabsTrigger value="realfight" className="text-sm md:text-sm py-3 px-4">
                       Cut to the Point
                     </TabsTrigger>
-                    <TabsTrigger value="behaviors" className="text-xs md:text-sm py-3 px-2">
+                    <TabsTrigger value="behaviors" className="text-sm md:text-sm py-3 px-4">
                       He Said, She Said
                     </TabsTrigger>
                   </>
                 ) : (
                   <>
-                    <TabsTrigger value="translator" className="text-xs md:text-sm py-3">
+                    <TabsTrigger value="translator" className="text-sm md:text-sm py-3 px-4">
                       Say It Better
                     </TabsTrigger>
-                    <TabsTrigger value="realfight" className="text-xs md:text-sm py-3">
+                    <TabsTrigger value="realfight" className="text-sm md:text-sm py-3 px-4">
                       Cut to the Point
                     </TabsTrigger>
-                    <TabsTrigger value="behaviors" className="text-xs md:text-sm py-3">
+                    <TabsTrigger value="behaviors" className="text-sm md:text-sm py-3 px-4">
                       He Said, She Said
                     </TabsTrigger>
                   </>
                 )}
               </TabsList>
-              <div className="p-5 md:p-6">
+              <div className="p-6 md:p-8">
                 <TabsContent value="translator" className="mt-0 pt-4">
                   <HeardTranslator />
                 </TabsContent>

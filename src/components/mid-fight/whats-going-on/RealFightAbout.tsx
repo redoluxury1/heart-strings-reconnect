@@ -58,54 +58,54 @@ const RealFightAbout = () => {
   }
   
   return (
-    <div className="space-y-4">
-      <div className="mb-3">
-        <h3 className="text-lg font-medium text-midnight-indigo mb-2">
+    <div className="space-y-6">
+      <div className="mb-6">
+        <h3 className="text-lg font-medium text-midnight-indigo mb-3">
           Cut to the Point
         </h3>
-        <p className="text-sm text-midnight-indigo/70">
+        <p className="text-sm text-midnight-indigo/70 mb-2">
           Tap what's actually bothering you underneath it all
         </p>
       </div>
       
-      <div className="grid grid-cols-1 gap-3">
+      <div className="grid grid-cols-1 gap-4">
         {realIssues.map((issue) => (
           <Button
             key={issue.id}
             variant={selectedIssue?.id === issue.id ? "default" : "outline"}
-            className={`text-left justify-start h-auto py-3 w-full ${
+            className={`text-left justify-start h-auto min-h-[48px] py-3 px-4 w-full whitespace-normal ${
               selectedIssue?.id === issue.id 
                 ? "bg-lavender-blue text-white" 
                 : "border-lavender-blue/30 hover:bg-lavender-blue/10 hover:text-mauve-rose"
             }`}
             onClick={() => setSelectedIssue(issue)}
           >
-            <span className="line-clamp-2">{issue.label}</span>
+            <span>{issue.label}</span>
           </Button>
         ))}
       </div>
       
       {selectedIssue && (
-        <div className="mt-6 space-y-4 bg-soft-blush/20 p-4 rounded-md">
+        <div className="mt-8 space-y-5 bg-soft-blush/20 p-5 rounded-md">
           <div>
-            <h4 className="text-md font-medium text-mauve-rose mb-1">What's Really Going On:</h4>
+            <h4 className="text-md font-medium text-mauve-rose mb-2">What's Really Going On:</h4>
             <p className="text-midnight-indigo/90 text-sm">
               {selectedIssue.explanation}
             </p>
           </div>
           
           <div>
-            <h4 className="text-md font-medium text-lavender-blue mb-1">Express It This Way:</h4>
-            <p className="bg-white p-3 rounded border border-lavender-blue/30 text-midnight-indigo/90">
+            <h4 className="text-md font-medium text-lavender-blue mb-2">Express It This Way:</h4>
+            <p className="bg-white p-4 rounded border border-lavender-blue/30 text-midnight-indigo/90">
               "{selectedIssue.suggestion}"
             </p>
           </div>
           
           <Button 
             onClick={handleStartChat} 
-            className="bg-lavender-blue hover:bg-lavender-blue/90 text-white mt-3 w-full"
+            className="bg-lavender-blue hover:bg-lavender-blue/90 text-white mt-4 w-full py-3"
           >
-            <MessageCircle className="h-4 w-4 mr-1" />
+            <MessageCircle className="h-4 w-4 mr-2" />
             Start a Chat
           </Button>
         </div>

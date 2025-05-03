@@ -76,12 +76,12 @@ const BehaviorDecoder = () => {
   }
   
   return (
-    <div className="space-y-4">
-      <div className="mb-3">
-        <h3 className="text-lg font-medium text-midnight-indigo mb-2">
+    <div className="space-y-6">
+      <div className="mb-6">
+        <h3 className="text-lg font-medium text-midnight-indigo mb-3">
           He Said, She Said
         </h3>
-        <p className="text-sm text-midnight-indigo/70">
+        <p className="text-sm text-midnight-indigo/70 mb-2">
           Understand what's behind common reactions during conflict
         </p>
       </div>
@@ -94,9 +94,9 @@ const BehaviorDecoder = () => {
           <CollapsibleTrigger asChild>
             <Button 
               variant="outline" 
-              className="w-full mb-4 flex justify-between items-center"
+              className="w-full mb-5 flex justify-between items-center py-3"
             >
-              <span>{genderTab === 'female' ? "She's not mad, she..." : "He doesn't hate you, he..."}</span>
+              <span className="font-medium">{genderTab === 'female' ? "She's not mad, she..." : "He doesn't hate you, he..."}</span>
               <span>{isDropdownOpen ? '▲' : '▼'}</span>
             </Button>
           </CollapsibleTrigger>
@@ -109,97 +109,101 @@ const BehaviorDecoder = () => {
             onValueChange={(value) => setGenderTab(value as 'female' | 'male')}
             className="w-full"
           >
-            <TabsList className="grid grid-cols-2 w-full mb-4">
-              <TabsTrigger value="female" className="text-xs md:text-sm">
+            <TabsList className="grid grid-cols-2 w-full mb-5">
+              <TabsTrigger value="female" className="text-xs md:text-sm py-3">
                 She's not mad, she...
               </TabsTrigger>
-              <TabsTrigger value="male" className="text-xs md:text-sm">
+              <TabsTrigger value="male" className="text-xs md:text-sm py-3">
                 He doesn't hate you, he...
               </TabsTrigger>
             </TabsList>
 
-            <TabsContent value="female" className="space-y-4">
-              <Select
-                value={selectedFemaleBehaviorId}
-                onValueChange={setSelectedFemaleBehaviorId}
-              >
-                <SelectTrigger className="w-full border-lavender-blue/30">
-                  <SelectValue placeholder="Choose a behavior..." />
-                </SelectTrigger>
-                <SelectContent>
-                  {femaleBehaviors.map((behavior) => (
-                    <SelectItem key={behavior.id} value={behavior.id}>
-                      {behavior.behavior}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+            <TabsContent value="female" className="space-y-5">
+              <div className="relative z-20">
+                <Select
+                  value={selectedFemaleBehaviorId}
+                  onValueChange={setSelectedFemaleBehaviorId}
+                >
+                  <SelectTrigger className="w-full border-lavender-blue/30 mb-2 py-3">
+                    <SelectValue placeholder="Choose a behavior..." />
+                  </SelectTrigger>
+                  <SelectContent className="z-50 bg-white">
+                    {femaleBehaviors.map((behavior) => (
+                      <SelectItem key={behavior.id} value={behavior.id}>
+                        {behavior.behavior}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
               
               {selectedFemaleBehavior && (
-                <div className="mt-6 space-y-4 bg-soft-blush/20 p-4 rounded-md">
+                <div className="mt-8 space-y-5 bg-soft-blush/20 p-5 rounded-md">
                   <div>
-                    <h4 className="text-md font-medium text-mauve-rose mb-1">What This Likely Means:</h4>
+                    <h4 className="text-md font-medium text-mauve-rose mb-2">What This Likely Means:</h4>
                     <p className="text-midnight-indigo/90 text-sm">
                       {selectedFemaleBehavior.meaning}
                     </p>
                   </div>
                   
                   <div>
-                    <h4 className="text-md font-medium text-lavender-blue mb-1">Try Saying:</h4>
-                    <p className="bg-white p-3 rounded border border-lavender-blue/30 text-midnight-indigo/90">
+                    <h4 className="text-md font-medium text-lavender-blue mb-2">Try Saying:</h4>
+                    <p className="bg-white p-4 rounded border border-lavender-blue/30 text-midnight-indigo/90">
                       "{selectedFemaleBehavior.response}"
                     </p>
                   </div>
                   
                   <Button 
                     onClick={handleStartChat} 
-                    className="bg-lavender-blue hover:bg-lavender-blue/90 text-white mt-3 w-full"
+                    className="bg-lavender-blue hover:bg-lavender-blue/90 text-white mt-5 w-full py-3"
                   >
-                    <MessageCircle className="h-4 w-4 mr-1" />
+                    <MessageCircle className="h-4 w-4 mr-2" />
                     Start a Chat
                   </Button>
                 </div>
               )}
             </TabsContent>
 
-            <TabsContent value="male" className="space-y-4">
-              <Select
-                value={selectedMaleBehaviorId}
-                onValueChange={setSelectedMaleBehaviorId}
-              >
-                <SelectTrigger className="w-full border-lavender-blue/30">
-                  <SelectValue placeholder="Choose a behavior..." />
-                </SelectTrigger>
-                <SelectContent>
-                  {maleBehaviors.map((behavior) => (
-                    <SelectItem key={behavior.id} value={behavior.id}>
-                      {behavior.behavior}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+            <TabsContent value="male" className="space-y-5">
+              <div className="relative z-20">
+                <Select
+                  value={selectedMaleBehaviorId}
+                  onValueChange={setSelectedMaleBehaviorId}
+                >
+                  <SelectTrigger className="w-full border-lavender-blue/30 mb-2 py-3">
+                    <SelectValue placeholder="Choose a behavior..." />
+                  </SelectTrigger>
+                  <SelectContent className="z-50 bg-white">
+                    {maleBehaviors.map((behavior) => (
+                      <SelectItem key={behavior.id} value={behavior.id}>
+                        {behavior.behavior}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
               
               {selectedMaleBehavior && (
-                <div className="mt-6 space-y-4 bg-soft-blush/20 p-4 rounded-md">
+                <div className="mt-8 space-y-5 bg-soft-blush/20 p-5 rounded-md">
                   <div>
-                    <h4 className="text-md font-medium text-mauve-rose mb-1">What This Likely Means:</h4>
+                    <h4 className="text-md font-medium text-mauve-rose mb-2">What This Likely Means:</h4>
                     <p className="text-midnight-indigo/90 text-sm">
                       {selectedMaleBehavior.meaning}
                     </p>
                   </div>
                   
                   <div>
-                    <h4 className="text-md font-medium text-lavender-blue mb-1">Try Saying:</h4>
-                    <p className="bg-white p-3 rounded border border-lavender-blue/30 text-midnight-indigo/90">
+                    <h4 className="text-md font-medium text-lavender-blue mb-2">Try Saying:</h4>
+                    <p className="bg-white p-4 rounded border border-lavender-blue/30 text-midnight-indigo/90">
                       "{selectedMaleBehavior.response}"
                     </p>
                   </div>
                   
                   <Button 
                     onClick={handleStartChat} 
-                    className="bg-lavender-blue hover:bg-lavender-blue/90 text-white mt-3 w-full"
+                    className="bg-lavender-blue hover:bg-lavender-blue/90 text-white mt-5 w-full py-3"
                   >
-                    <MessageCircle className="h-4 w-4 mr-1" />
+                    <MessageCircle className="h-4 w-4 mr-2" />
                     Start a Chat
                   </Button>
                 </div>
