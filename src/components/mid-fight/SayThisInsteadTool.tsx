@@ -1,8 +1,8 @@
 
 import React, { useState, useMemo } from 'react';
-import { sayInsteadPhrases } from '@/data/say-instead-phrases';
-import { SayInsteadPhrase } from '@/types/say-instead';
-import { MessageCircle } from 'lucide-react';
+import { sayInsteadPhrases } from '@/data/love-code-quiz';
+import { SayInsteadPhrase } from '@/types/love-code-quiz';
+import { MessageCircle, Search } from 'lucide-react';
 import PhraseCard from './say-instead/PhraseCard';
 import PhraseDetailView from './say-instead/PhraseDetailView';
 import NoResults from './say-instead/NoResults';
@@ -13,6 +13,7 @@ import {
   SelectTrigger,
   SelectValue
 } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
 
 // Ensure we're displaying at least 3 options per category
 const validateCategories = (phrases: SayInsteadPhrase[]) => {
@@ -29,26 +30,54 @@ const validateCategories = (phrases: SayInsteadPhrase[]) => {
   return Object.keys(categoryCounts).filter(category => categoryCounts[category] >= 3);
 };
 
+// Sample phrases for quick selection
+const commonPhrases = [
+  "You never listen",
+  "Always about you", 
+  "You're being dramatic",
+  "Trying to control me"
+];
+
 const SayThisInsteadTool: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedPhrase, setSelectedPhrase] = useState<SayInsteadPhrase | null>(null);
+  const [searchQuery, setSearchQuery] = useState<string>('');
   
   // Extract valid categories from all phrases (ensuring at least 3 per category)
   const categories = useMemo(() => {
     return validateCategories(sayInsteadPhrases).sort();
   }, []);
   
-  // Filter phrases based on selected category
+  // Filter phrases based on selected category and search query
   const filteredPhrases = useMemo(() => {
-    if (selectedCategory === 'all') {
-      return sayInsteadPhrases;
+    let phrases = sayInsteadPhrases;
+    
+    // Filter by category if not "all"
+    if (selectedCategory !== 'all') {
+      phrases = phrases.filter(phrase => 
+        phrase.categories.some(category => 
+          category === selectedCategory
+        )
+      );
     }
-    return sayInsteadPhrases.filter(phrase => 
-      phrase.categories.some(category => 
-        category === selectedCategory
-      )
-    );
-  }, [selectedCategory]);
+    
+    // Filter by search query if present
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase();
+      phrases = phrases.filter(phrase => 
+        phrase.original.toLowerCase().includes(query) ||
+        phrase.alternatives.some(alt => alt.toLowerCase().includes(query)) ||
+        phrase.categories.some(cat => cat.toLowerCase().includes(query))
+      );
+    }
+    
+    return phrases;
+  }, [selectedCategory, searchQuery]);
+
+  // Handle quick phrase selection
+  const handleQuickPhraseSelect = (phrase: string) => {
+    setSearchQuery(phrase);
+  };
 
   return (
     <div className="space-y-6">
@@ -60,6 +89,30 @@ const SayThisInsteadTool: React.FC = () => {
         <p className="text-midnight-indigo/80 mb-4 text-center max-w-2xl">
           Turn common conflict phrases into calmer alternatives that keep the conversation productive.
         </p>
+      </div>
+      
+      {/* Quick select common phrases */}
+      <div className="flex flex-wrap gap-2 justify-center mb-3">
+        {commonPhrases.map((phrase, index) => (
+          <button
+            key={index}
+            className="text-xs px-3 py-1 rounded-full bg-lavender-blue/10 text-midnight-indigo border border-lavender-blue/20 hover:bg-lavender-blue/20"
+            onClick={() => handleQuickPhraseSelect(phrase)}
+          >
+            "{phrase}"
+          </button>
+        ))}
+      </div>
+      
+      {/* Search input */}
+      <div className="relative mb-4">
+        <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
+        <Input
+          placeholder="Type a phrase or feeling..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="pl-9 bg-white border-lavender-blue/30 focus:border-lavender-blue"
+        />
       </div>
       
       {/* Category Filter Dropdown */}

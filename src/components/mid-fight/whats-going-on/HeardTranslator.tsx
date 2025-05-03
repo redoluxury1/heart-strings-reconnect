@@ -17,11 +17,25 @@ const HeardTranslator = () => {
   const [customPhrase, setCustomPhrase] = useState('');
   const [startConversationOpen, setStartConversationOpen] = useState(false);
 
+  // Sample phrases that users can quickly select
+  const examplePhrases = [
+    "You're trying to control everything I do",
+    "This is not a big deal",
+    "You never listen to me",
+    "You always make it about you"
+  ];
+
   const handleTranslate = () => {
     if (inputText.trim()) {
       const result = translateStatement(inputText);
       setTranslation(result);
     }
+  };
+
+  const handleExampleClick = (phrase: string) => {
+    setInputText(phrase);
+    const result = translateStatement(phrase);
+    setTranslation(result);
   };
 
   const handleStartChat = () => {
@@ -70,6 +84,20 @@ const HeardTranslator = () => {
         <p className="text-sm text-midnight-indigo/70">
           Type what you want to say, and we'll translate how it might be received
         </p>
+      </div>
+      
+      <div className="flex flex-wrap gap-2 mb-3">
+        {examplePhrases.map((phrase, index) => (
+          <Button
+            key={index}
+            variant="outline"
+            size="sm"
+            className="text-xs bg-white border-lavender-blue/20 hover:bg-lavender-blue/10"
+            onClick={() => handleExampleClick(phrase)}
+          >
+            "{phrase}"
+          </Button>
+        ))}
       </div>
       
       <Textarea

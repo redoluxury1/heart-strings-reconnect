@@ -15,6 +15,13 @@ const WhatsReallyGoingOn = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const isMobile = useIsMobile();
 
+  // Map tab values to display names
+  const tabNames = {
+    "translator": "Say It Better",
+    "realfight": "Cut to the Point",
+    "behaviors": "He Said, She Said"
+  };
+
   return (
     <div className="space-y-4">
       <div className="flex flex-col items-center mb-2">
@@ -33,13 +40,12 @@ const WhatsReallyGoingOn = () => {
             variant="outline" 
             className="w-full mb-4 justify-between"
           >
-            {activeTab === "translator" ? "Say It Better" : 
-             activeTab === "realfight" ? "Cut to the Point" : "He Said, She Said"}
+            <span>{tabNames[activeTab as keyof typeof tabNames]}</span>
             <span>{isCollapsed ? "▼ Show Tool" : "▲ Hide Tool"}</span>
           </Button>
         </CollapsibleTrigger>
         
-        <CollapsibleContent>
+        <CollapsibleContent className="pt-2">
           <Card className="border-lavender-blue/20">
             <Tabs 
               defaultValue="translator" 
@@ -47,9 +53,9 @@ const WhatsReallyGoingOn = () => {
               onValueChange={setActiveTab}
               className="w-full"
             >
-              <TabsList className={`grid ${isMobile ? 'grid-cols-1' : 'grid-cols-3'} w-full`}>
+              <TabsList className={`grid ${isMobile ? 'grid-cols-1 gap-2 p-2' : 'grid-cols-3'} w-full`}>
                 {isMobile ? (
-                  <div className="flex flex-col space-y-2 p-2">
+                  <>
                     <TabsTrigger value="translator" className="text-xs md:text-sm">
                       Say It Better
                     </TabsTrigger>
@@ -59,7 +65,7 @@ const WhatsReallyGoingOn = () => {
                     <TabsTrigger value="behaviors" className="text-xs md:text-sm">
                       He Said, She Said
                     </TabsTrigger>
-                  </div>
+                  </>
                 ) : (
                   <>
                     <TabsTrigger value="translator" className="text-xs md:text-sm">
@@ -74,15 +80,17 @@ const WhatsReallyGoingOn = () => {
                   </>
                 )}
               </TabsList>
-              <TabsContent value="translator" className="p-4">
-                <HeardTranslator />
-              </TabsContent>
-              <TabsContent value="realfight" className="p-4">
-                <RealFightAbout />
-              </TabsContent>
-              <TabsContent value="behaviors" className="p-4">
-                <BehaviorDecoder />
-              </TabsContent>
+              <div className="p-4">
+                <TabsContent value="translator" className="mt-0">
+                  <HeardTranslator />
+                </TabsContent>
+                <TabsContent value="realfight" className="mt-0">
+                  <RealFightAbout />
+                </TabsContent>
+                <TabsContent value="behaviors" className="mt-0">
+                  <BehaviorDecoder />
+                </TabsContent>
+              </div>
             </Tabs>
           </Card>
         </CollapsibleContent>
