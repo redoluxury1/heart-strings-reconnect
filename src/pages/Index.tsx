@@ -9,6 +9,7 @@ import StillUsSection from '../components/home/StillUsSection';
 import RelationshipStatsSection from '../components/home/RelationshipStatsSection';
 import LoveCodeQuizSection from '../components/home/LoveCodeQuizSection';
 import HomeLanding from '../components/home/HomeLanding';
+import PersonalizedConnection from '../components/home/PersonalizedConnection';
 
 const Index = () => {
   const [hasNewLoveNote, setHasNewLoveNote] = useState(false);
@@ -37,6 +38,8 @@ const Index = () => {
           </ContentContainer>
           <DailyLoveNote />
         </div>
+        
+        <PersonalizedConnection />
         
         <StillUsSection />
         
