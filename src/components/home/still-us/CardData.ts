@@ -9,7 +9,7 @@ export const getCardData = (): CardContent[] => {
       title: "Mid-Fight",
       description: "Emotions are high? That's okay. Here's where you can pause, breathe, and calm things down before saying more.",
       icon: React.createElement(Flame, { className: "h-6 w-6" }),
-      tools: ["Time Out Timer", "Pause & Phrase", "Say This Instead"],
+      tools: ["Time Out Timer", "Pause & Phrase", "Say This Instead", "What's Really Going On?"],
       comingSoonTools: ["Build a Bridge"],
       link: "/during-conflict",
       gradientClass: "from-mauve-rose/30 to-mauve-rose/10",
