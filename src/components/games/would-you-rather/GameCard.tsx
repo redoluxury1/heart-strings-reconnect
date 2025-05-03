@@ -7,6 +7,7 @@ import { GameCard as GameCardType } from '@/data/would-you-rather-cards';
 interface GameCardProps {
   card: GameCardType;
   onSelectOption: (option: 'optionA' | 'optionB') => void;
+  onSkip: () => void; // New prop for handling skips
   partnerAnswer?: 'optionA' | 'optionB';
   partnerName: string;
 }
@@ -14,6 +15,7 @@ interface GameCardProps {
 const GameCard: React.FC<GameCardProps> = ({ 
   card, 
   onSelectOption,
+  onSkip, // New prop for handling skips
   partnerAnswer,
   partnerName 
 }) => {
@@ -106,6 +108,19 @@ const GameCard: React.FC<GameCardProps> = ({
           )}
         </div>
       )}
+      
+      {/* Skip button at the bottom of the card */}
+      <div className="flex justify-center mt-5">
+        <Button
+          variant="ghost"
+          size="sm"
+          className="text-gray-500 hover:text-gray-700"
+          onClick={onSkip}
+          disabled={!!selectedOption}
+        >
+          Skip this question
+        </Button>
+      </div>
     </div>
   );
 };

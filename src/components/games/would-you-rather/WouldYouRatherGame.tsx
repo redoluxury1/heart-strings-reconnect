@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import GameCard from './GameCard';
@@ -99,6 +98,22 @@ const WouldYouRatherGame: React.FC = () => {
     });
   };
 
+  const handleSkip = () => {
+    // Move to the next card or wrap around to the first card
+    const nextIndex = (gameState.currentCardIndex + 1) % cards.length;
+    
+    setGameState({
+      ...gameState,
+      currentCardIndex: nextIndex,
+    });
+    
+    toast({
+      title: "Question skipped",
+      description: "Moving to the next question",
+      duration: 2000,
+    });
+  };
+
   const handleViewResults = () => {
     setGameState({
       ...gameState,
@@ -155,6 +170,7 @@ const WouldYouRatherGame: React.FC = () => {
             <GameCard
               card={currentCard}
               onSelectOption={handleSelectOption}
+              onSkip={handleSkip} // Add the skip handler
               partnerAnswer={gameState.partnerAnswers.find(a => a.cardId === currentCard.id)?.selectedOption}
               partnerName={gameState.partnerName}
             />
