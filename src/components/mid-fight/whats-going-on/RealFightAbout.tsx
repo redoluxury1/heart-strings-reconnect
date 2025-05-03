@@ -2,6 +2,9 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { getRealIssues } from '@/data/real-issues-data';
+import { MessageCircle } from 'lucide-react';
+import CustomizePhraseView from '../CustomizePhraseView';
+import ConversationDialog from '../ConversationDialog';
 
 interface RealIssue {
   id: string;
@@ -12,7 +15,47 @@ interface RealIssue {
 
 const RealFightAbout = () => {
   const [selectedIssue, setSelectedIssue] = useState<RealIssue | null>(null);
+  const [isCustomizing, setIsCustomizing] = useState(false);
+  const [customPhrase, setCustomPhrase] = useState('');
+  const [startConversationOpen, setStartConversationOpen] = useState(false);
   const realIssues = getRealIssues();
+  
+  const handleStartChat = () => {
+    if (selectedIssue) {
+      setCustomPhrase(selectedIssue.suggestion);
+      setIsCustomizing(true);
+    }
+  };
+
+  const handleStartConversation = () => {
+    setStartConversationOpen(true);
+  };
+
+  const handleSendInvite = () => {
+    // This would integrate with your notification system
+    setStartConversationOpen(false);
+    setIsCustomizing(false);
+  };
+
+  if (isCustomizing) {
+    return (
+      <>
+        <CustomizePhraseView
+          customPhrase={customPhrase}
+          onCustomPhraseChange={setCustomPhrase}
+          onBackToTopics={() => setIsCustomizing(false)}
+          onStartConversation={handleStartConversation}
+        />
+        
+        <ConversationDialog
+          isOpen={startConversationOpen}
+          onOpenChange={setStartConversationOpen}
+          partnerName="Partner"
+          onSendInvite={handleSendInvite}
+        />
+      </>
+    );
+  }
   
   return (
     <div className="space-y-4">
@@ -30,14 +73,14 @@ const RealFightAbout = () => {
           <Button
             key={issue.id}
             variant={selectedIssue?.id === issue.id ? "default" : "outline"}
-            className={`text-left justify-start h-auto py-3 ${
+            className={`text-left justify-start h-auto py-3 w-full ${
               selectedIssue?.id === issue.id 
                 ? "bg-lavender-blue text-white" 
-                : "border-lavender-blue/30 hover:bg-lavender-blue/10"
+                : "border-lavender-blue/30 hover:bg-lavender-blue/10 hover:text-mauve-rose"
             }`}
             onClick={() => setSelectedIssue(issue)}
           >
-            {issue.label}
+            <span className="line-clamp-2">{issue.label}</span>
           </Button>
         ))}
       </div>
@@ -57,6 +100,14 @@ const RealFightAbout = () => {
               "{selectedIssue.suggestion}"
             </p>
           </div>
+          
+          <Button 
+            onClick={handleStartChat} 
+            className="bg-lavender-blue hover:bg-lavender-blue/90 text-white mt-3 w-full"
+          >
+            <MessageCircle className="h-4 w-4 mr-1" />
+            Start a Chat
+          </Button>
         </div>
       )}
     </div>

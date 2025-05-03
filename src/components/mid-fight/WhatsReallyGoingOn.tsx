@@ -6,9 +6,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import HeardTranslator from './whats-going-on/HeardTranslator';
 import RealFightAbout from './whats-going-on/RealFightAbout';
 import BehaviorDecoder from './whats-going-on/BehaviorDecoder';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { Button } from '@/components/ui/button';
 
 const WhatsReallyGoingOn = () => {
   const [activeTab, setActiveTab] = useState("translator");
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  const isMobile = useIsMobile();
 
   return (
     <div className="space-y-4">
@@ -22,35 +27,66 @@ const WhatsReallyGoingOn = () => {
         </p>
       </div>
 
-      <Card className="border-lavender-blue/20">
-        <Tabs 
-          defaultValue="translator" 
-          value={activeTab} 
-          onValueChange={setActiveTab}
-          className="w-full"
-        >
-          <TabsList className="grid grid-cols-3 w-full">
-            <TabsTrigger value="translator" className="text-xs md:text-sm">
-              Say It Better
-            </TabsTrigger>
-            <TabsTrigger value="realfight" className="text-xs md:text-sm">
-              Cut to the Point
-            </TabsTrigger>
-            <TabsTrigger value="behaviors" className="text-xs md:text-sm">
-              Decode Their Behavior
-            </TabsTrigger>
-          </TabsList>
-          <TabsContent value="translator" className="p-4">
-            <HeardTranslator />
-          </TabsContent>
-          <TabsContent value="realfight" className="p-4">
-            <RealFightAbout />
-          </TabsContent>
-          <TabsContent value="behaviors" className="p-4">
-            <BehaviorDecoder />
-          </TabsContent>
-        </Tabs>
-      </Card>
+      <Collapsible open={!isCollapsed} onOpenChange={setIsCollapsed}>
+        <CollapsibleTrigger asChild>
+          <Button 
+            variant="outline" 
+            className="w-full mb-4 justify-between"
+          >
+            {activeTab === "translator" ? "Say It Better" : 
+             activeTab === "realfight" ? "Cut to the Point" : "He Said, She Said"}
+            <span>{isCollapsed ? "▼ Show Tool" : "▲ Hide Tool"}</span>
+          </Button>
+        </CollapsibleTrigger>
+        
+        <CollapsibleContent>
+          <Card className="border-lavender-blue/20">
+            <Tabs 
+              defaultValue="translator" 
+              value={activeTab} 
+              onValueChange={setActiveTab}
+              className="w-full"
+            >
+              <TabsList className={`grid ${isMobile ? 'grid-cols-1' : 'grid-cols-3'} w-full`}>
+                {isMobile ? (
+                  <div className="flex flex-col space-y-2 p-2">
+                    <TabsTrigger value="translator" className="text-xs md:text-sm">
+                      Say It Better
+                    </TabsTrigger>
+                    <TabsTrigger value="realfight" className="text-xs md:text-sm">
+                      Cut to the Point
+                    </TabsTrigger>
+                    <TabsTrigger value="behaviors" className="text-xs md:text-sm">
+                      He Said, She Said
+                    </TabsTrigger>
+                  </div>
+                ) : (
+                  <>
+                    <TabsTrigger value="translator" className="text-xs md:text-sm">
+                      Say It Better
+                    </TabsTrigger>
+                    <TabsTrigger value="realfight" className="text-xs md:text-sm">
+                      Cut to the Point
+                    </TabsTrigger>
+                    <TabsTrigger value="behaviors" className="text-xs md:text-sm">
+                      He Said, She Said
+                    </TabsTrigger>
+                  </>
+                )}
+              </TabsList>
+              <TabsContent value="translator" className="p-4">
+                <HeardTranslator />
+              </TabsContent>
+              <TabsContent value="realfight" className="p-4">
+                <RealFightAbout />
+              </TabsContent>
+              <TabsContent value="behaviors" className="p-4">
+                <BehaviorDecoder />
+              </TabsContent>
+            </Tabs>
+          </Card>
+        </CollapsibleContent>
+      </Collapsible>
     </div>
   );
 };

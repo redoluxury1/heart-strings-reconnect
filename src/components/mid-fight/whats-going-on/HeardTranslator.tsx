@@ -3,6 +3,9 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { translateStatement } from '@/data/translator-data';
+import { MessageCircle } from 'lucide-react';
+import CustomizePhraseView from '../CustomizePhraseView';
+import ConversationDialog from '../ConversationDialog';
 
 const HeardTranslator = () => {
   const [inputText, setInputText] = useState('');
@@ -10,6 +13,9 @@ const HeardTranslator = () => {
     heardAs: string;
     trySaying: string;
   } | null>(null);
+  const [isCustomizing, setIsCustomizing] = useState(false);
+  const [customPhrase, setCustomPhrase] = useState('');
+  const [startConversationOpen, setStartConversationOpen] = useState(false);
 
   const handleTranslate = () => {
     if (inputText.trim()) {
@@ -17,6 +23,43 @@ const HeardTranslator = () => {
       setTranslation(result);
     }
   };
+
+  const handleStartChat = () => {
+    if (translation) {
+      setCustomPhrase(translation.trySaying);
+      setIsCustomizing(true);
+    }
+  };
+
+  const handleStartConversation = () => {
+    setStartConversationOpen(true);
+  };
+
+  const handleSendInvite = () => {
+    // This would integrate with your notification system
+    setStartConversationOpen(false);
+    setIsCustomizing(false);
+  };
+
+  if (isCustomizing) {
+    return (
+      <>
+        <CustomizePhraseView
+          customPhrase={customPhrase}
+          onCustomPhraseChange={setCustomPhrase}
+          onBackToTopics={() => setIsCustomizing(false)}
+          onStartConversation={handleStartConversation}
+        />
+        
+        <ConversationDialog
+          isOpen={startConversationOpen}
+          onOpenChange={setStartConversationOpen}
+          partnerName="Partner"
+          onSendInvite={handleSendInvite}
+        />
+      </>
+    );
+  }
 
   return (
     <div className="space-y-4">
@@ -59,6 +102,14 @@ const HeardTranslator = () => {
               "{translation.trySaying}"
             </p>
           </div>
+          
+          <Button 
+            onClick={handleStartChat} 
+            className="bg-lavender-blue hover:bg-lavender-blue/90 text-white mt-3 w-full"
+          >
+            <MessageCircle className="h-4 w-4 mr-1" />
+            Start a Chat
+          </Button>
         </div>
       )}
     </div>
