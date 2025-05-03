@@ -124,7 +124,7 @@ const PersonalizedConnection = () => {
                   {card.description}
                 </p>
                 
-                <div className="flex flex-wrap gap-3 justify-start">
+                <div className="flex flex-row gap-3 items-center">
                   <Link to={card.linkTo} className="block">
                     <button 
                       className={cn(
