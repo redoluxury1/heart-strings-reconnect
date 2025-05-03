@@ -1,21 +1,11 @@
 
 import React, { useState } from 'react';
-import { getFemaleBehaviors, getMaleBehaviors } from '@/data/behavior-data';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Button } from '@/components/ui/button';
-import { MessageCircle } from 'lucide-react';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
 import { useIsMobile } from '@/hooks/use-mobile';
 import CustomizePhraseView from '../CustomizePhraseView';
 import ConversationDialog from '../ConversationDialog';
-
-interface Behavior {
-  id: string;
-  behavior: string;
-  meaning: string;
-  response: string;
-}
+import MobileBehaviorToggle from './behavior-decoder/MobileBehaviorToggle';
+import BehaviorTabs from './behavior-decoder/BehaviorTabs';
 
 const BehaviorDecoder = () => {
   const [selectedFemaleBehaviorId, setSelectedFemaleBehaviorId] = useState<string>('');
@@ -26,18 +16,12 @@ const BehaviorDecoder = () => {
   const [startConversationOpen, setStartConversationOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   
-  const femaleBehaviors = getFemaleBehaviors();
-  const maleBehaviors = getMaleBehaviors();
-  
-  const selectedFemaleBehavior = femaleBehaviors.find(b => b.id === selectedFemaleBehaviorId);
-  const selectedMaleBehavior = maleBehaviors.find(b => b.id === selectedMaleBehaviorId);
-
   const isMobile = useIsMobile();
   
   const handleStartChat = () => {
     const selectedBehavior = genderTab === 'female' 
-      ? selectedFemaleBehavior 
-      : selectedMaleBehavior;
+      ? getFemaleBehaviors().find(b => b.id === selectedFemaleBehaviorId)
+      : getMaleBehaviors().find(b => b.id === selectedMaleBehaviorId);
     
     if (selectedBehavior) {
       setCustomPhrase(selectedBehavior.response);
@@ -90,130 +74,29 @@ const BehaviorDecoder = () => {
         open={!isMobile || isDropdownOpen}
         onOpenChange={isMobile ? setIsDropdownOpen : undefined}
       >
-        {isMobile && (
-          <CollapsibleTrigger asChild>
-            <Button 
-              variant="outline" 
-              className="w-full mb-5 flex justify-between items-center py-3"
-            >
-              <span className="font-medium">{genderTab === 'female' ? "She's not mad, she..." : "He doesn't hate you, he..."}</span>
-              <span>{isDropdownOpen ? '▲' : '▼'}</span>
-            </Button>
-          </CollapsibleTrigger>
-        )}
+        <MobileBehaviorToggle 
+          isDropdownOpen={isDropdownOpen}
+          genderTab={genderTab}
+          isMobile={isMobile}
+        />
         
         <CollapsibleContent>
-          <Tabs 
-            defaultValue="female" 
-            value={genderTab}
-            onValueChange={(value) => setGenderTab(value as 'female' | 'male')}
-            className="w-full"
-          >
-            <TabsList className="grid grid-cols-2 w-full mb-5">
-              <TabsTrigger value="female" className="text-xs md:text-sm py-3">
-                She's not mad, she...
-              </TabsTrigger>
-              <TabsTrigger value="male" className="text-xs md:text-sm py-3">
-                He doesn't hate you, he...
-              </TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="female" className="space-y-5">
-              <div className="relative z-20">
-                <Select
-                  value={selectedFemaleBehaviorId}
-                  onValueChange={setSelectedFemaleBehaviorId}
-                >
-                  <SelectTrigger className="w-full border-lavender-blue/30 mb-2 py-3">
-                    <SelectValue placeholder="Choose a behavior..." />
-                  </SelectTrigger>
-                  <SelectContent className="z-50 bg-white">
-                    {femaleBehaviors.map((behavior) => (
-                      <SelectItem key={behavior.id} value={behavior.id}>
-                        {behavior.behavior}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              
-              {selectedFemaleBehavior && (
-                <div className="mt-8 space-y-5 bg-soft-blush/20 p-5 rounded-md">
-                  <div>
-                    <h4 className="text-md font-medium text-mauve-rose mb-2">What This Likely Means:</h4>
-                    <p className="text-midnight-indigo/90 text-sm">
-                      {selectedFemaleBehavior.meaning}
-                    </p>
-                  </div>
-                  
-                  <div>
-                    <h4 className="text-md font-medium text-lavender-blue mb-2">Try Saying:</h4>
-                    <p className="bg-white p-4 rounded border border-lavender-blue/30 text-midnight-indigo/90">
-                      "{selectedFemaleBehavior.response}"
-                    </p>
-                  </div>
-                  
-                  <Button 
-                    onClick={handleStartChat} 
-                    className="bg-lavender-blue hover:bg-lavender-blue/90 text-white mt-5 w-full py-3"
-                  >
-                    <MessageCircle className="h-4 w-4 mr-2" />
-                    Start a Chat
-                  </Button>
-                </div>
-              )}
-            </TabsContent>
-
-            <TabsContent value="male" className="space-y-5">
-              <div className="relative z-20">
-                <Select
-                  value={selectedMaleBehaviorId}
-                  onValueChange={setSelectedMaleBehaviorId}
-                >
-                  <SelectTrigger className="w-full border-lavender-blue/30 mb-2 py-3">
-                    <SelectValue placeholder="Choose a behavior..." />
-                  </SelectTrigger>
-                  <SelectContent className="z-50 bg-white">
-                    {maleBehaviors.map((behavior) => (
-                      <SelectItem key={behavior.id} value={behavior.id}>
-                        {behavior.behavior}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              
-              {selectedMaleBehavior && (
-                <div className="mt-8 space-y-5 bg-soft-blush/20 p-5 rounded-md">
-                  <div>
-                    <h4 className="text-md font-medium text-mauve-rose mb-2">What This Likely Means:</h4>
-                    <p className="text-midnight-indigo/90 text-sm">
-                      {selectedMaleBehavior.meaning}
-                    </p>
-                  </div>
-                  
-                  <div>
-                    <h4 className="text-md font-medium text-lavender-blue mb-2">Try Saying:</h4>
-                    <p className="bg-white p-4 rounded border border-lavender-blue/30 text-midnight-indigo/90">
-                      "{selectedMaleBehavior.response}"
-                    </p>
-                  </div>
-                  
-                  <Button 
-                    onClick={handleStartChat} 
-                    className="bg-lavender-blue hover:bg-lavender-blue/90 text-white mt-5 w-full py-3"
-                  >
-                    <MessageCircle className="h-4 w-4 mr-2" />
-                    Start a Chat
-                  </Button>
-                </div>
-              )}
-            </TabsContent>
-          </Tabs>
+          <BehaviorTabs 
+            genderTab={genderTab}
+            onGenderTabChange={(value) => setGenderTab(value)}
+            selectedFemaleBehaviorId={selectedFemaleBehaviorId}
+            selectedMaleBehaviorId={selectedMaleBehaviorId}
+            onFemaleBehaviorSelect={setSelectedFemaleBehaviorId}
+            onMaleBehaviorSelect={setSelectedMaleBehaviorId}
+            onStartChat={handleStartChat}
+          />
         </CollapsibleContent>
       </Collapsible>
     </div>
   );
 };
+
+// Need to bring in these functions for handleStartChat
+import { getFemaleBehaviors, getMaleBehaviors } from '@/data/behavior-data';
 
 export default BehaviorDecoder;
