@@ -22,6 +22,18 @@ export const getRealIssues = (): RealIssue[] => {
       suggestion: "I'm feeling defensive because I don't think we're approaching this as equals. Can we find a solution where neither of us has to be 'wrong'?"
     },
     {
+      id: "disrespected",
+      label: "I'm feeling disrespected",
+      explanation: "This comes from moments where your boundaries, opinions, or needs feel ignored or belittled, undermining the mutual respect essential to a healthy relationship.",
+      suggestion: "When you [specific action], I feel disrespected. I need us to find a way to disagree without making me feel devalued."
+    },
+    {
+      id: "unloved",
+      label: "I don't feel loved",
+      explanation: "This deep-seated feeling often surfaces during conflicts when emotional connection is strained, and actions or words seem to contradict the care you expect in the relationship.",
+      suggestion: "Right now, I'm feeling disconnected from you. Can we pause the argument and find a way to reconnect before continuing?"
+    },
+    {
       id: "confused",
       label: "I don't even know why this matters so much right now",
       explanation: "Sometimes conflicts escalate because they're connected to other unresolved issues or because you're stressed about something entirely different.",
