@@ -62,7 +62,7 @@ const GroundingStep: React.FC<GroundingStepProps> = ({ onResponse, onExit }) => 
         
         <Button 
           variant="outline" 
-          className="border-gray-300 text-midnight-indigo hover:bg-gray-100 py-6"
+          className="border-gray-300 text-midnight-indigo bg-white hover:bg-gray-100 py-6"
           onClick={handleNotYet}
         >
           Not yet, I need to decompress

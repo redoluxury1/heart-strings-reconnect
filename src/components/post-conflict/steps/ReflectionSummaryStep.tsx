@@ -182,7 +182,14 @@ const ReflectionSummaryStep: React.FC<ReflectionSummaryStepProps> = ({
       
       <div className="flex justify-center">
         <Button
-          onClick={onContinue}
+          onClick={() => {
+            onContinue();
+            // Smooth scroll to the "Okay But Now What" section
+            const element = document.getElementById("okay-but-now-what");
+            if (element) {
+              element.scrollIntoView({ behavior: "smooth" });
+            }
+          }}
           className="bg-mauve-rose hover:bg-mauve-rose/90 text-white flex items-center gap-2"
         >
           Continue to next steps
