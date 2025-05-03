@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Puzzle, MessageCircle, ExternalLink } from 'lucide-react';
+import { Puzzle } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import HeardTranslator from './whats-going-on/HeardTranslator';
@@ -23,13 +23,13 @@ const WhatsReallyGoingOn = () => {
   };
 
   return (
-    <div className="space-y-10 py-8">
-      <div className="flex flex-col items-center mb-8">
-        <Puzzle className="h-16 md:h-20 w-16 md:w-20 text-mauve-rose mb-5" />
-        <h3 className="text-2xl font-cormorant font-medium text-midnight-indigo mb-5 text-center">
+    <div className="space-y-6 md:space-y-10 py-6 md:py-8">
+      <div className="flex flex-col items-center mb-4 md:mb-8">
+        <Puzzle className="h-14 md:h-20 w-14 md:w-20 text-mauve-rose mb-4 md:mb-5" />
+        <h3 className="text-xl md:text-2xl font-cormorant font-medium text-midnight-indigo mb-3 md:mb-5 text-center">
           What's Really Going On?
         </h3>
-        <p className="text-midnight-indigo/80 text-center max-w-2xl px-4">
+        <p className="text-midnight-indigo/80 text-center max-w-2xl px-4 text-sm md:text-base">
           Fast insight tools to help you decode what's happening when things get heated.
         </p>
       </div>
@@ -38,14 +38,14 @@ const WhatsReallyGoingOn = () => {
         <CollapsibleTrigger asChild>
           <Button 
             variant="outline" 
-            className="w-full mb-6 justify-between py-3"
+            className="w-full mb-4 md:mb-6 justify-between py-3"
           >
-            <span className="font-medium">{tabNames[activeTab as keyof typeof tabNames]}</span>
+            <span className="font-medium text-sm md:text-base">{tabNames[activeTab as keyof typeof tabNames]}</span>
             <span>{isCollapsed ? "▼ Show Tool" : "▲ Hide Tool"}</span>
           </Button>
         </CollapsibleTrigger>
         
-        <CollapsibleContent className="pt-8">
+        <CollapsibleContent className="pt-4 md:pt-8">
           <Card className="border-lavender-blue/20 shadow-md">
             <Tabs 
               defaultValue="translator" 
@@ -53,41 +53,34 @@ const WhatsReallyGoingOn = () => {
               onValueChange={setActiveTab}
               className="w-full"
             >
-              <TabsList className={`grid ${isMobile ? 'grid-cols-1 gap-4 p-5 mb-5' : 'grid-cols-3 gap-2 p-3 mb-6'} w-full`}>
-                {isMobile ? (
-                  <>
-                    <TabsTrigger value="translator" className="text-sm md:text-sm py-3 px-4">
-                      Say It Better
-                    </TabsTrigger>
-                    <TabsTrigger value="realfight" className="text-sm md:text-sm py-3 px-4">
-                      Cut to the Point
-                    </TabsTrigger>
-                    <TabsTrigger value="behaviors" className="text-sm md:text-sm py-3 px-4">
-                      He Said, She Said
-                    </TabsTrigger>
-                  </>
-                ) : (
-                  <>
-                    <TabsTrigger value="translator" className="text-sm md:text-sm py-3 px-4">
-                      Say It Better
-                    </TabsTrigger>
-                    <TabsTrigger value="realfight" className="text-sm md:text-sm py-3 px-4">
-                      Cut to the Point
-                    </TabsTrigger>
-                    <TabsTrigger value="behaviors" className="text-sm md:text-sm py-3 px-4">
-                      He Said, She Said
-                    </TabsTrigger>
-                  </>
-                )}
+              <TabsList className="grid grid-cols-1 gap-2 p-3 mb-4 md:mb-6 w-full">
+                <TabsTrigger 
+                  value="translator" 
+                  className="text-sm py-3 px-4 justify-start"
+                >
+                  Say It Better
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="realfight" 
+                  className="text-sm py-3 px-4 justify-start"
+                >
+                  Cut to the Point
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="behaviors" 
+                  className="text-sm py-3 px-4 justify-start"
+                >
+                  He Said, She Said
+                </TabsTrigger>
               </TabsList>
-              <div className="p-6 md:p-8">
-                <TabsContent value="translator" className="mt-0 pt-4">
+              <div className="p-4 md:p-8">
+                <TabsContent value="translator" className="mt-0 pt-2 md:pt-4">
                   <HeardTranslator />
                 </TabsContent>
-                <TabsContent value="realfight" className="mt-0 pt-4">
+                <TabsContent value="realfight" className="mt-0 pt-2 md:pt-4">
                   <RealFightAbout />
                 </TabsContent>
-                <TabsContent value="behaviors" className="mt-0 pt-4">
+                <TabsContent value="behaviors" className="mt-0 pt-2 md:pt-4">
                   <BehaviorDecoder />
                 </TabsContent>
               </div>

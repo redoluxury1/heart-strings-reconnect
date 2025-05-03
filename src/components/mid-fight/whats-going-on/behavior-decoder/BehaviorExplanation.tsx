@@ -14,7 +14,7 @@ const BehaviorExplanation: React.FC<BehaviorExplanationProps> = ({
   onStartChat 
 }) => {
   return (
-    <div className="mt-8 space-y-5 bg-soft-blush/20 p-5 rounded-md">
+    <div className="mt-6 space-y-5 bg-soft-blush/20 p-4 md:p-5 rounded-md">
       <div>
         <h4 className="text-md font-medium text-mauve-rose mb-2">What This Likely Means:</h4>
         <p className="text-midnight-indigo/90 text-sm">
@@ -24,14 +24,14 @@ const BehaviorExplanation: React.FC<BehaviorExplanationProps> = ({
       
       <div>
         <h4 className="text-md font-medium text-lavender-blue mb-2">Try Saying:</h4>
-        <p className="bg-white p-4 rounded border border-lavender-blue/30 text-midnight-indigo/90">
+        <p className="bg-white p-3 md:p-4 rounded border border-lavender-blue/30 text-midnight-indigo/90 text-sm">
           "{behavior.response}"
         </p>
       </div>
       
       <Button 
         onClick={onStartChat} 
-        className="bg-lavender-blue hover:bg-lavender-blue/90 text-white mt-5 w-full py-3"
+        className="bg-lavender-blue hover:bg-lavender-blue/90 text-white mt-4 w-full py-2 md:py-3 text-sm"
       >
         <MessageCircle className="h-4 w-4 mr-2" />
         Start a Chat

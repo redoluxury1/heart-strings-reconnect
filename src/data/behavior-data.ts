@@ -1,5 +1,5 @@
 
-interface Behavior {
+export interface Behavior {
   id: string;
   behavior: string;
   meaning: string;

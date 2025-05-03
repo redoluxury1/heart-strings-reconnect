@@ -37,10 +37,10 @@ const BehaviorTabs: React.FC<BehaviorTabsProps> = ({
       className="w-full"
     >
       <TabsList className="grid grid-cols-2 w-full mb-5">
-        <TabsTrigger value="female" className="text-xs md:text-sm py-3">
+        <TabsTrigger value="female" className="text-xs md:text-sm py-3 px-2 md:px-3">
           She's not mad, she...
         </TabsTrigger>
-        <TabsTrigger value="male" className="text-xs md:text-sm py-3">
+        <TabsTrigger value="male" className="text-xs md:text-sm py-3 px-2 md:px-3">
           He doesn't hate you, he...
         </TabsTrigger>
       </TabsList>
@@ -50,6 +50,7 @@ const BehaviorTabs: React.FC<BehaviorTabsProps> = ({
           behaviors={femaleBehaviors}
           selectedBehaviorId={selectedFemaleBehaviorId}
           onBehaviorSelect={onFemaleBehaviorSelect}
+          placeholder="How is she acting?"
         />
         
         {selectedFemaleBehavior && (
@@ -65,6 +66,7 @@ const BehaviorTabs: React.FC<BehaviorTabsProps> = ({
           behaviors={maleBehaviors}
           selectedBehaviorId={selectedMaleBehaviorId}
           onBehaviorSelect={onMaleBehaviorSelect}
+          placeholder="How is he acting?"
         />
         
         {selectedMaleBehavior && (

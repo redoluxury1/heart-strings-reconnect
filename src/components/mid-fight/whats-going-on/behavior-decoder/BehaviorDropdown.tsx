@@ -22,12 +22,12 @@ const BehaviorDropdown: React.FC<BehaviorDropdownProps> = ({
         value={selectedBehaviorId}
         onValueChange={onBehaviorSelect}
       >
-        <SelectTrigger className="w-full border-lavender-blue/30 mb-2 py-3">
+        <SelectTrigger className="w-full border-lavender-blue/30 mb-2 py-3 text-sm">
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
-        <SelectContent className="z-50 bg-white">
+        <SelectContent className="z-50 bg-white text-sm">
           {behaviors.map((behavior) => (
-            <SelectItem key={behavior.id} value={behavior.id}>
+            <SelectItem key={behavior.id} value={behavior.id} className="py-3">
               {behavior.behavior}
             </SelectItem>
           ))}
