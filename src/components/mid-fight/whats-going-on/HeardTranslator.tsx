@@ -76,9 +76,9 @@ const HeardTranslator = () => {
   }
 
   return (
-    <div className="space-y-6 pt-6">
-      <div className="mb-6">
-        <h3 className="text-lg font-medium text-midnight-indigo mb-3">
+    <div className="space-y-6">
+      <div className="mb-8">
+        <h3 className="text-lg font-medium text-midnight-indigo mb-4">
           Say It Better
         </h3>
         <p className="text-sm text-midnight-indigo/70">
@@ -86,13 +86,13 @@ const HeardTranslator = () => {
         </p>
       </div>
       
-      <div className="flex flex-wrap gap-2 mb-5">
+      <div className="flex flex-wrap gap-2 mb-6">
         {examplePhrases.map((phrase, index) => (
           <Button
             key={index}
             variant="outline"
             size="sm"
-            className="text-xs bg-white border-lavender-blue/20 hover:bg-lavender-blue/10"
+            className="text-xs bg-white border-lavender-blue/20 hover:bg-lavender-blue/10 mb-1"
             onClick={() => handleExampleClick(phrase)}
           >
             "{phrase}"
@@ -109,23 +109,23 @@ const HeardTranslator = () => {
       
       <Button 
         onClick={handleTranslate} 
-        className="w-full bg-midnight-indigo hover:bg-midnight-indigo/90"
+        className="w-full bg-midnight-indigo hover:bg-midnight-indigo/90 mt-4"
         disabled={!inputText.trim()}
       >
         Translate
       </Button>
       
       {translation && (
-        <div className="mt-8 space-y-4 bg-soft-blush/20 p-4 rounded-md">
+        <div className="mt-8 space-y-5 bg-soft-blush/20 p-4 rounded-md">
           <div>
-            <h4 className="text-md font-medium text-mauve-rose mb-1">How It Might Land:</h4>
+            <h4 className="text-md font-medium text-mauve-rose mb-2">How It Might Land:</h4>
             <p className="bg-white p-3 rounded border border-mauve-rose/20 text-midnight-indigo/90">
               "{translation.heardAs}"
             </p>
           </div>
           
           <div>
-            <h4 className="text-md font-medium text-lavender-blue mb-1">Try Saying Instead:</h4>
+            <h4 className="text-md font-medium text-lavender-blue mb-2">Try Saying Instead:</h4>
             <p className="bg-white p-3 rounded border border-lavender-blue/30 text-midnight-indigo/90">
               "{translation.trySaying}"
             </p>
@@ -133,7 +133,7 @@ const HeardTranslator = () => {
           
           <Button 
             onClick={handleStartChat} 
-            className="bg-lavender-blue hover:bg-lavender-blue/90 text-white mt-3 w-full"
+            className="bg-lavender-blue hover:bg-lavender-blue/90 text-white mt-4 w-full"
           >
             <MessageCircle className="h-4 w-4 mr-1" />
             Start a Chat
