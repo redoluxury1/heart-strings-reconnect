@@ -45,11 +45,11 @@ const LoveCodeQuiz = () => {
   // Calculate quiz results
   const calculateResults = () => {
     const loveCodes: Record<LoveCode, number> = {
-      'loving_words': 0,
-      'thoughtful_gestures': 0,
-      'intentional_time': 0,
-      'helpful_actions': 0,
-      'physical_connection': 0
+      'affirm': 0,
+      'together': 0,
+      'uplift': 0,
+      'support': 0,
+      'touch': 0
     };
 
     // Tally the scores

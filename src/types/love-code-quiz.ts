@@ -1,6 +1,6 @@
 
 // Love Code types
-export type LoveCode = 'loving_words' | 'thoughtful_gestures' | 'intentional_time' | 'helpful_actions' | 'physical_connection';
+export type LoveCode = 'affirm' | 'together' | 'uplift' | 'support' | 'touch';
 
 // Answer structure
 export interface LoveCodeAnswer {

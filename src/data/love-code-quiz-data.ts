@@ -1,289 +1,289 @@
 
 import { LoveCodeQuestion, LoveCodeDescriptions, SayInsteadPhrase, PhraseCategory } from '../types/love-code-quiz';
 
-// Quiz questions data
+// Quiz questions data - new 25-question format
 export const quizQuestions: LoveCodeQuestion[] = [
   {
     id: 'q1',
-    text: "When you're having a really tough day, what would help you feel most supported by your partner?",
+    text: "When I've had a rough day, the thing that makes me feel better is…",
     answers: [
-      { id: 'q1a1', text: "They say something kind and reassuring to remind me I'm not alone.", code: 'loving_words' },
-      { id: 'q1a2', text: "They leave a small surprise or note that shows they were thinking of me.", code: 'thoughtful_gestures' },
-      { id: 'q1a3', text: "They stop what they're doing to spend uninterrupted time with me.", code: 'intentional_time' },
-      { id: 'q1a4', text: "They take something off my plate without me asking.", code: 'helpful_actions' },
-      { id: 'q1a5', text: "They hold me close or sit near me quietly.", code: 'physical_connection' }
+      { id: 'q1a1', text: "A long hug, even if no words are said", code: 'touch' },
+      { id: 'q1a2', text: "Someone doing something helpful for me without asking", code: 'uplift' },
+      { id: 'q1a3', text: "A calm moment together with no distractions", code: 'together' },
+      { id: 'q1a4', text: "A surprise gesture that shows they were thinking about me", code: 'support' },
+      { id: 'q1a5', text: "A sincere \"You're doing great — I see how hard you're trying\"", code: 'affirm' }
     ]
   },
   {
     id: 'q2',
-    text: "What makes you feel most loved in everyday life — not just big moments?",
+    text: "If I'm feeling disconnected in my relationship, I start to wish for…",
     answers: [
-      { id: 'q2a1', text: "When they tell me they appreciate me or admire something I did.", code: 'loving_words' },
-      { id: 'q2a2', text: "When I find my favorite snack or coffee waiting for me without asking.", code: 'thoughtful_gestures' },
-      { id: 'q2a3', text: "When they choose to do something with me, even if it's small.", code: 'intentional_time' },
-      { id: 'q2a4', text: "When they remember to take care of something that matters to me.", code: 'helpful_actions' },
-      { id: 'q2a5', text: "When they reach for my hand, touch my back, or cuddle for no reason.", code: 'physical_connection' }
+      { id: 'q2a1', text: "More physical closeness or affection", code: 'touch' },
+      { id: 'q2a2', text: "Thoughtful compliments or reassuring words", code: 'affirm' },
+      { id: 'q2a3', text: "A shared project or something we're working on together", code: 'uplift' },
+      { id: 'q2a4', text: "Quality time without phones, stress, or multitasking", code: 'together' },
+      { id: 'q2a5', text: "Sweet, unexpected things that show they care", code: 'support' }
     ]
   },
   {
     id: 'q3',
-    text: "How do you feel most connected to your partner during conflict repair?",
+    text: "On my birthday, what makes me feel most loved is…",
     answers: [
-      { id: 'q3a1', text: "When they express clearly that they still love and value me.", code: 'loving_words' },
-      { id: 'q3a2', text: "When they follow up later with a thoughtful apology or small peace offering.", code: 'thoughtful_gestures' },
-      { id: 'q3a3', text: "When they give time just to talk and listen without distraction.", code: 'intentional_time' },
-      { id: 'q3a4', text: "When they show through actions that they're trying to do better.", code: 'helpful_actions' },
-      { id: 'q3a5', text: "When we hug or hold hands and reconnect physically.", code: 'physical_connection' }
+      { id: 'q3a1', text: "A handwritten note or heartfelt words", code: 'affirm' },
+      { id: 'q3a2', text: "Spending the whole day together, even doing nothing special", code: 'together' },
+      { id: 'q3a3', text: "A small, meaningful surprise gift", code: 'support' },
+      { id: 'q3a4', text: "When they take care of things so I don't have to lift a finger", code: 'uplift' },
+      { id: 'q3a5', text: "Physical closeness — like cuddles, kisses, or back rubs", code: 'touch' }
     ]
   },
   {
     id: 'q4',
-    text: "Which of these would mean the most to you on a random Tuesday?",
+    text: "When I'm upset, what helps me calm down most?",
     answers: [
-      { id: 'q4a1', text: "A sweet text or unexpected compliment.", code: 'loving_words' },
-      { id: 'q4a2', text: "A small treat on your desk or a coffee brought home.", code: 'thoughtful_gestures' },
-      { id: 'q4a3', text: "A spontaneous invite to do something together.", code: 'intentional_time' },
-      { id: 'q4a4', text: "A task finished that you've been avoiding.", code: 'helpful_actions' },
-      { id: 'q4a5', text: "A long hug or affectionate touch as you pass by.", code: 'physical_connection' }
+      { id: 'q4a1', text: "A warm embrace or just sitting close", code: 'touch' },
+      { id: 'q4a2', text: "Being told my feelings make sense", code: 'affirm' },
+      { id: 'q4a3', text: "Someone quietly stepping in to help with whatever's overwhelming me", code: 'uplift' },
+      { id: 'q4a4', text: "Doing something together, even if it's low-key", code: 'together' },
+      { id: 'q4a5', text: "A little gesture — like tea made just the way I like it", code: 'support' }
     ]
   },
   {
     id: 'q5',
-    text: "What makes you feel emotionally safe with your partner?",
+    text: "I feel closest to someone when they…",
     answers: [
-      { id: 'q5a1', text: "When they speak to me with encouragement and kindness.", code: 'loving_words' },
-      { id: 'q5a2', text: "When they go out of their way to show they've been thinking of me.", code: 'thoughtful_gestures' },
-      { id: 'q5a3', text: "When they consistently make space to talk about deeper things.", code: 'intentional_time' },
-      { id: 'q5a4', text: "When they notice I'm overwhelmed and jump in to help.", code: 'helpful_actions' },
-      { id: 'q5a5', text: "When they hold me without needing to fix anything.", code: 'physical_connection' }
+      { id: 'q5a1', text: "Go out of their way to do things that make my life easier", code: 'uplift' },
+      { id: 'q5a2', text: "Take time just for me, no multitasking or distractions", code: 'together' },
+      { id: 'q5a3', text: "Are physically affectionate and initiate closeness", code: 'touch' },
+      { id: 'q5a4', text: "Give heartfelt compliments or say something kind out of nowhere", code: 'affirm' },
+      { id: 'q5a5', text: "Notice and remember the little things that matter to me", code: 'support' }
     ]
   },
   {
     id: 'q6',
-    text: "How do you know your partner is truly paying attention to you?",
+    text: "I'd rather my partner…",
     answers: [
-      { id: 'q6a1', text: "They repeat something I said and affirm it out loud.", code: 'loving_words' },
-      { id: 'q6a2', text: "They give me a small gift that shows they remembered something I mentioned.", code: 'thoughtful_gestures' },
-      { id: 'q6a3', text: "They put away distractions and give me their full focus.", code: 'intentional_time' },
-      { id: 'q6a4', text: "They act on something I brought up without needing a reminder.", code: 'helpful_actions' },
-      { id: 'q6a5', text: "They reach out physically while I'm talking — like holding my hand or leaning in.", code: 'physical_connection' }
+      { id: 'q6a1', text: "Make dinner when I'm exhausted", code: 'uplift' },
+      { id: 'q6a2', text: "Leave me a note reminding me they believe in me", code: 'affirm' },
+      { id: 'q6a3', text: "Sit on the couch with me while we unwind", code: 'together' },
+      { id: 'q6a4', text: "Reach over and hold my hand without saying anything", code: 'touch' },
+      { id: 'q6a5', text: "Bring home my favorite snack without being asked", code: 'support' }
     ]
   },
   {
     id: 'q7',
-    text: "What do you tend to remember most about a good day together?",
+    text: "I feel safest in my relationship when…",
     answers: [
-      { id: 'q7a1', text: "Something sweet or meaningful they said to me.", code: 'loving_words' },
-      { id: 'q7a2', text: "A small gesture or surprise that caught me off guard.", code: 'thoughtful_gestures' },
-      { id: 'q7a3', text: "The feeling of being fully present with each other.", code: 'intentional_time' },
-      { id: 'q7a4', text: "Something they did that lightened my load or made life easier.", code: 'helpful_actions' },
-      { id: 'q7a5', text: "A physical moment — a hug, a look, or the way we cuddled.", code: 'physical_connection' }
+      { id: 'q7a1', text: "My partner is physically near me", code: 'touch' },
+      { id: 'q7a2', text: "I'm told I'm loved, appreciated, and not a burden", code: 'affirm' },
+      { id: 'q7a3', text: "We spend intentional time together, just the two of us", code: 'together' },
+      { id: 'q7a4', text: "They jump in to help before I even have to ask", code: 'uplift' },
+      { id: 'q7a5', text: "They do small, thoughtful things that show they know me", code: 'support' }
     ]
   },
   {
     id: 'q8',
-    text: "What makes you feel most reassured when you're doubting the relationship?",
+    text: "When thinking about a dream date night…",
     answers: [
-      { id: 'q8a1', text: "Hearing clearly how much I'm loved or wanted.", code: 'loving_words' },
-      { id: 'q8a2', text: "A spontaneous, thoughtful gesture to show they're thinking of me.", code: 'thoughtful_gestures' },
-      { id: 'q8a3', text: "Uninterrupted time together to reconnect emotionally.", code: 'intentional_time' },
-      { id: 'q8a4', text: "Consistent action that shows they're committed and trying.", code: 'helpful_actions' },
-      { id: 'q8a5', text: "Physical closeness that reminds me we're still connected.", code: 'physical_connection' }
+      { id: 'q8a1', text: "A cozy night on the couch, just holding each other", code: 'touch' },
+      { id: 'q8a2', text: "An activity where we laugh and connect without stress", code: 'together' },
+      { id: 'q8a3', text: "Something they planned ahead as a surprise", code: 'support' },
+      { id: 'q8a4', text: "A conversation where they really listen and say what I need to hear", code: 'affirm' },
+      { id: 'q8a5', text: "Coming home to find the chores already done and candles lit", code: 'uplift' }
     ]
   },
   {
     id: 'q9',
-    text: "What makes an apology feel real to you?",
+    text: "When I look back on moments I've felt loved, I remember…",
     answers: [
-      { id: 'q9a1', text: "When it's expressed clearly and vulnerably in words.", code: 'loving_words' },
-      { id: 'q9a2', text: "When it comes with a small, thoughtful act to show they care.", code: 'thoughtful_gestures' },
-      { id: 'q9a3', text: "When they make time to talk it out fully and listen.", code: 'intentional_time' },
-      { id: 'q9a4', text: "When they do something to make it right or follow through on a promise.", code: 'helpful_actions' },
-      { id: 'q9a5', text: "When they hold me and don't rush the process.", code: 'physical_connection' }
+      { id: 'q9a1', text: "The words they said that stuck with me", code: 'affirm' },
+      { id: 'q9a2', text: "When they were fully present with me, no distractions", code: 'together' },
+      { id: 'q9a3', text: "The times they helped or took the pressure off me", code: 'uplift' },
+      { id: 'q9a4', text: "When they touched me like they really meant it", code: 'touch' },
+      { id: 'q9a5', text: "The little surprises that showed they \"just knew\"", code: 'support' }
     ]
   },
   {
     id: 'q10',
-    text: "Which of these would most likely make you feel frustrated or disconnected?",
+    text: "If I'm feeling insecure, the best thing my partner could do is…",
     answers: [
-      { id: 'q10a1', text: "A lack of affirming words or appreciation.", code: 'loving_words' },
-      { id: 'q10a2', text: "Feeling forgotten or overlooked in small ways.", code: 'thoughtful_gestures' },
-      { id: 'q10a3', text: "Never having enough intentional time together.", code: 'intentional_time' },
-      { id: 'q10a4', text: "Always feeling like you're doing everything alone.", code: 'helpful_actions' },
-      { id: 'q10a5', text: "A lack of physical touch or affection.", code: 'physical_connection' }
+      { id: 'q10a1', text: "Hold me close or pull me in for a kiss", code: 'touch' },
+      { id: 'q10a2', text: "Tell me what they admire about me", code: 'affirm' },
+      { id: 'q10a3', text: "Spend the whole afternoon doing something together", code: 'together' },
+      { id: 'q10a4', text: "Do something that shows they've got my back", code: 'uplift' },
+      { id: 'q10a5', text: "Show up with something sweet they remembered I love", code: 'support' }
     ]
   },
   {
     id: 'q11',
-    text: "How do you prefer to celebrate a special occasion?",
+    text: "I'm most likely to feel hurt in a relationship when…",
     answers: [
-      { id: 'q11a1', text: "With a heartfelt message or handwritten letter.", code: 'loving_words' },
-      { id: 'q11a2', text: "With a meaningful gift or surprise.", code: 'thoughtful_gestures' },
-      { id: 'q11a3', text: "With a day or evening spent fully together.", code: 'intentional_time' },
-      { id: 'q11a4', text: "With help planning or organizing the day.", code: 'helpful_actions' },
-      { id: 'q11a5', text: "With intimacy, affection, or just holding each other close.", code: 'physical_connection' }
+      { id: 'q11a1', text: "They stop saying kind or encouraging things to me", code: 'affirm' },
+      { id: 'q11a2', text: "We don't spend enough one-on-one time together", code: 'together' },
+      { id: 'q11a3', text: "They stop being physically affectionate", code: 'touch' },
+      { id: 'q11a4', text: "I feel like I'm doing everything by myself", code: 'uplift' },
+      { id: 'q11a5', text: "They stop putting thought into the little things that matter to me", code: 'support' }
     ]
   },
   {
     id: 'q12',
-    text: "If you had to go a week without something, what would be hardest to lose?",
+    text: "The smallest gesture that means the most to me is…",
     answers: [
-      { id: 'q12a1', text: "Encouraging words from your partner.", code: 'loving_words' },
-      { id: 'q12a2', text: "Unexpected thoughtful acts.", code: 'thoughtful_gestures' },
-      { id: 'q12a3', text: "Quality time just the two of you.", code: 'intentional_time' },
-      { id: 'q12a4', text: "Shared responsibilities or practical support.", code: 'helpful_actions' },
-      { id: 'q12a5', text: "Physical intimacy and closeness.", code: 'physical_connection' }
+      { id: 'q12a1', text: "Hearing \"I'm proud of you\" when I didn't expect it", code: 'affirm' },
+      { id: 'q12a2', text: "Getting a coffee or snack they know I love", code: 'support' },
+      { id: 'q12a3', text: "A spontaneous hug or hand on my back", code: 'touch' },
+      { id: 'q12a4', text: "Spending real, intentional time together", code: 'together' },
+      { id: 'q12a5', text: "Taking care of something stressful for me without asking", code: 'uplift' }
     ]
   },
   {
     id: 'q13',
-    text: "When you think about the future, what brings you the most comfort?",
+    text: "I usually express love to others by…",
     answers: [
-      { id: 'q13a1', text: "Knowing we'll always speak love to each other out loud.", code: 'loving_words' },
-      { id: 'q13a2', text: "Knowing we'll always surprise and delight each other in small ways.", code: 'thoughtful_gestures' },
-      { id: 'q13a3', text: "Knowing we'll never stop making time to connect.", code: 'intentional_time' },
-      { id: 'q13a4', text: "Knowing we'll show up and support each other through anything.", code: 'helpful_actions' },
-      { id: 'q13a5', text: "Knowing we'll stay physically close — from hand-holding to intimacy.", code: 'physical_connection' }
+      { id: 'q13a1', text: "Doing things to make their life easier", code: 'uplift' },
+      { id: 'q13a2', text: "Leaving notes or sending thoughtful texts", code: 'affirm' },
+      { id: 'q13a3', text: "Wanting to be physically close and affectionate", code: 'touch' },
+      { id: 'q13a4', text: "Making plans and spending focused time together", code: 'together' },
+      { id: 'q13a5', text: "Picking out gifts or gestures that are deeply personal", code: 'support' }
     ]
   },
   {
     id: 'q14',
-    text: "How do you show love when your partner is struggling?",
+    text: "In an argument, I feel more at peace when…",
     answers: [
-      { id: 'q14a1', text: "I tell them how strong or loved they are.", code: 'loving_words' },
-      { id: 'q14a2', text: "I leave notes, gifts, or thoughtful reminders they're not alone.", code: 'thoughtful_gestures' },
-      { id: 'q14a3', text: "I sit with them and just spend time being present.", code: 'intentional_time' },
-      { id: 'q14a4', text: "I do something for them that makes their life easier.", code: 'helpful_actions' },
-      { id: 'q14a5', text: "I hold them or stay physically close.", code: 'physical_connection' }
+      { id: 'q14a1', text: "They validate my feelings with words", code: 'affirm' },
+      { id: 'q14a2', text: "They reach out to hold my hand or touch me gently", code: 'touch' },
+      { id: 'q14a3', text: "They take action to make things right, not just say things", code: 'uplift' },
+      { id: 'q14a4', text: "We take time to reconnect without rushing", code: 'together' },
+      { id: 'q14a5', text: "They follow up with something meaningful after it's over", code: 'support' }
     ]
   },
   {
     id: 'q15',
-    text: "What makes you feel remembered and important?",
+    text: "My favorite type of \"I love you\" is…",
     answers: [
-      { id: 'q15a1', text: "A compliment or affirmation that hits just right.", code: 'loving_words' },
-      { id: 'q15a2', text: "A gift or gesture that shows they were thinking of me.", code: 'thoughtful_gestures' },
-      { id: 'q15a3', text: "Time blocked off just for me.", code: 'intentional_time' },
-      { id: 'q15a4', text: "An act that helps me or takes stress off my plate.", code: 'helpful_actions' },
-      { id: 'q15a5', text: "A physical moment — from a kiss on the forehead to hand-holding.", code: 'physical_connection' }
+      { id: 'q15a1', text: "Spoken out loud, clearly and sincerely", code: 'affirm' },
+      { id: 'q15a2', text: "A cozy night in with no distractions", code: 'together' },
+      { id: 'q15a3', text: "A small gift or thoughtful act they planned just for me", code: 'support' },
+      { id: 'q15a4', text: "Stepping in to help without being asked", code: 'uplift' },
+      { id: 'q15a5', text: "A kiss on the forehead or long hug", code: 'touch' }
     ]
   },
   {
     id: 'q16',
-    text: "What's your favorite kind of love moment?",
+    text: "When I feel emotionally overwhelmed, I wish they would…",
     answers: [
-      { id: 'q16a1', text: "A text that says 'just thinking of you.'", code: 'loving_words' },
-      { id: 'q16a2', text: "A surprise coffee, note, or little gift.", code: 'thoughtful_gestures' },
-      { id: 'q16a3', text: "Laughing together in the middle of doing nothing.", code: 'intentional_time' },
-      { id: 'q16a4', text: "When they step in to help before I ask.", code: 'helpful_actions' },
-      { id: 'q16a5', text: "A slow hug that lasts longer than usual.", code: 'physical_connection' }
+      { id: 'q16a1', text: "Sit quietly with me so I'm not alone", code: 'together' },
+      { id: 'q16a2', text: "Help take something off my plate", code: 'uplift' },
+      { id: 'q16a3', text: "Say something that reminds me they care", code: 'affirm' },
+      { id: 'q16a4', text: "Touch my arm, hold me, or pull me close", code: 'touch' },
+      { id: 'q16a5', text: "Show up with something small that lifts my mood", code: 'support' }
     ]
   },
   {
     id: 'q17',
-    text: "How do you feel best understood?",
+    text: "I feel most appreciated when…",
     answers: [
-      { id: 'q17a1', text: "When they reflect back what I've said with care.", code: 'loving_words' },
-      { id: 'q17a2', text: "When they do something that shows they've been paying attention.", code: 'thoughtful_gestures' },
-      { id: 'q17a3', text: "When they make time to listen with their full focus.", code: 'intentional_time' },
-      { id: 'q17a4', text: "When they act on my needs without me having to ask twice.", code: 'helpful_actions' },
-      { id: 'q17a5', text: "When they stay close and make me feel safe in their presence.", code: 'physical_connection' }
+      { id: 'q17a1', text: "I'm told how much I'm valued", code: 'affirm' },
+      { id: 'q17a2', text: "They recognize what I've done by taking a task off my list", code: 'uplift' },
+      { id: 'q17a3', text: "We carve out uninterrupted time together", code: 'together' },
+      { id: 'q17a4', text: "They do something small but meaningful, just because", code: 'support' },
+      { id: 'q17a5', text: "We're physically affectionate throughout the day", code: 'touch' }
     ]
   },
   {
     id: 'q18',
-    text: "Which one would mean the most after a long day?",
+    text: "If I'm struggling with self-doubt, I want them to…",
     answers: [
-      { id: 'q18a1', text: '"You did so much today. I\'m proud of you."', code: 'loving_words' },
-      { id: 'q18a2', text: "A favorite snack or item placed on your pillow.", code: 'thoughtful_gestures' },
-      { id: 'q18a3', text: "An evening just the two of you with no phones.", code: 'intentional_time' },
-      { id: 'q18a4', text: "Coming home to a cleaned space or task done.", code: 'helpful_actions' },
-      { id: 'q18a5', text: "A massage or time cuddling on the couch.", code: 'physical_connection' }
+      { id: 'q18a1', text: "Say exactly what they believe in about me", code: 'affirm' },
+      { id: 'q18a2', text: "Stay close and hold me", code: 'touch' },
+      { id: 'q18a3', text: "Remind me I'm not alone by spending time with me", code: 'together' },
+      { id: 'q18a4', text: "Quietly take care of something that's weighing on me", code: 'uplift' },
+      { id: 'q18a5', text: "Show they're thinking of me with something thoughtful", code: 'support' }
     ]
   },
   {
     id: 'q19',
-    text: "When you're in a good mood, how do you most naturally express love?",
+    text: "The best kind of \"check-in\" from my partner would be…",
     answers: [
-      { id: 'q19a1', text: "I say something sweet or affirming.", code: 'loving_words' },
-      { id: 'q19a2', text: "I bring or make something thoughtful.", code: 'thoughtful_gestures' },
-      { id: 'q19a3', text: "I ask to do something together.", code: 'intentional_time' },
-      { id: 'q19a4', text: "I take care of something for them.", code: 'helpful_actions' },
-      { id: 'q19a5', text: "I give extra physical affection.", code: 'physical_connection' }
+      { id: 'q19a1', text: "\"I'm thinking about you. How's your day?\"", code: 'affirm' },
+      { id: 'q19a2', text: "Coming by with something I need", code: 'support' },
+      { id: 'q19a3', text: "\"Wanna hang out tonight, just us?\"", code: 'together' },
+      { id: 'q19a4', text: "\"I took care of this for you\"", code: 'uplift' },
+      { id: 'q19a5', text: "A kiss or touch without needing to say much", code: 'touch' }
     ]
   },
   {
     id: 'q20',
-    text: "What would hurt the most in a relationship?",
+    text: "I feel most distant from my partner when…",
     answers: [
-      { id: 'q20a1', text: "Being spoken to harshly or with criticism.", code: 'loving_words' },
-      { id: 'q20a2', text: "Never being surprised or thought about in the little ways.", code: 'thoughtful_gestures' },
-      { id: 'q20a3', text: "Feeling like we're roommates, not emotionally connected.", code: 'intentional_time' },
-      { id: 'q20a4', text: "Feeling like I carry all the responsibility alone.", code: 'helpful_actions' },
-      { id: 'q20a5', text: "Feeling touch-starved or physically distant.", code: 'physical_connection' }
+      { id: 'q20a1', text: "They stop doing little things that help me", code: 'uplift' },
+      { id: 'q20a2', text: "We don't physically connect for a while", code: 'touch' },
+      { id: 'q20a3', text: "We're around each other but not with each other", code: 'together' },
+      { id: 'q20a4', text: "They forget to say loving or affirming things", code: 'affirm' },
+      { id: 'q20a5', text: "There's no thoughtfulness in the everyday stuff", code: 'support' }
     ]
   },
   {
     id: 'q21',
-    text: "What do you long for most in quiet moments?",
+    text: "If they forgot our anniversary but made it up later, I'd prefer…",
     answers: [
-      { id: 'q21a1', text: "A kind word or appreciation.", code: 'loving_words' },
-      { id: 'q21a2', text: "A thoughtful item that makes me feel seen.", code: 'thoughtful_gestures' },
-      { id: 'q21a3', text: "Shared silence with full presence.", code: 'intentional_time' },
-      { id: 'q21a4', text: "Help without asking.", code: 'helpful_actions' },
-      { id: 'q21a5', text: "A long hug or their hand on mine.", code: 'physical_connection' }
+      { id: 'q21a1', text: "A thoughtful, meaningful letter", code: 'affirm' },
+      { id: 'q21a2', text: "A quiet evening doing something meaningful together", code: 'together' },
+      { id: 'q21a3', text: "A simple, unexpected act of care", code: 'support' },
+      { id: 'q21a4', text: "Taking over all the tasks that day to give me a break", code: 'uplift' },
+      { id: 'q21a5', text: "A day full of cuddles and affection", code: 'touch' }
     ]
   },
   {
     id: 'q22',
-    text: "What do you miss most when apart from your partner?",
+    text: "In everyday life, I feel loved when…",
     answers: [
-      { id: 'q22a1', text: "Hearing them say sweet or supportive things.", code: 'loving_words' },
-      { id: 'q22a2', text: "Small surprise notes or gifts.", code: 'thoughtful_gestures' },
-      { id: 'q22a3', text: "Talking and being fully present with each other.", code: 'intentional_time' },
-      { id: 'q22a4', text: "Having their help with the day-to-day.", code: 'helpful_actions' },
-      { id: 'q22a5', text: "Physical affection and intimacy.", code: 'physical_connection' }
+      { id: 'q22a1', text: "I'm touched often and with intention", code: 'touch' },
+      { id: 'q22a2', text: "I'm included in time that feels special", code: 'together' },
+      { id: 'q22a3', text: "Someone says something that sticks with me", code: 'affirm' },
+      { id: 'q22a4', text: "My needs are met without me saying a word", code: 'uplift' },
+      { id: 'q22a5', text: "They go out of their way to make something feel personal", code: 'support' }
     ]
   },
   {
     id: 'q23',
-    text: "What would make an ordinary day feel extraordinary?",
+    text: "If we've been busy or disconnected, I'd most want…",
     answers: [
-      { id: 'q23a1', text: "A genuine compliment or loving check-in.", code: 'loving_words' },
-      { id: 'q23a2', text: "An unexpected gesture or treat.", code: 'thoughtful_gestures' },
-      { id: 'q23a3', text: "A meaningful conversation or shared moment.", code: 'intentional_time' },
-      { id: 'q23a4', text: "A task done without being asked.", code: 'helpful_actions' },
-      { id: 'q23a5', text: "Unexpected affection or a slow kiss.", code: 'physical_connection' }
+      { id: 'q23a1', text: "A night alone together to talk and reset", code: 'together' },
+      { id: 'q23a2', text: "Words of reassurance that we're still good", code: 'affirm' },
+      { id: 'q23a3', text: "Something thoughtful that feels like \"I see you\"", code: 'support' },
+      { id: 'q23a4', text: "A gesture that lightens my stress", code: 'uplift' },
+      { id: 'q23a5', text: "Physical touch to reconnect, even in silence", code: 'touch' }
     ]
   },
   {
     id: 'q24',
-    text: "How do you prefer to reconnect after a busy week?",
+    text: "If my partner was on a long trip, I'd miss…",
     answers: [
-      { id: 'q24a1', text: "Honest, loving conversation.", code: 'loving_words' },
-      { id: 'q24a2', text: "A small thoughtful surprise to show I was missed.", code: 'thoughtful_gestures' },
-      { id: 'q24a3', text: "Focused quality time together.", code: 'intentional_time' },
-      { id: 'q24a4', text: "Acts of service that help ease my stress.", code: 'helpful_actions' },
-      { id: 'q24a5', text: "Lots of cuddling, holding, and touch.", code: 'physical_connection' }
+      { id: 'q24a1', text: "Their physical presence", code: 'touch' },
+      { id: 'q24a2', text: "The way they'd help me with everyday stuff", code: 'uplift' },
+      { id: 'q24a3', text: "Talking with them and hearing kind words", code: 'affirm' },
+      { id: 'q24a4', text: "Having quality time to unwind together", code: 'together' },
+      { id: 'q24a5', text: "The way they'd do the little things only they think of", code: 'support' }
     ]
   },
   {
     id: 'q25',
-    text: "What love moment feels most like \"home\" to you?",
+    text: "When I say \"I love you,\" I'm often really saying…",
     answers: [
-      { id: 'q25a1', text: "A voice that makes me feel safe and seen.", code: 'loving_words' },
-      { id: 'q25a2', text: "A thoughtful little reminder that I matter.", code: 'thoughtful_gestures' },
-      { id: 'q25a3', text: "Time spent doing nothing together but feeling fully connected.", code: 'intentional_time' },
-      { id: 'q25a4', text: "Someone showing up to lighten my load.", code: 'helpful_actions' },
-      { id: 'q25a5', text: "A long embrace that says everything without words.", code: 'physical_connection' }
+      { id: 'q25a1', text: "\"I'm here for you — let me help.\"", code: 'uplift' },
+      { id: 'q25a2', text: "\"You matter to me more than anything.\"", code: 'together' },
+      { id: 'q25a3', text: "\"You're incredible and I believe in you.\"", code: 'affirm' },
+      { id: 'q25a4', text: "\"I want to be near you, physically and emotionally.\"", code: 'touch' },
+      { id: 'q25a5', text: "\"I've been thinking about you — here's something just for you.\"", code: 'support' }
     ]
   }
 ];
 
 // Love code descriptions
 export const loveCodeDescriptions: LoveCodeDescriptions = {
-  loving_words: {
-    title: "Loving Words",
+  affirm: {
+    title: "Affirming Words",
     emotionalCore: "You feel most connected when emotions are named and expressed verbally. Words matter deeply to you.",
     howYouFeelLoved: "You feel most loved when your partner speaks affirmation, appreciation, and loving sentiments out loud—from daily check-ins to deep conversations.",
     oftenMisread: "You might be misread as needy or validation-seeking when you're truly seeking emotional transparency and clear communication.",
@@ -292,14 +292,14 @@ export const loveCodeDescriptions: LoveCodeDescriptions = {
     color: "#E5DEFF", // Soft purple
     detailedDescription: {
       emotionalCore: "At your core, words don't just inform — they anchor you emotionally. You're someone who experiences connection through clarity, articulation, and tone. When love is spoken with sincerity, you don't just hear it — you feel it. Words are how you orient yourself in a relationship: they help you feel valued, secure, and known.\n\nYour nervous system responds to tone. A gentle \"I see you,\" or a vulnerable \"I'm sorry,\" lands deeper than actions alone. Even brief affirmations — a soft \"I missed you\" or \"I'm so lucky to have you\" — carry weight far beyond their syllables. This is because language is your access point to emotional safety. Without it, you may feel disoriented, even if everything else seems \"fine\" on the surface.\n\nFor you, language holds memories. You remember the sweet things people say long after the moment has passed. Harsh words, silence, or emotionally flat conversations can feel like deep ruptures — not because you're dramatic, but because you value emotional honesty. Words don't just matter. They mean everything.",
-      howYouFeelLoved: "You feel loved when someone speaks to you with warmth, presence, and intention. When your partner notices the little things you're doing and tells you — not just thinks it — it fills a reservoir inside you that actions alone can't reach. A compliment about your heart. A message during the day saying, \"I'm proud of you.\" A soft tone when things feel tense. These aren't just niceties to you — they're connection threads.\n\nEven more than that, it's the consistency of language that counts. You don't just want one perfect speech — you want the small, steady reminders that love is here, alive, and seen. Loving Words people thrive when conversations are reflective, affirming, and emotionally curious. You want to feel spoken to from the heart — not from obligation. You're most alive when you hear, \"Here's how I feel about you, and I want you to know.\"\n\nWhen a partner can verbalize appreciation, repair, or affection clearly and vulnerably — especially during hard moments — that's when you feel most safe, most connected, and most secure in the relationship.",
+      howYouFeelLoved: "You feel loved when someone speaks to you with warmth, presence, and intention. When your partner notices the little things you're doing and tells you — not just thinks it — it fills a reservoir inside you that actions alone can't reach. A compliment about your heart. A message during the day saying, \"I'm proud of you.\" A soft tone when things feel tense. These aren't just niceties to you — they're connection threads.\n\nEven more than that, it's the consistency of language that counts. You don't just want one perfect speech — you want the small, steady reminders that love is here, alive, and seen. Affirming Words people thrive when conversations are reflective, affirming, and emotionally curious. You want to feel spoken to from the heart — not from obligation. You're most alive when you hear, \"Here's how I feel about you, and I want you to know.\"\n\nWhen a partner can verbalize appreciation, repair, or affection clearly and vulnerably — especially during hard moments — that's when you feel most safe, most connected, and most secure in the relationship.",
       oftenMisread: "Because you value words so deeply, others might misinterpret your needs as \"needy,\" \"sensitive,\" or even \"insecure.\" But it's not about needing constant reassurance — it's about knowing that love is still alive between the lines. When someone goes silent during conflict, or avoids verbal connection altogether, it can trigger feelings of abandonment or doubt for you — not because you're irrational, but because words are your signal of emotional presence.\n\nPeople who don't share this Love Code may think their actions speak louder than words — and while you appreciate action, it doesn't reach the same emotional depth for you. In relationships, this can lead to a painful mismatch: one partner feels they're showing love by doing, while you may be wondering why they aren't saying anything.\n\nEven worse, words used carelessly — sharp tone, sarcasm, passive-aggressive remarks — hit deeper than they realize. For someone with your Love Code, tone is intimacy. It matters how things are said. The absence of tenderness in language can feel like distance, even if everything else is functioning. This is often misunderstood — and it can make you feel like your emotional needs are \"too much.\" They're not.",
       relationalGrowthTips: "Own your Love Code without apology — but learn to communicate your needs clearly, not expect your partner to just \"know.\" Phrases like, \"I connect most through words, and I'd love to hear what you're feeling,\" can open the door gently. You can model this by speaking affection first — giving the kind of love you long to receive. Often, people learn how to speak love because of you.\n\nIn conflict, your tendency may be to chase clarity through conversation — wanting to fix things through words. This is a gift — but it can become overwhelming for partners who process differently. Practice patience. Ask, \"When would be a good time to talk about this?\" or \"Can we come back to this in a way that feels good for both of us?\" You don't have to silence yourself — you just have to pace the conversation with love.\n\nAlso reflect: when do you go quiet? Do you shut down when you're hurt or disappointed with the way something was said? Sometimes the best thing you can do is let someone know — \"Words matter to me, and this felt like a disconnection.\" This Love Code doesn't make you fragile. It makes you attuned. Speak love clearly — and teach others how to speak it back."
     },
     secondaryDescription: "While this may not be your primary Love Code, affirming words still matter to you more than most people realize. When someone tells you what they appreciate about you — out loud — it leaves a lasting emotional imprint. You respond to sincere compliments, encouragement, and check-ins that remind you you're cared for. In tough moments, even a simple \"I'm here\" or \"You're doing great\" can soften your heart and help you reconnect faster. Words aren't everything — but they still carry weight."
   },
-  thoughtful_gestures: {
-    title: "Thoughtful Gestures",
+  support: {
+    title: "Thoughtful Support",
     emotionalCore: "You notice the small things and feel most loved when your partner goes out of their way to surprise or delight you.",
     howYouFeelLoved: "Unexpected notes, small gifts, or thoughtful gestures that show they've been thinking of you make you feel cherished and remembered.",
     oftenMisread: "You might be seen as materialistic when you're truly looking for the thoughtfulness behind the gesture rather than the thing itself.",
@@ -314,7 +314,7 @@ export const loveCodeDescriptions: LoveCodeDescriptions = {
     },
     secondaryDescription: "You're someone who notices the little things — and when someone surprises you with a small, intentional gesture, it speaks directly to your heart. This might not be your dominant way of receiving love, but when someone remembers something specific to you or goes out of their way to make a small moment special, it makes you feel deeply seen. You don't need big gifts — just effort and attention. Thoughtfulness in action is still meaningful to you."
   },
-  intentional_time: {
+  together: {
     title: "Intentional Time",
     emotionalCore: "You value presence over all else and feel most connected when someone gives you their undivided attention.",
     howYouFeelLoved: "Quality time with genuine presence, eye contact, and focused attention makes you feel truly valued and connected.",
@@ -330,7 +330,7 @@ export const loveCodeDescriptions: LoveCodeDescriptions = {
     },
     secondaryDescription: "Even if it's not your #1 Love Code, uninterrupted quality time still plays a big role in how you connect. You feel especially close to someone when they slow down and give you their full attention — whether that's during a deep conversation, a shared activity, or just doing nothing together. You may not need a ton of time, but the quality of it matters. Being present still carries a quiet power in your emotional world."
   },
-  helpful_actions: {
+  uplift: {
     title: "Helpful Actions",
     emotionalCore: "You feel most loved when someone does something tangible to make your life better or easier.",
     howYouFeelLoved: "Acts of service and practical support—especially when done without being asked—make you feel most cared for and understood.",
@@ -346,7 +346,7 @@ export const loveCodeDescriptions: LoveCodeDescriptions = {
     },
     secondaryDescription: "You may not always realize it, but you light up when someone steps in to help you, especially when they do it without being asked. You appreciate actions that show care — when someone lightens your load, follows through, or anticipates your needs. Even if this isn't your top Love Code, it still builds emotional safety for you. Support speaks volumes, and when it's consistent, it deepens your trust."
   },
-  physical_connection: {
+  touch: {
     title: "Physical Connection",
     emotionalCore: "You process emotions through touch and physical proximity, finding security in physical connection.",
     howYouFeelLoved: "Physical affection—from hand-holding to long hugs to intimate connection—helps you feel most secure and valued.",
