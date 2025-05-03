@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import { Puzzle } from 'lucide-react';
 import { Card } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import HeardTranslator from './whats-going-on/HeardTranslator';
 import RealFightAbout from './whats-going-on/RealFightAbout';
 import BehaviorDecoder from './whats-going-on/BehaviorDecoder';
@@ -10,17 +9,23 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Button } from '@/components/ui/button';
 import { ChevronDown, ChevronUp } from 'lucide-react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const WhatsReallyGoingOn = () => {
-  const [activeTab, setActiveTab] = useState("translator");
+  const [activeFeature, setActiveFeature] = useState<'translator' | 'realfight' | 'behaviors'>('translator');
   const [isCollapsed, setIsCollapsed] = useState(false);
   const isMobile = useIsMobile();
 
-  // Map tab values to display names
-  const tabNames = {
-    "translator": "Say It Better",
-    "realfight": "Cut to the Point",
-    "behaviors": "He Said, She Said"
+  // Map feature values to display names
+  const featureNames = {
+    'translator': 'Say It Better',
+    'realfight': 'Cut to the Point',
+    'behaviors': 'He Said, She Said'
   };
 
   return (
@@ -36,58 +41,53 @@ const WhatsReallyGoingOn = () => {
       </div>
 
       <Collapsible open={!isCollapsed} onOpenChange={setIsCollapsed}>
-        <CollapsibleTrigger asChild>
-          <Button 
-            variant="outline" 
-            className="w-full mb-3 md:mb-6 justify-between py-2 md:py-3 text-sm md:text-base"
-          >
-            <span className="font-medium">{tabNames[activeTab as keyof typeof tabNames]}</span>
-            <span className="flex items-center">
-              {isCollapsed ? <ChevronDown className="h-4 w-4 ml-1" /> : <ChevronUp className="h-4 w-4 ml-1" />}
-            </span>
-          </Button>
-        </CollapsibleTrigger>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button 
+              variant="outline" 
+              className="w-full mb-3 md:mb-6 justify-between py-2 md:py-3 text-sm md:text-base"
+            >
+              <span className="font-medium">{featureNames[activeFeature]}</span>
+              <span className="flex items-center">
+                <ChevronDown className="h-4 w-4 ml-1" />
+              </span>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="start" className="w-[calc(100%-1rem)] bg-white">
+            <DropdownMenuItem 
+              className="py-3 cursor-pointer" 
+              onClick={() => setActiveFeature('translator')}
+            >
+              Say It Better
+            </DropdownMenuItem>
+            <DropdownMenuItem 
+              className="py-3 cursor-pointer" 
+              onClick={() => setActiveFeature('realfight')}
+            >
+              Cut to the Point
+            </DropdownMenuItem>
+            <DropdownMenuItem 
+              className="py-3 cursor-pointer" 
+              onClick={() => setActiveFeature('behaviors')}
+            >
+              He Said, She Said
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
         
         <CollapsibleContent className={`${isMobile ? 'pt-3' : 'pt-4 md:pt-6'}`}>
           <Card className="border-lavender-blue/20 shadow-md">
-            <Tabs 
-              defaultValue="translator" 
-              value={activeTab} 
-              onValueChange={setActiveTab}
-              className="w-full"
-            >
-              <TabsList className="grid grid-cols-1 gap-1 p-2 mb-3 md:mb-5 w-full">
-                <TabsTrigger 
-                  value="translator" 
-                  className="text-sm py-2 md:py-3 px-3 md:px-4 justify-start"
-                >
-                  Say It Better
-                </TabsTrigger>
-                <TabsTrigger 
-                  value="realfight" 
-                  className="text-sm py-2 md:py-3 px-3 md:px-4 justify-start"
-                >
-                  Cut to the Point
-                </TabsTrigger>
-                <TabsTrigger 
-                  value="behaviors" 
-                  className="text-sm py-2 md:py-3 px-3 md:px-4 justify-start"
-                >
-                  He Said, She Said
-                </TabsTrigger>
-              </TabsList>
-              <div className={`${isMobile ? 'p-3' : 'p-4 md:p-6'}`}>
-                <TabsContent value="translator" className="mt-0 pt-2">
-                  <HeardTranslator />
-                </TabsContent>
-                <TabsContent value="realfight" className="mt-0 pt-2">
-                  <RealFightAbout />
-                </TabsContent>
-                <TabsContent value="behaviors" className="mt-0 pt-2">
-                  <BehaviorDecoder />
-                </TabsContent>
-              </div>
-            </Tabs>
+            <div className={`${isMobile ? 'p-3' : 'p-4 md:p-6'}`}>
+              {activeFeature === "translator" && (
+                <HeardTranslator />
+              )}
+              {activeFeature === "realfight" && (
+                <RealFightAbout />
+              )}
+              {activeFeature === "behaviors" && (
+                <BehaviorDecoder />
+              )}
+            </div>
           </Card>
         </CollapsibleContent>
       </Collapsible>
