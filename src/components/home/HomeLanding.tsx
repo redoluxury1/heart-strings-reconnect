@@ -1,6 +1,8 @@
 
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { getDailyQuote } from '../../data/hero-quotes';
+import { Button } from '@/components/ui/button';
 
 const humorousBanners = [
   "Finally, an app that teaches you when to listen and when to shut up.",
@@ -34,10 +36,23 @@ const HomeLanding = () => {
         {dailyQuote.subtext}
       </p>
       
-      <div className="bg-mauve-rose/10 py-3 px-4 rounded-lg max-w-lg mx-auto transition-all duration-500 ease-in-out">
+      <div className="bg-mauve-rose/10 py-3 px-4 rounded-lg max-w-lg mx-auto transition-all duration-500 ease-in-out mb-6">
         <p className="text-md italic text-midnight-indigo">
           {humorousBanners[currentBannerIndex]}
         </p>
+      </div>
+      
+      <div className="flex flex-wrap justify-center gap-4 mt-6">
+        <Link to="/love-code-quiz">
+          <Button className="bg-lavender-blue hover:bg-lavender-blue/90 text-white">
+            Take Love Code Quiz
+          </Button>
+        </Link>
+        <Link to="/personality-quiz">
+          <Button className="bg-mauve-rose hover:bg-mauve-rose/90 text-white">
+            Discover Your Personality
+          </Button>
+        </Link>
       </div>
     </div>
   );

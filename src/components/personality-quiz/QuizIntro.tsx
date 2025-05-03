@@ -1,0 +1,63 @@
+
+import React from 'react';
+import { Button } from "@/components/ui/button";
+import { Puzzle } from 'lucide-react';
+
+interface QuizIntroProps {
+  onStart: () => void;
+}
+
+const QuizIntro: React.FC<QuizIntroProps> = ({ onStart }) => {
+  return (
+    <div className="max-w-3xl mx-auto text-center bg-white p-8 md:p-10 rounded-xl shadow-md">
+      <div className="flex justify-center mb-6">
+        <Puzzle className="h-16 w-16 text-primary" />
+      </div>
+      
+      <h1 className="text-3xl md:text-4xl font-heading-now-medium font-medium text-midnight-indigo mb-4">
+        Discover Your Personality Blueprint
+      </h1>
+      
+      <p className="text-midnight-indigo/80 mb-6">
+        Learn how you show up in love, in conflict, and everything in between.
+        This quiz will help you understand your relationship style and emotional patterns.
+      </p>
+      
+      <div className="bg-soft-blush/30 rounded-lg p-6 mb-8">
+        <h3 className="font-medium text-midnight-indigo mb-3">How It Works:</h3>
+        <ul className="text-left text-midnight-indigo/80 space-y-2">
+          <li className="flex items-start">
+            <span className="h-1.5 w-1.5 rounded-full bg-mauve-rose mr-2 mt-2"></span>
+            <span>Answer 15 questions about your preferences in relationships</span>
+          </li>
+          <li className="flex items-start">
+            <span className="h-1.5 w-1.5 rounded-full bg-mauve-rose mr-2 mt-2"></span>
+            <span>No right or wrong answers — just honest reflections</span>
+          </li>
+          <li className="flex items-start">
+            <span className="h-1.5 w-1.5 rounded-full bg-mauve-rose mr-2 mt-2"></span>
+            <span>Discover your primary and secondary personality types</span>
+          </li>
+          <li className="flex items-start">
+            <span className="h-1.5 w-1.5 rounded-full bg-mauve-rose mr-2 mt-2"></span>
+            <span>Get insights to better understand your relationship patterns</span>
+          </li>
+        </ul>
+      </div>
+      
+      <Button 
+        size="lg"
+        onClick={onStart}
+        className="bg-mauve-rose hover:bg-mauve-rose/90 text-white font-medium px-10"
+      >
+        Start The Quiz
+      </Button>
+      
+      <p className="text-sm text-midnight-indigo/60 mt-6">
+        Takes approximately 3-5 minutes to complete
+      </p>
+    </div>
+  );
+};
+
+export default QuizIntro;
