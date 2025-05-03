@@ -96,7 +96,7 @@ const BehaviorDecoder = () => {
               variant="outline" 
               className="w-full mb-4 flex justify-between items-center"
             >
-              <span>{genderTab === 'female' ? 'She's not mad, she...' : 'He doesn't hate you, he...'}</span>
+              <span>{genderTab === 'female' ? "She's not mad, she..." : "He doesn't hate you, he..."}</span>
               <span>{isDropdownOpen ? '▲' : '▼'}</span>
             </Button>
           </CollapsibleTrigger>
