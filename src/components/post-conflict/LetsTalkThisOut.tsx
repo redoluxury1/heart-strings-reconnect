@@ -23,7 +23,7 @@ const LetsTalkThisOut = () => {
         </h2>
         
         <p className="text-center text-gray-700 mb-6 max-w-xl">
-          This is a space for both of you to pause, process, and talk it through — together. One step at a time.
+          This is a space for both of you to pause, process, and talk it through — together. No therapy couch required.
         </p>
         
         <Button 

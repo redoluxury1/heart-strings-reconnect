@@ -30,8 +30,7 @@ const OkayButNowWhat = () => {
         </h2>
         
         <p className="text-center text-gray-700 mb-6 max-w-xl mx-auto">
-          Uncovering the patterns in your relationship helps you both break free from them.
-          Let's understand what's really happening.
+          This is where we help you get back to being less annoyed.
         </p>
         
         <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:space-x-4 justify-center mb-4">
@@ -47,12 +46,12 @@ const OkayButNowWhat = () => {
             className="border-gray-300 text-midnight-indigo bg-white/70 hover:bg-gray-100"
             onClick={handleCreateRepairPlan}
           >
-            Create a Repair Plan
+            Send a White Flag
           </Button>
         </div>
         
         <p className="text-center text-gray-500 text-sm mt-4">
-          Conflict is natural. How we repair is what matters.
+          Tap here to unsay the stupid thing.
         </p>
       </div>
     );

@@ -44,11 +44,11 @@ const EmotionalCheckIn: React.FC<EmotionalCheckInProps> = ({
   return (
     <div>
       <h2 className="text-2xl md:text-3xl font-cormorant font-medium text-midnight-indigo mb-3 text-center">
-        Emotional Check-In
+        Where's Your Head At?
       </h2>
       
       <p className="text-center text-gray-700 mb-6">
-        What emotions came up for you during the fight?
+        What emotions came up for you during the fight? Somewhere between chill and chaos?
       </p>
       
       {!isSubmitted ? (
