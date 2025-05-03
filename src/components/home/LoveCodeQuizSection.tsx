@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -127,7 +128,7 @@ const LoveCodeQuizSection = () => {
                   Understand your emotional patterns and learn how your unique personality influences communication and relationships.
                 </p>
                 <div className="flex flex-wrap gap-3">
-                  <Link to="/personality-blueprint">
+                  <Link to="/personality-quiz">
                     <Button 
                       variant="default" 
                       className={`${

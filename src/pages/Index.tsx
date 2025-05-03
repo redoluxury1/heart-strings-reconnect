@@ -35,12 +35,14 @@ const Index = () => {
           <ContentContainer>
             <HomeLanding />
           </ContentContainer>
-          <DailyLoveNote />
         </div>
         
         <StillUsSection />
         
         <LoveCodeQuizSection />
+        
+        {/* Daily Love Note section moved below the LoveCodeQuizSection */}
+        <DailyLoveNote />
         
         <RelationshipStatsSection />
       </main>
