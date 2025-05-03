@@ -1,6 +1,7 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Button } from '@/components/ui/button';
 import BehaviorDropdown from './BehaviorDropdown';
 import BehaviorExplanation from './BehaviorExplanation';
 import { getFemaleBehaviors, getMaleBehaviors } from '@/data/behavior-data';
@@ -13,6 +14,7 @@ interface BehaviorTabsProps {
   onFemaleBehaviorSelect: (id: string) => void;
   onMaleBehaviorSelect: (id: string) => void;
   onStartChat: () => void;
+  isMobile: boolean;
 }
 
 const BehaviorTabs: React.FC<BehaviorTabsProps> = ({
@@ -22,59 +24,92 @@ const BehaviorTabs: React.FC<BehaviorTabsProps> = ({
   selectedMaleBehaviorId,
   onFemaleBehaviorSelect,
   onMaleBehaviorSelect,
-  onStartChat
+  onStartChat,
+  isMobile
 }) => {
+  // Pre-fetch behaviors for both genders
   const femaleBehaviors = getFemaleBehaviors();
   const maleBehaviors = getMaleBehaviors();
   
-  const selectedFemaleBehavior = femaleBehaviors.find(b => b.id === selectedFemaleBehaviorId);
-  const selectedMaleBehavior = maleBehaviors.find(b => b.id === selectedMaleBehaviorId);
+  // Get selected behavior based on current tab
+  const selectedBehavior = genderTab === 'female'
+    ? femaleBehaviors.find(b => b.id === selectedFemaleBehaviorId)
+    : maleBehaviors.find(b => b.id === selectedMaleBehaviorId);
+  
+  // Show first behavior by default if none selected
+  useEffect(() => {
+    if (genderTab === 'female' && !selectedFemaleBehaviorId && femaleBehaviors.length > 0) {
+      onFemaleBehaviorSelect(femaleBehaviors[0].id);
+    } else if (genderTab === 'male' && !selectedMaleBehaviorId && maleBehaviors.length > 0) {
+      onMaleBehaviorSelect(maleBehaviors[0].id);
+    }
+  }, [genderTab, selectedFemaleBehaviorId, selectedMaleBehaviorId]);
 
   return (
     <Tabs 
-      value={genderTab}
+      value={genderTab} 
       onValueChange={(value) => onGenderTabChange(value as 'female' | 'male')}
       className="w-full"
     >
-      <TabsList className="grid grid-cols-2 w-full mb-5">
-        <TabsTrigger value="female" className="text-xs md:text-sm py-3 px-2 md:px-3">
-          She's not mad, she...
+      <TabsList className="grid grid-cols-2 mb-4 w-full bg-lavender-blue/10">
+        <TabsTrigger 
+          value="female" 
+          className="text-sm py-2 px-3 data-[state=active]:text-lavender-blue font-medium"
+        >
+          What She Means
         </TabsTrigger>
-        <TabsTrigger value="male" className="text-xs md:text-sm py-3 px-2 md:px-3">
-          He doesn't hate you, he...
+        <TabsTrigger 
+          value="male" 
+          className="text-sm py-2 px-3 data-[state=active]:text-lavender-blue font-medium"
+        >
+          What He Means
         </TabsTrigger>
       </TabsList>
 
-      <TabsContent value="female" className="space-y-5">
-        <BehaviorDropdown 
-          behaviors={femaleBehaviors}
-          selectedBehaviorId={selectedFemaleBehaviorId}
-          onBehaviorSelect={onFemaleBehaviorSelect}
-          placeholder="How is she acting?"
-        />
-        
-        {selectedFemaleBehavior && (
-          <BehaviorExplanation 
-            behavior={selectedFemaleBehavior} 
-            onStartChat={onStartChat} 
-          />
-        )}
+      <TabsContent value="female" className="mt-0">
+        <div className={`${isMobile ? "flex flex-col" : "grid grid-cols-5 gap-4"}`}>
+          <div className={`${isMobile ? "mb-4" : "col-span-2"}`}>
+            <BehaviorDropdown
+              behaviors={femaleBehaviors}
+              selectedBehaviorId={selectedFemaleBehaviorId}
+              onBehaviorSelect={onFemaleBehaviorSelect}
+              genderTab="female"
+              isMobile={isMobile}
+            />
+          </div>
+          <div className={`${isMobile ? "" : "col-span-3"}`}>
+            {selectedBehavior && (
+              <BehaviorExplanation 
+                behavior={selectedBehavior}
+                onStartChat={onStartChat}
+                isMobile={isMobile}
+              />
+            )}
+          </div>
+        </div>
       </TabsContent>
 
-      <TabsContent value="male" className="space-y-5">
-        <BehaviorDropdown 
-          behaviors={maleBehaviors}
-          selectedBehaviorId={selectedMaleBehaviorId}
-          onBehaviorSelect={onMaleBehaviorSelect}
-          placeholder="How is he acting?"
-        />
-        
-        {selectedMaleBehavior && (
-          <BehaviorExplanation 
-            behavior={selectedMaleBehavior} 
-            onStartChat={onStartChat} 
-          />
-        )}
+      <TabsContent value="male" className="mt-0">
+        <div className={`${isMobile ? "flex flex-col" : "grid grid-cols-5 gap-4"}`}>
+          <div className={`${isMobile ? "mb-4" : "col-span-2"}`}>
+            <BehaviorDropdown
+              behaviors={maleBehaviors}
+              selectedBehaviorId={selectedMaleBehaviorId}
+              onBehaviorSelect={onMaleBehaviorSelect}
+              genderTab="male"
+              isMobile={isMobile}
+            />
+          </div>
+          <div className={`${isMobile ? "" : "col-span-3"}`}>
+            {selectedBehavior && (
+              <BehaviorExplanation 
+                behavior={selectedBehavior} 
+                onStartChat={onStartChat}
+                isMobile={isMobile}
+              />
+            )}
+          </div>
+        </div>
       </TabsContent>
     </Tabs>
   );

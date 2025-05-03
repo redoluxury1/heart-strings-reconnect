@@ -1,120 +1,227 @@
+// Keep imports the same 
 
+// Export the Behavior interface so components can use it
 export interface Behavior {
   id: string;
-  behavior: string;
-  meaning: string;
+  gender: 'female' | 'male';
+  phrase: string;
   response: string;
+  explanation: {
+    title: string;
+    description: string;
+  };
 }
 
-// Function to get the list of female behaviors
+const femaleBehaviorsData: Behavior[] = [
+  {
+    id: 'female-1',
+    gender: 'female',
+    phrase: "You never listen to me!",
+    response: "I'm sorry you feel that way. Can you tell me more about what I'm missing?",
+    explanation: {
+      title: "Feeling Unheard",
+      description: "She feels like her thoughts and feelings are not being valued or understood in the relationship."
+    }
+  },
+  {
+    id: 'female-2',
+    gender: 'female',
+    phrase: "Why are you always on your phone?",
+    response: "I didn't realize it bothered you. I can put it away when we're together.",
+    explanation: {
+      title: "Seeking Connection",
+      description: "She craves undivided attention and feels neglected when technology interferes with your time together."
+    }
+  },
+  {
+    id: 'female-3',
+    gender: 'female',
+    phrase: "I do everything around here!",
+    response: "I appreciate everything you do. How can we better divide the responsibilities?",
+    explanation: {
+      title: "Feeling Overwhelmed",
+      description: "She feels overburdened with household tasks and seeks a more equitable distribution of labor."
+    }
+  },
+  {
+    id: 'female-4',
+    gender: 'female',
+    phrase: "You don't appreciate me.",
+    response: "I'm sorry, I don't mean to make you feel that way. What can I do to show you my appreciation?",
+    explanation: {
+      title: "Longing for Validation",
+      description: "She needs to feel valued and recognized for her contributions and efforts in the relationship."
+    }
+  },
+  {
+    id: 'female-5',
+    gender: 'female',
+    phrase: "You never want to talk.",
+    response: "I know I can be closed off. Let's set aside time each day to connect and share our thoughts.",
+    explanation: {
+      title: "Yearning for Intimacy",
+      description: "She desires deeper emotional connection and feels disconnected due to lack of communication."
+    }
+  },
+  {
+    id: 'female-6',
+    gender: 'female',
+    phrase: "You're always late!",
+    response: "I understand my lateness is disrespectful. I'll make a conscious effort to be on time from now on.",
+    explanation: {
+      title: "Seeking Respect",
+      description: "She feels that her time is not being valued when you're consistently late."
+    }
+  },
+  {
+    id: 'female-7',
+    gender: 'female',
+    phrase: "You're so insensitive!",
+    response: "I'm sorry, I didn't realize I was being insensitive. Can you help me understand what I did?",
+    explanation: {
+      title: "Needing Empathy",
+      description: "She needs you to be more understanding and considerate of her feelings."
+    }
+  },
+  {
+    id: 'female-8',
+    gender: 'female',
+    phrase: "You never take my side!",
+    response: "I want to support you. Can you tell me how I can better show that I'm on your side?",
+    explanation: {
+      title: "Desiring Support",
+      description: "She wants to feel like you're her ally and advocate, especially in difficult situations."
+    }
+  },
+  {
+    id: 'female-9',
+    gender: 'female',
+    phrase: "You're always criticizing me!",
+    response: "I don't mean to make you feel inadequate. I'll focus on expressing my needs without criticizing you.",
+    explanation: {
+      title: "Feeling Judged",
+      description: "She feels constantly evaluated and judged, which undermines her self-esteem."
+    }
+  },
+  {
+    id: 'female-10',
+    gender: 'female',
+    phrase: "You don't understand me!",
+    response: "I want to understand you better. Can you help me see things from your perspective?",
+    explanation: {
+      title: "Yearning for Understanding",
+      description: "She feels misunderstood and wants you to make an effort to see the world through her eyes."
+    }
+  }
+];
+
+const maleBehaviorsData: Behavior[] = [
+  {
+    id: 'male-1',
+    gender: 'male',
+    phrase: "Just calm down!",
+    response: "I can see that you're upset. What can I do to help?",
+    explanation: {
+      title: "Feeling Overwhelmed",
+      description: "He feels helpless and unsure how to handle intense emotions."
+    }
+  },
+  {
+    id: 'male-2',
+    gender: 'male',
+    phrase: "Why are you so emotional?",
+    response: "I'm sorry, I didn't mean to invalidate your feelings. Can you tell me more about what you're feeling?",
+    explanation: {
+      title: "Difficulty Processing Emotions",
+      description: "He struggles to understand and respond to strong emotional displays."
+    }
+  },
+  {
+    id: 'male-3',
+    gender: 'male',
+    phrase: "Leave me alone!",
+    response: "I respect your need for space. I'll check in later to see if you're up for talking.",
+    explanation: {
+      title: "Needing Space",
+      description: "He needs time alone to process his thoughts and feelings."
+    }
+  },
+  {
+    id: 'male-4',
+    gender: 'male',
+    phrase: "I don't want to talk about it.",
+    response: "I understand. I'm here when you're ready to share.",
+    explanation: {
+      title: "Avoiding Vulnerability",
+      description: "He finds it difficult to open up and share his feelings."
+    }
+  },
+  {
+    id: 'male-5',
+    gender: 'male',
+    phrase: "You're overreacting!",
+    response: "I'm sorry, I didn't mean to dismiss your feelings. Can you help me understand why you're so upset?",
+    explanation: {
+      title: "Struggling with Empathy",
+      description: "He has difficulty understanding and validating your emotional response."
+    }
+  },
+  {
+    id: 'male-6',
+    gender: 'male',
+    phrase: "What's your problem?",
+    response: "I'm sorry, I didn't mean to sound accusatory. What's going on?",
+    explanation: {
+      title: "Feeling Defensive",
+      description: "He feels attacked and responds defensively to protect himself."
+    }
+  },
+  {
+    id: 'male-7',
+    gender: 'male',
+    phrase: "I don't care.",
+    response: "I'm sorry, I didn't mean to sound apathetic. What's important to you right now?",
+    explanation: {
+      title: "Difficulty Expressing Care",
+      description: "He struggles to show his concern and support in a way that resonates with you."
+    }
+  },
+  {
+    id: 'male-8',
+    gender: 'male',
+    phrase: "You're always nagging me!",
+    response: "I'm sorry, I didn't realize I was nagging. What can I do to better meet your needs?",
+    explanation: {
+      title: "Feeling Controlled",
+      description: "He feels like you're constantly trying to control or change him."
+    }
+  },
+  {
+    id: 'male-9',
+    gender: 'male',
+    phrase: "I'm fine.",
+    response: "I'm here if you want to talk about it.",
+    explanation: {
+      title: "Hiding Emotions",
+      description: "He tends to suppress his feelings and put on a brave face."
+    }
+  },
+  {
+    id: 'male-10',
+    gender: 'male',
+    phrase: "It's not a big deal.",
+    response: "I'm sorry, I didn't mean to minimize your feelings. Can you help me understand why it's important to you?",
+    explanation: {
+      title: "Dismissing Concerns",
+      description: "He tends to downplay the significance of your concerns."
+    }
+  }
+];
+
 export const getFemaleBehaviors = (): Behavior[] => {
-  return [
-    {
-      id: "fine",
-      behavior: "Says 'I'm fine' (but clearly isn't)",
-      meaning: "She likely feels unheard or that expressing her real feelings won't make a difference based on past experiences.",
-      response: "I can tell something's bothering you, and I want to understand. Would you prefer to talk now or do you need some space first?"
-    },
-    {
-      id: "eye-roll",
-      behavior: "Gives short answers + eye roll",
-      meaning: "She feels ignored or that her concerns have been repeatedly dismissed. This is often a response to feeling unheard over time, not just in this moment.",
-      response: "I can tell something's off. Want to talk about it now or later? I'm listening."
-    },
-    {
-      id: "silent",
-      behavior: "Suddenly very quiet",
-      meaning: "She might be processing her thoughts, feeling hurt, or protecting herself from saying something she'll regret. Silence often means emotional withdrawal for safety.",
-      response: "I notice you're quiet. I'm here when you're ready to talk, no pressure."
-    },
-    {
-      id: "sarcasm",
-      behavior: "Becomes sarcastic",
-      meaning: "Sarcasm often masks hurt feelings or frustration when direct communication hasn't worked. It's a defense mechanism against vulnerability.",
-      response: "I feel like there's something more serious under the sarcasm. Can we talk about what's really bothering you?"
-    },
-    {
-      id: "slam",
-      behavior: "Slams doors or cabinets",
-      meaning: "Physical expressions of frustration usually indicate feeling powerless in the conversation or relationship. This is emotion that has no other outlet.",
-      response: "I can see you're really upset, and that matters to me. Let's take a break and come back to this when we're both calmer."
-    },
-    {
-      id: "crying",
-      behavior: "Tearing up or crying",
-      meaning: "Tears can indicate feeling overwhelmed, deeply hurt, or frustrated by an inability to express the depth of her feelings in words that will be received.",
-      response: "I can see this is really affecting you. Take all the time you need, and know that I'm here to listen when you're ready."
-    },
-    {
-      id: "questions",
-      behavior: "Keeps asking questions but rejecting answers",
-      meaning: "She's likely looking for an answer that addresses her underlying concern, which might not be what she's explicitly asking about.",
-      response: "It feels like we might be talking about different things. Can you help me understand what's really concerning you underneath these questions?"
-    },
-    {
-      id: "brings-up-past",
-      behavior: "Brings up past mistakes",
-      meaning: "Unresolved issues are still causing pain, or there's a pattern she's trying to highlight that you might not be seeing in the current situation.",
-      response: "I can see how this connects to things that have hurt you before. I want to address both what's happening now and any unresolved feelings from before."
-    }
-  ];
+  return femaleBehaviorsData;
 };
 
-// Function to get the list of male behaviors
 export const getMaleBehaviors = (): Behavior[] => {
-  return [
-    {
-      id: "silent-male",
-      behavior: "Goes silent",
-      meaning: "He might be overwhelmed or afraid he'll say something wrong. Many men process emotions internally before they can articulate them.",
-      response: "I know you might need time to process. I'm not trying to force an answer, but I want us to come back to this when you're ready."
-    },
-    {
-      id: "logical",
-      behavior: "Gets overly logical or analytical",
-      meaning: "He's trying to fix or simplify the moment to regain control. This often happens when emotions feel too intense or unpredictable.",
-      response: "I know you're trying to solve this, but right now I just need you to hear how I'm feeling. Can we start there?"
-    },
-    {
-      id: "not-big-deal",
-      behavior: "Says 'It's not a big deal'",
-      meaning: "He's trying to move on or de-escalate what feels overwhelming. This isn't dismissal as much as it is self-protection.",
-      response: "I understand you might see it differently, but this matters to me. Can you help me understand your perspective without minimizing mine?"
-    },
-    {
-      id: "leaves",
-      behavior: "Physically leaves the room",
-      meaning: "He might be trying to prevent the conflict from escalating by creating physical space. This can be a healthy boundary if done respectfully.",
-      response: "I see you need space, and that's okay. Can we agree on when we'll come back to this conversation?"
-    },
-    {
-      id: "changes-subject",
-      behavior: "Changes the subject abruptly",
-      meaning: "He might feel cornered or unsure how to respond in a way that won't make things worse.",
-      response: "I noticed we moved away from what we were discussing. That topic is important to me. Can we find a time to revisit it?"
-    },
-    {
-      id: "gets-defensive",
-      behavior: "Becomes instantly defensive",
-      meaning: "He likely feels accused or that his character is being attacked rather than his actions, triggering a protect-and-defend response.",
-      response: "I'm not trying to blame you—I'm just sharing how I feel. We're on the same team, and I want us to work through this together."
-    },
-    {
-      id: "busy-with-phone",
-      behavior: "Gets busy with phone or distraction",
-      meaning: "This might be an avoidance strategy when the emotional content feels too difficult to engage with directly.",
-      response: "I'd really appreciate your full attention for just a few minutes. This matters to me, and I want to feel connected while we talk."
-    },
-    {
-      id: "shuts-down",
-      behavior: "Completely shuts down",
-      meaning: "He might be experiencing emotional flooding—a physiological state where productive conversation becomes impossible due to stress hormones.",
-      response: "I can see you're overwhelmed. Let's take a 20-minute break and come back to this when we're both calmer. I'm not giving up on us figuring this out."
-    }
-  ];
-};
-
-// Function to get all behaviors (for backward compatibility)
-export const getBehaviors = (): Behavior[] => {
-  return [...getFemaleBehaviors(), ...getMaleBehaviors()];
+  return maleBehaviorsData;
 };

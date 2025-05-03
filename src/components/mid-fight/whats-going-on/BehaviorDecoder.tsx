@@ -7,6 +7,9 @@ import ConversationDialog from '../ConversationDialog';
 import MobileBehaviorToggle from './behavior-decoder/MobileBehaviorToggle';
 import BehaviorTabs from './behavior-decoder/BehaviorTabs';
 
+// Import behavior data functions
+import { getFemaleBehaviors, getMaleBehaviors } from '@/data/behavior-data';
+
 const BehaviorDecoder = () => {
   const [selectedFemaleBehaviorId, setSelectedFemaleBehaviorId] = useState<string>('');
   const [selectedMaleBehaviorId, setSelectedMaleBehaviorId] = useState<string>('');
@@ -41,7 +44,7 @@ const BehaviorDecoder = () => {
 
   if (isCustomizing) {
     return (
-      <>
+      <div className="mt-2">
         <CustomizePhraseView
           customPhrase={customPhrase}
           onCustomPhraseChange={setCustomPhrase}
@@ -55,14 +58,14 @@ const BehaviorDecoder = () => {
           partnerName="Partner"
           onSendInvite={handleSendInvite}
         />
-      </>
+      </div>
     );
   }
   
   return (
-    <div className="space-y-6">
-      <div className="mb-6">
-        <h3 className="text-lg font-medium text-midnight-indigo mb-3">
+    <div className="space-y-4">
+      <div className="mb-4">
+        <h3 className="text-lg font-medium text-midnight-indigo mb-2">
           He Said, She Said
         </h3>
         <p className="text-sm text-midnight-indigo/70 mb-2">
@@ -80,23 +83,29 @@ const BehaviorDecoder = () => {
           isMobile={isMobile}
         />
         
-        <CollapsibleContent>
+        <CollapsibleContent className={isMobile ? "animate-accordion-down" : ""}>
           <BehaviorTabs 
             genderTab={genderTab}
-            onGenderTabChange={(value) => setGenderTab(value)}
+            onGenderTabChange={(value) => {
+              setGenderTab(value);
+              // Reset selected behaviors when switching tabs
+              if (value === 'female') {
+                setSelectedMaleBehaviorId('');
+              } else {
+                setSelectedFemaleBehaviorId('');
+              }
+            }}
             selectedFemaleBehaviorId={selectedFemaleBehaviorId}
             selectedMaleBehaviorId={selectedMaleBehaviorId}
             onFemaleBehaviorSelect={setSelectedFemaleBehaviorId}
             onMaleBehaviorSelect={setSelectedMaleBehaviorId}
             onStartChat={handleStartChat}
+            isMobile={isMobile}
           />
         </CollapsibleContent>
       </Collapsible>
     </div>
   );
 };
-
-// Need to bring in these functions for handleStartChat
-import { getFemaleBehaviors, getMaleBehaviors } from '@/data/behavior-data';
 
 export default BehaviorDecoder;

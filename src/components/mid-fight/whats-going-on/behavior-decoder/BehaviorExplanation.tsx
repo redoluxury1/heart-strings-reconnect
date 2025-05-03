@@ -1,41 +1,46 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { MessageCircle } from 'lucide-react';
 import { Behavior } from '@/data/behavior-data';
 
 interface BehaviorExplanationProps {
   behavior: Behavior;
   onStartChat: () => void;
+  isMobile: boolean;
 }
 
 const BehaviorExplanation: React.FC<BehaviorExplanationProps> = ({ 
-  behavior, 
-  onStartChat 
+  behavior,
+  onStartChat,
+  isMobile
 }) => {
   return (
-    <div className="mt-6 space-y-5 bg-soft-blush/20 p-4 md:p-5 rounded-md">
-      <div>
-        <h4 className="text-md font-medium text-mauve-rose mb-2">What This Likely Means:</h4>
-        <p className="text-midnight-indigo/90 text-sm">
-          {behavior.meaning}
+    <div className="bg-white rounded-md border border-lavender-blue/20 p-4">
+      <div className="mb-4">
+        <h4 className={`font-medium ${isMobile ? 'text-base mb-2' : 'text-lg mb-3'} text-midnight-indigo`}>
+          {behavior.explanation.title}
+        </h4>
+        <p className="text-sm text-midnight-indigo/80 leading-relaxed">
+          {behavior.explanation.description}
         </p>
       </div>
       
-      <div>
-        <h4 className="text-md font-medium text-lavender-blue mb-2">Try Saying:</h4>
-        <p className="bg-white p-3 md:p-4 rounded border border-lavender-blue/30 text-midnight-indigo/90 text-sm">
+      <div className={`${isMobile ? 'mb-3 py-2' : 'mb-4 py-3'} border-t border-b border-lavender-blue/10`}>
+        <p className="text-sm font-medium text-midnight-indigo mb-1">Instead of reacting, try saying:</p>
+        <blockquote className="italic text-sm text-midnight-indigo/90 pl-2 border-l-2 border-lavender-blue/30">
           "{behavior.response}"
-        </p>
+        </blockquote>
       </div>
-      
-      <Button 
-        onClick={onStartChat} 
-        className="bg-lavender-blue hover:bg-lavender-blue/90 text-white mt-4 w-full py-2 md:py-3 text-sm"
-      >
-        <MessageCircle className="h-4 w-4 mr-2" />
-        Start a Chat
-      </Button>
+
+      <div className="flex justify-end">
+        <Button 
+          onClick={onStartChat} 
+          variant="default"
+          className="bg-lavender-blue hover:bg-lavender-blue/90 text-white text-sm py-2"
+        >
+          Use this phrase
+        </Button>
+      </div>
     </div>
   );
 };
