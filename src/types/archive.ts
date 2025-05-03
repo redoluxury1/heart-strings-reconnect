@@ -26,6 +26,14 @@ export interface JournalEntry {
   isFavorite: boolean;
 }
 
+export interface RepairPlan {
+  id: string;
+  actions: Array<{id: number, text: string}>;
+  dateCreated: Date;
+  lastModified?: Date;
+  isFavorite: boolean;
+}
+
 export type ViewMode = 'list' | 'expanded';
 
 export interface SaveToastOptions {
@@ -34,3 +42,4 @@ export interface SaveToastOptions {
   action?: React.ReactNode;
   duration?: number;
 }
+

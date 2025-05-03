@@ -8,18 +8,21 @@ export interface ReconnectionTip {
   id: number;
   text: string;
   category: 'physical' | 'emotional' | 'activity' | 'communication';
+  patterns?: Array<'criticism-defensiveness' | 'stonewalling-pursuit' | 'contempt-contempt'>;
 }
 
 export const reconnectionTips: ReconnectionTip[] = [
   {
     id: 1,
     text: "Take a 10-minute walk together without discussing the argument.",
-    category: 'physical'
+    category: 'physical',
+    patterns: ['criticism-defensiveness', 'contempt-contempt']
   },
   {
     id: 2,
     text: "Send a message expressing appreciation for something they did today.",
-    category: 'communication'
+    category: 'communication',
+    patterns: ['criticism-defensiveness', 'contempt-contempt']
   },
   {
     id: 3,
@@ -34,7 +37,8 @@ export const reconnectionTips: ReconnectionTip[] = [
   {
     id: 5,
     text: "Share a memory of a time when you felt really connected.",
-    category: 'emotional'
+    category: 'emotional',
+    patterns: ['stonewalling-pursuit']
   },
   {
     id: 6,
@@ -44,12 +48,14 @@ export const reconnectionTips: ReconnectionTip[] = [
   {
     id: 7,
     text: "Give a 20-second hug - it releases oxytocin and helps rebuild connection.",
-    category: 'physical'
+    category: 'physical',
+    patterns: ['stonewalling-pursuit']
   },
   {
     id: 8,
     text: "Write down one thing you're committed to working on after this disagreement.",
-    category: 'communication'
+    category: 'communication',
+    patterns: ['criticism-defensiveness']
   },
   {
     id: 9,
@@ -59,7 +65,8 @@ export const reconnectionTips: ReconnectionTip[] = [
   {
     id: 10,
     text: "Ask an open question about something they're interested in, unrelated to the disagreement.",
-    category: 'communication'
+    category: 'communication',
+    patterns: ['stonewalling-pursuit', 'contempt-contempt']
   },
   {
     id: 11,
@@ -74,32 +81,38 @@ export const reconnectionTips: ReconnectionTip[] = [
   {
     id: 13,
     text: "Create a small gratitude list about your relationship and share it.",
-    category: 'emotional'
+    category: 'emotional',
+    patterns: ['criticism-defensiveness', 'contempt-contempt']
   },
   {
     id: 14,
     text: "Take five minutes to just sit together quietly without phones.",
-    category: 'physical'
+    category: 'physical',
+    patterns: ['stonewalling-pursuit']
   },
   {
     id: 15,
     text: "Offer a genuine compliment about something you admire in them.",
-    category: 'communication'
+    category: 'communication',
+    patterns: ['criticism-defensiveness', 'contempt-contempt']
   },
   {
     id: 16,
     text: "Suggest working on a small household task together.",
-    category: 'activity'
+    category: 'activity',
+    patterns: ['stonewalling-pursuit']
   },
   {
     id: 17,
     text: "Take turns naming three things you love about each other.",
-    category: 'emotional'
+    category: 'emotional',
+    patterns: ['criticism-defensiveness', 'contempt-contempt']
   },
   {
     id: 18,
     text: "Make a small future plan for something to look forward to together.",
-    category: 'communication'
+    category: 'communication',
+    patterns: ['stonewalling-pursuit']
   },
   {
     id: 19,
@@ -110,5 +123,55 @@ export const reconnectionTips: ReconnectionTip[] = [
     id: 20,
     text: "Ask if they need anything right now - a glass of water, some space, or comfort.",
     category: 'physical'
+  },
+  // Pattern-specific reconnection activities
+  {
+    id: 21,
+    text: "Practice active listening by summarizing what they said before responding.",
+    category: 'communication',
+    patterns: ['criticism-defensiveness']
+  },
+  {
+    id: 22,
+    text: "Write down your thoughts first before speaking to avoid defensive reactions.",
+    category: 'communication',
+    patterns: ['criticism-defensiveness']
+  },
+  {
+    id: 23,
+    text: "Set a timer for 15 minutes where you each speak uninterrupted for 5 minutes, followed by 5 minutes of reflection.",
+    category: 'communication',
+    patterns: ['criticism-defensiveness', 'stonewalling-pursuit']
+  },
+  {
+    id: 24,
+    text: "Create a signal for when either of you feels overwhelmed and needs a break.",
+    category: 'communication',
+    patterns: ['stonewalling-pursuit']
+  },
+  {
+    id: 25,
+    text: "Practice making 'I feel' statements instead of 'You always' statements.",
+    category: 'communication',
+    patterns: ['criticism-defensiveness']
+  },
+  {
+    id: 26,
+    text: "Share one vulnerable feeling about the situation without blame.",
+    category: 'emotional',
+    patterns: ['contempt-contempt', 'criticism-defensiveness']
+  },
+  {
+    id: 27,
+    text: "Take turns completing the sentence: 'I feel cared for when you...'",
+    category: 'emotional',
+    patterns: ['contempt-contempt']
+  },
+  {
+    id: 28,
+    text: "Agree on a time to return to the conversation that works for both of you.",
+    category: 'communication',
+    patterns: ['stonewalling-pursuit']
   }
 ];
+

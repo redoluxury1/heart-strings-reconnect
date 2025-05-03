@@ -1,10 +1,9 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useSession } from '../context/SessionContext';
-import { reconnectionTips } from '@/data/reconnection-tips';
+import { reconnectionTips, ReconnectionTip } from '@/data/reconnection-tips';
 
 const commonPatterns = [
   {
@@ -16,7 +15,8 @@ const commonPatterns = [
       "Try using 'I' statements instead of 'you' statements",
       "Take a break when you notice this pattern starting",
       "Ask clarifying questions instead of defending immediately"
-    ]
+    ],
+    patternType: "criticism-defensiveness"
   },
   {
     id: 2,
@@ -27,7 +27,8 @@ const commonPatterns = [
       "Agree on a specific time to return to the conversation",
       "Practice self-soothing during breaks",
       "Use gentle startups when re-engaging"
-    ]
+    ],
+    patternType: "stonewalling-pursuit"
   },
   {
     id: 3,
@@ -38,7 +39,8 @@ const commonPatterns = [
       "Build a culture of appreciation",
       "Express needs directly without contempt",
       "Focus on the underlying feelings beneath contempt"
-    ]
+    ],
+    patternType: "contempt-contempt"
   }
 ];
 
@@ -70,16 +72,34 @@ const PatternRecognitionFlow: React.FC = () => {
     }
   };
 
-  // Get a few random reconnection tips to suggest
-  const getRandomTips = () => {
-    return reconnectionTips
+  // Get pattern-specific reconnection tips
+  const getPatternSpecificTips = (patternType: string): ReconnectionTip[] => {
+    // First try to get pattern-specific tips
+    const specificTips = reconnectionTips
+      .filter(tip => tip.patterns && tip.patterns.includes(patternType as any))
       .sort(() => 0.5 - Math.random())
       .slice(0, 3);
+    
+    // If we don't have enough specific tips, supplement with general ones
+    if (specificTips.length < 3) {
+      const generalTips = reconnectionTips
+        .filter(tip => !tip.patterns || !tip.patterns.includes(patternType as any))
+        .sort(() => 0.5 - Math.random())
+        .slice(0, 3 - specificTips.length);
+      
+      return [...specificTips, ...generalTips];
+    }
+    
+    return specificTips;
   };
   
   const selectedPatternData = selectedPattern !== null 
     ? commonPatterns.find(p => p.id === selectedPattern)
     : null;
+  
+  const tipsToDisplay = selectedPatternData 
+    ? getPatternSpecificTips(selectedPatternData.patternType)
+    : reconnectionTips.sort(() => 0.5 - Math.random()).slice(0, 3);
   
   return (
     <div className="bg-white rounded-xl shadow-md overflow-hidden">
@@ -102,11 +122,13 @@ const PatternRecognitionFlow: React.FC = () => {
             </h2>
             
             <p className="text-gray-700 mb-6">
-              Try one of these activities together to help rebuild connection:
+              {selectedPatternData 
+                ? `Try these activities to help break the ${selectedPatternData.name.toLowerCase()}:` 
+                : "Try one of these activities together to help rebuild connection:"}
             </p>
             
             <ul className="space-y-4 mb-6">
-              {getRandomTips().map(tip => (
+              {tipsToDisplay.map(tip => (
                 <li key={tip.id} className="bg-soft-cream/20 p-4 rounded-lg">
                   <p className="text-gray-800">{tip.text}</p>
                   <p className="text-sm text-gray-500 mt-1 capitalize">
@@ -115,41 +137,6 @@ const PatternRecognitionFlow: React.FC = () => {
                 </li>
               ))}
             </ul>
-          </div>
-        ) : selectedPattern !== null && selectedPatternData ? (
-          <div className="animate-fade-in">
-            <h2 className="text-2xl md:text-3xl font-cormorant font-medium text-midnight-indigo mb-6">
-              {selectedPatternData.name}
-            </h2>
-            
-            <p className="text-gray-700 mb-6">
-              {selectedPatternData.description}
-            </p>
-            
-            <div className="mb-6">
-              <h3 className="font-medium text-mauve-rose mb-2">Common Examples:</h3>
-              <ul className="list-disc list-inside space-y-1 text-gray-600">
-                {selectedPatternData.examples.map((example, i) => (
-                  <li key={i}>{example}</li>
-                ))}
-              </ul>
-            </div>
-            
-            <div className="mb-8">
-              <h3 className="font-medium text-mauve-rose mb-2">Breaking the Pattern:</h3>
-              <ul className="list-disc list-inside space-y-2 text-gray-600">
-                {selectedPatternData.breakingTips.map((tip, i) => (
-                  <li key={i}>{tip}</li>
-                ))}
-              </ul>
-            </div>
-            
-            <Button
-              className="bg-midnight-indigo hover:bg-midnight-indigo/90 text-white w-full"
-              onClick={handleShowReconnectionTips}
-            >
-              Show me reconnection activities
-            </Button>
           </div>
         ) : (
           <div>

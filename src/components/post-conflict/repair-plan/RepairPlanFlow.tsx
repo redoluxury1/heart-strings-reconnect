@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { ArrowLeft, Check, Heart } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useSession } from '../context/SessionContext';
+import { useNavigate } from 'react-router-dom';
 
 interface RepairItem {
   id: number;
@@ -15,6 +16,7 @@ const RepairPlanFlow: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const { sessionData } = useSession();
   const { toast } = useToast();
+  const navigate = useNavigate();
   
   // Repair actions that can be selected by users
   const [repairItems, setRepairItems] = useState<RepairItem[]>([
@@ -73,6 +75,18 @@ const RepairPlanFlow: React.FC = () => {
       title: "Repair plan created",
       description: "Your custom repair plan has been saved.",
     });
+  };
+
+  const handleSavePlan = () => {
+    // In a real app, this would save the repair plan to a database
+    // For now, we'll just navigate to the archive with a success message
+    toast({
+      title: "Plan saved",
+      description: "Your repair plan has been saved to your archive.",
+    });
+    
+    // Redirect to the archive page with the repair-plans tab active
+    navigate('/archive', { state: { activeTab: 'repair-plans' } });
   };
   
   const handleGoBack = () => {
@@ -196,15 +210,9 @@ const RepairPlanFlow: React.FC = () => {
             
             <Button
               className="bg-midnight-indigo hover:bg-midnight-indigo/90 text-white"
-              onClick={() => {
-                // In a real app, this might navigate to a different page
-                toast({
-                  title: "Plan saved",
-                  description: "You can access your repair plan anytime in your profile.",
-                });
-              }}
+              onClick={handleSavePlan}
             >
-              Save Plan
+              Save to Archive
             </Button>
           </div>
         )}
