@@ -5,16 +5,17 @@ import { Check, Heart, Star, Trash2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { RepairPlan } from '@/types/archive';
 import { format } from 'date-fns';
+import { reconnectionTips } from '@/data/reconnection-tips';
 
 // Sample data - in a real app, this would come from storage/database
 const sampleRepairPlans: RepairPlan[] = [
   {
     id: '1',
     actions: [
-      { id: 1, text: "Take a 15-minute break before continuing the discussion" },
-      { id: 2, text: "Use 'I' statements instead of 'you' accusations" },
-      { id: 3, text: "Check in on feelings regularly during difficult conversations" },
-      { id: 4, text: "Validate each other's feelings before problem-solving" }
+      { id: 1, text: reconnectionTips[0].text },
+      { id: 2, text: reconnectionTips[4].text },
+      { id: 3, text: reconnectionTips[7].text },
+      { id: 4, text: reconnectionTips[22].text }
     ],
     dateCreated: new Date(Date.now() - 86400000 * 2), // 2 days ago
     isFavorite: true
@@ -22,9 +23,9 @@ const sampleRepairPlans: RepairPlan[] = [
   {
     id: '2',
     actions: [
-      { id: 1, text: "Start conversations with appreciation before bringing up concerns" },
-      { id: 3, text: "Schedule regular check-ins to discuss relationship needs" },
-      { id: 5, text: "Create a signal for when either of us needs a pause" }
+      { id: 1, text: reconnectionTips[1].text },
+      { id: 3, text: reconnectionTips[5].text },
+      { id: 5, text: reconnectionTips[23].text }
     ],
     dateCreated: new Date(Date.now() - 86400000 * 10), // 10 days ago
     isFavorite: false
