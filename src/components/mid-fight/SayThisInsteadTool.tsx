@@ -1,7 +1,7 @@
 
 import React, { useState, useMemo } from 'react';
 import { sayInsteadPhrases } from '@/data/love-code-quiz';
-import { SayInsteadPhrase } from '@/types/love-code-quiz';
+import { SayInsteadPhrase } from '@/types/say-instead';
 import { MessageCircle, Search } from 'lucide-react';
 import PhraseCard from './say-instead/PhraseCard';
 import PhraseDetailView from './say-instead/PhraseDetailView';
@@ -43,14 +43,22 @@ const SayThisInsteadTool: React.FC = () => {
   const [selectedPhrase, setSelectedPhrase] = useState<SayInsteadPhrase | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>('');
   
+  // Convert the imported phrases to the correct type
+  const typedPhrases: SayInsteadPhrase[] = useMemo(() => {
+    return sayInsteadPhrases.map(phrase => ({
+      ...phrase,
+      id: String(phrase.id) // Convert number id to string to match the type
+    }));
+  }, []);
+  
   // Extract valid categories from all phrases (ensuring at least 3 per category)
   const categories = useMemo(() => {
-    return validateCategories(sayInsteadPhrases).sort();
-  }, []);
+    return validateCategories(typedPhrases).sort();
+  }, [typedPhrases]);
   
   // Filter phrases based on selected category and search query
   const filteredPhrases = useMemo(() => {
-    let phrases = sayInsteadPhrases;
+    let phrases = typedPhrases;
     
     // Filter by category if not "all"
     if (selectedCategory !== 'all') {
@@ -72,7 +80,7 @@ const SayThisInsteadTool: React.FC = () => {
     }
     
     return phrases;
-  }, [selectedCategory, searchQuery]);
+  }, [typedPhrases, selectedCategory, searchQuery]);
 
   // Handle quick phrase selection
   const handleQuickPhraseSelect = (phrase: string) => {
