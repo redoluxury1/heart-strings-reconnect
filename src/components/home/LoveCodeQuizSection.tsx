@@ -64,7 +64,7 @@ const LoveCodeQuizSection = () => {
                 }`}>
                   Discover how you and your partner naturally express and prefer to receive love.
                 </p>
-                <div className="flex flex-wrap gap-3">
+                <div className="flex flex-wrap gap-3 justify-start">
                   <Link to="/love-code-quiz">
                     <Button 
                       variant="default" 
@@ -127,7 +127,7 @@ const LoveCodeQuizSection = () => {
                 }`}>
                   Understand your emotional patterns and learn how your unique personality influences communication and relationships.
                 </p>
-                <div className="flex flex-wrap gap-3">
+                <div className="flex flex-wrap gap-3 justify-start">
                   <Link to="/personality-quiz">
                     <Button 
                       variant="default" 

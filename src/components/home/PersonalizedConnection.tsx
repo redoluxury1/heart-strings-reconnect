@@ -5,6 +5,7 @@ import { Heart, Compass } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
+import { UserPlus } from 'lucide-react';
 
 type QuizCardProps = {
   title: string;
@@ -123,16 +124,26 @@ const PersonalizedConnection = () => {
                   {card.description}
                 </p>
                 
-                <Link to={card.linkTo} className="block mt-auto">
-                  <button 
-                    className={cn(
-                      "w-full rounded-full py-2.5 px-4 text-white transition-colors font-inter",
-                      card.buttonColorClass
-                    )}
-                  >
-                    {card.buttonText}
-                  </button>
-                </Link>
+                <div className="flex flex-wrap gap-3 justify-start">
+                  <Link to={card.linkTo} className="block">
+                    <button 
+                      className={cn(
+                        "rounded-full py-2.5 px-4 text-white transition-colors font-inter",
+                        card.buttonColorClass
+                      )}
+                    >
+                      {card.buttonText}
+                    </button>
+                  </Link>
+                  <Link to="/invite" className="block">
+                    <button 
+                      className="border-2 border-midnight-indigo text-midnight-indigo hover:bg-midnight-indigo/5 rounded-full py-2.5 px-4 transition-colors font-inter flex items-center"
+                    >
+                      <UserPlus className="mr-2 h-4 w-4" />
+                      Invite Partner
+                    </button>
+                  </Link>
+                </div>
               </div>
             </div>
           ))}
