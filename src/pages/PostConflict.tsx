@@ -5,6 +5,7 @@ import Footer from '@/components/layout/Footer';
 import ContentContainer from '@/components/common/ContentContainer';
 import LetsTalkThisOut from '@/components/post-conflict/LetsTalkThisOut';
 import OkayButNowWhat from '@/components/post-conflict/OkayButNowWhat';
+import PhraseRewind from '@/components/post-conflict/PhraseRewind';
 import FloatingTextBubbles from '@/components/post-conflict/FloatingTextBubbles';
 import { SessionProvider, useSession } from '@/components/post-conflict/context/SessionContext';
 
@@ -33,6 +34,12 @@ const PostConflictContent = () => {
             <LetsTalkThisOut />
 
             <OkayButNowWhat />
+          </div>
+        </ContentContainer>
+        
+        <ContentContainer maxWidth="lg">
+          <div className="max-w-3xl mx-auto mt-8">
+            <PhraseRewind />
           </div>
         </ContentContainer>
       </main>

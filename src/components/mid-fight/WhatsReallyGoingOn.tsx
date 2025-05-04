@@ -5,6 +5,7 @@ import { Card } from '@/components/ui/card';
 import HeardTranslator from './whats-going-on/HeardTranslator';
 import RealFightAbout from './whats-going-on/RealFightAbout';
 import BehaviorDecoder from './whats-going-on/BehaviorDecoder';
+import SayItBetter from './whats-going-on/SayItBetter';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Button } from '@/components/ui/button';
@@ -17,13 +18,14 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 const WhatsReallyGoingOn = () => {
-  const [activeFeature, setActiveFeature] = useState<'translator' | 'realfight' | 'behaviors'>('translator');
+  const [activeFeature, setActiveFeature] = useState<'translator' | 'realfight' | 'behaviors' | 'sayitbetter'>('translator');
   const [isCollapsed, setIsCollapsed] = useState(false);
   const isMobile = useIsMobile();
 
   // Map feature values to display names
   const featureNames = {
     'translator': 'Say It Better',
+    'sayitbetter': 'Phrase Library',
     'realfight': 'Cut to the Point',
     'behaviors': 'He Said, She Said'
   };
@@ -62,6 +64,12 @@ const WhatsReallyGoingOn = () => {
             </DropdownMenuItem>
             <DropdownMenuItem 
               className="py-3 cursor-pointer" 
+              onClick={() => setActiveFeature('sayitbetter')}
+            >
+              Phrase Library
+            </DropdownMenuItem>
+            <DropdownMenuItem 
+              className="py-3 cursor-pointer" 
               onClick={() => setActiveFeature('realfight')}
             >
               Cut to the Point
@@ -80,6 +88,9 @@ const WhatsReallyGoingOn = () => {
             <div className={`${isMobile ? 'p-3' : 'p-4 md:p-6'}`}>
               {activeFeature === "translator" && (
                 <HeardTranslator />
+              )}
+              {activeFeature === "sayitbetter" && (
+                <SayItBetter />
               )}
               {activeFeature === "realfight" && (
                 <RealFightAbout />

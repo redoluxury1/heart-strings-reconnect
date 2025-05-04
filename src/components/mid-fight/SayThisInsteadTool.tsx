@@ -1,6 +1,6 @@
 
 import React, { useState, useMemo } from 'react';
-import { sayInsteadPhrases } from '@/data/love-code-quiz';
+import { sayInsteadPhrases } from '@/data/say-instead-phrases';
 import { SayInsteadPhrase } from '@/types/say-instead';
 import { MessageCircle, Search } from 'lucide-react';
 import PhraseCard from './say-instead/PhraseCard';
@@ -43,12 +43,9 @@ const SayThisInsteadTool: React.FC = () => {
   const [selectedPhrase, setSelectedPhrase] = useState<SayInsteadPhrase | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>('');
   
-  // Convert the imported phrases to the correct type
+  // Use the imported phrases
   const typedPhrases: SayInsteadPhrase[] = useMemo(() => {
-    return sayInsteadPhrases.map(phrase => ({
-      ...phrase,
-      id: String(phrase.id) // Convert number id to string to match the type
-    }));
+    return sayInsteadPhrases;
   }, []);
   
   // Extract valid categories from all phrases (ensuring at least 3 per category)
