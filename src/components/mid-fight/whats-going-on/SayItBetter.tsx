@@ -4,7 +4,7 @@ import { Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select';
-import { SayItBetterPhrase, getFilteredPhrases, getAllCategories } from '@/data/say-it-better-data';
+import { SayItBetterPhrase, getFilteredPhrases, getAllCategories } from '@/data/say-it-better';
 import { Card } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 
