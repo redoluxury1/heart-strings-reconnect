@@ -1,5 +1,12 @@
-
-import { SayItBetterPhrase } from './say-it-better/types';
+// Define the SayItBetterPhrase type within this file
+export interface SayItBetterPhrase {
+  id: string;
+  original: string;
+  emotionalSubtext: string;
+  howItMightLand: string;
+  trySayingInstead: string;
+  categories: string[];
+}
 
 // This array contains all the phrases for the Say It Better feature
 export const sayItBetterPhrases: SayItBetterPhrase[] = [
@@ -84,15 +91,6 @@ export const sayItBetterPhrases: SayItBetterPhrase[] = [
     categories: ["Blame", "Conflict", "Communication"]
   }
 ];
-
-export interface SayItBetterPhrase {
-  id: string;
-  original: string;
-  emotionalSubtext: string;
-  howItMightLand: string;
-  trySayingInstead: string;
-  categories: string[];
-}
 
 // Return a filtered list of phrases by search term and/or category
 export const getFilteredPhrases = (
