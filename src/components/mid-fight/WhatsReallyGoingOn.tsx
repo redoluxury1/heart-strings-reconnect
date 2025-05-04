@@ -24,8 +24,8 @@ const WhatsReallyGoingOn = () => {
 
   // Map feature values to display names
   const featureNames = {
-    'translator': 'Say It Better',
-    'sayitbetter': 'Phrase Library',
+    'translator': 'Heard/Meant Translator',
+    'sayitbetter': 'Say It Better',
     'realfight': 'Cut to the Point',
     'behaviors': 'He Said, She Said'
   };
@@ -60,13 +60,13 @@ const WhatsReallyGoingOn = () => {
               className="py-3 cursor-pointer" 
               onClick={() => setActiveFeature('translator')}
             >
-              Say It Better
+              Heard/Meant Translator
             </DropdownMenuItem>
             <DropdownMenuItem 
               className="py-3 cursor-pointer" 
               onClick={() => setActiveFeature('sayitbetter')}
             >
-              Phrase Library
+              Say It Better
             </DropdownMenuItem>
             <DropdownMenuItem 
               className="py-3 cursor-pointer" 
