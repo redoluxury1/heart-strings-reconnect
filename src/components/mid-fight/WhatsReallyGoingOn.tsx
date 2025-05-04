@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import { Puzzle } from 'lucide-react';
 import { Card } from '@/components/ui/card';
-import HeardTranslator from './whats-going-on/HeardTranslator';
 import RealFightAbout from './whats-going-on/RealFightAbout';
 import BehaviorDecoder from './whats-going-on/BehaviorDecoder';
 import SayItBetter from './whats-going-on/SayItBetter';
@@ -18,13 +17,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 const WhatsReallyGoingOn = () => {
-  const [activeFeature, setActiveFeature] = useState<'translator' | 'realfight' | 'behaviors' | 'sayitbetter'>('translator');
+  const [activeFeature, setActiveFeature] = useState<'sayitbetter' | 'realfight' | 'behaviors'>('sayitbetter');
   const [isCollapsed, setIsCollapsed] = useState(false);
   const isMobile = useIsMobile();
 
   // Map feature values to display names
   const featureNames = {
-    'translator': 'Heard/Meant Translator',
     'sayitbetter': 'Say It Better',
     'realfight': 'Cut to the Point',
     'behaviors': 'He Said, She Said'
@@ -58,12 +56,6 @@ const WhatsReallyGoingOn = () => {
           <DropdownMenuContent align="start" className="w-[calc(100%-1rem)] bg-white">
             <DropdownMenuItem 
               className="py-3 cursor-pointer" 
-              onClick={() => setActiveFeature('translator')}
-            >
-              Heard/Meant Translator
-            </DropdownMenuItem>
-            <DropdownMenuItem 
-              className="py-3 cursor-pointer" 
               onClick={() => setActiveFeature('sayitbetter')}
             >
               Say It Better
@@ -86,9 +78,6 @@ const WhatsReallyGoingOn = () => {
         <CollapsibleContent className={`${isMobile ? 'pt-3' : 'pt-4 md:pt-6'}`}>
           <Card className="border-lavender-blue/20 shadow-md">
             <div className={`${isMobile ? 'p-3' : 'p-4 md:p-6'}`}>
-              {activeFeature === "translator" && (
-                <HeardTranslator />
-              )}
               {activeFeature === "sayitbetter" && (
                 <SayItBetter />
               )}
