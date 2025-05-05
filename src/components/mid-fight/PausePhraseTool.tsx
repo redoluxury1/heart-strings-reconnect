@@ -22,7 +22,7 @@ const PausePhraseTool: React.FC<PausePhraseToolProps> = ({ onClose }) => {
   const [startConversationOpen, setStartConversationOpen] = useState(false);
   const [partnerName, setPartnerName] = useState("your partner"); // In a real app, this would come from user data
 
-  // For colorizing goals in the goal selection view
+  // For colorizing goals in the goal selection view - using our updated color scheme without yellow/orange/green
   const goalColorMap = goals.reduce((acc, goal, index) => {
     acc[goal.id] = index % 5; // Using modulo 5 since we have 5 color options
     return acc;
@@ -58,8 +58,8 @@ const PausePhraseTool: React.FC<PausePhraseToolProps> = ({ onClose }) => {
 
   const handleSendInvite = () => {
     toast({
-      title: "Conversation request sent",
-      description: `${partnerName} will be notified that you want to talk things through.`,
+      title: "Message ready",
+      description: `Your phrase is ready to share with ${partnerName}.`,
     });
   };
 
@@ -104,7 +104,7 @@ const PausePhraseTool: React.FC<PausePhraseToolProps> = ({ onClose }) => {
         />
       )}
 
-      {/* Start Conversation Dialog */}
+      {/* Conversation Dialog - Updated title to reflect "Say what you mean" */}
       <ConversationDialog
         isOpen={startConversationOpen}
         onOpenChange={setStartConversationOpen}
