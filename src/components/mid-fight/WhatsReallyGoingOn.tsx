@@ -87,9 +87,16 @@ const WhatsReallyGoingOn = () => {
                 </div>
               )}
               {activeFeature === "realfight" && (
-                <h3 className="text-2xl font-cormorant font-medium text-midnight-indigo mb-2 text-center">
-                  Cut to the Point
-                </h3>
+                <div className="relative font-cormorant text-center my-4">
+                  <div className="text-4xl sm:text-5xl font-bold tracking-tight relative z-10">
+                    <span className="text-lavender-blue">Cut</span>
+                    <span className="mx-1 text-mauve-rose">to the</span>
+                    <span className="text-lavender-blue">Point</span>
+                  </div>
+                  <div className="absolute inset-0 flex items-center justify-center z-0">
+                    <div className="w-full h-[30%] bg-gradient-to-r from-lavender-blue/10 via-mauve-rose/10 to-lavender-blue/10 blur-md rounded-full"></div>
+                  </div>
+                </div>
               )}
               {activeFeature === "behaviors" && (
                 <h3 className="text-2xl font-cormorant font-medium text-midnight-indigo mb-2 text-center">

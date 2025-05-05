@@ -60,9 +60,6 @@ const RealFightAbout = () => {
   return (
     <div className="space-y-6">
       <div className="mb-6">
-        <h3 className="text-lg font-medium text-midnight-indigo mb-3">
-          Cut to the Point
-        </h3>
         <p className="text-sm text-midnight-indigo/70 mb-2">
           Tap what's actually bothering you underneath it all
         </p>
