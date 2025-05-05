@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { Button } from "@/components/ui/button";
-import { Puzzle } from 'lucide-react';
 
 interface QuizIntroProps {
   onStart: () => void;
@@ -10,13 +9,13 @@ interface QuizIntroProps {
 const QuizIntro: React.FC<QuizIntroProps> = ({ onStart }) => {
   return (
     <div className="max-w-3xl mx-auto text-center bg-white p-8 md:p-10 rounded-xl shadow-md">
-      <div className="flex justify-center mb-6">
-        <Puzzle className="h-16 w-16 text-primary" />
+      <div className="mb-8">
+        <img 
+          src="/public/lovable-uploads/99edd396-a932-4643-a801-ce8e4d438035.png" 
+          alt="Personality Blueprint Types" 
+          className="max-w-full h-auto mx-auto"
+        />
       </div>
-      
-      <h1 className="text-3xl md:text-4xl font-heading-now-medium font-medium text-midnight-indigo mb-8">
-        Discover Your Personality Blueprint
-      </h1>
       
       <div className="bg-soft-blush/30 rounded-lg p-6 mb-8">
         <h3 className="font-medium text-midnight-indigo mb-3">How It Works:</h3>
