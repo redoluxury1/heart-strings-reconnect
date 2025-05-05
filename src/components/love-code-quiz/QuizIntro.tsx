@@ -14,15 +14,9 @@ const QuizIntro: React.FC<QuizIntroProps> = ({ onStart }) => {
         <Heart className="h-16 w-16 text-mauve-rose" />
       </div>
       
-      <h1 className="text-3xl md:text-4xl font-heading-now-medium font-medium text-midnight-indigo mb-4">
+      <h1 className="text-3xl md:text-4xl font-heading-now-medium font-medium text-midnight-indigo mb-8">
         Discover Your Love Code™
       </h1>
-      
-      <p className="text-midnight-indigo/80 mb-6">
-        The Love Code™ quiz helps you understand how you naturally give and receive love. 
-        Through 25 thoughtful questions, we'll uncover your unique love language profile 
-        and help you connect more deeply with your partner.
-      </p>
       
       <div className="bg-soft-blush/30 rounded-lg p-6 mb-8">
         <h3 className="font-medium text-midnight-indigo mb-3">How It Works:</h3>

@@ -14,14 +14,9 @@ const QuizIntro: React.FC<QuizIntroProps> = ({ onStart }) => {
         <Puzzle className="h-16 w-16 text-primary" />
       </div>
       
-      <h1 className="text-3xl md:text-4xl font-heading-now-medium font-medium text-midnight-indigo mb-4">
+      <h1 className="text-3xl md:text-4xl font-heading-now-medium font-medium text-midnight-indigo mb-8">
         Discover Your Personality Blueprint
       </h1>
-      
-      <p className="text-midnight-indigo/80 mb-6">
-        Learn how you show up in love, in conflict, and everything in between.
-        This quiz will help you understand your relationship style and emotional patterns.
-      </p>
       
       <div className="bg-soft-blush/30 rounded-lg p-6 mb-8">
         <h3 className="font-medium text-midnight-indigo mb-3">How It Works:</h3>
