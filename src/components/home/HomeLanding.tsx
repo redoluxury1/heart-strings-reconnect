@@ -8,6 +8,16 @@ const humorousBanners = [
   "Tap here before you say something you'll regret.",
   "Like couples therapy, but your phone won't charge you $200 an hour.",
   "Because 'I'm fine' usually means the opposite.",
+  "For when 'whatever you want' definitely doesn't mean whatever you want.",
+  "Helping couples avoid the 'silent treatment' since 2024.",
+  "Save your relationship and your dignity at the same time.",
+  "The app your therapist wishes you'd download.",
+  "Turn 'I hate you right now' into 'I'm upset but still love you.'",
+  "For relationships where 'fine' is never actually fine.",
+  "Because sometimes love needs a translator.",
+  "Your relationship's secret weapon (don't tell your ex).",
+  "For when you want to fight fair, not just fight.",
+  "The app that helps you say what you mean, not what you feel like screaming."
 ];
 
 const HomeLanding = () => {

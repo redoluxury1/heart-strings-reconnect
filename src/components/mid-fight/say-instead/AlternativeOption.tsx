@@ -1,42 +1,40 @@
 
 import React from 'react';
-import { Button } from '@/components/ui/button';
 import { Edit, BookmarkPlus } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 interface AlternativeOptionProps {
   alternative: string;
-  onSaveToLibrary: () => void;
   onCustomize: () => void;
+  onSaveToLibrary: () => void;
 }
 
 const AlternativeOption: React.FC<AlternativeOptionProps> = ({ 
-  alternative,
-  onSaveToLibrary,
-  onCustomize
+  alternative, 
+  onCustomize,
+  onSaveToLibrary 
 }) => {
   return (
-    <div className="group bg-white p-3 rounded border border-lavender-blue/10 hover:border-lavender-blue/30 transition-all">
-      <p className="text-midnight-indigo group-hover:text-mauve-rose transition-colors">
-        "{alternative}"
-      </p>
-      <div className="flex justify-end gap-2 mt-2">
-        <Button 
-          variant="outline" 
-          size="sm" 
-          className="text-xs text-lavender-blue hover:bg-mauve-rose/10 hover:text-mauve-rose hover:border-mauve-rose/50"
-          onClick={onSaveToLibrary}
-        >
-          <BookmarkPlus className="h-3.5 w-3.5 mr-1" />
-          Save
-        </Button>
-        <Button 
-          variant="outline" 
-          size="sm" 
-          className="text-xs text-lavender-blue hover:bg-mauve-rose/10 hover:text-mauve-rose hover:border-mauve-rose/50"
+    <div className="bg-white rounded-lg p-3 shadow-sm">
+      <p className="text-sm text-midnight-indigo mb-2">"{alternative}"</p>
+      <div className="flex flex-wrap gap-2 justify-end">
+        <Button
+          variant="outline"
+          size="sm"
+          className="text-xs border-lavender-blue text-lavender-blue hover:bg-lavender-blue/10"
           onClick={onCustomize}
         >
-          <Edit className="h-3.5 w-3.5 mr-1" />
+          <Edit className="h-3 w-3 mr-1" />
           Customize
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          className="text-xs border-mauve-rose text-mauve-rose hover:bg-mauve-rose/10"
+          onClick={onSaveToLibrary}
+        >
+          <BookmarkPlus className="h-3 w-3 mr-1" />
+          Save
         </Button>
       </div>
     </div>
