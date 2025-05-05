@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -93,7 +94,7 @@ const TimeoutTimer: React.FC<TimeoutTimerProps> = ({ animationsEnabled = true })
         {/* Replace hourglass with custom TimeOut graphic */}
         <TimeOutGraphic />
         
-        <h3 className="font-cormorant text-2xl sm:text-4xl md:text-5xl font-medium text-midnight-indigo mb-6">
+        <h3 className="font-cormorant text-xl sm:text-2xl md:text-3xl font-medium text-midnight-indigo mb-6 text-center">
           Space isn't distance. It's protection.
         </h3>
         
