@@ -6,7 +6,7 @@ import ContentContainer from '../common/ContentContainer';
 import { useInterface } from '../common/InterfaceProvider';
 
 // Import quiz card icons
-import { HeartHandshake, Heart, Compass, UserPlus } from 'lucide-react';
+import { Compass, UserPlus } from 'lucide-react';
 
 const LoveCodeQuizSection = () => {
   const { isEmotional } = useInterface();
@@ -40,25 +40,14 @@ const LoveCodeQuizSection = () => {
           } shadow-md`}>
             <div className="flex flex-col md:flex-row md:items-center mb-6">
               <div className="flex-shrink-0 flex justify-center mb-4 md:mb-0 md:mr-6">
-                <div className={`p-4 rounded-full ${
-                  isEmotional 
-                    ? "bg-[#6A4A74]/20"
-                    : "bg-[#543544]/20" 
-                }`}>
-                  <Heart className={`h-8 w-8 ${
-                    isEmotional 
-                      ? "text-[#6A4A74]" 
-                      : "text-[#543544]"
-                  }`} />
-                </div>
+                <img 
+                  src="/public/lovable-uploads/bd86ba4b-3919-4f4c-81a5-9b4f0f83fd45.png" 
+                  alt="The Love Codes™" 
+                  className="h-20 w-auto md:h-24"
+                />
               </div>
               
               <div className="flex-1">
-                <h3 className={`text-xl font-cormorant font-semibold mb-2 ${
-                  isEmotional ? "text-[#6A4A74]" : "text-[#2C3E50]"
-                }`}>
-                  Love Code Quiz
-                </h3>
                 <p className={`mb-4 ${
                   isEmotional ? "text-midnight-indigo/80" : "text-[#2C3E50]/80"
                 }`}>

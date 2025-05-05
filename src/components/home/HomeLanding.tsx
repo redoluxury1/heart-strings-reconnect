@@ -44,7 +44,7 @@ const HomeLanding = () => {
         {dailyQuote.subtext}
       </p>
       
-      <div className="bg-mauve-rose/10 py-3 px-4 rounded-lg max-w-lg mx-auto transition-all duration-500 ease-in-out mb-6">
+      <div className="bg-mauve-rose/20 py-3 px-4 rounded-lg max-w-lg mx-auto transition-all duration-500 ease-in-out mb-6">
         <p className="text-xs italic text-lavender-blue/80">
           {humorousBanners[currentBannerIndex]}
         </p>
