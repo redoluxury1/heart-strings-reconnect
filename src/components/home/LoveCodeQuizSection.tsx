@@ -73,12 +73,12 @@ const LoveCodeQuizSection = () => {
                 </div>
               </div>
               
-              {/* Right Person */}
+              {/* Right Person - Updated with the new illustration */}
               <div className="flex-shrink-0 ml-2 md:ml-4">
                 <img 
-                  src="/lovable-uploads/7a2b8328-e169-495c-a5c9-c91fe30f2fda.png" 
+                  src="/lovable-uploads/711046fd-39e9-4eb8-865e-1ba9e75aa336.png" 
                   alt="Woman illustration" 
-                  className={`${isMobile ? 'w-20 md:w-24' : 'w-32 lg:w-40'} transform scale-x-[-1]`}
+                  className={`${isMobile ? 'w-28 md:w-32' : 'w-36 lg:w-40'}`}
                 />
               </div>
             </div>
