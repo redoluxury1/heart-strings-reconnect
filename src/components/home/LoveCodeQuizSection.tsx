@@ -93,7 +93,7 @@ const LoveCodeQuizSection = () => {
             <div className="flex flex-col md:flex-row md:items-center">
               <div className="flex-shrink-0 flex justify-center mb-4 md:mb-0 md:mr-6">
                 <img 
-                  src="/lovable-uploads/59fe8b97-9783-47b7-aa24-d823a7f7f4e6.png" 
+                  src="/lovable-uploads/8b7e7758-626f-4f40-a4ec-6ffe727f31b5.png" 
                   alt="Personality Blueprint™" 
                   className="h-28 w-auto md:h-36 lg:h-40"
                 />
