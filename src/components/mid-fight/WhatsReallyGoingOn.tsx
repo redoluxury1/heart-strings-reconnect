@@ -99,9 +99,13 @@ const WhatsReallyGoingOn = () => {
                 </div>
               )}
               {activeFeature === "behaviors" && (
-                <h3 className="text-2xl font-cormorant font-medium text-midnight-indigo mb-2 text-center">
-                  He Said, She Said
-                </h3>
+                <div className="text-center my-4">
+                  <img 
+                    src="/public/lovable-uploads/e94bfd7a-f9a6-4570-ae59-4f4cff947197.png" 
+                    alt="He Said She Said" 
+                    className="mx-auto h-20 md:h-24"
+                  />
+                </div>
               )}
             </div>
 

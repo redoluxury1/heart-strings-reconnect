@@ -65,9 +65,6 @@ const BehaviorDecoder = () => {
   return (
     <div className="space-y-4">
       <div className="mb-4">
-        <h3 className="text-lg font-medium text-midnight-indigo mb-2">
-          He Said, She Said
-        </h3>
         <p className="text-sm text-midnight-indigo/70 mb-2">
           Understand what's behind common reactions during conflict
         </p>
