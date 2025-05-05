@@ -32,8 +32,8 @@ const LoveCodeQuizSection = () => {
           {/* Quiz Preview Card */}
           <div className="mt-12 mb-14 relative">
             <div className="flex items-center justify-center">
-              {/* Left Person */}
-              <div className="flex-shrink-0 relative z-0">
+              {/* Left Person - Moved closer to quiz card by removing margin and adding negative margin */}
+              <div className="flex-shrink-0 relative z-0 -mr-2 md:-mr-3">
                 <img 
                   src="/lovable-uploads/aabdc349-360e-4d7c-9ed4-108241323c99.png" 
                   alt="Man illustration" 
