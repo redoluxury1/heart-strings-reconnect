@@ -35,9 +35,9 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ feature, isSelected, toggleFe
       >
         <CardHeader className="pb-2">
           {feature.customTitle ? (
-            // Custom title styling for What's Really Going On? feature
+            // Custom title styling for What's Really Going On? feature - adjusted for mobile
             <div className="relative font-cormorant text-center my-4">
-              <div className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight relative z-10">
+              <div className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight relative z-10">
                 <span className="text-lavender-blue">What's</span>
                 <span className="mx-1 md:mx-2 text-mauve-rose">Really</span>
                 <span className="text-lavender-blue">Going On?</span>

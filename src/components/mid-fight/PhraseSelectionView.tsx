@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, ArrowRight, Edit } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Edit, RotateCcw } from 'lucide-react';
 
 // Define the color options
 const colorOptions = [
@@ -149,16 +149,25 @@ const PhraseSelectionView: React.FC<PhraseSelectionViewProps> = ({
         </div>
       </div>
       
-      {/* Action button for customization only - removed the "New Phrase" button */}
-      <div className="flex justify-center">
+      {/* Action buttons for customization and starting over */}
+      <div className="flex flex-col items-center gap-3">
         <Button 
           variant="outline" 
-          size="sm" 
           className="text-xs flex items-center gap-1 border-lavender-blue/50 text-lavender-blue hover:bg-lavender-blue/10"
           onClick={() => onCustomizePhrase(currentPhrase)}
         >
           <Edit className="h-3.5 w-3.5" />
           <span>Customize</span>
+        </Button>
+        
+        <Button 
+          variant="ghost"
+          size="sm" 
+          className="text-xs flex items-center text-midnight-indigo/70 hover:text-mauve-rose"
+          onClick={onBack}
+        >
+          <RotateCcw className="h-3.5 w-3.5 mr-1.5" />
+          <span>Start over</span>
         </Button>
       </div>
     </>
