@@ -71,11 +71,11 @@ const BehaviorDecoder = () => {
         </p>
       </div>
 
-      {/* Gender Toggle Bubbles - Now Stacked Vertically */}
+      {/* Gender Toggle Bubbles - Now Stacked Vertically with Reduced Height */}
       <div className="flex flex-col gap-4 mb-6">
         <Button
           variant="outline"
-          className={`rounded-full px-4 py-6 text-sm flex items-center justify-center h-auto ${
+          className={`rounded-full px-4 py-2 text-sm flex items-center justify-center h-auto ${
             genderTab === 'male' 
               ? 'bg-lavender-blue text-white border-lavender-blue' 
               : 'bg-white text-midnight-indigo/80 border-lavender-blue/30 hover:bg-lavender-blue/10'
@@ -90,7 +90,7 @@ const BehaviorDecoder = () => {
         
         <Button
           variant="outline"
-          className={`rounded-full px-4 py-6 text-sm flex items-center justify-center h-auto ${
+          className={`rounded-full px-4 py-2 text-sm flex items-center justify-center h-auto ${
             genderTab === 'female' 
               ? 'bg-mauve-rose text-white border-mauve-rose' 
               : 'bg-white text-midnight-indigo/80 border-mauve-rose/30 hover:bg-mauve-rose/10'
