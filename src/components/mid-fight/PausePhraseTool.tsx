@@ -7,6 +7,7 @@ import PhraseSelectionView from './PhraseSelectionView';
 import CustomizePhraseView from './CustomizePhraseView';
 import ConversationDialog from './ConversationDialog';
 import { Goal } from '@/data/pause-phrase-goals';
+import PausePhraseGraphic from './PausePhraseGraphic';
 
 interface PausePhraseToolProps {
   onClose: () => void;
@@ -66,12 +67,20 @@ const PausePhraseTool: React.FC<PausePhraseToolProps> = ({ onClose }) => {
   return (
     <div className="flex flex-col">
       {step === 'goal-selection' ? (
-        <GoalSelectionView 
-          goals={goals.filter(goal => goal.title !== "Say how I feel without blame")}
-          onGoalSelect={handleGoalSelect}
-          onStartConversation={handleStartConversation}
-          onSomethingElse={handleSomethingElse}
-        />
+        <>
+          <PausePhraseGraphic />
+          <div className="text-center mb-6">
+            <p className="text-sm text-midnight-indigo/70">
+              You know what you want to say. We'll help you say it in a way they can actually hear.
+            </p>
+          </div>
+          <GoalSelectionView 
+            goals={goals.filter(goal => goal.title !== "Say how I feel without blame")}
+            onGoalSelect={handleGoalSelect}
+            onStartConversation={handleStartConversation}
+            onSomethingElse={handleSomethingElse}
+          />
+        </>
       ) : isCustomizing ? (
         <CustomizePhraseView
           customPhrase={customPhrase}

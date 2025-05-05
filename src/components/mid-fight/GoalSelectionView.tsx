@@ -27,18 +27,6 @@ const GoalSelectionView: React.FC<GoalSelectionViewProps> = ({
   
   return (
     <>
-      <div className="mb-6 text-center">
-        <h3 className="text-xl font-cormorant font-medium text-midnight-indigo mb-2">
-          Let's get the words right—without making it worse.
-        </h3>
-        <p className="text-sm text-midnight-indigo/70">
-          You know what you want to say. We'll help you say it in a way they can actually hear.
-        </p>
-        <p className="text-xs text-midnight-indigo/60 mt-2 italic">
-          Take your time. There's no rush to get it perfect—just clearer.
-        </p>
-      </div>
-      
       <div className="space-y-2 mb-6">
         {goals.map((goal) => (
           <Button
