@@ -15,9 +15,14 @@ const StillUsSection = () => {
       
       <ContentContainer>
         <div className="text-center mb-14 relative z-10">
-          <h2 className="font-cormorant text-3xl md:text-4xl font-semibold italic text-[#6A4A74] mb-4">
-            We're still US
-          </h2>
+          {/* Replace text heading with the image */}
+          <div className="flex justify-center mb-4">
+            <img 
+              src="/lovable-uploads/b1c8f509-f8ea-4a0a-97a9-3dce6eacb685.png" 
+              alt="We're still US" 
+              className="h-32 w-auto"
+            />
+          </div>
           <p className="text-center text-midnight-indigo font-inter font-light max-w-2xl mx-auto">
             For the hard moments, the quiet pauses, and the choice to reconnect — this space meets you wherever you are.
           </p>
