@@ -147,7 +147,7 @@ const Hero = () => {
             id={`bubble-${bubble.id}`}
             key={bubble.id}
             className={cn(
-              `absolute px-4 py-2 rounded-xl shadow-sm font-inter font-semibold text-center`,
+              `absolute px-4 py-2 rounded-xl shadow-sm font-inter font-semibold text-center text-sm`, // Added text-sm class to make the text smaller
               bubble.style.bgColor,
               bubble.style.textColor,
               bubble.positionStyle,
@@ -156,7 +156,7 @@ const Hero = () => {
               bubble.style.position
             )}
             style={{ 
-              animation: 'fadeIn 1.2s forwards', // Slower fade in
+              animation: 'fadeIn 1.2s forwards',
             }}
           >
             {bubble.message}
