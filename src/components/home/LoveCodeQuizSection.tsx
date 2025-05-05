@@ -24,10 +24,15 @@ const LoveCodeQuizSection = () => {
             <Heart className="h-12 w-12 md:h-16 md:w-16 text-[#b08d97]" fill="#b08d97" />
           </div>
           
-          {/* Main Title - Updated with smaller font size for mobile */}
-          <h2 className="font-cormorant text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-medium mb-2 md:mb-4 text-[#3c3543] whitespace-nowrap">
-            DISCOVER YOUR LOVE CODE™
-          </h2>
+          {/* Main Title - Updated to split into two lines with different capitalization */}
+          <div className="mb-2 md:mb-4 text-center">
+            <h2 className="font-cormorant text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-medium text-[#3c3543]">
+              Discover Your
+            </h2>
+            <h2 className="font-cormorant text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-medium text-[#3c3543]">
+              LOVE CODE™
+            </h2>
+          </div>
           
           {/* Quiz Preview Card - Updated with the new illustration */}
           <div className="mt-6 md:mt-8 mb-6 md:mb-8 relative flex justify-center">
