@@ -40,7 +40,7 @@ const HomeLanding = () => {
         {dailyQuote.headline}
       </h1>
       
-      <p className="text-xl max-w-2xl mx-auto text-midnight-indigo/80 mb-8">
+      <p className="text-sm max-w-2xl mx-auto text-lavender-blue/70 mb-8">
         {dailyQuote.subtext}
       </p>
       
