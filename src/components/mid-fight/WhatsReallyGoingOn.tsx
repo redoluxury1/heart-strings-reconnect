@@ -1,6 +1,5 @@
 
 import React, { useState } from 'react';
-import { Puzzle } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import RealFightAbout from './whats-going-on/RealFightAbout';
 import BehaviorDecoder from './whats-going-on/BehaviorDecoder';
@@ -8,7 +7,7 @@ import SayItBetter from './whats-going-on/SayItBetter';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Button } from '@/components/ui/button';
-import { ChevronDown, ChevronUp } from 'lucide-react';
+import { ChevronDown, ChevronDown } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -31,10 +30,18 @@ const WhatsReallyGoingOn = () => {
   return (
     <div className={`space-y-4 md:space-y-8 ${isMobile ? 'py-4' : 'py-6 md:py-8'}`}>
       <div className="flex flex-col items-center mb-4 md:mb-8">
-        <Puzzle className="h-12 md:h-20 w-12 md:w-20 text-mauve-rose mb-3 md:mb-5" />
-        <h3 className="text-xl md:text-2xl font-cormorant font-medium text-midnight-indigo mb-2 md:mb-4 text-center">
-          What's Really Going On?
-        </h3>
+        {/* Custom title styling to replace the icon */}
+        <div className="relative font-cormorant text-center my-4">
+          <div className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight relative z-10">
+            <span className="text-lavender-blue">What's</span>
+            <span className="mx-1 md:mx-2 text-mauve-rose">Really</span>
+            <span className="text-lavender-blue">Going On?</span>
+          </div>
+          <div className="absolute inset-0 flex items-center justify-center z-0">
+            <div className="w-full h-[30%] bg-gradient-to-r from-lavender-blue/10 via-mauve-rose/10 to-lavender-blue/10 blur-md rounded-full"></div>
+          </div>
+        </div>
+        
         <p className="text-midnight-indigo/80 text-center max-w-2xl px-4 text-sm md:text-base">
           Fast insight tools to help you decode what's happening when things get heated.
         </p>

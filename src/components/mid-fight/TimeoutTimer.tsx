@@ -94,7 +94,7 @@ const TimeoutTimer: React.FC<TimeoutTimerProps> = ({ animationsEnabled = true })
         {/* Replace hourglass with custom TimeOut graphic */}
         <TimeOutGraphic />
         
-        <h3 className="font-cormorant text-xl md:text-2xl font-medium text-midnight-indigo mb-6 text-center">
+        <h3 className="font-cormorant text-lg md:text-xl font-medium text-midnight-indigo mb-6 text-center">
           Space isn't distance. It's protection.
         </h3>
         
@@ -105,7 +105,7 @@ const TimeoutTimer: React.FC<TimeoutTimerProps> = ({ animationsEnabled = true })
                 <Button 
                   key={preset.value}
                   variant="outline"
-                  className="border-sage text-midnight-indigo hover:bg-peachy-terracotta hover:text-white hover:border-peachy-terracotta"
+                  className="border-mauve-rose text-midnight-indigo hover:bg-mauve-rose hover:text-white hover:border-mauve-rose"
                   onClick={() => startTimer(preset.value)}
                 >
                   {preset.label}
@@ -123,15 +123,15 @@ const TimeoutTimer: React.FC<TimeoutTimerProps> = ({ animationsEnabled = true })
                   placeholder="Enter time"
                   min="1"
                   max="120"
-                  className="flex-1 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-sage text-sm"
+                  className="flex-1 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-mauve-rose text-sm"
                 />
                 <div className="flex gap-2">
                   <Button 
                     type="button"
                     variant="outline"
                     className={customTimeUnit === 'minutes' 
-                      ? "border-sage bg-sage text-white hover:bg-peachy-terracotta hover:border-peachy-terracotta" 
-                      : "border-sage text-midnight-indigo hover:bg-peachy-terracotta hover:text-white hover:border-peachy-terracotta"}
+                      ? "border-mauve-rose bg-mauve-rose text-white hover:bg-mauve-rose hover:border-mauve-rose" 
+                      : "border-mauve-rose text-midnight-indigo hover:bg-mauve-rose hover:text-white hover:border-mauve-rose"}
                     onClick={() => setCustomTimeUnit('minutes')}
                   >
                     <span className="text-xs">Minutes</span>
@@ -140,8 +140,8 @@ const TimeoutTimer: React.FC<TimeoutTimerProps> = ({ animationsEnabled = true })
                     type="button"
                     variant="outline"
                     className={customTimeUnit === 'hours' 
-                      ? "border-sage bg-sage text-white hover:bg-peachy-terracotta hover:border-peachy-terracotta" 
-                      : "border-sage text-midnight-indigo hover:bg-peachy-terracotta hover:text-white hover:border-peachy-terracotta"}
+                      ? "border-mauve-rose bg-mauve-rose text-white hover:bg-mauve-rose hover:border-mauve-rose" 
+                      : "border-mauve-rose text-midnight-indigo hover:bg-mauve-rose hover:text-white hover:border-mauve-rose"}
                     onClick={() => setCustomTimeUnit('hours')}
                   >
                     <span className="text-xs">Hours</span>
@@ -149,7 +149,7 @@ const TimeoutTimer: React.FC<TimeoutTimerProps> = ({ animationsEnabled = true })
                 </div>
               </div>
               <Button 
-                className="w-full bg-sage hover:bg-sage/90 text-white"
+                className="w-full bg-mauve-rose hover:bg-mauve-rose/90 text-white"
                 onClick={handleCustomTimerStart}
               >
                 <span className="text-xs">Start Timer & Notify Partner</span>
@@ -174,7 +174,7 @@ const TimeoutTimer: React.FC<TimeoutTimerProps> = ({ animationsEnabled = true })
             </p>
             <Button 
               variant="outline"
-              className="border-peachy-terracotta text-peachy-terracotta hover:bg-peachy-terracotta/10"
+              className="border-mauve-rose text-mauve-rose hover:bg-mauve-rose/10"
               onClick={() => setTimerActive(false)}
             >
               Cancel Timer
