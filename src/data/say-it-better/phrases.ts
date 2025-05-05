@@ -14,12 +14,13 @@ import { initialPhrases } from './phrase-batches/initial-phrases';
 import { additionalPhrases } from './phrase-batches/additional-phrases';
 import { latestPhrases } from './phrase-batches/latest-phrases';
 import { newerPhrases } from './phrase-batches/newer-phrases';
+import { fifthBatchPhrases } from './phrase-batches/fifth-batch-phrases';
 
 // Combine all phrases into one exported array
 export const sayItBetterPhrases: SayItBetterPhrase[] = [
   ...initialPhrases,
   ...additionalPhrases,
   ...latestPhrases,
-  ...newerPhrases
+  ...newerPhrases,
+  ...fifthBatchPhrases
 ];
-
