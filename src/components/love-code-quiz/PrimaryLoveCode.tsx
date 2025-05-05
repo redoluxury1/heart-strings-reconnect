@@ -14,7 +14,7 @@ const PrimaryLoveCode: React.FC<PrimaryLoveCodeProps> = ({ primaryDesc }) => {
   return (
     <div className="border-t border-b border-lavender-blue/20 py-8 mb-8">
       <h2 className="text-2xl md:text-3xl font-heading-now-medium font-medium text-mauve-rose mb-4">
-        Your Primary Love Code: {primaryDesc.title}
+        Your Primary Love Code: {primaryDesc.title.split(':')[0]}
       </h2>
       
       <div className="space-y-6 text-midnight-indigo/80">
@@ -50,7 +50,7 @@ const PrimaryLoveCode: React.FC<PrimaryLoveCodeProps> = ({ primaryDesc }) => {
         {showDetailedDescription && (
           <div className="mt-6 space-y-6 p-6 border border-lavender-blue/20 rounded-lg">
             <div>
-              <h3 className="font-medium text-midnight-indigo mb-2">1. Emotional Core – Why {primaryDesc.title} Matter to You</h3>
+              <h3 className="font-medium text-midnight-indigo mb-2">1. Emotional Core – Why {primaryDesc.title.split(':')[0]} Matter to You</h3>
               <p className="whitespace-pre-line">
                 {primaryDesc.detailedDescription?.emotionalCore || "Detailed description coming soon."}
               </p>

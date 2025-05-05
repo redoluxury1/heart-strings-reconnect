@@ -1,6 +1,5 @@
 
 import React from 'react';
-import { Check, Users, HelpingHand, Gift, Hand } from 'lucide-react';
 import { LoveCodeDescription, LoveCode } from '../../types/love-code-quiz';
 import { DownloadOptionsMenu } from './DownloadOptionsMenu';
 import PDFDownloadButton from './PDFDownloadButton';
@@ -11,24 +10,6 @@ interface ResultsHeaderProps {
   primaryDesc: LoveCodeDescription;
   handleSendToEmail: () => void;
 }
-
-// Function to get the appropriate icon based on the love code
-const getLoveCodeIcon = (code: LoveCode) => {
-  switch (code) {
-    case 'affirm':
-      return <Check className="h-12 w-12 text-mauve-rose" />;
-    case 'together':
-      return <Users className="h-12 w-12 text-mauve-rose" />;
-    case 'support':
-      return <HelpingHand className="h-12 w-12 text-mauve-rose" />;
-    case 'uplift':
-      return <Gift className="h-12 w-12 text-mauve-rose" />;
-    case 'touch':
-      return <Hand className="h-12 w-12 text-mauve-rose" />;
-    default:
-      return <Check className="h-12 w-12 text-mauve-rose" />;
-  }
-};
 
 const ResultsHeader: React.FC<ResultsHeaderProps> = ({
   results,
@@ -43,10 +24,7 @@ const ResultsHeader: React.FC<ResultsHeaderProps> = ({
   
   return (
     <div className="mb-6">
-      <div className="flex justify-between items-center">
-        {/* Replace heart icon with love code specific icon */}
-        {getLoveCodeIcon(results.primaryCode)}
-        
+      <div className="flex justify-end items-center">
         <DownloadOptionsMenu 
           handlePdfDownload={() => {
             const downloadBtn = document.getElementById('pdf-download-button');
