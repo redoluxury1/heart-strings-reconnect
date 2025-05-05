@@ -31,12 +31,12 @@ const BackgroundPhrases: React.FC = () => {
       {deEscalationPhrases.map((phrase, index) => (
         <div 
           key={index}
-          className="absolute text-midnight-indigo/5 font-cormorant italic"
+          className="absolute text-lavender-blue/15 font-cormorant italic"
           style={{
             left: `${Math.random() * 85}%`,
             top: `${Math.random() * 85}%`,
             transform: `rotate(${Math.random() * 40 - 20}deg)`,
-            fontSize: `${Math.random() * 1.5 + 1}rem`,
+            fontSize: `${Math.random() * 1.5 + 1.5}rem`,
           }}
         >
           {phrase}

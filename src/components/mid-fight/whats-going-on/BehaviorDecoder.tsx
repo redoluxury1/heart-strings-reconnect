@@ -65,11 +65,7 @@ const BehaviorDecoder = () => {
   
   return (
     <div className="space-y-4">
-      <div className="mb-2">
-        <p className="text-sm text-midnight-indigo/70 mb-1">
-          Understand what's behind common reactions during conflict
-        </p>
-      </div>
+      {/* Removed the subtext that was here */}
 
       {/* New Title Image */}
       <div className="flex justify-center mb-4">
