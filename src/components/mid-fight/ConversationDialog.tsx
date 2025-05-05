@@ -10,7 +10,7 @@ import {
   DialogHeader,
   DialogTitle
 } from "@/components/ui/dialog";
-import { useInterface } from '../common/InterfaceProvider';
+import { useInterface } from '@/hooks/useInterfaceContext';
 
 interface ConversationDialogProps {
   isOpen: boolean;

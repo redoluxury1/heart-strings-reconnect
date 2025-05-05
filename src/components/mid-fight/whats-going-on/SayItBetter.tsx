@@ -1,12 +1,15 @@
 
 import React, { useState, useMemo } from 'react';
-import { Search } from 'lucide-react';
+import { Search, Edit } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select';
 import { SayItBetterPhrase, getFilteredPhrases, getAllCategories } from '@/data/say-it-better-data';
 import { Card } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
+import CustomizePhraseView from '@/components/mid-fight/CustomizePhraseView';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
+import ConversationDialog from '@/components/mid-fight/ConversationDialog';
 
 interface SayItBetterProps {
   allowSave?: boolean;
@@ -16,6 +19,10 @@ const SayItBetter: React.FC<SayItBetterProps> = ({ allowSave = false }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [expandedPhraseId, setExpandedPhraseId] = useState<string | null>(null);
+  const [isCustomizeOpen, setIsCustomizeOpen] = useState(false);
+  const [isConversationOpen, setIsConversationOpen] = useState(false);
+  const [currentPhrase, setCurrentPhrase] = useState<SayItBetterPhrase | null>(null);
+  const [customizedPhrase, setCustomizedPhrase] = useState('');
   const { toast } = useToast();
   
   const categories = useMemo(() => getAllCategories(), []);
@@ -27,6 +34,17 @@ const SayItBetter: React.FC<SayItBetterProps> = ({ allowSave = false }) => {
   const handlePhraseClick = (phraseId: string) => {
     setExpandedPhraseId(expandedPhraseId === phraseId ? null : phraseId);
   };
+
+  const handleCustomize = (phrase: SayItBetterPhrase) => {
+    setCurrentPhrase(phrase);
+    setCustomizedPhrase(phrase.trySayingInstead);
+    setIsCustomizeOpen(true);
+  };
+  
+  const handleStartConversation = () => {
+    setIsCustomizeOpen(false);
+    setIsConversationOpen(true);
+  };
   
   const handleSavePhrase = (phrase: SayItBetterPhrase) => {
     // In a real app, this would save to local storage or database
@@ -37,14 +55,6 @@ const SayItBetter: React.FC<SayItBetterProps> = ({ allowSave = false }) => {
     
     // For now, just log it
     console.log('Saved phrase:', phrase);
-  };
-  
-  const handleCopyPhrase = (text: string) => {
-    navigator.clipboard.writeText(text);
-    toast({
-      title: "Copied to clipboard",
-      description: "You can now paste this phrase anywhere.",
-    });
   };
 
   return (
@@ -142,10 +152,11 @@ const SayItBetter: React.FC<SayItBetterProps> = ({ allowSave = false }) => {
                       <Button
                         variant="outline"
                         size="sm"
-                        className="text-xs"
-                        onClick={() => handleCopyPhrase(phrase.trySayingInstead)}
+                        className="text-xs flex items-center"
+                        onClick={() => handleCustomize(phrase)}
                       >
-                        Copy
+                        <Edit className="h-3.5 w-3.5 mr-1.5" />
+                        Customize
                       </Button>
                       
                       {allowSave && (
@@ -166,6 +177,41 @@ const SayItBetter: React.FC<SayItBetterProps> = ({ allowSave = false }) => {
           ))}
         </div>
       )}
+
+      {/* Customize phrase dialog */}
+      <Dialog open={isCustomizeOpen} onOpenChange={setIsCustomizeOpen}>
+        <DialogContent className="sm:max-w-md">
+          {currentPhrase && (
+            <CustomizePhraseView
+              customPhrase={customizedPhrase}
+              onCustomPhraseChange={setCustomizedPhrase}
+              onBackToTopics={() => setIsCustomizeOpen(false)}
+              onStartConversation={handleStartConversation}
+              showSaveOption={allowSave}
+              onSaveToLibrary={() => {
+                if (currentPhrase) handleSavePhrase(currentPhrase);
+                setIsCustomizeOpen(false);
+              }}
+              isFromSayThisInstead={true}
+            />
+          )}
+        </DialogContent>
+      </Dialog>
+
+      {/* Conversation dialog */}
+      <ConversationDialog
+        isOpen={isConversationOpen}
+        onOpenChange={setIsConversationOpen}
+        partnerName="Partner" 
+        onSendInvite={() => {
+          console.log('Sending conversation invite with phrase:', customizedPhrase);
+          // In a real app, this would send the invite
+          toast({
+            title: "Conversation Started",
+            description: "We've sent your partner a notification to start the conversation.",
+          });
+        }}
+      />
     </div>
   );
 };
