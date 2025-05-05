@@ -1,20 +1,16 @@
 
 import React from 'react';
 import { LoveCodeDescription, LoveCode } from '../../types/love-code-quiz';
-import { DownloadOptionsMenu } from './DownloadOptionsMenu';
-import PDFDownloadButton from './PDFDownloadButton';
 import { LoveCodeResult } from '../../types/love-code-quiz';
 
 interface ResultsHeaderProps {
   results: LoveCodeResult;
   primaryDesc: LoveCodeDescription;
-  handleSendToEmail: () => void;
 }
 
 const ResultsHeader: React.FC<ResultsHeaderProps> = ({
   results,
   primaryDesc,
-  handleSendToEmail,
 }) => {
   const isAffirm = results.primaryCode === 'affirm';
   const isUplift = results.primaryCode === 'uplift';
@@ -24,21 +20,6 @@ const ResultsHeader: React.FC<ResultsHeaderProps> = ({
   
   return (
     <div className="mb-6">
-      <div className="flex justify-end items-center">
-        <DownloadOptionsMenu 
-          handlePdfDownload={() => {
-            const downloadBtn = document.getElementById('pdf-download-button');
-            if (downloadBtn) downloadBtn.click();
-          }}
-          handleSendToEmail={handleSendToEmail}
-        />
-        
-        {/* Hidden button for PDF download functionality */}
-        <div className="hidden">
-          <PDFDownloadButton id="pdf-download-button" results={results} />
-        </div>
-      </div>
-      
       {/* Display the Affirm image only for the Affirm love code */}
       {isAffirm && (
         <div className="mt-6">
