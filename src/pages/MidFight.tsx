@@ -5,6 +5,7 @@ import Footer from '@/components/layout/Footer';
 import ContentContainer from '@/components/common/ContentContainer';
 import TimeoutTimer from '@/components/mid-fight/TimeoutTimer';
 import FeatureCardSection from '@/components/mid-fight/FeatureCardSection';
+import BackgroundPhrases from '@/components/mid-fight/BackgroundPhrases';
 
 const MidFight = () => {
   const [selectedFeature, setSelectedFeature] = useState<string | null>(null);
@@ -28,10 +29,11 @@ const MidFight = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-slate-50 relative">
+      <BackgroundPhrases />
       <Navbar />
       
-      <main className="pb-16">
+      <main className="pb-16 relative z-10">
         {/* Timeout Timer Section */}
         <section className="py-8 bg-soft-blush/30">
           <ContentContainer maxWidth="lg">
