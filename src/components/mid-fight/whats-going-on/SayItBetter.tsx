@@ -6,7 +6,6 @@ import ConversationDialog from '@/components/mid-fight/ConversationDialog';
 import { useToast } from '@/hooks/use-toast';
 
 // Import our new components
-import SearchFilters from './say-it-better/SearchFilters';
 import PhraseList from './say-it-better/PhraseList';
 import { useSearchFilters } from './say-it-better/useSearchFilters';
 import { usePhraseManagement } from './say-it-better/usePhraseManagement';
@@ -20,11 +19,9 @@ const SayItBetter: React.FC<SayItBetterProps> = ({ allowSave = false }) => {
   
   // Custom hooks for search/filtering and phrase management
   const { 
-    searchTerm, 
     selectedCategory, 
     categories, 
     filteredPhrases, 
-    setSearchTerm, 
     setSelectedCategory 
   } = useSearchFilters();
   
@@ -46,22 +43,24 @@ const SayItBetter: React.FC<SayItBetterProps> = ({ allowSave = false }) => {
   return (
     <div className="space-y-6">
       <div className="mb-4">
-        <h3 className="text-lg font-medium text-midnight-indigo mb-3">
-          Say It Better
-        </h3>
         <p className="text-sm text-midnight-indigo/70 mb-4">
           Find better ways to express difficult feelings without causing harm
         </p>
       </div>
       
-      {/* Search and filter */}
-      <SearchFilters 
-        searchTerm={searchTerm}
-        onSearchChange={setSearchTerm}
-        selectedCategory={selectedCategory}
-        onCategoryChange={setSelectedCategory}
-        categories={categories}
-      />
+      {/* Category filter only - removed search */}
+      <div>
+        <select 
+          value={selectedCategory}
+          onChange={(e) => setSelectedCategory(e.target.value)}
+          className="w-full bg-white border border-lavender-blue/30 rounded-md p-2 text-sm focus:border-lavender-blue focus:outline-none focus:ring-1 focus:ring-lavender-blue"
+        >
+          <option value="all">All Categories</option>
+          {categories.map((category) => (
+            <option key={category} value={category}>{category}</option>
+          ))}
+        </select>
+      </div>
       
       {/* Results */}
       <PhraseList 

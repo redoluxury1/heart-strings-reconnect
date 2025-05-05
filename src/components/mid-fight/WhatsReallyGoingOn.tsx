@@ -29,19 +29,7 @@ const WhatsReallyGoingOn = () => {
 
   return (
     <div className={`space-y-4 md:space-y-8 ${isMobile ? 'py-4' : 'py-6 md:py-8'}`}>
-      <div className="flex flex-col items-center mb-4 md:mb-8">
-        {/* Custom title styling to replace the icon */}
-        <div className="relative font-cormorant text-center my-4">
-          <div className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight relative z-10">
-            <span className="text-lavender-blue">What's</span>
-            <span className="mx-1 md:mx-2 text-mauve-rose">Really</span>
-            <span className="text-lavender-blue">Going On?</span>
-          </div>
-          <div className="absolute inset-0 flex items-center justify-center z-0">
-            <div className="w-full h-[30%] bg-gradient-to-r from-lavender-blue/10 via-mauve-rose/10 to-lavender-blue/10 blur-md rounded-full"></div>
-          </div>
-        </div>
-        
+      <div className="mb-4 md:mb-8">
         <p className="text-midnight-indigo/80 text-center max-w-2xl px-4 text-sm md:text-base">
           Fast insight tools to help you decode what's happening when things get heated.
         </p>
@@ -84,6 +72,32 @@ const WhatsReallyGoingOn = () => {
         
         <CollapsibleContent className={`${isMobile ? 'pt-3' : 'pt-4 md:pt-6'}`}>
           <Card className="border-lavender-blue/20 shadow-md">
+            {/* Custom Feature Title */}
+            <div className="pt-6 px-4 md:px-6">
+              {activeFeature === "sayitbetter" && (
+                <div className="relative font-cormorant text-center my-4">
+                  <div className="text-4xl sm:text-5xl font-bold tracking-tight relative z-10">
+                    <span className="text-lavender-blue">Say</span>
+                    <span className="mx-1 text-mauve-rose">It</span>
+                    <span className="text-lavender-blue">Better</span>
+                  </div>
+                  <div className="absolute inset-0 flex items-center justify-center z-0">
+                    <div className="w-full h-[30%] bg-gradient-to-r from-lavender-blue/10 via-mauve-rose/10 to-lavender-blue/10 blur-md rounded-full"></div>
+                  </div>
+                </div>
+              )}
+              {activeFeature === "realfight" && (
+                <h3 className="text-2xl font-cormorant font-medium text-midnight-indigo mb-2 text-center">
+                  Cut to the Point
+                </h3>
+              )}
+              {activeFeature === "behaviors" && (
+                <h3 className="text-2xl font-cormorant font-medium text-midnight-indigo mb-2 text-center">
+                  He Said, She Said
+                </h3>
+              )}
+            </div>
+
             <div className={`${isMobile ? 'p-3' : 'p-4 md:p-6'}`}>
               {activeFeature === "sayitbetter" && (
                 <SayItBetter />
