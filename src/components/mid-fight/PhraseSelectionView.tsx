@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, ArrowRight, Edit } from 'lucide-react';
@@ -107,15 +108,17 @@ const PhraseSelectionView: React.FC<PhraseSelectionViewProps> = ({
       <div className={`p-4 rounded-lg mb-6 border ${colorSet.bg} ${colorSet.border}`}>
         <p className="text-midnight-indigo mb-3 font-light italic">{currentPhrase}</p>
         
-        {/* Why this works - moved up here, directly under the phrase */}
-        <Button 
-          variant="ghost" 
-          size="sm" 
-          className="text-xs text-lavender-blue justify-center hover:text-mauve-rose mb-3 px-0"
-          onClick={toggleWhyItWorks}
-        >
-          {showWhyItWorks ? "Hide explanation" : "Why this works"}
-        </Button>
+        {/* Why this works - centered below the phrase */}
+        <div className="flex justify-center mb-3">
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            className="text-xs text-lavender-blue justify-center hover:text-mauve-rose px-0"
+            onClick={toggleWhyItWorks}
+          >
+            {showWhyItWorks ? "Hide explanation" : "Why this works"}
+          </Button>
+        </div>
         
         {showWhyItWorks && (
           <div className="bg-white/70 p-3 rounded-lg mb-3">

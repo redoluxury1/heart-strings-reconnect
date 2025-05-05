@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { MessageCircle, BookmarkPlus } from 'lucide-react';
+import { MessageCircle, BookmarkPlus, RotateCcw } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
 
 interface CustomizePhraseViewProps {
@@ -42,14 +42,24 @@ const CustomizePhraseView: React.FC<CustomizePhraseViewProps> = ({
         className="w-full border border-lavender-blue/30 rounded-lg p-3 mb-4 h-32 focus:outline-none focus:ring-1 focus:ring-lavender-blue"
       />
       
-      <div className="flex flex-col sm:flex-row gap-3 justify-center">
+      <div className="flex flex-col items-center gap-3">
         <Button
           variant="default"
           className="bg-lavender-blue hover:bg-lavender-blue/90 text-white"
           onClick={onStartConversation}
         >
           <MessageCircle className="h-4 w-4 mr-1" />
-          Say it with care
+          Say what you mean
+        </Button>
+        
+        <Button
+          variant="outline"
+          size="sm"
+          className="border-lavender-blue/40 text-midnight-indigo hover:bg-mauve-rose/10 hover:text-mauve-rose hover:border-mauve-rose/40 h-7 px-2 py-0 text-xs"
+          onClick={onBackToTopics}
+        >
+          <RotateCcw className="h-3.5 w-3.5 mr-1.5" />
+          Start over
         </Button>
         
         {showSaveOption && onSaveToLibrary && (

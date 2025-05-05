@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { goals } from '@/data/pause-phrase-goals';
@@ -69,6 +70,14 @@ const PausePhraseTool: React.FC<PausePhraseToolProps> = ({ onClose }) => {
     setIsCustomizing(true);
   };
 
+  const handleStartOver = () => {
+    // Reset everything and go back to the first step
+    setStep('goal-selection');
+    setSelectedGoal(null);
+    setCustomPhrase('');
+    setIsCustomizing(false);
+  };
+
   return (
     <div className="flex flex-col">
       {step === 'goal-selection' ? (
@@ -91,7 +100,7 @@ const PausePhraseTool: React.FC<PausePhraseToolProps> = ({ onClose }) => {
         <CustomizePhraseView
           customPhrase={customPhrase}
           onCustomPhraseChange={setCustomPhrase}
-          onBackToTopics={handleBackToTopics}
+          onBackToTopics={handleStartOver}
           onStartConversation={handleStartConversation}
         />
       ) : (
