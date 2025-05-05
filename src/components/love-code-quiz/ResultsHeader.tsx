@@ -36,6 +36,7 @@ const ResultsHeader: React.FC<ResultsHeaderProps> = ({
   handleSendToEmail,
 }) => {
   const isAffirm = results.primaryCode === 'affirm';
+  const isUplift = results.primaryCode === 'uplift';
   
   return (
     <div className="mb-6">
@@ -63,6 +64,17 @@ const ResultsHeader: React.FC<ResultsHeaderProps> = ({
           <img 
             src="/public/lovable-uploads/b1b66aa9-d1a2-4ac8-b1b7-652da0124b00.png" 
             alt="Affirm: Encouraging words" 
+            className="w-full max-w-md mx-auto"
+          />
+        </div>
+      )}
+
+      {/* Display the Gifts image only for the Uplift love code */}
+      {isUplift && (
+        <div className="mt-6">
+          <img 
+            src="/public/lovable-uploads/12d63ddf-c8d1-4e6d-b780-c6ffcfdfd9bf.png" 
+            alt="Gifts: Receiving thoughtful gifts" 
             className="w-full max-w-md mx-auto"
           />
         </div>
