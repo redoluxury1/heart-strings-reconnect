@@ -1,70 +1,82 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { SendHorizontal, Edit } from 'lucide-react';
-import { useIsMobile } from '@/hooks/use-mobile';
+import { ChevronRight, MessageSquare, MessageSquarePlus } from 'lucide-react';
+import { Goal } from '@/data/pause-phrase-goals';
 
-interface Goal {
-  id: string;
-  title: string;
-  phrases: string[];
-}
+// Define the color options
+const colorOptions = [
+  { bg: "bg-lavender-blue/20", border: "border-lavender-blue/30", hoverBg: "hover:bg-lavender-blue/30" },
+  { bg: "bg-mauve-rose/20", border: "border-mauve-rose/30", hoverBg: "hover:bg-mauve-rose/30" },
+  { bg: "bg-sage/20", border: "border-sage/30", hoverBg: "hover:bg-sage/30" },
+  { bg: "bg-peachy-terracotta/20", border: "border-peachy-terracotta/30", hoverBg: "hover:bg-peachy-terracotta/30" },
+  { bg: "bg-golden-mustard/20", border: "border-golden-mustard/30", hoverBg: "hover:bg-golden-mustard/30" },
+];
 
 interface GoalSelectionViewProps {
   goals: Goal[];
   onGoalSelect: (goal: Goal) => void;
   onStartConversation: () => void;
   onSomethingElse: () => void;
+  goalColorMap?: Record<string, number>;
 }
 
-const GoalSelectionView: React.FC<GoalSelectionViewProps> = ({
-  goals,
-  onGoalSelect,
+const GoalSelectionView: React.FC<GoalSelectionViewProps> = ({ 
+  goals, 
+  onGoalSelect, 
   onStartConversation,
-  onSomethingElse
+  onSomethingElse,
+  goalColorMap = {}
 }) => {
-  const isMobile = useIsMobile();
-  
   return (
-    <>
-      <div className="space-y-2 mb-6">
-        {goals.map((goal) => (
-          <Button
-            key={goal.id}
-            variant="outline"
-            className="w-full flex justify-start items-center border-lavender-blue/40 text-midnight-indigo hover:bg-mauve-rose/10 hover:text-mauve-rose hover:border-mauve-rose/40 transition-all py-2 px-3 h-auto"
-            onClick={() => onGoalSelect(goal)}
-          >
-            <span className={`text-xs sm:text-sm`}>
-              {goal.title}
-            </span>
-          </Button>
-        ))}
-
+    <div className="space-y-3">
+      <h3 className="text-lg font-medium text-midnight-indigo">What do you want to say?</h3>
+      
+      <div className="space-y-2">
+        {goals.map((goal) => {
+          const colorIndex = goalColorMap[goal.id] || 0;
+          const colorSet = colorOptions[colorIndex % colorOptions.length];
+          
+          return (
+            <div 
+              key={goal.id}
+              onClick={() => onGoalSelect(goal)}
+              className={`p-3 rounded-md cursor-pointer flex justify-between items-center ${colorSet.bg} ${colorSet.border} ${colorSet.hoverBg} transition-colors`}
+            >
+              <div>
+                <p className="font-medium text-midnight-indigo">{goal.title}</p>
+                <p className="text-sm text-midnight-indigo/70">{goal.description}</p>
+              </div>
+              <ChevronRight className="h-5 w-5 text-midnight-indigo/50" />
+            </div>
+          );
+        })}
+        
         {/* Something else option */}
-        <Button
-          variant="outline"
-          className="w-full flex justify-start items-center border-lavender-blue/40 text-midnight-indigo hover:bg-mauve-rose/10 hover:text-mauve-rose hover:border-mauve-rose/40 transition-all py-2 px-3 h-auto"
+        <div 
           onClick={onSomethingElse}
+          className="p-3 rounded-md cursor-pointer flex justify-between items-center bg-sage/20 border-sage/30 hover:bg-sage/30 transition-colors"
         >
-          <div className="flex items-center gap-2">
-            <Edit className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-            <span className={`text-xs sm:text-sm`}>Something else</span>
+          <div>
+            <p className="font-medium text-midnight-indigo">Something else...</p>
+            <p className="text-sm text-midnight-indigo/70">Write your own message from scratch</p>
           </div>
-        </Button>
-      </div>
-
-      <div className="flex justify-center mt-4">
-        <Button
-          variant="default"
-          className="bg-lavender-blue hover:bg-lavender-blue/90 text-white flex items-center gap-2"
+          <MessageSquarePlus className="h-5 w-5 text-midnight-indigo/50" />
+        </div>
+        
+        {/* Start a conversation option */}
+        <div 
           onClick={onStartConversation}
+          className="p-3 rounded-md cursor-pointer flex justify-between items-center bg-lavender-blue/20 border-lavender-blue/30 hover:bg-lavender-blue/30 transition-colors mt-4"
         >
-          <SendHorizontal className="h-4 w-4" />
-          Say what you mean
-        </Button>
+          <div>
+            <p className="font-medium text-midnight-indigo">Start a conversation</p>
+            <p className="text-sm text-midnight-indigo/70">Send your partner a message inviting them to talk</p>
+          </div>
+          <MessageSquare className="h-5 w-5 text-midnight-indigo/50" />
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 

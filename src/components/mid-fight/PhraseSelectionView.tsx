@@ -1,6 +1,16 @@
+
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, ArrowRight, Edit } from 'lucide-react';
+
+// Define the color options
+const colorOptions = [
+  { bg: "bg-lavender-blue/20", border: "border-lavender-blue/30", hoverBg: "hover:bg-lavender-blue/30" },
+  { bg: "bg-mauve-rose/20", border: "border-mauve-rose/30", hoverBg: "hover:bg-mauve-rose/30" },
+  { bg: "bg-sage/20", border: "border-sage/30", hoverBg: "hover:bg-sage/30" },
+  { bg: "bg-peachy-terracotta/20", border: "border-peachy-terracotta/30", hoverBg: "hover:bg-peachy-terracotta/30" },
+  { bg: "bg-golden-mustard/20", border: "border-golden-mustard/30", hoverBg: "hover:bg-golden-mustard/30" },
+];
 
 interface PhraseSelectionViewProps {
   selectedGoal: {
@@ -10,12 +20,14 @@ interface PhraseSelectionViewProps {
   } | null;
   onBack: () => void;
   onCustomizePhrase: (phrase: string) => void;
+  colorIndex?: number;
 }
 
 const PhraseSelectionView: React.FC<PhraseSelectionViewProps> = ({
   selectedGoal,
   onBack,
-  onCustomizePhrase
+  onCustomizePhrase,
+  colorIndex = 0
 }) => {
   const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
   const [showWhyItWorks, setShowWhyItWorks] = useState(false);
@@ -34,6 +46,7 @@ const PhraseSelectionView: React.FC<PhraseSelectionViewProps> = ({
   
   const currentPhrase = selectedGoal.phrases[currentPhraseIndex];
   const phrasesCount = selectedGoal.phrases.length;
+  const colorSet = colorOptions[colorIndex % colorOptions.length];
   
   const goToNextPhrase = () => {
     setCurrentPhraseIndex((prev) => (prev + 1) % phrasesCount);
@@ -92,7 +105,7 @@ const PhraseSelectionView: React.FC<PhraseSelectionViewProps> = ({
         </h3>
       </div>
       
-      <div className="bg-soft-blush/20 p-4 rounded-lg mb-6 border border-lavender-blue/20">
+      <div className={`p-4 rounded-lg mb-6 border ${colorSet.bg} ${colorSet.border}`}>
         <p className="text-midnight-indigo mb-3 font-light italic">{currentPhrase}</p>
         
         {/* Navigation buttons - now more compact and under the phrase */}

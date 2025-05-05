@@ -7,11 +7,24 @@ interface PhraseOptionProps {
   text: string;
   onNewTopic: () => void;
   onCustomize: () => void;
+  colorIndex?: number;
 }
 
-const PhraseOption: React.FC<PhraseOptionProps> = ({ text, onNewTopic, onCustomize }) => {
+// Define an array of color combinations for backgrounds and borders
+const colorOptions = [
+  { bg: "bg-lavender-blue/20", border: "border-lavender-blue/30", hoverBg: "hover:bg-lavender-blue/30" },
+  { bg: "bg-mauve-rose/20", border: "border-mauve-rose/30", hoverBg: "hover:bg-mauve-rose/30" },
+  { bg: "bg-sage/20", border: "border-sage/30", hoverBg: "hover:bg-sage/30" },
+  { bg: "bg-peachy-terracotta/20", border: "border-peachy-terracotta/30", hoverBg: "hover:bg-peachy-terracotta/30" },
+  { bg: "bg-golden-mustard/20", border: "border-golden-mustard/30", hoverBg: "hover:bg-golden-mustard/30" },
+];
+
+const PhraseOption: React.FC<PhraseOptionProps> = ({ text, onNewTopic, onCustomize, colorIndex = 0 }) => {
+  // Use modulo to ensure we always get a valid color option even if index is out of bounds
+  const colorSet = colorOptions[colorIndex % colorOptions.length];
+  
   return (
-    <div className="bg-soft-blush/20 p-4 rounded-lg mb-4 border border-lavender-blue/20 hover:bg-mauve-rose/5 transition-colors">
+    <div className={`p-4 rounded-lg mb-4 border ${colorSet.bg} ${colorSet.border} ${colorSet.hoverBg} transition-colors`}>
       <p className="text-midnight-indigo mb-3 font-light italic hover:text-mauve-rose">{text}</p>
       <div className="flex space-x-2 justify-end">
         <Button 

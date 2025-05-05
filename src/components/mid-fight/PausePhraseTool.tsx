@@ -22,6 +22,12 @@ const PausePhraseTool: React.FC<PausePhraseToolProps> = ({ onClose }) => {
   const [startConversationOpen, setStartConversationOpen] = useState(false);
   const [partnerName, setPartnerName] = useState("your partner"); // In a real app, this would come from user data
 
+  // For colorizing goals in the goal selection view
+  const goalColorMap = goals.reduce((acc, goal, index) => {
+    acc[goal.id] = index % 5; // Using modulo 5 since we have 5 color options
+    return acc;
+  }, {} as Record<string, number>);
+
   const handleGoalSelect = (goal: Goal) => {
     setSelectedGoal(goal);
     setStep('phrase-options');
@@ -79,6 +85,7 @@ const PausePhraseTool: React.FC<PausePhraseToolProps> = ({ onClose }) => {
             onGoalSelect={handleGoalSelect}
             onStartConversation={handleStartConversation}
             onSomethingElse={handleSomethingElse}
+            goalColorMap={goalColorMap}
           />
         </>
       ) : isCustomizing ? (
@@ -93,6 +100,7 @@ const PausePhraseTool: React.FC<PausePhraseToolProps> = ({ onClose }) => {
           selectedGoal={selectedGoal}
           onBack={handleBackToTopics}
           onCustomizePhrase={handleCustomizePhrase}
+          colorIndex={selectedGoal ? goalColorMap[selectedGoal.id] : 0}
         />
       )}
 
