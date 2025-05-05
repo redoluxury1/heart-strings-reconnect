@@ -113,7 +113,7 @@ const PhraseSelectionView: React.FC<PhraseSelectionViewProps> = ({
           <Button 
             variant="ghost" 
             size="sm" 
-            className="text-xs text-lavender-blue justify-center hover:text-mauve-rose px-0"
+            className="text-xs text-white justify-center hover:text-white/90 px-0"
             onClick={toggleWhyItWorks}
           >
             {showWhyItWorks ? "Hide explanation" : "Why this works"}
@@ -175,3 +175,4 @@ const PhraseSelectionView: React.FC<PhraseSelectionViewProps> = ({
 };
 
 export default PhraseSelectionView;
+
