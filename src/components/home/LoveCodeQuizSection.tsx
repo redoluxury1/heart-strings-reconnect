@@ -19,17 +19,17 @@ const LoveCodeQuizSection = () => {
     }`}>
       <ContentContainer>
         <div className="max-w-4xl mx-auto text-center">
-          {/* Heart Icon */}
+          {/* Heart Icon - Made smaller */}
           <div className="flex justify-center mb-4">
-            <Heart className="h-12 w-12 md:h-16 md:w-16 text-[#b08d97]" fill="#b08d97" />
+            <Heart className="h-8 w-8 md:h-10 md:w-10 text-[#b08d97]" fill="#b08d97" />
           </div>
           
-          {/* Main Title - Updated to split into two lines with different capitalization */}
+          {/* Main Title - Increased font size */}
           <div className="mb-2 md:mb-4 text-center">
-            <h2 className="font-cormorant text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-medium text-[#3c3543]">
+            <h2 className="font-cormorant text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium text-[#3c3543]">
               Discover Your
             </h2>
-            <h2 className="font-cormorant text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-medium text-[#3c3543]">
+            <h2 className="font-cormorant text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium text-[#3c3543]">
               LOVE CODE™
             </h2>
           </div>
