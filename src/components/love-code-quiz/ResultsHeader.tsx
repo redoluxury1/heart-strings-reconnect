@@ -39,6 +39,7 @@ const ResultsHeader: React.FC<ResultsHeaderProps> = ({
   const isUplift = results.primaryCode === 'uplift';
   const isTogether = results.primaryCode === 'together';
   const isSupport = results.primaryCode === 'support';
+  const isTouch = results.primaryCode === 'touch';
   
   return (
     <div className="mb-6">
@@ -99,6 +100,17 @@ const ResultsHeader: React.FC<ResultsHeaderProps> = ({
           <img 
             src="/public/lovable-uploads/ce863750-c674-4a5b-86ab-eb34017f3513.png" 
             alt="Support: Helping out" 
+            className="w-full max-w-md mx-auto"
+          />
+        </div>
+      )}
+
+      {/* Display the Touch image only for the Touch love code */}
+      {isTouch && (
+        <div className="mt-6">
+          <img 
+            src="/public/lovable-uploads/d6ecf2b6-037d-44f5-9acd-d94d9c313e62.png" 
+            alt="Touch: Physical affection" 
             className="w-full max-w-md mx-auto"
           />
         </div>
