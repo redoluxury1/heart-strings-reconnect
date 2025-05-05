@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -31,56 +30,60 @@ const LoveCodeQuizSection = () => {
           
           {/* Quiz Preview Card */}
           <div className="mt-12 mb-14 relative">
-            {/* Quiz Card - Smaller on mobile */}
-            <div className="max-w-xs md:max-w-md mx-auto bg-white rounded-3xl shadow-md border border-[#e6d8dc] p-4 md:p-6 relative z-10">
-              {/* Question Counter - Smaller on mobile */}
-              <div className="text-xs md:text-sm text-[#3c3543] mb-1 md:mb-2">
-                Question 1 of 5
+            {/* Mobile Layout: Skinnier, taller quiz card with people on sides */}
+            <div className={`${isMobile ? 'flex items-center justify-center gap-1' : 'relative'}`}>
+              {/* Left Person - Repositioned for mobile */}
+              <div className={`${isMobile ? 'w-20 flex-shrink-0' : 'absolute left-0 top-1/2 -translate-y-1/2 -ml-10 md:-left-32 lg:-left-44'}`}>
+                <img 
+                  src="/lovable-uploads/7a2b8328-e169-495c-a5c9-c91fe30f2fda.png" 
+                  alt="Man illustration" 
+                  className={`${isMobile ? 'w-full' : 'w-32 lg:w-40'}`}
+                />
               </div>
               
-              {/* Question Text - Smaller on mobile */}
-              <h3 className="text-lg md:text-xl font-medium text-[#3c3543] mb-3 md:mb-5 text-center">
-                What makes you feel most loved in a relationship?
-              </h3>
+              {/* Quiz Card - Skinnier on mobile */}
+              <div className={`${isMobile ? 'max-w-[220px] flex-grow' : 'max-w-xs md:max-w-md mx-auto'} bg-white rounded-3xl shadow-md border border-[#e6d8dc] p-4 md:p-6 relative z-10`}>
+                {/* Question Counter */}
+                <div className="text-xs md:text-sm text-[#3c3543] mb-1 md:mb-2">
+                  Question 1 of 5
+                </div>
+                
+                {/* Question Text */}
+                <h3 className="text-lg md:text-xl font-medium text-[#3c3543] mb-3 md:mb-5 text-center">
+                  What makes you feel most loved in a relationship?
+                </h3>
+                
+                {/* Answer Options */}
+                <div className="space-y-2 md:space-y-3">
+                  <div className="p-2 md:p-3 bg-[#f3e9ea] rounded-lg text-left text-[#3c3543] text-sm md:text-base">
+                    A. A heartfelt "I love you"
+                  </div>
+                  <div className="p-2 md:p-3 bg-[#f3e9ea] rounded-lg text-left text-[#3c3543] text-sm md:text-base">
+                    B. When they help without me asking
+                  </div>
+                  <div className="p-2 md:p-3 bg-[#f3e9ea] rounded-lg text-left text-[#3c3543] text-sm md:text-base">
+                    C. Quality time together
+                  </div>
+                  <div className="p-2 md:p-3 bg-[#f3e9ea] rounded-lg text-left text-[#3c3543] text-sm md:text-base">
+                    D. A thoughtful gift or gesture
+                  </div>
+                  <div className="p-2 md:p-3 bg-[#f3e9ea] rounded-lg text-left text-[#3c3543] text-sm md:text-base">
+                    E. Physical touch and affection
+                  </div>
+                </div>
+              </div>
               
-              {/* Answer Options - Smaller on mobile */}
-              <div className="space-y-2 md:space-y-3">
-                <div className="p-2 md:p-3 bg-[#f3e9ea] rounded-lg text-left text-[#3c3543] text-sm md:text-base">
-                  A. A heartfelt "I love you"
-                </div>
-                <div className="p-2 md:p-3 bg-[#f3e9ea] rounded-lg text-left text-[#3c3543] text-sm md:text-base">
-                  B. When they help without me asking
-                </div>
-                <div className="p-2 md:p-3 bg-[#f3e9ea] rounded-lg text-left text-[#3c3543] text-sm md:text-base">
-                  C. Quality time together
-                </div>
-                <div className="p-2 md:p-3 bg-[#f3e9ea] rounded-lg text-left text-[#3c3543] text-sm md:text-base">
-                  D. A thoughtful gift or gesture
-                </div>
-                <div className="p-2 md:p-3 bg-[#f3e9ea] rounded-lg text-left text-[#3c3543] text-sm md:text-base">
-                  E. Physical touch and affection
-                </div>
+              {/* Right Person - Repositioned for mobile */}
+              <div className={`${isMobile ? 'w-20 flex-shrink-0' : 'absolute right-0 top-1/2 -translate-y-1/2 -mr-10 md:-right-32 lg:-right-44'}`}>
+                <img 
+                  src="/lovable-uploads/7a2b8328-e169-495c-a5c9-c91fe30f2fda.png" 
+                  alt="Woman illustration" 
+                  className={`${isMobile ? 'w-full' : 'w-32 lg:w-40'} transform scale-x-[-1]`}
+                />
               </div>
             </div>
             
-            {/* Illustrated Characters - Repositioned for mobile */}
-            <div className="absolute left-0 top-1/2 -translate-y-1/2 -ml-1 md:-ml-10 lg:-ml-10 md:-left-32 lg:-left-44">
-              <img 
-                src="/lovable-uploads/7a2b8328-e169-495c-a5c9-c91fe30f2fda.png" 
-                alt="Man illustration" 
-                className={`${isMobile ? 'w-20' : 'w-32 lg:w-40'}`}
-              />
-            </div>
-            
-            <div className="absolute right-0 top-1/2 -translate-y-1/2 -mr-1 md:-mr-10 lg:-mr-10 md:-right-32 lg:-right-44">
-              <img 
-                src="/lovable-uploads/7a2b8328-e169-495c-a5c9-c91fe30f2fda.png" 
-                alt="Woman illustration" 
-                className={`${isMobile ? 'w-20' : 'w-32 lg:w-40'} transform scale-x-[-1]`}
-              />
-            </div>
-            
-            {/* Decorative Stars */}
+            {/* Decorative Stars - Keep them outside of the flex container */}
             <div className="absolute -left-6 top-10 text-[#e6d8dc] text-xl">✧</div>
             <div className="absolute -right-6 bottom-10 text-[#e6d8dc] text-xl">✧</div>
           </div>
