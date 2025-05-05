@@ -33,45 +33,47 @@ const LoveCodeQuizSection = () => {
           <div className="mt-12 mb-14 relative">
             <div className="flex items-center justify-center">
               {/* Left Person */}
-              <div className="flex-shrink-0 mr-0">
+              <div className="flex-shrink-0 relative z-0">
                 <img 
                   src="/lovable-uploads/aabdc349-360e-4d7c-9ed4-108241323c99.png" 
                   alt="Man illustration" 
-                  className={`${isMobile ? 'w-24 md:w-28' : 'w-32 lg:w-40'}`}
+                  className={`${isMobile ? 'w-16 md:w-24' : 'w-32 lg:w-40'}`}
                 />
               </div>
               
-              {/* Quiz Card - Now more square with fewer options */}
-              <div className={`${isMobile ? 'max-w-[180px] aspect-square' : 'max-w-[280px] aspect-square'} bg-white rounded-2xl shadow-md border border-[#e6d8dc] p-3 md:p-4 relative z-10`}>
-                {/* Question Text - Removed the question counter */}
-                <h3 className="text-sm md:text-base font-medium text-[#3c3543] mb-4 md:mb-6 text-center mt-2">
-                  What makes you feel most loved?
-                </h3>
-                
-                {/* Answer Options - Only A and B now */}
-                <div className="space-y-3 md:space-y-4">
-                  <div className="p-2 md:p-3 bg-[#f3e9ea] rounded-lg text-left text-[#3c3543] text-xs md:text-sm">
-                    A. A heartfelt "I love you"
-                  </div>
-                  <div className="p-2 md:p-3 bg-[#f3e9ea] rounded-lg text-left text-[#3c3543] text-xs md:text-sm">
-                    B. When they help without asking
+              {/* Quiz Card */}
+              <div className="bg-white rounded-2xl shadow-md border border-[#e6d8dc] p-3 md:p-4 relative z-10 mx-1">
+                <div className={`${isMobile ? 'w-[130px] h-[130px]' : 'w-[280px] h-[280px]'} flex flex-col justify-center`}>
+                  {/* Question Text */}
+                  <h3 className="text-xs md:text-base font-medium text-[#3c3543] mb-3 md:mb-6 text-center">
+                    What makes you feel most loved?
+                  </h3>
+                  
+                  {/* Answer Options */}
+                  <div className="space-y-2 md:space-y-4">
+                    <div className="p-1.5 md:p-3 bg-[#f3e9ea] rounded-lg text-left text-[#3c3543] text-xs md:text-sm">
+                      A. A heartfelt "I love you"
+                    </div>
+                    <div className="p-1.5 md:p-3 bg-[#f3e9ea] rounded-lg text-left text-[#3c3543] text-xs md:text-sm">
+                      B. When they help without asking
+                    </div>
                   </div>
                 </div>
               </div>
               
-              {/* Right Person - Made smaller */}
-              <div className="flex-shrink-0 ml-0">
+              {/* Right Person */}
+              <div className="flex-shrink-0 relative z-0">
                 <img 
                   src="/lovable-uploads/711046fd-39e9-4eb8-865e-1ba9e75aa336.png" 
                   alt="Woman illustration" 
-                  className={`${isMobile ? 'w-22 md:w-26' : 'w-28 lg:w-32'}`}
+                  className={`${isMobile ? 'w-14 md:w-20' : 'w-28 lg:w-32'}`}
                 />
               </div>
             </div>
             
             {/* Decorative Stars */}
-            <div className="absolute -left-6 top-10 text-[#e6d8dc] text-xl">✧</div>
-            <div className="absolute -right-6 bottom-10 text-[#e6d8dc] text-xl">✧</div>
+            <div className="absolute -left-6 top-10 text-[#e6d8dc] text-xl hidden md:block">✧</div>
+            <div className="absolute -right-6 bottom-10 text-[#e6d8dc] text-xl hidden md:block">✧</div>
           </div>
           
           {/* Tagline */}
