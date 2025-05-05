@@ -41,7 +41,7 @@ const LoveCodeQuizSection = () => {
             <div className="flex flex-col md:flex-row md:items-center mb-6">
               <div className="flex-shrink-0 flex justify-center mb-4 md:mb-0 md:mr-6">
                 <img 
-                  src="/public/lovable-uploads/bd86ba4b-3919-4f4c-81a5-9b4f0f83fd45.png" 
+                  src="/lovable-uploads/826ed32a-6526-46f4-b3aa-501e5741fc57.png" 
                   alt="The Love Codes™" 
                   className="h-28 w-auto md:h-36 lg:h-40"
                 />
