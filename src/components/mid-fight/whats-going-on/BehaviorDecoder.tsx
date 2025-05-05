@@ -4,7 +4,9 @@ import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
 import { useIsMobile } from '@/hooks/use-mobile';
 import CustomizePhraseView from '../CustomizePhraseView';
 import ConversationDialog from '../ConversationDialog';
-import MobileBehaviorToggle from './behavior-decoder/MobileBehaviorToggle';
+import { Button } from '@/components/ui/button';
+import BehaviorDropdown from './behavior-decoder/BehaviorDropdown';
+import BehaviorExplanation from './behavior-decoder/BehaviorExplanation';
 import BehaviorTabs from './behavior-decoder/BehaviorTabs';
 
 // Import behavior data functions
@@ -17,7 +19,6 @@ const BehaviorDecoder = () => {
   const [isCustomizing, setIsCustomizing] = useState(false);
   const [customPhrase, setCustomPhrase] = useState('');
   const [startConversationOpen, setStartConversationOpen] = useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   
   const isMobile = useIsMobile();
   
@@ -70,37 +71,66 @@ const BehaviorDecoder = () => {
         </p>
       </div>
 
-      <Collapsible
-        open={!isMobile || isDropdownOpen}
-        onOpenChange={isMobile ? setIsDropdownOpen : undefined}
-      >
-        <MobileBehaviorToggle 
-          isDropdownOpen={isDropdownOpen}
-          genderTab={genderTab}
-          isMobile={isMobile}
-        />
+      {/* Gender Toggle Bubbles */}
+      <div className="grid grid-cols-2 gap-4 mb-6">
+        <Button
+          variant="outline"
+          className={`rounded-full px-4 py-6 text-sm flex items-center justify-center h-auto ${
+            genderTab === 'male' 
+              ? 'bg-lavender-blue text-white border-lavender-blue' 
+              : 'bg-white text-midnight-indigo/80 border-lavender-blue/30 hover:bg-lavender-blue/10'
+          }`}
+          onClick={() => {
+            setGenderTab('male');
+            setSelectedFemaleBehaviorId('');
+          }}
+        >
+          <span className="text-center">He doesn't hate you, he...</span>
+        </Button>
         
-        <CollapsibleContent className={isMobile ? "animate-accordion-down" : ""}>
-          <BehaviorTabs 
+        <Button
+          variant="outline"
+          className={`rounded-full px-4 py-6 text-sm flex items-center justify-center h-auto ${
+            genderTab === 'female' 
+              ? 'bg-mauve-rose text-white border-mauve-rose' 
+              : 'bg-white text-midnight-indigo/80 border-mauve-rose/30 hover:bg-mauve-rose/10'
+          }`}
+          onClick={() => {
+            setGenderTab('female');
+            setSelectedMaleBehaviorId('');
+          }}
+        >
+          <span className="text-center">She's not mad, she...</span>
+        </Button>
+      </div>
+
+      <div className={`${isMobile ? "flex flex-col" : "grid grid-cols-5 gap-4"}`}>
+        <div className={`${isMobile ? "mb-4" : "col-span-2"}`}>
+          <BehaviorDropdown
+            behaviors={genderTab === 'female' ? getFemaleBehaviors() : getMaleBehaviors()}
+            selectedBehaviorId={genderTab === 'female' ? selectedFemaleBehaviorId : selectedMaleBehaviorId}
+            onBehaviorSelect={genderTab === 'female' ? setSelectedFemaleBehaviorId : setSelectedMaleBehaviorId}
             genderTab={genderTab}
-            onGenderTabChange={(value) => {
-              setGenderTab(value);
-              // Reset selected behaviors when switching tabs
-              if (value === 'female') {
-                setSelectedMaleBehaviorId('');
-              } else {
-                setSelectedFemaleBehaviorId('');
-              }
-            }}
-            selectedFemaleBehaviorId={selectedFemaleBehaviorId}
-            selectedMaleBehaviorId={selectedMaleBehaviorId}
-            onFemaleBehaviorSelect={setSelectedFemaleBehaviorId}
-            onMaleBehaviorSelect={setSelectedMaleBehaviorId}
-            onStartChat={handleStartChat}
             isMobile={isMobile}
           />
-        </CollapsibleContent>
-      </Collapsible>
+        </div>
+        <div className={`${isMobile ? "" : "col-span-3"}`}>
+          {genderTab === 'female' && selectedFemaleBehaviorId && (
+            <BehaviorExplanation 
+              behavior={getFemaleBehaviors().find(b => b.id === selectedFemaleBehaviorId)!}
+              onStartChat={handleStartChat}
+              isMobile={isMobile}
+            />
+          )}
+          {genderTab === 'male' && selectedMaleBehaviorId && (
+            <BehaviorExplanation 
+              behavior={getMaleBehaviors().find(b => b.id === selectedMaleBehaviorId)!}
+              onStartChat={handleStartChat}
+              isMobile={isMobile}
+            />
+          )}
+        </div>
+      </div>
     </div>
   );
 };

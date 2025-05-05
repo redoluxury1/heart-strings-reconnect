@@ -103,7 +103,7 @@ const WhatsReallyGoingOn = () => {
                   <img 
                     src="/public/lovable-uploads/e94bfd7a-f9a6-4570-ae59-4f4cff947197.png" 
                     alt="He Said She Said" 
-                    className="mx-auto h-20 md:h-24"
+                    className="mx-auto h-28 md:h-36"
                   />
                 </div>
               )}
