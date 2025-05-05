@@ -34,7 +34,7 @@ const PdfGenerator: React.FC<PdfGeneratorProps> = ({ results, children }) => {
   return (
     <div>
       <div ref={targetRef} className="pdf-content">
-        {/* This div will be captured for the PDF */}
+        {/* PDF content will be captured from here */}
       </div>
       {children(handleDownload)}
     </div>
