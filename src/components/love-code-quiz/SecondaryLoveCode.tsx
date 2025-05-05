@@ -8,7 +8,7 @@ interface SecondaryLoveCodeProps {
 
 const SecondaryLoveCode: React.FC<SecondaryLoveCodeProps> = ({ secondaryDesc }) => {
   return (
-    <div className="bg-soft-blush/20 rounded-lg p-6 mb-8">
+    <div className="rounded-lg p-6 mb-8 border border-lavender-blue/20">
       <h2 className="text-xl font-cormorant font-medium text-midnight-indigo mb-3">
         Your Secondary Love Code: {secondaryDesc.title}
       </h2>

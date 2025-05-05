@@ -42,7 +42,8 @@ const QuizResults: React.FC<QuizResultsProps> = ({ results, onHome }) => {
   
   return (
     <div className="max-w-4xl mx-auto">
-      <div className="bg-white p-6 md:p-10 rounded-xl shadow-md results-container">
+      {/* Results container - removed background and shadow */}
+      <div className="p-6 md:p-10 rounded-xl results-container">
         {/* Results Header with Download Options */}
         <ResultsHeader 
           results={results}

@@ -48,7 +48,7 @@ const PrimaryLoveCode: React.FC<PrimaryLoveCodeProps> = ({ primaryDesc }) => {
         </Button>
         
         {showDetailedDescription && (
-          <div className="mt-6 space-y-6 p-6 bg-soft-blush/20 rounded-lg">
+          <div className="mt-6 space-y-6 p-6 border border-lavender-blue/20 rounded-lg">
             <div>
               <h3 className="font-medium text-midnight-indigo mb-2">1. Emotional Core – Why {primaryDesc.title} Matter to You</h3>
               <p className="whitespace-pre-line">
