@@ -61,7 +61,7 @@ const GoalSelectionView: React.FC<GoalSelectionViewProps> = ({
           onClick={onStartConversation}
         >
           <SendHorizontal className="h-4 w-4" />
-          Say it with care
+          Say what you mean
         </Button>
       </div>
     </>

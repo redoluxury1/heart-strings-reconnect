@@ -1,10 +1,9 @@
-
 import React, { useState, useEffect } from 'react';
-import { Hourglass } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { toast } from '@/components/ui/sonner';
+import TimeOutGraphic from './TimeOutGraphic';
 
 // Preset timer options in minutes
 const timeoutPresets = [
@@ -91,29 +90,15 @@ const TimeoutTimer: React.FC<TimeoutTimerProps> = ({ animationsEnabled = true })
   return (
     <div className="bg-white rounded-lg shadow-md p-6 border border-lavender-blue/20 mt-6 mb-10">
       <div className="flex flex-col items-center">
-        <div className="flex justify-center mb-4 relative">
-          {/* Hourglass with simplified animation */}
-          <div className="relative">
-            <Hourglass className="h-24 w-24 text-mauve-rose" />
-            {timerActive && animationsEnabled && (
-              <>
-                {/* Only keep the bottom collecting sand animation */}
-                <div className="absolute bottom-7 left-1/2 transform -translate-x-1/2 w-8 h-3 bg-mauve-rose/40 rounded-t-full animate-pulse" style={{ animationDuration: '3s' }} />
-              </>
-            )}
-          </div>
-        </div>
+        {/* Replace hourglass with custom TimeOut graphic */}
+        <TimeOutGraphic />
         
         <h3 className="font-cormorant text-2xl sm:text-4xl md:text-5xl font-medium text-midnight-indigo mb-6">
-          Space isn't distance. It's protection. Let's take a beat.
+          Space isn't distance. It's protection.
         </h3>
         
         {!timerActive ? (
           <>
-            <p className="text-midnight-indigo/80 mb-6 text-center max-w-md">
-              We'll let your partner know you're pausing to breathe—not walking away.
-            </p>
-            
             <div className="grid grid-cols-3 gap-3 w-full max-w-md mb-6">
               {timeoutPresets.map((preset) => (
                 <Button 
@@ -168,6 +153,11 @@ const TimeoutTimer: React.FC<TimeoutTimerProps> = ({ animationsEnabled = true })
               >
                 <span className="text-xs">Start Timer & Notify Partner</span>
               </Button>
+              
+              {/* Move the explanation text below the button as micro text */}
+              <p className="text-midnight-indigo/80 mt-4 text-center text-xs">
+                We'll let your partner know you're pausing to breathe—not walking away.
+              </p>
             </div>
           </>
         ) : (
