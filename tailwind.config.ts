@@ -76,6 +76,10 @@ export default {
 				'rosewood-tint': '#E69999',
 				'mauve-rose': '#C7747F',
 				'lavender-blue': '#8A8AC9',
+				// New colors
+				'sage': '#93AF8B',
+				'peachy-terracotta': '#DF8152',
+				'golden-mustard': '#E5C158',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

@@ -24,9 +24,9 @@ const PhraseRewind: React.FC<PhraseRewindProps> = ({ onClose }) => {
 
   return (
     <section className="py-6 md:py-8 bg-soft-blush/30">
-      <div className="bg-white rounded-lg shadow-md p-5 md:p-6 border border-lavender-blue/20">
+      <div className="bg-white rounded-lg shadow-md p-5 md:p-6 border border-sage/20">
         <div className="flex flex-col items-center mb-6 cursor-pointer" onClick={() => setIsOpen(!isOpen)}>
-          <MessageCircle className="h-16 md:h-20 w-16 md:w-20 text-lavender-blue mb-3" />
+          <MessageCircle className="h-16 md:h-20 w-16 md:w-20 text-sage mb-3" />
           <PausePhraseGraphic />
           <p className="text-midnight-indigo/80 text-center max-w-2xl mb-3 text-sm md:text-base">
             For next time: Discover gentler ways to express difficult feelings
@@ -34,9 +34,9 @@ const PhraseRewind: React.FC<PhraseRewindProps> = ({ onClose }) => {
           <Button 
             variant="outline" 
             onClick={() => setIsOpen(!isOpen)}
-            className="mt-2"
+            className="mt-2 border-sage text-sage hover:bg-sage hover:text-white"
           >
-            {isOpen ? "Close" : "Explore Better Phrases"}
+            {isOpen ? "Close" : "Say what you mean"}
           </Button>
         </div>
         
