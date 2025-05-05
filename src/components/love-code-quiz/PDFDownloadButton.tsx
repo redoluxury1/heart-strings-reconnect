@@ -6,13 +6,16 @@ import { usePDF } from 'react-to-pdf';
 import { toast } from '@/hooks/use-toast';
 import { LoveCodeResult } from '../../types/love-code-quiz';
 import { loveCodeDescriptions } from '../../data/love-code-quiz-data';
+import { moreLoveCodeDescriptions } from '../../data/love-code-quiz/more-love-code-descriptions';
 
 interface PDFDownloadButtonProps {
   results: LoveCodeResult;
+  id?: string;
 }
 
-const PDFDownloadButton: React.FC<PDFDownloadButtonProps> = ({ results }) => {
-  const primaryDesc = loveCodeDescriptions[results.primaryCode];
+const PDFDownloadButton: React.FC<PDFDownloadButtonProps> = ({ results, id }) => {
+  const allDescriptions = { ...loveCodeDescriptions, ...moreLoveCodeDescriptions };
+  const primaryDesc = allDescriptions[results.primaryCode];
   const { toPDF, targetRef } = usePDF({
     filename: `love-code-${primaryDesc.title.replace(/\s+/g, '-').toLowerCase()}.pdf`,
   });
@@ -36,6 +39,7 @@ const PDFDownloadButton: React.FC<PDFDownloadButtonProps> = ({ results }) => {
 
   return (
     <Button 
+      id={id}
       variant="outline" 
       className="border-mauve-rose bg-white text-mauve-rose hover:bg-mauve-rose/10 font-medium flex items-center gap-2" 
       onClick={handleDownload}
