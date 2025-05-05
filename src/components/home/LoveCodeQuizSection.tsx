@@ -18,18 +18,7 @@ const LoveCodeQuizSection = () => {
         : "bg-[#e8edf3]"
     }`}>
       <ContentContainer>
-        <div className="text-center mb-12">
-          <h2 className={`font-cormorant text-3xl md:text-4xl lg:text-5xl font-medium mb-4 ${
-            isEmotional ? "text-midnight-indigo" : "text-[#2C3E50]"
-          }`}>
-            Discover your Love Code + Personality Blueprint
-          </h2>
-          <p className={`text-lg max-w-2xl mx-auto ${
-            isEmotional ? "text-midnight-indigo/80" : "text-[#2C3E50]/80"
-          }`}>
-            Take our quizzes to understand your unique relationship patterns and discover how you and your partner connect.
-          </p>
-        </div>
+        {/* Removed the title and description text that were previously here */}
         
         <div className="max-w-3xl mx-auto space-y-8">
           {/* Combined Love Code card with both quiz and invite options */}
