@@ -43,7 +43,7 @@ const LoveCodeQuizSection = () => {
                 <img 
                   src="/public/lovable-uploads/bd86ba4b-3919-4f4c-81a5-9b4f0f83fd45.png" 
                   alt="The Love Codes™" 
-                  className="h-20 w-auto md:h-24"
+                  className="h-28 w-auto md:h-36 lg:h-40"
                 />
               </div>
               
