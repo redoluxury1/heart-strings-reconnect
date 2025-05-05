@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -31,7 +32,7 @@ const LoveCodeQuizSection = () => {
           {/* Quiz Preview Card */}
           <div className="mt-12 mb-14 relative">
             <div className="flex items-center justify-center">
-              {/* Left Person - Updated with the new illustration */}
+              {/* Left Person */}
               <div className="flex-shrink-0 mr-0">
                 <img 
                   src="/lovable-uploads/aabdc349-360e-4d7c-9ed4-108241323c99.png" 
@@ -40,39 +41,39 @@ const LoveCodeQuizSection = () => {
                 />
               </div>
               
-              {/* Quiz Card */}
-              <div className={`${isMobile ? 'max-w-[220px]' : 'max-w-xs md:max-w-md'} bg-white rounded-3xl shadow-md border border-[#e6d8dc] p-4 md:p-6 relative z-10`}>
+              {/* Quiz Card - Adjusted to be more square */}
+              <div className={`${isMobile ? 'max-w-[180px] aspect-square' : 'max-w-[280px] aspect-square'} bg-white rounded-2xl shadow-md border border-[#e6d8dc] p-3 md:p-4 relative z-10`}>
                 {/* Question Counter */}
-                <div className="text-xs md:text-sm text-[#3c3543] mb-1 md:mb-2">
+                <div className="text-xs md:text-sm text-[#3c3543] mb-1">
                   Question 1 of 5
                 </div>
                 
                 {/* Question Text */}
-                <h3 className="text-lg md:text-xl font-medium text-[#3c3543] mb-3 md:mb-5 text-center">
-                  What makes you feel most loved in a relationship?
+                <h3 className="text-sm md:text-base font-medium text-[#3c3543] mb-2 md:mb-3 text-center">
+                  What makes you feel most loved?
                 </h3>
                 
                 {/* Answer Options */}
-                <div className="space-y-2 md:space-y-3">
-                  <div className="p-2 md:p-3 bg-[#f3e9ea] rounded-lg text-left text-[#3c3543] text-sm md:text-base">
+                <div className="space-y-1.5 md:space-y-2">
+                  <div className="p-1.5 md:p-2 bg-[#f3e9ea] rounded-lg text-left text-[#3c3543] text-xs md:text-sm">
                     A. A heartfelt "I love you"
                   </div>
-                  <div className="p-2 md:p-3 bg-[#f3e9ea] rounded-lg text-left text-[#3c3543] text-sm md:text-base">
-                    B. When they help without me asking
+                  <div className="p-1.5 md:p-2 bg-[#f3e9ea] rounded-lg text-left text-[#3c3543] text-xs md:text-sm">
+                    B. When they help without asking
                   </div>
-                  <div className="p-2 md:p-3 bg-[#f3e9ea] rounded-lg text-left text-[#3c3543] text-sm md:text-base">
+                  <div className="p-1.5 md:p-2 bg-[#f3e9ea] rounded-lg text-left text-[#3c3543] text-xs md:text-sm">
                     C. Quality time together
                   </div>
-                  <div className="p-2 md:p-3 bg-[#f3e9ea] rounded-lg text-left text-[#3c3543] text-sm md:text-base">
+                  <div className="p-1.5 md:p-2 bg-[#f3e9ea] rounded-lg text-left text-[#3c3543] text-xs md:text-sm">
                     D. A thoughtful gift or gesture
                   </div>
-                  <div className="p-2 md:p-3 bg-[#f3e9ea] rounded-lg text-left text-[#3c3543] text-sm md:text-base">
+                  <div className="p-1.5 md:p-2 bg-[#f3e9ea] rounded-lg text-left text-[#3c3543] text-xs md:text-sm">
                     E. Physical touch and affection
                   </div>
                 </div>
               </div>
               
-              {/* Right Person - Keeping the previously updated illustration */}
+              {/* Right Person */}
               <div className="flex-shrink-0 ml-0">
                 <img 
                   src="/lovable-uploads/711046fd-39e9-4eb8-865e-1ba9e75aa336.png" 
