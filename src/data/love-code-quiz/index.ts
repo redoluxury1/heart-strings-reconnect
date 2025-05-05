@@ -28,4 +28,3 @@ export const allLoveCodeDescriptions: LoveCodeDescriptions = {
 export { sayInsteadPhrases };
 export { allQuizQuestions as quizQuestions };
 export { allLoveCodeDescriptions as loveCodeDescriptions };
-export { loveCodeNameMap };
