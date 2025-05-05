@@ -1,7 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Book, Heart, BookOpen, Check } from 'lucide-react';
+import { Book, Heart, BookOpen, Check, ChevronDown } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 import Navbar from '../components/layout/Navbar';
 import ContentContainer from '../components/common/ContentContainer';
@@ -11,6 +10,13 @@ import JournalEntries from '../components/archive/JournalEntries';
 import RepairPlansArchive from '../components/archive/RepairPlansArchive';
 import JournalBubblesHero from '../components/archive/JournalBubblesHero';
 import { useIsMobile } from '../hooks/use-mobile';
+import { 
+  DropdownMenu, 
+  DropdownMenuContent, 
+  DropdownMenuTrigger, 
+  DropdownMenuItem 
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
 
 const Archive = () => {
   const location = useLocation();
@@ -24,6 +30,33 @@ const Archive = () => {
     }
   }, [location.state]);
 
+  // Map section names to their display values
+  const sectionNames = {
+    'saved-rephrases': 'Saved Rephrases',
+    'love-notes': 'Love Notes',
+    'repair-plans': 'Repair Plans',
+    'thoughts': 'Thoughts'
+  };
+
+  // Icon mapping for each section
+  const sectionIcons = {
+    'saved-rephrases': <Book className="h-4 w-4" />,
+    'love-notes': <Heart className="h-4 w-4" />,
+    'repair-plans': <Check className="h-4 w-4" />,
+    'thoughts': <BookOpen className="h-4 w-4" />
+  };
+
+  // Helper to get active section class
+  const getSectionClass = (sectionName) => {
+    if (sectionName === 'saved-rephrases') {
+      return activeTab === sectionName ? 'bg-midnight-indigo text-white' : 'text-midnight-indigo';
+    } else if (sectionName === 'love-notes') {
+      return activeTab === sectionName ? 'bg-mauve-rose text-white' : 'text-midnight-indigo';
+    } else {
+      return activeTab === sectionName ? 'bg-soft-blush text-midnight-indigo' : 'text-midnight-indigo';
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#F1ECE8]">
       <Navbar />
@@ -32,66 +65,71 @@ const Archive = () => {
         <ContentContainer>
           <JournalBubblesHero />
           
-          <Tabs
-            defaultValue="saved-rephrases"
-            value={activeTab}
-            onValueChange={setActiveTab}
-            className="w-full mt-24"
-          >
-            <TabsList className="flex flex-col sm:flex-row justify-center mb-8 bg-transparent p-1 gap-2">
-              <div className="flex flex-col sm:flex-row justify-center w-full gap-2 flex-wrap">
-                <TabsTrigger 
-                  value="saved-rephrases"
-                  className="flex items-center gap-2 py-3 px-5 data-[state=active]:bg-midnight-indigo data-[state=active]:text-white rounded-full text-xs sm:text-sm"
-                >
-                  <Book className="h-4 w-4" />
-                  <span>Saved Rephrases</span>
-                </TabsTrigger>
-                <TabsTrigger 
-                  value="love-notes"
-                  className="flex items-center gap-2 py-3 px-5 data-[state=active]:bg-mauve-rose data-[state=active]:text-white rounded-full text-xs sm:text-sm relative"
-                >
-                  <Heart className="h-4 w-4" />
-                  <span>Love Notes</span>
-                  {activeTab !== 'love-notes' && location.state?.newNote && (
-                    <div className="absolute -right-2 -top-2 bg-mauve-rose text-white text-xs px-2 py-1 rounded-full animate-pulse">
-                      New
-                    </div>
-                  )}
-                </TabsTrigger>
-                <TabsTrigger 
-                  value="repair-plans"
-                  className="flex items-center gap-2 py-3 px-5 data-[state=active]:bg-soft-blush data-[state=active]:text-midnight-indigo rounded-full text-xs sm:text-sm"
-                >
-                  <Check className="h-4 w-4" />
-                  <span>Repair Plans</span>
-                </TabsTrigger>
-                <TabsTrigger 
-                  value="thoughts"
-                  className="flex items-center gap-2 py-3 px-5 data-[state=active]:bg-soft-blush data-[state=active]:text-midnight-indigo rounded-full text-xs sm:text-sm"
-                >
-                  <BookOpen className="h-4 w-4" />
-                  <span>Thoughts</span>
-                </TabsTrigger>
-              </div>
-            </TabsList>
+          <div className="mt-16 w-full">
+            {/* Dropdown menu for section selection */}
+            <div className="flex justify-center mb-8">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button 
+                    variant="outline"
+                    className="flex items-center gap-2 border border-midnight-indigo/30 bg-white"
+                  >
+                    {sectionIcons[activeTab]}
+                    <span>{sectionNames[activeTab]}</span>
+                    <ChevronDown className="h-4 w-4 ml-2" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56 bg-white">
+                  <DropdownMenuItem 
+                    className={`flex items-center gap-2 py-3 cursor-pointer ${getSectionClass('saved-rephrases')}`}
+                    onClick={() => setActiveTab('saved-rephrases')}
+                  >
+                    <Book className="h-4 w-4" />
+                    <span>Saved Rephrases</span>
+                    {activeTab !== 'love-notes' && location.state?.newNote && activeTab === 'saved-rephrases' && (
+                      <div className="ml-auto bg-mauve-rose text-white text-xs px-2 py-1 rounded-full">
+                        New
+                      </div>
+                    )}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    className={`flex items-center gap-2 py-3 cursor-pointer ${getSectionClass('love-notes')}`}
+                    onClick={() => setActiveTab('love-notes')}
+                  >
+                    <Heart className="h-4 w-4" />
+                    <span>Love Notes</span>
+                    {activeTab !== 'love-notes' && location.state?.newNote && (
+                      <div className="ml-auto bg-mauve-rose text-white text-xs px-2 py-1 rounded-full">
+                        New
+                      </div>
+                    )}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem 
+                    className={`flex items-center gap-2 py-3 cursor-pointer ${getSectionClass('repair-plans')}`}
+                    onClick={() => setActiveTab('repair-plans')}
+                  >
+                    <Check className="h-4 w-4" />
+                    <span>Repair Plans</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem 
+                    className={`flex items-center gap-2 py-3 cursor-pointer ${getSectionClass('thoughts')}`}
+                    onClick={() => setActiveTab('thoughts')}
+                  >
+                    <BookOpen className="h-4 w-4" />
+                    <span>Thoughts</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
             
-            <TabsContent value="saved-rephrases">
-              <SavedRephrases />
-            </TabsContent>
-            
-            <TabsContent value="love-notes">
-              <LoveNotesArchive newNote={location.state?.newNote} />
-            </TabsContent>
-            
-            <TabsContent value="repair-plans">
-              <RepairPlansArchive />
-            </TabsContent>
-            
-            <TabsContent value="thoughts" className="pt-4">
-              <JournalEntries />
-            </TabsContent>
-          </Tabs>
+            {/* Content for each section */}
+            <div>
+              {activeTab === 'saved-rephrases' && <SavedRephrases />}
+              {activeTab === 'love-notes' && <LoveNotesArchive newNote={location.state?.newNote} />}
+              {activeTab === 'repair-plans' && <RepairPlansArchive />}
+              {activeTab === 'thoughts' && <JournalEntries />}
+            </div>
+          </div>
         </ContentContainer>
       </div>
     </div>
