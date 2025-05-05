@@ -29,11 +29,11 @@ const LoveCodeQuizSection = () => {
             DISCOVER YOUR LOVE CODE™
           </h2>
           
-          {/* Quiz Preview Card - Replaced with new illustration image */}
+          {/* Quiz Preview Card - Updated with the new illustration */}
           <div className="mt-6 md:mt-8 mb-6 md:mb-8 relative flex justify-center">
             <div className="w-full max-w-[500px]">
               <img 
-                src="/lovable-uploads/06c2399f-a21c-4ff5-9e82-de9997ea9b70.png"
+                src="/lovable-uploads/5c335533-dffc-4fd3-8cfb-90c8f48f725d.png"
                 alt="Love Code Quiz preview with couple"
                 className="w-full h-auto rounded-xl"
               />
