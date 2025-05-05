@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -32,12 +31,12 @@ const LoveCodeQuizSection = () => {
           {/* Quiz Preview Card */}
           <div className="mt-12 mb-14 relative">
             <div className="flex items-center justify-center">
-              {/* Left Person */}
-              <div className="flex-shrink-0 mr-2 md:mr-4">
+              {/* Left Person - Updated with the new illustration */}
+              <div className="flex-shrink-0 mr-0">
                 <img 
-                  src="/lovable-uploads/7a2b8328-e169-495c-a5c9-c91fe30f2fda.png" 
+                  src="/lovable-uploads/aabdc349-360e-4d7c-9ed4-108241323c99.png" 
                   alt="Man illustration" 
-                  className={`${isMobile ? 'w-20 md:w-24' : 'w-32 lg:w-40'}`}
+                  className={`${isMobile ? 'w-24 md:w-28' : 'w-32 lg:w-40'}`}
                 />
               </div>
               
@@ -73,8 +72,8 @@ const LoveCodeQuizSection = () => {
                 </div>
               </div>
               
-              {/* Right Person - Updated with the new illustration */}
-              <div className="flex-shrink-0 ml-2 md:ml-4">
+              {/* Right Person - Keeping the previously updated illustration */}
+              <div className="flex-shrink-0 ml-0">
                 <img 
                   src="/lovable-uploads/711046fd-39e9-4eb8-865e-1ba9e75aa336.png" 
                   alt="Woman illustration" 
