@@ -9,6 +9,15 @@ import { LoveCodeDescriptions } from '../../types/love-code-quiz';
 // Combine all quiz questions
 export const allQuizQuestions = [...quizQuestions, ...moreQuizQuestions];
 
+// Map for updated love code names
+export const loveCodeNameMap = {
+  'affirm': 'Affirm',
+  'together': 'Together',
+  'support': 'Support', 
+  'uplift': 'Gifts',
+  'touch': 'Touch'
+};
+
 // Combine all love code descriptions
 export const allLoveCodeDescriptions: LoveCodeDescriptions = {
   ...loveCodeDescriptions,
@@ -19,3 +28,4 @@ export const allLoveCodeDescriptions: LoveCodeDescriptions = {
 export { sayInsteadPhrases };
 export { allQuizQuestions as quizQuestions };
 export { allLoveCodeDescriptions as loveCodeDescriptions };
+export { loveCodeNameMap };

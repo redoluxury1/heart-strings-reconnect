@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Sector, Label } from 'recharts';
 import { LoveCodeResult } from '../../types/love-code-quiz';
@@ -10,10 +9,18 @@ interface LoveCodeChartProps {
   results: LoveCodeResult;
 }
 
-// Helper function to format love code ID for display
+// Helper function to format love code ID for display with updated names
 const formatLoveCode = (code: string): string => {
-  const descriptions = { ...loveCodeDescriptions, ...moreLoveCodeDescriptions };
-  return descriptions[code]?.title || code.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+  // Map the code to the updated name
+  const codeNameMap: Record<string, string> = {
+    'affirm': 'Affirm',
+    'together': 'Together',
+    'support': 'Support',
+    'uplift': 'Gifts',
+    'touch': 'Touch'
+  };
+  
+  return codeNameMap[code] || code.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
 };
 
 // Brighter, richer color scheme matching the personality quiz colors
