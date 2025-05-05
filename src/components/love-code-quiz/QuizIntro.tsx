@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { Button } from "@/components/ui/button";
-import { Heart } from 'lucide-react';
 
 interface QuizIntroProps {
   onStart: () => void;
@@ -10,13 +9,13 @@ interface QuizIntroProps {
 const QuizIntro: React.FC<QuizIntroProps> = ({ onStart }) => {
   return (
     <div className="max-w-3xl mx-auto text-center bg-white p-8 md:p-10 rounded-xl shadow-md">
-      <div className="flex justify-center mb-6">
-        <Heart className="h-16 w-16 text-mauve-rose" />
+      <div className="flex justify-center mb-8">
+        <img 
+          src="/lovable-uploads/ea21751d-1de8-46e7-a674-7b702545c569.png" 
+          alt="The Love Codes™" 
+          className="w-full max-w-md h-auto"
+        />
       </div>
-      
-      <h1 className="text-3xl md:text-4xl font-heading-now-medium font-medium text-midnight-indigo mb-8">
-        Discover Your Love Code™
-      </h1>
       
       <div className="bg-soft-blush/30 rounded-lg p-6 mb-8">
         <h3 className="font-medium text-midnight-indigo mb-3">How It Works:</h3>
