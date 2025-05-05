@@ -35,23 +35,38 @@ const ResultsHeader: React.FC<ResultsHeaderProps> = ({
   primaryDesc,
   handleSendToEmail,
 }) => {
+  const isAffirm = results.primaryCode === 'affirm';
+  
   return (
-    <div className="flex justify-between items-center mb-6">
-      {/* Replace heart icon with love code specific icon */}
-      {getLoveCodeIcon(results.primaryCode)}
-      
-      <DownloadOptionsMenu 
-        handlePdfDownload={() => {
-          const downloadBtn = document.getElementById('pdf-download-button');
-          if (downloadBtn) downloadBtn.click();
-        }}
-        handleSendToEmail={handleSendToEmail}
-      />
-      
-      {/* Hidden button for PDF download functionality */}
-      <div className="hidden">
-        <PDFDownloadButton id="pdf-download-button" results={results} />
+    <div className="mb-6">
+      <div className="flex justify-between items-center">
+        {/* Replace heart icon with love code specific icon */}
+        {getLoveCodeIcon(results.primaryCode)}
+        
+        <DownloadOptionsMenu 
+          handlePdfDownload={() => {
+            const downloadBtn = document.getElementById('pdf-download-button');
+            if (downloadBtn) downloadBtn.click();
+          }}
+          handleSendToEmail={handleSendToEmail}
+        />
+        
+        {/* Hidden button for PDF download functionality */}
+        <div className="hidden">
+          <PDFDownloadButton id="pdf-download-button" results={results} />
+        </div>
       </div>
+      
+      {/* Display the Affirm image only for the Affirm love code */}
+      {isAffirm && (
+        <div className="mt-6">
+          <img 
+            src="/public/lovable-uploads/b1b66aa9-d1a2-4ac8-b1b7-652da0124b00.png" 
+            alt="Affirm: Encouraging words" 
+            className="w-full max-w-md mx-auto"
+          />
+        </div>
+      )}
     </div>
   );
 };
