@@ -13,11 +13,13 @@ export interface SayItBetterPhrase {
 import { initialPhrases } from './phrase-batches/initial-phrases';
 import { additionalPhrases } from './phrase-batches/additional-phrases';
 import { latestPhrases } from './phrase-batches/latest-phrases';
+import { newerPhrases } from './phrase-batches/newer-phrases';
 
 // Combine all phrases into one exported array
 export const sayItBetterPhrases: SayItBetterPhrase[] = [
   ...initialPhrases,
   ...additionalPhrases,
-  ...latestPhrases
+  ...latestPhrases,
+  ...newerPhrases
 ];
 
