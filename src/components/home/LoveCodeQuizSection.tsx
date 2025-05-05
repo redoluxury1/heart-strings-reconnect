@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -30,19 +31,18 @@ const LoveCodeQuizSection = () => {
           
           {/* Quiz Preview Card */}
           <div className="mt-12 mb-14 relative">
-            {/* Mobile Layout: Skinnier, taller quiz card with people on sides */}
-            <div className={`${isMobile ? 'flex items-center justify-center gap-1' : 'relative'}`}>
-              {/* Left Person - Repositioned for mobile */}
-              <div className={`${isMobile ? 'w-20 flex-shrink-0' : 'absolute left-0 top-1/2 -translate-y-1/2 -ml-10 md:-left-32 lg:-left-44'}`}>
+            <div className="flex items-center justify-center">
+              {/* Left Person */}
+              <div className="flex-shrink-0 mr-2 md:mr-4">
                 <img 
                   src="/lovable-uploads/7a2b8328-e169-495c-a5c9-c91fe30f2fda.png" 
                   alt="Man illustration" 
-                  className={`${isMobile ? 'w-full' : 'w-32 lg:w-40'}`}
+                  className={`${isMobile ? 'w-20 md:w-24' : 'w-32 lg:w-40'}`}
                 />
               </div>
               
-              {/* Quiz Card - Skinnier on mobile */}
-              <div className={`${isMobile ? 'max-w-[220px] flex-grow' : 'max-w-xs md:max-w-md mx-auto'} bg-white rounded-3xl shadow-md border border-[#e6d8dc] p-4 md:p-6 relative z-10`}>
+              {/* Quiz Card */}
+              <div className={`${isMobile ? 'max-w-[220px]' : 'max-w-xs md:max-w-md'} bg-white rounded-3xl shadow-md border border-[#e6d8dc] p-4 md:p-6 relative z-10`}>
                 {/* Question Counter */}
                 <div className="text-xs md:text-sm text-[#3c3543] mb-1 md:mb-2">
                   Question 1 of 5
@@ -73,17 +73,17 @@ const LoveCodeQuizSection = () => {
                 </div>
               </div>
               
-              {/* Right Person - Repositioned for mobile */}
-              <div className={`${isMobile ? 'w-20 flex-shrink-0' : 'absolute right-0 top-1/2 -translate-y-1/2 -mr-10 md:-right-32 lg:-right-44'}`}>
+              {/* Right Person */}
+              <div className="flex-shrink-0 ml-2 md:ml-4">
                 <img 
                   src="/lovable-uploads/7a2b8328-e169-495c-a5c9-c91fe30f2fda.png" 
                   alt="Woman illustration" 
-                  className={`${isMobile ? 'w-full' : 'w-32 lg:w-40'} transform scale-x-[-1]`}
+                  className={`${isMobile ? 'w-20 md:w-24' : 'w-32 lg:w-40'} transform scale-x-[-1]`}
                 />
               </div>
             </div>
             
-            {/* Decorative Stars - Keep them outside of the flex container */}
+            {/* Decorative Stars */}
             <div className="absolute -left-6 top-10 text-[#e6d8dc] text-xl">✧</div>
             <div className="absolute -right-6 bottom-10 text-[#e6d8dc] text-xl">✧</div>
           </div>
