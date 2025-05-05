@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { goals } from '@/data/pause-phrase-goals';
@@ -83,9 +82,9 @@ const PausePhraseTool: React.FC<PausePhraseToolProps> = ({ onClose }) => {
           <GoalSelectionView 
             goals={goals.filter(goal => goal.title !== "Say how I feel without blame")}
             onGoalSelect={handleGoalSelect}
-            onStartConversation={handleStartConversation}
             onSomethingElse={handleSomethingElse}
             goalColorMap={goalColorMap}
+            onStartConversation={() => {}}
           />
         </>
       ) : isCustomizing ? (
@@ -104,7 +103,7 @@ const PausePhraseTool: React.FC<PausePhraseToolProps> = ({ onClose }) => {
         />
       )}
 
-      {/* Conversation Dialog - Updated title to reflect "Say what you mean" */}
+      {/* Conversation Dialog - keep for customization flow */}
       <ConversationDialog
         isOpen={startConversationOpen}
         onOpenChange={setStartConversationOpen}

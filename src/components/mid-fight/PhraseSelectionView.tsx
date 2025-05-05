@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, ArrowRight, Edit } from 'lucide-react';
@@ -7,9 +6,9 @@ import { ArrowLeft, ArrowRight, Edit } from 'lucide-react';
 const colorOptions = [
   { bg: "bg-lavender-blue/20", border: "border-lavender-blue/30", hoverBg: "hover:bg-lavender-blue/30" },
   { bg: "bg-mauve-rose/20", border: "border-mauve-rose/30", hoverBg: "hover:bg-mauve-rose/30" },
-  { bg: "bg-sage/20", border: "border-sage/30", hoverBg: "hover:bg-sage/30" },
-  { bg: "bg-peachy-terracotta/20", border: "border-peachy-terracotta/30", hoverBg: "hover:bg-peachy-terracotta/30" },
-  { bg: "bg-golden-mustard/20", border: "border-golden-mustard/30", hoverBg: "hover:bg-golden-mustard/30" },
+  { bg: "bg-midnight-indigo/20", border: "border-midnight-indigo/30", hoverBg: "hover:bg-midnight-indigo/30" },
+  { bg: "bg-rosewood-tint/20", border: "border-rosewood-tint/30", hoverBg: "hover:bg-rosewood-tint/30" },
+  { bg: "bg-soft-cream/20", border: "border-soft-cream/30", hoverBg: "hover:bg-soft-cream/30" },
 ];
 
 interface PhraseSelectionViewProps {
@@ -108,32 +107,15 @@ const PhraseSelectionView: React.FC<PhraseSelectionViewProps> = ({
       <div className={`p-4 rounded-lg mb-6 border ${colorSet.bg} ${colorSet.border}`}>
         <p className="text-midnight-indigo mb-3 font-light italic">{currentPhrase}</p>
         
-        {/* Navigation buttons - now more compact and under the phrase */}
-        <div className="flex justify-center items-center mb-1 gap-3">
-          <Button 
-            variant="outline"
-            size="sm"
-            onClick={goToPreviousPhrase}
-            className="border-lavender-blue/40 text-midnight-indigo hover:bg-mauve-rose/10 hover:text-mauve-rose hover:border-mauve-rose/40 h-8 px-3 py-1"
-          >
-            <ArrowLeft className="h-3.5 w-3.5 mr-1" /> Go back
-          </Button>
-          <Button 
-            variant="outline"
-            size="sm"
-            onClick={goToNextPhrase}
-            className="border-lavender-blue/40 text-midnight-indigo hover:bg-mauve-rose/10 hover:text-mauve-rose hover:border-mauve-rose/40 h-8 px-3 py-1"
-          >
-            Try again <ArrowRight className="h-3.5 w-3.5 ml-1" />
-          </Button>
-        </div>
-
-        {/* Phrase counter - now below the buttons */}
-        <div className="text-center mb-3">
-          <span className="text-xs text-midnight-indigo/60">
-            {currentPhraseIndex + 1} of {phrasesCount}
-          </span>
-        </div>
+        {/* Why this works - moved up here, directly under the phrase */}
+        <Button 
+          variant="ghost" 
+          size="sm" 
+          className="text-xs text-lavender-blue justify-center hover:text-mauve-rose mb-3 px-0"
+          onClick={toggleWhyItWorks}
+        >
+          {showWhyItWorks ? "Hide explanation" : "Why this works"}
+        </Button>
         
         {showWhyItWorks && (
           <div className="bg-white/70 p-3 rounded-lg mb-3">
@@ -143,29 +125,29 @@ const PhraseSelectionView: React.FC<PhraseSelectionViewProps> = ({
           </div>
         )}
         
-        <div className="flex justify-center">
+        {/* Navigation buttons - moved to bottom and made smaller */}
+        <div className="flex justify-center gap-3 mt-4">
           <Button 
-            variant="ghost" 
-            size="sm" 
-            className="text-xs text-lavender-blue justify-center"
-            onClick={toggleWhyItWorks}
+            variant="outline"
+            size="sm"
+            onClick={goToPreviousPhrase}
+            className="border-lavender-blue/40 text-midnight-indigo hover:bg-mauve-rose/10 hover:text-mauve-rose hover:border-mauve-rose/40 h-7 px-2 py-0 text-xs"
           >
-            {showWhyItWorks ? "Hide explanation" : "Why this works"}
+            <ArrowLeft className="h-3 w-3 mr-1" /> Go back
+          </Button>
+          <Button 
+            variant="outline"
+            size="sm"
+            onClick={goToNextPhrase}
+            className="border-lavender-blue/40 text-midnight-indigo hover:bg-mauve-rose/10 hover:text-mauve-rose hover:border-mauve-rose/40 h-7 px-2 py-0 text-xs"
+          >
+            Try again <ArrowRight className="h-3 w-3 ml-1" />
           </Button>
         </div>
       </div>
       
-      {/* Action buttons moved to bottom */}
-      <div className="flex justify-center space-x-4">
-        <Button 
-          variant="outline" 
-          size="sm" 
-          className="text-xs flex items-center gap-1 border-mauve-rose/50 text-mauve-rose hover:bg-mauve-rose/10"
-          onClick={onBack}
-        >
-          <ArrowLeft className="h-3.5 w-3.5" />
-          <span>New Phrase</span>
-        </Button>
+      {/* Action button for customization only - removed the "New Phrase" button */}
+      <div className="flex justify-center">
         <Button 
           variant="outline" 
           size="sm" 

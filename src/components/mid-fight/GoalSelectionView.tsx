@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { ChevronRight, MessageSquare, MessageSquarePlus } from 'lucide-react';
+import { ChevronRight, MessageSquarePlus } from 'lucide-react';
 import { Goal } from '@/data/pause-phrase-goals';
 
 // Define the color options - removing yellow, orange and green from the palette
@@ -45,7 +45,6 @@ const GoalSelectionView: React.FC<GoalSelectionViewProps> = ({
             >
               <div>
                 <p className="font-medium text-midnight-indigo">{goal.title}</p>
-                <p className="text-sm text-midnight-indigo/70">{goal.title}</p>
               </div>
               <ChevronRight className="h-5 w-5 text-midnight-indigo/50" />
             </div>
@@ -62,18 +61,6 @@ const GoalSelectionView: React.FC<GoalSelectionViewProps> = ({
             <p className="text-sm text-midnight-indigo/70">Write your own message from scratch</p>
           </div>
           <MessageSquarePlus className="h-5 w-5 text-midnight-indigo/50" />
-        </div>
-        
-        {/* "Say what you mean" option (renamed from "Start a conversation") */}
-        <div 
-          onClick={onStartConversation}
-          className="p-3 rounded-md cursor-pointer flex justify-between items-center bg-lavender-blue/20 border-lavender-blue/30 hover:bg-lavender-blue/30 transition-colors mt-4"
-        >
-          <div>
-            <p className="font-medium text-midnight-indigo">Say what you mean</p>
-            <p className="text-sm text-midnight-indigo/70">Send your partner a message inviting them to talk</p>
-          </div>
-          <MessageSquare className="h-5 w-5 text-midnight-indigo/50" />
         </div>
       </div>
     </div>
