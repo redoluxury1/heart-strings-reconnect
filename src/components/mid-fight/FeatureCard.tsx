@@ -12,6 +12,7 @@ export interface Feature {
   comingSoon: boolean;
   alwaysVisible: boolean;
   microtext?: string;
+  customTitle?: boolean;
 }
 
 interface FeatureCardProps {
@@ -33,21 +34,38 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ feature, isSelected, toggleFe
         } ${isSelected ? 'ring-2 ring-lavender-blue' : ''}`}
       >
         <CardHeader className="pb-2">
-          <div className="flex items-center space-x-3">
-            <div className="p-2 rounded-full bg-soft-blush">
-              {feature.icon}
+          {feature.customTitle ? (
+            // Custom title styling for What's Really Going On? feature
+            <div className="relative font-cormorant text-center my-4">
+              <div className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight relative z-10">
+                <span className="text-lavender-blue">What's</span>
+                <span className="mx-1 md:mx-2 text-mauve-rose">Really</span>
+                <span className="text-lavender-blue">Going On?</span>
+              </div>
+              <div className="absolute inset-0 flex items-center justify-center z-0">
+                <div className="w-full h-[30%] bg-gradient-to-r from-lavender-blue/10 via-mauve-rose/10 to-lavender-blue/10 blur-md rounded-full"></div>
+              </div>
             </div>
-            <div>
-              <CardTitle className="text-xl font-cormorant font-medium text-midnight-indigo">
-                {feature.title}
-                {feature.comingSoon && (
-                  <span className="text-sm font-inter ml-2 text-mauve-rose/80">
-                    (Coming Soon)
-                  </span>
-                )}
-              </CardTitle>
+          ) : (
+            // Normal title with icon for other features
+            <div className="flex items-center space-x-3">
+              {feature.icon && (
+                <div className="p-2 rounded-full bg-soft-blush">
+                  {feature.icon}
+                </div>
+              )}
+              <div>
+                <CardTitle className="text-xl font-cormorant font-medium text-midnight-indigo">
+                  {feature.title}
+                  {feature.comingSoon && (
+                    <span className="text-sm font-inter ml-2 text-mauve-rose/80">
+                      (Coming Soon)
+                    </span>
+                  )}
+                </CardTitle>
+              </div>
             </div>
-          </div>
+          )}
         </CardHeader>
         <CardContent>
           <CardDescription className="text-midnight-indigo/80 mb-5">

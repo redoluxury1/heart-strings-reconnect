@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Book, Puzzle } from 'lucide-react';
 import ThoughtBubble from '@/components/icons/ThoughtBubble';
@@ -12,10 +13,11 @@ const features: Feature[] = [
     id: 'whats-going-on',
     title: "What's Really Going On?",
     description: "Decode what's happening when emotions are high with tools that translate intent, unpack real issues, and explain behaviors.",
-    icon: <ThoughtBubble className="h-6 w-6 text-mauve-rose" />,
+    icon: null, // Removed the icon
     comingSoon: false,
     alwaysVisible: false,
-    microtext: ""
+    microtext: "",
+    customTitle: true // Add this flag to indicate it has a custom title
   },
   {
     id: 'build-bridge',
