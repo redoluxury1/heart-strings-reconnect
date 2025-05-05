@@ -38,6 +38,7 @@ const ResultsHeader: React.FC<ResultsHeaderProps> = ({
   const isAffirm = results.primaryCode === 'affirm';
   const isUplift = results.primaryCode === 'uplift';
   const isTogether = results.primaryCode === 'together';
+  const isSupport = results.primaryCode === 'support';
   
   return (
     <div className="mb-6">
@@ -87,6 +88,17 @@ const ResultsHeader: React.FC<ResultsHeaderProps> = ({
           <img 
             src="/public/lovable-uploads/a3c24522-77b0-46a3-a528-f7db596ba104.png" 
             alt="Together: Spending quality time" 
+            className="w-full max-w-md mx-auto"
+          />
+        </div>
+      )}
+
+      {/* Display the Support image only for the Support love code */}
+      {isSupport && (
+        <div className="mt-6">
+          <img 
+            src="/public/lovable-uploads/ce863750-c674-4a5b-86ab-eb34017f3513.png" 
+            alt="Support: Helping out" 
             className="w-full max-w-md mx-auto"
           />
         </div>
