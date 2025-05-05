@@ -71,8 +71,8 @@ const BehaviorDecoder = () => {
         </p>
       </div>
 
-      {/* Gender Toggle Bubbles */}
-      <div className="grid grid-cols-2 gap-4 mb-6">
+      {/* Gender Toggle Bubbles - Now Stacked Vertically */}
+      <div className="flex flex-col gap-4 mb-6">
         <Button
           variant="outline"
           className={`rounded-full px-4 py-6 text-sm flex items-center justify-center h-auto ${
