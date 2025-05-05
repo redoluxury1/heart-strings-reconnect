@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom';
 
 const NavbarLogo = () => {
   return (
-    <div className="flex items-center space-x-2">
+    <div className="flex items-center">
       <Link to="/" className="flex items-center">
         <img 
-          src="/lovable-uploads/80619689-94c4-43be-b585-6e9079eace63.png" 
+          src="/lovable-uploads/8c8b4b4e-6eaf-4c82-a30c-b2969459af89.png" 
           alt="Bridge For Couples" 
-          className="h-28 w-auto"
+          className="h-16 w-auto"
         />
         <span className="sr-only">Bridge For Couples</span>
       </Link>

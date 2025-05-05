@@ -35,7 +35,7 @@ const HomeLanding = () => {
   }, []);
   
   return (
-    <div className="text-center pt-24 pb-4 md:py-16">
+    <div className="text-center pt-16 pb-4 md:py-14">
       <h1 className="font-cormorant text-4xl md:text-5xl lg:text-6xl font-medium mb-5 text-midnight-indigo">
         {dailyQuote.headline}
       </h1>

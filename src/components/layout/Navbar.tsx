@@ -42,7 +42,7 @@ const Navbar = ({ hasNewLoveNote = false, onViewLoveNote }: NavbarProps) => {
   const closeMobileMenu = () => setMobileMenuOpen(false);
 
   return (
-    <nav className="w-full py-4 px-6 md:px-12 flex items-center justify-between border-b border-slate-200">
+    <nav className="w-full py-2 px-6 md:px-12 flex items-center justify-between border-b border-slate-200">
       <NavbarLogo />
       
       {/* Desktop navigation */}
