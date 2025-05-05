@@ -24,8 +24,8 @@ const LoveCodeQuizSection = () => {
             <Heart className="h-12 w-12 md:h-16 md:w-16 text-[#b08d97]" fill="#b08d97" />
           </div>
           
-          {/* Main Title - Updated to be on a single line */}
-          <h2 className="font-cormorant text-3xl md:text-5xl lg:text-6xl font-medium mb-2 md:mb-4 text-[#3c3543] whitespace-nowrap">
+          {/* Main Title - Updated with smaller font size for mobile */}
+          <h2 className="font-cormorant text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-medium mb-2 md:mb-4 text-[#3c3543] whitespace-nowrap">
             DISCOVER YOUR LOVE CODE™
           </h2>
           
