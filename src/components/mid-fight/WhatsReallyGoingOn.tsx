@@ -73,7 +73,7 @@ const WhatsReallyGoingOn = () => {
         <CollapsibleContent className={`${isMobile ? 'pt-3' : 'pt-4 md:pt-6'}`}>
           <Card className="border-lavender-blue/20 shadow-md">
             {/* Custom Feature Title */}
-            <div className="pt-6 px-4 md:px-6">
+            <div className="pt-4 px-3 md:px-5">
               {activeFeature === "sayitbetter" && (
                 <div className="relative font-cormorant text-center my-4">
                   <div className="text-4xl sm:text-5xl font-bold tracking-tight relative z-10">
@@ -99,17 +99,13 @@ const WhatsReallyGoingOn = () => {
                 </div>
               )}
               {activeFeature === "behaviors" && (
-                <div className="text-center my-4">
-                  <img 
-                    src="/public/lovable-uploads/e94bfd7a-f9a6-4570-ae59-4f4cff947197.png" 
-                    alt="He Said She Said" 
-                    className="mx-auto h-36 md:h-44" 
-                  />
+                <div className="text-center my-2">
+                  {/* No more image here as we're using the one in BehaviorDecoder */}
                 </div>
               )}
             </div>
 
-            <div className={`${isMobile ? 'p-3' : 'p-4 md:p-6'}`}>
+            <div className={`${isMobile ? 'p-3' : 'p-4'}`}>
               {activeFeature === "sayitbetter" && (
                 <SayItBetter />
               )}

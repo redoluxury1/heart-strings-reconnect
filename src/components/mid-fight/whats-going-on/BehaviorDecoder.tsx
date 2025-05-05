@@ -65,17 +65,26 @@ const BehaviorDecoder = () => {
   
   return (
     <div className="space-y-4">
-      <div className="mb-4">
-        <p className="text-sm text-midnight-indigo/70 mb-2">
+      <div className="mb-2">
+        <p className="text-sm text-midnight-indigo/70 mb-1">
           Understand what's behind common reactions during conflict
         </p>
       </div>
 
-      {/* Gender Toggle Bubbles - Now Stacked Vertically with Reduced Height */}
-      <div className="flex flex-col gap-4 mb-6">
+      {/* New Title Image */}
+      <div className="flex justify-center mb-4">
+        <img 
+          src="/public/lovable-uploads/9be5e59c-d14f-442d-ad4e-2270b887f4c8.png" 
+          alt="He said She said" 
+          className="w-full max-w-[350px] h-auto" 
+        />
+      </div>
+
+      {/* Gender Toggle Bubbles - Thin buttons stacked vertically */}
+      <div className="flex flex-col gap-3 mb-4">
         <Button
           variant="outline"
-          className={`rounded-full px-4 py-2 text-sm flex items-center justify-center h-auto ${
+          className={`rounded-full px-4 py-1.5 text-sm flex items-center justify-center h-auto ${
             genderTab === 'male' 
               ? 'bg-lavender-blue text-white border-lavender-blue' 
               : 'bg-white text-midnight-indigo/80 border-lavender-blue/30 hover:bg-lavender-blue/10'
@@ -90,7 +99,7 @@ const BehaviorDecoder = () => {
         
         <Button
           variant="outline"
-          className={`rounded-full px-4 py-2 text-sm flex items-center justify-center h-auto ${
+          className={`rounded-full px-4 py-1.5 text-sm flex items-center justify-center h-auto ${
             genderTab === 'female' 
               ? 'bg-mauve-rose text-white border-mauve-rose' 
               : 'bg-white text-midnight-indigo/80 border-mauve-rose/30 hover:bg-mauve-rose/10'
