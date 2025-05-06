@@ -113,7 +113,7 @@ const PhraseSelectionView: React.FC<PhraseSelectionViewProps> = ({
           <Button 
             variant="ghost" 
             size="sm" 
-            className="text-xs text-white justify-center hover:text-white/90 px-0"
+            className="text-xs text-midnight-indigo/80 justify-center hover:text-midnight-indigo px-0"
             onClick={toggleWhyItWorks}
           >
             {showWhyItWorks ? "Hide explanation" : "Why this works"}
