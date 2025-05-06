@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import ContentContainer from '../common/ContentContainer';
 import { useInterface } from '../common/InterfaceProvider';
+import { Quote } from "lucide-react";
 import { 
   Carousel,
   CarouselContent,
@@ -133,18 +134,17 @@ const RelationshipStatsSection = () => {
               {communicationStats.map((item) => (
                 <CarouselItem key={item.id} className="md:basis-3/4">
                   <div className="mx-auto text-center p-8 md:p-12 rounded-3xl bg-white shadow-sm">
-                    {/* Quote marks */}
+                    {/* Quote marks - updated with transparent styling */}
                     <div className="flex justify-center mb-4">
-                      <img 
-                        src="/lovable-uploads/b0bff2dc-86f4-4f39-b536-147653e79b18.png" 
-                        alt="Quote marks" 
-                        className="h-16 w-auto opacity-40"
+                      <Quote 
+                        className="h-16 w-16 text-[#5d4357]/30" 
+                        strokeWidth={1.5}
                       />
                     </div>
                     
-                    {/* Statistic percentage */}
+                    {/* Statistic percentage - updated to use font-cormorant */}
                     <div className="mb-4">
-                      <span className="text-7xl md:text-8xl font-bold text-[#5d4357]">
+                      <span className="text-7xl md:text-8xl font-bold text-[#5d4357] font-cormorant">
                         {item.stat}
                       </span>
                     </div>
