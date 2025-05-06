@@ -49,6 +49,7 @@ const Index = () => {
         {/* Redesigned DailyLoveNote section */}
         <DailyLoveNote />
         
+        {/* Redesigned Why It Matters section */}
         <RelationshipStatsSection />
       </main>
       

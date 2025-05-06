@@ -1,6 +1,7 @@
+
 import React, { useState } from 'react';
 import ContentContainer from '../common/ContentContainer';
-import { useInterface } from '../../hooks/useInterfaceContext';
+import { useInterface } from '../common/InterfaceProvider';
 import { 
   Carousel,
   CarouselContent,
@@ -14,7 +15,7 @@ const communicationStats = [
   {
     id: 1,
     stat: "87%",
-    description: "of couples say communication is their biggest challenge in their relationship",
+    description: "of couples say communication is their biggest challenge",
     source: "National Marriage Project"
   },
   {
@@ -105,26 +106,19 @@ const communicationStats = [
 ];
 
 const RelationshipStatsSection = () => {
-  const { isEmotional, colors } = useInterface();
+  const { isEmotional } = useInterface();
   
   return (
     <section className={`py-16 ${
       isEmotional
-        ? "bg-[#fcfcfc]"
-        : "bg-gradient-to-b from-[#e8edf3] to-[#6a8cb3]/70"
+        ? "bg-[#f8f4f0]" // Soft cream background from mockup
+        : "bg-[#f8f4f0]"
     }`}>
       <ContentContainer>
         <div className="text-center mb-12">
-          <h2 className={`font-cormorant text-3xl md:text-4xl lg:text-5xl font-semibold mb-4 ${
-            isEmotional ? "text-[#6A4A74]" : "text-[#2C3E50]"
-          }`}>
-            Why It Matters
+          <h2 className="font-cormorant text-4xl md:text-5xl lg:text-6xl font-medium text-[#5d4357] tracking-wide">
+            WHY IT MATTERS
           </h2>
-          <p className={`text-lg max-w-2xl mx-auto ${
-            isEmotional ? "text-midnight-indigo/80" : "text-[#2C3E50]/80"
-          }`}>
-            The science behind communication in relationships is clear.
-          </p>
         </div>
         
         <div className="max-w-4xl mx-auto">
@@ -138,36 +132,52 @@ const RelationshipStatsSection = () => {
             <CarouselContent>
               {communicationStats.map((item) => (
                 <CarouselItem key={item.id} className="md:basis-3/4">
-                  <div className={`mx-auto text-center p-8 rounded-xl ${
-                    isEmotional 
-                      ? "bg-white shadow-sm border-2 border-[#6A4A74]/10" 
-                      : "bg-white/90 shadow-sm"
-                  }`}>
+                  <div className="mx-auto text-center p-8 md:p-12 rounded-3xl bg-white shadow-sm">
+                    {/* Quote marks */}
+                    <div className="flex justify-center mb-4">
+                      <img 
+                        src="/lovable-uploads/b0bff2dc-86f4-4f39-b536-147653e79b18.png" 
+                        alt="Quote marks" 
+                        className="h-16 w-auto opacity-40"
+                      />
+                    </div>
+                    
+                    {/* Statistic percentage */}
                     <div className="mb-4">
-                      <span className="text-7xl md:text-8xl font-bold text-[#6A4A74]">
+                      <span className="text-7xl md:text-8xl font-bold text-[#5d4357]">
                         {item.stat}
                       </span>
                     </div>
                     
-                    <p className={`text-xl md:text-2xl mb-4 max-w-2xl mx-auto ${
-                      isEmotional ? "text-midnight-indigo/90" : "text-[#2C3E50]"
-                    }`}>
+                    {/* Statistic description */}
+                    <p className="text-2xl md:text-3xl mb-6 max-w-2xl mx-auto font-cormorant text-[#5d4357]">
                       {item.description}
                     </p>
                     
-                    <p className={`text-sm italic ${
-                      isEmotional ? "text-midnight-indigo/60" : "text-[#2C3E50]/60"
-                    }`}>
-                      Source: {item.source}
+                    {/* Source citation */}
+                    <p className="text-lg italic text-[#5d4357]/70 font-cormorant">
+                      {item.source}
                     </p>
+                    
+                    {/* Pagination dots */}
+                    <div className="flex justify-center gap-2 mt-8">
+                      {[1, 2, 3].map((dot) => (
+                        <div 
+                          key={dot}
+                          className={`h-2 w-2 rounded-full ${
+                            dot === 1 ? "bg-[#5d4357]" : "bg-[#5d4357]/30"
+                          }`}
+                        />
+                      ))}
+                    </div>
                   </div>
                 </CarouselItem>
               ))}
             </CarouselContent>
             
             <div className="hidden md:block">
-              <CarouselPrevious className="left-0" />
-              <CarouselNext className="right-0" />
+              <CarouselPrevious className="left-0 border-[#5d4357] text-[#5d4357]" />
+              <CarouselNext className="right-0 border-[#5d4357] text-[#5d4357]" />
             </div>
           </Carousel>
         </div>
