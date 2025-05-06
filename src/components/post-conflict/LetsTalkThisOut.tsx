@@ -15,9 +15,10 @@ const LetsTalkThisOut = () => {
   }
 
   const handleReady = () => {
+    // Set session as started
     setIsSessionStarted(true);
-    // Skip the first grounding step since we're handling it here
-    setCurrentStep(1);
+    // Skip directly to step 1 (tone setting) to avoid duplicate first slides
+    setCurrentStep(1); 
   };
 
   return (

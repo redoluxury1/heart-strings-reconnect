@@ -50,17 +50,19 @@ const ToneSettingStep: React.FC<ToneSettingStepProps> = ({
         What's one thing you want to keep in mind while talking this through?
       </p>
       
-      <div className="w-full max-w-md flex flex-col gap-3">
-        {starterPrompts.map((prompt, index) => (
-          <Button
-            key={index}
-            variant="outline"
-            className="bg-[#8d6e82] border-none hover:bg-[#7d6272] hover:text-white text-white text-lg whitespace-normal h-auto py-4 rounded-full"
-            onClick={() => handleStarterPrompt(prompt)}
-          >
-            {prompt}
-          </Button>
-        ))}
+      <div className="w-full flex flex-col gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          {starterPrompts.map((prompt, index) => (
+            <Button
+              key={index}
+              variant="outline"
+              className="bg-[#8d6e82] border-none hover:bg-[#7d6272] hover:text-white text-white text-lg whitespace-normal h-auto py-3 px-4 rounded-full"
+              onClick={() => handleStarterPrompt(prompt)}
+            >
+              {prompt}
+            </Button>
+          ))}
+        </div>
         
         <Textarea 
           placeholder="Write your own..."
@@ -71,7 +73,7 @@ const ToneSettingStep: React.FC<ToneSettingStepProps> = ({
         
         <Button 
           onClick={handleSubmit}
-          className="bg-midnight-indigo hover:bg-midnight-indigo/90 text-white w-full py-4 flex items-center justify-center rounded-full text-lg"
+          className="bg-midnight-indigo hover:bg-midnight-indigo/90 text-white py-4 flex items-center justify-center rounded-full text-lg max-w-xs mx-auto"
           disabled={!input.trim()}
         >
           Continue
