@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/sonner';
@@ -10,7 +9,7 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 const timeoutPresets = [
   { label: '15 min', value: 15, description: 'Quick breath' },
   { label: '30 min', value: 30, description: 'Cool-down' },
-  { label: '1 hour', value: 60, description: 'Space to think' },
+  { label: '1 hour', value: 60, description: 'Brief space' }, // Changed from "Space to think" to "Brief space"
 ];
 
 interface TimeoutTimerProps {
