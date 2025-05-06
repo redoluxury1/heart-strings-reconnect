@@ -43,9 +43,10 @@ const Index = () => {
         {/* Repositioned LoveCodeQuizSection as the primary quiz section */}
         <LoveCodeQuizSection />
         
-        {/* New BlueprintQuizSection added here */}
+        {/* BlueprintQuizSection */}
         <BlueprintQuizSection />
         
+        {/* Redesigned DailyLoveNote section */}
         <DailyLoveNote />
         
         <RelationshipStatsSection />
