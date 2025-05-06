@@ -32,16 +32,18 @@ const PostConflictContent = () => {
               </p>
             )}
             
-            <LetsTalkThisOut />
+            <div className="space-y-20">
+              <LetsTalkThisOut />
 
-            <OkayButNowWhat />
-            
-            <SometimesItStillHurts />
+              <OkayButNowWhat />
+              
+              <SometimesItStillHurts />
+            </div>
           </div>
         </ContentContainer>
         
         <ContentContainer maxWidth="lg">
-          <div className="max-w-3xl mx-auto mt-8">
+          <div className="max-w-3xl mx-auto mt-20">
             <PhraseRewind />
           </div>
         </ContentContainer>
