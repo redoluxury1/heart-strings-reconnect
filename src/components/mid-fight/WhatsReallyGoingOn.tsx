@@ -22,7 +22,7 @@ const WhatsReallyGoingOn = () => {
     },
     'realfight': {
       title: 'Cut to the Point',
-      description: 'Identify what's really bothering you underneath surface tensions.',
+      description: "Identify what's really bothering you underneath surface tensions.",
       icon: <Target className="h-5 w-5 text-mauve-rose" />
     },
     'behaviors': {

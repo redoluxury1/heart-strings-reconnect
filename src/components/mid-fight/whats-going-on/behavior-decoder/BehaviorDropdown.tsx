@@ -25,7 +25,7 @@ const BehaviorDropdown: React.FC<BehaviorDropdownProps> = ({
   return (
     <div className="space-y-2">
       <p className="text-center text-midnight-indigo/80 mb-3">
-        {genderTab === 'female' ? 'Select what she's doing:' : 'Select what he's doing:'}
+        {genderTab === 'female' ? "Select what she's doing:" : "Select what he's doing:"}
       </p>
       
       <div className="grid grid-cols-1 gap-2 max-h-[400px] overflow-y-auto pr-1">
