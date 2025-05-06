@@ -29,7 +29,7 @@ const MidFight = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-slate-50 relative">
+    <div className="min-h-screen bg-soft-cream/20 relative">
       <BackgroundPhrases />
       <Navbar />
       

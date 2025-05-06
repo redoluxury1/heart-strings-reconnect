@@ -1,8 +1,6 @@
-
 import React, { useState } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { goals } from '@/data/pause-phrase-goals';
-import GoalSelectionView from './GoalSelectionView';
 import PhraseSelectionView from './PhraseSelectionView';
 import CustomizePhraseView from './CustomizePhraseView';
 import ConversationDialog from './ConversationDialog';
