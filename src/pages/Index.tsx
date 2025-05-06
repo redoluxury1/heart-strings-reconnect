@@ -53,7 +53,7 @@ const Index = () => {
         <RelationshipStatsSection />
       </main>
       
-      <Footer showCTA={true} />
+      <Footer />
     </div>
   );
 };
