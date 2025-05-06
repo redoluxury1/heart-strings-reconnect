@@ -1,7 +1,7 @@
 
 import React, { useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { MessageCircleHeart } from 'lucide-react';
+import { Heart } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useSession } from '../context/SessionContext';
 import { useToast } from '@/hooks/use-toast';
@@ -22,7 +22,7 @@ const GroundingStep: React.FC<GroundingStepProps> = ({ onResponse, onExit }) => 
     if (sessionData.partner2.ready) {
       toast({
         title: "Your partner is ready",
-        description: "Your partner is ready to talk through what happened.",
+        description: "Your partner is ready to work through what happened.",
       });
     }
   }, [sessionData.partner2.ready, toast]);
@@ -46,32 +46,44 @@ const GroundingStep: React.FC<GroundingStepProps> = ({ onResponse, onExit }) => 
 
   return (
     <div className="text-center">
-      <MessageCircleHeart className="h-12 w-12 mx-auto text-mauve-rose mb-4" />
+      <Heart className="h-12 w-12 mx-auto text-mauve-rose mb-6 stroke-[1.5px]" />
       
-      <h2 className="text-2xl md:text-3xl font-cormorant font-medium text-midnight-indigo mb-6">
-        Are you both ready to talk?
+      <h2 className="text-4xl md:text-5xl font-cormorant font-medium mb-4 text-center text-midnight-indigo">
+        Are you ready to work through this?
       </h2>
       
-      <div className="flex flex-col md:flex-row justify-center gap-4 max-w-sm mx-auto">
+      <p className="text-center text-gray-700 mb-3 text-lg">
+        Let's check in before we dive in.
+      </p>
+      <p className="text-center text-gray-700 mb-8 text-lg">
+        It's okay if you need a little more time.
+      </p>
+      
+      <div className="flex flex-col max-w-md mx-auto">
         <Button 
-          className="bg-midnight-indigo hover:bg-midnight-indigo/90 text-white py-6"
+          className="bg-midnight-indigo hover:bg-midnight-indigo/90 text-white py-6 mb-4 rounded-full text-lg"
           onClick={handleYes}
         >
-          Yes - I want to move forward
+          Yes — I'm ready to move forward
         </Button>
         
         <Button 
           variant="outline" 
-          className="border-gray-300 text-midnight-indigo bg-white hover:bg-gray-100 py-6"
+          className="border-gray-300 text-midnight-indigo bg-white hover:bg-gray-100 py-6 mb-6 rounded-full text-lg"
           onClick={handleNotYet}
         >
-          Not yet, I need to decompress
+          Not yet — I need to decompress first
         </Button>
+        
+        <div className="text-gray-500 text-center">
+          <p className="mb-2">
+            Taking space is sometimes the most emotionally intelligent choice.
+          </p>
+          <p>
+            Come back when you're ready.
+          </p>
+        </div>
       </div>
-      
-      <p className="mt-6 text-gray-500 text-sm max-w-md mx-auto">
-        It's okay if you're not ready. Sometimes taking space is the best thing you can do before talking.
-      </p>
     </div>
   );
 };

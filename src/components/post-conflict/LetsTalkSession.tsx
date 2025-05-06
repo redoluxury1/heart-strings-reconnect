@@ -5,11 +5,11 @@ import ProgressIndicator from './navigation/ProgressIndicator';
 import StepsNavigation from './navigation/StepsNavigation';
 import { useSteps } from './config/stepsConfig';
 
-interface LetsTalkSessionProps {
+interface WorkThroughSessionProps {
   onExit: () => void;
 }
 
-const LetsTalkSessionContent: React.FC<{ onExit: () => void }> = ({ onExit }) => {
+const WorkThroughSessionContent: React.FC<{ onExit: () => void }> = ({ onExit }) => {
   const { currentStepContent, totalSteps } = useSteps(onExit);
   
   return (
@@ -25,11 +25,11 @@ const LetsTalkSessionContent: React.FC<{ onExit: () => void }> = ({ onExit }) =>
   );
 };
 
-const LetsTalkSession: React.FC<LetsTalkSessionProps> = ({ onExit }) => {
+const LetsTalkSession: React.FC<WorkThroughSessionProps> = ({ onExit }) => {
   // Use a single SessionProvider for the entire session
   return (
     <SessionProvider>
-      <LetsTalkSessionContent onExit={onExit} />
+      <WorkThroughSessionContent onExit={onExit} />
     </SessionProvider>
   );
 };

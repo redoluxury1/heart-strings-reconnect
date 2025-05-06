@@ -27,7 +27,7 @@ const PostConflictContent = () => {
           <div className="max-w-3xl mx-auto mt-12">
             {showIntro && (
               <p className="text-center text-gray-600 mb-10 mt-12 pt-12">
-                Okay, take a breath. Let's talk about what went down- no judgment, just space to be honest and figure it out side by side.
+                Okay, take a breath. Let's work through what happened- no judgment, just space to be honest and figure it out side by side.
               </p>
             )}
             

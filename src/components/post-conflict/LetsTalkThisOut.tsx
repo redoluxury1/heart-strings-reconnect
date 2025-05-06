@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { BrainCog } from 'lucide-react';
+import { Heart } from 'lucide-react';
 import { useInterface } from '../../hooks/useInterfaceContext';
 import LetsTalkSession from './LetsTalkSession';
 
@@ -14,24 +14,44 @@ const LetsTalkThisOut = () => {
   }
 
   return (
-    <div className="bg-gradient-to-br from-soft-cream/40 to-soft-cream/10 rounded-xl shadow-md p-6 md:p-8 mb-12">
-      <div className="flex flex-col items-center">
-        <BrainCog className="h-12 w-12 text-mauve-rose mb-4" />
+    <div className="bg-soft-cream/40 rounded-xl shadow-md p-6 md:p-8 mb-12 text-center">
+      <div className="flex flex-col items-center max-w-xl mx-auto">
+        <Heart className="h-12 w-12 text-mauve-rose mb-6 stroke-[1.5px]" />
         
-        <h2 className="text-3xl md:text-4xl font-cormorant font-medium mb-3 text-center text-midnight-indigo">
-          Let's Talk This Out
+        <h2 className="text-4xl md:text-5xl font-cormorant font-medium mb-4 text-center text-midnight-indigo">
+          Are you ready to work through this?
         </h2>
         
-        <p className="text-center text-gray-700 mb-6 max-w-xl">
-          This is a space for both of you to pause, process, and talk it through — together. No therapy couch required.
+        <p className="text-center text-gray-700 mb-3 text-lg">
+          Let's check in before we dive in.
+        </p>
+        <p className="text-center text-gray-700 mb-8 text-lg">
+          It's okay if you need a little more time.
         </p>
         
         <Button 
           onClick={() => setIsSessionStarted(true)}
-          className="bg-midnight-indigo hover:bg-midnight-indigo/90 text-white px-8 py-2"
+          className="bg-midnight-indigo hover:bg-midnight-indigo/90 text-white px-8 py-6 w-full max-w-md mb-4 rounded-full text-lg"
         >
-          Let's get to the bottom of it
+          Yes — I'm ready to move forward
         </Button>
+        
+        <Button 
+          variant="outline" 
+          className="border-gray-300 text-midnight-indigo bg-white hover:bg-gray-100 px-8 py-6 w-full max-w-md mb-6 rounded-full text-lg"
+          onClick={() => window.location.href = '/during-conflict'}
+        >
+          Not yet — I need to decompress first
+        </Button>
+        
+        <div className="text-gray-500 text-center max-w-md mx-auto">
+          <p className="mb-2">
+            Taking space is sometimes the most emotionally intelligent choice.
+          </p>
+          <p>
+            Come back when you're ready.
+          </p>
+        </div>
       </div>
     </div>
   );
