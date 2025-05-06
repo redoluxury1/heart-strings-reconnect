@@ -4,7 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import BehaviorDropdown from './BehaviorDropdown';
 import BehaviorExplanation from './BehaviorExplanation';
-import { getFemaleBehaviors, getMaleBehaviors } from '@/data/behavior-data';
+import { getFemaleBehaviors, getMaleBehaviors, Behavior } from '@/data/behavior-data';
 
 interface BehaviorTabsProps {
   genderTab: 'female' | 'male';

@@ -2,13 +2,14 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { MessageSquare } from 'lucide-react';
 import CustomizePhraseView from '../CustomizePhraseView';
 import ConversationDialog from '../ConversationDialog';
 import BehaviorDropdown from './behavior-decoder/BehaviorDropdown';
 import BehaviorExplanation from './behavior-decoder/BehaviorExplanation';
 
 // Import behavior data functions
-import { getFemaleBehaviors, getMaleBehaviors } from '@/data/behavior-data';
+import { getFemaleBehaviors, getMaleBehaviors, Behavior } from '@/data/behavior-data';
 
 const BehaviorDecoder = () => {
   const [selectedFemaleBehaviorId, setSelectedFemaleBehaviorId] = useState<string>('');
@@ -62,13 +63,11 @@ const BehaviorDecoder = () => {
   
   return (
     <div className="space-y-6">
-      {/* New Design - Speech Bubbles Illustration */}
+      {/* Icon instead of image */}
       <div className="flex justify-center mb-6">
-        <img 
-          src="/lovable-uploads/550d9f1b-4549-4d93-9105-8012832cc781.png" 
-          alt="He Said She Said" 
-          className="w-full max-w-[300px] h-auto" 
-        />
+        <div className="h-16 w-16 rounded-full bg-soft-cream/70 flex items-center justify-center">
+          <MessageSquare className="h-8 w-8 text-mauve-rose" />
+        </div>
       </div>
 
       {/* Gender Toggle Buttons */}

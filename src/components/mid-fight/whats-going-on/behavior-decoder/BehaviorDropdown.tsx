@@ -1,14 +1,10 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
+import { Behavior } from '@/data/behavior-data';
 
 interface BehaviorDropdownProps {
-  behaviors: Array<{
-    id: string;
-    label: string;
-    explanation: string;
-    response: string;
-  }>;
+  behaviors: Behavior[];
   selectedBehaviorId: string;
   onBehaviorSelect: (id: string) => void;
   genderTab: 'female' | 'male';
