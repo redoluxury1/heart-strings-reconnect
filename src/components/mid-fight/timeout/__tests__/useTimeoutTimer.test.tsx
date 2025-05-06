@@ -1,5 +1,5 @@
 
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { useTimeoutTimer } from '../useTimeoutTimer';
 
@@ -10,6 +10,10 @@ jest.mock('@/components/ui/sonner', () => ({
 
 // Mock navigator.vibrate
 global.navigator.vibrate = jest.fn();
+
+// Mock Audio API
+window.HTMLMediaElement.prototype.play = jest.fn();
+window.HTMLMediaElement.prototype.pause = jest.fn();
 
 describe('useTimeoutTimer Hook', () => {
   beforeEach(() => {
@@ -129,5 +133,24 @@ describe('useTimeoutTimer Hook', () => {
       max: 6,
       defaultValue: 1,
     });
+  });
+  
+  it('plays sound and vibrates when timer completes', () => {
+    const { result } = renderHook(() => useTimeoutTimer());
+    
+    act(() => {
+      result.current.startTimer(1/60); // 1 second timer for testing
+    });
+    
+    // Advance timer to completion
+    act(() => {
+      jest.advanceTimersByTime(1000);
+    });
+    
+    // Verify vibration was triggered
+    expect(navigator.vibrate).toHaveBeenCalledWith([100, 50, 100, 50, 100]);
+    
+    // Verify audio play was attempted
+    expect(HTMLMediaElement.prototype.play).toHaveBeenCalled();
   });
 });

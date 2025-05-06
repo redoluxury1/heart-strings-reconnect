@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { toast } from '@/components/ui/sonner';
 
 export const useTimeoutTimer = (animationsEnabled = true) => {
@@ -9,6 +9,30 @@ export const useTimeoutTimer = (animationsEnabled = true) => {
   const [customMinutes, setCustomMinutes] = useState(15);
   const [remainingSeconds, setRemainingSeconds] = useState(0);
   const [customTimeUnit, setCustomTimeUnit] = useState<'minutes' | 'hours'>('minutes');
+  
+  // Audio reference for timer completion sound
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  
+  // Initialize audio element
+  useEffect(() => {
+    audioRef.current = new Audio("/notification-sound.mp3");
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+    };
+  }, []);
+  
+  // Play sound effect
+  const playSound = () => {
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0;
+      audioRef.current.play().catch(err => {
+        console.warn("Could not play sound effect:", err);
+      });
+    }
+  };
   
   // Timer countdown effect
   useEffect(() => {
@@ -25,6 +49,8 @@ export const useTimeoutTimer = (animationsEnabled = true) => {
             if (navigator.vibrate) {
               navigator.vibrate([100, 50, 100, 50, 100]);
             }
+            // Play sound effect on timer completion
+            playSound();
             toast("Time's up!", {
               description: "Your timeout period has ended.",
             });
