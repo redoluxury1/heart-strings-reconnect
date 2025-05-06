@@ -93,7 +93,7 @@ const CategorySection: React.FC<CategorySectionProps> = ({
           <button 
             key={option.id} 
             onClick={() => onOptionSelect(option.id)}
-            className="bg-[#FDE1D3] hover:bg-[#FDE1D3]/80 text-midnight-indigo rounded-full py-3 px-5 text-sm md:text-base transition-colors text-start shadow-sm"
+            className="bg-[#E5DEFF] hover:bg-[#E5DEFF]/80 text-midnight-indigo rounded-full py-2 px-4 text-sm md:text-base transition-colors text-start shadow-sm max-w-[90%]"
           >
             {option.text}
           </button>
