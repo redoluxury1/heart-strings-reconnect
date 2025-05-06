@@ -43,14 +43,14 @@ const LetsTalkThisOut = () => {
         
         <Button 
           onClick={handleReady}
-          className="bg-midnight-indigo hover:bg-midnight-indigo/90 text-white px-8 py-6 w-full max-w-md mb-4 rounded-full text-base"
+          className="bg-[#7d6272] border-none hover:bg-[#6d5262] text-white px-4 py-2 w-full max-w-md mb-4 rounded-full text-sm"
         >
           Yes — I'm ready to move forward
         </Button>
         
         <Button 
           variant="outline" 
-          className="border-gray-300 text-midnight-indigo hover:text-midnight-indigo bg-white hover:bg-gray-100 py-4 w-full max-w-md mb-6 rounded-full"
+          className="border-gray-300 text-[#7d6272] hover:text-[#6d5262] bg-white hover:bg-gray-100 py-1 w-full max-w-md mb-6 rounded-full"
           onClick={() => window.location.href = '/during-conflict'}
         >
           <span className="text-sm px-2">Not yet — I need to decompress first</span>
