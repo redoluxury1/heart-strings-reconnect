@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Book } from 'lucide-react';
 import FeatureCard, { Feature } from './FeatureCard';
@@ -17,15 +18,6 @@ const features: Feature[] = [
     alwaysVisible: false,
     microtext: "",
     customTitle: true
-  },
-  {
-    id: 'build-bridge',
-    title: 'Build a Bridge',
-    description: 'Sometimes we just need a third party to help us navigate something hard. We are building our team of experts to bring this feature to life.',
-    icon: <Book className="h-6 w-6 text-mauve-rose" />,
-    comingSoon: true,
-    alwaysVisible: false,
-    microtext: "Want to get in on the ground level?"
   }
 ];
 
@@ -64,25 +56,6 @@ const FeatureCardSection: React.FC<FeatureCardSectionProps> = ({
           <BuildBridgeCard />
         </ContentContainer>
       </section>
-      
-      {/* Other feature cards */}
-      {features.length > 1 && (
-        <section className="py-6 md:py-8 bg-soft-blush/30">
-          <ContentContainer maxWidth="lg">
-            <div className="grid grid-cols-1 gap-6 md:gap-8">
-              {features.filter(f => f.id !== 'whats-going-on').map((feature) => (
-                <FeatureCard 
-                  key={feature.id}
-                  feature={feature}
-                  isSelected={selectedFeature === feature.id}
-                  toggleFeature={toggleFeature}
-                  customContent={null}
-                />
-              ))}
-            </div>
-          </ContentContainer>
-        </section>
-      )}
     </>
   );
 };
