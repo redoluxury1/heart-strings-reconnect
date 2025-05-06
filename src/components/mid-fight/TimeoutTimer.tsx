@@ -1,16 +1,16 @@
 
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { toast } from '@/components/ui/sonner';
 import TimeOutGraphic from './TimeOutGraphic';
+import { Slider } from '@/components/ui/slider';
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
-// Preset timer options in minutes
+// Preset timer options in minutes with descriptions
 const timeoutPresets = [
-  { label: '15 min', value: 15 },
-  { label: '30 min', value: 30 },
-  { label: '1 hour', value: 60 },
+  { label: '15 min', value: 15, description: 'Quick breath' },
+  { label: '30 min', value: 30, description: 'Cool-down' },
+  { label: '1 hour', value: 60, description: 'Space to think' },
 ];
 
 interface TimeoutTimerProps {
@@ -21,7 +21,7 @@ const TimeoutTimer: React.FC<TimeoutTimerProps> = ({ animationsEnabled = true })
   // Timer states
   const [timerActive, setTimerActive] = useState(false);
   const [timerMinutes, setTimerMinutes] = useState(0);
-  const [customMinutes, setCustomMinutes] = useState('');
+  const [customMinutes, setCustomMinutes] = useState(15);
   const [remainingSeconds, setRemainingSeconds] = useState(0);
   const [customTimeUnit, setCustomTimeUnit] = useState<'minutes' | 'hours'>('minutes');
   
@@ -70,118 +70,101 @@ const TimeoutTimer: React.FC<TimeoutTimerProps> = ({ animationsEnabled = true })
     return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   };
   
-  // Handle custom timer input
+  // Handle custom timer with slider
   const handleCustomTimerStart = () => {
-    if (customMinutes && !isNaN(Number(customMinutes))) {
-      let mins = Number(customMinutes);
-      
-      // Convert hours to minutes if the unit is hours
-      if (customTimeUnit === 'hours') {
-        mins = mins * 60;
-      }
-      
-      // Limit between 1-120 minutes
-      mins = Math.min(Math.max(1, mins), 120);
-      
-      startTimer(mins);
-      setCustomMinutes('');
+    let mins = customMinutes;
+    
+    // Convert hours to minutes if the unit is hours
+    if (customTimeUnit === 'hours') {
+      mins = mins * 60;
     }
+    
+    // Limit between 1-120 minutes
+    mins = Math.min(Math.max(1, mins), 120);
+    
+    startTimer(mins);
   };
   
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 border border-lavender-blue/20 mt-6 mb-10">
-      <div className="flex flex-col items-center">
-        {/* Replace hourglass with custom TimeOut graphic */}
-        <TimeOutGraphic />
-        
-        <h3 className="font-cormorant text-lg md:text-xl font-medium text-midnight-indigo mb-6 text-center">
-          Space isn't distance. It's protection.
-        </h3>
-        
-        {!timerActive ? (
-          <>
-            <div className="grid grid-cols-3 gap-3 w-full max-w-md mb-6">
-              {timeoutPresets.map((preset) => (
+    <div className="bg-white rounded-lg shadow-md p-6 border border-lavender-blue/10 mt-6 mb-10">
+      <TimeOutGraphic />
+      
+      {!timerActive ? (
+        <>
+          <h3 className="font-cormorant text-2xl text-[#5d4357] mb-6 text-center">
+            Set your own time
+          </h3>
+          
+          <div className="grid grid-cols-3 gap-4 mb-10">
+            {timeoutPresets.map((preset) => (
+              <div key={preset.value} className="flex flex-col items-center">
                 <Button 
                   key={preset.value}
                   variant="outline"
-                  className="border-mauve-rose text-midnight-indigo hover:bg-mauve-rose hover:text-white hover:border-mauve-rose"
+                  className="w-full py-6 rounded-full bg-[#f7e0dc] border-none text-[#5d4357] hover:bg-[#e7c6c0] text-lg font-medium mb-2"
                   onClick={() => startTimer(preset.value)}
                 >
                   {preset.label}
                 </Button>
-              ))}
+                <span className="text-sm text-[#5d4357]">{preset.description}</span>
+              </div>
+            ))}
+          </div>
+          
+          <div className="w-full max-w-md mx-auto mb-8">
+            <div className="mb-6">
+              <Slider
+                defaultValue={[15]}
+                max={120}
+                min={1}
+                step={1}
+                className="py-4"
+                onValueChange={(value) => setCustomMinutes(value[0])}
+                value={[customMinutes]}
+              />
             </div>
             
-            <div className="w-full max-w-md mb-6">
-              <Label className="block text-midnight-indigo mb-2">Set your own time:</Label>
-              <div className="flex gap-2 mb-3">
-                <Input
-                  type="number"
-                  value={customMinutes}
-                  onChange={(e) => setCustomMinutes(e.target.value)}
-                  placeholder="Enter time"
-                  min="1"
-                  max="120"
-                  className="flex-1 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-mauve-rose text-sm"
-                />
-                <div className="flex gap-2">
-                  <Button 
-                    type="button"
-                    variant="outline"
-                    className={customTimeUnit === 'minutes' 
-                      ? "border-mauve-rose bg-mauve-rose text-white hover:bg-mauve-rose hover:border-mauve-rose" 
-                      : "border-mauve-rose text-midnight-indigo hover:bg-mauve-rose hover:text-white hover:border-mauve-rose"}
-                    onClick={() => setCustomTimeUnit('minutes')}
-                  >
-                    <span className="text-xs">Minutes</span>
-                  </Button>
-                  <Button 
-                    type="button"
-                    variant="outline"
-                    className={customTimeUnit === 'hours' 
-                      ? "border-mauve-rose bg-mauve-rose text-white hover:bg-mauve-rose hover:border-mauve-rose" 
-                      : "border-mauve-rose text-midnight-indigo hover:bg-mauve-rose hover:text-white hover:border-mauve-rose"}
-                    onClick={() => setCustomTimeUnit('hours')}
-                  >
-                    <span className="text-xs">Hours</span>
-                  </Button>
-                </div>
-              </div>
-              <Button 
-                className="w-full bg-mauve-rose hover:bg-mauve-rose/90 text-white"
-                onClick={handleCustomTimerStart}
-              >
-                <span className="text-xs">Start Timer & Notify Partner</span>
-              </Button>
-              
-              {/* Move the explanation text below the button as micro text */}
-              <p className="text-midnight-indigo/80 mt-4 text-center text-xs">
-                We'll let your partner know you're pausing to breathe—not walking away.
-              </p>
-            </div>
-          </>
-        ) : (
-          <div className="text-center">
-            <p className="text-midnight-indigo mb-2">
-              Your partner has been notified that you need some time.
-            </p>
-            <div className="text-4xl font-bold text-golden-mustard my-6">
-              {formatTime()}
-            </div>
-            <p className="text-midnight-indigo/80 mb-4 italic">
-              You're doing something brave. Give yourself this time.
-            </p>
+            <ToggleGroup type="single" value={customTimeUnit} onValueChange={(value) => value && setCustomTimeUnit(value as 'minutes' | 'hours')} className="justify-center rounded-full overflow-hidden mb-6 border border-[#5d4357]/20">
+              <ToggleGroupItem value="minutes" className="data-[state=on]:bg-[#5d4357] data-[state=on]:text-white px-10 py-3 rounded-l-full">
+                Minutes
+              </ToggleGroupItem>
+              <ToggleGroupItem value="hours" className="data-[state=on]:bg-[#5d4357] data-[state=on]:text-white px-10 py-3 rounded-r-full">
+                Hours
+              </ToggleGroupItem>
+            </ToggleGroup>
+            
             <Button 
-              variant="outline"
-              className="border-mauve-rose text-mauve-rose hover:bg-mauve-rose/10"
-              onClick={() => setTimerActive(false)}
+              className="w-full bg-[#5d4357] hover:bg-[#5d4357]/90 text-white py-6 rounded-full text-lg"
+              onClick={handleCustomTimerStart}
             >
-              Cancel Timer
+              Pause Now & Notify Partner
             </Button>
+            
+            <p className="text-[#5d4357] mt-6 text-center italic font-cormorant text-lg">
+              We're choosing peace — even mid-fight.
+            </p>
           </div>
-        )}
-      </div>
+        </>
+      ) : (
+        <div className="text-center">
+          <p className="text-[#5d4357] mb-2">
+            Your partner has been notified that you need some time.
+          </p>
+          <div className="text-4xl font-bold text-golden-mustard my-6">
+            {formatTime()}
+          </div>
+          <p className="text-[#5d4357]/80 mb-4 italic">
+            You're doing something brave. Give yourself this time.
+          </p>
+          <Button 
+            variant="outline"
+            className="border-mauve-rose text-mauve-rose hover:bg-mauve-rose/10"
+            onClick={() => setTimerActive(false)}
+          >
+            Cancel Timer
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

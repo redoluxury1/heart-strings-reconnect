@@ -3,14 +3,13 @@ import React from 'react';
 
 const TimeOutGraphic: React.FC = () => {
   return (
-    <div className="relative font-cormorant text-center my-4">
-      <div className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight relative z-10">
-        <span className="text-midnight-indigo">Time</span>
-        <span className="mx-1 md:mx-2 text-mauve-rose">Out</span>
-      </div>
-      <div className="absolute inset-0 flex items-center justify-center z-0">
-        <div className="w-full h-[30%] bg-gradient-to-r from-midnight-indigo/10 via-mauve-rose/10 to-midnight-indigo/10 blur-md rounded-full"></div>
-      </div>
+    <div className="text-center my-8">
+      <h2 className="text-5xl md:text-6xl font-cormorant text-[#5d4357] font-medium">
+        Time Out
+      </h2>
+      <p className="text-xl md:text-2xl font-cormorant text-[#5d4357] mt-4 mb-10">
+        Take a pause. Not a step away.
+      </p>
     </div>
   );
 };
