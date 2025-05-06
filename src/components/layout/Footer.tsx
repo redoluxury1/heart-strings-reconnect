@@ -13,23 +13,16 @@ const Footer = ({ showCTA = false }: FooterProps) => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="pt-20 pb-10 relative z-10">
-      {/* Separator dots */}
-      <div className="flex justify-center items-center gap-4 mb-16">
-        <div className="h-2 w-2 rounded-full bg-[#9a9a9a]/60"></div>
-        <div className="h-2 w-2 rounded-full bg-[#9a9a9a]/60"></div>
-        <div className="h-2 w-2 rounded-full bg-[#9a9a9a]/60"></div>
-      </div>
-      
+    <footer className="pt-8 pb-10 relative z-10">
       {/* Main Footer Content */}
       <div className="bg-[#fce9e7] rounded-3xl max-w-4xl mx-auto px-6 py-16 md:px-12">
         <div className="flex flex-col items-center relative z-20">
           {/* Logo */}
           <div className="mb-12">
             <img 
-              src="/lovable-uploads/258c4a04-63bc-4f6b-a3eb-312b251ac758.png" 
+              src="/lovable-uploads/43d77678-108c-4565-978c-3afdead85010.png" 
               alt="Bridge For Couples" 
-              className="h-20 md:h-24 w-auto" 
+              className="h-24 md:h-28 w-auto" 
             />
           </div>
           
