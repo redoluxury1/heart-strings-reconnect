@@ -8,6 +8,7 @@ import DailyLoveNote from '../components/home/DailyLoveNote';
 import StillUsSection from '../components/home/StillUsSection';
 import RelationshipStatsSection from '../components/home/RelationshipStatsSection';
 import LoveCodeQuizSection from '../components/home/LoveCodeQuizSection';
+import BlueprintQuizSection from '../components/home/BlueprintQuizSection';
 import HomeLanding from '../components/home/HomeLanding';
 
 const Index = () => {
@@ -41,6 +42,9 @@ const Index = () => {
         
         {/* Repositioned LoveCodeQuizSection as the primary quiz section */}
         <LoveCodeQuizSection />
+        
+        {/* New BlueprintQuizSection added here */}
+        <BlueprintQuizSection />
         
         <DailyLoveNote />
         
