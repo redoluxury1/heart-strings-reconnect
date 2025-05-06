@@ -29,9 +29,13 @@ const PausePhraseTool: React.FC<PausePhraseToolProps> = ({ onClose }) => {
     return acc;
   }, {} as Record<string, number>);
 
-  const handleGoalSelect = (goal: Goal) => {
-    setSelectedGoal(goal);
-    setStep('phrase-options');
+  const handleGoalSelect = (goalId: string) => {
+    // Find the goal by id
+    const goal = goals.find(g => g.id === goalId);
+    if (goal) {
+      setSelectedGoal(goal);
+      setStep('phrase-options');
+    }
   };
 
   const handleBackToTopics = () => {
@@ -79,21 +83,34 @@ const PausePhraseTool: React.FC<PausePhraseToolProps> = ({ onClose }) => {
     setIsCustomizing(false);
   };
 
-  const handleCategorySelection = (goalId: string) => {
-    const goal = goals.find(g => g.id === goalId);
-    if (goal) {
-      handleGoalSelect(goal);
-    }
-  };
-
   // If we're using the compact view (new design), show that
   if (useCompactView) {
     return (
       <>
         <CompactPausePhrase 
-          onCategorySelect={handleCategorySelection} 
+          onCategorySelect={handleGoalSelect} 
           onSomethingElse={handleSomethingElse}
         />
+        
+        {/* Show phrase selection view when a goal is selected */}
+        {step === 'phrase-options' && selectedGoal && !isCustomizing && (
+          <PhraseSelectionView
+            selectedGoal={selectedGoal}
+            onBack={handleBackToTopics}
+            onCustomizePhrase={handleCustomizePhrase}
+            colorIndex={selectedGoal ? goalColorMap[selectedGoal.id] : 0}
+          />
+        )}
+        
+        {/* Show customization view when customizing */}
+        {isCustomizing && (
+          <CustomizePhraseView
+            customPhrase={customPhrase}
+            onCustomPhraseChange={setCustomPhrase}
+            onBackToTopics={handleStartOver}
+            onStartConversation={handleStartConversation}
+          />
+        )}
         
         {/* Conversation Dialog - keep for customization flow */}
         <ConversationDialog

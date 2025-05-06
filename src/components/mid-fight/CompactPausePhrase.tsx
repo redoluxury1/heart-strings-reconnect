@@ -82,7 +82,7 @@ const CategorySection: React.FC<CategorySectionProps> = ({
   return (
     <div className="bg-soft-cream/70 rounded-xl p-5 shadow-sm">
       <div className="flex items-center gap-2 mb-4">
-        <div className="text-2xl">
+        <div className="text-2xl flex items-center justify-center w-8 h-8 rounded-full bg-white/30">
           {icon}
         </div>
         <h3 className="text-midnight-indigo font-cormorant text-3xl">{title}</h3>
