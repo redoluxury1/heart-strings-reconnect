@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { goals } from '@/data/pause-phrase-goals';
@@ -14,14 +15,13 @@ interface PausePhraseToolProps {
 }
 
 const PausePhraseTool: React.FC<PausePhraseToolProps> = ({ onClose }) => {
-  const [step, setStep] = useState<'goal-selection' | 'phrase-options'>('goal-selection');
+  const [step, setStep] = useState<'goal-selection' | 'phrase-options' | 'customize'>('goal-selection');
   const [selectedGoal, setSelectedGoal] = useState<Goal | null>(null);
   const [customPhrase, setCustomPhrase] = useState('');
-  const [isCustomizing, setIsCustomizing] = useState(false);
   const { toast } = useToast();
   const [startConversationOpen, setStartConversationOpen] = useState(false);
-  const [partnerName, setPartnerName] = useState("your partner"); // In a real app, this would come from user data
-  const [useCompactView, setUseCompactView] = useState(true); // Default to compact view
+  const [partnerName, setPartnerName] = useState("your partner"); 
+  const [useCompactView, setUseCompactView] = useState(true); 
 
   // For colorizing goals in the goal selection view
   const goalColorMap = goals.reduce((acc, goal, index) => {
@@ -39,22 +39,13 @@ const PausePhraseTool: React.FC<PausePhraseToolProps> = ({ onClose }) => {
   };
 
   const handleBackToTopics = () => {
-    if (isCustomizing) {
-      // If we were customizing a specific phrase, go back to phrase options
-      if (selectedGoal) {
-        setIsCustomizing(false);
-      } else {
-        // If it was "Something else" with no selected goal, go back to topics
-        setStep('goal-selection');
-      }
-    } else {
-      setStep('goal-selection');
-    }
+    setStep('goal-selection');
+    setSelectedGoal(null);
   };
 
   const handleCustomizePhrase = (phrase: string) => {
     setCustomPhrase(phrase);
-    setIsCustomizing(true);
+    setStep('customize');
   };
 
   const handleStartConversation = () => {
@@ -72,7 +63,7 @@ const PausePhraseTool: React.FC<PausePhraseToolProps> = ({ onClose }) => {
     // For "Something else", go directly to customization with a blank template
     setCustomPhrase("");
     setSelectedGoal(null);
-    setIsCustomizing(true);
+    setStep('customize');
   };
 
   const handleStartOver = () => {
@@ -80,86 +71,51 @@ const PausePhraseTool: React.FC<PausePhraseToolProps> = ({ onClose }) => {
     setStep('goal-selection');
     setSelectedGoal(null);
     setCustomPhrase('');
-    setIsCustomizing(false);
   };
 
-  // If we're using the compact view (new design), show that
-  if (useCompactView) {
-    return (
-      <>
+  // Show the appropriate view based on the current step
+  const renderCurrentView = () => {
+    if (step === 'goal-selection') {
+      return (
         <CompactPausePhrase 
           onCategorySelect={handleGoalSelect} 
           onSomethingElse={handleSomethingElse}
         />
-        
-        {/* Show phrase selection view when a goal is selected */}
-        {step === 'phrase-options' && selectedGoal && !isCustomizing && (
-          <PhraseSelectionView
-            selectedGoal={selectedGoal}
-            onBack={handleBackToTopics}
-            onCustomizePhrase={handleCustomizePhrase}
-            colorIndex={selectedGoal ? goalColorMap[selectedGoal.id] : 0}
-          />
-        )}
-        
-        {/* Show customization view when customizing */}
-        {isCustomizing && (
-          <CustomizePhraseView
-            customPhrase={customPhrase}
-            onCustomPhraseChange={setCustomPhrase}
-            onBackToTopics={handleStartOver}
-            onStartConversation={handleStartConversation}
-          />
-        )}
-        
-        {/* Conversation Dialog - keep for customization flow */}
-        <ConversationDialog
-          isOpen={startConversationOpen}
-          onOpenChange={setStartConversationOpen}
-          partnerName={partnerName}
-          onSendInvite={handleSendInvite}
-          topicId={selectedGoal?.id || 'something-else'}
-        />
-      </>
-    );
-  }
-
-  // Otherwise use the original flow
-  return (
-    <div className="flex flex-col">
-      {step === 'goal-selection' ? (
-        <>
-          <PausePhraseGraphic />
-          <div className="text-center mb-6">
-            <p className="text-sm text-midnight-indigo/70">
-              You know what you want to say. We'll help you say it in a way they can actually hear.
-            </p>
-          </div>
-          <GoalSelectionView 
-            goals={goals.filter(goal => goal.title !== "Say how I feel without blame")}
-            onGoalSelect={handleGoalSelect}
-            onSomethingElse={handleSomethingElse}
-            goalColorMap={goalColorMap}
-            onStartConversation={handleStartConversation}
-          />
-        </>
-      ) : isCustomizing ? (
-        <CustomizePhraseView
-          customPhrase={customPhrase}
-          onCustomPhraseChange={setCustomPhrase}
-          onBackToTopics={handleStartOver}
-          onStartConversation={handleStartConversation}
-        />
-      ) : (
+      );
+    } else if (step === 'phrase-options' && selectedGoal) {
+      return (
         <PhraseSelectionView
           selectedGoal={selectedGoal}
           onBack={handleBackToTopics}
           onCustomizePhrase={handleCustomizePhrase}
           colorIndex={selectedGoal ? goalColorMap[selectedGoal.id] : 0}
         />
-      )}
+      );
+    } else if (step === 'customize') {
+      return (
+        <CustomizePhraseView
+          customPhrase={customPhrase}
+          onCustomPhraseChange={setCustomPhrase}
+          onBackToTopics={handleStartOver}
+          onStartConversation={handleStartConversation}
+        />
+      );
+    }
+    
+    // Fallback to goal selection
+    return (
+      <CompactPausePhrase 
+        onCategorySelect={handleGoalSelect} 
+        onSomethingElse={handleSomethingElse}
+      />
+    );
+  };
 
-      {/* Conversation Dialog - keep for customization flow */}
+  return (
+    <div className="flex flex-col">
+      {renderCurrentView()}
+      
+      {/* Conversation Dialog */}
       <ConversationDialog
         isOpen={startConversationOpen}
         onOpenChange={setStartConversationOpen}
