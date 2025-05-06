@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { LightbulbIcon, HeartIcon, ShieldIcon } from 'lucide-react';
+import PausePhraseGraphic from './PausePhraseGraphic';
 
 interface PhraseOptionProps {
   text: string;
@@ -81,9 +82,7 @@ const PausePhraseCard: React.FC<PausePhraseCardProps> = ({ onOptionSelect }) => 
   return (
     <div className="space-y-6 max-w-2xl mx-auto">
       <div className="text-center mb-8">
-        <h2 className="text-5xl font-cormorant font-medium text-midnight-indigo mb-4">
-          PAUSE + PHRASE
-        </h2>
+        <PausePhraseGraphic />
         <p className="text-midnight-indigo/80 text-lg max-w-lg mx-auto">
           We'll help you phrase what's on your heart, in a way they can actually hear.
         </p>
