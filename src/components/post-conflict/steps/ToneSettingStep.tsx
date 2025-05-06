@@ -31,7 +31,9 @@ const ToneSettingStep: React.FC<ToneSettingStepProps> = ({
     onResponse(prompt);
     // Move to the next step automatically
     setTimeout(() => {
-      setCurrentStep(prev => prev + 1);
+      // Fix: Use a direct number instead of a function
+      const nextStep = 2; // This will move to the perspective step (index 2)
+      setCurrentStep(nextStep);
     }, 500);
   };
   

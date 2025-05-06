@@ -16,7 +16,9 @@ export const useSteps = (onExit: () => void) => {
   // Helper function for auto-advancing
   const autoAdvance = () => {
     setTimeout(() => {
-      setCurrentStep(prev => prev + 1);
+      // Fix: Use direct number instead of a function
+      const nextStep = currentStep + 1;
+      setCurrentStep(nextStep);
     }, 500);
   };
 
