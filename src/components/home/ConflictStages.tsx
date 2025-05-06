@@ -10,7 +10,7 @@ const ConflictStages = () => {
   const stages = [
     {
       title: "During Conflict",
-      description: "Tools to help deescalate tension and communicate effectively when emotions are high.",
+      description: "Tools to help deescalate tension, communicate effectively, and even connect with an expert when needed.",
       icon: <MessageCircle className="h-6 w-6" />,
       link: "/during-conflict",
       color: "from-rose-100 to-rose-50"
