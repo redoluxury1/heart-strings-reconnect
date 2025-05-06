@@ -1,7 +1,8 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
+import { useSession } from '../context/SessionContext';
 
 interface ToneSettingStepProps {
   onResponse: (response: string) => void;
@@ -13,24 +14,42 @@ const ToneSettingStep: React.FC<ToneSettingStepProps> = ({
   partner1Response
 }) => {
   const [input, setInput] = useState(partner1Response || '');
-  const [isSubmitted, setIsSubmitted] = useState(!!partner1Response);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const { setCurrentStep } = useSession();
   
   const starterPrompts = [
     "I want us to work together to...",
     "We're on the same team. Let's...",
-    "I want to stay open even if it's hard...",
+    "I'm open and willing to listen...",
     "I'm here to listen, not fight...",
     "I care about you, even if I'm upset..."
   ];
   
   const handleStarterPrompt = (prompt: string) => {
     setInput(prompt);
+    // Auto-save after selecting a prompt
+    onResponse(prompt);
+    // Move to the next step automatically
+    setTimeout(() => {
+      setCurrentStep(prev => prev + 1);
+    }, 500);
   };
   
-  const handleSubmit = () => {
-    if (input.trim()) {
+  // Auto-save when input changes after a short delay
+  useEffect(() => {
+    if (input.trim() && input !== partner1Response) {
+      const timer = setTimeout(() => {
+        onResponse(input);
+      }, 1000);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [input, onResponse, partner1Response]);
+  
+  // Handle textarea blur to save content
+  const handleBlur = () => {
+    if (input.trim() && input !== partner1Response) {
       onResponse(input);
-      setIsSubmitted(true);
     }
   };
   
@@ -56,7 +75,7 @@ const ToneSettingStep: React.FC<ToneSettingStepProps> = ({
             <Button
               key={index}
               variant="outline"
-              className="bg-[#7d6272] border-none hover:bg-[#6d5262] hover:text-white text-white text-sm whitespace-normal h-auto py-2 px-3 rounded-full max-w-[95%] mx-auto"
+              className="bg-[#7d6272] border-none hover:bg-[#6d5262] hover:text-white text-white text-xs whitespace-normal h-auto py-2 px-3 rounded-full max-w-[95%] mx-auto"
               onClick={() => handleStarterPrompt(prompt)}
             >
               {prompt}
@@ -68,16 +87,9 @@ const ToneSettingStep: React.FC<ToneSettingStepProps> = ({
           placeholder="Write your own..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          className="mt-3 mb-4 min-h-[120px] rounded-2xl"
+          onBlur={handleBlur}
+          className="mt-3 mb-4 min-h-[80px] h-20 rounded-2xl"
         />
-        
-        <Button 
-          onClick={handleSubmit}
-          className="bg-midnight-indigo hover:bg-midnight-indigo/90 text-white py-4 flex items-center justify-center rounded-full text-lg max-w-xs mx-auto"
-          disabled={!input.trim()}
-        >
-          Continue
-        </Button>
       </div>
     </div>
   );

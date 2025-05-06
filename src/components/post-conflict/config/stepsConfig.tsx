@@ -11,14 +11,23 @@ import EndSessionStep from '../steps/EndSessionStep';
 import { useSession } from '../context/SessionContext';
 
 export const useSteps = (onExit: () => void) => {
-  const { handleResponse, sessionData, currentStep, handleRestart } = useSession();
+  const { handleResponse, sessionData, currentStep, handleRestart, setCurrentStep } = useSession();
+
+  // Helper function for auto-advancing
+  const autoAdvance = () => {
+    setTimeout(() => {
+      setCurrentStep(prev => prev + 1);
+    }, 500);
+  };
 
   const steps = [
     {
       id: 'grounding',
       component: 
         <GroundingStep 
-          onResponse={(response) => handleResponse('partner1', 'grounding', response)} 
+          onResponse={(response) => {
+            handleResponse('partner1', 'grounding', response);
+          }} 
           onExit={onExit}
           onNext={() => {}} // This will be set in GroundingStep
         />
@@ -27,7 +36,11 @@ export const useSteps = (onExit: () => void) => {
       id: 'tone',
       component: 
         <ToneSettingStep 
-          onResponse={(response) => handleResponse('partner1', 'tone', response)}
+          onResponse={(response) => {
+            handleResponse('partner1', 'tone', response);
+            // Auto-advance after a short delay
+            autoAdvance();
+          }}
           partner1Response={sessionData.partner1.responses.tone}
         />
     },
@@ -35,7 +48,11 @@ export const useSteps = (onExit: () => void) => {
       id: 'perspective',
       component: 
         <PerspectiveStep 
-          onResponse={(response) => handleResponse('partner1', 'perspective', response)}
+          onResponse={(response) => {
+            handleResponse('partner1', 'perspective', response);
+            // Auto-advance after handling response
+            autoAdvance();
+          }}
           partner1Response={sessionData.partner1.responses.perspective}
           partner2Response={sessionData.partner2.responses.perspective}
         />
@@ -44,7 +61,11 @@ export const useSteps = (onExit: () => void) => {
       id: 'emotions',
       component: 
         <EmotionalCheckIn 
-          onResponse={(response) => handleResponse('partner1', 'emotions', response)}
+          onResponse={(response) => {
+            handleResponse('partner1', 'emotions', response);
+            // Auto-advance after handling response
+            autoAdvance();
+          }}
           selectedEmotions={sessionData.partner1.responses.emotions}
           partner2Emotions={sessionData.partner2.responses.emotions}
         />
@@ -53,7 +74,11 @@ export const useSteps = (onExit: () => void) => {
       id: 'needs',
       component: 
         <NeedsRepairStep 
-          onResponse={(response) => handleResponse('partner1', 'needs', response)}
+          onResponse={(response) => {
+            handleResponse('partner1', 'needs', response);
+            // Auto-advance after handling response
+            autoAdvance();
+          }}
           partner1Response={sessionData.partner1.responses.needs}
           partner2Response={sessionData.partner2.responses.needs}
         />
@@ -62,7 +87,11 @@ export const useSteps = (onExit: () => void) => {
       id: 'connection',
       component: 
         <ConnectionPromptStep 
-          onResponse={(response) => handleResponse('partner1', 'connection', response)}
+          onResponse={(response) => {
+            handleResponse('partner1', 'connection', response);
+            // Auto-advance after handling response
+            autoAdvance();
+          }}
           partner1Response={sessionData.partner1.responses.connection}
           partner2Response={sessionData.partner2.responses.connection}
         />
