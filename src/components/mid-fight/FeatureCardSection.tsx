@@ -1,7 +1,5 @@
-
 import React from 'react';
-import { Book, Puzzle } from 'lucide-react';
-import ThoughtBubble from '@/components/icons/ThoughtBubble';
+import { Book } from 'lucide-react';
 import FeatureCard, { Feature } from './FeatureCard';
 import ContentContainer from '@/components/common/ContentContainer';
 import PausePhraseTool from './PausePhraseTool';
@@ -41,7 +39,7 @@ const FeatureCardSection: React.FC<FeatureCardSectionProps> = ({
 }) => {
   return (
     <>
-      {/* Pause Phrase Tool - Always visible */}
+      {/* Pause Phrase Tool - Always visible with compact design */}
       <section className="py-6 md:py-8 bg-soft-blush/30">
         <ContentContainer maxWidth="lg">
           <div className="bg-white rounded-lg shadow-md p-5 md:p-6 border border-lavender-blue/20">

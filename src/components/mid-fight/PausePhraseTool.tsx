@@ -7,6 +7,7 @@ import ConversationDialog from './ConversationDialog';
 import { Goal } from '@/data/pause-phrase-goals';
 import PausePhraseGraphic from './PausePhraseGraphic';
 import GoalSelectionView from './GoalSelectionView';
+import CompactPausePhrase from './CompactPausePhrase';
 
 interface PausePhraseToolProps {
   onClose: () => void;
@@ -20,8 +21,9 @@ const PausePhraseTool: React.FC<PausePhraseToolProps> = ({ onClose }) => {
   const { toast } = useToast();
   const [startConversationOpen, setStartConversationOpen] = useState(false);
   const [partnerName, setPartnerName] = useState("your partner"); // In a real app, this would come from user data
+  const [useCompactView, setUseCompactView] = useState(true); // Default to compact view
 
-  // For colorizing goals in the goal selection view - using our updated color scheme without yellow/orange/green
+  // For colorizing goals in the goal selection view
   const goalColorMap = goals.reduce((acc, goal, index) => {
     acc[goal.id] = index % 5; // Using modulo 5 since we have 5 color options
     return acc;
@@ -77,6 +79,35 @@ const PausePhraseTool: React.FC<PausePhraseToolProps> = ({ onClose }) => {
     setIsCustomizing(false);
   };
 
+  const handleCategorySelection = (goalId: string) => {
+    const goal = goals.find(g => g.id === goalId);
+    if (goal) {
+      handleGoalSelect(goal);
+    }
+  };
+
+  // If we're using the compact view (new design), show that
+  if (useCompactView) {
+    return (
+      <>
+        <CompactPausePhrase 
+          onCategorySelect={handleCategorySelection} 
+          onSomethingElse={handleSomethingElse}
+        />
+        
+        {/* Conversation Dialog - keep for customization flow */}
+        <ConversationDialog
+          isOpen={startConversationOpen}
+          onOpenChange={setStartConversationOpen}
+          partnerName={partnerName}
+          onSendInvite={handleSendInvite}
+          topicId={selectedGoal?.id || 'something-else'}
+        />
+      </>
+    );
+  }
+
+  // Otherwise use the original flow
   return (
     <div className="flex flex-col">
       {step === 'goal-selection' ? (
