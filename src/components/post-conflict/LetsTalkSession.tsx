@@ -13,7 +13,7 @@ const WorkThroughSessionContent: React.FC<{ onExit: () => void }> = ({ onExit })
   const { currentStepContent, totalSteps } = useSteps(onExit);
   
   return (
-    <div className="bg-white rounded-xl shadow-md overflow-hidden">
+    <div className="bg-[#f5f0e8] rounded-xl shadow-md overflow-hidden">
       <ProgressIndicator totalSteps={totalSteps} />
       
       <div className="p-6 md:p-8">

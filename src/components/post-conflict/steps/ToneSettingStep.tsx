@@ -37,9 +37,9 @@ const ToneSettingStep: React.FC<ToneSettingStepProps> = ({
   return (
     <div className="flex flex-col items-center max-w-xl mx-auto">
       <img 
-        src="/lovable-uploads/035b9f98-9337-4134-b1d7-e27a6922b517.png" 
+        src="/lovable-uploads/6a166a5a-f921-4cff-8a03-83cbfe4fde10.png" 
         alt="Couple embracing" 
-        className="w-full max-w-md rounded-2xl mb-6" 
+        className="w-full max-w-md mb-6" 
       />
       
       <h2 className="text-4xl md:text-5xl font-cormorant font-medium text-midnight-indigo mb-4 text-center">
@@ -55,7 +55,7 @@ const ToneSettingStep: React.FC<ToneSettingStepProps> = ({
           <Button
             key={index}
             variant="outline"
-            className="bg-mauve-rose/30 border-none hover:bg-mauve-rose/40 hover:text-midnight-indigo text-midnight-indigo text-lg whitespace-normal h-auto py-4 rounded-full"
+            className="bg-[#8d6e82] border-none hover:bg-[#7d6272] hover:text-white text-white text-lg whitespace-normal h-auto py-4 rounded-full"
             onClick={() => handleStarterPrompt(prompt)}
           >
             {prompt}
