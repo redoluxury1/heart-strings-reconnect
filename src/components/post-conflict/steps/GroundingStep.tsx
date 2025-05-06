@@ -1,7 +1,6 @@
 
 import React, { useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Heart } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useSession } from '../context/SessionContext';
 import { useToast } from '@/hooks/use-toast';
@@ -46,7 +45,11 @@ const GroundingStep: React.FC<GroundingStepProps> = ({ onResponse, onExit }) => 
 
   return (
     <div className="text-center">
-      <Heart className="h-12 w-12 mx-auto text-mauve-rose mb-6 stroke-[1.5px]" />
+      <img 
+        src="/lovable-uploads/088d792b-f2dc-44de-9679-9ff534e02d4e.png" 
+        alt="Couple sitting together" 
+        className="h-24 w-auto mx-auto mb-6" 
+      />
       
       <h2 className="text-4xl md:text-5xl font-cormorant font-medium mb-4 text-center text-midnight-indigo">
         Are you ready to work through this?
@@ -72,7 +75,7 @@ const GroundingStep: React.FC<GroundingStepProps> = ({ onResponse, onExit }) => 
           className="border-gray-300 text-midnight-indigo bg-white hover:bg-gray-100 py-6 mb-6 rounded-full text-lg"
           onClick={handleNotYet}
         >
-          Not yet — I need to decompress first
+          <span className="px-2">Not yet — I need to decompress first</span>
         </Button>
         
         <div className="text-gray-500 text-center">

@@ -1,7 +1,6 @@
 
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Heart } from 'lucide-react';
 import { useInterface } from '../../hooks/useInterfaceContext';
 import LetsTalkSession from './LetsTalkSession';
 
@@ -16,7 +15,11 @@ const LetsTalkThisOut = () => {
   return (
     <div className="bg-soft-cream/40 rounded-xl shadow-md p-6 md:p-8 mb-12 text-center">
       <div className="flex flex-col items-center max-w-xl mx-auto">
-        <Heart className="h-12 w-12 text-mauve-rose mb-6 stroke-[1.5px]" />
+        <img 
+          src="/lovable-uploads/088d792b-f2dc-44de-9679-9ff534e02d4e.png" 
+          alt="Couple sitting together" 
+          className="h-24 w-auto mb-6" 
+        />
         
         <h2 className="text-4xl md:text-5xl font-cormorant font-medium mb-4 text-center text-midnight-indigo">
           Are you ready to work through this?
@@ -38,10 +41,10 @@ const LetsTalkThisOut = () => {
         
         <Button 
           variant="outline" 
-          className="border-gray-300 text-midnight-indigo bg-white hover:bg-gray-100 px-8 py-6 w-full max-w-md mb-6 rounded-full text-lg"
+          className="border-gray-300 text-midnight-indigo bg-white hover:bg-gray-100 px-6 py-6 w-full max-w-md mb-6 rounded-full text-lg"
           onClick={() => window.location.href = '/during-conflict'}
         >
-          Not yet — I need to decompress first
+          <span className="px-2">Not yet — I need to decompress first</span>
         </Button>
         
         <div className="text-gray-500 text-center max-w-md mx-auto">
