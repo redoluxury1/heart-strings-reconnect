@@ -2,15 +2,23 @@
 import React, { useState } from 'react';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { ChevronRight } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import CustomizePhraseView from '@/components/mid-fight/CustomizePhraseView';
 import ConversationDialog from '@/components/mid-fight/ConversationDialog';
 import { useToast } from '@/hooks/use-toast';
 
-// Import our components
+// Import components
 import PhraseList from './say-it-better/PhraseList';
 import { useSearchFilters } from './say-it-better/useSearchFilters';
 import { usePhraseManagement } from './say-it-better/usePhraseManagement';
+
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface SayItBetterProps {
   allowSave?: boolean;
@@ -18,7 +26,6 @@ interface SayItBetterProps {
 
 const SayItBetter: React.FC<SayItBetterProps> = ({ allowSave = false }) => {
   const { toast } = useToast();
-  const [showCategories, setShowCategories] = useState(false);
   
   // Custom hooks for search/filtering and phrase management
   const { 
@@ -43,58 +50,27 @@ const SayItBetter: React.FC<SayItBetterProps> = ({ allowSave = false }) => {
     setCustomizedPhrase
   } = usePhraseManagement({ allowSave });
 
-  // Category selection interface
-  if (showCategories) {
-    return (
-      <div className="space-y-4">
-        <div className="mb-4">
-          <h4 className="text-lg font-medium text-midnight-indigo mb-2">
-            Select a category
-          </h4>
-          <p className="text-sm text-midnight-indigo/70">
-            Choose a category to find phrases for your situation
-          </p>
-        </div>
-        
-        <div className="space-y-2">
-          {['all', ...categories].map((category) => (
-            <Button
-              key={category}
-              variant="outline"
-              className={`w-full justify-between py-3 px-4 border-lavender-blue/20 ${
-                selectedCategory === category 
-                  ? 'bg-mauve-rose/10 text-mauve-rose border-mauve-rose/30' 
-                  : 'hover:bg-mauve-rose/5 text-midnight-indigo'
-              }`}
-              onClick={() => {
-                setSelectedCategory(category);
-                setShowCategories(false);
-              }}
-            >
-              <span>{category === 'all' ? 'All Categories' : category}</span>
-              <ChevronRight className="h-4 w-4 text-mauve-rose/70" />
-            </Button>
-          ))}
-        </div>
-      </div>
-    );
-  }
-
-  // Main phrase list view
   return (
     <div className="space-y-6">
-      <Button
-        variant="outline"
-        className="w-full flex justify-between items-center bg-mauve-rose/20 hover:bg-mauve-rose/30 border-mauve-rose/20 text-midnight-indigo py-3"
-        onClick={() => setShowCategories(true)}
-      >
-        <span>
-          {selectedCategory === 'all' 
-            ? 'Select a category' 
-            : `Category: ${selectedCategory}`}
-        </span>
-        <ChevronRight className="h-4 w-4" />
-      </Button>
+      {/* Category dropdown */}
+      <div className="w-full">
+        <Select 
+          value={selectedCategory} 
+          onValueChange={setSelectedCategory}
+        >
+          <SelectTrigger className="w-full bg-white border-lavender-blue/30 hover:border-lavender-blue focus:border-lavender-blue py-3">
+            <SelectValue placeholder="Select a category" />
+          </SelectTrigger>
+          <SelectContent className="bg-white">
+            <SelectItem value="all">All Categories</SelectItem>
+            {categories.map((category) => (
+              <SelectItem key={category} value={category}>
+                {category}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
       
       {/* Results */}
       <PhraseList 
