@@ -15,7 +15,7 @@ const colorOptions = [
 
 interface GoalSelectionViewProps {
   goals: Goal[];
-  onGoalSelect: (goal: Goal) => void;
+  onGoalSelect: (goalId: string) => void; // Changed from Goal to goalId: string
   onStartConversation: () => void;
   onSomethingElse: () => void;
   goalColorMap?: Record<string, number>;
@@ -40,7 +40,7 @@ const GoalSelectionView: React.FC<GoalSelectionViewProps> = ({
           return (
             <div 
               key={goal.id}
-              onClick={() => onGoalSelect(goal)}
+              onClick={() => onGoalSelect(goal.id)} // Changed to pass goal.id instead of goal
               className={`p-3 rounded-md cursor-pointer flex justify-between items-center ${colorSet.bg} ${colorSet.border} ${colorSet.hoverBg} transition-colors`}
             >
               <div>
