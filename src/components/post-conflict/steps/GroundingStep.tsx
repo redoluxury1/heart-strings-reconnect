@@ -72,10 +72,10 @@ const GroundingStep: React.FC<GroundingStepProps> = ({ onResponse, onExit }) => 
         
         <Button 
           variant="outline" 
-          className="border-gray-300 text-midnight-indigo bg-white hover:bg-gray-100 py-6 mb-6 rounded-full text-lg"
+          className="border-gray-300 text-midnight-indigo hover:text-midnight-indigo bg-white hover:bg-gray-100 py-4 mb-6 rounded-full"
           onClick={handleNotYet}
         >
-          <span className="px-2">Not yet — I need to decompress first</span>
+          <span className="text-base px-2">Not yet — I need to decompress first</span>
         </Button>
         
         <div className="text-gray-500 text-center">
