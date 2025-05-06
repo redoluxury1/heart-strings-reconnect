@@ -65,9 +65,17 @@ const TimeoutTimer: React.FC<TimeoutTimerProps> = ({ animationsEnabled = true })
   
   // Format remaining time for display
   const formatTime = () => {
-    const minutes = Math.floor(remainingSeconds / 60);
-    const seconds = remainingSeconds % 60;
-    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    // For times greater than 60 minutes, show in hours:minutes format
+    if (remainingSeconds >= 3600) {
+      const hours = Math.floor(remainingSeconds / 3600);
+      const minutes = Math.floor((remainingSeconds % 3600) / 60);
+      return `${hours}:${minutes.toString().padStart(2, '0')}`;
+    } else {
+      // For shorter times, show minutes:seconds
+      const minutes = Math.floor(remainingSeconds / 60);
+      const seconds = remainingSeconds % 60;
+      return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    }
   };
   
   // Get slider min, max, and default values based on time unit
