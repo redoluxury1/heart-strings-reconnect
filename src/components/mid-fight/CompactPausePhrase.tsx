@@ -30,7 +30,7 @@ const CompactPausePhrase: React.FC<CompactPausePhraseProps> = ({
           { id: 'explain-meant', text: 'Explain what I meant' },
           { id: 'ask-question', text: 'Ask a question calmly' },
           { id: 'express-need', text: 'Share a need' },
-          { id: 'acknowledge-pattern', text: 'Share a vulnerability' }
+          { id: 'acknowledge-pattern', text: 'Address a recurring issue' }
         ]}
         onOptionSelect={onCategorySelect}
       />
@@ -41,7 +41,8 @@ const CompactPausePhrase: React.FC<CompactPausePhraseProps> = ({
         icon={<Heart className="text-pink-300" />}
         options={[
           { id: 'say-what-hurt', text: 'Say what hurt me' },
-          { id: 'share-fear', text: 'Share a vulnerability' }
+          { id: 'share-fear', text: 'Share a vulnerability' },
+          { id: 'express-feeling', text: 'Express feelings without blame' }
         ]}
         onOptionSelect={onCategorySelect}
       />
@@ -53,7 +54,9 @@ const CompactPausePhrase: React.FC<CompactPausePhraseProps> = ({
         options={[
           { id: 'suggest-solution', text: 'Suggest a compromise' },
           { id: 'request-appreciation', text: 'Ask for appreciation' },
-          { id: 'set-boundary', text: 'Set a boundary' }
+          { id: 'set-boundary', text: 'Set a boundary' },
+          { id: 'apologize', text: 'Apologize' },
+          { id: 'ask-for-space', text: 'Ask for space' }
         ]}
         onOptionSelect={onCategorySelect}
       />
@@ -77,12 +80,12 @@ const CategorySection: React.FC<CategorySectionProps> = ({
   onOptionSelect
 }) => {
   return (
-    <div className="bg-mauve-rose/80 rounded-xl p-5 shadow-sm">
+    <div className="bg-soft-cream/70 rounded-xl p-5 shadow-sm">
       <div className="flex items-center gap-2 mb-4">
         <div className="text-2xl">
           {icon}
         </div>
-        <h3 className="text-white font-cormorant text-3xl">{title}</h3>
+        <h3 className="text-midnight-indigo font-cormorant text-3xl">{title}</h3>
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -90,7 +93,7 @@ const CategorySection: React.FC<CategorySectionProps> = ({
           <button 
             key={option.id} 
             onClick={() => onOptionSelect(option.id)}
-            className="bg-rosewood-tint/80 hover:bg-rosewood-tint/90 text-white rounded-full py-3 px-5 text-sm md:text-base transition-colors text-start"
+            className="bg-[#FDE1D3] hover:bg-[#FDE1D3]/80 text-midnight-indigo rounded-full py-3 px-5 text-sm md:text-base transition-colors text-start shadow-sm"
           >
             {option.text}
           </button>
