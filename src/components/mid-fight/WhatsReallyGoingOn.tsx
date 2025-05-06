@@ -22,7 +22,7 @@ const WhatsReallyGoingOn = () => {
     },
     'realfight': {
       title: 'Cut to the Point',
-      description: '', // Removed the sentence as requested
+      description: '', // Removed the description as requested
       icon: <Target className="h-5 w-5 text-mauve-rose" />
     },
     'behaviors': {

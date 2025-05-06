@@ -34,7 +34,7 @@ const BehaviorDropdown: React.FC<BehaviorDropdownProps> = ({
                 ? genderTab === 'female' 
                   ? 'bg-mauve-rose text-white border-mauve-rose'
                   : 'bg-midnight-indigo text-white border-midnight-indigo'
-                : 'border-lavender-blue/20 hover:bg-lavender-blue/5 text-midnight-indigo'
+                : 'border-lavender-blue/20 hover:bg-lavender-blue/5 hover:text-midnight-indigo text-midnight-indigo'
             }`}
             onClick={() => onBehaviorSelect(behavior.id)}
           >
