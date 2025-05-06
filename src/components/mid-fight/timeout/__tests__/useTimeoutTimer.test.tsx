@@ -1,5 +1,6 @@
 
 import { renderHook, act } from '@testing-library/react-hooks';
+import '@testing-library/jest-dom';
 import { useTimeoutTimer } from '../useTimeoutTimer';
 
 // Mock the toast function

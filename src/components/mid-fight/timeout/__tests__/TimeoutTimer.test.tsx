@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import TimeoutTimer from '../../TimeoutTimer';
 
 // Mock the sub-components to isolate TimeoutTimer testing

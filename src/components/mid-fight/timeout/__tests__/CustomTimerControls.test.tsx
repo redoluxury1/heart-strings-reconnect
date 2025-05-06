@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import CustomTimerControls from '../CustomTimerControls';
 
 jest.mock('@/components/ui/slider', () => ({
