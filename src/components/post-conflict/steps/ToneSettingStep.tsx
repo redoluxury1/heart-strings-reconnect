@@ -56,7 +56,7 @@ const ToneSettingStep: React.FC<ToneSettingStepProps> = ({
             <Button
               key={index}
               variant="outline"
-              className="bg-[#8d6e82] border-none hover:bg-[#7d6272] hover:text-white text-white text-lg whitespace-normal h-auto py-3 px-4 rounded-full"
+              className="bg-[#7d6272] border-none hover:bg-[#6d5262] hover:text-white text-white text-sm whitespace-normal h-auto py-2 px-3 rounded-full max-w-[95%] mx-auto"
               onClick={() => handleStarterPrompt(prompt)}
             >
               {prompt}
