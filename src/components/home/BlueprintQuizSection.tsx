@@ -16,45 +16,46 @@ const BlueprintQuizSection = () => {
     }`}>
       <ContentContainer>
         <div className="max-w-4xl mx-auto text-center">
-          <div className="grid md:grid-cols-2 gap-6 md:gap-10 items-center">
-            {/* Left side - Image */}
-            <div className="order-2 md:order-1">
+          {/* Main Title - Styled like Love Code section */}
+          <div className="mb-4 md:mb-6 text-center">
+            <h2 className="font-cormorant text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium text-[#3c3543]">
+              Discover Your
+            </h2>
+            <h2 className="font-cormorant text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium text-[#3c3543]">
+              PERSONALITY BLUEPRINT
+            </h2>
+          </div>
+          
+          {/* Quiz Preview Card - Updated with the new illustration */}
+          <div className="mt-6 md:mt-8 mb-6 md:mb-8 relative flex justify-center">
+            <div className="w-full max-w-[500px]">
               <img 
-                src="/lovable-uploads/86c8a669-0424-42ca-99d0-0e43d050e6ae.png" 
+                src="/lovable-uploads/2a32ba00-539b-4d2d-a892-b4b84db7e48f.png"
                 alt="Couple looking at personality blueprint" 
-                className="w-full h-auto rounded-lg mx-auto"
+                className="w-full h-auto rounded-xl"
               />
             </div>
             
-            {/* Right side - Content */}
-            <div className="order-1 md:order-2 flex flex-col items-center md:items-start">
-              <div className="mb-6 md:mb-8 text-center md:text-left">
-                <h2 className="font-cormorant text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium text-[#3c3543]">
-                  DISCOVER YOUR
-                </h2>
-                <h2 className="font-cormorant text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium text-[#3c3543]">
-                  PERSONALITY
-                </h2>
-                <h2 className="font-cormorant text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium text-[#3c3543]">
-                  BLUEPRINT
-                </h2>
-              </div>
-              
-              <p className="text-lg md:text-xl mb-4 text-[#3c3543]/80">
-                Uncover your personality type.
-              </p>
-              <p className="text-lg md:text-xl mb-8 text-[#3c3543]/80">
-                Deepen your connection.
-              </p>
-              
-              <Link to="/personality-quiz">
-                <Button 
-                  className="bg-[#a87b6d] hover:bg-[#96695d] text-white px-6 md:px-8 py-4 md:py-6 text-base md:text-lg rounded-full h-auto"
-                >
-                  DISCOVER YOUR BLUEPRINT
-                </Button>
-              </Link>
-            </div>
+            {/* Decorative Stars */}
+            <div className="absolute -left-6 top-10 text-[#e6d8dc] text-xl hidden md:block">✧</div>
+            <div className="absolute -right-6 bottom-10 text-[#e6d8dc] text-xl hidden md:block">✧</div>
+          </div>
+          
+          {/* Tagline */}
+          <h3 className="font-cormorant text-xl md:text-2xl lg:text-4xl font-medium mb-4 md:mb-8 text-[#3c3543]">
+            UNCOVER YOUR PERSONALITY,<br />
+            DEEPEN YOUR CONNECTION
+          </h3>
+          
+          {/* CTA Button */}
+          <div className="flex justify-center">
+            <Link to="/personality-quiz">
+              <Button 
+                className="bg-[#a87b6d] hover:bg-[#96695d] text-white px-6 md:px-8 py-4 md:py-6 text-base md:text-lg rounded-full h-auto"
+              >
+                DISCOVER YOUR BLUEPRINT
+              </Button>
+            </Link>
           </div>
         </div>
       </ContentContainer>
