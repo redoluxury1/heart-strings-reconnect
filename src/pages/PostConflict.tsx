@@ -6,6 +6,7 @@ import ContentContainer from '@/components/common/ContentContainer';
 import LetsTalkThisOut from '@/components/post-conflict/LetsTalkThisOut';
 import OkayButNowWhat from '@/components/post-conflict/OkayButNowWhat';
 import PhraseRewind from '@/components/post-conflict/PhraseRewind';
+import SometimesItStillHurts from '@/components/post-conflict/SometimesItStillHurts';
 import FloatingTextBubbles from '@/components/post-conflict/FloatingTextBubbles';
 import { SessionProvider, useSession } from '@/components/post-conflict/context/SessionContext';
 
@@ -34,6 +35,8 @@ const PostConflictContent = () => {
             <LetsTalkThisOut />
 
             <OkayButNowWhat />
+            
+            <SometimesItStillHurts />
           </div>
         </ContentContainer>
         
