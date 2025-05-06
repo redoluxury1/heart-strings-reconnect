@@ -6,6 +6,7 @@ import CustomizePhraseView from './CustomizePhraseView';
 import ConversationDialog from './ConversationDialog';
 import { Goal } from '@/data/pause-phrase-goals';
 import PausePhraseGraphic from './PausePhraseGraphic';
+import GoalSelectionView from './GoalSelectionView';
 
 interface PausePhraseToolProps {
   onClose: () => void;
@@ -91,7 +92,7 @@ const PausePhraseTool: React.FC<PausePhraseToolProps> = ({ onClose }) => {
             onGoalSelect={handleGoalSelect}
             onSomethingElse={handleSomethingElse}
             goalColorMap={goalColorMap}
-            onStartConversation={() => {}}
+            onStartConversation={handleStartConversation}
           />
         </>
       ) : isCustomizing ? (
