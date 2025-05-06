@@ -30,47 +30,48 @@ const ToneSettingStep: React.FC<ToneSettingStepProps> = ({
   const handleSubmit = () => {
     if (input.trim()) {
       onResponse(input);
-      // Instead of showing the reflection, we'll just mark it as submitted
-      // and let the navigation system move to the next step
       setIsSubmitted(true);
     }
   };
   
   return (
-    <div>
-      <h2 className="text-2xl md:text-3xl font-cormorant font-medium text-midnight-indigo mb-3 text-center">
+    <div className="flex flex-col items-center max-w-xl mx-auto">
+      <img 
+        src="/lovable-uploads/035b9f98-9337-4134-b1d7-e27a6922b517.png" 
+        alt="Couple embracing" 
+        className="w-full max-w-md rounded-2xl mb-6" 
+      />
+      
+      <h2 className="text-4xl md:text-5xl font-cormorant font-medium text-midnight-indigo mb-4 text-center">
         Setting the Tone
       </h2>
       
-      <p className="text-center text-gray-700 mb-6">
+      <p className="text-center text-gray-700 mb-8 text-lg max-w-md">
         What's one thing you want to keep in mind while talking this through?
       </p>
       
-      <div className="max-w-lg mx-auto">
-        <div className="flex flex-wrap gap-2 justify-center mb-3">
-          {starterPrompts.map((prompt, index) => (
-            <Button
-              key={index}
-              variant="outline"
-              size="sm"
-              className="bg-white border-gray-300 hover:bg-gray-100 hover:text-mauve-rose text-gray-700 whitespace-normal h-auto py-1"
-              onClick={() => handleStarterPrompt(prompt)}
-            >
-              {prompt}
-            </Button>
-          ))}
-        </div>
+      <div className="w-full max-w-md flex flex-col gap-3">
+        {starterPrompts.map((prompt, index) => (
+          <Button
+            key={index}
+            variant="outline"
+            className="bg-mauve-rose/30 border-none hover:bg-mauve-rose/40 hover:text-midnight-indigo text-midnight-indigo text-lg whitespace-normal h-auto py-4 rounded-full"
+            onClick={() => handleStarterPrompt(prompt)}
+          >
+            {prompt}
+          </Button>
+        ))}
         
         <Textarea 
-          placeholder="Write your reflection here..."
+          placeholder="Write your own..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          className="mb-4 min-h-[120px]"
+          className="mt-3 mb-4 min-h-[120px] rounded-2xl"
         />
         
         <Button 
           onClick={handleSubmit}
-          className="bg-midnight-indigo hover:bg-midnight-indigo/90 text-white w-full flex items-center justify-center"
+          className="bg-midnight-indigo hover:bg-midnight-indigo/90 text-white w-full py-4 flex items-center justify-center rounded-full text-lg"
           disabled={!input.trim()}
         >
           Continue
