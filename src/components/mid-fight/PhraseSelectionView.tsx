@@ -122,8 +122,11 @@ const PhraseSelectionView: React.FC<PhraseSelectionViewProps> = ({
         
         {showWhyItWorks && (
           <div className="bg-white/70 p-3 rounded-lg mb-3">
-            <p className="text-sm text-midnight-indigo/80">
-              <span className="font-medium">Why this works:</span> {getWhyItWorksExplanation()}
+            <p className="text-sm text-midnight-indigo mb-1">
+              <span className="font-medium">Why this works:</span> 
+            </p>
+            <p className="text-sm text-midnight-indigo">
+              {getWhyItWorksExplanation()}
             </p>
           </div>
         )}
@@ -175,4 +178,3 @@ const PhraseSelectionView: React.FC<PhraseSelectionViewProps> = ({
 };
 
 export default PhraseSelectionView;
-
