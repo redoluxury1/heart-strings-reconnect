@@ -4,7 +4,7 @@ import React from 'react';
 const PausePhraseGraphic: React.FC = () => {
   return (
     <div className="relative font-cormorant text-center my-4">
-      <div className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight relative z-10">
+      <div className="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight relative z-10 whitespace-nowrap">
         <span className="text-midnight-indigo">Pause + Phrase</span>
       </div>
       <div className="absolute inset-0 flex items-center justify-center z-0">
