@@ -1,6 +1,6 @@
-
 import React from 'react';
 import { Lightbulb, Heart, Shield } from 'lucide-react';
+import PausePhraseGraphic from './PausePhraseGraphic';
 
 interface CompactPausePhraseProps {
   onCategorySelect: (goalId: string) => void;
@@ -14,9 +14,7 @@ const CompactPausePhrase: React.FC<CompactPausePhraseProps> = ({
   return (
     <div className="flex flex-col space-y-6 max-w-2xl mx-auto">
       <div className="text-center">
-        <h2 className="text-5xl font-cormorant font-medium text-midnight-indigo mb-2">
-          PAUSE + PHRASE
-        </h2>
+        <PausePhraseGraphic />
         <p className="text-midnight-indigo/80 text-lg">
           We'll help you phrase what's on your heart, in a way they can actually hear.
         </p>

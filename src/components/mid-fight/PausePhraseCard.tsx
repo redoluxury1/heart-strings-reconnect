@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { LightbulbIcon, HeartIcon, ShieldIcon } from 'lucide-react';
 import PausePhraseGraphic from './PausePhraseGraphic';
