@@ -3,14 +3,22 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useInterface } from '../../hooks/useInterfaceContext';
 import LetsTalkSession from './LetsTalkSession';
+import { useSession } from './context/SessionContext';
 
 const LetsTalkThisOut = () => {
   const { colors } = useInterface();
   const [isSessionStarted, setIsSessionStarted] = useState(false);
+  const { setCurrentStep } = useSession();
   
   if (isSessionStarted) {
     return <LetsTalkSession onExit={() => setIsSessionStarted(false)} />;
   }
+
+  const handleReady = () => {
+    setIsSessionStarted(true);
+    // Skip the first grounding step since we're handling it here
+    setCurrentStep(1);
+  };
 
   return (
     <div className="bg-soft-cream/40 rounded-xl shadow-md p-6 md:p-8 mb-12 text-center">
@@ -33,7 +41,7 @@ const LetsTalkThisOut = () => {
         </p>
         
         <Button 
-          onClick={() => setIsSessionStarted(true)}
+          onClick={handleReady}
           className="bg-midnight-indigo hover:bg-midnight-indigo/90 text-white px-8 py-6 w-full max-w-md mb-4 rounded-full text-lg"
         >
           Yes — I'm ready to move forward
