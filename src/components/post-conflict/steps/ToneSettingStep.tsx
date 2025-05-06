@@ -14,7 +14,6 @@ const ToneSettingStep: React.FC<ToneSettingStepProps> = ({
   partner1Response
 }) => {
   const [input, setInput] = useState(partner1Response || '');
-  const [isSubmitted, setIsSubmitted] = useState(false);
   const { setCurrentStep } = useSession();
   
   const starterPrompts = [
@@ -26,15 +25,10 @@ const ToneSettingStep: React.FC<ToneSettingStepProps> = ({
   ];
   
   const handleStarterPrompt = (prompt: string) => {
+    // Just set the input text without auto-navigating
     setInput(prompt);
     // Auto-save after selecting a prompt
     onResponse(prompt);
-    // Move to the next step automatically
-    setTimeout(() => {
-      // Fix: Use a direct number instead of a function
-      const nextStep = 2; // This will move to the perspective step (index 2)
-      setCurrentStep(nextStep);
-    }, 500);
   };
   
   // Auto-save when input changes after a short delay
@@ -90,7 +84,7 @@ const ToneSettingStep: React.FC<ToneSettingStepProps> = ({
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onBlur={handleBlur}
-          className="mt-3 mb-4 min-h-[80px] h-20 rounded-2xl"
+          className="mt-3 mb-4 min-h-[60px] h-16 rounded-2xl"
         />
       </div>
     </div>
