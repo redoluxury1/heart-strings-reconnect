@@ -70,6 +70,40 @@ const TimeoutTimer: React.FC<TimeoutTimerProps> = ({ animationsEnabled = true })
     return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   };
   
+  // Get slider min, max, and default values based on time unit
+  const getSliderConfig = () => {
+    if (customTimeUnit === 'minutes') {
+      return {
+        min: 5,
+        max: 59,
+        defaultValue: 15
+      };
+    } else {
+      return {
+        min: 1,
+        max: 6,
+        defaultValue: 1
+      };
+    }
+  };
+  
+  // Adjust customMinutes when toggling between units
+  useEffect(() => {
+    const config = getSliderConfig();
+    setCustomMinutes(config.defaultValue);
+  }, [customTimeUnit]);
+  
+  const sliderConfig = getSliderConfig();
+  
+  // Format display value for slider
+  const formatSliderValue = () => {
+    if (customTimeUnit === 'minutes') {
+      return `${customMinutes} min`;
+    } else {
+      return customMinutes === 1 ? '1 hour' : `${customMinutes} hours`;
+    }
+  };
+  
   // Handle custom timer with slider
   const handleCustomTimerStart = () => {
     let mins = customMinutes;
@@ -78,9 +112,6 @@ const TimeoutTimer: React.FC<TimeoutTimerProps> = ({ animationsEnabled = true })
     if (customTimeUnit === 'hours') {
       mins = mins * 60;
     }
-    
-    // Limit between 1-120 minutes
-    mins = Math.min(Math.max(1, mins), 120);
     
     startTimer(mins);
   };
@@ -112,15 +143,26 @@ const TimeoutTimer: React.FC<TimeoutTimerProps> = ({ animationsEnabled = true })
           </div>
           
           <div className="w-full max-w-md mx-auto mb-8">
+            <div className="mb-2 flex justify-between items-center">
+              <span className="text-[#5d4357]">
+                {customTimeUnit === 'minutes' ? '5 min' : '1 hour'}
+              </span>
+              <span className="text-lg font-medium text-[#5d4357]">
+                {formatSliderValue()}
+              </span>
+              <span className="text-[#5d4357]">
+                {customTimeUnit === 'minutes' ? '59 min' : '6 hours'}
+              </span>
+            </div>
+            
             <div className="mb-6">
               <Slider
-                defaultValue={[15]}
-                max={120}
-                min={1}
+                min={sliderConfig.min}
+                max={sliderConfig.max}
                 step={1}
-                className="py-4"
-                onValueChange={(value) => setCustomMinutes(value[0])}
                 value={[customMinutes]}
+                onValueChange={(value) => setCustomMinutes(value[0])}
+                className="py-4"
               />
             </div>
             
