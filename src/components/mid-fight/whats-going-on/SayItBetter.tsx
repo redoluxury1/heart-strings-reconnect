@@ -1,11 +1,13 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { ChevronRight } from 'lucide-react';
 import CustomizePhraseView from '@/components/mid-fight/CustomizePhraseView';
 import ConversationDialog from '@/components/mid-fight/ConversationDialog';
 import { useToast } from '@/hooks/use-toast';
 
-// Import our new components
+// Import our components
 import PhraseList from './say-it-better/PhraseList';
 import { useSearchFilters } from './say-it-better/useSearchFilters';
 import { usePhraseManagement } from './say-it-better/usePhraseManagement';
@@ -16,6 +18,7 @@ interface SayItBetterProps {
 
 const SayItBetter: React.FC<SayItBetterProps> = ({ allowSave = false }) => {
   const { toast } = useToast();
+  const [showCategories, setShowCategories] = useState(false);
   
   // Custom hooks for search/filtering and phrase management
   const { 
@@ -40,27 +43,58 @@ const SayItBetter: React.FC<SayItBetterProps> = ({ allowSave = false }) => {
     setCustomizedPhrase
   } = usePhraseManagement({ allowSave });
 
+  // Category selection interface
+  if (showCategories) {
+    return (
+      <div className="space-y-4">
+        <div className="mb-4">
+          <h4 className="text-lg font-medium text-midnight-indigo mb-2">
+            Select a category
+          </h4>
+          <p className="text-sm text-midnight-indigo/70">
+            Choose a category to find phrases for your situation
+          </p>
+        </div>
+        
+        <div className="space-y-2">
+          {['all', ...categories].map((category) => (
+            <Button
+              key={category}
+              variant="outline"
+              className={`w-full justify-between py-3 px-4 border-lavender-blue/20 ${
+                selectedCategory === category 
+                  ? 'bg-mauve-rose/10 text-mauve-rose border-mauve-rose/30' 
+                  : 'hover:bg-mauve-rose/5 text-midnight-indigo'
+              }`}
+              onClick={() => {
+                setSelectedCategory(category);
+                setShowCategories(false);
+              }}
+            >
+              <span>{category === 'all' ? 'All Categories' : category}</span>
+              <ChevronRight className="h-4 w-4 text-mauve-rose/70" />
+            </Button>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  // Main phrase list view
   return (
     <div className="space-y-6">
-      <div className="mb-4">
-        <p className="text-sm text-midnight-indigo/70 mb-4">
-          Find better ways to express difficult feelings without causing harm
-        </p>
-      </div>
-      
-      {/* Category filter only - removed search */}
-      <div>
-        <select 
-          value={selectedCategory}
-          onChange={(e) => setSelectedCategory(e.target.value)}
-          className="w-full bg-white border border-lavender-blue/30 rounded-md p-2 text-sm focus:border-lavender-blue focus:outline-none focus:ring-1 focus:ring-lavender-blue"
-        >
-          <option value="all">All Categories</option>
-          {categories.map((category) => (
-            <option key={category} value={category}>{category}</option>
-          ))}
-        </select>
-      </div>
+      <Button
+        variant="outline"
+        className="w-full flex justify-between items-center bg-mauve-rose/20 hover:bg-mauve-rose/30 border-mauve-rose/20 text-midnight-indigo py-3"
+        onClick={() => setShowCategories(true)}
+      >
+        <span>
+          {selectedCategory === 'all' 
+            ? 'Select a category' 
+            : `Category: ${selectedCategory}`}
+        </span>
+        <ChevronRight className="h-4 w-4" />
+      </Button>
       
       {/* Results */}
       <PhraseList 
@@ -99,7 +133,6 @@ const SayItBetter: React.FC<SayItBetterProps> = ({ allowSave = false }) => {
         partnerName="Partner" 
         onSendInvite={() => {
           console.log('Sending conversation invite with phrase:', customizedPhrase);
-          // In a real app, this would send the invite
           toast({
             title: "Conversation Started",
             description: "We've sent your partner a notification to start the conversation.",

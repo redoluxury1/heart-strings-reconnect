@@ -11,11 +11,11 @@ const features: Feature[] = [
     id: 'whats-going-on',
     title: "What's Really Going On?",
     description: "Decode what's happening when emotions are high with tools that translate intent, unpack real issues, and explain behaviors.",
-    icon: null, // Removed the icon
+    icon: null,
     comingSoon: false,
     alwaysVisible: false,
     microtext: "",
-    customTitle: true // Add this flag to indicate it has a custom title
+    customTitle: true
   },
   {
     id: 'build-bridge',
@@ -48,22 +48,27 @@ const FeatureCardSection: React.FC<FeatureCardSectionProps> = ({
         </ContentContainer>
       </section>
       
+      {/* What's Really Going On Feature */}
+      <section className="py-6 md:py-8 bg-soft-cream/30">
+        <ContentContainer maxWidth="lg">
+          <div className="bg-white rounded-lg shadow-md p-5 md:p-6 border border-lavender-blue/20">
+            <WhatsReallyGoingOn />
+          </div>
+        </ContentContainer>
+      </section>
+      
       {/* Other feature cards */}
-      {features.length > 0 && (
+      {features.length > 1 && (
         <section className="py-6 md:py-8 bg-soft-blush/30">
           <ContentContainer maxWidth="lg">
-            <div className="grid grid-cols-1 md:grid-cols-1 gap-6 md:gap-8">
-              {features.map((feature) => (
+            <div className="grid grid-cols-1 gap-6 md:gap-8">
+              {features.filter(f => f.id !== 'whats-going-on').map((feature) => (
                 <FeatureCard 
                   key={feature.id}
                   feature={feature}
                   isSelected={selectedFeature === feature.id}
                   toggleFeature={toggleFeature}
-                  customContent={
-                    feature.id === 'whats-going-on' && selectedFeature === 'whats-going-on' 
-                      ? <WhatsReallyGoingOn /> 
-                      : null
-                  }
+                  customContent={null}
                 />
               ))}
             </div>
