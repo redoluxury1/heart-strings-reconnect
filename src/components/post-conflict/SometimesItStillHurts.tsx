@@ -27,11 +27,11 @@ const SometimesItStillHurts = () => {
             Find calm when forgiveness doesn't erase the pain.
           </p>
           
-          {/* Illustration of the couple */}
+          {/* New illustration of the couple */}
           <div className="mb-8 flex justify-center">
             <img 
-              src="/lovable-uploads/b5b996e6-1bbc-4e6d-8ef4-ceda4579c784.png" 
-              alt="Couple comforting each other"
+              src="/lovable-uploads/c8f75296-51f7-4d50-84f0-68f55b65e7bc.png" 
+              alt="Person crying with partner comforting them"
               className="w-full max-w-md h-auto" 
             />
           </div>

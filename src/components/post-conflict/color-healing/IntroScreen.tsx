@@ -14,8 +14,8 @@ const IntroScreen: React.FC<IntroScreenProps> = ({ onBegin }) => {
       </h2>
       
       <img 
-        src="/lovable-uploads/75a2efab-7a98-43ed-aa60-ff0fd54306da.png" 
-        alt="Couple comforting each other" 
+        src="/lovable-uploads/c8f75296-51f7-4d50-84f0-68f55b65e7bc.png" 
+        alt="Person crying with partner comforting them" 
         className="h-auto w-full max-w-sm mb-8" 
       />
       
