@@ -28,9 +28,16 @@ const IntroScreen: React.FC<IntroScreenProps> = ({ onBegin }) => {
         </p>
         
         <div className="flex justify-center mb-8 relative">
+          {/* Animated waves that wrap around the figure */}
           <div className="absolute inset-0 -z-10">
+            {/* Right side wave */}
             <div className="absolute top-[10%] right-[10%] w-40 h-40 rounded-full bg-[#E5DEFF] opacity-50 blur-xl animate-wave-right"></div>
+            {/* Left side wave */}
             <div className="absolute bottom-[20%] left-[10%] w-40 h-40 rounded-full bg-[#FFDEE2] opacity-50 blur-xl animate-wave-left"></div>
+            {/* New top wave that wraps over the figure */}
+            <div className="absolute top-[-5%] left-[30%] w-52 h-52 rounded-full bg-[#E5DEFF] opacity-40 blur-xl animate-wave-top"></div>
+            {/* Additional wave for more complete wrapping effect */}
+            <div className="absolute top-[15%] right-[30%] w-36 h-36 rounded-full bg-[#FFDEE2] opacity-40 blur-xl animate-wave-circle"></div>
           </div>
           <img 
             src="/lovable-uploads/bfee4335-5a61-4d5c-bdc2-cda58c3beb29.png" 
