@@ -61,7 +61,6 @@ const PatternList: React.FC<PatternListProps> = ({ patterns, onPatternSelect }) 
         </p>
 
         <Button 
-          onClick={() => {}}
           className="bg-[#14213d] hover:bg-[#14213d]/90 text-white font-medium py-6 px-8 rounded-full text-xl w-full max-w-md"
           onClick={() => onPatternSelect("1")}
         >
