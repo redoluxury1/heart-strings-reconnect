@@ -4,12 +4,14 @@ import { Button } from '@/components/ui/button';
 import { Smile, Zap, MessageSquare } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { useNavigate } from 'react-router-dom';
+import { CommonPattern } from '../types';
 
 interface PatternRepairScreenProps {
+  pattern?: CommonPattern | null;
   onContinue: () => void;
 }
 
-const PatternRepairScreen: React.FC<PatternRepairScreenProps> = ({ onContinue }) => {
+const PatternRepairScreen: React.FC<PatternRepairScreenProps> = ({ pattern, onContinue }) => {
   const navigate = useNavigate();
   
   const handleTryInRealLife = () => {
@@ -74,10 +76,10 @@ const PatternRepairScreen: React.FC<PatternRepairScreenProps> = ({ onContinue })
         </Card>
       </div>
       
-      <div className="w-full mt-10 flex justify-center">
+      <div className="w-full mt-10">
         <Button
           onClick={handleTryInRealLife}
-          className="bg-[#14213d] hover:bg-[#14213d]/90 text-white font-medium py-3 px-8 rounded-full text-lg"
+          className="bg-[#14213d] hover:bg-[#14213d]/90 text-white font-medium py-3 px-8 rounded-full text-lg mx-auto"
         >
           Try in Real Life
         </Button>

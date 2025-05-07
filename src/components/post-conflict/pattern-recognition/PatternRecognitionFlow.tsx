@@ -13,6 +13,7 @@ import CyclePatternScreen from './components/CyclePatternScreen';
 import PatternDetailScreen from './components/PatternDetailScreen';
 import PatternRepairScreen from './components/PatternRepairScreen';
 import PursueDistanceDetailScreen from './components/PursueDistanceDetailScreen';
+import PursueDistanceRepairScreen from './components/PursueDistanceRepairScreen';
 import { reconnectionTips } from '@/data/reconnection-tips';
 
 const PatternRecognitionFlow: React.FC = () => {
@@ -82,11 +83,14 @@ const PatternRecognitionFlow: React.FC = () => {
             />
           )
         ) : showPatternRepair ? (
-          <PatternRepairScreen 
-            pattern={selectedPatternData} 
-            onContinue={handlePatternRepairComplete}
-            onTryInRealLife={handleGoBack}
-          />
+          selectedPatternData?.patternType === 'pursue-distance' ? (
+            <PursueDistanceRepairScreen onContinue={handlePatternRepairComplete} />
+          ) : (
+            <PatternRepairScreen 
+              pattern={selectedPatternData}
+              onContinue={handlePatternRepairComplete}
+            />
+          )
         ) : isShowingTips ? (
           <ReconnectionTips 
             selectedPattern={selectedPatternData || null}
