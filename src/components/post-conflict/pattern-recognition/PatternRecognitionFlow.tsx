@@ -57,7 +57,7 @@ const PatternRecognitionFlow: React.FC = () => {
             currentQuestion={currentQuestion}
             currentQuestionIndex={currentQuestionIndex}
             totalQuestions={quizQuestions.length}
-            onAnswerSelect={(answerId) => handleAnswerSelect(currentQuestionIndex, answerId as string)}
+            onAnswerSelect={(answerId) => handleAnswerSelect(currentQuestionIndex, answerId.toString())}
           />
         ) : (
           <PatternList 
