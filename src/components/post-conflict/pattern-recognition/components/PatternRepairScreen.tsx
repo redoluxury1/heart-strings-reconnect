@@ -21,11 +21,11 @@ const PatternRepairScreen: React.FC<PatternRepairScreenProps> = ({ pattern, onCo
   return (
     <div className="flex flex-col items-center text-center max-w-md mx-auto py-6">
       <div className="mb-4 w-full">
-        <h1 className="text-4xl md:text-5xl font-cormorant font-medium text-[#14213d] mb-4">
+        <h1 className="text-4xl md:text-5xl font-medium text-[#14213d] mb-4">
           You're not enemies—you're overwhelmed.
         </h1>
         
-        <h2 className="text-xl text-[#444] font-cormorant">
+        <h2 className="text-xl text-[#444] leading-relaxed">
           Try these steps to interrupt the cycle and reconnect.
         </h2>
       </div>

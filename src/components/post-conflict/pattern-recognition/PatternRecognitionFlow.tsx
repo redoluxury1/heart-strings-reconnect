@@ -74,7 +74,7 @@ const PatternRecognitionFlow: React.FC = () => {
         ) : showCyclePattern ? (
           <CyclePatternScreen onContinue={handleCyclePatternComplete} />
         ) : showPatternDetail ? (
-          selectedPatternData?.patternType === 'pursue-distance' ? (
+          patternType === 'pursue-distance' ? (
             <PursueDistanceDetailScreen onContinue={handlePatternDetailComplete} />
           ) : (
             <PatternDetailScreen 
@@ -83,7 +83,7 @@ const PatternRecognitionFlow: React.FC = () => {
             />
           )
         ) : showPatternRepair ? (
-          selectedPatternData?.patternType === 'pursue-distance' ? (
+          patternType === 'pursue-distance' ? (
             <PursueDistanceRepairScreen onContinue={handlePatternRepairComplete} />
           ) : (
             <PatternRepairScreen 
