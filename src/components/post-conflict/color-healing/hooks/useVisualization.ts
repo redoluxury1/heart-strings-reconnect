@@ -88,7 +88,8 @@ const useVisualization = ({ onComplete }: UseVisualizationProps = {}) => {
   return {
     fadeIn,
     expandOrb,
-    showButtons
+    showButtons,
+    setFadeIn // Export the setFadeIn function so it can be used in components
   };
 };
 
