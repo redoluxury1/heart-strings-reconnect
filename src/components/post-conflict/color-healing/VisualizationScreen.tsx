@@ -15,6 +15,7 @@ const VisualizationScreen: React.FC<VisualizationScreenProps> = ({
 }) => {
   const [fadeIn, setFadeIn] = useState(false);
   const [expandOrb, setExpandOrb] = useState(false);
+  const [countdown, setCountdown] = useState<number | null>(null);
   
   // Trigger fade-in animation after component mounts
   useEffect(() => {
@@ -22,16 +23,39 @@ const VisualizationScreen: React.FC<VisualizationScreenProps> = ({
       setFadeIn(true);
     }, 500);
     
-    // Trigger the expansion animation after a delay
-    const expandTimer = setTimeout(() => {
-      setExpandOrb(true);
-    }, 2000);
-    
     return () => {
       clearTimeout(fadeTimer);
-      clearTimeout(expandTimer);
     };
   }, []);
+
+  // Handle countdown and expansion animation
+  useEffect(() => {
+    let countdownInterval: ReturnType<typeof setInterval>;
+    
+    if (fadeIn) {
+      // Start with 5 seconds
+      setCountdown(5);
+      
+      // Start countdown
+      countdownInterval = setInterval(() => {
+        setCountdown(prev => {
+          if (prev === null) return null;
+          if (prev <= 1) {
+            clearInterval(countdownInterval);
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+      
+      // Start expansion animation when countdown begins
+      setExpandOrb(true);
+    }
+    
+    return () => {
+      if (countdownInterval) clearInterval(countdownInterval);
+    };
+  }, [fadeIn]);
 
   return (
     <div className="flex flex-col items-center max-w-xl mx-auto text-center">
@@ -43,61 +67,75 @@ const VisualizationScreen: React.FC<VisualizationScreenProps> = ({
         Imagine a small ball of light in your body—it's your chosen color. Maybe it's in your belly… or your chest… or your mind. Picture it clearly.
       </p>
 
-      <div className="relative h-40 w-40 mb-10 flex items-center justify-center overflow-visible">
-        {/* Expanding overlay that covers the entire screen */}
-        <div 
-          className={`fixed inset-0 transition-opacity duration-[8000ms] pointer-events-none z-10 ${
-            expandOrb ? 'opacity-80' : 'opacity-0'
-          }`}
-          style={{ 
-            backgroundColor: selectedColor,
-          }}
-        />
-        
-        {/* Larger outer glow */}
-        <div 
-          className={`absolute rounded-full transition-all duration-[5000ms] ${
-            expandOrb ? 'scale-[15] opacity-20' : (fadeIn ? 'opacity-40 scale-100' : 'opacity-0 scale-0')
-          }`}
-          style={{ 
-            backgroundColor: selectedColor, 
-            height: '140px', 
-            width: '140px',
-            boxShadow: `0 0 60px 20px ${selectedColor}`,
-            filter: 'blur(15px)'
-          }}
-        />
-        
-        {/* Medium glow layer */}
-        <div 
-          className={`absolute rounded-full transition-all duration-[4000ms] ${
-            expandOrb ? 'scale-[10] opacity-40' : (fadeIn ? 'opacity-60 scale-100' : 'opacity-0 scale-0')
-          }`}
-          style={{ 
-            backgroundColor: selectedColor, 
-            height: '120px', 
-            width: '120px',
-            boxShadow: `0 0 40px 15px ${selectedColor}`,
-            filter: 'blur(10px)'
-          }}
-        />
-        
-        {/* Inner core */}
-        <div 
-          className={`absolute rounded-full transition-all duration-[3000ms] ${
-            expandOrb ? 'scale-[8] opacity-80' : (fadeIn ? 'opacity-80 scale-100' : 'opacity-0 scale-0')
-          }`}
-          style={{ 
-            backgroundColor: selectedColor, 
-            height: '100px', 
-            width: '100px',
-            boxShadow: `0 0 30px 10px ${selectedColor}`,
-            filter: 'blur(5px)'
-          }}
-        />
+      <div className="relative h-80 w-full mb-10 flex items-center justify-center overflow-hidden">
+        {/* Container for the orb expansion - limited to this div */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          {/* Largest glow layer - will fill the container but not beyond */}
+          <div 
+            className={`absolute rounded-full transition-all duration-[5000ms] ${
+              expandOrb ? 'scale-[8] opacity-30' : (fadeIn ? 'opacity-20 scale-100' : 'opacity-0 scale-0')
+            }`}
+            style={{ 
+              backgroundColor: 'transparent', 
+              height: '160px', 
+              width: '160px',
+              boxShadow: `0 0 80px 30px ${selectedColor}`,
+              filter: 'blur(20px)'
+            }}
+          />
+          
+          {/* Large outer glow */}
+          <div 
+            className={`absolute rounded-full transition-all duration-[5000ms] ${
+              expandOrb ? 'scale-[6] opacity-40' : (fadeIn ? 'opacity-30 scale-100' : 'opacity-0 scale-0')
+            }`}
+            style={{ 
+              backgroundColor: 'transparent', 
+              height: '140px', 
+              width: '140px',
+              boxShadow: `0 0 60px 25px ${selectedColor}`,
+              filter: 'blur(15px)'
+            }}
+          />
+          
+          {/* Medium glow layer */}
+          <div 
+            className={`absolute rounded-full transition-all duration-[5000ms] ${
+              expandOrb ? 'scale-[4] opacity-50' : (fadeIn ? 'opacity-40 scale-100' : 'opacity-0 scale-0')
+            } animate-pulse-slow`}
+            style={{ 
+              backgroundColor: 'transparent', 
+              height: '120px', 
+              width: '120px',
+              boxShadow: `0 0 50px 20px ${selectedColor}`,
+              filter: 'blur(10px)'
+            }}
+          />
+          
+          {/* Inner core - always visible */}
+          <div 
+            className={`absolute rounded-full transition-all duration-[5000ms] ${
+              expandOrb ? 'scale-[2.5] opacity-70' : (fadeIn ? 'opacity-70 scale-100' : 'opacity-0 scale-0')
+            }`}
+            style={{ 
+              backgroundColor: selectedColor,
+              height: '100px', 
+              width: '100px',
+              boxShadow: `0 0 30px 15px ${selectedColor}`,
+              filter: 'blur(5px)'
+            }}
+          />
+        </div>
       </div>
       
-      <div className={`flex space-x-4 mt-4 transition-opacity duration-1000 ${expandOrb ? 'opacity-0' : 'opacity-100'}`}>
+      {/* Countdown display */}
+      {countdown !== null && (
+        <div className="mb-8 text-2xl font-medium text-gray-600 transition-opacity duration-300">
+          {countdown}
+        </div>
+      )}
+      
+      <div className="flex space-x-4 mt-4">
         <Button 
           variant="outline" 
           onClick={onBack}
