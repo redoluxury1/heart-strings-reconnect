@@ -16,7 +16,7 @@ const useVisualization = ({ onComplete }: UseVisualizationProps = {}) => {
     try {
       const sound = new Audio('/notification-sound.mp3');
       sound.volume = 0.3; // Keep volume subtle
-      sound.play();
+      sound.play().catch(e => console.log('Audio play prevented by browser policy:', e));
     } catch (error) {
       console.error('Error playing sound:', error);
     }

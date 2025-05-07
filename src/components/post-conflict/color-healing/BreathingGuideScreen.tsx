@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
+import { toast } from '@/hooks/use-toast';
 
 interface BreathingGuideScreenProps {
   selectedColor: string;
@@ -16,6 +17,8 @@ const BreathingGuideScreen: React.FC<BreathingGuideScreenProps> = ({
   const [isBreathing, setIsBreathing] = useState(false);
   const [breathPhase, setBreathPhase] = useState<'inhale' | 'exhale' | 'hold'>('inhale');
   const [counter, setCounter] = useState(0);
+  const [breathCycles, setBreathCycles] = useState(0);
+  const [totalTime, setTotalTime] = useState(0);
   
   // Breathing circle animation
   useEffect(() => {
@@ -30,7 +33,9 @@ const BreathingGuideScreen: React.FC<BreathingGuideScreenProps> = ({
       } else if (counter < 9) {
         setBreathPhase('exhale');
       } else {
+        // Complete one breathing cycle
         setCounter(0);
+        setBreathCycles(prev => prev + 1);
         return;
       }
       
@@ -41,10 +46,54 @@ const BreathingGuideScreen: React.FC<BreathingGuideScreenProps> = ({
     return () => clearInterval(timer);
   }, [isBreathing, counter]);
 
+  // Track total breathing time and cycles
+  useEffect(() => {
+    if (!isBreathing) return;
+    
+    const timeInterval = setInterval(() => {
+      setTotalTime(prev => prev + 1);
+    }, 1000);
+    
+    return () => clearInterval(timeInterval);
+  }, [isBreathing]);
+
+  // Show notification after 5 seconds of breathing or 2 complete cycles
+  useEffect(() => {
+    if (!isBreathing) return;
+    
+    const shouldNotify = totalTime >= 5 || breathCycles >= 2;
+    
+    if (shouldNotify) {
+      // Play a subtle sound notification when breathing completes
+      const playCompletionSound = () => {
+        try {
+          const sound = new Audio('/notification-sound.mp3');
+          sound.volume = 0.3; // Keep volume subtle
+          sound.play().catch(e => console.log('Audio play prevented by browser policy:', e));
+        } catch (error) {
+          console.error('Error playing sound:', error);
+        }
+      };
+      
+      playCompletionSound();
+      
+      toast({
+        title: "Breathing exercise complete",
+        description: "Notice how your body feels now - centered and present",
+      });
+      
+      // Reset counters but don't stop breathing if the user wants to continue
+      setTotalTime(0);
+      setBreathCycles(0);
+    }
+  }, [totalTime, breathCycles, isBreathing]);
+
   const toggleBreathing = () => {
     if (!isBreathing) {
       setCounter(0);
       setBreathPhase('inhale');
+      setTotalTime(0);
+      setBreathCycles(0);
     }
     setIsBreathing(!isBreathing);
   };
