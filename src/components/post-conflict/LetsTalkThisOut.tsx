@@ -31,11 +31,11 @@ const LetsTalkThisOut = () => {
         />
         
         <h2 className="text-4xl md:text-5xl font-cormorant font-medium mb-4 text-center text-midnight-indigo">
-          Are you ready to work through this?
+          Let's talk this out
         </h2>
         
         <p className="text-center text-gray-700 mb-3 text-lg">
-          Let's check in before we dive in.
+          Ready to work through what happened?
         </p>
         <p className="text-center text-gray-700 mb-8 text-lg">
           It's okay if you need a little more time.

@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+
+import React from 'react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { useSession } from '../context/SessionContext';
@@ -10,85 +11,36 @@ interface GroundingStepProps {
   onNext: () => void;
 }
 
+// This component is now just for internal session navigation
+// and shouldn't be shown directly as it would duplicate the entry point
 const GroundingStep: React.FC<GroundingStepProps> = ({ onResponse, onExit }) => {
   const navigate = useNavigate();
-  const { setCurrentStep, sessionData } = useSession();
+  const { setCurrentStep } = useSession();
   const { toast } = useToast();
 
-  // Check if partner is ready when this component mounts or partner status changes
-  // We'll keep this for when the component first loads, but not repeat notifications
-  useEffect(() => {
-    if (sessionData.partner2.ready) {
-      toast({
-        title: "Your partner is ready",
-        description: "Your partner is ready to work through what happened.",
-      });
-    }
-  }, []); // Only run on mount
+  // We'll automatically advance to the next step since this is now internal
+  React.useEffect(() => {
+    // Automatically go to the next step (tone setting)
+    setCurrentStep(1);
+  }, [setCurrentStep]);
 
+  // These handlers are kept for API consistency but shouldn't be called
   const handleNotYet = () => {
     onResponse(false);
-    // Navigate to the timer section on the mid-fight page
     navigate('/during-conflict');
   };
 
   const handleYes = () => {
     onResponse(true);
-    // Notify that you're ready (in a real app, this would send to the partner)
     toast({
       title: "You're ready",
       description: "Your partner has been notified that you're ready to talk.",
     });
-    // Directly go to step 1 (tone setting) to avoid duplicate steps
     setCurrentStep(1);
   };
 
-  return (
-    <div className="text-center">
-      <img 
-        src="/lovable-uploads/088d792b-f2dc-44de-9679-9ff534e02d4e.png" 
-        alt="Couple sitting together" 
-        className="h-24 w-auto mx-auto mb-6" 
-      />
-      
-      <h2 className="text-4xl md:text-5xl font-cormorant font-medium mb-4 text-center text-midnight-indigo">
-        Are you ready to work through this?
-      </h2>
-      
-      <p className="text-center text-gray-700 mb-3 text-lg">
-        Let's check in before we dive in.
-      </p>
-      <p className="text-center text-gray-700 mb-8 text-lg">
-        It's okay if you need a little more time.
-      </p>
-      
-      <div className="flex flex-col max-w-md mx-auto">
-        <Button 
-          className="bg-[#7d6272] border-none hover:bg-[#6d5262] text-white py-2 mb-4 rounded-full text-sm"
-          onClick={handleYes}
-        >
-          Yes — I'm ready to move forward
-        </Button>
-        
-        <Button 
-          variant="outline" 
-          className="border-gray-300 text-[#7d6272] hover:text-[#6d5262] bg-white hover:bg-gray-100 py-1 mb-6 rounded-full"
-          onClick={handleNotYet}
-        >
-          <span className="text-sm px-2">Not yet — I need to decompress first</span>
-        </Button>
-        
-        <div className="text-gray-500 text-center">
-          <p className="mb-2">
-            Taking space is sometimes the most emotionally intelligent choice.
-          </p>
-          <p>
-            Come back when you're ready.
-          </p>
-        </div>
-      </div>
-    </div>
-  );
+  // Return empty div as this component should not render any UI
+  return <div className="hidden"></div>;
 };
 
 export default GroundingStep;

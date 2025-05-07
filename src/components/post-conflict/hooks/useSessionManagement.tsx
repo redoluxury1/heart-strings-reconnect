@@ -59,30 +59,8 @@ export const useSessionManagement = () => {
       }
     }));
     
-    // Simulate partner 2 response (In a real app, this would come from the other user)
-    // Only show notification for ready check step (step 0) and only if not shown before
-    if (partner === 'partner1' && currentStep === 0 && !partnerNotificationShown) {
-      setTimeout(() => {
-        setSessionData(prev => ({
-          ...prev,
-          partner2: {
-            ...prev.partner2,
-            ready: true
-          }
-        }));
-        
-        // Only show the "partner is ready" toast once on the first step
-        toast({
-          title: "Your partner is ready",
-          description: "Your partner has completed this step.",
-          duration: 2000,
-          className: "bg-[#E5DEFF] text-[#483D8B] border border-[#C8BDFF]",
-        });
-        
-        // Mark notification as shown so it won't appear again
-        setPartnerNotificationShown(true);
-      }, 3000);
-    }
+    // Skip the partner simulation entirely - we'll remove this automatic partner behavior
+    // This avoids unnecessary notifications that distract the user
   };
   
   const handleRestart = () => {
