@@ -3,12 +3,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ChevronRight } from 'lucide-react';
 import { useSession } from '../context/SessionContext';
-import { 
-  Table,
-  TableBody,
-  TableCell, 
-  TableRow
-} from '@/components/ui/table';
+import { Card } from '@/components/ui/card';
 
 interface ReflectionSummaryStepProps {
   partner1Data: {
@@ -34,32 +29,6 @@ const ReflectionSummaryStep: React.FC<ReflectionSummaryStepProps> = ({
   const { sessionData } = useSession();
   const partnerReady = sessionData.partner2.ready;
   
-  // Generate emotional insight based on the combined emotions
-  const getEmotionalInsight = () => {
-    const p1Emotions = partner1Data.emotions || [];
-    const p2Emotions = partner2Data.emotions || [];
-    
-    // Check for specific emotion combinations
-    if (p1Emotions.includes('rejected') && p2Emotions.includes('anxious')) {
-      return "When one partner feels rejected and the other feels anxious, it can create a cycle of shutdown and misunderstanding. What you both need most might be clarity and emotional safety.";
-    }
-    
-    if (p1Emotions.includes('hurt') && p2Emotions.includes('overwhelmed')) {
-      return "When hurt meets overwhelm, it's often a sign that you both care deeply but are processing differently. Creating space for both experiences can help you reconnect.";
-    }
-    
-    if (p1Emotions.includes('frustrated') && p2Emotions.includes('misunderstood')) {
-      return "Frustration paired with feeling misunderstood often reveals a communication pattern where both of you want to connect but are missing each other's signals.";
-    }
-    
-    if (p1Emotions.includes('anger') && p2Emotions.includes('fear')) {
-      return "When anger meets fear in a relationship, it often signals different protective responses to feeling vulnerable. Beneath both emotions is usually a desire for safety.";
-    }
-    
-    // Default insight if no specific combination matches
-    return "Your emotions reflect how much you care about each other and this relationship. Different emotional responses don't mean incompatibility—they're opportunities to understand each other more deeply.";
-  };
-
   // If partner hasn't completed the process yet
   if (!partnerReady) {
     return (
@@ -89,94 +58,102 @@ const ReflectionSummaryStep: React.FC<ReflectionSummaryStepProps> = ({
 
   // If both partners have completed the process
   return (
-    <div>
-      <h2 className="text-2xl md:text-3xl font-cormorant font-medium text-midnight-indigo mb-4 text-center">
-        Your Conversation Summary
+    <div className="max-w-3xl mx-auto bg-[#fafaf8] pb-8 pt-2 px-4 md:px-6 rounded-xl">
+      <h2 className="text-4xl md:text-5xl font-cormorant font-semibold text-[#2e2a63] mb-2 text-center">
+        You Made It Through
       </h2>
       
-      <p className="text-center text-gray-700 mb-8">
-        Here's what you both shared during this conversation.
+      <p className="text-center text-gray-700 mb-8 text-lg max-w-2xl mx-auto">
+        Here's what you both shared—and what matters most as you move forward.
       </p>
       
+      <div className="flex flex-col md:flex-row gap-6 mb-10 relative">
+        <div className="flex-1">
+          <Card className="h-full shadow-sm border-0 overflow-hidden rounded-2xl bg-white">
+            <div className="p-6">
+              <h3 className="text-2xl font-semibold text-[#2e2a63] mb-4">What You Shared</h3>
+              <p className="text-gray-800 text-lg">
+                {partner1Data.perspective || "You took time to reflect."}
+              </p>
+            </div>
+          </Card>
+        </div>
+        
+        <div className="flex-1">
+          <Card className="h-full shadow-sm border-0 overflow-hidden rounded-2xl bg-white">
+            <div className="p-6">
+              <h3 className="text-2xl font-semibold text-[#2e2a63] mb-4">What They Shared</h3>
+              <p className="text-gray-800 text-lg">
+                {partner2Data.perspective || "Your partner hasn't shared anything yet."}
+              </p>
+            </div>
+          </Card>
+        </div>
+        
+        <div className="absolute right-0 top-1/4 -z-10 hidden md:block">
+          <img 
+            src="/lovable-uploads/043c78c7-7c91-426b-a0c9-60030fd66d26.png" 
+            alt="Couple walking together" 
+            className="h-auto w-72" 
+          />
+        </div>
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
-        {/* Perspective Section */}
-        <div className="bg-soft-blush/20 p-5 rounded-lg">
-          <h3 className="font-medium mb-3 text-midnight-indigo">What happened (your perspective):</h3>
-          <p className="text-gray-700">{partner1Data.perspective || "Not shared"}</p>
-        </div>
+        <Card className="shadow-sm border-0 overflow-hidden rounded-2xl bg-white">
+          <div className="p-6">
+            <h3 className="text-2xl font-semibold text-[#2e2a63] mb-4">Emotions That Came Up</h3>
+            <div className="flex flex-wrap gap-2">
+              {partner1Data.emotions && partner1Data.emotions.length > 0 ? (
+                partner1Data.emotions.map(emotion => (
+                  <span
+                    key={emotion}
+                    className="bg-[#FFF8C2] text-[#5a5343] px-5 py-2 rounded-full text-base"
+                  >
+                    {emotion}
+                  </span>
+                ))
+              ) : (
+                <span className="text-gray-500">No emotions shared</span>
+              )}
+              
+              {partner2Data.emotions && partner2Data.emotions.length > 0 && (
+                partner2Data.emotions.map(emotion => (
+                  <span
+                    key={`partner-${emotion}`}
+                    className="bg-[#FFE9C2] text-[#5a4a33] px-5 py-2 rounded-full text-base"
+                  >
+                    {emotion}
+                  </span>
+                ))
+              )}
+            </div>
+          </div>
+        </Card>
         
-        <div className="bg-soft-cream/30 p-5 rounded-lg">
-          <h3 className="font-medium mb-3 text-midnight-indigo">What happened (their perspective):</h3>
-          <p className="text-gray-700">{partner2Data.perspective || "Not shared"}</p>
-        </div>
-        
-        {/* Emotions Section */}
-        <div className="bg-soft-blush/20 p-5 rounded-lg">
-          <h3 className="font-medium mb-3 text-midnight-indigo">Emotions you felt:</h3>
-          <div className="flex flex-wrap gap-2">
-            {partner1Data.emotions && partner1Data.emotions.length > 0 ? (
-              partner1Data.emotions.map(emotion => (
-                <span
-                  key={emotion}
-                  className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm"
-                >
-                  {emotion}
-                </span>
-              ))
-            ) : (
-              <span className="text-gray-700">Not shared</span>
+        <Card className="shadow-sm border-0 overflow-hidden rounded-2xl bg-white">
+          <div className="p-6">
+            <h3 className="text-2xl font-semibold text-[#2e2a63] mb-4">Repair Statements</h3>
+            <p className="text-gray-800 text-lg">
+              {partner1Data.connection || "I appreciate when you..."}
+            </p>
+            
+            {partner2Data.connection && (
+              <>
+                <div className="my-2 border-t border-gray-100"></div>
+                <p className="text-gray-800 text-lg">
+                  {partner2Data.connection}
+                </p>
+              </>
             )}
           </div>
-        </div>
-        
-        <div className="bg-soft-cream/30 p-5 rounded-lg">
-          <h3 className="font-medium mb-3 text-midnight-indigo">Emotions they felt:</h3>
-          <div className="flex flex-wrap gap-2">
-            {partner2Data.emotions && partner2Data.emotions.length > 0 ? (
-              partner2Data.emotions.map(emotion => (
-                <span
-                  key={emotion}
-                  className="bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-sm"
-                >
-                  {emotion}
-                </span>
-              ))
-            ) : (
-              <span className="text-gray-700">Not shared</span>
-            )}
-          </div>
-        </div>
-        
-        {/* Needs Section */}
-        <div className="bg-soft-blush/20 p-5 rounded-lg">
-          <h3 className="font-medium mb-3 text-midnight-indigo">What you need:</h3>
-          <p className="text-gray-700">{partner1Data.needs || "Not shared"}</p>
-        </div>
-        
-        <div className="bg-soft-cream/30 p-5 rounded-lg">
-          <h3 className="font-medium mb-3 text-midnight-indigo">What they need:</h3>
-          <p className="text-gray-700">{partner2Data.needs || "Not shared"}</p>
-        </div>
-        
-        {/* Appreciated Section */}
-        <div className="bg-soft-blush/20 p-5 rounded-lg">
-          <h3 className="font-medium mb-3 text-midnight-indigo">What you appreciate:</h3>
-          <p className="text-gray-700">{partner1Data.connection || "Not shared"}</p>
-        </div>
-        
-        <div className="bg-soft-cream/30 p-5 rounded-lg">
-          <h3 className="font-medium mb-3 text-midnight-indigo">What they appreciate:</h3>
-          <p className="text-gray-700">{partner2Data.connection || "Not shared"}</p>
-        </div>
+        </Card>
       </div>
       
       {/* Emotional Insight Section */}
-      <div className="mb-10 p-6 bg-midnight-indigo/10 rounded-lg">
-        <h3 className="font-medium mb-3 text-midnight-indigo text-center">
-          Here's what your emotions might be telling you...
-        </h3>
-        <p className="text-center text-gray-700 italic">
-          {getEmotionalInsight()}
+      <div className="mb-10 p-6 bg-[#f9f5ff] rounded-2xl border border-[#e5deff]">
+        <p className="text-center text-gray-700 text-lg">
+          This conversation helped uncover needs, emotions, and care. You don't have to be perfect to stay connected—you just have to keep trying.
         </p>
       </div>
       
@@ -190,7 +167,7 @@ const ReflectionSummaryStep: React.FC<ReflectionSummaryStepProps> = ({
               element.scrollIntoView({ behavior: "smooth" });
             }
           }}
-          className="bg-mauve-rose hover:bg-mauve-rose/90 text-white flex items-center gap-2"
+          className="bg-[#2e2a63] hover:bg-[#1e1a43] text-white flex items-center gap-2 rounded-full px-6"
         >
           Continue to next steps
           <ChevronRight size={16} />
