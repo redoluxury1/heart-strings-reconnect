@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { CirclePicker } from 'react-color';
+import { Slider } from '@/components/ui/slider';
 
 interface ColorSelectionScreenProps {
   selectedColor: string;
@@ -18,6 +19,7 @@ const ColorSelectionScreen: React.FC<ColorSelectionScreenProps> = ({
 }) => {
   const [showContinue, setShowContinue] = useState(false);
   const [imagePreloaded, setImagePreloaded] = useState(false);
+  const [sliderValue, setSliderValue] = useState([180]); // Default to middle of hue range (0-360)
   
   // Preload the visualization screen assets
   useEffect(() => {
@@ -29,6 +31,51 @@ const ColorSelectionScreen: React.FC<ColorSelectionScreenProps> = ({
       img.onload = null;
     };
   }, []);
+
+  // Convert hue value to RGB color
+  const hueToColor = (hue: number): string => {
+    // Convert HSL to RGB
+    const h = hue / 360;
+    const s = 1;
+    const l = 0.5;
+    
+    let r, g, b;
+    
+    if (s === 0) {
+      r = g = b = l;
+    } else {
+      const hue2rgb = (p: number, q: number, t: number): number => {
+        if (t < 0) t += 1;
+        if (t > 1) t -= 1;
+        if (t < 1/6) return p + (q - p) * 6 * t;
+        if (t < 1/2) return q;
+        if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+        return p;
+      };
+      
+      const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+      const p = 2 * l - q;
+      
+      r = hue2rgb(p, q, h + 1/3);
+      g = hue2rgb(p, q, h);
+      b = hue2rgb(p, q, h - 1/3);
+    }
+    
+    const toHex = (x: number): string => {
+      const hex = Math.round(x * 255).toString(16);
+      return hex.length === 1 ? '0' + hex : hex;
+    };
+    
+    return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+  };
+  
+  // Update color when slider changes
+  const handleSliderChange = (value: number[]) => {
+    setSliderValue(value);
+    const color = hueToColor(value[0]);
+    onColorSelect(color);
+    setShowContinue(true);
+  };
   
   const colors = [
     '#a6cee3', // Light blue
@@ -61,7 +108,7 @@ const ColorSelectionScreen: React.FC<ColorSelectionScreenProps> = ({
         Trust your intuition—there's no wrong answer
       </p>
       
-      <div className="p-4 bg-white rounded-xl shadow-inner mb-8">
+      <div className="p-4 bg-white rounded-xl shadow-inner mb-6">
         <CirclePicker
           width="320px"
           circleSize={28}
@@ -72,6 +119,27 @@ const ColorSelectionScreen: React.FC<ColorSelectionScreenProps> = ({
             onColorSelect(color.hex);
             setShowContinue(true);
           }}
+        />
+      </div>
+      
+      {/* Rainbow color slider */}
+      <div className="w-full max-w-md px-4 mb-8">
+        <p className="text-center text-gray-600 mb-2 text-sm">
+          Or fine-tune with our color-o-meter
+        </p>
+        <div 
+          className="h-2 w-full mb-4 rounded-full" 
+          style={{ 
+            background: 'linear-gradient(to right, #FF0000, #FFFF00, #00FF00, #00FFFF, #0000FF, #FF00FF, #FF0000)'
+          }}
+        ></div>
+        <Slider
+          value={sliderValue}
+          min={0}
+          max={360}
+          step={1}
+          onValueChange={handleSliderChange}
+          className="w-full"
         />
       </div>
       
@@ -100,7 +168,7 @@ const ColorSelectionScreen: React.FC<ColorSelectionScreenProps> = ({
         
         <Button
           onClick={onContinue}
-          className="bg-[#7D5248] hover:bg-[#6a443b] text-white rounded-full py-2 px-6"
+          className="bg-[#6a3d9a] hover:bg-[#5a2d8a] text-white rounded-full py-2 px-6"
         >
           Continue with this color
         </Button>
