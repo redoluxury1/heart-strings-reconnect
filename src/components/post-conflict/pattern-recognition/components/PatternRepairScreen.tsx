@@ -30,7 +30,7 @@ const PatternRepairScreen: React.FC<PatternRepairScreenProps> = ({ onContinue })
       
       <div className="w-full my-6">
         <img
-          src="/lovable-uploads/0fc1feab-b41e-42a1-bdd1-cdf2a4ea1b48.png"
+          src="/lovable-uploads/3b284c19-cb83-4bd1-85b3-a1d36fd5aaab.png"
           alt="Couple calmly connecting and seated together after conflict"
           className="w-[65%] mx-auto h-auto"
         />
@@ -74,18 +74,10 @@ const PatternRepairScreen: React.FC<PatternRepairScreenProps> = ({ onContinue })
         </Card>
       </div>
       
-      <div className="w-full px-6 mt-10 flex gap-4">
-        <Button
-          onClick={onContinue}
-          className="bg-[#14213d] hover:bg-[#14213d]/90 text-white font-medium py-3 px-8 rounded-xl text-xl flex-1"
-        >
-          Continue
-        </Button>
-        
+      <div className="w-full mt-10 flex justify-center">
         <Button
           onClick={handleTryInRealLife}
-          variant="outline"
-          className="border-[#14213d] text-[#14213d] hover:bg-[#14213d]/10 font-medium py-3 px-8 rounded-xl text-xl flex-1"
+          className="bg-[#14213d] hover:bg-[#14213d]/90 text-white font-medium py-3 px-8 rounded-full text-lg"
         >
           Try in Real Life
         </Button>
