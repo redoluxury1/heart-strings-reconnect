@@ -19,7 +19,6 @@ const VisualizationScreen: React.FC<VisualizationScreenProps> = ({
   const [expandOrb, setExpandOrb] = useState(false);
   const [countdown, setCountdown] = useState<number | null>(null);
   const [showButtons, setShowButtons] = useState(true);
-  const [expansionScale, setExpansionScale] = useState(0);
   
   // Play a subtle sound notification when visualization completes
   const playCompletionSound = () => {
@@ -69,14 +68,6 @@ const VisualizationScreen: React.FC<VisualizationScreenProps> = ({
             }, 1000);
             return 0;
           }
-          
-          // Adjust expansion scale based on countdown time
-          // Scale grows DRAMATICALLY as we approach 3 seconds
-          const newScale = prev <= 3 
-            ? 40 - (prev * 2.5) // Massive growth in final 3 seconds (35-40x size)
-            : 10 + ((10 - prev) * 3); // Stronger gradual growth until 3 seconds
-          
-          setExpansionScale(newScale);
           return prev - 1;
         });
       }, 1000);
@@ -101,69 +92,75 @@ const VisualizationScreen: React.FC<VisualizationScreenProps> = ({
         Imagine a small ball of light in your body—it's your chosen color. Maybe it's in your belly… or your chest… or your mind. Picture it clearly.
       </p>
 
-      <div className="h-96 w-full flex items-center justify-center overflow-visible">
-        {/* Outer glow layer with hypnotic pulsing */}
-        <div 
-          className="absolute rounded-full transition-all duration-1000 animate-pulse-slow"
-          style={{ 
-            backgroundColor: 'transparent',
-            height: '65px', 
-            width: '72px', 
-            boxShadow: `0 0 60px 30px ${selectedColor}`,
-            filter: 'blur(15px)',
-            transform: 'rotate(15deg)',
-            opacity: fadeIn ? 0.35 : 0,
-            scale: expandOrb ? `${expansionScale}` : fadeIn ? '0.3' : '0',
-            transition: 'all 1000ms cubic-bezier(0.17, 0.55, 0.55, 1)'
-          }}
-        />
-        
-        {/* Medium glow layer with different dimensions and rotation */}
-        <div 
-          className="absolute rounded-full transition-all duration-1000 animate-wave-circle"
-          style={{ 
-            backgroundColor: 'transparent',
-            height: '48px', 
-            width: '54px',
-            boxShadow: `0 0 45px 25px ${selectedColor}`,
-            filter: 'blur(8px)',
-            borderRadius: '65% 35% 55% 45%',
-            opacity: fadeIn ? 0.45 : 0,
-            scale: expandOrb ? `${expansionScale * 0.85}` : fadeIn ? '0.2' : '0',
-            transition: 'all 1000ms cubic-bezier(0.34, 1.56, 0.64, 1)'
-          }}
-        />
-        
-        {/* Inner bright core with pulsing effect */}
-        <div 
-          className="absolute rounded-full transition-all duration-1000 animate-expand"
-          style={{ 
-            backgroundColor: selectedColor,
-            height: '42px', 
-            width: '46px',
-            boxShadow: `0 0 30px 18px ${selectedColor}`,
-            filter: 'blur(3px)',
-            borderRadius: '60% 40% 65% 35%',
-            opacity: fadeIn ? 0.8 : 0,
-            scale: expandOrb ? `${expansionScale * 0.7}` : fadeIn ? '0.1' : '0',
-            transition: 'all 1000ms cubic-bezier(0.25, 1.05, 0.75, 0.9)'
-          }}
-        />
-        
-        {/* Central dot with constant pulsing */}
-        <div 
-          className="absolute transition-opacity duration-1000 animate-pulse-slow"
-          style={{ 
-            backgroundColor: selectedColor,
-            height: '22px', 
-            width: '25px',
-            boxShadow: `0 0 18px 10px ${selectedColor}`,
-            borderRadius: '62% 38% 58% 42%',
-            transform: 'rotate(-12deg)',
-            opacity: fadeIn ? 0.95 : 0,
-            transition: 'opacity 800ms ease'
-          }}
-        />
+      <div className="h-64 w-full flex items-center justify-center">
+        {/* Pulsating orb with multiple layers for more dynamic effect */}
+        <div className="relative">
+          {/* Outer layer - slow pulse */}
+          <div 
+            className="absolute rounded-full animate-pulse-slow"
+            style={{ 
+              backgroundColor: 'transparent',
+              boxShadow: `0 0 40px 25px ${selectedColor}`,
+              filter: 'blur(15px)',
+              height: '100px', 
+              width: '100px',
+              opacity: fadeIn ? 0.3 : 0,
+              transition: 'opacity 1200ms ease-in-out',
+              left: '-50px',
+              top: '-50px'
+            }}
+          />
+          
+          {/* Middle layer - circular movement */}
+          <div 
+            className="absolute rounded-full animate-wave-circle"
+            style={{ 
+              backgroundColor: 'transparent',
+              boxShadow: `0 0 30px 15px ${selectedColor}`,
+              filter: 'blur(10px)',
+              height: '80px', 
+              width: '80px',
+              borderRadius: '60% 40% 65% 35%',
+              opacity: fadeIn ? 0.45 : 0,
+              transition: 'opacity 1000ms ease-in-out',
+              left: '-40px',
+              top: '-40px'
+            }}
+          />
+          
+          {/* Inner core - floating movement */}
+          <div 
+            className="absolute rounded-full animate-float-slow"
+            style={{ 
+              backgroundColor: selectedColor,
+              boxShadow: `0 0 20px 12px ${selectedColor}`,
+              filter: 'blur(5px)',
+              height: '60px', 
+              width: '60px',
+              borderRadius: '55% 45% 60% 40%',
+              opacity: fadeIn ? 0.7 : 0,
+              transition: 'opacity 800ms ease-in-out',
+              left: '-30px',
+              top: '-30px'
+            }}
+          />
+          
+          {/* Center core - solid */}
+          <div 
+            className="absolute rounded-full animate-expand"
+            style={{ 
+              backgroundColor: selectedColor,
+              height: '40px', 
+              width: '40px',
+              boxShadow: `0 0 15px 8px ${selectedColor}`,
+              borderRadius: '50%',
+              opacity: fadeIn ? 0.9 : 0,
+              transition: 'opacity 600ms ease-in-out',
+              left: '-20px',
+              top: '-20px'
+            }}
+          />
+        </div>
 
         {/* Fullscreen button for enhanced immersion */}
         {fadeIn && !showButtons && (
