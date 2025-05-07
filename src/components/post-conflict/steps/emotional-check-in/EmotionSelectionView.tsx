@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -55,6 +56,7 @@ const EmotionSelectionView: React.FC<EmotionSelectionViewProps> = ({
           alt="Two people looking stressed and emotionally overwhelmed" 
           className="w-60 h-auto"
           loading="eager"
+          fetchpriority="high"
         />
       </div>
       
