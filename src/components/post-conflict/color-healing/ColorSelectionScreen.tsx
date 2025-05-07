@@ -1,7 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Slider } from '@/components/ui/slider';
 import { Label } from '@/components/ui/label';
 
 interface ColorSelectionScreenProps {
@@ -26,7 +25,7 @@ const ColorSelectionScreen: React.FC<ColorSelectionScreenProps> = ({
     { name: 'Teal', hex: '#45B5AA' },
   ];
   
-  // Rainbow gradient for the slider
+  // Rainbow gradient for the color picker
   const rainbowGradient = 'linear-gradient(to right, #FF0000, #FF7F00, #FFFF00, #00FF00, #0000FF, #4B0082, #8B00FF)';
   
   // Convert hue value to an RGB hex color
@@ -82,6 +81,19 @@ const ColorSelectionScreen: React.FC<ColorSelectionScreenProps> = ({
     }
   }, [selectedColor]);
 
+  // Handler for both click and drag on the rainbow
+  const handleRainbowInteraction = (e: React.MouseEvent | React.TouchEvent) => {
+    // Get the position for either mouse or touch event
+    const clientX = 'touches' in e 
+      ? e.touches[0].clientX 
+      : (e as React.MouseEvent).clientX;
+    
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = clientX - rect.left;
+    const percentage = Math.max(0, Math.min(1, x / rect.width));
+    setHue(Math.round(percentage * 360));
+  };
+
   return (
     <div className="flex flex-col items-center max-w-xl mx-auto text-center">
       <h2 className="text-3xl md:text-4xl font-cormorant font-medium mb-6 text-center text-midnight-indigo">
@@ -112,42 +124,38 @@ const ColorSelectionScreen: React.FC<ColorSelectionScreenProps> = ({
       <div className="mb-8 w-full max-w-md">
         <Label className="block text-sm text-gray-600 mb-2">Or select a custom color:</Label>
         
-        {/* Rainbow color slider */}
-        <div className="mb-4">
+        {/* Interactive rainbow color picker */}
+        <div 
+          className="h-16 rounded-lg mb-4 relative cursor-pointer" 
+          style={{ background: rainbowGradient }}
+          onClick={handleRainbowInteraction}
+          onMouseMove={(e) => {
+            if (e.buttons === 1) { // Only track if mouse button is pressed
+              handleRainbowInteraction(e);
+            }
+          }}
+          onTouchMove={handleRainbowInteraction}
+          aria-label="Color selection slider"
+          role="slider"
+          aria-valuemin={0}
+          aria-valuemax={360}
+          aria-valuenow={hue}
+        >
+          {/* Cursor indicator */}
           <div 
-            className="h-12 rounded-lg mb-2 relative cursor-pointer" 
-            style={{ background: rainbowGradient }}
-            onClick={(e) => {
-              const rect = e.currentTarget.getBoundingClientRect();
-              const x = e.clientX - rect.left;
-              const percentage = x / rect.width;
-              setHue(Math.round(percentage * 360));
+            className="absolute top-0 bottom-0 w-2 bg-white border border-gray-300 shadow-md"
+            style={{ 
+              left: `calc(${(hue / 360) * 100}% - 2px)`,
+              transform: 'translateX(-50%)'
             }}
-          >
-            {/* Cursor indicator */}
-            <div 
-              className="absolute top-0 bottom-0 w-2 bg-white border border-gray-300 shadow-md"
-              style={{ 
-                left: `calc(${(hue / 360) * 100}% - 2px)`,
-                transform: 'translateX(-50%)'
-              }}
-            ></div>
-          </div>
-          
-          <Slider
-            value={[hue]}
-            min={0}
-            max={360}
-            step={1}
-            className="w-full"
-            onValueChange={(values) => setHue(values[0])}
-          />
+          ></div>
         </div>
         
         {/* Color preview */}
         <div 
           className="h-16 w-full rounded-md border-2 border-gray-200 mb-4"
           style={{ backgroundColor: selectedColor }}
+          aria-label="Selected color preview"
         ></div>
       </div>
       
