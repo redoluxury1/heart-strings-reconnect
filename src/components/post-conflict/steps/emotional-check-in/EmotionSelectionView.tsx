@@ -31,7 +31,7 @@ const EmotionSelectionView: React.FC<EmotionSelectionViewProps> = ({
       category: 'hurt',
       color: 'bg-peach-100',
       textColor: 'text-navy-800',
-      emotions: ['rejected', 'guilty', 'betrayed', 'numb']
+      emotions: ['rejected', 'guilty', 'betrayed', 'wounded']
     },
     {
       category: 'shut down',

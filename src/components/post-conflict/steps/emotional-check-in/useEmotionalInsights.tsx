@@ -18,7 +18,8 @@ export const useEmotionalInsights = (emotions: string[]) => {
       'anxious': "Anxiety often points to how much you care about what might happen. It's protective in nature.",
       'disappointed': "Disappointment reflects the gap between our hopes and reality. It reveals what matters most to you.",
       'betrayed': "Feelings of betrayal reveal how deeply you trusted. The pain reflects the value of the trust that was broken.",
-      'guilty': "Guilt, while uncomfortable, can reflect your moral compass and desire to honor your values."
+      'guilty': "Guilt, while uncomfortable, can reflect your moral compass and desire to honor your values.",
+      'wounded': "Feeling wounded suggests a deep emotional injury. It acknowledges the impact others' actions have had on your heart."
     };
 
     // Multiple emotions logic
