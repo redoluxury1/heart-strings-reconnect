@@ -17,7 +17,6 @@ const VisualizationScreen: React.FC<VisualizationScreenProps> = ({
 }) => {
   const [fadeIn, setFadeIn] = useState(false);
   const [expandOrb, setExpandOrb] = useState(false);
-  const [countdown, setCountdown] = useState<number | null>(null);
   const [showButtons, setShowButtons] = useState(true);
   
   // Play a subtle sound notification when visualization completes
@@ -42,43 +41,30 @@ const VisualizationScreen: React.FC<VisualizationScreenProps> = ({
     };
   }, []);
 
-  // Handle countdown and expansion animation
+  // Handle expansion animation
   useEffect(() => {
-    let countdownInterval: ReturnType<typeof setInterval>;
+    let visualizationTimer: ReturnType<typeof setTimeout>;
     
     if (fadeIn) {
-      // Start with 10 seconds
-      setCountdown(10);
-      
-      // Start countdown
-      countdownInterval = setInterval(() => {
-        setCountdown(prev => {
-          if (prev === null) return null;
-          if (prev <= 1) {
-            clearInterval(countdownInterval);
-            // Make countdown disappear after reaching 0
-            setTimeout(() => {
-              setCountdown(null);
-              setShowButtons(true);
-              playCompletionSound();
-              toast({
-                title: "Visualization complete",
-                description: "Feel the energy of your chosen color throughout your being",
-              });
-            }, 1000);
-            return 0;
-          }
-          return prev - 1;
-        });
-      }, 1000);
-      
-      // Start expansion animation when countdown begins
-      setExpandOrb(true);
+      // Hide buttons during visualization
       setShowButtons(false);
+      
+      // Start expansion animation
+      setExpandOrb(true);
+      
+      // Set timer for visualization completion (10 seconds)
+      visualizationTimer = setTimeout(() => {
+        setShowButtons(true);
+        playCompletionSound();
+        toast({
+          title: "Visualization complete",
+          description: "Feel the energy of your chosen color throughout your being",
+        });
+      }, 10000);
     }
     
     return () => {
-      if (countdownInterval) clearInterval(countdownInterval);
+      if (visualizationTimer) clearTimeout(visualizationTimer);
     };
   }, [fadeIn]);
 
@@ -88,8 +74,12 @@ const VisualizationScreen: React.FC<VisualizationScreenProps> = ({
         Visualization
       </h2>
       
-      <p className="text-center text-gray-700 mb-8 text-lg max-w-md mx-auto">
+      <p className="text-center text-gray-700 mb-4 text-lg max-w-md mx-auto">
         Imagine a small ball of light in your body—it's your chosen color. Maybe it's in your belly… or your chest… or your mind. Picture it clearly.
+      </p>
+      
+      <p className="text-center text-gray-700 mb-8 text-lg font-medium max-w-md mx-auto">
+        TAKE 5 INTENTIONAL DEEP BREATHS
       </p>
 
       <div className="h-64 w-full flex items-center justify-center">
@@ -181,15 +171,6 @@ const VisualizationScreen: React.FC<VisualizationScreenProps> = ({
           </Button>
         )}
       </div>
-      
-      {/* Countdown display - fades out when it reaches 0 */}
-      {countdown !== null && (
-        <div className={`mb-8 text-2xl font-medium text-gray-600 transition-opacity duration-300 ${
-          countdown === 0 ? 'opacity-0' : 'opacity-100'
-        }`}>
-          {countdown}
-        </div>
-      )}
       
       {/* Buttons fade in/out based on expansion state */}
       <div className={`flex space-x-4 mt-4 transition-opacity duration-500 ${showButtons ? 'opacity-100' : 'opacity-0'}`}>
