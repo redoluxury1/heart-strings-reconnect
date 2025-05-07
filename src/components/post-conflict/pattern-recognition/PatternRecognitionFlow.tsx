@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, ChevronRight } from 'lucide-react';
 import { useSession } from '../context/SessionContext';
 import { patternQuizzes, commonPatterns } from './data/pattern-data';
 import { usePatternRecognition, PatternId } from './hooks/usePatternRecognition';
@@ -52,7 +52,7 @@ const PatternRecognitionFlow: React.FC<PatternRecognitionFlowProps> = ({
   const { getPatternSpecificTips } = helpers;
   
   const selectedPatternData = selectedPattern !== null 
-    ? commonPatterns.find(p => p.id === parseInt(selectedPattern))
+    ? commonPatterns.find(p => p.id.toString() === selectedPattern)
     : null;
   
   const patternType = selectedPatternData?.patternType || null;
