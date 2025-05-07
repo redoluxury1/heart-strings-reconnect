@@ -101,10 +101,10 @@ const VisualizationScreen: React.FC<VisualizationScreenProps> = ({
         Imagine a small ball of light in your body—it's your chosen color. Maybe it's in your belly… or your chest… or your mind. Picture it clearly.
       </p>
 
-      <div className="relative h-96 w-full mb-10 flex items-center justify-center overflow-hidden">
+      <div className="h-96 w-full flex items-center justify-center overflow-visible">
         {/* Outer glow layer with hypnotic pulsing */}
         <div 
-          className="rounded-full transition-all duration-1000 animate-pulse-slow"
+          className="absolute rounded-full transition-all duration-1000 animate-pulse-slow"
           style={{ 
             backgroundColor: 'transparent',
             height: '65px', 
