@@ -62,20 +62,24 @@ const ConnectionPromptStep: React.FC<ConnectionPromptStepProps> = ({
       </p>
       
       {!isSubmitted ? (
-        <div className="space-y-8">
-          <div className="flex justify-center">
+        <div className="space-y-8 relative">
+          {/* Image positioned in background */}
+          <div className="flex justify-center relative">
             {!imageLoaded && (
-              <Skeleton className="h-64 w-64 rounded-lg" />
+              <Skeleton className="h-80 w-64 rounded-lg" />
             )}
-            <img 
-              src="/lovable-uploads/d6b06238-3fe7-4a13-b1d9-396548eadbee.png"
-              alt="Couple embracing" 
-              className={`h-auto w-64 md:w-72 transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
-              onLoad={() => setImageLoaded(true)}
-            />
+            <div className="absolute" style={{ top: '-20px', zIndex: 0 }}>
+              <img 
+                src="/lovable-uploads/09ddfa28-d193-41e0-98fb-b37fd0ff5dab.png"
+                alt="Couple holding hands" 
+                className={`h-auto w-72 md:w-80 transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+                onLoad={() => setImageLoaded(true)}
+              />
+            </div>
           </div>
           
-          <div className="flex flex-col gap-3 justify-center items-center max-w-md mx-auto">
+          {/* Buttons and input positioned in front of the image with padding to ensure visibility */}
+          <div className="flex flex-col gap-3 justify-center items-center max-w-md mx-auto mt-16 relative" style={{ zIndex: 1 }}>
             {starterPrompts.map((prompt, index) => (
               <Button
                 key={index}
