@@ -1,7 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { toast } from '@/hooks/use-toast';
 
 interface BreathingGuideScreenProps {
   selectedColor: string;
@@ -57,36 +56,7 @@ const BreathingGuideScreen: React.FC<BreathingGuideScreenProps> = ({
     return () => clearInterval(timeInterval);
   }, [isBreathing]);
 
-  // Show notification after 5 seconds of breathing or 2 complete cycles
-  useEffect(() => {
-    if (!isBreathing) return;
-    
-    const shouldNotify = totalTime >= 5 || breathCycles >= 2;
-    
-    if (shouldNotify) {
-      // Play a subtle sound notification when breathing completes
-      const playCompletionSound = () => {
-        try {
-          const sound = new Audio('/notification-sound.mp3');
-          sound.volume = 0.3; // Keep volume subtle
-          sound.play().catch(e => console.log('Audio play prevented by browser policy:', e));
-        } catch (error) {
-          console.error('Error playing sound:', error);
-        }
-      };
-      
-      playCompletionSound();
-      
-      toast({
-        title: "Breathing exercise complete",
-        description: "Notice how your body feels now - centered and present",
-      });
-      
-      // Reset counters but don't stop breathing if the user wants to continue
-      setTotalTime(0);
-      setBreathCycles(0);
-    }
-  }, [totalTime, breathCycles, isBreathing]);
+  // Removed the notification effect that was previously here
 
   const toggleBreathing = () => {
     if (!isBreathing) {
@@ -113,10 +83,13 @@ const BreathingGuideScreen: React.FC<BreathingGuideScreenProps> = ({
           className={`rounded-full transition-all duration-[4000ms] flex items-center justify-center text-white font-medium`}
           style={{ 
             backgroundColor: selectedColor,
-            height: breathPhase === 'inhale' ? '200px' : breathPhase === 'hold' ? '200px' : '80px', 
-            width: breathPhase === 'inhale' ? '200px' : breathPhase === 'hold' ? '200px' : '80px',
+            // Reversed logic: small circle for inhale start, large for inhale end/hold, small for exhale end
+            height: breathPhase === 'inhale' ? '80px' : breathPhase === 'hold' ? '200px' : '80px', 
+            width: breathPhase === 'inhale' ? '80px' : breathPhase === 'hold' ? '200px' : '80px',
+            transform: breathPhase === 'inhale' ? 'scale(1, 1)' : breathPhase === 'hold' ? 'scale(2.5, 2.5)' : 'scale(1, 1)',
             boxShadow: `0 0 40px 10px ${selectedColor}`,
             opacity: isBreathing ? 0.8 : 0.5,
+            transition: 'all 4s ease-in-out'
           }}
         >
           {isBreathing && (
