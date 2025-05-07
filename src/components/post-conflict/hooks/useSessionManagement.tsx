@@ -69,9 +69,12 @@ export const useSessionManagement = () => {
           }
         }));
         
+        // More subtle toast notification for partner status
         toast({
-          title: "Partner ready",
+          title: "Your partner is ready",
           description: "Your partner has completed this step.",
+          duration: 2000, // Shorter duration (2 seconds)
+          className: "bg-[#E5DEFF] text-[#483D8B] border border-[#C8BDFF]",
         });
       }, 3000);
     }

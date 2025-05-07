@@ -68,13 +68,14 @@ const NeedsRepairStep: React.FC<NeedsRepairStepProps> = ({
             />
           </div>
           
-          <div className="grid grid-cols-2 gap-2 max-w-md mx-auto">
+          {/* Changed to a single column of skinnier bubbles */}
+          <div className="flex flex-col gap-2 max-w-md mx-auto">
             {starterPrompts.map((prompt, index) => (
               <Button
                 key={index}
                 variant="outline"
                 size="sm"
-                className="bg-[#7b4b69] hover:bg-[#6a3a58] text-white rounded-full py-1.5 px-3.5 text-sm font-normal h-auto whitespace-normal"
+                className="bg-[#7b4b69] hover:bg-[#6a3a58] text-white rounded-full py-1.5 px-4 text-xs font-normal h-auto whitespace-normal"
                 onClick={() => handleStarterPrompt(prompt)}
               >
                 {prompt}
@@ -89,8 +90,6 @@ const NeedsRepairStep: React.FC<NeedsRepairStepProps> = ({
               onChange={(e) => setInput(e.target.value)}
               className="mb-2 min-h-[80px] border-[#7b4b69] border-2 rounded-lg"
             />
-            
-            {/* Removed the "Your response will save automatically" text */}
           </div>
         </div>
       ) : (

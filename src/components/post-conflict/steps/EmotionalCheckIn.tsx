@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import EmotionSelectionView from './emotional-check-in/EmotionSelectionView';
 import EmotionSummaryView from './emotional-check-in/EmotionSummaryView';
 import { useEmotionalInsights } from './emotional-check-in/useEmotionalInsights';
@@ -21,23 +21,29 @@ const EmotionalCheckIn: React.FC<EmotionalCheckInProps> = ({
   const emotionalInsight = useEmotionalInsights(emotions);
   
   const handleEmotionToggle = (emotion: string) => {
-    if (emotions.includes(emotion)) {
-      setEmotions(emotions.filter(e => e !== emotion));
-    } else {
-      setEmotions([...emotions, emotion]);
+    const updatedEmotions = emotions.includes(emotion)
+      ? emotions.filter(e => e !== emotion)
+      : [...emotions, emotion];
+    
+    setEmotions(updatedEmotions);
+    
+    // Auto-submit when emotions change after a short delay
+    if (updatedEmotions.length > 0) {
+      onResponse(updatedEmotions);
+      setTimeout(() => setIsSubmitted(true), 800);
     }
   };
   
   const handleAddCustomEmotion = (emotion: string) => {
     if (!emotions.includes(emotion)) {
-      setEmotions([...emotions, emotion]);
-    }
-  };
-  
-  const handleSubmit = () => {
-    if (emotions.length > 0) {
-      onResponse(emotions);
-      setIsSubmitted(true);
+      const updatedEmotions = [...emotions, emotion];
+      setEmotions(updatedEmotions);
+      
+      // Auto-submit when adding custom emotion
+      if (updatedEmotions.length > 0) {
+        onResponse(updatedEmotions);
+        setTimeout(() => setIsSubmitted(true), 800);
+      }
     }
   };
   
@@ -52,7 +58,7 @@ const EmotionalCheckIn: React.FC<EmotionalCheckInProps> = ({
           emotions={emotions}
           onEmotionToggle={handleEmotionToggle}
           onAddCustomEmotion={handleAddCustomEmotion}
-          onSubmit={handleSubmit}
+          onSubmit={() => {}} // Empty function as we'll auto-submit
         />
       ) : (
         <EmotionSummaryView
