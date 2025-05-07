@@ -20,21 +20,6 @@ const EndSessionStep: React.FC<EndSessionStepProps> = ({
     navigate('/reconnect');
   };
 
-  const handleNextSteps = () => {
-    // Navigate to the "Okay, but what's next" section
-    const okayButNowWhatSection = document.getElementById('okay-but-now-what');
-    if (okayButNowWhatSection) {
-      // Offset to account for any fixed headers
-      const yOffset = -80; 
-      const y = okayButNowWhatSection.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      
-      window.scrollTo({
-        top: y,
-        behavior: 'smooth'
-      });
-    }
-  };
-
   return (
     <div className="text-center max-w-md mx-auto">
       {/* Add the couple image */}
@@ -69,13 +54,6 @@ const EndSessionStep: React.FC<EndSessionStepProps> = ({
       </div>
       
       <div className="flex flex-col gap-3 mb-2">
-        <Button 
-          className="bg-[#2e2a63] hover:bg-[#1e1a43] text-white py-6 text-lg rounded-full"
-          onClick={handleNextSteps}
-        >
-          <span className="text-sm">What's next for us?</span>
-        </Button>
-        
         <Button 
           className="bg-[#c06b6b] hover:bg-[#a35757] text-white py-6 text-lg rounded-full"
           onClick={handlePlayGame}
