@@ -9,7 +9,7 @@ export const commonPatterns: CommonPattern[] = [
     description: "You feel blamed, so you shut down. They get louder. Repeat.",
     examples: ["You always...", "That's not fair!", "Silence or stonewalling"],
     breakingTips: [
-      "Soften the Start – "I'm feeling…" vs. "You always…"",
+      'Soften the Start – "I\'m feeling…" vs. "You always…"',
       "Breathe Before You Defend",
       "Repair Before You Retreat"
     ],
@@ -22,7 +22,7 @@ export const commonPatterns: CommonPattern[] = [
     examples: ["Talk to me!", "Avoiding eye contact", "Feeling abandoned or smothered"],
     breakingTips: [
       "Take the Pressure Off – Use warmth, not urgency",
-      "Signal Safety – Say "I'm overwhelmed," not "I'm done"",
+      'Signal Safety – Say "I\'m overwhelmed," not "I\'m done"',
       "Reconnect Without Solving – Be near, not fix"
     ],
     patternType: "pursue-distance"
@@ -34,7 +34,7 @@ export const commonPatterns: CommonPattern[] = [
     examples: ["Passive tension", "Bottled-up frustration", "Big reaction, followed by regret"],
     breakingTips: [
       "Check in Sooner – Don't wait until you're boiling",
-      "Name the Build-Up – "Something's been bothering me…"",
+      'Name the Build-Up – "Something\'s been bothering me…"',
       "Repair the Aftershock – Apologize for tone, not the truth"
     ],
     patternType: "silent-tension-snap"
@@ -58,7 +58,7 @@ export const commonPatterns: CommonPattern[] = [
     examples: ["Let's just fix this.", "I can't talk about this right now.", "One over-explains, one shuts down"],
     breakingTips: [
       "Honor the Pause – Don't force closure",
-      "Ask, "Is now okay?" before solving",
+      'Ask, "Is now okay?" before solving',
       "Come Back Later with Softness"
     ],
     patternType: "fix-reject"

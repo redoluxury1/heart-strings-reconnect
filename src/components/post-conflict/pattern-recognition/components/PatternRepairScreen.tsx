@@ -95,7 +95,7 @@ const PatternRepairScreen: React.FC<PatternRepairScreenProps> = ({ pattern, onCo
         },
         { 
           icon: <Zap size={28} className="text-[#FF8C00]" />,
-          title: "Ask, "Is now okay?"",
+          title: "Ask, \"Is now okay?\"",
           description: "Get consent before offering solutions."
         },
         { 
