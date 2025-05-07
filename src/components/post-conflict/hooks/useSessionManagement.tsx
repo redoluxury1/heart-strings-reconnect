@@ -59,7 +59,8 @@ export const useSessionManagement = () => {
     }));
     
     // Simulate partner 2 response (In a real app, this would come from the other user)
-    if (partner === 'partner1') {
+    // Only show notification for ready check step (step 0)
+    if (partner === 'partner1' && currentStep === 0) {
       setTimeout(() => {
         setSessionData(prev => ({
           ...prev,
@@ -69,11 +70,11 @@ export const useSessionManagement = () => {
           }
         }));
         
-        // More subtle toast notification for partner status
+        // Only show the "partner is ready" toast on the first step (ready check)
         toast({
           title: "Your partner is ready",
           description: "Your partner has completed this step.",
-          duration: 2000, // Shorter duration (2 seconds)
+          duration: 2000,
           className: "bg-[#E5DEFF] text-[#483D8B] border border-[#C8BDFF]",
         });
       }, 3000);
