@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { PatternType } from '../types';
 import { ReconnectionTip, reconnectionTips } from '@/data/reconnection-tips';
@@ -13,6 +14,7 @@ export interface PatternRecognitionState {
   showIntro: boolean;
   showCyclePattern: boolean;
   showPatternDetail: boolean;
+  showPatternRepair: boolean;
 }
 
 export const usePatternRecognition = () => {
@@ -24,7 +26,8 @@ export const usePatternRecognition = () => {
     currentQuestionIndex: 0,
     showIntro: true,
     showCyclePattern: false,
-    showPatternDetail: false
+    showPatternDetail: false,
+    showPatternRepair: false
   });
 
   const handleIntroComplete = () => {
@@ -53,8 +56,16 @@ export const usePatternRecognition = () => {
   const handlePatternDetailComplete = () => {
     setState(prev => ({
       ...prev,
-      isShowingQuiz: true,
-      showPatternDetail: false
+      showPatternDetail: false,
+      showPatternRepair: true
+    }));
+  };
+  
+  const handlePatternRepairComplete = () => {
+    setState(prev => ({
+      ...prev,
+      showPatternRepair: false,
+      isShowingQuiz: true
     }));
   };
 
@@ -98,14 +109,23 @@ export const usePatternRecognition = () => {
         };
       }
       
-      // If showing quiz, go back to pattern detail
+      // If showing quiz, go back to pattern repair
       if (prev.isShowingQuiz) {
         return {
           ...prev,
           isShowingQuiz: false,
-          showPatternDetail: true,
+          showPatternRepair: true,
           currentQuestionIndex: 0,
           quizAnswers: []
+        };
+      }
+      
+      // If showing pattern repair, go back to pattern detail
+      if (prev.showPatternRepair) {
+        return {
+          ...prev,
+          showPatternRepair: false,
+          showPatternDetail: true
         };
       }
       
@@ -158,7 +178,8 @@ export const usePatternRecognition = () => {
       handleGoBack,
       handleIntroComplete,
       handleCyclePatternComplete,
-      handlePatternDetailComplete
+      handlePatternDetailComplete,
+      handlePatternRepairComplete
     },
     helpers: {
       getPatternSpecificTips
