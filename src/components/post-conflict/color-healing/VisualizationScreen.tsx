@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import OrbVisualization from './visualization/OrbVisualization';
-import VisualizationControls from './visualization/VisualizationControls';
 import VisualizationInstructions from './visualization/VisualizationInstructions';
 import useVisualization from './hooks/useVisualization';
 
@@ -20,6 +19,8 @@ const VisualizationScreen: React.FC<VisualizationScreenProps> = ({
   const [showControls, setShowControls] = useState(false);
   const { fadeIn, setFadeIn } = useVisualization();
   const [imagePreloaded, setImagePreloaded] = useState(false);
+  const [countdown, setCountdown] = useState(7);
+  const [countdownComplete, setCountdownComplete] = useState(false);
 
   // Preload next screen image
   useEffect(() => {
@@ -32,12 +33,13 @@ const VisualizationScreen: React.FC<VisualizationScreenProps> = ({
     };
   }, []);
   
-  // Automatically fade in the orb and show controls after a delay
+  // Automatically fade in the orb
   useEffect(() => {
     const fadeTimer = setTimeout(() => {
       setFadeIn(true);
     }, 1000);
     
+    // Start countdown after a delay
     const controlsTimer = setTimeout(() => {
       setShowControls(true);
     }, 4000);
@@ -47,6 +49,25 @@ const VisualizationScreen: React.FC<VisualizationScreenProps> = ({
       clearTimeout(controlsTimer);
     };
   }, [setFadeIn]);
+  
+  // Handle countdown logic
+  useEffect(() => {
+    if (!showControls) return;
+    
+    let timer: ReturnType<typeof setTimeout>;
+    
+    if (countdown > 0) {
+      timer = setTimeout(() => {
+        setCountdown(prev => prev - 1);
+      }, 1000);
+    } else {
+      setCountdownComplete(true);
+    }
+    
+    return () => {
+      if (timer) clearTimeout(timer);
+    };
+  }, [countdown, showControls]);
   
   return (
     <div className="flex flex-col items-center max-w-xl mx-auto">
@@ -61,24 +82,15 @@ const VisualizationScreen: React.FC<VisualizationScreenProps> = ({
       </div>
       
       {showControls && (
-        <>
-          <div className="w-full flex flex-col gap-4 items-center">
-            <Button
-              onClick={onBack}
-              variant="outline"
-              className="border-gray-300 text-gray-600 hover:bg-gray-100 rounded-full py-2 px-6 w-full max-w-xs"
-            >
-              Back
-            </Button>
-            
-            <Button
-              onClick={onContinue}
-              className="bg-[#7D5248] hover:bg-[#6a443b] text-white rounded-full py-2 px-6 w-full max-w-xs"
-            >
-              Continue
-            </Button>
-          </div>
-        </>
+        <div className="w-full flex flex-col gap-4 items-center">
+          <Button
+            onClick={onContinue}
+            disabled={!countdownComplete}
+            className="bg-[#7D5248] hover:bg-[#6a443b] text-white rounded-full py-3 px-6 w-full max-w-xs text-lg"
+          >
+            {countdownComplete ? 'Continue' : `Continue in ${countdown}`}
+          </Button>
+        </div>
       )}
     </div>
   );

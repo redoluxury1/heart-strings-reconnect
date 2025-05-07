@@ -22,40 +22,60 @@ const OrbVisualization: React.FC<OrbVisualizationProps> = ({
     }
   };
   
+  // Enhance color brightness by adding 20% opacity to the original color
+  const enhancedColor = selectedColor;
+  
   return (
-    <div className="h-64 w-full flex items-center justify-center">
+    <div className="h-72 w-full flex items-center justify-center">
       {/* Pulsating orb with multiple layers for more dynamic effect */}
       <div className="relative">
-        {/* Outer layer - slow pulse */}
+        {/* Outer glow layer - slow pulse */}
         <div 
           className="absolute rounded-full animate-pulse-slow will-change-transform"
           style={{ 
             backgroundColor: 'transparent',
-            boxShadow: `0 0 40px 25px ${selectedColor}`,
-            filter: 'blur(15px)',
+            boxShadow: `0 0 60px 40px ${enhancedColor}`,
+            filter: 'blur(20px)',
+            height: '130px', 
+            width: '130px',
+            opacity: fadeIn ? 0.4 : 0,
+            transition: 'opacity 1200ms ease-in-out',
+            left: '-65px',
+            top: '-65px'
+          }}
+        />
+        
+        {/* Middle layer - circular movement with more pronounced shape */}
+        <div 
+          className="absolute rounded-full animate-wave-circle will-change-transform"
+          style={{ 
+            backgroundColor: 'transparent',
+            boxShadow: `0 0 40px 25px ${enhancedColor}`,
+            filter: 'blur(8px)',
             height: '100px', 
             width: '100px',
-            opacity: fadeIn ? 0.3 : 0,
-            transition: 'opacity 1200ms ease-in-out',
+            borderRadius: '60% 40% 65% 35%',
+            opacity: fadeIn ? 0.6 : 0,
+            transition: 'opacity 1000ms ease-in-out',
             left: '-50px',
             top: '-50px'
           }}
         />
         
-        {/* Middle layer - circular movement */}
+        {/* Additional movement layer */}
         <div 
-          className="absolute rounded-full animate-wave-circle will-change-transform"
+          className="absolute rounded-full animate-wave-top will-change-transform"
           style={{ 
             backgroundColor: 'transparent',
-            boxShadow: `0 0 30px 15px ${selectedColor}`,
+            boxShadow: `0 0 35px 20px ${enhancedColor}`,
             filter: 'blur(10px)',
-            height: '80px', 
-            width: '80px',
-            borderRadius: '60% 40% 65% 35%',
-            opacity: fadeIn ? 0.45 : 0,
-            transition: 'opacity 1000ms ease-in-out',
-            left: '-40px',
-            top: '-40px'
+            height: '90px', 
+            width: '90px',
+            borderRadius: '50% 50% 40% 60%',
+            opacity: fadeIn ? 0.5 : 0,
+            transition: 'opacity 900ms ease-in-out',
+            left: '-45px',
+            top: '-45px'
           }}
         />
         
@@ -63,16 +83,16 @@ const OrbVisualization: React.FC<OrbVisualizationProps> = ({
         <div 
           className="absolute rounded-full animate-float-slow will-change-transform"
           style={{ 
-            backgroundColor: selectedColor,
-            boxShadow: `0 0 20px 12px ${selectedColor}`,
+            backgroundColor: enhancedColor,
+            boxShadow: `0 0 25px 15px ${enhancedColor}`,
             filter: 'blur(5px)',
-            height: '60px', 
-            width: '60px',
+            height: '70px', 
+            width: '70px',
             borderRadius: '55% 45% 60% 40%',
-            opacity: fadeIn ? 0.7 : 0,
+            opacity: fadeIn ? 0.8 : 0,
             transition: 'opacity 800ms ease-in-out',
-            left: '-30px',
-            top: '-30px'
+            left: '-35px',
+            top: '-35px'
           }}
         />
         
@@ -80,15 +100,15 @@ const OrbVisualization: React.FC<OrbVisualizationProps> = ({
         <div 
           className="absolute rounded-full animate-expand will-change-transform"
           style={{ 
-            backgroundColor: selectedColor,
-            height: '40px', 
-            width: '40px',
-            boxShadow: `0 0 15px 8px ${selectedColor}`,
+            backgroundColor: enhancedColor,
+            height: '50px', 
+            width: '50px',
+            boxShadow: `0 0 20px 12px ${enhancedColor}`,
             borderRadius: '50%',
-            opacity: fadeIn ? 0.9 : 0,
+            opacity: fadeIn ? 1 : 0,
             transition: 'opacity 600ms ease-in-out',
-            left: '-20px',
-            top: '-20px'
+            left: '-25px',
+            top: '-25px'
           }}
         />
       </div>

@@ -64,7 +64,7 @@ const useVisualization = ({ onComplete }: UseVisualizationProps = {}) => {
       // Start expansion animation
       setExpandOrb(true);
       
-      // Set timer for visualization completion (10 seconds)
+      // Set timer for visualization completion (7 seconds to match countdown)
       visualizationTimer = setTimeout(() => {
         setShowButtons(true);
         playCompletionSound();
@@ -77,7 +77,7 @@ const useVisualization = ({ onComplete }: UseVisualizationProps = {}) => {
         if (onComplete) {
           onComplete();
         }
-      }, 10000);
+      }, 7000);
     }
     
     return () => {
