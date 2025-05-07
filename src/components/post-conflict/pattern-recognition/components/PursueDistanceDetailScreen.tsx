@@ -22,7 +22,7 @@ const PursueDistanceDetailScreen: React.FC<PursueDistanceDetailScreenProps> = ({
       
       <div className="w-full my-6">
         <img
-          src="/lovable-uploads/c1f2b229-27f9-4ec7-8d45-905ac30c1322.png"
+          src="/lovable-uploads/860f841f-3974-44d6-9b4b-bad84d8ec2f0.png"
           alt="One partner trying to connect while the other distances"
           className="w-full h-auto mx-auto"
         />

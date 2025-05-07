@@ -76,10 +76,17 @@ const PatternRecognitionFlow: React.FC = () => {
           selectedPatternData?.patternType === 'pursue-distance' ? (
             <PursueDistanceDetailScreen onContinue={handlePatternDetailComplete} />
           ) : (
-            <PatternDetailScreen onContinue={handlePatternDetailComplete} />
+            <PatternDetailScreen 
+              pattern={selectedPatternData} 
+              onContinue={handlePatternDetailComplete} 
+            />
           )
         ) : showPatternRepair ? (
-          <PatternRepairScreen onContinue={handlePatternRepairComplete} />
+          <PatternRepairScreen 
+            pattern={selectedPatternData} 
+            onContinue={handlePatternRepairComplete}
+            onTryInRealLife={handleGoBack}
+          />
         ) : isShowingTips ? (
           <ReconnectionTips 
             selectedPattern={selectedPatternData || null}
@@ -90,7 +97,7 @@ const PatternRecognitionFlow: React.FC = () => {
             currentQuestion={currentQuestion}
             currentQuestionIndex={currentQuestionIndex}
             totalQuestions={quizQuestions.length}
-            onAnswerSelect={(answerId) => handleAnswerSelect(currentQuestionIndex, answerId.toString())}
+            onAnswerSelect={(answerId) => handleAnswerSelect(currentQuestionIndex, answerId)}
           />
         ) : (
           <PatternList 
