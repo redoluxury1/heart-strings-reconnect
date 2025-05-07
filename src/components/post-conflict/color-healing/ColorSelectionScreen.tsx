@@ -125,10 +125,10 @@ const ColorSelectionScreen: React.FC<ColorSelectionScreenProps> = ({
       {/* Rainbow color slider */}
       <div className="w-full max-w-md px-4 mb-8">
         <p className="text-center text-gray-600 mb-2 text-sm">
-          Or fine-tune with our color-o-meter
+          or choose your own custom color
         </p>
         <div 
-          className="h-2 w-full mb-4 rounded-full" 
+          className="h-4 w-full rounded-full" 
           style={{ 
             background: 'linear-gradient(to right, #FF0000, #FFFF00, #00FF00, #00FFFF, #0000FF, #FF00FF, #FF0000)'
           }}
@@ -139,7 +139,7 @@ const ColorSelectionScreen: React.FC<ColorSelectionScreenProps> = ({
           max={360}
           step={1}
           onValueChange={handleSliderChange}
-          className="w-full"
+          className="w-full -mt-2"
         />
       </div>
       
