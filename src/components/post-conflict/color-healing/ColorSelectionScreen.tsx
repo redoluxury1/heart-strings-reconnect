@@ -64,15 +64,21 @@ const ColorSelectionScreen: React.FC<ColorSelectionScreenProps> = ({
   // State for the hue value (0-360 degrees)
   const [hue, setHue] = useState(0);
   
+  // State to track the current preview color (this ensures the UI stays in sync)
+  const [previewColor, setPreviewColor] = useState(selectedColor);
+  
   // Handle click on predefined color
   const handlePredefinedColorClick = (color: string) => {
+    // Update both the parent component's state and our local preview
     onColorSelect(color);
+    setPreviewColor(color);
   };
   
   // Update the selected color when hue changes
   useEffect(() => {
     const newColor = hueToColor(hue);
     onColorSelect(newColor);
+    setPreviewColor(newColor); // Also update our local preview
   }, [hue, onColorSelect]);
   
   // Initialize hue from a selected color if one exists
@@ -83,6 +89,7 @@ const ColorSelectionScreen: React.FC<ColorSelectionScreenProps> = ({
       // Just set a default hue when a predefined color is selected
       // In a more complete implementation, we would extract the hue from the selectedColor
       setHue(240);
+      setPreviewColor(selectedColor); // Make sure our local preview is in sync
     }
   }, [selectedColor]);
 
@@ -156,10 +163,10 @@ const ColorSelectionScreen: React.FC<ColorSelectionScreenProps> = ({
           ></div>
         </div>
         
-        {/* Color preview */}
+        {/* Color preview - now using our local state to ensure it updates immediately */}
         <div 
           className="h-16 w-full rounded-md border-2 border-gray-200 mb-4"
-          style={{ backgroundColor: selectedColor }}
+          style={{ backgroundColor: previewColor }}
           aria-label="Selected color preview"
         ></div>
       </div>
