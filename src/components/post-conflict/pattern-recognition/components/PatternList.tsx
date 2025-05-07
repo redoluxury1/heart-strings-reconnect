@@ -2,7 +2,7 @@
 import React from 'react';
 import { CommonPattern } from '../types';
 import { PatternId } from '../hooks/usePatternRecognition';
-import { ArrowRight, RefreshCw, Users, LightningBolt, Volume2, PuzzlePiece } from 'lucide-react';
+import { ArrowRight, RefreshCw, Users, Zap, Volume2, Puzzle } from 'lucide-react';
 
 interface PatternListProps {
   patterns: CommonPattern[];
@@ -40,7 +40,7 @@ const PatternList: React.FC<PatternListProps> = ({ patterns, onPatternSelect }) 
           />
           
           <PatternCard 
-            IconComponent={LightningBolt}
+            IconComponent={Zap}
             iconColor="#E5C158" 
             title="Silent Tension > Snap > Shame"
             description="It builds up... until it bursts."
@@ -56,7 +56,7 @@ const PatternList: React.FC<PatternListProps> = ({ patterns, onPatternSelect }) 
           />
           
           <PatternCard 
-            IconComponent={PuzzlePiece}
+            IconComponent={Puzzle}
             iconColor="#E69999" 
             title="Fix It / Reject It"
             description="One wants to solve. The other isn't ready."
