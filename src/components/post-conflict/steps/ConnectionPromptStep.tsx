@@ -68,7 +68,7 @@ const ConnectionPromptStep: React.FC<ConnectionPromptStepProps> = ({
             {!imageLoaded && (
               <Skeleton className="h-80 w-64 rounded-lg" />
             )}
-            <div className="absolute" style={{ top: '-20px', zIndex: 0 }}>
+            <div className="absolute" style={{ zIndex: 0 }}>
               <img 
                 src="/lovable-uploads/09ddfa28-d193-41e0-98fb-b37fd0ff5dab.png"
                 alt="Couple holding hands" 
@@ -78,8 +78,8 @@ const ConnectionPromptStep: React.FC<ConnectionPromptStepProps> = ({
             </div>
           </div>
           
-          {/* Buttons and input positioned in front of the image with padding to ensure visibility */}
-          <div className="flex flex-col gap-3 justify-center items-center max-w-md mx-auto mt-16 relative" style={{ zIndex: 1 }}>
+          {/* Buttons and input positioned below the image faces */}
+          <div className="flex flex-col gap-3 justify-center items-center max-w-md mx-auto mt-56 relative" style={{ zIndex: 1 }}>
             {starterPrompts.map((prompt, index) => (
               <Button
                 key={index}
