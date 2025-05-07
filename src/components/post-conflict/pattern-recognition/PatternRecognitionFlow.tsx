@@ -8,14 +8,15 @@ import { usePatternRecognition } from './hooks/usePatternRecognition';
 import PatternList from './components/PatternList';
 import QuizQuestion from './components/QuizQuestion';
 import ReconnectionTips from './components/ReconnectionTips';
+import PatternIntroScreen from './components/PatternIntroScreen';
 import { reconnectionTips } from '@/data/reconnection-tips';
 
 const PatternRecognitionFlow: React.FC = () => {
   const { state, actions, helpers } = usePatternRecognition();
   const { sessionData } = useSession();
   
-  const { selectedPattern, isShowingQuiz, isShowingTips, currentQuestionIndex } = state;
-  const { handlePatternSelect, handleAnswerSelect, handleGoBack } = actions;
+  const { selectedPattern, isShowingQuiz, isShowingTips, currentQuestionIndex, showIntro } = state;
+  const { handlePatternSelect, handleAnswerSelect, handleGoBack, handleIntroComplete } = actions;
   const { getPatternSpecificTips } = helpers;
   
   const selectedPatternData = selectedPattern !== null 
@@ -33,7 +34,7 @@ const PatternRecognitionFlow: React.FC = () => {
   return (
     <div className="bg-white rounded-xl shadow-md overflow-hidden">
       <div className="p-6 md:p-8">
-        {(selectedPattern !== null || isShowingQuiz || isShowingTips) && (
+        {!showIntro && (selectedPattern !== null || isShowingQuiz || isShowingTips) && (
           <Button
             variant="ghost"
             className="mb-4"
@@ -44,7 +45,9 @@ const PatternRecognitionFlow: React.FC = () => {
           </Button>
         )}
         
-        {isShowingTips ? (
+        {showIntro ? (
+          <PatternIntroScreen onContinue={handleIntroComplete} />
+        ) : isShowingTips ? (
           <ReconnectionTips 
             selectedPattern={selectedPatternData || null}
             tipsToDisplay={tipsToDisplay}
