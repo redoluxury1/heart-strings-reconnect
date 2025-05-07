@@ -78,8 +78,8 @@ const ConnectionPromptStep: React.FC<ConnectionPromptStepProps> = ({
             </div>
           </div>
           
-          {/* Buttons and input positioned below the image faces */}
-          <div className="flex flex-col gap-3 justify-center items-center max-w-md mx-auto mt-56 relative" style={{ zIndex: 1 }}>
+          {/* Buttons and input positioned far below the image so it doesn't obstruct the couple */}
+          <div className="flex flex-col gap-3 justify-center items-center max-w-md mx-auto mt-96 relative" style={{ zIndex: 1 }}>
             {starterPrompts.map((prompt, index) => (
               <Button
                 key={index}
