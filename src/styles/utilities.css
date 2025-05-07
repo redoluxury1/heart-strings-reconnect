@@ -1,0 +1,18 @@
+
+@layer utilities {
+  .rounded-btn {
+    @apply rounded-full px-6 py-3 font-medium transition-all duration-200 shadow-sm;
+  }
+  
+  .primary-btn {
+    @apply bg-midnight-indigo text-soft-blush hover:bg-opacity-90 rounded-btn;
+  }
+  
+  .secondary-btn {
+    @apply bg-rosewood-tint text-soft-blush hover:bg-opacity-90 rounded-btn;
+  }
+  
+  .outlined-btn {
+    @apply border border-midnight-indigo text-midnight-indigo hover:bg-soft-blush rounded-btn;
+  }
+}
