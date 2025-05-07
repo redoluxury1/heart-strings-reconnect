@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Mic, MicOff } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface PerspectiveStepProps {
   onResponse: (response: string) => void;
@@ -19,6 +20,7 @@ const PerspectiveStep: React.FC<PerspectiveStepProps> = ({
   const [isRecording, setIsRecording] = useState(false);
   const [hasSubmitted, setHasSubmitted] = useState(!!partner1Response);
   const recognitionRef = useRef<any>(null);
+  const isMobile = useIsMobile();
   
   const starterPrompts = [
     "I feel like you misunderstood me when...",
@@ -76,12 +78,17 @@ const PerspectiveStep: React.FC<PerspectiveStepProps> = ({
     setPerspective(prompt);
   };
   
-  const handleSubmit = () => {
-    if (perspective.trim()) {
-      onResponse(perspective.trim());
-      setHasSubmitted(true);
-    }
-  };
+  // Auto-save when content changes
+  useEffect(() => {
+    const saveTimeout = setTimeout(() => {
+      if (perspective.trim() && !hasSubmitted) {
+        onResponse(perspective.trim());
+        setHasSubmitted(true);
+      }
+    }, 1500); // Save after 1.5 seconds of inactivity
+    
+    return () => clearTimeout(saveTimeout);
+  }, [perspective, hasSubmitted, onResponse]);
   
   const speechRecognitionAvailable = 'webkitSpeechRecognition' in window || 'SpeechRecognition' in window;
 
@@ -120,13 +127,13 @@ const PerspectiveStep: React.FC<PerspectiveStepProps> = ({
         </div>
         
         {!hasSubmitted && (
-          <div className="flex flex-wrap gap-2 justify-center mb-4">
+          <div className={`flex flex-wrap gap-2 justify-center mb-4 ${isMobile ? 'max-w-[280px] mx-auto' : ''}`}>
             {starterPrompts.map((prompt, index) => (
               <Button
                 key={index}
                 variant="outline"
                 size="sm"
-                className="bg-[#4c4489] hover:bg-[#3b3476] text-white whitespace-normal py-2 px-4 rounded-full text-sm font-normal"
+                className="bg-[#4c4489] hover:bg-[#3b3476] text-white whitespace-normal py-2 px-3 rounded-full text-xs font-normal"
                 onClick={() => handleStarterPrompt(prompt)}
               >
                 {prompt}
@@ -140,20 +147,10 @@ const PerspectiveStep: React.FC<PerspectiveStepProps> = ({
           value={perspective}
           onChange={(e) => setPerspective(e.target.value)}
           placeholder="Type your perspective here..."
-          className="w-full h-32 mt-4 rounded-3xl bg-[#f8f3e9] border-[#f8f3e9] text-[#5e5757] px-6 py-4 text-lg"
+          className="w-full h-24 mt-4 rounded-3xl bg-[#f8f3e9] border-[#f8f3e9] text-[#5e5757] px-6 py-4 text-lg"
         />
         
-        {!hasSubmitted && (
-          <div className="flex justify-center mt-6">
-            <Button 
-              className="bg-[#4c4489] hover:bg-[#3b3476] text-white px-8 py-2 rounded-full"
-              onClick={handleSubmit}
-              disabled={!perspective.trim()}
-            >
-              Continue
-            </Button>
-          </div>
-        )}
+        {/* Remove continue button - Auto-save functionality added instead */}
       </div>
       
       {/* Only show partner's perspective after submission */}
