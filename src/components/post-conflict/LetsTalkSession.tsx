@@ -1,6 +1,6 @@
 
-import React from 'react';
-import { SessionProvider } from './context/SessionContext';
+import React, { useEffect } from 'react';
+import { SessionProvider, useSession } from './context/SessionContext';
 import ProgressIndicator from './navigation/ProgressIndicator';
 import StepsNavigation from './navigation/StepsNavigation';
 import { useSteps } from './config/stepsConfig';
@@ -11,6 +11,12 @@ interface WorkThroughSessionProps {
 
 const WorkThroughSessionContent: React.FC<{ onExit: () => void }> = ({ onExit }) => {
   const { currentStepContent, totalSteps } = useSteps(onExit);
+  const { currentStep } = useSession();
+  
+  // Scroll to top whenever the current step changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [currentStep]);
   
   return (
     <div className="bg-[#f5f0e8] rounded-xl shadow-md overflow-hidden">

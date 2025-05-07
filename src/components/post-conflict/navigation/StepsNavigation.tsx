@@ -13,12 +13,16 @@ const StepsNavigation: React.FC<StepsNavigationProps> = ({ totalSteps }) => {
   const goBack = () => {
     if (currentStep > 0) {
       setCurrentStep(currentStep - 1);
+      // Scroll to top of the page when navigating to ensure user sees the beginning of content
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
   
   const goNext = () => {
     if (currentStep < totalSteps - 1 && bothPartnersReady) {
       setCurrentStep(currentStep + 1);
+      // Scroll to top of the page when navigating to ensure user sees the beginning of content
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
   

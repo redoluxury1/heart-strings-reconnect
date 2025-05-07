@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { getRealIssues } from '@/data/real-issues-data';
 import { MessageCircle, Target } from 'lucide-react';
@@ -19,6 +19,22 @@ const RealFightAbout = () => {
   const [customPhrase, setCustomPhrase] = useState('');
   const [startConversationOpen, setStartConversationOpen] = useState(false);
   const realIssues = getRealIssues();
+  const selectedIssueRef = useRef<HTMLDivElement>(null);
+  
+  const handleSelectIssue = (issue: RealIssue) => {
+    // If clicking the same issue, toggle it off
+    if (selectedIssue?.id === issue.id) {
+      setSelectedIssue(null);
+    } else {
+      setSelectedIssue(issue);
+      // Adding a slight delay to ensure the DOM is updated before scrolling
+      setTimeout(() => {
+        if (selectedIssueRef.current) {
+          selectedIssueRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      }, 100);
+    }
+  };
   
   const handleStartChat = () => {
     if (selectedIssue) {
@@ -71,48 +87,52 @@ const RealFightAbout = () => {
         </p>
       </div>
       
-      <div className="grid grid-cols-1 gap-3">
+      <div className="space-y-3">
         {realIssues.map((issue) => (
-          <Button
-            key={issue.id}
-            variant={selectedIssue?.id === issue.id ? "default" : "outline"}
-            className={`text-left justify-start h-auto py-3 px-4 w-full whitespace-normal ${
-              selectedIssue?.id === issue.id 
-                ? "bg-mauve-rose/90 text-white" 
-                : "border-mauve-rose/30 hover:bg-mauve-rose/10 hover:text-mauve-rose text-midnight-indigo"
-            }`}
-            onClick={() => setSelectedIssue(issue)}
-          >
-            <span>{issue.label}</span>
-          </Button>
+          <div key={issue.id} className="flex flex-col">
+            <Button
+              variant={selectedIssue?.id === issue.id ? "default" : "outline"}
+              className={`text-left justify-start h-auto py-3 px-4 w-full whitespace-normal ${
+                selectedIssue?.id === issue.id 
+                  ? "bg-mauve-rose/90 text-white" 
+                  : "border-mauve-rose/30 hover:bg-mauve-rose/10 hover:text-mauve-rose text-midnight-indigo"
+              }`}
+              onClick={() => handleSelectIssue(issue)}
+            >
+              <span>{issue.label}</span>
+            </Button>
+            
+            {selectedIssue?.id === issue.id && (
+              <div 
+                ref={selectedIssueRef}
+                className="mt-2 space-y-5 bg-soft-blush/20 p-5 rounded-md animate-fade-in"
+              >
+                <div>
+                  <h4 className="text-md font-medium text-mauve-rose mb-2">What's Really Going On:</h4>
+                  <p className="text-midnight-indigo text-sm">
+                    {selectedIssue.explanation}
+                  </p>
+                </div>
+                
+                <div>
+                  <h4 className="text-md font-medium text-lavender-blue mb-2">Express It This Way:</h4>
+                  <p className="bg-white p-4 rounded border border-lavender-blue/30 text-midnight-indigo">
+                    "{selectedIssue.suggestion}"
+                  </p>
+                </div>
+                
+                <Button 
+                  onClick={handleStartChat} 
+                  className="bg-mauve-rose hover:bg-mauve-rose/90 text-white mt-4 w-full py-2.5"
+                >
+                  <MessageCircle className="h-4 w-4 mr-2" />
+                  Start a Chat
+                </Button>
+              </div>
+            )}
+          </div>
         ))}
       </div>
-      
-      {selectedIssue && (
-        <div className="mt-6 space-y-5 bg-soft-blush/20 p-5 rounded-md">
-          <div>
-            <h4 className="text-md font-medium text-mauve-rose mb-2">What's Really Going On:</h4>
-            <p className="text-midnight-indigo text-sm">
-              {selectedIssue.explanation}
-            </p>
-          </div>
-          
-          <div>
-            <h4 className="text-md font-medium text-lavender-blue mb-2">Express It This Way:</h4>
-            <p className="bg-white p-4 rounded border border-lavender-blue/30 text-midnight-indigo">
-              "{selectedIssue.suggestion}"
-            </p>
-          </div>
-          
-          <Button 
-            onClick={handleStartChat} 
-            className="bg-mauve-rose hover:bg-mauve-rose/90 text-white mt-4 w-full py-2.5"
-          >
-            <MessageCircle className="h-4 w-4 mr-2" />
-            Start a Chat
-          </Button>
-        </div>
-      )}
     </div>
   );
 };

@@ -25,21 +25,19 @@ const EndSessionStep: React.FC<EndSessionStepProps> = ({
     // Navigate to the "Okay, but what's next" section
     const okayButNowWhatSection = document.getElementById('okay-but-now-what');
     if (okayButNowWhatSection) {
-      okayButNowWhatSection.scrollIntoView({ behavior: 'smooth' });
+      // Offset to account for any fixed headers
+      const yOffset = -80; 
+      const y = okayButNowWhatSection.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      
+      window.scrollTo({
+        top: y,
+        behavior: 'smooth'
+      });
     }
   };
 
   return (
     <div className="text-center max-w-md mx-auto">
-      {/* Main couple illustration */}
-      <div className="mb-6">
-        <img 
-          src="/lovable-uploads/08f3a4de-4e5d-48c7-a31d-baf49f58b59d.png" 
-          alt="Couple sitting with popcorn" 
-          className="w-full h-auto rounded-lg"
-        />
-      </div>
-      
       <h2 className="text-4xl font-cormorant font-medium text-[#2e2a63] mb-4">
         Phew! How do you feel?
       </h2>
@@ -67,7 +65,7 @@ const EndSessionStep: React.FC<EndSessionStepProps> = ({
           className="bg-[#2e2a63] hover:bg-[#1e1a43] text-white py-6 text-lg rounded-full"
           onClick={handleNextSteps}
         >
-          What's next for us?
+          <span className="text-sm">What's next for us?</span>
         </Button>
         
         <Button 
@@ -75,7 +73,7 @@ const EndSessionStep: React.FC<EndSessionStepProps> = ({
           onClick={handlePlayGame}
         >
           <span className="text-white">🚗</span>
-          <span>Play Would You Rather</span>
+          <span className="text-sm">Play Would You Rather</span>
         </Button>
       </div>
       
@@ -85,7 +83,7 @@ const EndSessionStep: React.FC<EndSessionStepProps> = ({
           onClick={onRestart}
         >
           <span className="text-black">💬</span>
-          <span>Talk through something else</span>
+          <span className="text-sm">Talk through something else</span>
         </Button>
       )}
     </div>
