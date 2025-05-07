@@ -23,7 +23,7 @@ const OkayButNowWhat = () => {
   };
   
   return (
-    <div id="okay-but-now-what" className="bg-gradient-to-br from-[#F5F0E8]/60 to-[#F5F0E8]/20 rounded-xl shadow-md">
+    <div id="okay-but-now-what" className="bg-[#F5F0E8] rounded-xl shadow-sm">
       {activeFlow === null ? (
         <InitialOptionsView 
           onFindPattern={handleFindPattern}

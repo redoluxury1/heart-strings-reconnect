@@ -12,35 +12,30 @@ const InitialOptionsView: React.FC<InitialOptionsViewProps> = ({
   onCreateRepairPlan
 }) => {
   return (
-    <div className="bg-gradient-to-br from-soft-cream/40 to-soft-cream/10 rounded-xl shadow-md p-6 md:p-8">
-      <h2 className="text-3xl md:text-4xl font-cormorant font-medium mb-4 text-center text-midnight-indigo">
-        Okay... But Now What?
+    <div className="p-8 md:p-12 flex flex-col items-center">
+      <h2 className="text-4xl md:text-5xl font-cormorant font-medium mb-4 text-center text-[#473C85]">
+        Okay, but now what?
       </h2>
       
-      <p className="text-center text-gray-700 mb-6 max-w-xl mx-auto">
-        This is where we help you get back to being less annoyed.
+      <p className="text-center text-gray-800 mb-12 max-w-lg mx-auto text-xl">
+        This is where we help you prevent the next argument.
       </p>
       
-      <div className="flex flex-col space-y-4 md:space-y-0 md:flex-row md:space-x-4 justify-center mb-4">
+      <div className="flex flex-col space-y-4 w-full max-w-md">
         <Button 
-          className="bg-midnight-indigo hover:bg-midnight-indigo/90 text-white px-6"
+          className="bg-[#473C85] hover:bg-[#373075] text-white py-6 rounded-full text-xl"
           onClick={onFindPattern}
         >
-          Find Our Pattern
+          Recognize a Pattern
         </Button>
         
         <Button 
-          variant="outline" 
-          className="border-gray-300 text-midnight-indigo bg-white/70 hover:bg-gray-100"
+          className="bg-[#473C85] hover:bg-[#373075] text-white py-6 rounded-full text-xl"
           onClick={onCreateRepairPlan}
         >
           Send a White Flag
         </Button>
       </div>
-      
-      <p className="text-center text-gray-500 text-sm mt-4">
-        Tap here to unsay the stupid thing.
-      </p>
     </div>
   );
 };
