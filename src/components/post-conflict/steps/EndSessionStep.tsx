@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Heart, Gamepad2, RefreshCw } from 'lucide-react';
+import { RefreshCw } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Slider } from '@/components/ui/slider';
 
@@ -17,7 +17,7 @@ const EndSessionStep: React.FC<EndSessionStepProps> = ({
   const [moodValue, setMoodValue] = useState([50]); // Default to middle of scale
 
   const handlePlayGame = () => {
-    // This will later link to the would you rather game
+    // This will link to the would you rather game
     navigate('/games');
   };
 
@@ -30,23 +30,25 @@ const EndSessionStep: React.FC<EndSessionStepProps> = ({
   };
 
   return (
-    <div className="text-center">
-      <div className="flex justify-center mb-6">
-        <div className="flex items-center">
-          <Heart className="h-8 w-8 text-red-500 fill-red-500 mr-2" />
-          <Heart className="h-8 w-8 text-red-500 fill-red-500" />
-        </div>
+    <div className="text-center max-w-md mx-auto">
+      {/* Main couple illustration */}
+      <div className="mb-6">
+        <img 
+          src="/lovable-uploads/f010cbe0-b528-4ab1-a115-28e8da8b9acc.png" 
+          alt="Couple sitting together comfortably" 
+          className="w-full h-auto rounded-lg"
+        />
       </div>
       
-      <h2 className="text-2xl md:text-3xl font-cormorant font-medium text-midnight-indigo mb-4">
-        Phew! How do you feel?
+      <h2 className="text-4xl font-cormorant font-medium text-[#2e2a63] mb-4">
+        Phew! How do ya feel?
       </h2>
       
-      <p className="text-gray-700 mb-8 max-w-md mx-auto">
+      <p className="text-gray-800 mb-8 text-lg">
         Conflict doesn't mean disconnection — and you just proved it. What would you like to do next?
       </p>
       
-      <div className="max-w-md mx-auto mb-10">
+      <div className="mb-10">
         <div className="flex justify-between text-sm text-gray-600 mb-2">
           <span>Still Hurting</span>
           <span>Feeling Hopeful</span>
@@ -60,29 +62,29 @@ const EndSessionStep: React.FC<EndSessionStepProps> = ({
         />
       </div>
       
-      <div className="flex flex-col md:flex-row justify-center gap-4 mb-4">
+      <div className="flex flex-col gap-3 mb-2">
         <Button 
-          className="flex items-center gap-2 bg-midnight-indigo hover:bg-midnight-indigo/90 text-white" 
+          className="bg-[#2e2a63] hover:bg-[#1e1a43] text-white py-6 text-xl rounded-full"
           onClick={handleNextSteps}
         >
           What's next for us?
         </Button>
         
         <Button 
-          className="flex items-center gap-2 bg-mauve-rose hover:bg-mauve-rose/90 text-white" 
+          className="bg-[#c06b6b] hover:bg-[#a35757] text-white py-6 text-xl rounded-full flex items-center justify-center gap-2"
           onClick={handlePlayGame}
         >
-          <Gamepad2 size={18} />
+          <span className="text-white">🚗</span>
           Play Would You Rather
         </Button>
       </div>
       
       {onRestart && (
         <Button 
-          className="mb-4 flex items-center gap-2 mx-auto bg-mauve-rose/30 hover:bg-mauve-rose/40 text-midnight-indigo"
+          className="bg-[#e3d5bd] hover:bg-[#d6c9b1] text-black py-6 text-xl rounded-full flex items-center justify-center gap-2 w-full"
           onClick={onRestart}
         >
-          <RefreshCw size={18} />
+          <span className="text-black">💬</span>
           Talk through something else
         </Button>
       )}
