@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -62,29 +61,26 @@ const ConnectionPromptStep: React.FC<ConnectionPromptStepProps> = ({
       </p>
       
       {!isSubmitted ? (
-        <div className="space-y-8 relative">
-          {/* Image positioned in background */}
-          <div className="flex justify-center relative mb-8">
+        <div className="space-y-8">
+          <div className="flex justify-center mb-4">
             {!imageLoaded && (
-              <Skeleton className="h-40 w-32 rounded-lg" />
+              <Skeleton className="h-28 w-24 rounded-lg" />
             )}
-            <div className="absolute" style={{ zIndex: 0 }}>
-              <img 
-                src="/lovable-uploads/09ddfa28-d193-41e0-98fb-b37fd0ff5dab.png"
-                alt="Couple holding hands" 
-                className={`h-auto w-40 md:w-48 transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
-                onLoad={() => setImageLoaded(true)}
-              />
-            </div>
+            <img 
+              src="/lovable-uploads/09ddfa28-d193-41e0-98fb-b37fd0ff5dab.png"
+              alt="Couple holding hands" 
+              className={`h-auto w-32 md:w-36 transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+              onLoad={() => setImageLoaded(true)}
+            />
           </div>
           
-          {/* Buttons and input positioned below the smaller image */}
-          <div className="flex flex-col gap-3 justify-center items-center max-w-md mx-auto relative mt-16" style={{ zIndex: 1 }}>
+          {/* Make the interactive elements completely separate from the image */}
+          <div className="flex flex-col gap-2 justify-center items-center max-w-md mx-auto">
             {starterPrompts.map((prompt, index) => (
               <Button
                 key={index}
                 onClick={() => handleStarterPrompt(prompt)}
-                className="bg-[#483D61] hover:bg-[#352d49] text-white w-full py-5 h-14 rounded-full max-w-md text-center"
+                className="bg-[#483D61] hover:bg-[#352d49] text-white w-full py-4 h-12 rounded-full max-w-md text-center"
               >
                 {prompt}
               </Button>
@@ -94,12 +90,12 @@ const ConnectionPromptStep: React.FC<ConnectionPromptStepProps> = ({
               placeholder="I appreciate..."
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              className="mb-4 min-h-[100px] border-[#483D61] border-2 rounded-lg mt-4"
+              className="mb-4 min-h-[100px] border-[#483D61] border-2 rounded-lg mt-2"
             />
             
             <Button 
               onClick={handleSubmit}
-              className="bg-[#592c21] hover:bg-[#452219] text-white w-full py-5 h-14 rounded-full max-w-md"
+              className="bg-[#592c21] hover:bg-[#452219] text-white w-full py-4 h-12 rounded-full max-w-md"
             >
               Continue
             </Button>
