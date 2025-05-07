@@ -18,7 +18,7 @@ const EndSessionStep: React.FC<EndSessionStepProps> = ({
 
   const handlePlayGame = () => {
     // This will link to the would you rather game
-    navigate('/games');
+    navigate('/reconnect');
   };
 
   const handleNextSteps = () => {
