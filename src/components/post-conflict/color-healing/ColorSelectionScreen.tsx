@@ -51,7 +51,7 @@ const ColorSelectionScreen: React.FC<ColorSelectionScreenProps> = ({
                 ${selectedColor === color.value ? 'ring-4 ring-offset-2' : 'hover:ring-2 hover:ring-offset-1'}`}
               style={{ 
                 backgroundColor: color.value,
-                ringColor: color.value
+                // Remove the invalid ringColor property
               }}
             />
             <span className="text-sm font-medium">{color.name}</span>
