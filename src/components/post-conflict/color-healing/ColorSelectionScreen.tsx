@@ -1,8 +1,7 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
-import { CircleDot, ColorPicker } from 'lucide-react';
+import { CircleDot, Palette } from 'lucide-react';
 
 interface ColorSelectionScreenProps {
   selectedColor: string;
@@ -79,7 +78,7 @@ const ColorSelectionScreen: React.FC<ColorSelectionScreenProps> = ({
             </>
           ) : (
             <>
-              <ColorPicker size={16} />
+              <Palette size={16} />
               <span>Create custom color</span>
             </>
           )}
@@ -100,7 +99,6 @@ const ColorSelectionScreen: React.FC<ColorSelectionScreenProps> = ({
                   ${selectedColor === color.value ? 'ring-4 ring-offset-2' : 'hover:ring-2 hover:ring-offset-1'}`}
                 style={{ 
                   backgroundColor: color.value,
-                  // Remove the invalid ringColor property
                 }}
               />
               <span className="text-sm font-medium">{color.name}</span>

@@ -13,7 +13,6 @@ const BreathingGuideScreen: React.FC<BreathingGuideScreenProps> = ({
   onContinue,
   onBack
 }) => {
-  const [isBreathing, setIsBreathing] = useState(true); // Auto-start breathing
   const [breathPhase, setBreathPhase] = useState<'inhale' | 'hold' | 'exhale'>('inhale');
   const [counter, setCounter] = useState(0);
   const [breathCycles, setBreathCycles] = useState(0);
@@ -21,28 +20,20 @@ const BreathingGuideScreen: React.FC<BreathingGuideScreenProps> = ({
   // Size transformations based on phase and counter
   const getCircleSize = () => {
     if (breathPhase === 'inhale') {
-      // Start small (80px), grow to medium (160px), then large (200px)
-      if (counter === 0) return '80px';
-      if (counter === 1) return '120px';
-      if (counter === 2) return '160px';
-      if (counter === 3) return '200px';
+      // Start small (80px), grow to large (200px) over 4 seconds
+      return `${80 + ((counter / 3) * 120)}px`;
     } else if (breathPhase === 'hold') {
       // Stay at maximum size
       return '200px';
     } else if (breathPhase === 'exhale') {
-      // Start large (200px), shrink to medium (160px), then small (80px)
-      if (counter === 5) return '180px';
-      if (counter === 6) return '140px';
-      if (counter === 7) return '100px';
-      if (counter === 8) return '80px';
+      // Start large (200px), shrink to small (80px) over 4 seconds
+      return `${200 - ((counter - 4) / 3 * 120)}px`;
     }
     return '80px'; // Default size
   };
 
   // Breathing circle animation
   useEffect(() => {
-    if (!isBreathing) return;
-    
     const breathingCycle = () => {
       // Inhale for 4 seconds, hold for 1, exhale for 4
       if (counter < 4) {
@@ -63,7 +54,7 @@ const BreathingGuideScreen: React.FC<BreathingGuideScreenProps> = ({
     
     const timer = setInterval(breathingCycle, 1000);
     return () => clearInterval(timer);
-  }, [isBreathing, counter]);
+  }, [counter]);
 
   return (
     <div className="flex flex-col items-center max-w-xl mx-auto text-center">
@@ -83,7 +74,7 @@ const BreathingGuideScreen: React.FC<BreathingGuideScreenProps> = ({
             height: getCircleSize(),
             width: getCircleSize(),
             boxShadow: `0 0 40px 10px ${selectedColor}`,
-            opacity: isBreathing ? 0.8 : 0.5,
+            opacity: 0.8,
             transition: 'all 1s ease-in-out'
           }}
         >
@@ -93,11 +84,11 @@ const BreathingGuideScreen: React.FC<BreathingGuideScreenProps> = ({
         </div>
       </div>
       
-      <div className="flex space-x-4 mt-4">
+      <div className="flex justify-center">
         <Button 
-          variant="outline" 
           onClick={onBack}
-          className="border-gray-300 text-gray-600 hover:text-[#7d6272]"
+          variant="outline" 
+          className="border-gray-300 text-gray-600 hover:text-[#7d6272] mr-4"
         >
           Back
         </Button>

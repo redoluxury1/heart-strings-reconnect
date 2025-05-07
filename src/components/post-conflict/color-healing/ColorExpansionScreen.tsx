@@ -63,17 +63,13 @@ const ColorExpansionScreen: React.FC<ColorExpansionScreenProps> = ({
         ))}
       </div>
       
-      <div className="flex space-x-4 mt-4 relative z-10">
-        <Button 
-          variant="outline" 
-          onClick={onBack}
-          className="border-gray-300 text-gray-600 hover:text-[#7d6272] bg-white"
-        >
-          Back
-        </Button>
+      <div className="flex justify-center mt-4 relative z-10">
         <Button 
           onClick={onContinue}
-          className="bg-[#7d6272] hover:bg-[#6d5262] text-white"
+          className="text-white"
+          style={{
+            backgroundColor: selectedColor,
+          }}
         >
           Continue
         </Button>
