@@ -27,8 +27,8 @@ const NavbarLogo = () => {
           src="/lovable-uploads/8c8b4b4e-6eaf-4c82-a30c-b2969459af89.png" 
           alt="Bridge For Couples" 
           className={`h-16 w-auto transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
-          onLoad={() => setImageLoaded(true)}
           loading="eager" // Critical UI element
+          onLoad={() => setImageLoaded(true)}
         />
         <span className="sr-only">Bridge For Couples</span>
       </Link>
