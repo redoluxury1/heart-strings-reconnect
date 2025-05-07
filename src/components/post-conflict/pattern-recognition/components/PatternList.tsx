@@ -21,11 +21,11 @@ const PatternList: React.FC<PatternListProps> = ({ patterns, onPatternSelect }) 
           />
         </div>
 
-        <h2 className="text-4xl md:text-5xl font-cormorant font-medium text-midnight-indigo my-6">
+        <h2 className="text-4xl md:text-5xl font-cormorant font-medium text-[#14213d] my-6 text-center">
           Does this feel familiar?
         </h2>
         
-        <p className="text-midnight-indigo text-lg md:text-xl max-w-2xl text-center mb-6">
+        <p className="text-[#14213d] text-lg md:text-xl max-w-2xl text-center mb-6">
           Most couples fall into the same pattern again and again. It usually starts small—then spirals. 
           Let's slow it down and catch the steps.
         </p>
