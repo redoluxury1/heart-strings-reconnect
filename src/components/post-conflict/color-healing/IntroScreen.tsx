@@ -29,7 +29,7 @@ const IntroScreen: React.FC<IntroScreenProps> = ({ onBegin }) => {
         
         <div className="flex justify-center mb-8">
           <img 
-            src="/lovable-uploads/f3491f6b-acc0-4171-8fb6-e9a234feab6b.png" 
+            src="/lovable-uploads/bfee4335-5a61-4d5c-bdc2-cda58c3beb29.png" 
             alt="Person with closed eyes and peaceful expression with colorful waves in background" 
             className="h-auto w-full max-w-md"
           />
