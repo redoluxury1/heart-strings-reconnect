@@ -1,4 +1,3 @@
-
 /**
  * Reconnection tips data for the "Okay, but now what?" feature
  * These tips provide practical actions users can take to reconnect after a conflict
@@ -149,7 +148,7 @@ export const reconnectionTips: ReconnectionTip[] = [
     id: 24,
     text: "Create a signal for when either of you feels overwhelmed and needs a break.",
     category: 'communication',
-    patterns: ['stonewalling-pursuit']
+    patterns: ['stonewalling-pursuit', 'pursue-distance']
   },
   {
     id: 25,
@@ -173,6 +172,30 @@ export const reconnectionTips: ReconnectionTip[] = [
     id: 28,
     text: "Agree on a time to return to the conversation that works for both of you.",
     category: 'communication',
-    patterns: ['stonewalling-pursuit']
+    patterns: ['stonewalling-pursuit', 'pursue-distance']
+  },
+  {
+    id: 29,
+    text: "For pursuers: Practice waiting 24 hours before bringing up a concern again.",
+    category: 'communication',
+    patterns: ['pursue-distance']
+  },
+  {
+    id: 30,
+    text: "For distancers: Set a timer for 10 minutes of active engagement before taking space.",
+    category: 'communication',
+    patterns: ['pursue-distance']
+  },
+  {
+    id: 31,
+    text: "Create a shared signal that means 'I need connection' without words.",
+    category: 'communication',
+    patterns: ['pursue-distance']
+  },
+  {
+    id: 32,
+    text: "Agree on a daily 'connection time' that's scheduled and reliable.",
+    category: 'activity',
+    patterns: ['pursue-distance']
   }
 ];

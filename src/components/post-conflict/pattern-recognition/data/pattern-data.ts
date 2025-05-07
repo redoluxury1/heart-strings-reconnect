@@ -1,4 +1,3 @@
-
 import { CommonPattern, PatternQuizzes } from '../types';
 
 // Define common patterns
@@ -38,6 +37,18 @@ export const commonPatterns: CommonPattern[] = [
       "Focus on the underlying feelings beneath contempt"
     ],
     patternType: "contempt-contempt"
+  },
+  {
+    id: 4,
+    name: "Pursue-Distance Cycle",
+    description: "One partner pursues connection, the other distances, creating a harmful push-pull dynamic.",
+    examples: ["Why won't you talk to me?", "I need space", "Stop pressuring me"],
+    breakingTips: [
+      "Recognize when the pattern starts",
+      "Agree on a gentle way to request space",
+      "Schedule connection time in advance"
+    ],
+    patternType: "pursue-distance"
   }
 ];
 
@@ -91,6 +102,23 @@ export const patternQuizzes: PatternQuizzes = {
     {
       id: 3,
       question: "During arguments, do either of you make comments that feel dismissive or belittling?",
+      options: ["Almost always", "Sometimes", "Rarely"],
+    }
+  ],
+  "pursue-distance": [
+    {
+      id: 1,
+      question: "During conflicts, does one of you try to talk more while the other withdraws?",
+      options: ["Almost always", "Sometimes", "Rarely"],
+    },
+    {
+      id: 2,
+      question: "How often do you feel that one person wants more discussion while the other wants space?",
+      options: ["Almost always", "Sometimes", "Rarely"],
+    },
+    {
+      id: 3,
+      question: "Do you feel caught in a cycle where the more one person pursues, the more the other distances?",
       options: ["Almost always", "Sometimes", "Rarely"],
     }
   ]
