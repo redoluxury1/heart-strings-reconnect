@@ -83,13 +83,16 @@ const BreathingGuideScreen: React.FC<BreathingGuideScreenProps> = ({
           className={`rounded-full transition-all duration-[4000ms] flex items-center justify-center text-white font-medium`}
           style={{ 
             backgroundColor: selectedColor,
-            // Reversed logic: small circle for inhale start, large for inhale end/hold, small for exhale end
-            height: breathPhase === 'inhale' ? '80px' : breathPhase === 'hold' ? '200px' : '80px', 
-            width: breathPhase === 'inhale' ? '80px' : breathPhase === 'hold' ? '200px' : '80px',
-            transform: breathPhase === 'inhale' ? 'scale(1, 1)' : breathPhase === 'hold' ? 'scale(2.5, 2.5)' : 'scale(1, 1)',
+            // Correct logic: small circle for inhale start, large for inhale end, small for exhale end
+            height: breathPhase === 'inhale' ? (counter < 2 ? '80px' : counter < 4 ? '160px' : '200px') : 
+                    breathPhase === 'hold' ? '200px' : 
+                    (counter < 7 ? '160px' : '80px'),
+            width: breathPhase === 'inhale' ? (counter < 2 ? '80px' : counter < 4 ? '160px' : '200px') : 
+                   breathPhase === 'hold' ? '200px' : 
+                   (counter < 7 ? '160px' : '80px'),
             boxShadow: `0 0 40px 10px ${selectedColor}`,
             opacity: isBreathing ? 0.8 : 0.5,
-            transition: 'all 4s ease-in-out'
+            transition: 'all 1s ease-in-out'
           }}
         >
           {isBreathing && (
@@ -102,11 +105,7 @@ const BreathingGuideScreen: React.FC<BreathingGuideScreenProps> = ({
       
       <Button 
         onClick={toggleBreathing}
-        className={`mb-6 rounded-full px-6 ${
-          isBreathing 
-            ? 'bg-gray-600 hover:bg-gray-700' 
-            : `bg-[${selectedColor}] hover:opacity-90`
-        }`}
+        className="mb-6 rounded-full px-6 text-white"
         style={{ backgroundColor: isBreathing ? undefined : selectedColor }}
       >
         {isBreathing ? 'Pause' : 'Breathe with me'}
@@ -122,7 +121,10 @@ const BreathingGuideScreen: React.FC<BreathingGuideScreenProps> = ({
         </Button>
         <Button 
           onClick={onContinue}
-          className="bg-[#7d6272] hover:bg-[#6d5262] text-white"
+          className="text-white"
+          style={{
+            backgroundColor: selectedColor,
+          }}
         >
           Continue
         </Button>

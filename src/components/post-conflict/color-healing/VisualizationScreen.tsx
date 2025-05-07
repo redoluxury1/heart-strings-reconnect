@@ -16,11 +16,10 @@ const VisualizationScreen: React.FC<VisualizationScreenProps> = ({
   onContinue,
   onBack
 }) => {
-  const [showControls, setShowControls] = useState(false);
-  const { fadeIn, setFadeIn } = useVisualization();
   const [imagePreloaded, setImagePreloaded] = useState(false);
   const [countdown, setCountdown] = useState(7);
   const [countdownComplete, setCountdownComplete] = useState(false);
+  const { fadeIn, setFadeIn } = useVisualization();
 
   // Preload next screen image
   useEffect(() => {
@@ -39,21 +38,13 @@ const VisualizationScreen: React.FC<VisualizationScreenProps> = ({
       setFadeIn(true);
     }, 1000);
     
-    // Start countdown after a delay
-    const controlsTimer = setTimeout(() => {
-      setShowControls(true);
-    }, 4000);
-    
     return () => {
       clearTimeout(fadeTimer);
-      clearTimeout(controlsTimer);
     };
   }, [setFadeIn]);
   
   // Handle countdown logic
   useEffect(() => {
-    if (!showControls) return;
-    
     let timer: ReturnType<typeof setTimeout>;
     
     if (countdown > 0) {
@@ -67,7 +58,7 @@ const VisualizationScreen: React.FC<VisualizationScreenProps> = ({
     return () => {
       if (timer) clearTimeout(timer);
     };
-  }, [countdown, showControls]);
+  }, [countdown]);
   
   return (
     <div className="flex flex-col items-center max-w-xl mx-auto">
@@ -77,21 +68,22 @@ const VisualizationScreen: React.FC<VisualizationScreenProps> = ({
         <OrbVisualization 
           selectedColor={selectedColor}
           fadeIn={fadeIn}
-          showButtons={showControls}
+          showButtons={false}
         />
       </div>
       
-      {showControls && (
-        <div className="w-full flex flex-col gap-4 items-center">
-          <Button
-            onClick={onContinue}
-            disabled={!countdownComplete}
-            className="bg-[#7D5248] hover:bg-[#6a443b] text-white rounded-full py-3 px-6 w-full max-w-xs text-lg"
-          >
-            {countdownComplete ? 'Continue' : `Continue in ${countdown}`}
-          </Button>
-        </div>
-      )}
+      <div className="w-full flex flex-col gap-4 items-center">
+        <Button
+          onClick={onContinue}
+          disabled={!countdownComplete}
+          className="py-3 px-6 w-full max-w-xs text-lg text-white rounded-full"
+          style={{
+            backgroundColor: selectedColor,
+          }}
+        >
+          {countdownComplete ? 'Continue' : `Continue in ${countdown}`}
+        </Button>
+      </div>
     </div>
   );
 };

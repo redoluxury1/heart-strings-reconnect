@@ -36,7 +36,6 @@ const ColorHealingMethod: React.FC = () => {
 
   const handleColorSelection = (color: string) => {
     setSelectedColor(color);
-    handleNext();
   };
 
   const handleReflectionSelection = (feeling: string) => {

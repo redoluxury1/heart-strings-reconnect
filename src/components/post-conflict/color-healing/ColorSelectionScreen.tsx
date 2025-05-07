@@ -6,15 +6,14 @@ import { Slider } from '@/components/ui/slider';
 interface ColorSelectionScreenProps {
   selectedColor?: string;
   onColorSelect: (color: string) => void;
-  onBack: () => void;
   onContinue: () => void;
+  onBack: () => void;
 }
 
 const ColorSelectionScreen: React.FC<ColorSelectionScreenProps> = ({ 
   selectedColor: initialColor,
   onColorSelect,
-  onBack,
-  onContinue
+  onContinue,
 }) => {
   // Predefined color options
   const colorOptions = [
@@ -112,7 +111,11 @@ const ColorSelectionScreen: React.FC<ColorSelectionScreenProps> = ({
         
         <Button 
           type="submit"
-          className="px-8 py-2 bg-[#7D5248] hover:bg-[#6a443b] text-white"
+          className="px-8 py-2 text-white"
+          style={{
+            backgroundColor: customColor,
+            hover: `${customColor}cc`
+          }}
         >
           Continue with this color
         </Button>
