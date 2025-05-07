@@ -87,11 +87,11 @@ const PerspectiveStep: React.FC<PerspectiveStepProps> = ({
 
   return (
     <div className="max-w-xl mx-auto">
-      {/* New illustration at the top */}
+      {/* Updated illustration */}
       <div className="flex justify-center mb-8">
         <img 
-          src="/lovable-uploads/3dcbd3c7-4288-42ab-b962-0c0161bfdfd7.png" 
-          alt="Person upset after conflict with partner walking away" 
+          src="/lovable-uploads/d5b67d58-780b-4fdb-bfed-f10a3a9f2fa7.png" 
+          alt="Person upset with partner walking away" 
           className="w-full max-w-md h-auto"
         />
       </div>
@@ -120,13 +120,13 @@ const PerspectiveStep: React.FC<PerspectiveStepProps> = ({
         </div>
         
         {!hasSubmitted && (
-          <div className="flex flex-col gap-3 justify-center mb-4">
+          <div className="flex flex-wrap gap-2 justify-center mb-4">
             {starterPrompts.map((prompt, index) => (
               <Button
                 key={index}
                 variant="outline"
-                size="lg"
-                className="bg-[#4c4489] hover:bg-[#3b3476] text-white whitespace-normal h-auto py-3 px-6 rounded-full text-lg font-normal justify-start"
+                size="sm"
+                className="bg-[#4c4489] hover:bg-[#3b3476] text-white whitespace-normal py-2 px-4 rounded-full text-sm font-normal"
                 onClick={() => handleStarterPrompt(prompt)}
               >
                 {prompt}
