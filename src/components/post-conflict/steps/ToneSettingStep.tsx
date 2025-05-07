@@ -25,10 +25,9 @@ const ToneSettingStep: React.FC<ToneSettingStepProps> = ({
   ];
   
   const handleStarterPrompt = (prompt: string) => {
-    // Just set the input text without auto-navigating
+    // Just set the input text without saving or auto-navigating
     setInput(prompt);
-    // Auto-save after selecting a prompt
-    onResponse(prompt);
+    // Remove auto-save after selecting a prompt to prevent auto-advancing
   };
   
   // Auto-save when input changes after a short delay

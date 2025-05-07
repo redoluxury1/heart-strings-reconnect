@@ -1,4 +1,3 @@
-
 import React from 'react';
 import GroundingStep from '../steps/GroundingStep';
 import ToneSettingStep from '../steps/ToneSettingStep';
@@ -40,8 +39,7 @@ export const useSteps = (onExit: () => void) => {
         <ToneSettingStep 
           onResponse={(response) => {
             handleResponse('partner1', 'tone', response);
-            // Auto-advance after a short delay
-            autoAdvance();
+            // Remove auto-advance - this should now happen via the navigation buttons instead
           }}
           partner1Response={sessionData.partner1.responses.tone}
         />
