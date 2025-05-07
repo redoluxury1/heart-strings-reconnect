@@ -34,14 +34,14 @@ const EndSessionStep: React.FC<EndSessionStepProps> = ({
       {/* Main couple illustration */}
       <div className="mb-6">
         <img 
-          src="/lovable-uploads/f010cbe0-b528-4ab1-a115-28e8da8b9acc.png" 
-          alt="Couple sitting together comfortably" 
+          src="/lovable-uploads/08f3a4de-4e5d-48c7-a31d-baf49f58b59d.png" 
+          alt="Couple sitting with popcorn" 
           className="w-full h-auto rounded-lg"
         />
       </div>
       
       <h2 className="text-4xl font-cormorant font-medium text-[#2e2a63] mb-4">
-        Phew! How do ya feel?
+        Phew! How do you feel?
       </h2>
       
       <p className="text-gray-800 mb-8 text-lg">
@@ -64,28 +64,28 @@ const EndSessionStep: React.FC<EndSessionStepProps> = ({
       
       <div className="flex flex-col gap-3 mb-2">
         <Button 
-          className="bg-[#2e2a63] hover:bg-[#1e1a43] text-white py-6 text-xl rounded-full"
+          className="bg-[#2e2a63] hover:bg-[#1e1a43] text-white py-6 text-lg rounded-full"
           onClick={handleNextSteps}
         >
           What's next for us?
         </Button>
         
         <Button 
-          className="bg-[#c06b6b] hover:bg-[#a35757] text-white py-6 text-xl rounded-full flex items-center justify-center gap-2"
+          className="bg-[#c06b6b] hover:bg-[#a35757] text-white py-6 text-lg rounded-full flex items-center justify-center gap-2"
           onClick={handlePlayGame}
         >
           <span className="text-white">🚗</span>
-          Play Would You Rather
+          <span>Play Would You Rather</span>
         </Button>
       </div>
       
       {onRestart && (
         <Button 
-          className="bg-[#e3d5bd] hover:bg-[#d6c9b1] text-black py-6 text-xl rounded-full flex items-center justify-center gap-2 w-full"
+          className="bg-[#e3d5bd] hover:bg-[#d6c9b1] text-black py-6 text-lg rounded-full flex items-center justify-center gap-2 w-full"
           onClick={onRestart}
         >
           <span className="text-black">💬</span>
-          Talk through something else
+          <span>Talk through something else</span>
         </Button>
       )}
     </div>
