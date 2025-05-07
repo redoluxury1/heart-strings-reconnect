@@ -29,7 +29,7 @@ const PatternIntroScreen: React.FC<PatternIntroScreenProps> = ({ onContinue }) =
       
       <Button
         onClick={onContinue}
-        className="bg-[#14213d] hover:bg-[#14213d]/90 text-white font-medium py-6 px-8 rounded-full text-xl w-full max-w-md"
+        className="bg-[#14213d] hover:bg-[#14213d]/90 text-white font-medium py-2 px-6 rounded-full text-base w-auto max-w-xs"
       >
         Start Recognizing the Pattern
       </Button>
