@@ -11,11 +11,11 @@ const PursueDistanceDetailScreen: React.FC<PursueDistanceDetailScreenProps> = ({
   return (
     <div className="flex flex-col items-center text-center max-w-md mx-auto py-6">
       <div className="mb-4 w-full">
-        <h1 className="text-4xl md:text-5xl font-cormorant font-medium text-[#1A1A2E] mb-4">
+        <h1 className="text-4xl md:text-5xl font-medium text-[#1A1A2E] mb-4">
           One of you gets louder. The other pulls away.
         </h1>
         
-        <h2 className="text-xl text-[#444] font-cormorant">
+        <h2 className="text-xl text-[#444] leading-relaxed">
           Both of you are trying to protect connection—you just do it differently.
         </h2>
       </div>
@@ -41,7 +41,7 @@ const PursueDistanceDetailScreen: React.FC<PursueDistanceDetailScreenProps> = ({
         <ul className="space-y-5">
           <li className="flex items-start">
             <div className="mr-3 mt-1">
-              <MessageCircle size={20} className="text-[#8B4513]" />
+              <MessageCircle size={20} className="text-[#D2691E]" />
             </div>
             <div>
               <span className="font-bold text-[#1A1A2E]">Pursuer: </span>
@@ -61,7 +61,7 @@ const PursueDistanceDetailScreen: React.FC<PursueDistanceDetailScreenProps> = ({
           
           <li className="flex items-start">
             <div className="mr-3 mt-1">
-              <HeartCrack size={20} className="text-[#8B4513]" />
+              <HeartCrack size={20} className="text-[#D2691E]" />
             </div>
             <div>
               <span className="font-bold text-[#1A1A2E]">Both: </span>
