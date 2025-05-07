@@ -22,7 +22,7 @@ const PatternDetailScreen: React.FC<PatternDetailScreenProps> = ({ onContinue })
       
       <div className="w-full my-6">
         <img
-          src="/lovable-uploads/2e52d5db-c01c-454c-bda1-17844d611d2c.png"
+          src="/lovable-uploads/f12fb5d9-a81f-4532-b321-307ece3be41e.png"
           alt="Couple in conflict, one partner pointing, the other crossing arms"
           className="w-[65%] mx-auto h-auto"
         />
