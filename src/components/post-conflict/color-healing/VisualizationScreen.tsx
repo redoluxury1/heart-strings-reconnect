@@ -17,6 +17,7 @@ const VisualizationScreen: React.FC<VisualizationScreenProps> = ({
   const [expandOrb, setExpandOrb] = useState(false);
   const [countdown, setCountdown] = useState<number | null>(null);
   const [showButtons, setShowButtons] = useState(true);
+  const [expansionScale, setExpansionScale] = useState(0);
   
   // Trigger fade-in animation after component mounts
   useEffect(() => {
@@ -50,6 +51,14 @@ const VisualizationScreen: React.FC<VisualizationScreenProps> = ({
             }, 1000);
             return 0;
           }
+          
+          // Adjust expansion scale based on countdown time
+          // Scale grows dramatically as we approach 3 seconds
+          const newScale = prev <= 3 
+            ? 20 - (prev * 1.5) // Faster growth in final 3 seconds
+            : 6 + ((10 - prev) * 1.8); // Gradual growth until 3 seconds
+          
+          setExpansionScale(newScale);
           return prev - 1;
         });
       }, 1000);
@@ -77,67 +86,60 @@ const VisualizationScreen: React.FC<VisualizationScreenProps> = ({
       <div className="relative h-80 w-full mb-10 flex items-center justify-center">
         {/* Outer glow layer with more irregular shape */}
         <div 
-          className={`rounded-full transition-all duration-[10000ms] ${
-            expandOrb 
-              ? 'scale-[10] opacity-30' 
-              : (fadeIn ? 'scale-[0.3] opacity-30' : 'scale-0 opacity-0')
-          } animate-pulse-slow`}
+          className="rounded-full transition-all duration-1000 animate-pulse-slow"
           style={{ 
             backgroundColor: 'transparent',
-            height: '60px', 
-            width: '65px', // Slightly wider to create less circular shape
+            height: '65px', 
+            width: '70px', // Slightly wider to create less circular shape
             boxShadow: `0 0 40px 20px ${selectedColor}`,
             filter: 'blur(10px)',
-            transform: 'rotate(15deg)' // Slight rotation for irregular shape
+            transform: 'rotate(15deg)', // Slight rotation for irregular shape
+            opacity: fadeIn ? 0.3 : 0,
+            scale: expandOrb ? `${expansionScale}` : fadeIn ? '0.3' : '0'
           }}
         />
         
         {/* Medium glow layer with different dimensions */}
         <div 
-          className={`absolute rounded-full transition-all duration-[10000ms] ${
-            expandOrb 
-              ? 'scale-[8] opacity-40' 
-              : (fadeIn ? 'scale-[0.2] opacity-40' : 'scale-0 opacity-0')
-          } animate-wave-circle`}
+          className="absolute rounded-full transition-all duration-1000 animate-wave-circle"
           style={{ 
             backgroundColor: 'transparent',
             height: '48px', 
             width: '53px', // Different ratio for less circular appearance
             boxShadow: `0 0 35px 15px ${selectedColor}`,
             filter: 'blur(6px)',
-            borderRadius: '60% 40% 50% 45%' // Irregular border radius
+            borderRadius: '60% 40% 50% 45%', // Irregular border radius
+            opacity: fadeIn ? 0.4 : 0,
+            scale: expandOrb ? `${expansionScale * 0.8}` : fadeIn ? '0.2' : '0'
           }}
         />
         
         {/* Inner bright core with pulsing effect */}
         <div 
-          className={`absolute rounded-full transition-all duration-[10000ms] ${
-            expandOrb 
-              ? 'scale-[6] opacity-70' 
-              : (fadeIn ? 'scale-[0.1] opacity-70' : 'scale-0 opacity-0')
-          } animate-expand`}
+          className="absolute rounded-full transition-all duration-1000 animate-expand"
           style={{ 
             backgroundColor: selectedColor,
             height: '40px', 
             width: '44px', // Slightly wider for less perfect circle
             boxShadow: `0 0 25px 12px ${selectedColor}`,
             filter: 'blur(2px)',
-            borderRadius: '55% 45% 60% 40%' // Irregular border radius
+            borderRadius: '55% 45% 60% 40%', // Irregular border radius
+            opacity: fadeIn ? 0.7 : 0,
+            scale: expandOrb ? `${expansionScale * 0.6}` : fadeIn ? '0.1' : '0'
           }}
         />
         
         {/* Central dot with constant pulsing */}
         <div 
-          className={`absolute transition-opacity duration-1000 animate-pulse-slow ${
-            fadeIn ? 'opacity-90' : 'opacity-0'
-          }`}
+          className="absolute transition-opacity duration-1000 animate-pulse-slow"
           style={{ 
             backgroundColor: selectedColor,
             height: '20px', 
             width: '22px', // Slightly wider
             boxShadow: `0 0 15px 8px ${selectedColor}`,
             borderRadius: '60% 40% 55% 45%', // Irregular border radius
-            transform: 'rotate(-10deg)' // Slight rotation
+            transform: 'rotate(-10deg)', // Slight rotation
+            opacity: fadeIn ? 0.9 : 0
           }}
         />
       </div>
