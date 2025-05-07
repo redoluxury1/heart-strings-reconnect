@@ -5,95 +5,133 @@ import { PatternType } from '../types';
 
 export type PatternId = string;
 
-export const usePatternRecognition = () => {
-  const [selectedPattern, setSelectedPattern] = useState<PatternId | null>(null);
-  const [isShowingQuiz, setIsShowingQuiz] = useState(false);
-  const [isShowingTips, setIsShowingTips] = useState(false);
-  const [quizAnswers, setQuizAnswers] = useState<Array<{questionId: number, answer: string}>>([]);
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [showIntro, setShowIntro] = useState(true);
+interface PatternRecognitionState {
+  selectedPattern: PatternId | null;
+  isShowingQuiz: boolean;
+  isShowingTips: boolean;
+  quizAnswers: Array<{ questionId: number; answer: string }>;
+  currentQuestionIndex: number;
+  showIntro: boolean;
+  showCyclePattern: boolean;
+}
 
-  const handlePatternSelect = useCallback((patternId: PatternId) => {
-    setSelectedPattern(patternId);
-    setIsShowingQuiz(true);
-    setCurrentQuestionIndex(0);
-    setQuizAnswers([]);
+export const usePatternRecognition = () => {
+  const [state, setState] = useState<PatternRecognitionState>({
+    selectedPattern: null,
+    isShowingQuiz: false,
+    isShowingTips: false,
+    quizAnswers: [],
+    currentQuestionIndex: 0,
+    showIntro: true,
+    showCyclePattern: false,
+  });
+  
+  const handleIntroComplete = useCallback(() => {
+    setState(prevState => ({
+      ...prevState,
+      showIntro: false,
+      showCyclePattern: true,
+    }));
+  }, []);
+  
+  const handleCyclePatternComplete = useCallback(() => {
+    setState(prevState => ({
+      ...prevState,
+      showCyclePattern: false,
+    }));
   }, []);
 
-  const handleAnswerSelect = useCallback((questionIndex: number, answerId: string) => {
-    setQuizAnswers(prev => [
-      ...prev, 
-      { questionId: questionIndex, answer: answerId }
-    ]);
-    
-    // Move to the next question or show tips
-    setCurrentQuestionIndex(prev => {
-      const nextIndex = prev + 1;
-      // If no more questions, show tips
-      if (nextIndex >= 3) { // Assuming 3 questions per pattern
-        setIsShowingTips(true);
-        setIsShowingQuiz(false);
-        return 0;
+  const handlePatternSelect = useCallback((patternId: PatternId) => {
+    setState(prevState => ({
+      ...prevState,
+      selectedPattern: patternId,
+      isShowingQuiz: true,
+      currentQuestionIndex: 0,
+      quizAnswers: [],
+    }));
+  }, []);
+  
+  const handleAnswerSelect = useCallback((questionId: number, answerId: string) => {
+    setState(prevState => {
+      const newAnswers = [
+        ...prevState.quizAnswers, 
+        { questionId, answer: answerId }
+      ];
+      
+      const isLastQuestion = prevState.currentQuestionIndex >= 1;
+      
+      if (isLastQuestion) {
+        return {
+          ...prevState,
+          quizAnswers: newAnswers,
+          isShowingQuiz: false,
+          isShowingTips: true,
+        };
       }
-      return nextIndex;
+      
+      return {
+        ...prevState,
+        quizAnswers: newAnswers,
+        currentQuestionIndex: prevState.currentQuestionIndex + 1,
+      };
     });
   }, []);
   
   const handleGoBack = useCallback(() => {
-    if (isShowingTips) {
-      setIsShowingTips(false);
-      setIsShowingQuiz(true);
-    } else if (isShowingQuiz) {
-      if (currentQuestionIndex > 0) {
-        setCurrentQuestionIndex(prev => prev - 1);
-        setQuizAnswers(prev => prev.slice(0, -1));
-      } else {
-        setIsShowingQuiz(false);
-        setSelectedPattern(null);
+    setState(prevState => {
+      if (prevState.isShowingTips) {
+        return {
+          ...prevState,
+          isShowingTips: false,
+          isShowingQuiz: true,
+        };
       }
-    } else {
-      setSelectedPattern(null);
-    }
-  }, [isShowingQuiz, isShowingTips, currentQuestionIndex]);
-  
-  const handleIntroComplete = useCallback(() => {
-    setShowIntro(false);
+      
+      if (prevState.isShowingQuiz) {
+        return {
+          ...prevState,
+          isShowingQuiz: false,
+          selectedPattern: null,
+          quizAnswers: [],
+          currentQuestionIndex: 0,
+        };
+      }
+      
+      if (prevState.showCyclePattern) {
+        return {
+          ...prevState,
+          showCyclePattern: false,
+          showIntro: true,
+        };
+      }
+      
+      return {
+        ...prevState,
+        selectedPattern: null,
+      };
+    });
   }, []);
   
   const getPatternSpecificTips = useCallback((patternType: string): ReconnectionTip[] => {
-    const matchingTips = reconnectionTips.filter(tip => 
-      tip.patterns && tip.patterns.includes(patternType as PatternType)
-    );
-    
-    if (matchingTips.length >= 3) {
-      return matchingTips.slice(0, 3);
-    }
-    
-    // Not enough matching tips, add some general ones
-    const generalTips = reconnectionTips.filter(tip => 
-      !tip.patterns || tip.patterns.length === 0
-    );
-    
-    return [...matchingTips, ...generalTips].slice(0, 3);
+    return reconnectionTips
+      .filter(tip => 
+        tip.patterns.includes(patternType as PatternType)
+      )
+      .sort(() => 0.5 - Math.random())
+      .slice(0, 3);
   }, []);
   
   return {
-    state: {
-      selectedPattern,
-      isShowingQuiz,
-      isShowingTips,
-      quizAnswers,
-      currentQuestionIndex,
-      showIntro
-    },
+    state,
     actions: {
       handlePatternSelect,
       handleAnswerSelect,
       handleGoBack,
-      handleIntroComplete
+      handleIntroComplete,
+      handleCyclePatternComplete,
     },
     helpers: {
-      getPatternSpecificTips
+      getPatternSpecificTips,
     }
   };
 };

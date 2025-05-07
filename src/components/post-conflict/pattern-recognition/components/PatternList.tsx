@@ -13,15 +13,15 @@ const PatternList: React.FC<PatternListProps> = ({ patterns, onPatternSelect }) 
   return (
     <div className="bg-[#F5F0E8] p-4 md:p-6 rounded-lg">
       <div className="flex flex-col items-center justify-center mb-8">
-        <h2 className="text-4xl md:text-5xl font-cormorant font-medium text-[#14213d] mb-4 text-center">
-          Does this feel familiar?
+        <h2 className="text-3xl md:text-4xl font-cormorant font-medium text-[#14213d] mb-3 text-center">
+          Which pattern sounds familiar?
         </h2>
         
-        <p className="text-[#14213d] text-lg md:text-xl max-w-xl text-center mb-8">
+        <p className="text-[#14213d] text-md md:text-lg max-w-xl text-center mb-6">
           These common loops show up in many couples. Tap one to explore how it plays out—and how to break it.
         </p>
 
-        <div className="w-full max-w-md space-y-3">
+        <div className="w-full max-w-md space-y-2">
           {/* Pattern Cards */}
           <PatternCard 
             icon="🔄" 
@@ -78,18 +78,18 @@ const PatternCard = ({
   return (
     <button 
       onClick={onClick}
-      className="w-full bg-white rounded-xl p-3 flex items-center justify-between border border-gray-100 shadow-sm hover:shadow transition-shadow"
+      className="w-full bg-white rounded-xl p-2.5 flex items-center justify-between border border-gray-100 shadow-sm hover:shadow transition-shadow"
     >
-      <div className="flex items-center gap-3">
-        <div className="text-[#E9B872] text-2xl min-w-10 flex items-center justify-center">
+      <div className="flex items-center gap-2">
+        <div className="text-[#E9B872] text-xl min-w-8 flex items-center justify-center">
           {icon}
         </div>
         <div className="text-left">
-          <h3 className="text-base font-medium text-[#14213d]">{title}</h3>
-          <p className="text-sm text-gray-600">{description}</p>
+          <h3 className="text-sm font-medium text-[#14213d]">{title}</h3>
+          <p className="text-xs text-gray-600">{description}</p>
         </div>
       </div>
-      <ArrowRight className="text-gray-400 h-5 w-5" />
+      <ArrowRight className="text-gray-400 h-4 w-4" />
     </button>
   );
 };
