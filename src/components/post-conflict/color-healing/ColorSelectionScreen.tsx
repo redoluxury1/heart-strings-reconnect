@@ -1,6 +1,7 @@
+
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
+import { CirclePicker } from 'react-color';
 
 interface ColorSelectionScreenProps {
   selectedColor: string;
@@ -9,176 +10,99 @@ interface ColorSelectionScreenProps {
   onBack: () => void;
 }
 
-const ColorSelectionScreen: React.FC<ColorSelectionScreenProps> = ({ 
-  selectedColor, 
+const ColorSelectionScreen: React.FC<ColorSelectionScreenProps> = ({
+  selectedColor,
   onColorSelect,
   onContinue,
   onBack
 }) => {
-  const predefinedColors = [
-    { name: 'Blue', hex: '#4A90E2' },
-    { name: 'Purple', hex: '#9B87F5' },
-    { name: 'Pink', hex: '#E887B2' },
-    { name: 'Green', hex: '#58D68D' },
-    { name: 'Gold', hex: '#F4D03F' },
-    { name: 'Teal', hex: '#45B5AA' },
+  const [showContinue, setShowContinue] = useState(false);
+  const [imagePreloaded, setImagePreloaded] = useState(false);
+  
+  // Preload the visualization screen assets
+  useEffect(() => {
+    const img = new Image();
+    img.src = "/lovable-uploads/bfee4335-5a61-4d5c-bdc2-cda58c3beb29.png";
+    img.onload = () => setImagePreloaded(true);
+    
+    return () => {
+      img.onload = null;
+    };
+  }, []);
+  
+  const colors = [
+    '#a6cee3', // Light blue
+    '#1f78b4', // Darker blue
+    '#b2df8a', // Light green
+    '#33a02c', // Darker green
+    '#e5c494', // Light brown
+    '#E6A98E', // Peach
+    '#CC92E7', // Lavender
+    '#fb9a99', // Light red/pink
+    '#e31a1c', // Red
+    '#fdbf6f', // Light orange
+    '#ff7f00', // Orange
+    '#cab2d6', // Light purple
+    '#6a3d9a', // Purple
+    '#7D5248', // Brown (default)
   ];
   
-  // Rainbow gradient for the color picker
-  const rainbowGradient = 'linear-gradient(to right, #FF0000, #FF7F00, #FFFF00, #00FF00, #0000FF, #4B0082, #8B00FF)';
-  
-  // Convert hue value to an RGB hex color
-  const hueToColor = (hue: number) => {
-    // Convert the hue (0-360) to HSL and then to RGB
-    const h = hue;
-    const s = 1; // 100% saturation
-    const l = 0.5; // 50% lightness
-    
-    const chroma = (1 - Math.abs(2 * l - 1)) * s;
-    const x = chroma * (1 - Math.abs((h / 60) % 2 - 1));
-    const m = l - chroma / 2;
-    
-    let r, g, b;
-    if (h >= 0 && h < 60) {
-      [r, g, b] = [chroma, x, 0];
-    } else if (h >= 60 && h < 120) {
-      [r, g, b] = [x, chroma, 0];
-    } else if (h >= 120 && h < 180) {
-      [r, g, b] = [0, chroma, x];
-    } else if (h >= 180 && h < 240) {
-      [r, g, b] = [0, x, chroma];
-    } else if (h >= 240 && h < 300) {
-      [r, g, b] = [x, 0, chroma];
-    } else {
-      [r, g, b] = [chroma, 0, x];
-    }
-    
-    const red = Math.round((r + m) * 255).toString(16).padStart(2, '0');
-    const green = Math.round((g + m) * 255).toString(16).padStart(2, '0');
-    const blue = Math.round((b + m) * 255).toString(16).padStart(2, '0');
-    
-    return `#${red}${green}${blue}`;
-  };
-  
-  // State for the hue value (0-360 degrees)
-  const [hue, setHue] = useState(0);
-  
-  // Use local state to control the preview immediately without waiting for parent updates
-  const [localSelectedColor, setLocalSelectedColor] = useState(selectedColor);
-  
-  // Handle click on predefined color
-  const handlePredefinedColorClick = (color: string) => {
-    setLocalSelectedColor(color); // Update local state immediately for preview
-    onColorSelect(color); // Update the parent component's state
-  };
-  
-  // Update the selected color when hue changes
-  useEffect(() => {
-    const newColor = hueToColor(hue);
-    setLocalSelectedColor(newColor); // Update local state immediately
-    onColorSelect(newColor); // Update parent's state
-  }, [hue, onColorSelect]);
-  
-  // Keep local state in sync with parent state when it changes externally
-  useEffect(() => {
-    setLocalSelectedColor(selectedColor);
-  }, [selectedColor]);
-
-  // Handler for both click and drag on the rainbow
-  const handleRainbowInteraction = (e: React.MouseEvent | React.TouchEvent) => {
-    // Get the position for either mouse or touch event
-    const clientX = 'touches' in e 
-      ? e.touches[0].clientX 
-      : (e as React.MouseEvent).clientX;
-    
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = clientX - rect.left;
-    const percentage = Math.max(0, Math.min(1, x / rect.width));
-    setHue(Math.round(percentage * 360));
-  };
-
-  // Debug logs to help identify issues
-  console.log("Local Selected Color:", localSelectedColor);
-  console.log("Parent Selected Color:", selectedColor);
-
   return (
-    <div className="flex flex-col items-center max-w-xl mx-auto text-center">
+    <div className="flex flex-col items-center max-w-xl mx-auto">
       <h2 className="text-3xl md:text-4xl font-cormorant font-medium mb-6 text-center text-midnight-indigo">
         Choose Your Color
       </h2>
       
-      <p className="text-center text-gray-700 mb-8 text-lg">
-        What's a color that makes you feel safe, calm, or happy?
+      <p className="text-center text-gray-700 mb-3">
+        Which color feels most healing to you right now?
       </p>
-
-      <div className="grid grid-cols-3 gap-4 mb-6 w-full max-w-md">
-        {predefinedColors.map((color) => (
-          <div 
-            key={color.hex} 
-            className={`h-16 rounded-md cursor-pointer flex items-center justify-center transition-all ${
-              localSelectedColor === color.hex ? 'ring-4 ring-offset-2 ring-[#7d6272]' : 'hover:scale-105'
-            }`}
-            style={{ backgroundColor: color.hex }}
-            onClick={() => handlePredefinedColorClick(color.hex)}
-          >
-            <span className={`text-xs font-medium ${['#F4D03F', '#58D68D'].includes(color.hex) ? 'text-gray-800' : 'text-white'}`}>
-              {color.name}
-            </span>
-          </div>
-        ))}
-      </div>
-
-      <div className="mb-8 w-full max-w-md">
-        <Label className="block text-sm text-gray-600 mb-2">Or select a custom color:</Label>
-        
-        {/* Interactive rainbow color picker */}
-        <div 
-          className="h-16 rounded-lg mb-4 relative cursor-pointer" 
-          style={{ background: rainbowGradient }}
-          onClick={handleRainbowInteraction}
-          onMouseMove={(e) => {
-            if (e.buttons === 1) { // Only track if mouse button is pressed
-              handleRainbowInteraction(e);
-            }
+      
+      <p className="text-center text-gray-500 mb-8 text-sm">
+        Trust your intuition—there's no wrong answer
+      </p>
+      
+      <div className="p-4 bg-white rounded-xl shadow-inner mb-8">
+        <CirclePicker
+          width="320px"
+          circleSize={28}
+          circleSpacing={14}
+          colors={colors}
+          color={selectedColor}
+          onChange={(color) => {
+            onColorSelect(color.hex);
+            setShowContinue(true);
           }}
-          onTouchMove={handleRainbowInteraction}
-          aria-label="Color selection slider"
-          role="slider"
-          aria-valuemin={0}
-          aria-valuemax={360}
-          aria-valuenow={hue}
-        >
-          {/* Cursor indicator */}
-          <div 
-            className="absolute top-0 bottom-0 w-2 bg-white border border-gray-300 shadow-md"
-            style={{ 
-              left: `calc(${(hue / 360) * 100}% - 2px)`,
-              transform: 'translateX(-50%)'
-            }}
-          ></div>
-        </div>
-        
-        {/* Color preview - using our local state for immediate updates */}
+        />
+      </div>
+      
+      <div className="flex justify-center items-center mb-6">
         <div 
-          className="h-16 w-full rounded-md border-2 border-gray-200 mb-4"
-          style={{ backgroundColor: localSelectedColor }}
-          aria-label="Selected color preview"
+          className="w-24 h-24 rounded-full transition-all duration-500"
+          style={{ 
+            backgroundColor: selectedColor,
+            boxShadow: `0 0 20px 5px ${selectedColor}`,
+          }}
         ></div>
       </div>
       
-      <div className="flex space-x-4 mt-4">
-        <Button 
-          variant="outline" 
+      <p className="text-center text-gray-600 mb-8 italic">
+        "This color makes me feel safe and calm"
+      </p>
+      
+      <div className="flex flex-col gap-4 mt-4 w-full max-w-sm">
+        <Button
           onClick={onBack}
-          className="border-gray-300 text-gray-600 hover:text-[#7d6272]"
+          variant="outline"
+          className="border-gray-300 text-gray-600 hover:bg-gray-100 rounded-full py-2 px-6"
         >
           Back
         </Button>
-        <Button 
+        
+        <Button
           onClick={onContinue}
-          className="bg-[#7d6272] hover:bg-[#6d5262] text-white"
+          className="bg-[#7D5248] hover:bg-[#6a443b] text-white rounded-full py-2 px-6"
         >
-          Continue
+          Continue with this color
         </Button>
       </div>
     </div>

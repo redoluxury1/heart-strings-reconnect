@@ -28,7 +28,7 @@ const OrbVisualization: React.FC<OrbVisualizationProps> = ({
       <div className="relative">
         {/* Outer layer - slow pulse */}
         <div 
-          className="absolute rounded-full animate-pulse-slow"
+          className="absolute rounded-full animate-pulse-slow will-change-transform"
           style={{ 
             backgroundColor: 'transparent',
             boxShadow: `0 0 40px 25px ${selectedColor}`,
@@ -44,7 +44,7 @@ const OrbVisualization: React.FC<OrbVisualizationProps> = ({
         
         {/* Middle layer - circular movement */}
         <div 
-          className="absolute rounded-full animate-wave-circle"
+          className="absolute rounded-full animate-wave-circle will-change-transform"
           style={{ 
             backgroundColor: 'transparent',
             boxShadow: `0 0 30px 15px ${selectedColor}`,
@@ -61,7 +61,7 @@ const OrbVisualization: React.FC<OrbVisualizationProps> = ({
         
         {/* Inner core - floating movement */}
         <div 
-          className="absolute rounded-full animate-float-slow"
+          className="absolute rounded-full animate-float-slow will-change-transform"
           style={{ 
             backgroundColor: selectedColor,
             boxShadow: `0 0 20px 12px ${selectedColor}`,
@@ -78,7 +78,7 @@ const OrbVisualization: React.FC<OrbVisualizationProps> = ({
         
         {/* Center core - solid */}
         <div 
-          className="absolute rounded-full animate-expand"
+          className="absolute rounded-full animate-expand will-change-transform"
           style={{ 
             backgroundColor: selectedColor,
             height: '40px', 

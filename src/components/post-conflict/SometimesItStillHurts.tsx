@@ -6,6 +6,7 @@ import { Card } from '@/components/ui/card';
 
 const SometimesItStillHurts = () => {
   const [showColorHealing, setShowColorHealing] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
   
   if (showColorHealing) {
     return <ColorHealingMethod />;
@@ -32,7 +33,10 @@ const SometimesItStillHurts = () => {
             <img 
               src="/lovable-uploads/c8f75296-51f7-4d50-84f0-68f55b65e7bc.png" 
               alt="Person crying with partner comforting them"
-              className="w-full max-w-md h-auto" 
+              className={`w-full max-w-md h-auto ${!imageLoaded ? 'opacity-0' : 'opacity-100'} transition-opacity duration-300`} 
+              onLoad={() => setImageLoaded(true)}
+              loading="eager"
+              fetchPriority="high"
             />
           </div>
           

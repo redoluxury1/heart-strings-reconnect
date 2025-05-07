@@ -65,6 +65,7 @@ const IntroScreen: React.FC<IntroScreenProps> = ({ onBegin }) => {
               className={`h-auto w-full max-w-md relative z-0 transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
               onLoad={() => setImageLoaded(true)}
               loading="eager" // This is a critical above-the-fold image
+              fetchPriority="high"
             />
           </div>
         </div>
