@@ -1,10 +1,11 @@
 
 import React from 'react';
 import { CommonPattern } from '../types';
+import { PatternId } from '../hooks/usePatternRecognition';
 
 interface PatternListProps {
   patterns: CommonPattern[];
-  onPatternSelect: (patternId: number) => void;
+  onPatternSelect: (patternId: PatternId) => void;
 }
 
 const PatternList: React.FC<PatternListProps> = ({ patterns, onPatternSelect }) => {

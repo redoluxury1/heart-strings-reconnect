@@ -54,10 +54,13 @@ export const usePatternRecognition = () => {
     if (!patternType) return reconnectionTips.slice(0, 3);
     
     // Filter tips that are relevant to this pattern type
-    // We'll assume reconnectionTips has a relevantPatterns property, if not we need to adjust this
-    const filteredTips = reconnectionTips.filter(tip => 
-      tip.tags && tip.tags.includes(patternType)
-    );
+    // Since reconnectionTips might not have tags, we'll add a type guard
+    const filteredTips = reconnectionTips.filter(tip => {
+      if ('tags' in tip && Array.isArray(tip.tags)) {
+        return tip.tags.includes(patternType);
+      }
+      return false;
+    });
     
     // If we have enough relevant tips, return those, otherwise fall back to random ones
     return filteredTips.length >= 3 
