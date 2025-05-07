@@ -103,7 +103,7 @@ const PerspectiveStep: React.FC<PerspectiveStepProps> = ({
         />
       </div>
       
-      <h2 className="text-4xl md:text-5xl font-cormorant font-medium text-[#3b3476] mb-6 text-center">
+      <h2 className="text-4xl md:text-5xl font-cormorant font-medium text-[#3b3476] mb-6 text-center whitespace-nowrap">
         What just happened?
       </h2>
       
@@ -147,7 +147,7 @@ const PerspectiveStep: React.FC<PerspectiveStepProps> = ({
           value={perspective}
           onChange={(e) => setPerspective(e.target.value)}
           placeholder="Type your perspective here..."
-          className="w-full h-24 mt-4 rounded-3xl bg-[#f8f3e9] border-[#f8f3e9] text-[#5e5757] px-6 py-4 text-lg"
+          className="w-full h-20 mt-4 rounded-3xl bg-[#f8f3e9] border-[#f8f3e9] text-[#5e5757] px-6 py-3 text-sm"
         />
         
         {/* Remove continue button - Auto-save functionality added instead */}
