@@ -1,33 +1,31 @@
 
 import React from 'react';
-import { Button } from '@/components/ui/button';
-import { Check } from 'lucide-react';
 
 interface EmotionButtonProps {
   emotion: string;
   isSelected: boolean;
   onToggle: (emotion: string) => void;
+  backgroundColor?: string;
+  textColor?: string;
 }
 
 const EmotionButton: React.FC<EmotionButtonProps> = ({ 
   emotion, 
   isSelected, 
-  onToggle 
+  onToggle,
+  backgroundColor = 'bg-lavender-100',
+  textColor = 'text-navy-800'
 }) => {
   return (
-    <Button
-      key={emotion}
+    <button
       type="button"
-      variant={isSelected ? 'default' : 'outline'}
-      className={isSelected 
-        ? 'bg-mauve-rose text-white hover:text-white' 
-        : 'border-gray-300 text-gray-700 hover:bg-gray-100 hover:text-mauve-rose'
-      }
+      className={`${backgroundColor} ${textColor} px-6 py-3 rounded-full text-lg transition-all ${
+        isSelected ? 'ring-2 ring-midnight-indigo font-medium' : 'font-normal'
+      }`}
       onClick={() => onToggle(emotion)}
     >
-      {isSelected && <Check className="mr-1 h-4 w-4" />}
       {emotion}
-    </Button>
+    </button>
   );
 };
 

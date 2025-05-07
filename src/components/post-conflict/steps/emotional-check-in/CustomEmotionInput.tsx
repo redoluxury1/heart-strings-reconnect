@@ -1,8 +1,5 @@
 
 import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Plus } from 'lucide-react';
-import { Input } from '@/components/ui/input';
 
 interface CustomEmotionInputProps {
   onAddEmotion: (emotion: string) => void;
@@ -19,12 +16,13 @@ const CustomEmotionInput: React.FC<CustomEmotionInputProps> = ({ onAddEmotion })
   };
 
   return (
-    <div className="flex gap-2 mb-8 max-w-lg mx-auto">
-      <Input
-        placeholder="Add your own emotion..."
+    <div className="flex items-center max-w-xl mx-auto bg-white border border-[#22254a] rounded-full px-4 py-2 mb-8">
+      <input
+        type="text"
+        placeholder="Didn't see yours? Add your own emotion here:"
         value={customEmotion}
         onChange={(e) => setCustomEmotion(e.target.value)}
-        className="flex-grow"
+        className="w-full bg-transparent border-none outline-none px-2 py-1 text-[#22254a]"
         onKeyDown={(e) => {
           if (e.key === 'Enter') {
             e.preventDefault();
@@ -32,15 +30,6 @@ const CustomEmotionInput: React.FC<CustomEmotionInputProps> = ({ onAddEmotion })
           }
         }}
       />
-      <Button
-        onClick={handleAddCustom}
-        variant="outline"
-        className="bg-midnight-indigo/20 hover:bg-midnight-indigo/30 text-midnight-indigo hover:text-midnight-indigo"
-        disabled={!customEmotion.trim()}
-      >
-        <Plus size={16} className="mr-1" />
-        Add
-      </Button>
     </div>
   );
 };
