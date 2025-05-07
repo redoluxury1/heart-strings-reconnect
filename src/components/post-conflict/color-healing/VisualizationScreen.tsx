@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import OrbVisualization from './visualization/OrbVisualization';
 import VisualizationControls from './visualization/VisualizationControls';
 import VisualizationInstructions from './visualization/VisualizationInstructions';
-import { useVisualization } from './hooks/useVisualization';
+import useVisualization from './hooks/useVisualization';
 
 interface VisualizationScreenProps {
   selectedColor: string;
