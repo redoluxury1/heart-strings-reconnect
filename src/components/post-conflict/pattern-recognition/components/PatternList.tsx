@@ -2,7 +2,7 @@
 import React from 'react';
 import { CommonPattern } from '../types';
 import { PatternId } from '../hooks/usePatternRecognition';
-import { Button } from '@/components/ui/button';
+import { ArrowRight } from 'lucide-react';
 
 interface PatternListProps {
   patterns: CommonPattern[];
@@ -11,33 +11,86 @@ interface PatternListProps {
 
 const PatternList: React.FC<PatternListProps> = ({ patterns, onPatternSelect }) => {
   return (
-    <div className="bg-[#F5F0E8] p-4 rounded-lg">
-      <div className="flex flex-col items-center justify-center mb-8 mt-4">
-        <div className="relative w-full max-w-md mb-4">
-          <img 
-            src="/lovable-uploads/5cb5dfb1-324e-4ed4-b1a6-5e68957ad34e.png" 
-            alt="Relationship cycle: Frustration, React, Hurt, Distance" 
-            className="w-full h-auto"
-          />
-        </div>
-
-        <h2 className="text-4xl md:text-5xl font-cormorant font-medium text-[#14213d] my-6 text-center">
-          Does this feel familiar?
+    <div className="bg-[#F5F0E8] p-4 md:p-6 rounded-lg">
+      <div className="flex flex-col items-center justify-center mb-8">
+        <h2 className="text-4xl md:text-5xl font-cormorant font-medium text-[#14213d] mb-4 text-center">
+          Which pattern sounds like your relationship?
         </h2>
         
-        <p className="text-[#14213d] text-lg md:text-xl max-w-2xl text-center mb-6">
-          Most couples fall into the same pattern again and again. It usually starts small—then spirals. 
-          Let's slow it down and catch the steps.
+        <p className="text-[#14213d] text-lg md:text-xl max-w-2xl text-center mb-8">
+          These common loops show up in many couples. Tap one to explore how it plays out—and how to break it.
         </p>
 
-        <Button 
-          className="bg-[#14213d] hover:bg-[#14213d]/90 text-white font-medium py-6 px-8 rounded-full text-xl w-full max-w-md"
-          onClick={() => onPatternSelect("1")}
-        >
-          See Common Patterns
-        </Button>
+        <div className="w-full max-w-2xl space-y-4">
+          {/* Pattern Cards */}
+          <PatternCard 
+            icon="🔄" 
+            title="Blame / Defend / Withdraw"
+            description="You feel blamed, so you shut down. They get louder. Repeat."
+            onClick={() => onPatternSelect("1")}
+          />
+          
+          <PatternCard 
+            icon="👫" 
+            title="Pursue / Distance"
+            description="One of you chases connection. The other pulls away."
+            onClick={() => onPatternSelect("2")}
+          />
+          
+          <PatternCard 
+            icon="⚡" 
+            title="Silent Tension > Snap > Shame"
+            description="It builds up... until it bursts."
+            onClick={() => onPatternSelect("3")}
+          />
+          
+          <PatternCard 
+            icon="🔊" 
+            title="Criticize / Control"
+            description="Everything feels like a correction."
+            onClick={() => onPatternSelect("4")}
+          />
+          
+          <PatternCard 
+            icon="🧩" 
+            title="Fix It / Reject It"
+            description="One wants to solve. The other isn't ready."
+            onClick={() => onPatternSelect("5")}
+          />
+        </div>
       </div>
     </div>
+  );
+};
+
+// Pattern card component
+const PatternCard = ({ 
+  icon, 
+  title, 
+  description, 
+  onClick 
+}: { 
+  icon: string; 
+  title: string; 
+  description: string; 
+  onClick: () => void;
+}) => {
+  return (
+    <button 
+      onClick={onClick}
+      className="w-full bg-white rounded-xl p-4 flex items-center justify-between border border-gray-100 shadow-sm hover:shadow transition-shadow"
+    >
+      <div className="flex items-center gap-4">
+        <div className="text-[#E9B872] text-3xl min-w-12 flex items-center justify-center">
+          {icon}
+        </div>
+        <div className="text-left">
+          <h3 className="text-xl font-medium text-[#14213d]">{title}</h3>
+          <p className="text-gray-600">{description}</p>
+        </div>
+      </div>
+      <ArrowRight className="text-gray-400 h-6 w-6" />
+    </button>
   );
 };
 

@@ -1,89 +1,99 @@
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
+import { reconnectionTips, ReconnectionTip } from '@/data/reconnection-tips';
 import { PatternType } from '../types';
-import { reconnectionTips } from '@/data/reconnection-tips';
 
-// Define a type for Pattern ID which was missing
 export type PatternId = string;
 
 export const usePatternRecognition = () => {
   const [selectedPattern, setSelectedPattern] = useState<PatternId | null>(null);
   const [isShowingQuiz, setIsShowingQuiz] = useState(false);
   const [isShowingTips, setIsShowingTips] = useState(false);
+  const [quizAnswers, setQuizAnswers] = useState<Array<{questionId: number, answer: string}>>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [showIntro, setShowIntro] = useState(true);
 
-  // Handle selecting a pattern
-  const handlePatternSelect = (patternId: PatternId) => {
+  const handlePatternSelect = useCallback((patternId: PatternId) => {
     setSelectedPattern(patternId);
     setIsShowingQuiz(true);
     setCurrentQuestionIndex(0);
-  };
+    setQuizAnswers([]);
+  }, []);
 
-  // Handle going back to previous screen
-  const handleGoBack = () => {
+  const handleAnswerSelect = useCallback((questionIndex: number, answerId: string) => {
+    setQuizAnswers(prev => [
+      ...prev, 
+      { questionId: questionIndex, answer: answerId }
+    ]);
+    
+    // Move to the next question or show tips
+    setCurrentQuestionIndex(prev => {
+      const nextIndex = prev + 1;
+      // If no more questions, show tips
+      if (nextIndex >= 3) { // Assuming 3 questions per pattern
+        setIsShowingTips(true);
+        setIsShowingQuiz(false);
+        return 0;
+      }
+      return nextIndex;
+    });
+  }, []);
+  
+  const handleGoBack = useCallback(() => {
     if (isShowingTips) {
       setIsShowingTips(false);
       setIsShowingQuiz(true);
     } else if (isShowingQuiz) {
-      setIsShowingQuiz(false);
-      setSelectedPattern(null);
-    } else if (selectedPattern !== null) {
-      setSelectedPattern(null);
-    }
-  };
-
-  // Handle selecting an answer in the quiz
-  const handleAnswerSelect = (questionId: number, answerId: string) => {
-    // Move to next question or show tips
-    if (currentQuestionIndex < 2) { // Assuming 3 questions per pattern
-      setCurrentQuestionIndex(prev => prev + 1);
-    } else {
-      setIsShowingQuiz(false);
-      setIsShowingTips(true);
-    }
-  };
-
-  // Handle intro completion
-  const handleIntroComplete = () => {
-    setShowIntro(false);
-  };
-
-  // Helper to get pattern specific tips
-  const getPatternSpecificTips = (patternType: PatternType) => {
-    if (!patternType) return reconnectionTips.slice(0, 3);
-    
-    // Filter tips that are relevant to this pattern type
-    // Since reconnectionTips might not have tags, we'll add a type guard
-    const filteredTips = reconnectionTips.filter(tip => {
-      if ('tags' in tip && Array.isArray(tip.tags)) {
-        return tip.tags.includes(patternType);
+      if (currentQuestionIndex > 0) {
+        setCurrentQuestionIndex(prev => prev - 1);
+        setQuizAnswers(prev => prev.slice(0, -1));
+      } else {
+        setIsShowingQuiz(false);
+        setSelectedPattern(null);
       }
-      return false;
-    });
+    } else {
+      setSelectedPattern(null);
+    }
+  }, [isShowingQuiz, isShowingTips, currentQuestionIndex]);
+  
+  const handleIntroComplete = useCallback(() => {
+    setShowIntro(false);
+  }, []);
+  
+  const getPatternSpecificTips = useCallback((patternType: string): ReconnectionTip[] => {
+    const matchingTips = reconnectionTips.filter(tip => 
+      tip.applicablePatterns.includes(patternType as PatternType)
+    );
     
-    // If we have enough relevant tips, return those, otherwise fall back to random ones
-    return filteredTips.length >= 3 
-      ? filteredTips.slice(0, 3) 
-      : reconnectionTips.sort(() => 0.5 - Math.random()).slice(0, 3);
-  };
-
+    if (matchingTips.length >= 3) {
+      return matchingTips.slice(0, 3);
+    }
+    
+    // Not enough matching tips, add some general ones
+    const generalTips = reconnectionTips.filter(tip => 
+      tip.applicablePatterns.includes('all')
+    );
+    
+    return [...matchingTips, ...generalTips].slice(0, 3);
+  }, []);
+  
   return {
     state: {
       selectedPattern,
       isShowingQuiz,
       isShowingTips,
+      quizAnswers,
       currentQuestionIndex,
-      showIntro,
+      showIntro
     },
     actions: {
       handlePatternSelect,
       handleAnswerSelect,
       handleGoBack,
-      handleIntroComplete,
+      handleIntroComplete
     },
     helpers: {
-      getPatternSpecificTips,
+      getPatternSpecificTips
     }
   };
 };
