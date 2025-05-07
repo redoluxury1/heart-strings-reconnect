@@ -22,7 +22,7 @@ const IntroScreen: React.FC<IntroScreenProps> = ({ onBegin }) => {
           Let's Try Something Soothing
         </h2>
         
-        <p className="text-[#2B2B2B] text-xl mb-8 max-w-md mx-auto leading-relaxed">
+        <p className="text-[#2B2B2B] text-base mb-8 max-w-md mx-auto leading-relaxed">
           Sometimes the body remembers what the mind is ready to move past. This simple breathing
           and visualization method can help you feel more peaceful—even when old pain resurfaces.
         </p>
