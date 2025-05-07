@@ -64,7 +64,7 @@ const ConnectionPromptStep: React.FC<ConnectionPromptStepProps> = ({
       {!isSubmitted ? (
         <div className="space-y-8 relative">
           {/* Image positioned in background */}
-          <div className="flex justify-center relative">
+          <div className="flex justify-center relative mb-96">
             {!imageLoaded && (
               <Skeleton className="h-80 w-64 rounded-lg" />
             )}
@@ -79,7 +79,7 @@ const ConnectionPromptStep: React.FC<ConnectionPromptStepProps> = ({
           </div>
           
           {/* Buttons and input positioned far below the image so it doesn't obstruct the couple */}
-          <div className="flex flex-col gap-3 justify-center items-center max-w-md mx-auto mt-96 relative" style={{ zIndex: 1 }}>
+          <div className="flex flex-col gap-3 justify-center items-center max-w-md mx-auto relative" style={{ zIndex: 1 }}>
             {starterPrompts.map((prompt, index) => (
               <Button
                 key={index}
