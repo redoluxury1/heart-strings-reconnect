@@ -74,7 +74,7 @@ const NeedsRepairStep: React.FC<NeedsRepairStepProps> = ({
                 key={index}
                 variant="outline"
                 size="sm"
-                className="bg-[#7b4b69] hover:bg-[#6a3a58] text-white rounded-full py-1.5 px-3 text-sm font-normal h-auto"
+                className="bg-[#7b4b69] hover:bg-[#6a3a58] text-white rounded-full py-1.5 px-3.5 text-sm font-normal h-auto whitespace-normal"
                 onClick={() => handleStarterPrompt(prompt)}
               >
                 {prompt}
@@ -90,10 +90,7 @@ const NeedsRepairStep: React.FC<NeedsRepairStepProps> = ({
               className="mb-2 min-h-[80px] border-[#7b4b69] border-2 rounded-lg"
             />
             
-            {/* Continue button removed, using auto-save instead */}
-            <p className="text-xs text-gray-500 text-center italic">
-              Your response will save automatically
-            </p>
+            {/* Removed the "Your response will save automatically" text */}
           </div>
         </div>
       ) : (
