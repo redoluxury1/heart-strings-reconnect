@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -31,13 +32,6 @@ const ConnectionPromptStep: React.FC<ConnectionPromptStepProps> = ({
     setInput(prompt);
   };
   
-  const handleSubmit = () => {
-    if (input.trim()) {
-      onResponse(input);
-      setIsSubmitted(true);
-    }
-  };
-  
   // Auto-save when input changes after a short delay
   React.useEffect(() => {
     if (input.trim() && input !== partner1Response) {
@@ -61,7 +55,7 @@ const ConnectionPromptStep: React.FC<ConnectionPromptStepProps> = ({
       </p>
       
       {!isSubmitted ? (
-        <div className="space-y-8">
+        <div className="space-y-6">
           <div className="flex justify-center mb-4">
             {!imageLoaded && (
               <Skeleton className="h-28 w-24 rounded-lg" />
@@ -90,15 +84,10 @@ const ConnectionPromptStep: React.FC<ConnectionPromptStepProps> = ({
               placeholder="I appreciate..."
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              className="mb-4 min-h-[100px] border-[#483D61] border-2 rounded-lg mt-2"
+              className="mb-4 min-h-[60px] border-[#483D61] border-2 rounded-lg mt-2"
             />
             
-            <Button 
-              onClick={handleSubmit}
-              className="bg-[#592c21] hover:bg-[#452219] text-white w-full py-4 h-12 rounded-full max-w-md"
-            >
-              Continue
-            </Button>
+            {/* Continue button removed as requested */}
           </div>
         </div>
       ) : (
