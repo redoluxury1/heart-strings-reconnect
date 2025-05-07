@@ -64,6 +64,11 @@ const ColorSelectionScreen: React.FC<ColorSelectionScreenProps> = ({
   // State for the hue value (0-360 degrees)
   const [hue, setHue] = useState(0);
   
+  // Handle click on predefined color
+  const handlePredefinedColorClick = (color: string) => {
+    onColorSelect(color);
+  };
+  
   // Update the selected color when hue changes
   useEffect(() => {
     const newColor = hueToColor(hue);
@@ -112,7 +117,7 @@ const ColorSelectionScreen: React.FC<ColorSelectionScreenProps> = ({
               selectedColor === color.hex ? 'ring-4 ring-offset-2 ring-[#7d6272]' : 'hover:scale-105'
             }`}
             style={{ backgroundColor: color.hex }}
-            onClick={() => onColorSelect(color.hex)}
+            onClick={() => handlePredefinedColorClick(color.hex)}
           >
             <span className={`text-xs font-medium ${['#F4D03F', '#58D68D'].includes(color.hex) ? 'text-gray-800' : 'text-white'}`}>
               {color.name}
