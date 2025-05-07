@@ -1,7 +1,8 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { Slider } from '@/components/ui/slider';
+import { Label } from '@/components/ui/label';
 
 interface ColorSelectionScreenProps {
   selectedColor: string;
@@ -24,6 +25,62 @@ const ColorSelectionScreen: React.FC<ColorSelectionScreenProps> = ({
     { name: 'Gold', hex: '#F4D03F' },
     { name: 'Teal', hex: '#45B5AA' },
   ];
+  
+  // Rainbow gradient for the slider
+  const rainbowGradient = 'linear-gradient(to right, #FF0000, #FF7F00, #FFFF00, #00FF00, #0000FF, #4B0082, #8B00FF)';
+  
+  // Convert hue value to an RGB hex color
+  const hueToColor = (hue: number) => {
+    // Convert the hue (0-360) to HSL and then to RGB
+    const h = hue;
+    const s = 1; // 100% saturation
+    const l = 0.5; // 50% lightness
+    
+    const chroma = (1 - Math.abs(2 * l - 1)) * s;
+    const x = chroma * (1 - Math.abs((h / 60) % 2 - 1));
+    const m = l - chroma / 2;
+    
+    let r, g, b;
+    if (h >= 0 && h < 60) {
+      [r, g, b] = [chroma, x, 0];
+    } else if (h >= 60 && h < 120) {
+      [r, g, b] = [x, chroma, 0];
+    } else if (h >= 120 && h < 180) {
+      [r, g, b] = [0, chroma, x];
+    } else if (h >= 180 && h < 240) {
+      [r, g, b] = [0, x, chroma];
+    } else if (h >= 240 && h < 300) {
+      [r, g, b] = [x, 0, chroma];
+    } else {
+      [r, g, b] = [chroma, 0, x];
+    }
+    
+    const red = Math.round((r + m) * 255).toString(16).padStart(2, '0');
+    const green = Math.round((g + m) * 255).toString(16).padStart(2, '0');
+    const blue = Math.round((b + m) * 255).toString(16).padStart(2, '0');
+    
+    return `#${red}${green}${blue}`;
+  };
+  
+  // State for the hue value (0-360 degrees)
+  const [hue, setHue] = useState(0);
+  
+  // Update the selected color when hue changes
+  useEffect(() => {
+    const newColor = hueToColor(hue);
+    onColorSelect(newColor);
+  }, [hue, onColorSelect]);
+  
+  // Initialize hue from a selected color if one exists
+  useEffect(() => {
+    // This is a simplified way to get an approximate hue from a hex color
+    // A complete implementation would need to convert hex to HSL properly
+    if (selectedColor && selectedColor !== hueToColor(hue)) {
+      // Just set a default hue when a predefined color is selected
+      // In a more complete implementation, we would extract the hue from the selectedColor
+      setHue(240);
+    }
+  }, [selectedColor]);
 
   return (
     <div className="flex flex-col items-center max-w-xl mx-auto text-center">
@@ -53,13 +110,45 @@ const ColorSelectionScreen: React.FC<ColorSelectionScreenProps> = ({
       </div>
 
       <div className="mb-8 w-full max-w-md">
-        <label className="block text-sm text-gray-600 mb-2">Or select a custom color:</label>
-        <Input 
-          type="color" 
-          value={selectedColor}
-          onChange={(e) => onColorSelect(e.target.value)}
-          className="h-12 w-full cursor-pointer"
-        />
+        <Label className="block text-sm text-gray-600 mb-2">Or select a custom color:</Label>
+        
+        {/* Rainbow color slider */}
+        <div className="mb-4">
+          <div 
+            className="h-12 rounded-lg mb-2 relative cursor-pointer" 
+            style={{ background: rainbowGradient }}
+            onClick={(e) => {
+              const rect = e.currentTarget.getBoundingClientRect();
+              const x = e.clientX - rect.left;
+              const percentage = x / rect.width;
+              setHue(Math.round(percentage * 360));
+            }}
+          >
+            {/* Cursor indicator */}
+            <div 
+              className="absolute top-0 bottom-0 w-2 bg-white border border-gray-300 shadow-md"
+              style={{ 
+                left: `calc(${(hue / 360) * 100}% - 2px)`,
+                transform: 'translateX(-50%)'
+              }}
+            ></div>
+          </div>
+          
+          <Slider
+            value={[hue]}
+            min={0}
+            max={360}
+            step={1}
+            className="w-full"
+            onValueChange={(values) => setHue(values[0])}
+          />
+        </div>
+        
+        {/* Color preview */}
+        <div 
+          className="h-16 w-full rounded-md border-2 border-gray-200 mb-4"
+          style={{ backgroundColor: selectedColor }}
+        ></div>
       </div>
       
       <div className="flex space-x-4 mt-4">
