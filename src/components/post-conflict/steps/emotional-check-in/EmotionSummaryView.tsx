@@ -21,7 +21,7 @@ const EmotionSummaryView: React.FC<EmotionSummaryViewProps> = ({
             {emotions.map(emotion => (
               <span
                 key={emotion}
-                className="bg-[#FFF8C2] text-[#5a5343] px-3 py-1 rounded-full text-sm"
+                className="bg-[#7b4b69] text-white px-3 py-1 rounded-full text-sm"
               >
                 {emotion}
               </span>
@@ -36,7 +36,7 @@ const EmotionSummaryView: React.FC<EmotionSummaryViewProps> = ({
               {partnerEmotions.map(emotion => (
                 <span
                   key={emotion}
-                  className="bg-[#FFE9C2] text-[#5a4a33] px-3 py-1 rounded-full text-sm"
+                  className="bg-[#E5DEFF] text-[#483D8B] px-3 py-1 rounded-full text-sm"
                 >
                   {emotion}
                 </span>

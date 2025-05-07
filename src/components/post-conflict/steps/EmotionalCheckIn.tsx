@@ -27,10 +27,9 @@ const EmotionalCheckIn: React.FC<EmotionalCheckInProps> = ({
     
     setEmotions(updatedEmotions);
     
-    // Auto-submit when emotions change after a short delay
+    // Only save the selections but don't auto-submit
     if (updatedEmotions.length > 0) {
       onResponse(updatedEmotions);
-      setTimeout(() => setIsSubmitted(true), 800);
     }
   };
   
@@ -39,10 +38,9 @@ const EmotionalCheckIn: React.FC<EmotionalCheckInProps> = ({
       const updatedEmotions = [...emotions, emotion];
       setEmotions(updatedEmotions);
       
-      // Auto-submit when adding custom emotion
+      // Only save the selections but don't auto-submit
       if (updatedEmotions.length > 0) {
         onResponse(updatedEmotions);
-        setTimeout(() => setIsSubmitted(true), 800);
       }
     }
   };
