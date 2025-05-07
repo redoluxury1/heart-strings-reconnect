@@ -13,7 +13,7 @@ const PatternList: React.FC<PatternListProps> = ({ patterns, onPatternSelect }) 
   return (
     <div className="space-y-8">
       <div className="text-center mb-8">
-        <h1 className="text-3xl font-semibold text-[#1A1A2E] mb-3">Recognize a Pattern?</h1>
+        <h1 className="text-3xl font-semibold text-[#1A1A2E] mb-3">Which pattern sounds like your relationship?</h1>
         <p className="text-gray-600">
           Most couples find themselves caught in the same few emotional cycles. 
           Which one feels most familiar to you?

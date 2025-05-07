@@ -13,7 +13,10 @@ export type PatternType =
   | 'criticism-defensiveness'
   | 'stonewalling-pursuit'
   | 'contempt-contempt'
-  | 'pursue-distance';
+  | 'pursue-distance'
+  | 'silent-tension-snap'
+  | 'criticize-control'
+  | 'fix-reject';
 
 export interface CommonPattern {
   id: number;

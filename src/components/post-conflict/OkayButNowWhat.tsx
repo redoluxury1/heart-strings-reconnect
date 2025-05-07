@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button';
 import { RotateCw, Flag } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import PatternRecognitionFlow from './pattern-recognition/PatternRecognitionFlow';
-import Card from '@/components/common/Card';
 import { useState } from 'react';
 
 const OkayButNowWhat = () => {
@@ -35,7 +34,10 @@ const OkayButNowWhat = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           {/* Pattern Recognition Button */}
-          <Card className={`bg-white hover:shadow-md transition-shadow cursor-pointer ${showPatternTool ? 'ring-2 ring-[#2e2a63]' : ''}`} onClick={handlePatternToolToggle}>
+          <div 
+            className={`bg-white rounded-lg border shadow-sm hover:shadow-md transition-shadow cursor-pointer ${showPatternTool ? 'ring-2 ring-[#2e2a63]' : ''}`} 
+            onClick={handlePatternToolToggle}
+          >
             <div className="flex flex-col items-center text-center p-4">
               <div className="bg-[#e1d8ed] p-3 rounded-full mb-4">
                 <RotateCw className="h-8 w-8 text-[#2e2a63]" />
@@ -45,10 +47,13 @@ const OkayButNowWhat = () => {
                 Identify the fight you keep having—and why it keeps showing up.
               </p>
             </div>
-          </Card>
+          </div>
           
           {/* Send a White Flag Button */}
-          <Card className={`bg-white hover:shadow-md transition-shadow cursor-pointer ${showFlagTool ? 'ring-2 ring-[#c06b6b]' : ''}`} onClick={handleFlagToolToggle}>
+          <div 
+            className={`bg-white rounded-lg border shadow-sm hover:shadow-md transition-shadow cursor-pointer ${showFlagTool ? 'ring-2 ring-[#c06b6b]' : ''}`}
+            onClick={handleFlagToolToggle}
+          >
             <div className="flex flex-col items-center text-center p-4">
               <div className="bg-[#fce6d4] p-3 rounded-full mb-4">
                 <Flag className="h-8 w-8 text-[#c06b6b]" />
@@ -58,7 +63,7 @@ const OkayButNowWhat = () => {
                 Send a pause signal, call a truce, or say "I need space" without making it worse.
               </p>
             </div>
-          </Card>
+          </div>
         </div>
         
         {/* Tool Content Display */}

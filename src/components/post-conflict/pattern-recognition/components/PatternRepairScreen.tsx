@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Smile, Zap, MessageSquare } from 'lucide-react';
@@ -18,15 +17,107 @@ const PatternRepairScreen: React.FC<PatternRepairScreenProps> = ({ pattern, onCo
     navigate('/during-conflict');
   };
 
+  if (!pattern) return null;
+
+  // Default configuration for Blame/Defend/Withdraw pattern
+  let title = "You're not enemies—you're overwhelmed.";
+  let subtitle = "Try these steps to interrupt the cycle and reconnect.";
+  let steps = [
+    { 
+      icon: <Smile size={28} className="text-[#8B4513]" />,
+      title: "Soften the Start",
+      description: "Use gentle language, not blame. Try \"I'm feeling...\" instead of \"You always...\""
+    },
+    { 
+      icon: <Zap size={28} className="text-[#FF8C00]" />,
+      title: "Breathe Before You Defend",
+      description: "Pause and reflect instead of reacting. Defensiveness blocks connection."
+    },
+    { 
+      icon: <MessageSquare size={28} className="text-[#FF8C00]" />,
+      title: "Repair Before You Retreat",
+      description: "Instead of shutting down, say: \"Can we reset?\" or \"I need a sec, but I want to come back.\""
+    }
+  ];
+  
+  // Override configuration based on pattern type
+  switch(pattern.patternType) {
+    case "silent-tension-snap":
+      title = "Your silence isn't protection—it's pressure.";
+      subtitle = "Try these steps to express yourself earlier and gentler.";
+      steps = [
+        { 
+          icon: <Smile size={28} className="text-[#8B4513]" />,
+          title: "Check in Sooner",
+          description: "Don't wait until you're boiling. Name small frustrations before they grow."
+        },
+        { 
+          icon: <Zap size={28} className="text-[#FF8C00]" />,
+          title: "Name the Build-Up",
+          description: "Try \"Something's been bothering me...\" instead of exploding when it's too much."
+        },
+        { 
+          icon: <MessageSquare size={28} className="text-[#FF8C00]" />,
+          title: "Repair the Aftershock",
+          description: "Apologize for your tone, not for your feelings or needs."
+        }
+      ];
+      break;
+    case "criticize-control":
+      title = "It's not about being right—it's about being kind.";
+      subtitle = "Try these steps to give feedback that feels like support, not criticism.";
+      steps = [
+        { 
+          icon: <Smile size={28} className="text-[#8B4513]" />,
+          title: "Shift from Fixing to Understanding",
+          description: "Ask what your partner needs before offering your solution."
+        },
+        { 
+          icon: <Zap size={28} className="text-[#FF8C00]" />,
+          title: "Ask, Don't Instruct",
+          description: "\"Would it help if...\" feels better than \"You should...\""
+        },
+        { 
+          icon: <MessageSquare size={28} className="text-[#FF8C00]" />,
+          title: "Celebrate Progress, Not Perfection",
+          description: "Notice what's going well, not just what could be better."
+        }
+      ];
+      break;
+    case "fix-reject":
+      title = "Solutions without safety don't stick.";
+      subtitle = "Try these steps to create emotional safety before problem-solving.";
+      steps = [
+        { 
+          icon: <Smile size={28} className="text-[#8B4513]" />,
+          title: "Honor the Pause",
+          description: "Don't force closure. Emotional processing has its own timeline."
+        },
+        { 
+          icon: <Zap size={28} className="text-[#FF8C00]" />,
+          title: "Ask, "Is now okay?"",
+          description: "Get consent before offering solutions."
+        },
+        { 
+          icon: <MessageSquare size={28} className="text-[#FF8C00]" />,
+          title: "Come Back Later with Softness",
+          description: "Start with connection, not the problem that needs fixing."
+        }
+      ];
+      break;
+    default:
+      // Keep default configuration for Blame/Defend/Withdraw
+  }
+
   return (
     <div className="flex flex-col items-center text-center max-w-md mx-auto py-6">
       <div className="mb-4 w-full">
         <h1 className="text-4xl md:text-5xl font-medium text-[#14213d] mb-4">
-          You're not enemies—you're overwhelmed.
+          {title}
         </h1>
         
         <h2 className="text-xl text-[#444] leading-relaxed">
-          Try these steps to interrupt the cycle and reconnect.
+          {subtitle}
         </h2>
       </div>
       
@@ -39,49 +130,27 @@ const PatternRepairScreen: React.FC<PatternRepairScreenProps> = ({ pattern, onCo
       </div>
       
       <div className="w-full space-y-4 mt-4">
-        <Card className="p-4 flex items-start">
-          <div className="mr-4 mt-1">
-            <Smile size={28} className="text-[#8B4513]" />
-          </div>
-          <div className="text-left">
-            <h3 className="font-bold text-lg text-[#14213d]">Soften the Start</h3>
-            <p className="text-[#333333]">
-              Use gentle language, not blame. Try "<span className="italic">I'm feeling...</span>" instead of "<span className="italic">You always...</span>"
-            </p>
-          </div>
-        </Card>
-        
-        <Card className="p-4 flex items-start">
-          <div className="mr-4 mt-1">
-            <Zap size={28} className="text-[#FF8C00]" />
-          </div>
-          <div className="text-left">
-            <h3 className="font-bold text-lg text-[#14213d]">Breathe Before You Defend</h3>
-            <p className="text-[#333333]">
-              Pause and reflect instead of reacting. Defensiveness blocks connection.
-            </p>
-          </div>
-        </Card>
-        
-        <Card className="p-4 flex items-start">
-          <div className="mr-4 mt-1">
-            <MessageSquare size={28} className="text-[#FF8C00]" />
-          </div>
-          <div className="text-left">
-            <h3 className="font-bold text-lg text-[#14213d]">Repair Before You Retreat</h3>
-            <p className="text-[#333333]">
-              Instead of shutting down, say: "<span className="italic">Can we reset?</span>" or "<span className="italic">I need a sec, but I want to come back.</span>"
-            </p>
-          </div>
-        </Card>
+        {steps.map((step, index) => (
+          <Card key={index} className="p-4 flex items-start">
+            <div className="mr-4 mt-1">
+              {step.icon}
+            </div>
+            <div className="text-left">
+              <h3 className="font-bold text-lg text-[#14213d]">{step.title}</h3>
+              <p className="text-[#333333]">
+                {step.description}
+              </p>
+            </div>
+          </Card>
+        ))}
       </div>
       
       <div className="w-full mt-10">
         <Button
-          onClick={handleTryInRealLife}
+          onClick={onContinue}
           className="bg-[#14213d] hover:bg-[#14213d]/90 text-white font-medium py-3 px-8 rounded-full text-lg mx-auto"
         >
-          Try in Real Life
+          Continue
         </Button>
       </div>
     </div>

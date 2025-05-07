@@ -20,7 +20,7 @@ const CyclePatternScreen: React.FC<CyclePatternScreenProps> = ({ onContinue }) =
       </h2>
       
       <p className="text-xl text-[#14213d] mb-10">
-        Most couples fall into the same pattern again and again. It usually starts small—then spirals. Let's slow it down and catch the steps.
+        Patterns are hard to see when you're in them. But they repeat for a reason. Let's name yours.
       </p>
       
       <Button
