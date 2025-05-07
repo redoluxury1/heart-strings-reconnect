@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -31,12 +31,17 @@ const NeedsRepairStep: React.FC<NeedsRepairStepProps> = ({
     setInput(prompt);
   };
   
-  const handleSubmit = () => {
-    if (input.trim()) {
-      onResponse(input);
-      setIsSubmitted(true);
+  // Auto-save when input changes after a short delay
+  useEffect(() => {
+    if (input.trim() && input !== partner1Response) {
+      const saveTimer = setTimeout(() => {
+        onResponse(input);
+        setIsSubmitted(true);
+      }, 1200); // Auto-save after 1.2 second of inactivity
+      
+      return () => clearTimeout(saveTimer);
     }
-  };
+  }, [input, onResponse, partner1Response]);
   
   return (
     <div className="max-w-2xl mx-auto">
@@ -44,32 +49,32 @@ const NeedsRepairStep: React.FC<NeedsRepairStepProps> = ({
         Needs + Repair
       </h2>
       
-      <p className="text-center text-2xl text-gray-800 mb-8">
+      <p className="text-center text-2xl text-gray-800 mb-6">
         What do you need in order to move forward?
       </p>
       
       {!isSubmitted ? (
-        <div className="space-y-6">
+        <div className="space-y-4">
           <div className="flex justify-center mb-4">
             {!imageLoaded && (
-              <Skeleton className="h-64 w-64 rounded-lg" />
+              <Skeleton className="h-52 w-52 rounded-lg" />
             )}
             <img 
-              src="/lovable-uploads/86ce82c1-0b6c-4830-b3cd-91817c842665.png" 
+              src="/lovable-uploads/bdee8a9b-e15c-4d60-a2f7-01e813da95e5.png" 
               alt="Couple holding hands and supporting each other" 
-              className={`h-auto w-64 md:w-80 transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+              className={`h-auto w-52 md:w-64 transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
               onLoad={() => setImageLoaded(true)}
               loading="eager"
             />
           </div>
           
-          <div className="space-y-3">
+          <div className="grid grid-cols-2 gap-2 max-w-md mx-auto">
             {starterPrompts.map((prompt, index) => (
               <Button
                 key={index}
                 variant="outline"
-                size="lg"
-                className="bg-[#483D8B] hover:bg-[#3c3372] text-white rounded-full w-full py-6 text-xl font-normal h-auto"
+                size="sm"
+                className="bg-[#7b4b69] hover:bg-[#6a3a58] text-white rounded-full py-1.5 px-3 text-sm font-normal h-auto"
                 onClick={() => handleStarterPrompt(prompt)}
               >
                 {prompt}
@@ -77,21 +82,18 @@ const NeedsRepairStep: React.FC<NeedsRepairStepProps> = ({
             ))}
           </div>
           
-          <div className="mt-6">
+          <div className="mt-3 max-w-md mx-auto">
             <Textarea 
               placeholder="I need..."
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              className="mb-4 min-h-[120px] border-[#483D8B] border-2 rounded-lg"
+              className="mb-2 min-h-[80px] border-[#7b4b69] border-2 rounded-lg"
             />
             
-            <Button 
-              onClick={handleSubmit}
-              className="bg-[#6a5acd] hover:bg-[#483D8B] text-white w-full flex items-center justify-center py-6 text-lg"
-              disabled={!input.trim()}
-            >
-              Continue
-            </Button>
+            {/* Continue button removed, using auto-save instead */}
+            <p className="text-xs text-gray-500 text-center italic">
+              Your response will save automatically
+            </p>
           </div>
         </div>
       ) : (
