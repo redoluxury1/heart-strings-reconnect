@@ -8,11 +8,11 @@ const VisualizationInstructions: React.FC = () => {
         Visualization
       </h2>
       
-      <p className="text-center text-gray-700 mb-4 text-lg max-w-md mx-auto">
+      <p className="text-center text-gray-700 mb-4 text-base max-w-md mx-auto">
         Imagine a small ball of light in your body—it's your chosen color. Maybe it's in your belly… or your chest… or your mind. Picture it clearly.
       </p>
       
-      <p className="text-center text-gray-700 mb-8 text-lg font-medium max-w-md mx-auto">
+      <p className="text-center text-gray-700 mb-8 text-base font-medium max-w-md mx-auto">
         TAKE 5 INTENTIONAL DEEP BREATHS
       </p>
     </>
