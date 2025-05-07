@@ -25,7 +25,7 @@ const EmotionSelectionView: React.FC<EmotionSelectionViewProps> = ({
       category: 'overwhelmed',
       color: 'bg-lavender-100',
       textColor: 'text-navy-800',
-      emotions: ['anxious', 'chaotic', 'stressed', 'retrayed']
+      emotions: ['anxious', 'chaotic', 'stressed', 'betrayed']
     },
     {
       category: 'hurt',
@@ -50,34 +50,33 @@ const EmotionSelectionView: React.FC<EmotionSelectionViewProps> = ({
   return (
     <div className="max-w-2xl mx-auto">
       {/* Main emotion illustration */}
-      <div className="flex justify-center mb-6">
+      <div className="flex justify-center mb-4">
         <img 
-          src="/lovable-uploads/a3832cf3-b101-4e12-b62e-e549e7dc9cf9.png" 
-          alt="Person with hand on face, looking overwhelmed" 
-          className="w-64 h-auto"
+          src="/lovable-uploads/0e873fb6-7302-498a-a8ac-c7c5a5e83f57.png" 
+          alt="Two people looking stressed and emotionally overwhelmed" 
+          className="w-60 h-auto"
         />
       </div>
       
-      <p className="text-center text-navy-800 text-xl mb-10">
+      <p className="text-center text-navy-800 text-md mb-8">
         Emotions run deep—let's name what came up for you.
       </p>
       
       {/* Emotion categories */}
-      <div className="space-y-8 mb-6">
+      <div className="space-y-6 mb-6">
         {emotionCategories.map((category) => (
-          <div key={category.category} className="space-y-3">
-            <h3 className="text-2xl font-medium text-[#7b4b69]">{category.category}</h3>
-            <div className="flex flex-wrap gap-3">
+          <div key={category.category} className="space-y-2">
+            <h3 className="text-xl font-medium text-[#7b4b69]">{category.category}</h3>
+            <div className="grid grid-cols-2 md:grid-cols-2 gap-2">
               {category.emotions.map((emotion) => (
-                <button
+                <EmotionButton
                   key={emotion}
-                  onClick={() => onEmotionToggle(emotion)}
-                  className={`${category.color} ${category.textColor} px-6 py-3 rounded-full text-lg font-medium transition-colors ${
-                    emotions.includes(emotion) ? 'ring-2 ring-midnight-indigo' : ''
-                  }`}
-                >
-                  {emotion}
-                </button>
+                  emotion={emotion}
+                  isSelected={emotions.includes(emotion)}
+                  onToggle={onEmotionToggle}
+                  backgroundColor={category.color}
+                  textColor={category.textColor}
+                />
               ))}
             </div>
           </div>
@@ -85,25 +84,13 @@ const EmotionSelectionView: React.FC<EmotionSelectionViewProps> = ({
       </div>
       
       {/* Add your own emotion */}
-      <div className="flex items-center max-w-xl mx-auto bg-white border border-[#22254a] rounded-full px-4 py-2 mb-8">
-        <input
-          type="text"
-          placeholder="Didn't see yours? Add your own emotion here:"
-          className="w-full bg-transparent border-none outline-none px-2 py-1 text-[#22254a]"
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' && e.currentTarget.value.trim()) {
-              onAddCustomEmotion(e.currentTarget.value.trim());
-              e.currentTarget.value = '';
-            }
-          }}
-        />
-      </div>
+      <CustomEmotionInput onAddEmotion={onAddCustomEmotion} />
       
       {/* Continue button */}
       <div className="text-center">
         <Button 
           onClick={onSubmit}
-          className="bg-[#7b4b69] hover:bg-[#6a3a58] text-white rounded-full px-8 py-6 text-xl w-full max-w-md"
+          className="bg-[#7b4b69] hover:bg-[#6a3a58] text-white rounded-full px-6 py-5 text-md w-full max-w-md"
           disabled={emotions.length === 0}
         >
           I've named my emotions

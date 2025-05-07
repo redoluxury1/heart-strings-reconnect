@@ -16,13 +16,13 @@ const CustomEmotionInput: React.FC<CustomEmotionInputProps> = ({ onAddEmotion })
   };
 
   return (
-    <div className="flex items-center max-w-xl mx-auto bg-white border border-[#22254a] rounded-full px-4 py-2 mb-8">
+    <div className="flex items-center max-w-xl mx-auto bg-white border border-[#22254a] rounded-full px-3 py-1.5 mb-6">
       <input
         type="text"
         placeholder="Didn't see yours? Add your own emotion here:"
         value={customEmotion}
         onChange={(e) => setCustomEmotion(e.target.value)}
-        className="w-full bg-transparent border-none outline-none px-2 py-1 text-[#22254a]"
+        className="w-full bg-transparent border-none outline-none px-2 py-0.5 text-sm text-[#22254a]"
         onKeyDown={(e) => {
           if (e.key === 'Enter') {
             e.preventDefault();

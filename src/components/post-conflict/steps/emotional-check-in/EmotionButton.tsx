@@ -19,7 +19,7 @@ const EmotionButton: React.FC<EmotionButtonProps> = ({
   return (
     <button
       type="button"
-      className={`${backgroundColor} ${textColor} px-6 py-3 rounded-full text-lg transition-all ${
+      className={`${backgroundColor} ${textColor} px-4 py-2 rounded-full text-sm transition-all ${
         isSelected ? 'ring-2 ring-midnight-indigo font-medium' : 'font-normal'
       }`}
       onClick={() => onToggle(emotion)}
