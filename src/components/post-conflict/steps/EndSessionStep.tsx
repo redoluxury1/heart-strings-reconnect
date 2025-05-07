@@ -1,7 +1,6 @@
 
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { RefreshCw } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Slider } from '@/components/ui/slider';
 
@@ -38,6 +37,15 @@ const EndSessionStep: React.FC<EndSessionStepProps> = ({
 
   return (
     <div className="text-center max-w-md mx-auto">
+      {/* Add the couple image */}
+      <div className="flex justify-center mb-6">
+        <img 
+          src="/lovable-uploads/4d7f62d0-dd67-4224-91ce-5befbd32a9bf.png" 
+          alt="Couple relaxing together" 
+          className="h-40 w-auto" 
+        />
+      </div>
+      
       <h2 className="text-4xl font-cormorant font-medium text-[#2e2a63] mb-4">
         Phew! How do you feel?
       </h2>
@@ -69,20 +77,18 @@ const EndSessionStep: React.FC<EndSessionStepProps> = ({
         </Button>
         
         <Button 
-          className="bg-[#c06b6b] hover:bg-[#a35757] text-white py-6 text-lg rounded-full flex items-center justify-center gap-2"
+          className="bg-[#c06b6b] hover:bg-[#a35757] text-white py-6 text-lg rounded-full"
           onClick={handlePlayGame}
         >
-          <span className="text-white">🚗</span>
           <span className="text-sm">Play Would You Rather</span>
         </Button>
       </div>
       
       {onRestart && (
         <Button 
-          className="bg-[#e3d5bd] hover:bg-[#d6c9b1] text-black py-6 text-lg rounded-full flex items-center justify-center gap-2 w-full"
+          className="bg-[#e3d5bd] hover:bg-[#d6c9b1] text-black py-6 text-lg rounded-full w-full"
           onClick={onRestart}
         >
-          <span className="text-black">💬</span>
           <span className="text-sm">Talk through something else</span>
         </Button>
       )}
