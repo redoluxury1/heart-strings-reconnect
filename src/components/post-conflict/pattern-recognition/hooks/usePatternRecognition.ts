@@ -1,18 +1,18 @@
-
-import { useState, useCallback } from 'react';
-import { reconnectionTips, ReconnectionTip } from '@/data/reconnection-tips';
+import { useState } from 'react';
 import { PatternType } from '../types';
+import { ReconnectionTip, reconnectionTips } from '@/data/reconnection-tips';
 
 export type PatternId = string;
 
-interface PatternRecognitionState {
+export interface PatternRecognitionState {
   selectedPattern: PatternId | null;
   isShowingQuiz: boolean;
   isShowingTips: boolean;
-  quizAnswers: Array<{ questionId: number; answer: string }>;
+  quizAnswers: { questionId: number; answer: string }[];
   currentQuestionIndex: number;
   showIntro: boolean;
   showCyclePattern: boolean;
+  showPatternDetail: boolean;
 }
 
 export const usePatternRecognition = () => {
@@ -24,103 +24,132 @@ export const usePatternRecognition = () => {
     currentQuestionIndex: 0,
     showIntro: true,
     showCyclePattern: false,
+    showPatternDetail: false
   });
-  
-  const handleIntroComplete = useCallback(() => {
-    setState(prevState => ({
-      ...prevState,
-      showIntro: false,
-      showCyclePattern: true,
-    }));
-  }, []);
-  
-  const handleCyclePatternComplete = useCallback(() => {
-    setState(prevState => ({
-      ...prevState,
-      showCyclePattern: false,
-    }));
-  }, []);
 
-  const handlePatternSelect = useCallback((patternId: PatternId) => {
-    setState(prevState => ({
-      ...prevState,
-      selectedPattern: patternId,
-      isShowingQuiz: true,
-      currentQuestionIndex: 0,
-      quizAnswers: [],
+  const handleIntroComplete = () => {
+    setState(prev => ({
+      ...prev,
+      showIntro: false,
+      showCyclePattern: true
     }));
-  }, []);
+  };
+
+  const handleCyclePatternComplete = () => {
+    setState(prev => ({
+      ...prev,
+      showCyclePattern: false
+    }));
+  };
+
+  const handlePatternSelect = (patternId: PatternId) => {
+    setState(prev => ({
+      ...prev,
+      selectedPattern: patternId,
+      showPatternDetail: true
+    }));
+  };
   
-  const handleAnswerSelect = useCallback((questionId: number, answerId: string) => {
-    setState(prevState => {
-      const newAnswers = [
-        ...prevState.quizAnswers, 
-        { questionId, answer: answerId }
-      ];
-      
-      const isLastQuestion = prevState.currentQuestionIndex >= 1;
+  const handlePatternDetailComplete = () => {
+    setState(prev => ({
+      ...prev,
+      isShowingQuiz: true,
+      showPatternDetail: false
+    }));
+  };
+
+  const handleAnswerSelect = (questionIndex: number, answerId: string) => {
+    setState(prev => {
+      const newQuizAnswers = [...prev.quizAnswers];
+      newQuizAnswers[questionIndex] = {
+        questionId: questionIndex,
+        answer: answerId
+      };
+
+      const isLastQuestion = questionIndex === 2; // Assuming 3 questions per quiz
       
       if (isLastQuestion) {
         return {
-          ...prevState,
-          quizAnswers: newAnswers,
+          ...prev,
+          quizAnswers: newQuizAnswers,
           isShowingQuiz: false,
-          isShowingTips: true,
+          isShowingTips: true
         };
       }
-      
+
       return {
-        ...prevState,
-        quizAnswers: newAnswers,
-        currentQuestionIndex: prevState.currentQuestionIndex + 1,
+        ...prev,
+        quizAnswers: newQuizAnswers,
+        currentQuestionIndex: questionIndex + 1
       };
     });
-  }, []);
-  
-  const handleGoBack = useCallback(() => {
-    setState(prevState => {
-      if (prevState.isShowingTips) {
+  };
+
+  const handleGoBack = () => {
+    setState(prev => {
+      // If showing tips, go back to the quiz
+      if (prev.isShowingTips) {
         return {
-          ...prevState,
+          ...prev,
           isShowingTips: false,
           isShowingQuiz: true,
-        };
-      }
-      
-      if (prevState.isShowingQuiz) {
-        return {
-          ...prevState,
-          isShowingQuiz: false,
-          selectedPattern: null,
-          quizAnswers: [],
           currentQuestionIndex: 0,
+          quizAnswers: []
         };
       }
       
-      if (prevState.showCyclePattern) {
+      // If showing quiz, go back to pattern detail
+      if (prev.isShowingQuiz) {
         return {
-          ...prevState,
-          showCyclePattern: false,
-          showIntro: true,
+          ...prev,
+          isShowingQuiz: false,
+          showPatternDetail: true,
+          currentQuestionIndex: 0,
+          quizAnswers: []
         };
       }
       
+      // If showing pattern detail, go back to pattern selection
+      if (prev.showPatternDetail) {
+        return {
+          ...prev,
+          selectedPattern: null,
+          showPatternDetail: false
+        };
+      }
+
+      // Default: reset to the initial pattern selection
       return {
-        ...prevState,
+        ...prev,
         selectedPattern: null,
+        isShowingQuiz: false,
+        isShowingTips: false,
+        currentQuestionIndex: 0,
+        quizAnswers: []
       };
     });
-  }, []);
-  
-  const getPatternSpecificTips = useCallback((patternType: string): ReconnectionTip[] => {
-    return reconnectionTips
-      .filter(tip => 
-        tip.patterns.includes(patternType as PatternType)
-      )
+  };
+
+  const getPatternSpecificTips = (patternType: PatternType): ReconnectionTip[] => {
+    // Filter tips that are specific to this pattern type
+    const specificTips = reconnectionTips.filter(tip => 
+      tip.patterns && tip.patterns.includes(patternType)
+    );
+    
+    // If we have at least 3 specific tips, return those
+    if (specificTips.length >= 3) {
+      return specificTips.slice(0, 3);
+    }
+    
+    // Otherwise, add some generic tips to reach 3
+    const genericTips = reconnectionTips
+      .filter(tip => !tip.patterns || !tip.patterns.includes(patternType))
       .sort(() => 0.5 - Math.random())
-      .slice(0, 3);
-  }, []);
-  
+      .slice(0, 3 - specificTips.length);
+    
+    return [...specificTips, ...genericTips];
+  };
+
   return {
     state,
     actions: {
@@ -129,9 +158,10 @@ export const usePatternRecognition = () => {
       handleGoBack,
       handleIntroComplete,
       handleCyclePatternComplete,
+      handlePatternDetailComplete
     },
     helpers: {
-      getPatternSpecificTips,
+      getPatternSpecificTips
     }
   };
 };

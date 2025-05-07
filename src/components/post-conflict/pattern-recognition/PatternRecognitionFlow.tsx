@@ -10,6 +10,7 @@ import QuizQuestion from './components/QuizQuestion';
 import ReconnectionTips from './components/ReconnectionTips';
 import PatternIntroScreen from './components/PatternIntroScreen';
 import CyclePatternScreen from './components/CyclePatternScreen';
+import PatternDetailScreen from './components/PatternDetailScreen';
 import { reconnectionTips } from '@/data/reconnection-tips';
 
 const PatternRecognitionFlow: React.FC = () => {
@@ -22,7 +23,8 @@ const PatternRecognitionFlow: React.FC = () => {
     isShowingTips, 
     currentQuestionIndex, 
     showIntro,
-    showCyclePattern 
+    showCyclePattern,
+    showPatternDetail
   } = state;
   
   const { 
@@ -30,7 +32,8 @@ const PatternRecognitionFlow: React.FC = () => {
     handleAnswerSelect, 
     handleGoBack, 
     handleIntroComplete,
-    handleCyclePatternComplete 
+    handleCyclePatternComplete,
+    handlePatternDetailComplete
   } = actions;
   
   const { getPatternSpecificTips } = helpers;
@@ -50,7 +53,7 @@ const PatternRecognitionFlow: React.FC = () => {
   return (
     <div className="bg-white rounded-xl shadow-md overflow-hidden">
       <div className="p-6 md:p-8">
-        {!showIntro && !showCyclePattern && (selectedPattern !== null || isShowingQuiz || isShowingTips) && (
+        {!showIntro && !showCyclePattern && !showPatternDetail && (selectedPattern !== null || isShowingQuiz || isShowingTips) && (
           <Button
             variant="ghost"
             className="mb-4"
@@ -65,6 +68,8 @@ const PatternRecognitionFlow: React.FC = () => {
           <PatternIntroScreen onContinue={handleIntroComplete} />
         ) : showCyclePattern ? (
           <CyclePatternScreen onContinue={handleCyclePatternComplete} />
+        ) : showPatternDetail ? (
+          <PatternDetailScreen onContinue={handlePatternDetailComplete} />
         ) : isShowingTips ? (
           <ReconnectionTips 
             selectedPattern={selectedPatternData || null}
