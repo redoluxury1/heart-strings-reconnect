@@ -25,7 +25,7 @@ const CyclePatternScreen: React.FC<CyclePatternScreenProps> = ({ onContinue }) =
       
       <Button
         onClick={onContinue}
-        className="bg-[#14213d] hover:bg-[#14213d]/90 text-white font-medium py-3 px-8 rounded-full text-xl w-full max-w-sm"
+        className="bg-[#14213d] hover:bg-[#14213d]/90 text-white font-medium py-2 px-5 rounded-full text-sm"
       >
         See Common Patterns
       </Button>

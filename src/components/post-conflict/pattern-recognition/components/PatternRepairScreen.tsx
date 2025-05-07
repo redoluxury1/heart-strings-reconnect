@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Smile, Zap, MessageSquare } from 'lucide-react';
@@ -24,17 +25,17 @@ const PatternRepairScreen: React.FC<PatternRepairScreenProps> = ({ pattern, onCo
   let subtitle = "Try these steps to interrupt the cycle and reconnect.";
   let steps = [
     { 
-      icon: <Smile size={28} className="text-[#8B4513]" />,
+      icon: <Smile size={28} className="text-[#14213d]" />,
       title: "Soften the Start",
       description: "Use gentle language, not blame. Try \"I'm feeling...\" instead of \"You always...\""
     },
     { 
-      icon: <Zap size={28} className="text-[#FF8C00]" />,
+      icon: <Zap size={28} className="text-[#14213d]" />,
       title: "Breathe Before You Defend",
       description: "Pause and reflect instead of reacting. Defensiveness blocks connection."
     },
     { 
-      icon: <MessageSquare size={28} className="text-[#FF8C00]" />,
+      icon: <MessageSquare size={28} className="text-[#14213d]" />,
       title: "Repair Before You Retreat",
       description: "Instead of shutting down, say: \"Can we reset?\" or \"I need a sec, but I want to come back.\""
     }
@@ -47,17 +48,17 @@ const PatternRepairScreen: React.FC<PatternRepairScreenProps> = ({ pattern, onCo
       subtitle = "Try these steps to express yourself earlier and gentler.";
       steps = [
         { 
-          icon: <Smile size={28} className="text-[#8B4513]" />,
+          icon: <Smile size={28} className="text-[#14213d]" />,
           title: "Check in Sooner",
           description: "Don't wait until you're boiling. Name small frustrations before they grow."
         },
         { 
-          icon: <Zap size={28} className="text-[#FF8C00]" />,
+          icon: <Zap size={28} className="text-[#14213d]" />,
           title: "Name the Build-Up",
           description: "Try \"Something's been bothering me...\" instead of exploding when it's too much."
         },
         { 
-          icon: <MessageSquare size={28} className="text-[#FF8C00]" />,
+          icon: <MessageSquare size={28} className="text-[#14213d]" />,
           title: "Repair the Aftershock",
           description: "Apologize for your tone, not for your feelings or needs."
         }
@@ -68,17 +69,17 @@ const PatternRepairScreen: React.FC<PatternRepairScreenProps> = ({ pattern, onCo
       subtitle = "Try these steps to give feedback that feels like support, not criticism.";
       steps = [
         { 
-          icon: <Smile size={28} className="text-[#8B4513]" />,
+          icon: <Smile size={28} className="text-[#14213d]" />,
           title: "Shift from Fixing to Understanding",
           description: "Ask what your partner needs before offering your solution."
         },
         { 
-          icon: <Zap size={28} className="text-[#FF8C00]" />,
+          icon: <Zap size={28} className="text-[#14213d]" />,
           title: "Ask, Don't Instruct",
           description: "\"Would it help if...\" feels better than \"You should...\""
         },
         { 
-          icon: <MessageSquare size={28} className="text-[#FF8C00]" />,
+          icon: <MessageSquare size={28} className="text-[#14213d]" />,
           title: "Celebrate Progress, Not Perfection",
           description: "Notice what's going well, not just what could be better."
         }
@@ -89,17 +90,17 @@ const PatternRepairScreen: React.FC<PatternRepairScreenProps> = ({ pattern, onCo
       subtitle = "Try these steps to create emotional safety before problem-solving.";
       steps = [
         { 
-          icon: <Smile size={28} className="text-[#8B4513]" />,
+          icon: <Smile size={28} className="text-[#14213d]" />,
           title: "Honor the Pause",
           description: "Don't force closure. Emotional processing has its own timeline."
         },
         { 
-          icon: <Zap size={28} className="text-[#FF8C00]" />,
+          icon: <Zap size={28} className="text-[#14213d]" />,
           title: "Ask, \"Is now okay?\"",
           description: "Get consent before offering solutions."
         },
         { 
-          icon: <MessageSquare size={28} className="text-[#FF8C00]" />,
+          icon: <MessageSquare size={28} className="text-[#14213d]" />,
           title: "Come Back Later with Softness",
           description: "Start with connection, not the problem that needs fixing."
         }
@@ -116,7 +117,7 @@ const PatternRepairScreen: React.FC<PatternRepairScreenProps> = ({ pattern, onCo
           {title}
         </h1>
         
-        <h2 className="text-xl text-[#444] leading-relaxed">
+        <h2 className="text-xl text-[#14213d] leading-relaxed">
           {subtitle}
         </h2>
       </div>
@@ -148,7 +149,7 @@ const PatternRepairScreen: React.FC<PatternRepairScreenProps> = ({ pattern, onCo
       <div className="w-full mt-10">
         <Button
           onClick={onContinue}
-          className="bg-[#14213d] hover:bg-[#14213d]/90 text-white font-medium py-3 px-8 rounded-full text-lg mx-auto"
+          className="bg-[#14213d] hover:bg-[#14213d]/90 text-white font-medium py-2 px-5 rounded-full text-sm"
         >
           Continue
         </Button>

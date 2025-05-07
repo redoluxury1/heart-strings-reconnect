@@ -19,11 +19,11 @@ const PursueDistanceRepairScreen: React.FC<PursueDistanceRepairScreenProps> = ({
   return (
     <div className="flex flex-col items-center text-center max-w-md mx-auto py-6">
       <div className="mb-4 w-full">
-        <h1 className="text-3xl md:text-4xl font-medium text-[#1A1A2E] mb-4">
+        <h1 className="text-3xl md:text-4xl font-medium text-[#14213d] mb-4">
           Connection can't be forced—but it can be invited.
         </h1>
         
-        <h2 className="text-lg text-[#444]">
+        <h2 className="text-lg text-[#14213d]">
           Try these steps to reset the cycle and meet in the middle.
         </h2>
       </div>
@@ -39,10 +39,10 @@ const PursueDistanceRepairScreen: React.FC<PursueDistanceRepairScreenProps> = ({
       <div className="w-full space-y-4 mt-4">
         <Card className="p-4 flex items-start bg-[#FFF8F3] border-0 shadow">
           <div className="mr-4 mt-1">
-            <User className="text-[#D2691E] h-6 w-6" />
+            <User className="text-[#14213d] h-6 w-6" />
           </div>
           <div className="text-left">
-            <h3 className="font-bold text-lg text-[#1A1A2E]">Take the Pressure Off</h3>
+            <h3 className="font-bold text-lg text-[#14213d]">Take the Pressure Off</h3>
             <p className="text-[#333333]">
               If you're the pursuer, slow down. Start with warmth, not urgency. Try "I miss you" instead of "Why are you ignoring me?"
             </p>
@@ -51,10 +51,10 @@ const PursueDistanceRepairScreen: React.FC<PursueDistanceRepairScreenProps> = ({
         
         <Card className="p-4 flex items-start bg-[#FFF8F3] border-0 shadow">
           <div className="mr-4 mt-1">
-            <Speaker className="text-[#D2691E] h-6 w-6" />
+            <Speaker className="text-[#14213d] h-6 w-6" />
           </div>
           <div className="text-left">
-            <h3 className="font-bold text-lg text-[#1A1A2E]">Signal Safety</h3>
+            <h3 className="font-bold text-lg text-[#14213d]">Signal Safety</h3>
             <p className="text-[#333333]">
               If you're the distancer, let them know you're still here. Even "I'm just overwhelmed" builds connection.
             </p>
@@ -63,10 +63,10 @@ const PursueDistanceRepairScreen: React.FC<PursueDistanceRepairScreenProps> = ({
         
         <Card className="p-4 flex items-start bg-[#FFF8F3] border-0 shadow">
           <div className="mr-4 mt-1">
-            <ConnectIcon className="text-[#D2691E] h-6 w-6" />
+            <ConnectIcon className="text-[#14213d] h-6 w-6" />
           </div>
           <div className="text-left">
-            <h3 className="font-bold text-lg text-[#1A1A2E]">Reconnect Without Solving</h3>
+            <h3 className="font-bold text-lg text-[#14213d]">Reconnect Without Solving</h3>
             <p className="text-[#333333]">
               Pause problem-solving. Just share space, listen, or be near each other without fixing anything.
             </p>
@@ -76,10 +76,10 @@ const PursueDistanceRepairScreen: React.FC<PursueDistanceRepairScreenProps> = ({
       
       <div className="w-full mt-10">
         <Button
-          onClick={handleTryInRealLife}
-          className="bg-[#1A1A2E] hover:bg-[#1A1A2E]/90 text-white font-medium py-3 px-8 rounded-xl text-lg mx-auto"
+          onClick={onContinue}
+          className="bg-[#14213d] hover:bg-[#14213d]/90 text-white font-medium py-2 px-5 rounded-full text-sm"
         >
-          Try These in Real Life
+          Continue
         </Button>
       </div>
     </div>

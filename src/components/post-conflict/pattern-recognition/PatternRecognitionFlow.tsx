@@ -16,7 +16,15 @@ import PursueDistanceDetailScreen from './components/PursueDistanceDetailScreen'
 import PursueDistanceRepairScreen from './components/PursueDistanceRepairScreen';
 import { reconnectionTips } from '@/data/reconnection-tips';
 
-const PatternRecognitionFlow: React.FC = () => {
+interface PatternRecognitionFlowProps {
+  onClose?: () => void;
+  fullScreen?: boolean;
+}
+
+const PatternRecognitionFlow: React.FC<PatternRecognitionFlowProps> = ({ 
+  onClose,
+  fullScreen = false
+}) => {
   const { state, actions, helpers } = usePatternRecognition();
   const { sessionData } = useSession();
   
@@ -44,7 +52,7 @@ const PatternRecognitionFlow: React.FC = () => {
   const { getPatternSpecificTips } = helpers;
   
   const selectedPatternData = selectedPattern !== null 
-    ? commonPatterns.find(p => p.id.toString() === selectedPattern)
+    ? commonPatterns.find(p => p.id === parseInt(selectedPattern))
     : null;
   
   const patternType = selectedPatternData?.patternType || null;
@@ -55,14 +63,32 @@ const PatternRecognitionFlow: React.FC = () => {
     ? getPatternSpecificTips(patternType)
     : reconnectionTips.sort(() => 0.5 - Math.random()).slice(0, 3);
   
+  // Determine classes based on fullScreen mode
+  const containerClasses = fullScreen 
+    ? "fixed inset-0 z-50 bg-white overflow-y-auto" 
+    : "bg-white rounded-xl shadow-md overflow-hidden";
+  
   return (
-    <div className="bg-white rounded-xl shadow-md overflow-hidden">
+    <div className={containerClasses}>
       <div className="p-6 md:p-8">
+        {(fullScreen && onClose) && (
+          <Button
+            variant="ghost"
+            className="mb-4"
+            onClick={onClose}
+            size="sm"
+          >
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to tools
+          </Button>
+        )}
+        
         {!showIntro && !showCyclePattern && !showPatternDetail && !showPatternRepair && (selectedPattern !== null || isShowingQuiz || isShowingTips) && (
           <Button
             variant="ghost"
             className="mb-4"
             onClick={handleGoBack}
+            size="sm"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back

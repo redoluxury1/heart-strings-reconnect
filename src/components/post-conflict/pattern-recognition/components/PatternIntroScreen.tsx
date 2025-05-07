@@ -9,11 +9,11 @@ interface PatternIntroScreenProps {
 const PatternIntroScreen: React.FC<PatternIntroScreenProps> = ({ onContinue }) => {
   return (
     <div className="flex flex-col items-center justify-center text-center max-w-3xl mx-auto py-4">
-      <h2 className="text-5xl font-cormorant font-medium text-midnight-indigo mb-6 tracking-tight">
+      <h2 className="text-5xl font-cormorant font-medium text-[#14213d] mb-6 tracking-tight">
         Let's break the cycle.
       </h2>
       
-      <p className="text-xl text-midnight-indigo mb-10 max-w-2xl">
+      <p className="text-xl text-[#14213d] mb-10 max-w-2xl">
         Every couple has patterns. The goal isn't to be perfect—it's to catch 
         the cycle before it catches you.
       </p>
@@ -28,7 +28,7 @@ const PatternIntroScreen: React.FC<PatternIntroScreenProps> = ({ onContinue }) =
       
       <Button
         onClick={onContinue}
-        className="bg-[#14213d] hover:bg-[#14213d]/90 text-white font-medium py-2 px-6 rounded-full text-base w-auto max-w-xs"
+        className="bg-[#14213d] hover:bg-[#14213d]/90 text-white font-medium py-2 px-5 rounded-full text-sm"
       >
         Start Recognizing the Pattern
       </Button>
