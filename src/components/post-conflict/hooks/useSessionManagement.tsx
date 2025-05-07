@@ -17,6 +17,7 @@ const initialSessionData: SessionData = {
 export const useSessionManagement = () => {
   const [sessionData, setSessionData] = useState<SessionData>(initialSessionData);
   const [currentStep, setCurrentStep] = useState(0);
+  const [partnerNotificationShown, setPartnerNotificationShown] = useState(false);
   const bothPartnersReady = sessionData.partner1.ready && sessionData.partner2.ready;
 
   // Initialize from session storage if available
@@ -59,8 +60,8 @@ export const useSessionManagement = () => {
     }));
     
     // Simulate partner 2 response (In a real app, this would come from the other user)
-    // Only show notification for ready check step (step 0)
-    if (partner === 'partner1' && currentStep === 0) {
+    // Only show notification for ready check step (step 0) and only if not shown before
+    if (partner === 'partner1' && currentStep === 0 && !partnerNotificationShown) {
       setTimeout(() => {
         setSessionData(prev => ({
           ...prev,
@@ -70,13 +71,16 @@ export const useSessionManagement = () => {
           }
         }));
         
-        // Only show the "partner is ready" toast on the first step (ready check)
+        // Only show the "partner is ready" toast once on the first step
         toast({
           title: "Your partner is ready",
           description: "Your partner has completed this step.",
           duration: 2000,
           className: "bg-[#E5DEFF] text-[#483D8B] border border-[#C8BDFF]",
         });
+        
+        // Mark notification as shown so it won't appear again
+        setPartnerNotificationShown(true);
       }, 3000);
     }
   };
@@ -88,6 +92,7 @@ export const useSessionManagement = () => {
     // Reset to initial state
     setCurrentStep(0);
     setSessionData(initialSessionData);
+    setPartnerNotificationShown(false);
     
     toast({
       title: "Starting new session",

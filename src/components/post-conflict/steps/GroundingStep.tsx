@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
@@ -17,6 +16,7 @@ const GroundingStep: React.FC<GroundingStepProps> = ({ onResponse, onExit }) => 
   const { toast } = useToast();
 
   // Check if partner is ready when this component mounts or partner status changes
+  // We'll keep this for when the component first loads, but not repeat notifications
   useEffect(() => {
     if (sessionData.partner2.ready) {
       toast({
@@ -24,7 +24,7 @@ const GroundingStep: React.FC<GroundingStepProps> = ({ onResponse, onExit }) => 
         description: "Your partner is ready to work through what happened.",
       });
     }
-  }, [sessionData.partner2.ready, toast]);
+  }, []); // Only run on mount
 
   const handleNotYet = () => {
     onResponse(false);
@@ -39,7 +39,7 @@ const GroundingStep: React.FC<GroundingStepProps> = ({ onResponse, onExit }) => 
       title: "You're ready",
       description: "Your partner has been notified that you're ready to talk.",
     });
-    // Directly go to the next step
+    // Directly go to step 1 (tone setting) to avoid duplicate steps
     setCurrentStep(1);
   };
 
