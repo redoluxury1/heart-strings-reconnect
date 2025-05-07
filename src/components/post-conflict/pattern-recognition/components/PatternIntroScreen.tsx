@@ -8,7 +8,8 @@ interface PatternIntroScreenProps {
 
 const PatternIntroScreen: React.FC<PatternIntroScreenProps> = ({ onContinue }) => {
   return (
-    <div className="flex flex-col items-center justify-center text-center max-w-3xl mx-auto py-4">
+    <div className="flex flex-col items-center justify-center text-center max-w-3xl mx-auto py-4"
+         style={{ background: "#F5F0E8" }}>
       <h2 className="text-5xl font-cormorant font-medium text-midnight-indigo mb-6 tracking-tight">
         Let's break the cycle.
       </h2>
@@ -20,7 +21,7 @@ const PatternIntroScreen: React.FC<PatternIntroScreenProps> = ({ onContinue }) =
       
       <div className="relative w-full max-w-md mb-10">
         <img
-          src="/lovable-uploads/fddf3d4f-1e5a-4b70-99c4-dc7b3f655aa1.png"
+          src="/lovable-uploads/601b1881-05d3-4bd1-aaca-a1a8b483e1f8.png"
           alt="Couple sitting back to back with arms crossed"
           className="w-full h-auto rounded-lg"
         />
