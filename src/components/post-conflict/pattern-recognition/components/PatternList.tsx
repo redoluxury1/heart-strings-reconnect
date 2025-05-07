@@ -25,7 +25,7 @@ const PatternList: React.FC<PatternListProps> = ({ patterns, onPatternSelect }) 
           <button
             key={pattern.id}
             className="w-full text-left p-4 rounded-lg border border-gray-200 hover:bg-soft-cream/20 transition-colors"
-            onClick={() => onPatternSelect(pattern.id)}
+            onClick={() => onPatternSelect(pattern.id.toString())}
           >
             <h3 className="font-medium text-mauve-rose">{pattern.name}</h3>
             <p className="text-gray-600 mt-1">{pattern.description}</p>

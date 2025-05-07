@@ -20,7 +20,7 @@ const PatternRecognitionFlow: React.FC = () => {
   const { getPatternSpecificTips } = helpers;
   
   const selectedPatternData = selectedPattern !== null 
-    ? commonPatterns.find(p => p.id === selectedPattern)
+    ? commonPatterns.find(p => p.id.toString() === selectedPattern)
     : null;
   
   const patternType = selectedPatternData?.patternType || null;
@@ -62,7 +62,7 @@ const PatternRecognitionFlow: React.FC = () => {
         ) : (
           <PatternList 
             patterns={commonPatterns}
-            onPatternSelect={handlePatternSelect}
+            onPatternSelect={(patternId) => handlePatternSelect(patternId.toString())}
           />
         )}
       </div>

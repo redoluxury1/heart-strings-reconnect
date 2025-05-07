@@ -38,3 +38,4 @@ export interface PatternRecognitionState {
 export interface PatternRecognitionHelpers {
   getPatternSpecificTips: (patternType: string) => ReconnectionTip[];
 }
+
