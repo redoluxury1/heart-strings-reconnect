@@ -69,7 +69,7 @@ const PatternRecognitionFlow: React.FC<PatternRecognitionFlowProps> = ({
     : "bg-white rounded-xl shadow-md overflow-hidden";
   
   return (
-    <div className={containerClasses}>
+    <div className={containerClasses} style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 50, background: 'white' }}>
       <div className="p-6 md:p-8">
         {(fullScreen && onClose) && (
           <Button
@@ -127,7 +127,7 @@ const PatternRecognitionFlow: React.FC<PatternRecognitionFlowProps> = ({
             currentQuestion={currentQuestion}
             currentQuestionIndex={currentQuestionIndex}
             totalQuestions={quizQuestions.length}
-            onAnswerSelect={(answerId) => handleAnswerSelect(currentQuestionIndex, answerId)}
+            onAnswerSelect={(answerId) => handleAnswerSelect(currentQuestionIndex, answerId.toString())}
           />
         ) : (
           <PatternList 
