@@ -21,7 +21,7 @@ const PatternIntroScreen: React.FC<PatternIntroScreenProps> = ({ onContinue }) =
       
       <div className="relative w-full max-w-md mb-10">
         <img
-          src="/lovable-uploads/601b1881-05d3-4bd1-aaca-a1a8b483e1f8.png"
+          src="/lovable-uploads/39110aa2-d4b1-4586-bd3f-56a1ae1053c8.png"
           alt="Couple sitting back to back with arms crossed"
           className="w-full h-auto rounded-lg"
         />
