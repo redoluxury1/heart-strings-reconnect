@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import IntroScreen from './IntroScreen';
 import ColorSelectionScreen from './ColorSelectionScreen';
 import VisualizationScreen from './VisualizationScreen';
@@ -15,6 +15,11 @@ const ColorHealingMethod: React.FC = () => {
 
   // Total number of screens in the flow
   const totalScreens = 6;
+
+  // Scroll to top when screen changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [currentScreen]);
 
   const handleNext = () => {
     if (currentScreen < totalScreens - 1) {

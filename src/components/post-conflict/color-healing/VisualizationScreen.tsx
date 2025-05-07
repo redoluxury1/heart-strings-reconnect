@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import OrbVisualization from './visualization/OrbVisualization';
 import VisualizationInstructions from './visualization/VisualizationInstructions';
@@ -17,9 +17,18 @@ const VisualizationScreen: React.FC<VisualizationScreenProps> = ({
   onBack
 }) => {
   const [imagePreloaded, setImagePreloaded] = useState(false);
-  const [countdown, setCountdown] = useState(7);
+  const [countdown, setCountdown] = useState(12); // Changed from 7 to 12 seconds
   const [countdownComplete, setCountdownComplete] = useState(false);
   const { fadeIn, setFadeIn } = useVisualization();
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Scroll to top of component when mounted
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, []);
 
   // Preload next screen image
   useEffect(() => {
@@ -61,7 +70,7 @@ const VisualizationScreen: React.FC<VisualizationScreenProps> = ({
   }, [countdown]);
   
   return (
-    <div className="flex flex-col items-center max-w-xl mx-auto">
+    <div ref={containerRef} className="flex flex-col items-center max-w-xl mx-auto">
       <VisualizationInstructions />
       
       <div className="relative w-full mb-12">
