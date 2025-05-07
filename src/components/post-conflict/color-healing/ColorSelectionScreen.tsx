@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
@@ -64,33 +63,25 @@ const ColorSelectionScreen: React.FC<ColorSelectionScreenProps> = ({
   // State for the hue value (0-360 degrees)
   const [hue, setHue] = useState(0);
   
-  // State to track the current preview color (this ensures the UI stays in sync)
+  // Local state for preview color that doesn't depend on parent state updates
   const [previewColor, setPreviewColor] = useState(selectedColor);
   
   // Handle click on predefined color
   const handlePredefinedColorClick = (color: string) => {
-    // Update both the parent component's state and our local preview
-    onColorSelect(color);
-    setPreviewColor(color);
+    setPreviewColor(color); // Update the local preview immediately
+    onColorSelect(color); // Update the parent component's state
   };
   
   // Update the selected color when hue changes
   useEffect(() => {
     const newColor = hueToColor(hue);
-    onColorSelect(newColor);
-    setPreviewColor(newColor); // Also update our local preview
+    setPreviewColor(newColor); // Update local preview immediately
+    onColorSelect(newColor); // Update parent component's state
   }, [hue, onColorSelect]);
   
-  // Initialize hue from a selected color if one exists
+  // Keep local state in sync with parent state when it changes externally
   useEffect(() => {
-    // This is a simplified way to get an approximate hue from a hex color
-    // A complete implementation would need to convert hex to HSL properly
-    if (selectedColor && selectedColor !== hueToColor(hue)) {
-      // Just set a default hue when a predefined color is selected
-      // In a more complete implementation, we would extract the hue from the selectedColor
-      setHue(240);
-      setPreviewColor(selectedColor); // Make sure our local preview is in sync
-    }
+    setPreviewColor(selectedColor);
   }, [selectedColor]);
 
   // Handler for both click and drag on the rainbow
@@ -105,6 +96,10 @@ const ColorSelectionScreen: React.FC<ColorSelectionScreenProps> = ({
     const percentage = Math.max(0, Math.min(1, x / rect.width));
     setHue(Math.round(percentage * 360));
   };
+
+  // Add console logs to help debug the issue
+  console.log("Preview Color:", previewColor);
+  console.log("Selected Color:", selectedColor);
 
   return (
     <div className="flex flex-col items-center max-w-xl mx-auto text-center">
@@ -121,7 +116,7 @@ const ColorSelectionScreen: React.FC<ColorSelectionScreenProps> = ({
           <div 
             key={color.hex} 
             className={`h-16 rounded-md cursor-pointer flex items-center justify-center transition-all ${
-              selectedColor === color.hex ? 'ring-4 ring-offset-2 ring-[#7d6272]' : 'hover:scale-105'
+              previewColor === color.hex ? 'ring-4 ring-offset-2 ring-[#7d6272]' : 'hover:scale-105'
             }`}
             style={{ backgroundColor: color.hex }}
             onClick={() => handlePredefinedColorClick(color.hex)}
@@ -163,7 +158,7 @@ const ColorSelectionScreen: React.FC<ColorSelectionScreenProps> = ({
           ></div>
         </div>
         
-        {/* Color preview - now using our local state to ensure it updates immediately */}
+        {/* Color preview - using our independent local state for immediate updates */}
         <div 
           className="h-16 w-full rounded-md border-2 border-gray-200 mb-4"
           style={{ backgroundColor: previewColor }}
