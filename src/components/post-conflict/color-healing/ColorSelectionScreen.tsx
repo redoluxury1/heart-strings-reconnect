@@ -4,13 +4,17 @@ import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
 
 interface ColorSelectionScreenProps {
+  selectedColor?: string; // Make selectedColor an optional prop
   onColorSelect: (color: string) => void;
   onBack: () => void;
+  onContinue: () => void; // Add onContinue prop to match what's being passed
 }
 
 const ColorSelectionScreen: React.FC<ColorSelectionScreenProps> = ({ 
+  selectedColor: initialColor,
   onColorSelect,
-  onBack 
+  onBack,
+  onContinue
 }) => {
   // Predefined color options
   const colorOptions = [
@@ -20,8 +24,8 @@ const ColorSelectionScreen: React.FC<ColorSelectionScreenProps> = ({
     { name: 'Red', value: '#ea384c' },
   ];
   
-  const [selectedColor, setSelectedColor] = useState<string>(colorOptions[0].value);
-  const [customColor, setCustomColor] = useState<string>(colorOptions[0].value);
+  const [selectedColor, setSelectedColor] = useState<string>(initialColor || colorOptions[0].value);
+  const [customColor, setCustomColor] = useState<string>(initialColor || colorOptions[0].value);
   const [showCustomColorPicker, setShowCustomColorPicker] = useState<boolean>(false);
 
   // Handle color option selection
@@ -44,6 +48,7 @@ const ColorSelectionScreen: React.FC<ColorSelectionScreenProps> = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onColorSelect(selectedColor);
+    onContinue(); // Call onContinue when the form is submitted
   };
 
   return (
@@ -63,7 +68,7 @@ const ColorSelectionScreen: React.FC<ColorSelectionScreenProps> = ({
             style={{
               backgroundColor: color.value,
               boxShadow: selectedColor === color.value ? `0 0 15px ${color.value}` : 'none',
-              ring: selectedColor === color.value ? color.value : 'transparent',
+              // Remove the invalid 'ring' property from the style object
             }}
             onClick={() => handleColorOptionSelect(color.value)}
             aria-label={`Select ${color.name} color`}

@@ -36,6 +36,7 @@ const ColorHealingMethod: React.FC = () => {
 
   const handleColorSelection = (color: string) => {
     setSelectedColor(color);
+    handleNext();
   };
 
   const handleReflectionSelection = (feeling: string) => {
@@ -49,8 +50,8 @@ const ColorHealingMethod: React.FC = () => {
         return <IntroScreen onBegin={handleNext} />;
       case 1:
         return <ColorSelectionScreen 
-                selectedColor={selectedColor} 
-                onColorSelect={handleColorSelection} 
+                selectedColor={selectedColor}
+                onColorSelect={handleColorSelection}
                 onContinue={handleNext}
                 onBack={handleBack}
               />;
