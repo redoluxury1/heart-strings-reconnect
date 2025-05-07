@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import IntroScreen from './IntroScreen';
 import ColorSelectionScreen from './ColorSelectionScreen';
 import VisualizationScreen from './VisualizationScreen';
@@ -12,13 +12,16 @@ const ColorHealingMethod: React.FC = () => {
   const [currentScreen, setCurrentScreen] = useState(0);
   const [selectedColor, setSelectedColor] = useState<string>('#7D5248'); // Default to the warm brown color
   const [reflectionResult, setReflectionResult] = useState<string | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   // Total number of screens in the flow
   const totalScreens = 6;
 
-  // Scroll to top when screen changes
+  // Scroll to component top when screen changes
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (containerRef.current) {
+      containerRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   }, [currentScreen]);
 
   const handleNext = () => {
@@ -90,7 +93,7 @@ const ColorHealingMethod: React.FC = () => {
   };
 
   return (
-    <Card className="border-none rounded-xl shadow-md overflow-hidden mb-12">
+    <Card ref={containerRef} className="border-none rounded-xl shadow-md overflow-hidden mb-12">
       <div className="p-8 lg:p-12 bg-[#F8EFE0]">
         {renderScreen()}
       </div>

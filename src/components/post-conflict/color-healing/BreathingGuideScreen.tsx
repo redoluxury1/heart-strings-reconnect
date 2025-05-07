@@ -43,9 +43,11 @@ const BreathingGuideScreen: React.FC<BreathingGuideScreenProps> = ({
       } else if (counter < 9) {
         setBreathPhase('exhale');
       } else {
-        // Complete one breathing cycle
+        // Reset counter and start a new breathing cycle
+        // This ensures a smooth transition from exhale back to inhale
         setCounter(0);
         setBreathCycles(prev => prev + 1);
+        setBreathPhase('inhale');
         return;
       }
       

@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import { useSession } from '../context/SessionContext';
 import { patternQuizzes, commonPatterns } from './data/pattern-data';
-import { usePatternRecognition } from './hooks/usePatternRecognition';
+import { usePatternRecognition, PatternId } from './hooks/usePatternRecognition';
 import PatternList from './components/PatternList';
 import QuizQuestion from './components/QuizQuestion';
 import ReconnectionTips from './components/ReconnectionTips';
@@ -23,11 +23,11 @@ const PatternRecognitionFlow: React.FC = () => {
     ? commonPatterns.find(p => p.id === selectedPattern)
     : null;
   
-  const patternType = selectedPatternData?.patternType || '';
+  const patternType = selectedPatternData?.patternType || null;
   const quizQuestions = patternType ? patternQuizzes[patternType] || [] : [];
   const currentQuestion = quizQuestions[currentQuestionIndex];
   
-  const tipsToDisplay = selectedPatternData 
+  const tipsToDisplay = selectedPatternData && patternType
     ? getPatternSpecificTips(patternType)
     : reconnectionTips.sort(() => 0.5 - Math.random()).slice(0, 3);
   
@@ -57,7 +57,7 @@ const PatternRecognitionFlow: React.FC = () => {
             currentQuestion={currentQuestion}
             currentQuestionIndex={currentQuestionIndex}
             totalQuestions={quizQuestions.length}
-            onAnswerSelect={handleAnswerSelect}
+            onAnswerSelect={(answerId) => handleAnswerSelect(currentQuestionIndex, answerId)}
           />
         ) : (
           <PatternList 
