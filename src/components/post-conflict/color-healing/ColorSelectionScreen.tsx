@@ -4,10 +4,10 @@ import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
 
 interface ColorSelectionScreenProps {
-  selectedColor?: string; // Make selectedColor an optional prop
+  selectedColor?: string;
   onColorSelect: (color: string) => void;
   onBack: () => void;
-  onContinue: () => void; // Add onContinue prop to match what's being passed
+  onContinue: () => void;
 }
 
 const ColorSelectionScreen: React.FC<ColorSelectionScreenProps> = ({ 
@@ -68,7 +68,6 @@ const ColorSelectionScreen: React.FC<ColorSelectionScreenProps> = ({
             style={{
               backgroundColor: color.value,
               boxShadow: selectedColor === color.value ? `0 0 15px ${color.value}` : 'none',
-              // Remove the invalid 'ring' property from the style object
             }}
             onClick={() => handleColorOptionSelect(color.value)}
             aria-label={`Select ${color.name} color`}
@@ -100,30 +99,23 @@ const ColorSelectionScreen: React.FC<ColorSelectionScreenProps> = ({
       
       <div className="mt-8 w-full flex flex-col items-center">
         <div 
-          className="w-24 h-24 rounded-full mb-6"
+          className="w-24 h-24 rounded-full mb-4"
           style={{ 
             backgroundColor: customColor,
             boxShadow: `0 0 15px ${customColor}`
           }}
         />
         
-        <div className="flex space-x-4">
-          <Button 
-            type="button" 
-            variant="outline"
-            onClick={onBack}
-            className="px-8 py-2 border-gray-300"
-          >
-            Back
-          </Button>
-          
-          <Button 
-            type="submit"
-            className="px-8 py-2 bg-[#7D5248] hover:bg-[#6a443b] text-white"
-          >
-            Continue with this color
-          </Button>
-        </div>
+        <p className="text-sm text-gray-600 italic mb-6">
+          This color makes me feel safe and calm
+        </p>
+        
+        <Button 
+          type="submit"
+          className="px-8 py-2 bg-[#7D5248] hover:bg-[#6a443b] text-white"
+        >
+          Continue with this color
+        </Button>
       </div>
     </form>
   );
