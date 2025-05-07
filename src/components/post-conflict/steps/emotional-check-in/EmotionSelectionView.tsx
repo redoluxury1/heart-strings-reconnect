@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -55,6 +54,7 @@ const EmotionSelectionView: React.FC<EmotionSelectionViewProps> = ({
           src="/lovable-uploads/0e873fb6-7302-498a-a8ac-c7c5a5e83f57.png" 
           alt="Two people looking stressed and emotionally overwhelmed" 
           className="w-60 h-auto"
+          loading="eager"
         />
       </div>
       
@@ -101,15 +101,7 @@ const EmotionSelectionView: React.FC<EmotionSelectionViewProps> = ({
       {/* Add your own emotion */}
       <CustomEmotionInput onAddEmotion={onAddCustomEmotion} />
       
-      {/* Submit button */}
-      <div className="text-center mt-6">
-        <Button 
-          onClick={onSubmit}
-          className="bg-[#2e2a63] hover:bg-[#22254a] text-white px-6 py-2 rounded-full"
-        >
-          Keep Going
-        </Button>
-      </div>
+      {/* Remove the Submit button since we already have navigation buttons */}
     </div>
   );
 };
