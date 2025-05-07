@@ -56,7 +56,7 @@ const EmotionalCheckIn: React.FC<EmotionalCheckInProps> = ({
           emotions={emotions}
           onEmotionToggle={handleEmotionToggle}
           onAddCustomEmotion={handleAddCustomEmotion}
-          onSubmit={() => {}} // Empty function as we'll auto-submit
+          onSubmit={() => setIsSubmitted(true)}
         />
       ) : (
         <EmotionSummaryView

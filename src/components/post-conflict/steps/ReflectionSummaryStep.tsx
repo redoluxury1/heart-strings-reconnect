@@ -1,7 +1,5 @@
 
 import React from 'react';
-import { Button } from '@/components/ui/button';
-import { ChevronRight } from 'lucide-react';
 import { useSession } from '../context/SessionContext';
 import { Card, CardContent } from '@/components/ui/card';
 
@@ -42,13 +40,6 @@ const ReflectionSummaryStep: React.FC<ReflectionSummaryStepProps> = ({
             Hang tight! We'll notify you when your partner finishes.
           </p>
         </div>
-        
-        <Button
-          onClick={onContinue}
-          className="bg-mauve-rose hover:bg-mauve-rose/90 text-white"
-        >
-          See what's next
-        </Button>
       </div>
     );
   }
@@ -143,15 +134,7 @@ const ReflectionSummaryStep: React.FC<ReflectionSummaryStepProps> = ({
         </p>
       </div>
       
-      <div className="flex justify-center">
-        <Button
-          onClick={onContinue}
-          className="bg-[#2e2a63] hover:bg-[#1e1a43] text-white flex items-center gap-2 rounded-full px-6"
-        >
-          Continue
-          <ChevronRight size={16} />
-        </Button>
-      </div>
+      {/* Continue button removed */}
     </div>
   );
 };

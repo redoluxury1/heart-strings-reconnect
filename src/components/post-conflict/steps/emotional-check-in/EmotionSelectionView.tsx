@@ -87,11 +87,14 @@ const EmotionSelectionView: React.FC<EmotionSelectionViewProps> = ({
       {/* Add your own emotion */}
       <CustomEmotionInput onAddEmotion={onAddCustomEmotion} />
       
-      {/* Note: Submit button removed as emotions now auto-save */}
-      <div className="text-center mt-2">
-        <p className="text-gray-500 text-sm italic">
-          Your selections will save automatically
-        </p>
+      {/* Submit button */}
+      <div className="text-center mt-6">
+        <Button 
+          onClick={onSubmit}
+          className="bg-[#7b4b69] hover:bg-[#6a3a58] text-white px-6 py-2 rounded-full"
+        >
+          Keep Going
+        </Button>
       </div>
     </div>
   );

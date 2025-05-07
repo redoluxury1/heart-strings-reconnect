@@ -1,3 +1,4 @@
+
 import React from 'react';
 import GroundingStep from '../steps/GroundingStep';
 import ToneSettingStep from '../steps/ToneSettingStep';
@@ -63,8 +64,7 @@ export const useSteps = (onExit: () => void) => {
         <EmotionalCheckIn 
           onResponse={(response) => {
             handleResponse('partner1', 'emotions', response);
-            // Auto-advance after handling response
-            autoAdvance();
+            // Removed auto-advance to allow users to select multiple emotions
           }}
           selectedEmotions={sessionData.partner1.responses.emotions}
           partner2Emotions={sessionData.partner2.responses.emotions}
