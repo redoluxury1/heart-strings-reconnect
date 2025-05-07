@@ -7,6 +7,7 @@ interface EmotionButtonProps {
   onToggle: (emotion: string) => void;
   backgroundColor?: string;
   textColor?: string;
+  smallText?: boolean;
 }
 
 const EmotionButton: React.FC<EmotionButtonProps> = ({ 
@@ -14,7 +15,8 @@ const EmotionButton: React.FC<EmotionButtonProps> = ({
   isSelected, 
   onToggle,
   backgroundColor = 'bg-lavender-100',
-  textColor = 'text-navy-800'
+  textColor = 'text-navy-800',
+  smallText = false
 }) => {
   return (
     <button
@@ -24,7 +26,9 @@ const EmotionButton: React.FC<EmotionButtonProps> = ({
       }`}
       onClick={() => onToggle(emotion)}
     >
-      {emotion}
+      <span className={smallText ? 'text-xs' : 'text-sm'}>
+        {emotion}
+      </span>
     </button>
   );
 };

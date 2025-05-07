@@ -43,7 +43,7 @@ const EmotionSelectionView: React.FC<EmotionSelectionViewProps> = ({
       category: 'frustrated',
       color: 'bg-rose-300/70',
       textColor: 'text-navy-800',
-      emotions: ['angry', 'misunderstood', 'unheard']
+      emotions: ['angry', 'misunderstood', 'unheard', 'irritated']
     }
   ];
   
@@ -76,6 +76,7 @@ const EmotionSelectionView: React.FC<EmotionSelectionViewProps> = ({
                   onToggle={onEmotionToggle}
                   backgroundColor={category.color}
                   textColor={category.textColor}
+                  smallText={emotion === 'misunderstood'}
                 />
               ))}
             </div>
