@@ -62,7 +62,7 @@ export const usePatternRecognition = () => {
   
   const getPatternSpecificTips = useCallback((patternType: string): ReconnectionTip[] => {
     const matchingTips = reconnectionTips.filter(tip => 
-      tip.applicablePatterns.includes(patternType as PatternType)
+      tip.patterns && tip.patterns.includes(patternType as PatternType)
     );
     
     if (matchingTips.length >= 3) {
@@ -71,7 +71,7 @@ export const usePatternRecognition = () => {
     
     // Not enough matching tips, add some general ones
     const generalTips = reconnectionTips.filter(tip => 
-      tip.applicablePatterns.includes('all')
+      !tip.patterns || tip.patterns.length === 0
     );
     
     return [...matchingTips, ...generalTips].slice(0, 3);

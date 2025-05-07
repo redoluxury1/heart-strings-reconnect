@@ -62,7 +62,7 @@ const PatternRecognitionFlow: React.FC = () => {
         ) : (
           <PatternList 
             patterns={commonPatterns}
-            onPatternSelect={(patternId) => handlePatternSelect(patternId)}
+            onPatternSelect={(patternId) => handlePatternSelect(patternId.toString())}
           />
         )}
       </div>

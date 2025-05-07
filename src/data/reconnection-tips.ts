@@ -4,11 +4,13 @@
  * These tips provide practical actions users can take to reconnect after a conflict
  */
 
+import { PatternType } from '@/components/post-conflict/pattern-recognition/types';
+
 export interface ReconnectionTip {
   id: number;
   text: string;
   category: 'physical' | 'emotional' | 'activity' | 'communication';
-  patterns?: Array<'criticism-defensiveness' | 'stonewalling-pursuit' | 'contempt-contempt'>;
+  patterns?: PatternType[];
 }
 
 export const reconnectionTips: ReconnectionTip[] = [
@@ -174,4 +176,3 @@ export const reconnectionTips: ReconnectionTip[] = [
     patterns: ['stonewalling-pursuit']
   }
 ];
-
