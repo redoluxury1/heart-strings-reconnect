@@ -1,126 +1,89 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Slider } from '@/components/ui/slider';
 
 interface ColorSelectionScreenProps {
-  selectedColor?: string;
+  selectedColor: string;
   onColorSelect: (color: string) => void;
   onContinue: () => void;
   onBack: () => void;
 }
 
-const ColorSelectionScreen: React.FC<ColorSelectionScreenProps> = ({ 
-  selectedColor: initialColor,
+const ColorSelectionScreen: React.FC<ColorSelectionScreenProps> = ({
+  selectedColor,
   onColorSelect,
   onContinue,
+  onBack
 }) => {
-  // Predefined color options
+  // Colors options
   const colorOptions = [
-    { name: 'Purple', value: '#8B5CF6' },
-    { name: 'Blue', value: '#0EA5E9' },
-    { name: 'Pink', value: '#D946EF' },
-    { name: 'Red', value: '#ea384c' },
+    { value: '#7D5248', name: 'Warm Brown', description: 'Stability & Security' },
+    { value: '#E3A15A', name: 'Golden Yellow', description: 'Joy & Optimism' },
+    { value: '#5F7973', name: 'Sage Green', description: 'Peace & Growth' },
+    { value: '#7d6272', name: 'Mauve', description: 'Compassion & Understanding' },
+    { value: '#5885AF', name: 'Soft Blue', description: 'Calmness & Communication' },
+    { value: '#8B4513', name: 'Deep Brown', description: 'Grounding & Warmth' },
+    { value: '#6b9080', name: 'Forest Green', description: 'Healing & Balance' },
+    { value: '#677db7', name: 'Lavender Blue', description: 'Serenity & Harmony' },
   ];
-  
-  const [selectedColor, setSelectedColor] = useState<string>(initialColor || colorOptions[0].value);
-  const [customColor, setCustomColor] = useState<string>(initialColor || colorOptions[0].value);
-  const [showCustomColorPicker, setShowCustomColorPicker] = useState<boolean>(false);
-
-  // Handle color option selection
-  const handleColorOptionSelect = (color: string) => {
-    setSelectedColor(color);
-    setCustomColor(color);
-    setShowCustomColorPicker(false);
-  };
-
-  // Handle custom color change via slider
-  const handleSliderChange = (value: number[]) => {
-    // Convert the slider value to a hue (0-360)
-    const hue = Math.floor(value[0] * 360);
-    const newColor = `hsl(${hue}, 80%, 50%)`;
-    setCustomColor(newColor);
-    setSelectedColor(newColor);
-  };
-
-  // Handle form submission
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onColorSelect(selectedColor);
-    onContinue(); // Call onContinue when the form is submitted
-  };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col items-center space-y-8">
-      <h2 className="text-2xl font-semibold text-[#473C85] mb-2">
-        Choose a color that feels healing to you
+    <div className="flex flex-col items-center max-w-xl mx-auto">
+      <h2 className="text-3xl md:text-4xl font-cormorant font-medium mb-6 text-center text-midnight-indigo">
+        Choose a Color That Feels Healing to You
       </h2>
       
-      <div className="grid grid-cols-4 gap-4 w-full max-w-md">
+      <p className="text-center text-gray-700 mb-8">
+        Color can have remarkable effects on our emotional state. Select a color that resonates with 
+        your feelings right now - one that feels soothing, supportive, or healing.
+      </p>
+
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
         {colorOptions.map((color) => (
-          <button
+          <div 
             key={color.value}
-            type="button"
-            className={`w-16 h-16 rounded-full transition-all ${
-              selectedColor === color.value ? 'ring-4 ring-offset-2 ring-opacity-50' : ''
-            }`}
-            style={{
-              backgroundColor: color.value,
-              boxShadow: selectedColor === color.value ? `0 0 15px ${color.value}` : 'none',
-            }}
-            onClick={() => handleColorOptionSelect(color.value)}
-            aria-label={`Select ${color.name} color`}
-          />
+            onClick={() => onColorSelect(color.value)}
+            className={`flex flex-col items-center space-y-1 cursor-pointer transition-transform duration-200 
+              ${selectedColor === color.value ? 'scale-110' : 'scale-100 hover:scale-105'}`}
+          >
+            <div 
+              className={`w-16 h-16 md:w-20 md:h-20 rounded-full cursor-pointer transition-all duration-300 
+                ${selectedColor === color.value ? 'ring-4 ring-offset-2' : 'hover:ring-2 hover:ring-offset-1'}`}
+              style={{ 
+                backgroundColor: color.value,
+                ringColor: color.value
+              }}
+            />
+            <span className="text-sm font-medium">{color.name}</span>
+            <span className="text-xs text-gray-500">{color.description}</span>
+          </div>
         ))}
       </div>
-      
-      <div className="w-full max-w-md">
-        <p className="text-center text-sm text-gray-600 mb-2">
-          or choose your own custom color
-        </p>
-        
-        <div className="relative h-12 px-2">
-          <div 
-            className="absolute inset-0 rounded-full h-6 mt-3 overflow-hidden"
-            style={{
-              background: 'linear-gradient(to right, #FF0000, #FFFF00, #00FF00, #00FFFF, #0000FF, #FF00FF, #FF0000)',
-            }}
-          />
-          <Slider
-            defaultValue={[0]}
-            max={1}
-            step={0.001}
-            className="pt-3"
-            onValueChange={handleSliderChange}
-          />
-        </div>
-      </div>
-      
-      <div className="mt-8 w-full flex flex-col items-center">
+
+      {/* Selected color visualization */}
+      <div className="flex flex-col items-center mb-8">
         <div 
-          className="w-24 h-24 rounded-full mb-4"
+          className="w-32 h-32 rounded-full transition-all duration-500"
           style={{ 
-            backgroundColor: customColor,
-            boxShadow: `0 0 15px ${customColor}`
+            backgroundColor: selectedColor,
+            boxShadow: `0 0 30px 5px ${selectedColor}`
           }}
         />
-        
-        <p className="text-sm text-gray-600 italic mb-6">
-          This color makes me feel safe and calm
-        </p>
-        
-        <Button 
-          type="submit"
-          className="px-8 py-2 text-white"
+        <p className="mt-3 text-sm text-gray-600">This color makes me feel safe and calm</p>
+      </div>
+
+      <div className="flex justify-center w-full">
+        <Button
+          onClick={onContinue}
+          className="py-3 px-6 w-full max-w-xs text-lg text-white rounded-full"
           style={{
-            backgroundColor: customColor,
-            hover: `${customColor}cc`
+            backgroundColor: selectedColor
           }}
         >
           Continue with this color
         </Button>
       </div>
-    </form>
+    </div>
   );
 };
 

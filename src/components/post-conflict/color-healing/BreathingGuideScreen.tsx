@@ -13,12 +13,32 @@ const BreathingGuideScreen: React.FC<BreathingGuideScreenProps> = ({
   onContinue,
   onBack
 }) => {
-  const [isBreathing, setIsBreathing] = useState(false);
-  const [breathPhase, setBreathPhase] = useState<'inhale' | 'exhale' | 'hold'>('inhale');
+  const [isBreathing, setIsBreathing] = useState(true); // Auto-start breathing
+  const [breathPhase, setBreathPhase] = useState<'inhale' | 'hold' | 'exhale'>('inhale');
   const [counter, setCounter] = useState(0);
   const [breathCycles, setBreathCycles] = useState(0);
-  const [totalTime, setTotalTime] = useState(0);
   
+  // Size transformations based on phase and counter
+  const getCircleSize = () => {
+    if (breathPhase === 'inhale') {
+      // Start small (80px), grow to medium (160px), then large (200px)
+      if (counter === 0) return '80px';
+      if (counter === 1) return '120px';
+      if (counter === 2) return '160px';
+      if (counter === 3) return '200px';
+    } else if (breathPhase === 'hold') {
+      // Stay at maximum size
+      return '200px';
+    } else if (breathPhase === 'exhale') {
+      // Start large (200px), shrink to medium (160px), then small (80px)
+      if (counter === 5) return '180px';
+      if (counter === 6) return '140px';
+      if (counter === 7) return '100px';
+      if (counter === 8) return '80px';
+    }
+    return '80px'; // Default size
+  };
+
   // Breathing circle animation
   useEffect(() => {
     if (!isBreathing) return;
@@ -45,29 +65,6 @@ const BreathingGuideScreen: React.FC<BreathingGuideScreenProps> = ({
     return () => clearInterval(timer);
   }, [isBreathing, counter]);
 
-  // Track total breathing time and cycles
-  useEffect(() => {
-    if (!isBreathing) return;
-    
-    const timeInterval = setInterval(() => {
-      setTotalTime(prev => prev + 1);
-    }, 1000);
-    
-    return () => clearInterval(timeInterval);
-  }, [isBreathing]);
-
-  // Removed the notification effect that was previously here
-
-  const toggleBreathing = () => {
-    if (!isBreathing) {
-      setCounter(0);
-      setBreathPhase('inhale');
-      setTotalTime(0);
-      setBreathCycles(0);
-    }
-    setIsBreathing(!isBreathing);
-  };
-
   return (
     <div className="flex flex-col items-center max-w-xl mx-auto text-center">
       <h2 className="text-3xl md:text-4xl font-cormorant font-medium mb-6 text-center text-midnight-indigo">
@@ -80,36 +77,21 @@ const BreathingGuideScreen: React.FC<BreathingGuideScreenProps> = ({
 
       <div className="relative h-60 w-60 mb-8 flex items-center justify-center">
         <div 
-          className={`rounded-full transition-all duration-[4000ms] flex items-center justify-center text-white font-medium`}
+          className="rounded-full transition-all duration-[1000ms] flex items-center justify-center text-white font-medium"
           style={{ 
             backgroundColor: selectedColor,
-            // Correct logic: small circle for inhale start, large for inhale end, small for exhale end
-            height: breathPhase === 'inhale' ? (counter < 2 ? '80px' : counter < 4 ? '160px' : '200px') : 
-                    breathPhase === 'hold' ? '200px' : 
-                    (counter < 7 ? '160px' : '80px'),
-            width: breathPhase === 'inhale' ? (counter < 2 ? '80px' : counter < 4 ? '160px' : '200px') : 
-                   breathPhase === 'hold' ? '200px' : 
-                   (counter < 7 ? '160px' : '80px'),
+            height: getCircleSize(),
+            width: getCircleSize(),
             boxShadow: `0 0 40px 10px ${selectedColor}`,
             opacity: isBreathing ? 0.8 : 0.5,
             transition: 'all 1s ease-in-out'
           }}
         >
-          {isBreathing && (
-            <span className="text-xl">
-              {breathPhase === 'inhale' ? 'Inhale' : breathPhase === 'exhale' ? 'Exhale' : 'Hold'}
-            </span>
-          )}
+          <span className="text-xl">
+            {breathPhase === 'inhale' ? 'Inhale' : breathPhase === 'exhale' ? 'Exhale' : 'Hold'}
+          </span>
         </div>
       </div>
-      
-      <Button 
-        onClick={toggleBreathing}
-        className="mb-6 rounded-full px-6 text-white"
-        style={{ backgroundColor: isBreathing ? undefined : selectedColor }}
-      >
-        {isBreathing ? 'Pause' : 'Breathe with me'}
-      </Button>
       
       <div className="flex space-x-4 mt-4">
         <Button 
