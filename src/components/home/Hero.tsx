@@ -65,13 +65,19 @@ const bubbleVariants = [
 const Hero = () => {
   const [visibleBubbles, setVisibleBubbles] = useState([]);
   const [usedPositions, setUsedPositions] = useState([]);
+  const [isVisible, setIsVisible] = useState(false);
   
   const bubbleStyles = getBubbleStyles();
 
+  useEffect(() => {
+    // Set visible after component mounts to trigger transitions properly
+    setIsVisible(true);
+  }, []);
+
   // Function to create a new bubble
   const createBubble = () => {
-    // Only allow up to 3 bubbles at once
-    if (visibleBubbles.length >= 3) return;
+    // Only allow up to 2 bubbles at once to reduce DOM operations
+    if (visibleBubbles.length >= 2) return;
     
     const messageIndex = Math.floor(Math.random() * messages.length);
     const styleIndex = Math.floor(Math.random() * bubbleStyles.length);
@@ -115,28 +121,30 @@ const Hero = () => {
           setUsedPositions(prev => prev.filter(pos => pos !== selectedVariantIndex));
         });
       }
-    }, 4000); // Increased display time from 2.5s to 4s
+    }, 4500); // More consistent display time
   };
 
   // Effect to periodically add new bubbles
   useEffect(() => {
+    if (!isVisible) return; // Don't start animations until visible
+    
     // Initial bubble on load with delay
     const initialTimer = setTimeout(() => {
       createBubble();
-    }, 800); // Slightly longer initial delay
+    }, 1200); // Slightly longer initial delay for page load
     
     // Set interval to add new bubbles at staggered times
     const interval = setInterval(() => {
       if (Math.random() > 0.3) { // 70% chance to create a new bubble each interval
         createBubble();
       }
-    }, 1200); // Slower interval between bubble creation attempts (from 800ms to 1200ms)
+    }, 1500); // Increased interval for better performance
     
     return () => {
       clearTimeout(initialTimer);
       clearInterval(interval);
     };
-  }, [visibleBubbles.length, usedPositions]);
+  }, [isVisible, visibleBubbles.length, usedPositions]);
 
   return (
     <div className="relative z-10 bg-gradient-to-b from-rose-50 via-white to-transparent py-20 pb-28 overflow-visible">
@@ -147,7 +155,7 @@ const Hero = () => {
             id={`bubble-${bubble.id}`}
             key={bubble.id}
             className={cn(
-              `absolute px-4 py-2 rounded-xl shadow-sm font-inter font-semibold text-center text-sm`, // Added text-sm class to make the text smaller
+              `absolute px-4 py-2 rounded-xl shadow-sm font-inter font-semibold text-center text-sm`, 
               bubble.style.bgColor,
               bubble.style.textColor,
               bubble.positionStyle,
@@ -157,6 +165,7 @@ const Hero = () => {
             )}
             style={{ 
               animation: 'fadeIn 1.2s forwards',
+              willChange: 'opacity, transform',
             }}
           >
             {bubble.message}

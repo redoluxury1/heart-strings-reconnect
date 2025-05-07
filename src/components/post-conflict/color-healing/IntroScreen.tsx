@@ -1,12 +1,26 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface IntroScreenProps {
   onBegin: () => void;
 }
 
 const IntroScreen: React.FC<IntroScreenProps> = ({ onBegin }) => {
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  useEffect(() => {
+    // Preload the image
+    const img = new Image();
+    img.src = "/lovable-uploads/bfee4335-5a61-4d5c-bdc2-cda58c3beb29.png";
+    img.onload = () => setImageLoaded(true);
+    
+    return () => {
+      img.onload = null; // Clean up
+    };
+  }, []);
+  
   return (
     <div className="flex flex-col items-center max-w-xl mx-auto text-center p-4 relative">
       {/* Background gradient waves with animation */}
@@ -39,11 +53,20 @@ const IntroScreen: React.FC<IntroScreenProps> = ({ onBegin }) => {
             {/* Additional wave for more complete wrapping effect */}
             <div className="absolute top-[15%] right-[30%] w-36 h-36 rounded-full bg-[#FFDEE2] opacity-40 blur-xl animate-wave-circle"></div>
           </div>
-          <img 
-            src="/lovable-uploads/bfee4335-5a61-4d5c-bdc2-cda58c3beb29.png" 
-            alt="Person with closed eyes and peaceful expression with colorful waves in background" 
-            className="h-auto w-full max-w-md relative z-0"
-          />
+          
+          {/* Image with loading state */}
+          <div className="h-auto w-full max-w-md relative z-0">
+            {!imageLoaded && (
+              <Skeleton className="h-[300px] w-full max-w-md rounded-lg bg-gray-200" />
+            )}
+            <img 
+              src="/lovable-uploads/bfee4335-5a61-4d5c-bdc2-cda58c3beb29.png" 
+              alt="Person with closed eyes and peaceful expression with colorful waves in background" 
+              className={`h-auto w-full max-w-md relative z-0 transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+              onLoad={() => setImageLoaded(true)}
+              loading="eager" // This is a critical above-the-fold image
+            />
+          </div>
         </div>
         
         <div className="mt-4">

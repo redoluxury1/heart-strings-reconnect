@@ -10,9 +10,29 @@ const useVisualization = ({ onComplete }: UseVisualizationProps = {}) => {
   const [fadeIn, setFadeIn] = useState(false);
   const [expandOrb, setExpandOrb] = useState(false);
   const [showButtons, setShowButtons] = useState(true);
+  const [audioPreloaded, setAudioPreloaded] = useState(false);
+  
+  // Preload audio file when component mounts
+  useEffect(() => {
+    const audio = new Audio('/notification-sound.mp3');
+    
+    const handleCanPlayThrough = () => {
+      setAudioPreloaded(true);
+      audio.removeEventListener('canplaythrough', handleCanPlayThrough);
+    };
+    
+    audio.addEventListener('canplaythrough', handleCanPlayThrough);
+    audio.load(); // Start loading the audio
+    
+    return () => {
+      audio.removeEventListener('canplaythrough', handleCanPlayThrough);
+    };
+  }, []);
   
   // Play a subtle sound notification when visualization completes
   const playCompletionSound = () => {
+    if (!audioPreloaded) return;
+    
     try {
       const sound = new Audio('/notification-sound.mp3');
       sound.volume = 0.3; // Keep volume subtle
