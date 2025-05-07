@@ -63,25 +63,25 @@ const ColorSelectionScreen: React.FC<ColorSelectionScreenProps> = ({
   // State for the hue value (0-360 degrees)
   const [hue, setHue] = useState(0);
   
-  // Local state for preview color that doesn't depend on parent state updates
-  const [previewColor, setPreviewColor] = useState(selectedColor);
+  // Use local state to control the preview immediately without waiting for parent updates
+  const [localSelectedColor, setLocalSelectedColor] = useState(selectedColor);
   
   // Handle click on predefined color
   const handlePredefinedColorClick = (color: string) => {
-    setPreviewColor(color); // Update the local preview immediately
+    setLocalSelectedColor(color); // Update local state immediately for preview
     onColorSelect(color); // Update the parent component's state
   };
   
   // Update the selected color when hue changes
   useEffect(() => {
     const newColor = hueToColor(hue);
-    setPreviewColor(newColor); // Update local preview immediately
-    onColorSelect(newColor); // Update parent component's state
+    setLocalSelectedColor(newColor); // Update local state immediately
+    onColorSelect(newColor); // Update parent's state
   }, [hue, onColorSelect]);
   
   // Keep local state in sync with parent state when it changes externally
   useEffect(() => {
-    setPreviewColor(selectedColor);
+    setLocalSelectedColor(selectedColor);
   }, [selectedColor]);
 
   // Handler for both click and drag on the rainbow
@@ -97,9 +97,9 @@ const ColorSelectionScreen: React.FC<ColorSelectionScreenProps> = ({
     setHue(Math.round(percentage * 360));
   };
 
-  // Add console logs to help debug the issue
-  console.log("Preview Color:", previewColor);
-  console.log("Selected Color:", selectedColor);
+  // Debug logs to help identify issues
+  console.log("Local Selected Color:", localSelectedColor);
+  console.log("Parent Selected Color:", selectedColor);
 
   return (
     <div className="flex flex-col items-center max-w-xl mx-auto text-center">
@@ -116,7 +116,7 @@ const ColorSelectionScreen: React.FC<ColorSelectionScreenProps> = ({
           <div 
             key={color.hex} 
             className={`h-16 rounded-md cursor-pointer flex items-center justify-center transition-all ${
-              previewColor === color.hex ? 'ring-4 ring-offset-2 ring-[#7d6272]' : 'hover:scale-105'
+              localSelectedColor === color.hex ? 'ring-4 ring-offset-2 ring-[#7d6272]' : 'hover:scale-105'
             }`}
             style={{ backgroundColor: color.hex }}
             onClick={() => handlePredefinedColorClick(color.hex)}
@@ -158,10 +158,10 @@ const ColorSelectionScreen: React.FC<ColorSelectionScreenProps> = ({
           ></div>
         </div>
         
-        {/* Color preview - using our independent local state for immediate updates */}
+        {/* Color preview - using our local state for immediate updates */}
         <div 
           className="h-16 w-full rounded-md border-2 border-gray-200 mb-4"
-          style={{ backgroundColor: previewColor }}
+          style={{ backgroundColor: localSelectedColor }}
           aria-label="Selected color preview"
         ></div>
       </div>
