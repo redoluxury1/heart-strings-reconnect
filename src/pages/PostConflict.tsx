@@ -32,7 +32,7 @@ const PostConflictContent = () => {
               </p>
             )}
             
-            <div className="space-y-20">
+            <div className="space-y-32">
               <LetsTalkThisOut />
 
               <OkayButNowWhat />
@@ -43,7 +43,7 @@ const PostConflictContent = () => {
         </ContentContainer>
         
         <ContentContainer maxWidth="lg">
-          <div className="max-w-3xl mx-auto mt-20">
+          <div className="max-w-3xl mx-auto mt-32">
             <PhraseRewind />
           </div>
         </ContentContainer>

@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import ColorHealingMethod from './color-healing/ColorHealingMethod';
+import { Card } from '@/components/ui/card';
 
 const SometimesItStillHurts = () => {
   const [showColorHealing, setShowColorHealing] = useState(false);
@@ -11,30 +12,45 @@ const SometimesItStillHurts = () => {
   }
 
   return (
-    <div className="bg-soft-cream/40 rounded-xl shadow-md p-6 md:p-8 mb-12 text-center">
-      <div className="flex flex-col items-center max-w-xl mx-auto">
-        <img 
-          src="/lovable-uploads/6a166a5a-f921-4cff-8a03-83cbfe4fde10.png" 
-          alt="Heart healing" 
-          className="h-24 w-auto mb-6" 
-        />
-        
-        <h2 className="text-4xl md:text-5xl font-cormorant font-medium mb-4 text-center text-midnight-indigo">
-          Sometimes It Still Hurts
-        </h2>
-        
-        <p className="text-center text-gray-700 mb-8 text-lg">
-          A calming breathwork and visualization tool to release lingering emotional tension.
-        </p>
-        
-        <Button 
-          onClick={() => setShowColorHealing(true)}
-          className="bg-[#7d6272] border-none hover:bg-[#6d5262] text-white px-4 py-2 w-full max-w-md mb-4 rounded-full text-sm"
-        >
-          Try Color Healing Method
-        </Button>
+    <Card className="border-none overflow-hidden rounded-xl shadow-md">
+      <div 
+        className="p-8 lg:p-12 flex flex-col items-center bg-[#F8EFE0]" 
+      >
+        <div className="max-w-2xl mx-auto text-center">
+          {/* Title using the serif font and warm brown color */}
+          <h2 className="font-cormorant text-5xl md:text-6xl lg:text-7xl mb-4 text-[#7D5248] leading-tight">
+            Sometimes,<br />it still hurts.
+          </h2>
+          
+          {/* Subtitle text */}
+          <p className="text-[#7D5248] text-xl md:text-2xl mb-8 max-w-lg mx-auto">
+            Find calm when forgiveness doesn't erase the pain.
+          </p>
+          
+          {/* Illustration of the couple */}
+          <div className="mb-8 flex justify-center">
+            <img 
+              src="/lovable-uploads/b5b996e6-1bbc-4e6d-8ef4-ceda4579c784.png" 
+              alt="Couple comforting each other"
+              className="w-full max-w-md h-auto" 
+            />
+          </div>
+          
+          {/* Button to start the color healing flow */}
+          <Button 
+            onClick={() => setShowColorHealing(true)}
+            className="bg-[#7D5248] hover:bg-[#6a443b] text-white rounded-full px-8 py-6 text-lg"
+          >
+            Try Color Healing Method
+          </Button>
+          
+          {/* Descriptive text about the color healing method */}
+          <p className="text-[#7D5248] opacity-80 mt-4 text-sm max-w-sm mx-auto">
+            A calming breathwork and visualization tool to release lingering emotional tension.
+          </p>
+        </div>
       </div>
-    </div>
+    </Card>
   );
 };
 

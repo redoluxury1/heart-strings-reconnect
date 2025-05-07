@@ -6,10 +6,11 @@ import VisualizationScreen from './VisualizationScreen';
 import BreathingGuideScreen from './BreathingGuideScreen';
 import ColorExpansionScreen from './ColorExpansionScreen';
 import ReflectionScreen from './ReflectionScreen';
+import { Card } from '@/components/ui/card';
 
 const ColorHealingMethod: React.FC = () => {
   const [currentScreen, setCurrentScreen] = useState(0);
-  const [selectedColor, setSelectedColor] = useState<string>('#7d6272'); // Default to mauve color
+  const [selectedColor, setSelectedColor] = useState<string>('#7D5248'); // Default to the warm brown color
   const [reflectionResult, setReflectionResult] = useState<string | null>(null);
 
   // Total number of screens in the flow
@@ -29,7 +30,7 @@ const ColorHealingMethod: React.FC = () => {
 
   const handleRestart = () => {
     setCurrentScreen(0);
-    setSelectedColor('#7d6272');
+    setSelectedColor('#7D5248');
     setReflectionResult(null);
   };
 
@@ -84,9 +85,11 @@ const ColorHealingMethod: React.FC = () => {
   };
 
   return (
-    <div className="bg-soft-cream/40 rounded-xl shadow-md p-6 md:p-8 mb-12 overflow-hidden">
-      {renderScreen()}
-    </div>
+    <Card className="border-none rounded-xl shadow-md overflow-hidden mb-12">
+      <div className="p-8 lg:p-12 bg-[#F8EFE0]">
+        {renderScreen()}
+      </div>
+    </Card>
   );
 };
 
