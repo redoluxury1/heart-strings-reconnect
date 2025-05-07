@@ -8,7 +8,7 @@ interface StepsNavigationProps {
 }
 
 const StepsNavigation: React.FC<StepsNavigationProps> = ({ totalSteps }) => {
-  const { currentStep, setCurrentStep, bothPartnersReady } = useSession();
+  const { currentStep, setCurrentStep } = useSession();
   
   const goBack = () => {
     if (currentStep > 0) {
@@ -19,7 +19,7 @@ const StepsNavigation: React.FC<StepsNavigationProps> = ({ totalSteps }) => {
   };
   
   const goNext = () => {
-    if (currentStep < totalSteps - 1 && bothPartnersReady) {
+    if (currentStep < totalSteps - 1) {
       setCurrentStep(currentStep + 1);
       // Scroll to top of the page when navigating to ensure user sees the beginning of content
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -44,7 +44,6 @@ const StepsNavigation: React.FC<StepsNavigationProps> = ({ totalSteps }) => {
       <Button 
         onClick={goNext} 
         className="bg-midnight-indigo hover:bg-midnight-indigo/90 text-white"
-        disabled={!bothPartnersReady}
       >
         Keep Going
       </Button>

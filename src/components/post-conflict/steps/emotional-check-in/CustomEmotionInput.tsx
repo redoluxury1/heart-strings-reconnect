@@ -22,7 +22,7 @@ const CustomEmotionInput: React.FC<CustomEmotionInputProps> = ({ onAddEmotion })
         placeholder="Didn't see yours? Add your own emotion here:"
         value={customEmotion}
         onChange={(e) => setCustomEmotion(e.target.value)}
-        className="w-full bg-transparent border-none outline-none px-2 py-0.5 text-sm text-[#22254a]"
+        className="w-full bg-transparent border-none outline-none px-2 py-0.5 text-xs text-[#22254a]"
         onKeyDown={(e) => {
           if (e.key === 'Enter') {
             e.preventDefault();
