@@ -31,7 +31,10 @@ export const useSteps = (onExit: () => void) => {
             handleResponse('partner1', 'grounding', response);
           }} 
           onExit={onExit}
-          onNext={() => {}} // This will be set in GroundingStep
+          onNext={() => {
+            // Advance to the next step when user clicks "Yes"
+            setCurrentStep(1);
+          }}
         />
     },
     {

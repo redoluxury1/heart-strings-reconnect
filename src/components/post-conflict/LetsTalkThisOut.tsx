@@ -17,8 +17,8 @@ const LetsTalkThisOut = () => {
   const handleReady = () => {
     // Set session as started
     setIsSessionStarted(true);
-    // Skip directly to step 1 (tone setting) to avoid duplicate first slides
-    setCurrentStep(1); 
+    // Start at step 0 (grounding step) to ensure proper flow
+    setCurrentStep(0); 
   };
 
   return (
@@ -28,6 +28,8 @@ const LetsTalkThisOut = () => {
           src="/lovable-uploads/088d792b-f2dc-44de-9679-9ff534e02d4e.png" 
           alt="Couple sitting together" 
           className="h-24 w-auto mb-6" 
+          loading="eager"
+          fetchPriority="high"
         />
         
         <h2 className="text-4xl md:text-5xl font-cormorant font-medium mb-4 text-center text-midnight-indigo">
