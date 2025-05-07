@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Heart } from 'lucide-react';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface ConnectionPromptStepProps {
   onResponse: (response: string) => void;
@@ -17,13 +18,14 @@ const ConnectionPromptStep: React.FC<ConnectionPromptStepProps> = ({
 }) => {
   const [input, setInput] = useState(partner1Response || '');
   const [isSubmitted, setIsSubmitted] = useState(!!partner1Response);
+  const [imageLoaded, setImageLoaded] = useState(false);
   
   const starterPrompts = [
     "I appreciate when you...",
     "I love you. You...",
     "I really respect you when...",
     "Even when we're fighting, I...",
-    "One thing I admire about you is..."
+    "I appreciate..."
   ];
   
   const handleStarterPrompt = (prompt: string) => {
@@ -37,75 +39,94 @@ const ConnectionPromptStep: React.FC<ConnectionPromptStepProps> = ({
     }
   };
   
+  // Auto-save when input changes after a short delay
+  React.useEffect(() => {
+    if (input.trim() && input !== partner1Response) {
+      const saveTimer = setTimeout(() => {
+        onResponse(input);
+        setIsSubmitted(true);
+      }, 1200); // Auto-save after 1.2 second of inactivity
+      
+      return () => clearTimeout(saveTimer);
+    }
+  }, [input, onResponse, partner1Response]);
+  
   return (
-    <div>
-      <h2 className="text-2xl md:text-3xl font-cormorant font-medium text-midnight-indigo mb-3 text-center">
+    <div className="max-w-2xl mx-auto">
+      <h2 className="text-3xl md:text-4xl font-cormorant font-medium text-[#2a2559] mb-4 text-center">
         Let's Move Forward
       </h2>
       
-      <div className="max-w-2xl mx-auto">
-        <p className="text-center text-gray-700 mb-6">
-          Even though we fought, I still care about you. Let's say something kind to help us repair our love.
-        </p>
-        
-        {!isSubmitted ? (
-          <div className="max-w-lg mx-auto">
-            <div className="flex flex-wrap gap-2 justify-center mb-3">
-              {starterPrompts.map((prompt, index) => (
-                <Button
-                  key={index}
-                  variant="outline"
-                  size="sm"
-                  className="bg-white border-gray-300 hover:bg-gray-100 hover:text-mauve-rose text-gray-700 whitespace-normal h-auto py-1"
-                  onClick={() => handleStarterPrompt(prompt)}
-                >
-                  {prompt}
-                </Button>
-              ))}
-            </div>
+      <p className="text-center text-gray-700 mb-6 text-lg">
+        Even though we fought, I still care about you. Let's say something kind to help us repair our love.
+      </p>
+      
+      {!isSubmitted ? (
+        <div className="space-y-8">
+          <div className="flex justify-center">
+            {!imageLoaded && (
+              <Skeleton className="h-64 w-64 rounded-lg" />
+            )}
+            <img 
+              src="/lovable-uploads/d6b06238-3fe7-4a13-b1d9-396548eadbee.png"
+              alt="Couple embracing" 
+              className={`h-auto w-64 md:w-72 transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+              onLoad={() => setImageLoaded(true)}
+            />
+          </div>
+          
+          <div className="flex flex-col gap-3 justify-center items-center max-w-md mx-auto">
+            {starterPrompts.map((prompt, index) => (
+              <Button
+                key={index}
+                onClick={() => handleStarterPrompt(prompt)}
+                className="bg-[#483D61] hover:bg-[#352d49] text-white w-full py-5 h-14 rounded-full max-w-md text-center"
+              >
+                {prompt}
+              </Button>
+            ))}
             
             <Textarea 
               placeholder="I appreciate..."
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              className="mb-4 min-h-[120px]"
+              className="mb-4 min-h-[100px] border-[#483D61] border-2 rounded-lg mt-4"
             />
             
             <Button 
               onClick={handleSubmit}
-              className="bg-midnight-indigo hover:bg-midnight-indigo/90 text-white w-full flex items-center justify-center"
-              disabled={!input.trim()}
+              className="bg-[#592c21] hover:bg-[#452219] text-white w-full py-5 h-14 rounded-full max-w-md"
             >
               Continue
             </Button>
           </div>
-        ) : (
-          <div className="mt-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="bg-soft-blush/20 p-5 rounded-lg">
-                <h3 className="font-medium mb-3 text-midnight-indigo">You appreciate:</h3>
-                <p className="text-gray-700">{partner1Response}</p>
-              </div>
-              
-              {partner2Response && (
-                <div className="bg-soft-cream/30 p-5 rounded-lg animate-fade-in">
-                  <h3 className="font-medium mb-3 text-midnight-indigo">Your partner appreciates:</h3>
-                  <p className="text-gray-700">{partner2Response}</p>
-                </div>
-              )}
+        </div>
+      ) : (
+        <div className="mt-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-[#FDE1D3]/40 p-5 rounded-lg border border-[#FDE1D3]">
+              <h3 className="font-medium mb-3 text-[#483D8B]">You appreciate:</h3>
+              <p className="text-gray-700">{partner1Response}</p>
             </div>
             
-            {partner1Response && partner2Response && (
-              <div className="flex justify-center mt-8">
-                <div className="animate-pulse flex items-center">
-                  <Heart className="h-6 w-6 text-red-500 fill-red-500 mr-2" />
-                  <Heart className="h-6 w-6 text-red-500 fill-red-500" />
-                </div>
+            {partner2Response && (
+              <div className="bg-[#E5DEFF]/40 p-5 rounded-lg border border-[#E5DEFF] animate-fade-in">
+                <h3 className="font-medium mb-3 text-[#483D8B]">Your partner appreciates:</h3>
+                <p className="text-gray-700">{partner2Response}</p>
               </div>
             )}
           </div>
-        )}
-      </div>
+          
+          {partner1Response && partner2Response && (
+            <div className="flex justify-center mt-8">
+              <div className="animate-pulse flex items-center">
+                <Heart className="h-6 w-6 text-red-500 fill-red-500 mr-2" />
+                <Heart className="h-6 w-6 text-red-500 fill-red-500" />
+              </div>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };
