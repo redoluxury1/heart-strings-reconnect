@@ -86,39 +86,47 @@ const PerspectiveStep: React.FC<PerspectiveStepProps> = ({
   const speechRecognitionAvailable = 'webkitSpeechRecognition' in window || 'SpeechRecognition' in window;
 
   return (
-    <div className="text-center">
-      <h2 className="text-2xl md:text-3xl font-cormorant font-medium text-midnight-indigo mb-6">
+    <div className="max-w-xl mx-auto">
+      {/* New illustration at the top */}
+      <div className="flex justify-center mb-8">
+        <img 
+          src="/lovable-uploads/3dcbd3c7-4288-42ab-b962-0c0161bfdfd7.png" 
+          alt="Person upset after conflict with partner walking away" 
+          className="w-full max-w-md h-auto"
+        />
+      </div>
+      
+      <h2 className="text-4xl md:text-5xl font-cormorant font-medium text-[#3b3476] mb-6 text-center">
         What just happened?
       </h2>
       
       <div className="mb-6">
-        <div className="flex items-center mb-2 justify-center">
-          <label htmlFor="perspective" className="text-sm text-gray-600 mr-2">
+        <div className="flex items-center mb-4 justify-center">
+          <p className="text-xl text-[#3b3476] mr-2">
             Share your perspective:
-          </label>
+          </p>
           
           {speechRecognitionAvailable && (
             <Button
               type="button"
               size="sm"
               variant={isRecording ? "default" : "outline"}
-              className={isRecording ? "bg-red-500 hover:bg-red-600" : ""}
+              className={`rounded-full ${isRecording ? "bg-red-500 hover:bg-red-600" : "border-[#3b3476] text-[#3b3476]"}`}
               onClick={toggleRecording}
             >
               {isRecording ? <MicOff size={16} /> : <Mic size={16} />}
-              {isRecording ? "Stop" : "Record"}
             </Button>
           )}
         </div>
         
         {!hasSubmitted && (
-          <div className="flex flex-wrap gap-2 justify-center mb-3">
+          <div className="flex flex-col gap-3 justify-center mb-4">
             {starterPrompts.map((prompt, index) => (
               <Button
                 key={index}
                 variant="outline"
-                size="sm"
-                className="bg-white border-gray-300 hover:bg-gray-100 hover:text-mauve-rose text-gray-700 whitespace-normal h-auto py-1"
+                size="lg"
+                className="bg-[#4c4489] hover:bg-[#3b3476] text-white whitespace-normal h-auto py-3 px-6 rounded-full text-lg font-normal justify-start"
                 onClick={() => handleStarterPrompt(prompt)}
               >
                 {prompt}
@@ -132,17 +140,19 @@ const PerspectiveStep: React.FC<PerspectiveStepProps> = ({
           value={perspective}
           onChange={(e) => setPerspective(e.target.value)}
           placeholder="Type your perspective here..."
-          className="w-full h-32"
+          className="w-full h-32 mt-4 rounded-3xl bg-[#f8f3e9] border-[#f8f3e9] text-[#5e5757] px-6 py-4 text-lg"
         />
         
         {!hasSubmitted && (
-          <Button 
-            className="bg-midnight-indigo hover:bg-midnight-indigo/90 text-white px-8 mt-4"
-            onClick={handleSubmit}
-            disabled={!perspective.trim()}
-          >
-            Continue
-          </Button>
+          <div className="flex justify-center mt-6">
+            <Button 
+              className="bg-[#4c4489] hover:bg-[#3b3476] text-white px-8 py-2 rounded-full"
+              onClick={handleSubmit}
+              disabled={!perspective.trim()}
+            >
+              Continue
+            </Button>
+          </div>
         )}
       </div>
       
