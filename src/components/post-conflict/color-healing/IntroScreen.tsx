@@ -9,11 +9,11 @@ interface IntroScreenProps {
 const IntroScreen: React.FC<IntroScreenProps> = ({ onBegin }) => {
   return (
     <div className="flex flex-col items-center max-w-xl mx-auto text-center p-4 relative">
-      {/* Background gradient waves */}
+      {/* Background gradient waves with animation */}
       <div className="absolute inset-0 z-0 opacity-30">
-        <div className="absolute top-[30%] right-[5%] w-72 h-72 rounded-full bg-[#E5DEFF] blur-xl"></div>
-        <div className="absolute top-[40%] left-[10%] w-64 h-64 rounded-full bg-[#FFDEE2] blur-xl"></div>
-        <div className="absolute bottom-[20%] left-[15%] w-48 h-48 rounded-full bg-[#FDE1D3] blur-xl"></div>
+        <div className="absolute top-[30%] right-[5%] w-72 h-72 rounded-full bg-[#E5DEFF] blur-xl animate-pulse-slow"></div>
+        <div className="absolute top-[40%] left-[10%] w-64 h-64 rounded-full bg-[#FFDEE2] blur-xl animate-float-slow"></div>
+        <div className="absolute bottom-[20%] left-[15%] w-48 h-48 rounded-full bg-[#FDE1D3] blur-xl animate-expand"></div>
       </div>
       
       {/* Content with higher z-index to appear above the background */}
@@ -27,11 +27,15 @@ const IntroScreen: React.FC<IntroScreenProps> = ({ onBegin }) => {
           and visualization method can help you feel more peaceful—even when old pain resurfaces.
         </p>
         
-        <div className="flex justify-center mb-8">
+        <div className="flex justify-center mb-8 relative">
+          <div className="absolute inset-0 -z-10">
+            <div className="absolute top-[10%] right-[10%] w-40 h-40 rounded-full bg-[#E5DEFF] opacity-50 blur-xl animate-wave-right"></div>
+            <div className="absolute bottom-[20%] left-[10%] w-40 h-40 rounded-full bg-[#FFDEE2] opacity-50 blur-xl animate-wave-left"></div>
+          </div>
           <img 
             src="/lovable-uploads/bfee4335-5a61-4d5c-bdc2-cda58c3beb29.png" 
             alt="Person with closed eyes and peaceful expression with colorful waves in background" 
-            className="h-auto w-full max-w-md"
+            className="h-auto w-full max-w-md relative z-0"
           />
         </div>
         

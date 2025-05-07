@@ -117,6 +117,82 @@
       transform: translateY(-10px) scale(0.95);
     }
   }
+  
+  /* Wave animations for color healing page */
+  @keyframes waveRight {
+    0% {
+      transform: translateX(-5px) translateY(0) scale(1);
+      opacity: 0.3;
+    }
+    50% {
+      transform: translateX(20px) translateY(-10px) scale(1.2);
+      opacity: 0.6;
+    }
+    100% {
+      transform: translateX(-5px) translateY(0) scale(1);
+      opacity: 0.3;
+    }
+  }
+  
+  @keyframes waveLeft {
+    0% {
+      transform: translateX(5px) translateY(0) scale(1);
+      opacity: 0.3;
+    }
+    50% {
+      transform: translateX(-20px) translateY(10px) scale(1.2);
+      opacity: 0.6;
+    }
+    100% {
+      transform: translateX(5px) translateY(0) scale(1);
+      opacity: 0.3;
+    }
+  }
+  
+  @keyframes pulseSlow {
+    0% {
+      transform: scale(0.95);
+      opacity: 0.3;
+    }
+    50% {
+      transform: scale(1.1);
+      opacity: 0.5;
+    }
+    100% {
+      transform: scale(0.95);
+      opacity: 0.3;
+    }
+  }
+  
+  @keyframes floatSlow {
+    0% {
+      transform: translateY(0);
+      opacity: 0.3;
+    }
+    50% {
+      transform: translateY(-15px);
+      opacity: 0.5;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 0.3;
+    }
+  }
+  
+  @keyframes expand {
+    0% {
+      transform: scale(1);
+      opacity: 0.3;
+    }
+    50% {
+      transform: scale(1.3);
+      opacity: 0.5;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 0.3;
+    }
+  }
 }
 
 @layer utilities {
@@ -134,5 +210,26 @@
   
   .outlined-btn {
     @apply border border-midnight-indigo text-midnight-indigo hover:bg-soft-blush rounded-btn;
+  }
+  
+  /* Animation utilities for color healing waves */
+  .animate-wave-right {
+    animation: waveRight 8s ease-in-out infinite;
+  }
+  
+  .animate-wave-left {
+    animation: waveLeft 8s ease-in-out infinite;
+  }
+  
+  .animate-pulse-slow {
+    animation: pulseSlow 6s ease-in-out infinite;
+  }
+  
+  .animate-float-slow {
+    animation: floatSlow 10s ease-in-out infinite;
+  }
+  
+  .animate-expand {
+    animation: expand 12s ease-in-out infinite;
   }
 }
