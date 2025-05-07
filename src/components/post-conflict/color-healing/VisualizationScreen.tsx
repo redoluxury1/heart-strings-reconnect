@@ -75,7 +75,7 @@ const VisualizationScreen: React.FC<VisualizationScreenProps> = ({
       </p>
 
       <div className="relative h-80 w-full mb-10 flex items-center justify-center">
-        {/* The orb starts as a small dot and expands */}
+        {/* Outer glow layer with more irregular shape */}
         <div 
           className={`rounded-full transition-all duration-[10000ms] ${
             expandOrb 
@@ -85,54 +85,59 @@ const VisualizationScreen: React.FC<VisualizationScreenProps> = ({
           style={{ 
             backgroundColor: 'transparent',
             height: '60px', 
-            width: '60px',
-            boxShadow: `0 0 40px 15px ${selectedColor}`,
-            filter: 'blur(8px)'
+            width: '65px', // Slightly wider to create less circular shape
+            boxShadow: `0 0 40px 20px ${selectedColor}`,
+            filter: 'blur(10px)',
+            transform: 'rotate(15deg)' // Slight rotation for irregular shape
           }}
         />
         
-        {/* Medium glow layer */}
+        {/* Medium glow layer with different dimensions */}
         <div 
           className={`absolute rounded-full transition-all duration-[10000ms] ${
             expandOrb 
               ? 'scale-[8] opacity-40' 
               : (fadeIn ? 'scale-[0.2] opacity-40' : 'scale-0 opacity-0')
-          } animate-pulse-slow`}
+          } animate-wave-circle`}
           style={{ 
             backgroundColor: 'transparent',
-            height: '50px', 
-            width: '50px',
-            boxShadow: `0 0 30px 10px ${selectedColor}`,
-            filter: 'blur(6px)'
+            height: '48px', 
+            width: '53px', // Different ratio for less circular appearance
+            boxShadow: `0 0 35px 15px ${selectedColor}`,
+            filter: 'blur(6px)',
+            borderRadius: '60% 40% 50% 45%' // Irregular border radius
           }}
         />
         
-        {/* Inner bright core */}
+        {/* Inner bright core with pulsing effect */}
         <div 
           className={`absolute rounded-full transition-all duration-[10000ms] ${
             expandOrb 
               ? 'scale-[6] opacity-70' 
               : (fadeIn ? 'scale-[0.1] opacity-70' : 'scale-0 opacity-0')
-          }`}
+          } animate-expand`}
           style={{ 
             backgroundColor: selectedColor,
             height: '40px', 
-            width: '40px',
-            boxShadow: `0 0 20px 8px ${selectedColor}`,
-            filter: 'blur(2px)'
+            width: '44px', // Slightly wider for less perfect circle
+            boxShadow: `0 0 25px 12px ${selectedColor}`,
+            filter: 'blur(2px)',
+            borderRadius: '55% 45% 60% 40%' // Irregular border radius
           }}
         />
         
-        {/* Central dot - always stays small and bright */}
+        {/* Central dot with constant pulsing */}
         <div 
-          className={`absolute rounded-full transition-opacity duration-1000 ${
+          className={`absolute transition-opacity duration-1000 animate-pulse-slow ${
             fadeIn ? 'opacity-90' : 'opacity-0'
           }`}
           style={{ 
             backgroundColor: selectedColor,
             height: '20px', 
-            width: '20px',
-            boxShadow: `0 0 15px 5px ${selectedColor}`
+            width: '22px', // Slightly wider
+            boxShadow: `0 0 15px 8px ${selectedColor}`,
+            borderRadius: '60% 40% 55% 45%', // Irregular border radius
+            transform: 'rotate(-10deg)' // Slight rotation
           }}
         />
       </div>
