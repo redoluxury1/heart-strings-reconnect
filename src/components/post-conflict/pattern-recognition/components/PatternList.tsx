@@ -2,7 +2,7 @@
 import React from 'react';
 import { CommonPattern } from '../types';
 import { PatternId } from '../hooks/usePatternRecognition';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, RefreshCw, Users, LightningBolt, Volume2, PuzzlePiece } from 'lucide-react';
 
 interface PatternListProps {
   patterns: CommonPattern[];
@@ -24,35 +24,40 @@ const PatternList: React.FC<PatternListProps> = ({ patterns, onPatternSelect }) 
         <div className="w-full max-w-md space-y-2">
           {/* Pattern Cards */}
           <PatternCard 
-            icon="🔄" 
+            IconComponent={RefreshCw}
+            iconColor="#E69999" 
             title="Blame / Defend / Withdraw"
             description="You feel blamed, so you shut down. They get louder. Repeat."
             onClick={() => onPatternSelect("1")}
           />
           
           <PatternCard 
-            icon="👫" 
+            IconComponent={Users}
+            iconColor="#4A448C" 
             title="Pursue / Distance"
             description="One of you chases connection. The other pulls away."
             onClick={() => onPatternSelect("2")}
           />
           
           <PatternCard 
-            icon="⚡" 
+            IconComponent={LightningBolt}
+            iconColor="#E5C158" 
             title="Silent Tension > Snap > Shame"
             description="It builds up... until it bursts."
             onClick={() => onPatternSelect("3")}
           />
           
           <PatternCard 
-            icon="🔊" 
+            IconComponent={Volume2}
+            iconColor="#4A448C" 
             title="Criticize / Control"
             description="Everything feels like a correction."
             onClick={() => onPatternSelect("4")}
           />
           
           <PatternCard 
-            icon="🧩" 
+            IconComponent={PuzzlePiece}
+            iconColor="#E69999" 
             title="Fix It / Reject It"
             description="One wants to solve. The other isn't ready."
             onClick={() => onPatternSelect("5")}
@@ -63,14 +68,16 @@ const PatternList: React.FC<PatternListProps> = ({ patterns, onPatternSelect }) 
   );
 };
 
-// Pattern card component - make skinnier with smaller text
+// Pattern card component with Lucide icons instead of emojis
 const PatternCard = ({ 
-  icon, 
+  IconComponent, 
+  iconColor,
   title, 
   description, 
   onClick 
 }: { 
-  icon: string; 
+  IconComponent: React.ElementType;
+  iconColor: string;
   title: string; 
   description: string; 
   onClick: () => void;
@@ -81,8 +88,8 @@ const PatternCard = ({
       className="w-full bg-white rounded-xl p-2.5 flex items-center justify-between border border-gray-100 shadow-sm hover:shadow transition-shadow"
     >
       <div className="flex items-center gap-2">
-        <div className="text-[#E9B872] text-xl min-w-8 flex items-center justify-center">
-          {icon}
+        <div className="min-w-8 flex items-center justify-center">
+          <IconComponent color={iconColor} size={20} strokeWidth={1.5} />
         </div>
         <div className="text-left">
           <h3 className="text-sm font-medium text-[#14213d]">{title}</h3>
