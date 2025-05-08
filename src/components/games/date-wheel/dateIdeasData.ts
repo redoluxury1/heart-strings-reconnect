@@ -1,3 +1,4 @@
+
 import { DateIdea } from '@/types/date-wheel';
 
 // Create date idea data
@@ -232,7 +233,7 @@ const dateIdeas: DateIdea[] = [
     title: '10-Minute Massage Swap',
     description: 'One gives. One receives. Then switch. No strings.',
     category: ['home', 'flirty'],
-    icon: 'Heart',
+    icon: 'HandHelping',
     tip: 'Touch re-regulates the nervous system and softens resentment.'
   },
   {

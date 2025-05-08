@@ -22,7 +22,7 @@ import {
   Gift,
   Camera,
   Clock,
-  HandHolding,
+  HandHelping,
   Wine,
   PaintRoller
 } from 'lucide-react';
@@ -136,8 +136,8 @@ const DateWheel: React.FC = () => {
         return <Camera className="h-6 w-6 text-midnight-indigo" />;
       case 'Clock':
         return <Clock className="h-6 w-6 text-midnight-indigo" />;
-      case 'HandHolding':
-        return <HandHolding className="h-6 w-6 text-midnight-indigo" />;
+      case 'HandHelping':
+        return <HandHelping className="h-6 w-6 text-midnight-indigo" />;
       case 'Wine':
         return <Wine className="h-6 w-6 text-midnight-indigo" />;
       case 'PaintRoller':
