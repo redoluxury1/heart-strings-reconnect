@@ -1,52 +1,13 @@
 
 import React from 'react';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, RefreshCcw, Users, Megaphone, PuzzlePiece } from 'lucide-react';
 import { CommonPattern } from '../types';
 import PatternCard from './PatternCard';
-import { User, Speaker, ConnectIcon } from './PursueDistanceIcons';
 
 interface PatternListProps {
   patterns: CommonPattern[];
   onPatternSelect: (patternId: string) => void;
 }
-
-// Custom SVG icons for each pattern type
-const PatternIcons: Record<string, React.ReactNode> = {
-  'criticism-defensiveness': (
-    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="24" cy="24" r="20" stroke="currentColor" strokeWidth="2"/>
-      <path d="M16 24C20 19 28 19 32 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-      <path d="M16 30C20 35 28 35 32 30" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeDasharray="2 2"/>
-    </svg>
-  ),
-  'pursue-distance': (
-    <div className="flex gap-1.5">
-      <User className="h-8 w-8" />
-      <ConnectIcon className="h-8 w-8" />
-      <Speaker className="h-8 w-8" />
-    </div>
-  ),
-  'silent-tension-snap': (
-    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M22 16L14 28H22L20 36L28 24H20L22 16Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-    </svg>
-  ),
-  'criticize-control': (
-    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M20 17C20 15.3431 21.3431 14 23 14H25C26.6569 14 28 15.3431 28 17V19C28 20.6569 26.6569 22 25 22H23C21.3431 22 20 20.6569 20 19V17Z" stroke="currentColor" strokeWidth="2"/>
-      <path d="M24 22V32" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-      <path d="M18 32H30" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-    </svg>
-  ),
-  'fix-reject': (
-    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M16 18L24 14L32 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-      <path d="M16 24L24 20L32 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-      <path d="M16 30L24 26L32 30" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-      <path d="M16 34L24 30L32 34" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-    </svg>
-  ),
-};
 
 // Friendly pattern names for display
 const friendlyPatternNames: Record<string, string> = {
@@ -67,6 +28,28 @@ const friendlyDescriptions: Record<string, string> = {
 };
 
 const PatternList: React.FC<PatternListProps> = ({ patterns, onPatternSelect }) => {
+  // Get appropriate icon based on pattern type
+  const getPatternIcon = (patternType: string) => {
+    switch(patternType) {
+      case 'criticism-defensiveness':
+        return <RefreshCcw className="h-8 w-8" />;
+      case 'pursue-distance':
+        return <Users className="h-8 w-8" />;
+      case 'criticize-control':
+        return <Megaphone className="h-8 w-8" />;
+      case 'fix-reject':
+        return <PuzzlePiece className="h-8 w-8" />;
+      case 'silent-tension-snap':
+        return (
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M22 16L14 28H22L20 36L28 24H20L22 16Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
     <div className="space-y-6 max-w-xl mx-auto">
       <div className="text-center mb-8">
@@ -84,7 +67,7 @@ const PatternList: React.FC<PatternListProps> = ({ patterns, onPatternSelect }) 
           <PatternCard
             key={pattern.id}
             onClick={() => onPatternSelect(pattern.id.toString())}
-            icon={PatternIcons[pattern.patternType]}
+            icon={getPatternIcon(pattern.patternType)}
             title={friendlyPatternNames[pattern.patternType] || pattern.name}
           >
             <p className="text-[#14213d]/80 text-base leading-relaxed">
