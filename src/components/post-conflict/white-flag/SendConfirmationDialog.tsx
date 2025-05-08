@@ -2,7 +2,17 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 
 interface SendConfirmationDialogProps {
   message: string;
@@ -19,25 +29,25 @@ const SendConfirmationDialog = ({ message }: SendConfirmationDialogProps) => {
   };
   
   return (
-    <Dialog>
-      <DialogTrigger asChild>
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
         <Button className="bg-[#2e2a63] hover:bg-[#1e1a43] text-white px-8 py-2">
           Send Message
         </Button>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Send this message?</DialogTitle>
-        </DialogHeader>
-        <div className="py-4">
-          <p className="text-[#1A1F2C]">{message}</p>
-        </div>
-        <div className="flex justify-end gap-2">
-          <Button variant="outline">Cancel</Button>
-          <Button onClick={handleSend}>Confirm & Send</Button>
-        </div>
-      </DialogContent>
-    </Dialog>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Send this message?</AlertDialogTitle>
+          <AlertDialogDescription>
+            <p className="text-[#1A1F2C]">{message}</p>
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogAction onClick={handleSend}>Confirm & Send</AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 };
 
