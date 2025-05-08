@@ -22,11 +22,10 @@ const VisualizationScreen: React.FC<VisualizationScreenProps> = ({
   const { fadeIn, setFadeIn } = useVisualization();
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Scroll to top of component when mounted
+  // Scroll only within component when mounted, not to top of page
   useEffect(() => {
     if (containerRef.current) {
       containerRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }, []);
 
@@ -69,6 +68,13 @@ const VisualizationScreen: React.FC<VisualizationScreenProps> = ({
     };
   }, [countdown]);
   
+  // Handle continue click without scrolling to top of page
+  const handleContinueClick = (e) => {
+    // Prevent default browser behavior
+    e.preventDefault();
+    onContinue();
+  };
+  
   return (
     <div ref={containerRef} className="flex flex-col items-center max-w-xl mx-auto">
       <VisualizationInstructions />
@@ -83,7 +89,7 @@ const VisualizationScreen: React.FC<VisualizationScreenProps> = ({
       
       <div className="w-full flex flex-col gap-4 items-center">
         <Button
-          onClick={onContinue}
+          onClick={handleContinueClick}
           disabled={!countdownComplete}
           className="py-3 px-6 w-full max-w-xs text-lg text-white rounded-full"
           style={{

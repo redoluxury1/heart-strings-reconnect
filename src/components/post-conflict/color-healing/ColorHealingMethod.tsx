@@ -17,7 +17,7 @@ const ColorHealingMethod: React.FC = () => {
   // Total number of screens in the flow
   const totalScreens = 6;
 
-  // Scroll to component top when screen changes
+  // Scroll to component top when screen changes, but not to page top
   useEffect(() => {
     if (containerRef.current) {
       // This scrolls to the component itself rather than the window

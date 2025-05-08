@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
@@ -52,6 +53,13 @@ const ColorSelectionScreen: React.FC<ColorSelectionScreenProps> = ({
   const updateCustomColor = () => {
     const customColor = getCustomColor();
     onColorSelect(customColor);
+  };
+
+  // Handle continue click without scrolling to top of page
+  const handleContinueClick = (e) => {
+    // Prevent default browser behavior which might cause scrolling
+    e.preventDefault();
+    onContinue();
   };
 
   return (
@@ -181,7 +189,7 @@ const ColorSelectionScreen: React.FC<ColorSelectionScreenProps> = ({
 
       <div className="flex justify-center w-full">
         <Button
-          onClick={onContinue}
+          onClick={handleContinueClick}
           className="py-3 px-6 w-full max-w-xs text-lg text-white rounded-full"
           style={{
             backgroundColor: selectedColor
