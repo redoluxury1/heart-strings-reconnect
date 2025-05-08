@@ -25,6 +25,8 @@ const PursueDistanceDetailScreen: React.FC<PursueDistanceDetailScreenProps> = ({
           src="/lovable-uploads/860f841f-3974-44d6-9b4b-bad84d8ec2f0.png"
           alt="One partner trying to connect while the other distances"
           className="w-full h-auto mx-auto"
+          loading="eager"
+          fetchPriority="high"
         />
       </div>
       

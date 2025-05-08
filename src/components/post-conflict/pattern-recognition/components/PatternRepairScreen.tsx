@@ -128,6 +128,8 @@ const PatternRepairScreen: React.FC<PatternRepairScreenProps> = ({
           src="/lovable-uploads/3b284c19-cb83-4bd1-85b3-a1d36fd5aaab.png"
           alt="Couple calmly connecting and seated together after conflict"
           className="w-[65%] mx-auto h-auto"
+          loading="eager"
+          fetchPriority="high"
         />
       </div>
       

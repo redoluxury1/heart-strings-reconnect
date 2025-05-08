@@ -75,6 +75,8 @@ const PatternDetailScreen: React.FC<PatternDetailScreenProps> = ({ pattern, onCo
           src="/lovable-uploads/3b284c19-cb83-4bd1-85b3-a1d36fd5aaab.png"
           alt="Couple in pattern of conflict"
           className="w-full h-auto mx-auto"
+          loading="eager"
+          fetchPriority="high"
         />
       </div>
       

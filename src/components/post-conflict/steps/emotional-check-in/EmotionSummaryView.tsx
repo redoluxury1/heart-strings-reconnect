@@ -47,7 +47,7 @@ const EmotionSummaryView: React.FC<EmotionSummaryViewProps> = ({
       </div>
 
       {emotionalInsight && (
-        <div className="mt-4 p-3 bg-[#f9f5ff] rounded-xl text-center text-gray-700 text-sm border border-[#e5deff]">
+        <div className="mt-4 p-3 bg-[#f9f5ff] rounded-xl text-center text-[#2e2a63] text-sm border border-[#e5deff]">
           {emotionalInsight}
         </div>
       )}

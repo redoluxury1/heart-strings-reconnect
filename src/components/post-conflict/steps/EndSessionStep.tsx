@@ -42,7 +42,9 @@ const EndSessionStep: React.FC<EndSessionStepProps> = ({
         <img 
           src="/lovable-uploads/4d7f62d0-dd67-4224-91ce-5befbd32a9bf.png" 
           alt="Couple relaxing together" 
-          className="h-40 w-auto" 
+          className="h-40 w-auto"
+          loading="eager"
+          fetchPriority="high"
         />
       </div>
       
@@ -50,12 +52,12 @@ const EndSessionStep: React.FC<EndSessionStepProps> = ({
         Phew! How do you feel?
       </h2>
       
-      <p className="text-gray-800 mb-8 text-lg">
+      <p className="text-[#2e2a63] mb-8 text-lg">
         Conflict doesn't mean disconnection — and you just proved it. What would you like to do next?
       </p>
       
       <div className="mb-10">
-        <div className="flex justify-between text-sm text-gray-600 mb-2">
+        <div className="flex justify-between text-sm text-[#2e2a63] mb-2">
           <span>Still Hurting</span>
           <span>Feeling Hopeful</span>
         </div>

@@ -33,7 +33,7 @@ const LetsTalkThisOut = () => {
         />
         
         <h2 className="text-4xl md:text-5xl font-cormorant font-medium mb-4 text-center text-midnight-indigo">
-          Let's talk this out
+          Let's work this out
         </h2>
         
         <p className="text-center text-gray-700 mb-3 text-lg">

@@ -32,6 +32,8 @@ const PursueDistanceRepairScreen: React.FC<PursueDistanceRepairScreenProps> = ({
           src="/lovable-uploads/90ca9d1d-4881-4b84-bc51-96d9cb10c80a.png"
           alt="Couple seated calmly, reconnecting after emotional distance"
           className="w-[80%] mx-auto h-auto"
+          loading="eager"
+          fetchPriority="high"
         />
       </div>
       

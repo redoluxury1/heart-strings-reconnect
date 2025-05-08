@@ -34,11 +34,11 @@ const OkayButNowWhat = () => {
   return (
     <section id="okay-but-now-what" className="bg-[#f8f5f0] rounded-xl shadow-sm p-6 md:p-8">
       <div className="max-w-3xl mx-auto">
-        <h2 className="text-4xl font-cormorant font-medium text-[#1A1A2E] mb-3 text-center">
+        <h2 className="text-4xl font-cormorant font-medium text-[#2e2a63] mb-3 text-center">
           OK but now what?
         </h2>
         
-        <p className="text-center text-gray-600 mb-10">
+        <p className="text-center text-[#2e2a63] mb-10">
           You made it through the hard part. This section helps you keep it from happening again.
         </p>
         
@@ -52,8 +52,8 @@ const OkayButNowWhat = () => {
               <div className="bg-[#e1d8ed] p-3 rounded-full mb-4">
                 <RotateCw className="h-8 w-8 text-[#2e2a63]" />
               </div>
-              <h3 className="text-xl font-medium text-[#1A1A2E] mb-2">Recognize a Pattern</h3>
-              <p className="text-gray-600">
+              <h3 className="text-xl font-medium text-[#2e2a63] mb-2">Recognize a Pattern</h3>
+              <p className="text-[#2e2a63]">
                 Identify the fight you keep having—and why it keeps showing up.
               </p>
             </div>
@@ -68,8 +68,8 @@ const OkayButNowWhat = () => {
               <div className="bg-[#fce6d4] p-3 rounded-full mb-4">
                 <Flag className="h-8 w-8 text-[#c06b6b]" />
               </div>
-              <h3 className="text-xl font-medium text-[#1A1A2E] mb-2">Send a White Flag</h3>
-              <p className="text-gray-600">
+              <h3 className="text-xl font-medium text-[#2e2a63] mb-2">Send a White Flag</h3>
+              <p className="text-[#2e2a63]">
                 Send a pause signal, call a truce, or say "I need space" without making it worse.
               </p>
             </div>
@@ -118,7 +118,7 @@ const WhiteFlagTool = () => {
   
   return (
     <div className="max-w-2xl mx-auto">
-      <h3 className="text-2xl font-medium text-[#1A1A2E] mb-6 text-center">Choose a message template</h3>
+      <h3 className="text-2xl font-medium text-[#2e2a63] mb-6 text-center">Choose a message template</h3>
       
       <div className="grid grid-cols-1 gap-4 mb-8">
         {templates.map(template => (
@@ -131,8 +131,8 @@ const WhiteFlagTool = () => {
             }`}
             onClick={() => setSelectedTemplate(template.id)}
           >
-            <h4 className="font-medium text-[#1A1A2E] mb-2">{template.title}</h4>
-            <p className="text-gray-600">{template.message}</p>
+            <h4 className="font-medium text-[#2e2a63] mb-2">{template.title}</h4>
+            <p className="text-[#2e2a63]">{template.message}</p>
           </div>
         ))}
       </div>

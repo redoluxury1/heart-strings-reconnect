@@ -63,14 +63,11 @@ const PatternRecognitionFlow: React.FC<PatternRecognitionFlowProps> = ({
     navigate('/during-conflict?section=pause-phrase');
   };
   
-  // Determine classes based on fullScreen mode
-  const containerClasses = fullScreen 
-    ? "fixed inset-0 z-50 bg-white overflow-y-auto" 
-    : "bg-white rounded-xl shadow-md overflow-hidden";
-  
+  // Fix: Use absolute positioning to ensure full screen coverage
   return (
-    <div className={containerClasses} style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 50, background: 'white' }}>
+    <div className="fixed inset-0 z-50 bg-white overflow-y-auto">
       <div className="p-6 md:p-8">
+        {/* Back to tools button for fullScreen mode */}
         {(fullScreen && onClose) && (
           <Button
             variant="ghost"
@@ -83,7 +80,21 @@ const PatternRecognitionFlow: React.FC<PatternRecognitionFlowProps> = ({
           </Button>
         )}
         
-        {!showIntro && !showCyclePattern && !showPatternDetail && !showPatternRepair && (selectedPattern !== null || isShowingTips) && (
+        {/* Show back button to pattern list on pattern detail screens */}
+        {showPatternDetail && (
+          <Button
+            variant="ghost"
+            className="mb-4"
+            onClick={handleGoBack}
+            size="sm"
+          >
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to patterns
+          </Button>
+        )}
+        
+        {/* For all other views, show back button when applicable except intro and cycle pattern */}
+        {!showIntro && !showCyclePattern && !showPatternDetail && (selectedPattern !== null || isShowingTips) && (
           <Button
             variant="ghost"
             className="mb-4"
