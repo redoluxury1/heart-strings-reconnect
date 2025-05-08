@@ -4,6 +4,7 @@ import { useToast } from '@/hooks/use-toast';
 import CodeWordSetup from './CodeWordSetup';
 import CodeWordUsage from './CodeWordUsage';
 import CodeWordSync from './CodeWordSync';
+import CodeWordConfirmation from './CodeWordConfirmation';
 import { 
   Dialog, 
   DialogContent,
@@ -19,7 +20,7 @@ const mockRelationship = {
   codeWord: null
 };
 
-export type CodeWordStatus = 'setup' | 'sync' | 'usage' | 'cool-down' | 'negotiation';
+export type CodeWordStatus = 'setup' | 'sync' | 'usage' | 'cool-down' | 'negotiation' | 'confirmation';
 
 const CodeWordTool = () => {
   const [codeWord, setCodeWord] = useState<CodeWordInfo | null>(mockRelationship.codeWord);
@@ -87,15 +88,16 @@ const CodeWordTool = () => {
     };
     
     setCodeWord(newCodeWord);
-    setCurrentView('usage');
-    setUserSuggestion(null);
     
-    toast({
-      title: "Code word set",
-      description: partnerStatus === 'couple' 
-        ? `'${word}' is now your code word. We've notified your partner for confirmation.`
-        : `'${word}' is now your code word.`,
-    });
+    // If this is the first time setting a code word or confirming partner's word,
+    // show the confirmation screen
+    if (!codeWord || (codeWord.status !== 'confirmed' && newCodeWord.status === 'confirmed')) {
+      setCurrentView('confirmation');
+    } else {
+      setCurrentView('usage');
+    }
+    
+    setUserSuggestion(null);
     
     // Close dialog if open
     setIsDialogOpen(false);
@@ -118,14 +120,9 @@ const CodeWordTool = () => {
       };
       
       setCodeWord(updatedCodeWord);
-      setCurrentView('usage');
+      setCurrentView('confirmation'); // Show the confirmation screen
       setPartnerWord(null);
       setHasNotification(false);
-      
-      toast({
-        title: "Code word confirmed",
-        description: `'${partnerWord}' is now your shared code word.`,
-      });
     }
   };
   
@@ -163,6 +160,15 @@ const CodeWordTool = () => {
     setUserSuggestion(null);
   };
   
+  const handleConfirmationClose = () => {
+    setCurrentView('usage');
+    
+    toast({
+      title: "Code word confirmed",
+      description: codeWord ? `'${codeWord.word}' is now your shared code word.` : "",
+    });
+  };
+
   // This simulates a partner suggesting a word
   // In a real app, this would come from a websocket or API
   const simulatePartnerSuggestion = () => {
@@ -188,6 +194,13 @@ const CodeWordTool = () => {
           partnerWord={partnerWord}
           onConfirm={handleConfirmPartnerWord}
           onReject={handleRejectPartnerWord}
+        />
+      )}
+      
+      {currentView === 'confirmation' && codeWord && (
+        <CodeWordConfirmation 
+          codeWord={codeWord.word} 
+          onClose={handleConfirmationClose}
         />
       )}
       
