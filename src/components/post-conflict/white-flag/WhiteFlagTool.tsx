@@ -49,27 +49,29 @@ const FlagTypeCard = ({
 const MessagesSelector = ({ 
   flagType, 
   onSelect,
-  onCustomChange
+  onCustomChange,
+  customMessage
 }: { 
   flagType: FlagType; 
   onSelect: (message: string) => void;
   onCustomChange: (value: string) => void;
+  customMessage: string;
 }) => {
   const [selectedMessageIndex, setSelectedMessageIndex] = useState<number | null>(null);
-  const [customMessage, setCustomMessage] = useState('');
   const [isCustom, setIsCustom] = useState(false);
 
   const handleSelectMessage = (index: number) => {
     setSelectedMessageIndex(index);
     setIsCustom(false);
-    onSelect(flagType.messages[index]);
+    const selectedMessage = flagType.messages[index];
+    onSelect(selectedMessage);
+    onCustomChange(selectedMessage); // Preload the selected message to custom textarea
   };
 
   const handleCustomChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setCustomMessage(e.target.value);
+    onCustomChange(e.target.value);
     setIsCustom(true);
     setSelectedMessageIndex(null);
-    onCustomChange(e.target.value);
   };
 
   return (
@@ -134,17 +136,19 @@ const SendConfirmationDialog = ({ message }: { message: string }) => {
 const WhiteFlagTool = () => {
   const [selectedFlagType, setSelectedFlagType] = useState<FlagType | null>(null);
   const [selectedMessage, setSelectedMessage] = useState<string>('');
+  const [customMessage, setCustomMessage] = useState<string>('');
   const [step, setStep] = useState<'select-flag' | 'select-message'>('select-flag');
   const { toast } = useToast();
 
   const handleSelectFlag = (flagType: FlagType) => {
     setSelectedFlagType(flagType);
     setSelectedMessage('');
+    setCustomMessage('');
     setStep('select-message');
   };
 
   const handleSaveAsFavorite = () => {
-    if (!selectedMessage) {
+    if (!customMessage) {
       toast({
         title: "No message selected",
         description: "Please select or write a message first.",
@@ -161,6 +165,7 @@ const WhiteFlagTool = () => {
   const handleBack = () => {
     setStep('select-flag');
     setSelectedMessage('');
+    setCustomMessage('');
   };
 
   return (
@@ -213,11 +218,12 @@ const WhiteFlagTool = () => {
               <MessagesSelector 
                 flagType={selectedFlagType}
                 onSelect={setSelectedMessage}
-                onCustomChange={setSelectedMessage}
+                onCustomChange={setCustomMessage}
+                customMessage={customMessage}
               />
               
               <div className="mt-6 flex flex-wrap justify-center gap-4">
-                <SendConfirmationDialog message={selectedMessage} />
+                <SendConfirmationDialog message={customMessage || selectedMessage} />
                 <Button 
                   variant="outline" 
                   className="border-[#c06b6b] text-[#c06b6b]"
