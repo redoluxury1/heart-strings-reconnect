@@ -1,4 +1,3 @@
-
 import { DateIdea } from '@/types/date-wheel';
 
 // Create date idea data
@@ -243,6 +242,166 @@ const dateIdeas: DateIdea[] = [
     category: ['home'],
     icon: 'Star',
     tip: 'Dreaming together re-centers the "we."'
+  },
+  {
+    id: 'parallel-play',
+    title: 'Parallel Play Night',
+    description: 'Sit together and do your own thing—reading, sketching, scrolling. Just be near each other.',
+    category: ['home', 'low-effort'],
+    icon: 'Book',
+    tip: 'Reconnection doesn\'t always need words—just presence.'
+  },
+  {
+    id: 'grocery-trial',
+    title: 'Grocery Store Time Trial',
+    description: 'Set a timer and split up. You each grab ingredients for a surprise snack. Regroup and eat.',
+    category: ['out', 'adventure'],
+    icon: 'ShoppingBag',
+    tip: 'Light pressure and friendly competition spark fun.'
+  },
+  {
+    id: 'bucket-list',
+    title: 'Build a Shared Bucket List',
+    description: 'Use the notes app or a notebook. Add big and small experiences you want to do together.',
+    category: ['home', 'low-effort'],
+    icon: 'Star',
+    tip: 'Forward focus builds hope and "we" language.'
+  },
+  {
+    id: 'couch-picnic',
+    title: 'Couch Picnic',
+    description: 'Eat something low-key (like snacks or takeout) on the couch, floor, or in bed—plates optional.',
+    category: ['home', 'low-effort'],
+    icon: 'Home',
+    tip: 'Breaking the routine softens the vibe.'
+  },
+  {
+    id: 'old-voicemail',
+    title: 'Listen to an Old Voicemail',
+    description: 'Pick an old message and listen together. Bonus: record a new one for each other.',
+    category: ['home', 'flirty'],
+    icon: 'Headphones',
+    tip: 'Real voices bring back real connection.'
+  },
+  {
+    id: 'ideal-weekend',
+    title: '"Your Ideal Weekend" Swap',
+    description: 'Describe what your perfect Saturday looks like. Then see how close you can get this week.',
+    category: ['home', 'low-effort'],
+    icon: 'Calendar',
+    tip: 'Helps you understand and support each other\'s world.'
+  },
+  {
+    id: 'new-neighborhood',
+    title: 'Walk a New Neighborhood',
+    description: 'Choose a nearby area you\'ve never walked and explore together without a plan.',
+    category: ['out', 'adventure'],
+    icon: 'MapPin',
+    tip: 'Novelty creates fresh context for connection.'
+  },
+  {
+    id: 'new-show',
+    title: 'Watch Something You Normally Wouldn\'t',
+    description: 'Pick a show or doc outside your usual genres—then talk about it after.',
+    category: ['home', 'low-effort'],
+    icon: 'Film',
+    tip: 'Doing something different brings out new parts of you both.'
+  },
+  {
+    id: 'swap-favorites',
+    title: 'Swap Favorites',
+    description: 'Trade each other\'s favorite snack, shirt, song, or movie—then try it like it\'s brand new.',
+    category: ['home', 'flirty'],
+    icon: 'Gift',
+    tip: 'Builds curiosity and invites play.'
+  },
+  {
+    id: 'tiktok-recipe',
+    title: 'Recreate a TikTok Recipe',
+    description: 'Pick a trending dish and try making it together. Bonus: record yourselves (or don\'t).',
+    category: ['home', 'adventure'],
+    icon: 'Utensils',
+    tip: 'Doing, not talking, creates safer connection.'
+  },
+  {
+    id: 'budget-date',
+    title: 'Budget Date Challenge',
+    description: 'Set a limit ($5, $15, $30) and design the best date you can with it.',
+    category: ['out', 'adventure'],
+    icon: 'Star',
+    tip: 'Creates intention without requiring money.'
+  },
+  {
+    id: 'clean-sprint',
+    title: '20-Minute Clean Sprint (Then Reward)',
+    description: 'Clean one room together fast—then treat yourselves with dessert or a show.',
+    category: ['home'],
+    icon: 'Home',
+    tip: 'Creates "we did that" energy that spills into other parts of your relationship.'
+  },
+  {
+    id: 'bookstore-stroll',
+    title: 'Stroll Through a Bookstore',
+    description: 'Grab a coffee, wander the aisles, show each other interesting covers or titles.',
+    category: ['out', 'low-effort'],
+    icon: 'Book',
+    tip: 'Quiet curiosity builds comfort and shared rhythm.'
+  },
+  {
+    id: 'fake-vacation',
+    title: 'Make a Fake Vacation Plan',
+    description: 'Pick a random place you\'ve never been and plan a pretend trip—flights, outfits, snacks.',
+    category: ['home', 'adventure'],
+    icon: 'MapPin',
+    tip: 'Shared dreaming activates connection and creativity.'
+  },
+  {
+    id: 'yelp-review',
+    title: 'Write a Yelp Review Together',
+    description: 'Pick a restaurant or place you both went and co-write a dramatic or funny review.',
+    category: ['home', 'low-effort'],
+    icon: 'Star',
+    tip: 'Co-creating stories encourages laughter and bonding.'
+  },
+  {
+    id: 'taste-test',
+    title: 'Taste Test Something Weird',
+    description: 'Try unusual snacks or drinks from another culture or a specialty store. Rate them together.',
+    category: ['home', 'adventure'],
+    icon: 'Coffee',
+    tip: 'Shared risk (even in food!) builds intimacy.'
+  },
+  {
+    id: 'slow-dance',
+    title: 'Do a 1-Song Slow Dance',
+    description: 'Pick a meaningful song and dance to it wherever you are. Just one.',
+    category: ['home', 'flirty'],
+    icon: 'Music',
+    tip: 'Regulates the nervous system and reignites affection.'
+  },
+  {
+    id: 'old-photos',
+    title: 'Look Through Old Photos',
+    description: 'Scroll through your old camera rolls or saved memes together.',
+    category: ['home', 'low-effort'],
+    icon: 'Camera',
+    tip: 'Shared history is one of your strongest assets.'
+  },
+  {
+    id: 'what-if-game',
+    title: '"What If We…" Game',
+    description: 'Take turns finishing the sentence: "What if we…" and see where it goes.',
+    category: ['home', 'flirty'],
+    icon: 'MessageCircle',
+    tip: 'Opens the door to possibilities without expectations.'
+  },
+  {
+    id: 'silence-coffee',
+    title: 'Sit in Silence with Coffee or Wine',
+    description: 'Just sit. Sip. No phones. No pressure.',
+    category: ['home', 'low-effort'],
+    icon: 'Coffee',
+    tip: 'Sometimes, peace is the best reset of all.'
   }
 ];
 

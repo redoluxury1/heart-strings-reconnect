@@ -1,5 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import { CirclePlay, Film, Pizza, Moon, Paintbrush, Heart, Home, MapPin, Mountain, Sun, Music, Eye, Coffee, Utensils, Star, MessageCircle, Calendar } from 'lucide-react';
+import { 
+  CirclePlay, 
+  Film, 
+  Pizza, 
+  Moon, 
+  Paintbrush, 
+  Heart, 
+  Home, 
+  MapPin, 
+  Mountain, 
+  Sun, 
+  Music, 
+  Eye, 
+  Coffee, 
+  Utensils, 
+  Star, 
+  MessageCircle, 
+  Calendar,
+  Book,
+  ShoppingBag,
+  Gift,
+  Camera,
+  Clock,
+  HandHolding,
+  Wine,
+  PaintRoller
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
@@ -100,6 +126,22 @@ const DateWheel: React.FC = () => {
         return <MessageCircle className="h-6 w-6 text-midnight-indigo" />;
       case 'Calendar':
         return <Calendar className="h-6 w-6 text-midnight-indigo" />;
+      case 'Book':
+        return <Book className="h-6 w-6 text-midnight-indigo" />;
+      case 'ShoppingBag':
+        return <ShoppingBag className="h-6 w-6 text-midnight-indigo" />;
+      case 'Gift':
+        return <Gift className="h-6 w-6 text-midnight-indigo" />;
+      case 'Camera':
+        return <Camera className="h-6 w-6 text-midnight-indigo" />;
+      case 'Clock':
+        return <Clock className="h-6 w-6 text-midnight-indigo" />;
+      case 'HandHolding':
+        return <HandHolding className="h-6 w-6 text-midnight-indigo" />;
+      case 'Wine':
+        return <Wine className="h-6 w-6 text-midnight-indigo" />;
+      case 'PaintRoller':
+        return <PaintRoller className="h-6 w-6 text-midnight-indigo" />;
       default:
         return <Heart className="h-6 w-6 text-midnight-indigo" />;
     }
