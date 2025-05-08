@@ -80,12 +80,12 @@ const PatternRecognitionFlow: React.FC<PatternRecognitionFlowProps> = ({
           </Button>
         )}
         
-        {/* Show back button to pattern list on pattern detail screens */}
-        {showPatternDetail && (
+        {/* Show back button to pattern list specifically on pattern detail screens */}
+        {selectedPattern !== null && showPatternDetail && (
           <Button
             variant="ghost"
             className="mb-4"
-            onClick={handleGoBack}
+            onClick={() => handlePatternSelect(null)}
             size="sm"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
