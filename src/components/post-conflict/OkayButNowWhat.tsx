@@ -14,6 +14,10 @@ const OkayButNowWhat = () => {
   const handlePatternToolToggle = () => {
     setShowPatternTool(!showPatternTool);
     setShowFlagTool(false);
+    // When opening pattern tool, scroll to top to ensure full view
+    if (!showPatternTool) {
+      window.scrollTo(0, 0);
+    }
   };
   
   const handleFlagToolToggle = () => {

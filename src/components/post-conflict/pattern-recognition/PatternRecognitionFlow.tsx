@@ -63,10 +63,9 @@ const PatternRecognitionFlow: React.FC<PatternRecognitionFlowProps> = ({
     navigate('/during-conflict?section=pause-phrase');
   };
   
-  // Fix: Use absolute positioning to ensure full screen coverage
   return (
-    <div className="fixed inset-0 z-50 bg-white overflow-y-auto">
-      <div className="p-6 md:p-8">
+    <div className="fixed inset-0 z-[100] bg-white overflow-y-auto">
+      <div className="min-h-screen p-6 md:p-8">
         {/* Back to tools button for fullScreen mode */}
         {(fullScreen && onClose) && (
           <Button
