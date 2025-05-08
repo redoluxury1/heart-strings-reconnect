@@ -13,7 +13,7 @@ interface PatternListProps {
 const friendlyPatternNames: Record<string, string> = {
   'criticism-defensiveness': 'Blame / Defend / Withdraw',
   'pursue-distance': 'Pursue / Distance',
-  'silent-tension-snap': 'Silent Tension > Snap > Shame',
+  'silent-tension-snap': 'Silent Tension / Snap / Shame',
   'criticize-control': 'Criticize / Control',
   'fix-reject': 'Fix It / Reject It',
 };
