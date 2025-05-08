@@ -1,5 +1,5 @@
 
-import { Flag, Heart, Frown, Pause } from 'lucide-react';
+import { Pause, Heart, Frown } from 'lucide-react';
 
 export type FlagType = {
   id: string;
@@ -18,7 +18,9 @@ export const flagTypes: FlagType[] = [
     messages: [
       'I need a little space to calm down, but I want to come back to this.',
       'I care about you. I just need to gather my thoughts before we talk more.',
-      'Let\'s pause. I don\'t want to make things worse.'
+      'Let\'s pause. I don\'t want to make things worse.',
+      'I\'m not trying to avoid this, I just need a moment to breathe.',
+      'I\'m feeling overwhelmed. I\'m going to step away so I don\'t make this worse.'
     ]
   },
   {

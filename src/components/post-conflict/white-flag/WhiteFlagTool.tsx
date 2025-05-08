@@ -21,24 +21,24 @@ const FlagTypeCard = ({
   
   return (
     <div 
-      className={`border rounded-xl p-4 mb-3 cursor-pointer transition-all ${
+      className={`border rounded-xl p-3 mb-2 cursor-pointer transition-all ${
         isSelected ? 'border-[#c06b6b] bg-[#fce6d4]/30' : 'border-gray-200'
       }`}
       onClick={onClick}
     >
-      <div className="flex items-center gap-3">
-        <div className={`h-10 w-10 flex items-center justify-center ${
+      <div className="flex items-center gap-2">
+        <div className={`h-8 w-8 flex items-center justify-center ${
           isSelected ? 'text-[#c06b6b]' : 'text-[#c06b6b]'
         }`}>
           {flagType.id === 'reconnect' ? (
-            <IconComponent size={24} fill="#c06b6b" stroke="#c06b6b" />
+            <IconComponent size={20} fill="#c06b6b" stroke="#c06b6b" />
           ) : (
-            <IconComponent size={24} stroke="#c06b6b" />
+            <IconComponent size={20} stroke="#c06b6b" />
           )}
         </div>
         
         <div>
-          <h3 className="text-lg font-medium text-[#1A1F2C] mb-1">{flagType.title}</h3>
+          <h3 className="text-base font-medium text-[#1A1F2C] mb-0.5">{flagType.title}</h3>
           <p className="text-xs text-[#1A1F2C]/80">{flagType.description}</p>
         </div>
       </div>
@@ -78,20 +78,20 @@ const MessagesSelector = ({
       
       <RadioGroup value={selectedMessageIndex?.toString()} onValueChange={(value) => handleSelectMessage(parseInt(value))}>
         {flagType.messages.map((message, index) => (
-          <div key={index} className="flex items-start space-x-2 mb-3 p-3 border rounded-lg">
+          <div key={index} className="flex items-start space-x-2 mb-2 p-2 border rounded-lg">
             <RadioGroupItem value={index.toString()} id={`message-${index}`} />
-            <label htmlFor={`message-${index}`} className="text-[#1A1F2C] cursor-pointer">{message}</label>
+            <label htmlFor={`message-${index}`} className="text-[#1A1F2C] text-sm cursor-pointer">{message}</label>
           </div>
         ))}
       </RadioGroup>
       
       <div className="mt-4">
-        <h3 className="text-lg font-medium text-[#1A1F2C] mb-2">Or write your own:</h3>
+        <h3 className="text-base font-medium text-[#1A1F2C] mb-2">Or write your own:</h3>
         <Textarea 
           value={customMessage}
           onChange={handleCustomChange}
           placeholder="Write a custom message..."
-          className="w-full min-h-[100px]"
+          className="w-full min-h-[80px]"
         />
       </div>
     </div>
@@ -134,11 +134,13 @@ const SendConfirmationDialog = ({ message }: { message: string }) => {
 const WhiteFlagTool = () => {
   const [selectedFlagType, setSelectedFlagType] = useState<FlagType | null>(null);
   const [selectedMessage, setSelectedMessage] = useState<string>('');
+  const [step, setStep] = useState<'select-flag' | 'select-message'>('select-flag');
   const { toast } = useToast();
 
   const handleSelectFlag = (flagType: FlagType) => {
     setSelectedFlagType(flagType);
     setSelectedMessage('');
+    setStep('select-message');
   };
 
   const handleSaveAsFavorite = () => {
@@ -156,52 +158,76 @@ const WhiteFlagTool = () => {
     });
   };
 
+  const handleBack = () => {
+    setStep('select-flag');
+    setSelectedMessage('');
+  };
+
   return (
     <div className="max-w-2xl mx-auto">
-      <div className="text-center mb-8">
-        <div className="bg-[#f8f5f0] inline-block p-4 rounded-xl mb-4">
-          <FlagIcon className="h-10 w-10 text-[#2e2a63]" />
-        </div>
-        <h2 className="text-3xl font-cormorant font-medium text-[#2e2a63] mb-2">
-          Wave the White Flag
-        </h2>
-        <p className="text-[#1A1F2C] mb-6">
-          A way to pause, reset, or say "I'm not OK"—without making it worse.
-        </p>
-        <h3 className="text-xl font-medium text-[#2e2a63] mb-6">
-          What kind of flag do you need to send right now?
-        </h3>
-      </div>
-
-      <div className="space-y-2 mb-6">
-        {flagTypes.map((flagType) => (
-          <FlagTypeCard 
-            key={flagType.id}
-            flagType={flagType} 
-            isSelected={selectedFlagType?.id === flagType.id}
-            onClick={() => handleSelectFlag(flagType)}
-          />
-        ))}
-      </div>
-
-      {selectedFlagType && (
-        <div className="mt-6 border-t pt-6">
-          <MessagesSelector 
-            flagType={selectedFlagType}
-            onSelect={setSelectedMessage}
-            onCustomChange={setSelectedMessage}
-          />
-          
-          <div className="mt-6 flex flex-wrap justify-center gap-4">
-            <SendConfirmationDialog message={selectedMessage} />
-            <Button 
-              variant="outline" 
-              className="border-[#c06b6b] text-[#c06b6b]"
-              onClick={handleSaveAsFavorite}
-            >
-              Save as Favorite
-            </Button>
+      {step === 'select-flag' ? (
+        <>
+          <div className="text-center mb-6">
+            <div className="bg-[#f8f5f0] inline-block p-4 rounded-xl mb-4">
+              <FlagIcon className="h-10 w-10 text-[#2e2a63]" />
+            </div>
+            <h2 className="text-3xl font-cormorant font-medium text-[#2e2a63] mb-2">
+              Wave the White Flag
+            </h2>
+            <p className="text-[#1A1F2C] mb-6">
+              A way to pause, reset, or say "I'm not OK"—without making it worse.
+            </p>
+            <h3 className="text-xl font-medium text-[#2e2a63] mb-4">
+              What kind of flag do you need to send right now?
+            </h3>
           </div>
+    
+          <div className="space-y-2 mb-6">
+            {flagTypes.map((flagType) => (
+              <FlagTypeCard 
+                key={flagType.id}
+                flagType={flagType} 
+                isSelected={selectedFlagType?.id === flagType.id}
+                onClick={() => handleSelectFlag(flagType)}
+              />
+            ))}
+          </div>
+        </>
+      ) : (
+        <div>
+          <button 
+            onClick={handleBack} 
+            className="text-[#2e2a63] flex items-center mb-4 hover:underline"
+          >
+            &larr; Back to flag types
+          </button>
+          
+          <div className="text-center mb-4">
+            <h2 className="text-2xl font-cormorant font-medium text-[#2e2a63] mb-2">
+              {selectedFlagType?.title}
+            </h2>
+          </div>
+          
+          {selectedFlagType && (
+            <>
+              <MessagesSelector 
+                flagType={selectedFlagType}
+                onSelect={setSelectedMessage}
+                onCustomChange={setSelectedMessage}
+              />
+              
+              <div className="mt-6 flex flex-wrap justify-center gap-4">
+                <SendConfirmationDialog message={selectedMessage} />
+                <Button 
+                  variant="outline" 
+                  className="border-[#c06b6b] text-[#c06b6b]"
+                  onClick={handleSaveAsFavorite}
+                >
+                  Save as Favorite
+                </Button>
+              </div>
+            </>
+          )}
         </div>
       )}
     </div>
