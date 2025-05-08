@@ -2,11 +2,11 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, ChevronRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { useSession } from '../context/SessionContext';
 import { patternQuizzes, commonPatterns } from './data/pattern-data';
 import { usePatternRecognition, PatternId } from './hooks/usePatternRecognition';
 import PatternList from './components/PatternList';
-import QuizQuestion from './components/QuizQuestion';
 import ReconnectionTips from './components/ReconnectionTips';
 import PatternIntroScreen from './components/PatternIntroScreen';
 import CyclePatternScreen from './components/CyclePatternScreen';
@@ -25,14 +25,13 @@ const PatternRecognitionFlow: React.FC<PatternRecognitionFlowProps> = ({
   onClose,
   fullScreen = false
 }) => {
+  const navigate = useNavigate();
   const { state, actions, helpers } = usePatternRecognition();
   const { sessionData } = useSession();
   
   const { 
     selectedPattern, 
-    isShowingQuiz, 
     isShowingTips, 
-    currentQuestionIndex, 
     showIntro,
     showCyclePattern,
     showPatternDetail,
@@ -41,12 +40,10 @@ const PatternRecognitionFlow: React.FC<PatternRecognitionFlowProps> = ({
   
   const { 
     handlePatternSelect, 
-    handleAnswerSelect, 
     handleGoBack, 
     handleIntroComplete,
     handleCyclePatternComplete,
     handlePatternDetailComplete,
-    handlePatternRepairComplete
   } = actions;
   
   const { getPatternSpecificTips } = helpers;
@@ -56,12 +53,15 @@ const PatternRecognitionFlow: React.FC<PatternRecognitionFlowProps> = ({
     : null;
   
   const patternType = selectedPatternData?.patternType || null;
-  const quizQuestions = patternType ? patternQuizzes[patternType] || [] : [];
-  const currentQuestion = quizQuestions[currentQuestionIndex];
   
   const tipsToDisplay = selectedPatternData && patternType
     ? getPatternSpecificTips(patternType)
     : reconnectionTips.sort(() => 0.5 - Math.random()).slice(0, 3);
+  
+  // Navigate to Pause+Phrase section
+  const handleNavigateToPausePhrase = () => {
+    navigate('/during-conflict?section=pause-phrase');
+  };
   
   // Determine classes based on fullScreen mode
   const containerClasses = fullScreen 
@@ -83,7 +83,7 @@ const PatternRecognitionFlow: React.FC<PatternRecognitionFlowProps> = ({
           </Button>
         )}
         
-        {!showIntro && !showCyclePattern && !showPatternDetail && !showPatternRepair && (selectedPattern !== null || isShowingQuiz || isShowingTips) && (
+        {!showIntro && !showCyclePattern && !showPatternDetail && !showPatternRepair && (selectedPattern !== null || isShowingTips) && (
           <Button
             variant="ghost"
             className="mb-4"
@@ -110,24 +110,18 @@ const PatternRecognitionFlow: React.FC<PatternRecognitionFlowProps> = ({
           )
         ) : showPatternRepair ? (
           patternType === 'pursue-distance' ? (
-            <PursueDistanceRepairScreen onContinue={handlePatternRepairComplete} />
+            <PursueDistanceRepairScreen onContinue={handleNavigateToPausePhrase} />
           ) : (
             <PatternRepairScreen 
               pattern={selectedPatternData}
-              onContinue={handlePatternRepairComplete}
+              onContinue={handleNavigateToPausePhrase}
+              buttonText="Practice in real life"
             />
           )
         ) : isShowingTips ? (
           <ReconnectionTips 
             selectedPattern={selectedPatternData || null}
             tipsToDisplay={tipsToDisplay}
-          />
-        ) : isShowingQuiz && currentQuestion ? (
-          <QuizQuestion
-            currentQuestion={currentQuestion}
-            currentQuestionIndex={currentQuestionIndex}
-            totalQuestions={quizQuestions.length}
-            onAnswerSelect={(answerId) => handleAnswerSelect(currentQuestionIndex, answerId.toString())}
           />
         ) : (
           <PatternList 

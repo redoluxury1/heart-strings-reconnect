@@ -7,15 +7,14 @@ import { User, Speaker, ConnectIcon } from './PursueDistanceIcons';
 
 interface PursueDistanceRepairScreenProps {
   onContinue: () => void;
+  buttonText?: string;
 }
 
-const PursueDistanceRepairScreen: React.FC<PursueDistanceRepairScreenProps> = ({ onContinue }) => {
-  const navigate = useNavigate();
+const PursueDistanceRepairScreen: React.FC<PursueDistanceRepairScreenProps> = ({ 
+  onContinue, 
+  buttonText = "Continue" 
+}) => {
   
-  const handleTryInRealLife = () => {
-    navigate('/during-conflict');
-  };
-
   return (
     <div className="flex flex-col items-center text-center max-w-md mx-auto py-6">
       <div className="mb-4 w-full">
@@ -79,7 +78,7 @@ const PursueDistanceRepairScreen: React.FC<PursueDistanceRepairScreenProps> = ({
           onClick={onContinue}
           className="bg-[#14213d] hover:bg-[#14213d]/90 text-white font-medium py-2 px-5 rounded-full text-sm"
         >
-          Continue
+          {buttonText}
         </Button>
       </div>
     </div>

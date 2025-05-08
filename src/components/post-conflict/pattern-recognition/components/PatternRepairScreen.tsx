@@ -9,15 +9,16 @@ import { CommonPattern } from '../types';
 interface PatternRepairScreenProps {
   pattern?: CommonPattern | null;
   onContinue: () => void;
+  buttonText?: string;
 }
 
-const PatternRepairScreen: React.FC<PatternRepairScreenProps> = ({ pattern, onContinue }) => {
+const PatternRepairScreen: React.FC<PatternRepairScreenProps> = ({ 
+  pattern, 
+  onContinue,
+  buttonText = "Continue"
+}) => {
   const navigate = useNavigate();
   
-  const handleTryInRealLife = () => {
-    navigate('/during-conflict');
-  };
-
   if (!pattern) return null;
 
   // Default configuration for Blame/Defend/Withdraw pattern
@@ -151,7 +152,7 @@ const PatternRepairScreen: React.FC<PatternRepairScreenProps> = ({ pattern, onCo
           onClick={onContinue}
           className="bg-[#14213d] hover:bg-[#14213d]/90 text-white font-medium py-2 px-5 rounded-full text-sm"
         >
-          Continue
+          {buttonText}
         </Button>
       </div>
     </div>
