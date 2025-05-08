@@ -5,7 +5,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 const PausePhraseGraphic: React.FC = () => {
   const [imageLoaded, setImageLoaded] = useState(false);
   
-  // Preload the image when component mounts
+  // Preload the image when component mounts with higher priority
   useEffect(() => {
     const img = new Image();
     img.src = "/lovable-uploads/09c6e370-f376-47e7-98ba-66452103b58b.png";
@@ -27,6 +27,7 @@ const PausePhraseGraphic: React.FC = () => {
         className={`h-auto w-full max-w-md mx-auto transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
         onLoad={() => setImageLoaded(true)}
         loading="eager"
+        fetchPriority="high"
       />
     </div>
   );

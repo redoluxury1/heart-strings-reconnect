@@ -1,12 +1,24 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import ColorHealingMethod from './color-healing/ColorHealingMethod';
 import { Card } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const SometimesItStillHurts = () => {
   const [showColorHealing, setShowColorHealing] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
+  
+  // Preload the image when component mounts
+  useEffect(() => {
+    const img = new Image();
+    img.src = "/lovable-uploads/c8f75296-51f7-4d50-84f0-68f55b65e7bc.png";
+    img.onload = () => setImageLoaded(true);
+    
+    return () => {
+      img.onload = null; // Clean up
+    };
+  }, []);
   
   if (showColorHealing) {
     return <ColorHealingMethod />;
@@ -30,6 +42,9 @@ const SometimesItStillHurts = () => {
           
           {/* New illustration of the couple */}
           <div className="mb-8 flex justify-center">
+            {!imageLoaded && (
+              <Skeleton className="w-full max-w-md h-64" />
+            )}
             <img 
               src="/lovable-uploads/c8f75296-51f7-4d50-84f0-68f55b65e7bc.png" 
               alt="Person crying with partner comforting them"

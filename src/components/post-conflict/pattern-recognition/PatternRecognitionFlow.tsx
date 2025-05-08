@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -28,6 +28,19 @@ const PatternRecognitionFlow: React.FC<PatternRecognitionFlowProps> = ({
   const navigate = useNavigate();
   const { state, actions, helpers } = usePatternRecognition();
   const { sessionData } = useSession();
+  
+  // Preload key images when component mounts
+  useEffect(() => {
+    const preloadImages = [
+      '/lovable-uploads/39110aa2-d4b1-4586-bd3f-56a1ae1053c8.png',
+      '/lovable-uploads/ff2e4176-28cc-47b9-b205-8c36e2d8aafe.png',
+    ];
+    
+    preloadImages.forEach(src => {
+      const img = new Image();
+      img.src = src;
+    });
+  }, []);
   
   const { 
     selectedPattern, 

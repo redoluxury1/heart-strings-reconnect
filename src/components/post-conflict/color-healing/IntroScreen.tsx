@@ -10,8 +10,8 @@ interface IntroScreenProps {
 const IntroScreen: React.FC<IntroScreenProps> = ({ onBegin }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
 
+  // Preload the image with high priority
   useEffect(() => {
-    // Preload the image
     const img = new Image();
     img.src = "/lovable-uploads/bfee4335-5a61-4d5c-bdc2-cda58c3beb29.png";
     img.onload = () => setImageLoaded(true);

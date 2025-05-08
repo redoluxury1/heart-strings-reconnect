@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -18,6 +17,17 @@ const NeedsRepairStep: React.FC<NeedsRepairStepProps> = ({
   const [input, setInput] = useState(partner1Response || '');
   const [isSubmitted, setIsSubmitted] = useState(!!partner1Response);
   const [imageLoaded, setImageLoaded] = useState(false);
+  
+  // Preload image when component mounts
+  useEffect(() => {
+    const img = new Image();
+    img.src = "/lovable-uploads/bdee8a9b-e15c-4d60-a2f7-01e813da95e5.png";
+    img.onload = () => setImageLoaded(true);
+    
+    return () => {
+      img.onload = null; // Clean up
+    };
+  }, []);
   
   const starterPrompts = [
     "I really need you to...",
@@ -65,6 +75,7 @@ const NeedsRepairStep: React.FC<NeedsRepairStepProps> = ({
               className={`h-auto w-52 md:w-64 transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
               onLoad={() => setImageLoaded(true)}
               loading="eager"
+              fetchPriority="high"
             />
           </div>
           
