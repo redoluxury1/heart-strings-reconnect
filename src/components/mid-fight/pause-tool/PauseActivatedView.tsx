@@ -3,16 +3,22 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { CodeWordInfo } from '@/types/relationship';
 import CodeWordDisplay from '../code-word/components/CodeWordDisplay';
+import { useToast } from '@/hooks/use-toast';
+import { Clock } from 'lucide-react';
 
 interface PauseActivatedViewProps {
   codeWord: CodeWordInfo;
   onTimerSelect: (minutes: number | null) => void;
+  onCustomTimer: () => void;
 }
 
 const PauseActivatedView: React.FC<PauseActivatedViewProps> = ({ 
   codeWord,
-  onTimerSelect 
+  onTimerSelect,
+  onCustomTimer
 }) => {
+  const { toast } = useToast();
+
   return (
     <div className="max-w-md mx-auto text-center">
       <div className="bg-[#FDE1D3]/50 p-5 rounded-lg mb-6">
@@ -49,10 +55,11 @@ const PauseActivatedView: React.FC<PauseActivatedViewProps> = ({
           1 hour
         </Button>
         <Button 
-          onClick={() => onTimerSelect(null)}
-          className="bg-[#f7e0dc] text-[#5d4357] hover:bg-[#e7c6c0] py-5"
+          onClick={onCustomTimer}
+          className="bg-[#f7e0dc] text-[#5d4357] hover:bg-[#e7c6c0] py-5 flex items-center justify-center gap-2"
         >
-          No timer
+          <Clock className="h-4 w-4" />
+          Custom
         </Button>
       </div>
       

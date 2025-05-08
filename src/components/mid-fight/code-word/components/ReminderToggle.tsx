@@ -25,8 +25,8 @@ const ReminderToggle: React.FC<ReminderToggleProps> = ({
     toast({
       title: checked ? "Reminders enabled" : "Reminders disabled",
       description: checked 
-        ? "We'll remind you about your code word during heated moments." 
-        : "Code word reminders have been turned off.",
+        ? "We'll send notifications about your code word during heated moments." 
+        : "Code word notifications have been turned off.",
     });
   };
   

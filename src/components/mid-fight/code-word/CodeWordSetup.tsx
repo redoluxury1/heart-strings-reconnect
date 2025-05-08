@@ -2,6 +2,7 @@
 import React from 'react';
 import CodeWordForm from './components/CodeWordForm';
 import SuggestionGrid from './components/SuggestionGrid';
+import ReminderToggle from './components/ReminderToggle';
 
 interface CodeWordSetupProps {
   onSetCodeWord: (word: string) => void;
@@ -39,6 +40,10 @@ const CodeWordSetup: React.FC<CodeWordSetupProps> = ({
       <SuggestionGrid 
         suggestions={SUGGESTED_WORDS} 
         onSelect={onSetCodeWord} 
+      />
+      
+      <ReminderToggle 
+        notificationText="Remind us to use our code word during heated moments"
       />
     </div>
   );

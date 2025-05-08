@@ -5,15 +5,19 @@ import { useCodeWordState } from '../code-word/hooks/useCodeWordState';
 import PauseActivatedView from './PauseActivatedView';
 import MidPauseView from './MidPauseView';
 import PauseTimerEndView from './PauseTimerEndView';
+import CustomTimerView from './CustomTimerView';
+import CodeWordActivationView from './CodeWordActivationView';
 import { CodeWordInfo } from '@/types/relationship';
+import { useToast } from '@/hooks/use-toast';
 
-export type PauseStatus = 'setup' | 'activated' | 'in-pause' | 'ended';
+export type PauseStatus = 'setup' | 'activation' | 'activated' | 'custom-timer' | 'in-pause' | 'ended';
 
 const PauseTool = () => {
   const {
     codeWord,
     currentView: codeWordView,
     handleSetCodeWord,
+    handleChangeCodeWord,
     userSuggestion,
     setUserSuggestion,
   } = useCodeWordState();
@@ -22,13 +26,23 @@ const PauseTool = () => {
   const [pauseTimeMinutes, setPauseTimeMinutes] = useState<number | null>(null);
   const [timeRemaining, setTimeRemaining] = useState<number | null>(null);
   const [timerActive, setTimerActive] = useState(false);
+  const { toast } = useToast();
 
   // Determine initial state based on code word existence
   useEffect(() => {
     if (codeWord && codeWord.status === 'confirmed') {
-      setPauseStatus('activated');
+      setPauseStatus('activation');
     }
   }, [codeWord]);
+
+  // Save code word confirmation
+  const handleCodeWordConfirm = (word: string) => {
+    handleSetCodeWord(word);
+    toast({
+      title: "Code word locked in",
+      description: `We've saved "${word}" as your code word. When you use it in real life, come here to set a timer to cool off.`
+    });
+  };
 
   // When pause is activated, check if a timer was selected
   useEffect(() => {
@@ -78,23 +92,31 @@ const PauseTool = () => {
     }
   }, []);
 
-  const handleActivatePause = () => {
+  const handleActivateCodeWord = () => {
     setPauseStatus('activated');
   };
 
   const handleTimerSelect = (minutes: number | null) => {
     if (minutes === null) {
-      // Just activate code word without timer
       return;
     }
     
     setPauseTimeMinutes(minutes);
     setPauseStatus('in-pause');
     setTimerActive(true);
+    
+    toast({
+      title: "Timer started",
+      description: `Taking a ${minutes} minute pause.`
+    });
+  };
+  
+  const handleCustomTimer = () => {
+    setPauseStatus('custom-timer');
   };
 
   const handleEndPause = () => {
-    setPauseStatus('activated');
+    setPauseStatus(codeWord?.status === 'confirmed' ? 'activation' : 'setup');
     setPauseTimeMinutes(null);
     setTimeRemaining(null);
     setTimerActive(false);
@@ -137,7 +159,7 @@ const PauseTool = () => {
     if (!codeWord || codeWordView === 'setup') {
       return (
         <CodeWordSetup
-          onSetCodeWord={handleSetCodeWord}
+          onSetCodeWord={handleCodeWordConfirm}
           initialWord={userSuggestion || ''}
           onWordChange={setUserSuggestion}
         />
@@ -145,11 +167,27 @@ const PauseTool = () => {
     }
     
     switch (pauseStatus) {
+      case 'activation':
+        return (
+          <CodeWordActivationView
+            codeWord={codeWord}
+            onActivate={handleActivateCodeWord}
+            onChangeCodeWord={handleChangeCodeWord}
+          />
+        );
       case 'activated':
         return (
           <PauseActivatedView
             codeWord={codeWord}
             onTimerSelect={handleTimerSelect}
+            onCustomTimer={handleCustomTimer}
+          />
+        );
+      case 'custom-timer':
+        return (
+          <CustomTimerView
+            onTimerSelect={handleTimerSelect}
+            onBack={() => setPauseStatus('activated')}
           />
         );
       case 'in-pause':
@@ -170,7 +208,7 @@ const PauseTool = () => {
       default:
         return (
           <CodeWordSetup
-            onSetCodeWord={handleSetCodeWord}
+            onSetCodeWord={handleCodeWordConfirm}
             initialWord={userSuggestion || ''}
             onWordChange={setUserSuggestion}
           />

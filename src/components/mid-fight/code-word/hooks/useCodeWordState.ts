@@ -92,6 +92,16 @@ export const useCodeWordState = () => {
     setIsDialogOpen(false);
   };
   
+  const handleChangeCodeWord = () => {
+    setCurrentView('setup');
+    setUserSuggestion(null);
+    
+    toast({
+      title: "Change code word",
+      description: "Choose a new code word for you and your partner."
+    });
+  };
+  
   const handlePartnerSuggestion = (suggestedWord: string) => {
     setPartnerWord(suggestedWord);
     setCurrentView('sync');
@@ -142,11 +152,6 @@ export const useCodeWordState = () => {
     
     // In a real app, this would notify the partner
     // and potentially update status in the database
-  };
-  
-  const handleChangeCodeWord = () => {
-    setCurrentView('setup');
-    setUserSuggestion(null);
   };
   
   const handleConfirmationClose = () => {
