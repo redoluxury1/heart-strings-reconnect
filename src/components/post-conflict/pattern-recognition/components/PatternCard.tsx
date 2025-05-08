@@ -19,7 +19,7 @@ const PatternCard: React.FC<PatternCardProps> = ({
 }) => {
   const cardClasses = cn(
     "w-full p-4 bg-white hover:bg-gray-50 border border-gray-100 rounded-2xl flex items-center",
-    "transition-colors duration-200 shadow-sm hover:shadow",
+    "transition-colors duration-200 shadow-sm hover:shadow relative pr-12",
     onClick ? "cursor-pointer" : "",
     className
   );
@@ -33,7 +33,7 @@ const PatternCard: React.FC<PatternCardProps> = ({
       )}
       <div className="flex-1">
         {title && (
-          <h3 className="text-xl font-cormorant font-bold text-[#14213d] mb-1">{title}</h3>
+          <h3 className="text-lg font-cormorant font-bold text-[#14213d] mb-1">{title}</h3>
         )}
         {children}
       </div>

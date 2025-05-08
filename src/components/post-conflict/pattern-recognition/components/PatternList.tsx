@@ -51,7 +51,7 @@ const PatternList: React.FC<PatternListProps> = ({ patterns, onPatternSelect }) 
   };
 
   return (
-    <div className="space-y-6 max-w-xl mx-auto">
+    <div className="space-y-6 max-w-lg mx-auto">
       <div className="text-center mb-8">
         <h1 className="text-5xl font-cormorant font-bold text-[#14213d] mb-5">
           Which pattern sounds like your relationship?
@@ -70,10 +70,12 @@ const PatternList: React.FC<PatternListProps> = ({ patterns, onPatternSelect }) 
             icon={getPatternIcon(pattern.patternType)}
             title={friendlyPatternNames[pattern.patternType] || pattern.name}
           >
-            <p className="text-[#14213d]/80 text-base leading-relaxed">
+            <p className="text-[#14213d]/80 text-sm leading-relaxed">
               {friendlyDescriptions[pattern.patternType] || pattern.description}
             </p>
-            <ChevronRight className="h-6 w-6 text-[#14213d]/40 absolute right-4" />
+            <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
+              <ChevronRight className="h-6 w-6 text-[#14213d]/40" />
+            </div>
           </PatternCard>
         ))}
       </div>
