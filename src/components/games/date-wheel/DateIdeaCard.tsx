@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Save, RotateCw, Calendar } from 'lucide-react';
+import { Save, RotateCw, Calendar, Film, Pizza, Moon, Paintbrush, MapPin, Sun, Heart, Mountain, Home } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { DateIdea } from '@/types/date-wheel';
 
@@ -12,6 +12,32 @@ interface DateIdeaCardProps {
 }
 
 const DateIdeaCard: React.FC<DateIdeaCardProps> = ({ dateIdea, onSave, onTryAgain }) => {
+  // Function to render the appropriate icon based on the icon name
+  const renderIcon = (iconName: string) => {
+    switch (iconName) {
+      case 'Film':
+        return <Film className="h-6 w-6 text-midnight-indigo" />;
+      case 'Pizza':
+        return <Pizza className="h-6 w-6 text-midnight-indigo" />;
+      case 'Moon':
+        return <Moon className="h-6 w-6 text-midnight-indigo" />;
+      case 'Paintbrush':
+        return <Paintbrush className="h-6 w-6 text-midnight-indigo" />;
+      case 'MapPin':
+        return <MapPin className="h-6 w-6 text-midnight-indigo" />;
+      case 'Sun':
+        return <Sun className="h-6 w-6 text-midnight-indigo" />;
+      case 'Heart':
+        return <Heart className="h-6 w-6 text-midnight-indigo" />;
+      case 'Mountain':
+        return <Mountain className="h-6 w-6 text-midnight-indigo" />;
+      case 'Home':
+        return <Home className="h-6 w-6 text-midnight-indigo" />;
+      default:
+        return <Heart className="h-6 w-6 text-midnight-indigo" />;
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.9 }}
@@ -21,7 +47,7 @@ const DateIdeaCard: React.FC<DateIdeaCardProps> = ({ dateIdea, onSave, onTryAgai
     >
       <div className="flex items-center mb-4">
         <div className="p-3 rounded-full bg-lavender-blue/20 mr-3">
-          {dateIdea.icon}
+          {renderIcon(dateIdea.icon)}
         </div>
         <h3 className="text-2xl font-cormorant font-medium text-midnight-indigo">
           {dateIdea.title}

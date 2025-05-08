@@ -1,5 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { CirclePlay, Heart, Home, MapPin, Mountain, Sun, Film, Pizza, Moon, Paintbrush } from 'lucide-react';
+
+import React, { useState, useEffect } from 'react';
+import { CirclePlay, Film, Pizza, Moon, Paintbrush, Heart, Home, MapPin, Mountain, Sun } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
@@ -64,6 +65,32 @@ const DateWheel: React.FC = () => {
       });
     }
   };
+
+  // Function to render the appropriate icon based on the icon name
+  const renderIcon = (iconName: string) => {
+    switch (iconName) {
+      case 'Film':
+        return <Film className="h-6 w-6 text-midnight-indigo" />;
+      case 'Pizza':
+        return <Pizza className="h-6 w-6 text-midnight-indigo" />;
+      case 'Moon':
+        return <Moon className="h-6 w-6 text-midnight-indigo" />;
+      case 'Paintbrush':
+        return <Paintbrush className="h-6 w-6 text-midnight-indigo" />;
+      case 'MapPin':
+        return <MapPin className="h-6 w-6 text-midnight-indigo" />;
+      case 'Sun':
+        return <Sun className="h-6 w-6 text-midnight-indigo" />;
+      case 'Heart':
+        return <Heart className="h-6 w-6 text-midnight-indigo" />;
+      case 'Mountain':
+        return <Mountain className="h-6 w-6 text-midnight-indigo" />;
+      case 'Home':
+        return <Home className="h-6 w-6 text-midnight-indigo" />;
+      default:
+        return <Heart className="h-6 w-6 text-midnight-indigo" />;
+    }
+  };
   
   return (
     <div className="flex flex-col items-center w-full max-w-3xl mx-auto">
@@ -125,7 +152,7 @@ const DateWheel: React.FC = () => {
                       transform: 'translate(-50%, -50%) rotate(90deg)',
                     }}
                   >
-                    {idea.icon}
+                    {renderIcon(idea.icon)}
                   </div>
                 </div>
               );

@@ -6,7 +6,7 @@ export interface DateIdea {
   title: string;
   description: string;
   category: string[];
-  icon: ReactNode;
+  icon: string;
   tip?: string;
 }
 
