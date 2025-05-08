@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Edit, Target, MessageSquare, ChevronRight } from 'lucide-react';
@@ -37,6 +36,9 @@ const WhatsReallyGoingOn = () => {
     return (
       <div className="space-y-6 py-4 md:py-8">
         <div className="mb-6 text-center">
+          <h2 className="text-3xl font-cormorant font-medium text-midnight-indigo mb-3">
+            What's really going on?
+          </h2>
           <h3 className="text-xl md:text-2xl font-medium text-midnight-indigo mb-2">
             Tap a tool to decode what's happening underneath the conflict.
           </h3>
