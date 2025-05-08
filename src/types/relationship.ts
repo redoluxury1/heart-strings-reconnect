@@ -7,8 +7,16 @@ export interface Relationship {
   inviteEmail: string | null;
   inviteName: string | null;
   status: 'invited' | 'connected' | null;
+  codeWord?: CodeWordInfo | null;
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface CodeWordInfo {
+  word: string;
+  updatedAt: Date;
+  updatedBy: string;
+  status: 'pending' | 'confirmed';
 }
 
 export interface InviteRequest {
