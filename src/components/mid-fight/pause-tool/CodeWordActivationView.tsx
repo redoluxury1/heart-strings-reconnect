@@ -37,6 +37,7 @@ const CodeWordActivationView: React.FC<CodeWordActivationViewProps> = ({
         className="bg-[#f7e0dc]/50 p-8 rounded-lg mb-8 text-center cursor-pointer hover:bg-[#f7e0dc]/70 transition-colors"
         textSize="text-4xl"
         onClick={handleActivateClick}
+        showQuotes={false}
       />
       
       <p className="text-[#5d4357]/80 mb-8">

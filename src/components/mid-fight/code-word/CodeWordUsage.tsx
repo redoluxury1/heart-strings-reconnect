@@ -35,7 +35,7 @@ const CodeWordUsage: React.FC<CodeWordUsageProps> = ({
         Your shared code word is:
       </h3>
       
-      <CodeWordDisplay codeWord={codeWord} />
+      <CodeWordDisplay codeWord={codeWord} showQuotes={true} />
       
       <StatusIndicator status={status} />
       

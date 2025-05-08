@@ -26,7 +26,7 @@ const PauseActivatedView: React.FC<PauseActivatedViewProps> = ({
           Code Word Activated
         </h3>
         <p className="text-[#5d4357] mb-6">
-          Your code word <span className="font-medium">"{codeWord.word}"</span> was used. 
+          Your code word <span className="font-medium">{codeWord.word}</span> was used. 
           That means you both agreed to pause—right now.
         </p>
       </div>
