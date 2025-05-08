@@ -20,6 +20,7 @@ const ColorHealingMethod: React.FC = () => {
   // Scroll to component top when screen changes
   useEffect(() => {
     if (containerRef.current) {
+      // This scrolls to the component itself rather than the window
       containerRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }, [currentScreen]);
