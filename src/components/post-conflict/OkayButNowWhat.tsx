@@ -5,6 +5,7 @@ import { RotateCw, Flag } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import PatternRecognitionFlow from './pattern-recognition/PatternRecognitionFlow';
 import { useState } from 'react';
+import WhiteFlagTool from './white-flag/WhiteFlagTool';
 
 const OkayButNowWhat = () => {
   const navigate = useNavigate();
@@ -90,68 +91,6 @@ const OkayButNowWhat = () => {
         )}
       </div>
     </section>
-  );
-};
-
-// White Flag Tool Component
-const WhiteFlagTool = () => {
-  const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
-  
-  const templates = [
-    {
-      id: 'timeout',
-      title: 'Request a Timeout',
-      message: "I need some space to calm down. Can we take 20 minutes to cool off and then talk?"
-    },
-    {
-      id: 'truce',
-      title: 'Call a Truce',
-      message: "I want to find a way forward with you. Can we put this aside for now and talk when we're both feeling better?"
-    },
-    {
-      id: 'apologize',
-      title: 'Simple Apology',
-      message: "I'm sorry for how I reacted. That wasn't fair to you. Can we try again?"
-    },
-    {
-      id: 'reconnect',
-      title: 'Reconnection Request',
-      message: "This feels hard right now, but I still care about you. Can we find a way to reset?"
-    }
-  ];
-  
-  return (
-    <div className="max-w-2xl mx-auto">
-      <h3 className="text-2xl font-medium text-[#2e2a63] mb-6 text-center">Choose a message template</h3>
-      
-      <div className="grid grid-cols-1 gap-4 mb-8">
-        {templates.map(template => (
-          <div 
-            key={template.id}
-            className={`border p-4 rounded-lg cursor-pointer transition-all ${
-              selectedTemplate === template.id 
-                ? 'border-[#c06b6b] bg-[#fce6d4]/30' 
-                : 'border-gray-200 hover:border-gray-300'
-            }`}
-            onClick={() => setSelectedTemplate(template.id)}
-          >
-            <h4 className="font-medium text-[#2e2a63] mb-2">{template.title}</h4>
-            <p className="text-[#2e2a63]">{template.message}</p>
-          </div>
-        ))}
-      </div>
-      
-      {selectedTemplate && (
-        <div className="mt-6 flex justify-center space-x-4">
-          <Button className="bg-[#c06b6b] hover:bg-[#a35757] text-white px-6">
-            Copy Text
-          </Button>
-          <Button className="bg-[#2e2a63] hover:bg-[#1e1a43] text-white px-6">
-            Send Message
-          </Button>
-        </div>
-      )}
-    </div>
   );
 };
 
