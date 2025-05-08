@@ -17,7 +17,7 @@ const PauseActivatedView: React.FC<PauseActivatedViewProps> = ({
     <div className="max-w-md mx-auto text-center">
       <div className="bg-[#FDE1D3]/50 p-5 rounded-lg mb-6">
         <h3 className="text-2xl text-[#5d4357] font-medium mb-4">
-          Pause Activated
+          Code Word Activated
         </h3>
         <p className="text-[#5d4357] mb-6">
           Your code word <span className="font-medium">"{codeWord.word}"</span> was used. 

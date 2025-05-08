@@ -6,9 +6,13 @@ import { useToast } from '@/hooks/use-toast';
 
 interface ReminderToggleProps {
   initialValue?: boolean;
+  notificationText?: string;
 }
 
-const ReminderToggle: React.FC<ReminderToggleProps> = ({ initialValue = false }) => {
+const ReminderToggle: React.FC<ReminderToggleProps> = ({ 
+  initialValue = false,
+  notificationText = "Remind us about our code word during a fight" 
+}) => {
   const [isEnabled, setIsEnabled] = useState(initialValue);
   const { toast } = useToast();
   
@@ -35,7 +39,7 @@ const ReminderToggle: React.FC<ReminderToggleProps> = ({ initialValue = false })
           onCheckedChange={handleToggle}
         />
         <Label htmlFor="remind" className="text-sm text-[#5d4357] cursor-pointer">
-          Remind us about our code word during a fight
+          {notificationText}
         </Label>
       </div>
     </div>

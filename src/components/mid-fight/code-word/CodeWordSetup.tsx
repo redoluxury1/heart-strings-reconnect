@@ -10,11 +10,10 @@ interface CodeWordSetupProps {
 }
 
 const SUGGESTED_WORDS = [
-  'Marshmallow',
   'Red Light',
-  'Pineapple',
-  'Switch Tracks',
-  'Dog Whistle'
+  'Redo',
+  'Freeze',
+  'Switch Tracks'
 ];
 
 const CodeWordSetup: React.FC<CodeWordSetupProps> = ({ 

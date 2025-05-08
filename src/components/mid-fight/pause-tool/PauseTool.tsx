@@ -21,6 +21,7 @@ const PauseTool = () => {
   const [pauseStatus, setPauseStatus] = useState<PauseStatus>('setup');
   const [pauseTimeMinutes, setPauseTimeMinutes] = useState<number | null>(null);
   const [timeRemaining, setTimeRemaining] = useState<number | null>(null);
+  const [timerActive, setTimerActive] = useState(false);
 
   // Determine initial state based on code word existence
   useEffect(() => {
@@ -31,12 +32,13 @@ const PauseTool = () => {
 
   // When pause is activated, check if a timer was selected
   useEffect(() => {
-    if (pauseStatus === 'in-pause' && pauseTimeMinutes) {
+    if (pauseStatus === 'in-pause' && pauseTimeMinutes && timerActive) {
       // Convert minutes to milliseconds
       const endTime = Date.now() + pauseTimeMinutes * 60 * 1000;
       
       // Store in localStorage for persistence
       localStorage.setItem('bridge-pause-end-time', endTime.toString());
+      localStorage.setItem('bridge-timer-active', 'true');
       
       const timer = setInterval(() => {
         const remaining = Math.max(0, Math.floor((endTime - Date.now()) / 1000));
@@ -46,19 +48,24 @@ const PauseTool = () => {
           clearInterval(timer);
           setPauseStatus('ended');
           localStorage.removeItem('bridge-pause-end-time');
+          localStorage.removeItem('bridge-timer-active');
         }
       }, 1000);
       
       return () => clearInterval(timer);
     }
-  }, [pauseStatus, pauseTimeMinutes]);
+  }, [pauseStatus, pauseTimeMinutes, timerActive]);
 
   // Check for existing pause on load
   useEffect(() => {
     const savedEndTime = localStorage.getItem('bridge-pause-end-time');
-    if (savedEndTime) {
+    const savedTimerActive = localStorage.getItem('bridge-timer-active');
+    
+    if (savedEndTime && savedTimerActive === 'true') {
       const endTime = parseInt(savedEndTime, 10);
       const remaining = Math.max(0, Math.floor((endTime - Date.now()) / 1000));
+      
+      setTimerActive(true);
       
       if (remaining > 0) {
         setPauseStatus('in-pause');
@@ -66,24 +73,33 @@ const PauseTool = () => {
       } else {
         setPauseStatus('ended');
         localStorage.removeItem('bridge-pause-end-time');
+        localStorage.removeItem('bridge-timer-active');
       }
     }
   }, []);
 
-  const handleActivatePause = (codeWordUsed?: boolean) => {
+  const handleActivatePause = () => {
     setPauseStatus('activated');
   };
 
   const handleTimerSelect = (minutes: number | null) => {
+    if (minutes === null) {
+      // Just activate code word without timer
+      return;
+    }
+    
     setPauseTimeMinutes(minutes);
     setPauseStatus('in-pause');
+    setTimerActive(true);
   };
 
   const handleEndPause = () => {
     setPauseStatus('activated');
     setPauseTimeMinutes(null);
     setTimeRemaining(null);
+    setTimerActive(false);
     localStorage.removeItem('bridge-pause-end-time');
+    localStorage.removeItem('bridge-timer-active');
   };
 
   const handleViewReconnection = () => {
@@ -165,7 +181,7 @@ const PauseTool = () => {
   return (
     <div className="bg-white rounded-lg shadow-md p-6 border border-lavender-blue/10 mt-6 mb-10">
       <h2 className="text-5xl md:text-6xl font-cormorant text-[#5d4357] font-medium text-center mb-6">
-        Pause Tool
+        Code Word + Time Out
       </h2>
       <p className="text-xl md:text-2xl font-cormorant text-[#5d4357] mt-4 mb-10 text-center">
         Use your code word or take a break when things get heated.
