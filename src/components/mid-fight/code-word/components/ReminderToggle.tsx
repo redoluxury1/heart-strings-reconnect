@@ -1,14 +1,42 @@
 
-import React from 'react';
+import React, { useState } from 'react';
+import { Switch } from '@/components/ui/switch';
+import { Label } from '@/components/ui/label';
+import { useToast } from '@/hooks/use-toast';
 
-const ReminderToggle: React.FC = () => {
+interface ReminderToggleProps {
+  initialValue?: boolean;
+}
+
+const ReminderToggle: React.FC<ReminderToggleProps> = ({ initialValue = false }) => {
+  const [isEnabled, setIsEnabled] = useState(initialValue);
+  const { toast } = useToast();
+  
+  const handleToggle = (checked: boolean) => {
+    setIsEnabled(checked);
+    
+    // In a real app, this would save the preference to the user's settings
+    localStorage.setItem('remind-code-word', checked.toString());
+    
+    toast({
+      title: checked ? "Reminders enabled" : "Reminders disabled",
+      description: checked 
+        ? "We'll remind you about your code word during heated moments." 
+        : "Code word reminders have been turned off.",
+    });
+  };
+  
   return (
     <div className="mt-8 flex items-center justify-center">
       <div className="inline-flex items-center gap-2 p-3 bg-[#f7e0dc]/30 rounded-lg">
-        <input type="checkbox" id="remind" className="rounded" />
-        <label htmlFor="remind" className="text-sm text-[#5d4357]">
+        <Switch 
+          id="remind" 
+          checked={isEnabled}
+          onCheckedChange={handleToggle}
+        />
+        <Label htmlFor="remind" className="text-sm text-[#5d4357] cursor-pointer">
           Remind us about our code word during a fight
-        </label>
+        </Label>
       </div>
     </div>
   );

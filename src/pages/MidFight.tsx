@@ -3,10 +3,9 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import ContentContainer from '@/components/common/ContentContainer';
-import TimeoutTimer from '@/components/mid-fight/TimeoutTimer';
 import FeatureCardSection from '@/components/mid-fight/FeatureCardSection';
 import BackgroundPhrases from '@/components/mid-fight/BackgroundPhrases';
-import CodeWordTool from '@/components/mid-fight/code-word/CodeWordTool';
+import PauseTool from '@/components/mid-fight/pause-tool/PauseTool';
 
 const MidFight = () => {
   const [selectedFeature, setSelectedFeature] = useState<string | null>(null);
@@ -35,16 +34,11 @@ const MidFight = () => {
       <Navbar />
       
       <main className="pb-16 relative z-10">
-        {/* Timeout Timer and Code Word Section */}
+        {/* Unified Pause Tool Section */}
         <section className="py-8 bg-soft-blush/30">
           <ContentContainer maxWidth="lg">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Left column: Timeout Timer */}
-              <TimeoutTimer animationsEnabled={animationsEnabled} />
-              
-              {/* Right column: Code Word */}
-              <CodeWordTool />
-            </div>
+            {/* Unified Pause Tool */}
+            <PauseTool />
           </ContentContainer>
         </section>
 
