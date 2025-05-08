@@ -16,7 +16,10 @@ export interface CodeWordInfo {
   word: string;
   updatedAt: Date;
   updatedBy: string;
-  status: 'pending' | 'confirmed';
+  status: 'pending' | 'confirmed' | 'negotiation';
+  partnerSuggestion?: string;
+  userSuggestion?: string;
+  lastUsed?: Date;
 }
 
 export interface InviteRequest {

@@ -1,19 +1,24 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Flag, PauseCircle } from 'lucide-react';
+import { Flag, PauseCircle, Clock } from 'lucide-react';
 
 interface CodeWordUsageProps {
   codeWord: string;
   onCodeWordUsed: () => void;
   onChangeCodeWord: () => void;
+  status?: 'pending' | 'confirmed' | 'negotiation';
 }
 
 const CodeWordUsage: React.FC<CodeWordUsageProps> = ({ 
   codeWord, 
   onCodeWordUsed, 
-  onChangeCodeWord 
+  onChangeCodeWord,
+  status = 'confirmed' 
 }) => {
+  const isPending = status === 'pending';
+  const isNegotiating = status === 'negotiation';
+  
   return (
     <div className="max-w-md mx-auto text-center">
       <div className="flex justify-center mb-4">
@@ -32,6 +37,24 @@ const CodeWordUsage: React.FC<CodeWordUsageProps> = ({
         </span>
       </div>
       
+      {isPending && (
+        <div className="bg-[#f7e0dc]/30 p-3 rounded-lg mb-6 flex items-center justify-center gap-2">
+          <Clock size={16} className="text-[#5d4357]" />
+          <span className="text-sm text-[#5d4357]">
+            Waiting for partner confirmation
+          </span>
+        </div>
+      )}
+      
+      {isNegotiating && (
+        <div className="bg-[#f7e0dc]/30 p-3 rounded-lg mb-6 flex items-center justify-center gap-2">
+          <Clock size={16} className="text-[#5d4357]" />
+          <span className="text-sm text-[#5d4357]">
+            Negotiating word with partner
+          </span>
+        </div>
+      )}
+      
       <p className="text-[#5d4357]/80 mb-8 italic">
         When either of you says this word, it means "let's pause this conversation" — no questions asked.
       </p>
@@ -40,6 +63,7 @@ const CodeWordUsage: React.FC<CodeWordUsageProps> = ({
         <Button
           onClick={onCodeWordUsed}
           className="w-full flex items-center justify-center gap-2 bg-[#5d4357] hover:bg-[#4d3347] text-white py-4"
+          disabled={isPending || isNegotiating}
         >
           <Flag size={18} />
           <span>We used our code word</span>

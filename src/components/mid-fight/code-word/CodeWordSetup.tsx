@@ -1,10 +1,12 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
 interface CodeWordSetupProps {
   onSetCodeWord: (word: string) => void;
+  initialWord?: string;
+  onWordChange?: (word: string) => void;
 }
 
 const SUGGESTED_WORDS = [
@@ -15,14 +17,26 @@ const SUGGESTED_WORDS = [
   'Dog Whistle'
 ];
 
-const CodeWordSetup: React.FC<CodeWordSetupProps> = ({ onSetCodeWord }) => {
-  const [customWord, setCustomWord] = useState('');
+const CodeWordSetup: React.FC<CodeWordSetupProps> = ({ 
+  onSetCodeWord, 
+  initialWord = '', 
+  onWordChange 
+}) => {
+  const [customWord, setCustomWord] = useState(initialWord || '');
   
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
     if (customWord.trim()) {
       onSetCodeWord(customWord.trim());
+    }
+  };
+  
+  const handleWordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newWord = e.target.value;
+    setCustomWord(newWord);
+    if (onWordChange) {
+      onWordChange(newWord);
     }
   };
   
@@ -40,7 +54,7 @@ const CodeWordSetup: React.FC<CodeWordSetupProps> = ({ onSetCodeWord }) => {
           <Input
             type="text"
             value={customWord}
-            onChange={(e) => setCustomWord(e.target.value)}
+            onChange={handleWordChange}
             placeholder="Enter your code word"
             className="w-full py-5 px-4"
           />

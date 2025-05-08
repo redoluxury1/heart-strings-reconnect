@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
+import { Check, X } from 'lucide-react';
 
 interface CodeWordSyncProps {
   partnerWord: string;
@@ -34,17 +35,19 @@ const CodeWordSync: React.FC<CodeWordSyncProps> = ({
       <div className="space-y-3">
         <Button
           onClick={onConfirm}
-          className="w-full bg-[#2e2a63] hover:bg-[#1e1a43] text-white py-4"
+          className="w-full bg-[#2e2a63] hover:bg-[#1e1a43] text-white py-4 flex items-center justify-center gap-2"
         >
-          Yes, confirm it
+          <Check size={18} />
+          <span>Yes, confirm it</span>
         </Button>
         
         <Button
           onClick={onReject}
           variant="outline"
-          className="w-full border-[#5d4357] text-[#5d4357] py-4 hover:bg-[#5d4357]/10"
+          className="w-full border-[#5d4357] text-[#5d4357] py-4 hover:bg-[#5d4357]/10 flex items-center justify-center gap-2"
         >
-          No, suggest a new one
+          <X size={18} />
+          <span>No, suggest a new one</span>
         </Button>
       </div>
     </div>

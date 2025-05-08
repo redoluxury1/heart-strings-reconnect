@@ -11,24 +11,71 @@ import {
   DialogDescription
 } from '@/components/ui/dialog';
 import { CodeWordInfo } from '@/types/relationship';
+import { useInterface } from '@/hooks/useInterfaceContext';
 
-// Mock data for demonstration purposes (would be replaced with real data)
+// Mock data for demonstration purposes (would be replaced with real data from API)
 const mockRelationship = {
   id: 'rel-123',
   codeWord: null
 };
 
-export type CodeWordStatus = 'setup' | 'sync' | 'usage' | 'cool-down';
+export type CodeWordStatus = 'setup' | 'sync' | 'usage' | 'cool-down' | 'negotiation';
 
 const CodeWordTool = () => {
   const [codeWord, setCodeWord] = useState<CodeWordInfo | null>(mockRelationship.codeWord);
   const [currentView, setCurrentView] = useState<CodeWordStatus>(codeWord ? 'usage' : 'setup');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [partnerWord, setPartnerWord] = useState<string | null>(null);
+  const [hasNotification, setHasNotification] = useState(false);
+  const [userSuggestion, setUserSuggestion] = useState<string | null>(null);
   const { toast } = useToast();
+  const { partnerStatus } = useInterface();
   
   // This would be based on authentication in a real implementation
   const currentUserId = "user-123";
+  const partnerId = "user-456";
+  
+  // Load code word data from localStorage for demo purposes
+  // In a real app, this would be from an API or real-time database
+  useEffect(() => {
+    const savedCodeWord = localStorage.getItem('bridge-code-word');
+    if (savedCodeWord) {
+      try {
+        const parsedCodeWord = JSON.parse(savedCodeWord);
+        setCodeWord(parsedCodeWord);
+        
+        // Show appropriate view based on code word status
+        if (parsedCodeWord.status === 'pending' && parsedCodeWord.updatedBy !== currentUserId) {
+          // Partner has set a word that needs confirmation
+          setPartnerWord(parsedCodeWord.word);
+          setCurrentView('sync');
+          setHasNotification(true);
+        } else if (parsedCodeWord.status === 'negotiation') {
+          // Both suggested different words and need to reach agreement
+          if (parsedCodeWord.partnerSuggestion && parsedCodeWord.updatedBy !== currentUserId) {
+            setPartnerWord(parsedCodeWord.partnerSuggestion);
+            setCurrentView('sync');
+            setHasNotification(true);
+          } else {
+            setCurrentView('usage');
+          }
+        } else if (parsedCodeWord.status === 'confirmed') {
+          // Word is confirmed by both
+          setCurrentView('usage');
+        }
+      } catch (e) {
+        console.error("Error loading code word data:", e);
+      }
+    }
+  }, [currentUserId]);
+  
+  // Save changes to localStorage for demo purposes
+  // In a real app, this would save to an API or database
+  useEffect(() => {
+    if (codeWord) {
+      localStorage.setItem('bridge-code-word', JSON.stringify(codeWord));
+    }
+  }, [codeWord]);
   
   const handleSetCodeWord = (word: string) => {
     // In a real app, this would send to backend and update relationship
@@ -36,15 +83,18 @@ const CodeWordTool = () => {
       word,
       updatedAt: new Date(),
       updatedBy: currentUserId,
-      status: 'pending', // Needs partner confirmation
+      status: partnerStatus === 'couple' ? 'pending' : 'confirmed', // If solo user, auto-confirm
     };
     
     setCodeWord(newCodeWord);
     setCurrentView('usage');
+    setUserSuggestion(null);
     
     toast({
       title: "Code word set",
-      description: `'${word}' is now your code word. We've notified your partner.`,
+      description: partnerStatus === 'couple' 
+        ? `'${word}' is now your code word. We've notified your partner for confirmation.`
+        : `'${word}' is now your code word.`,
     });
     
     // Close dialog if open
@@ -54,6 +104,7 @@ const CodeWordTool = () => {
   const handlePartnerSuggestion = (suggestedWord: string) => {
     setPartnerWord(suggestedWord);
     setCurrentView('sync');
+    setHasNotification(false);
   };
   
   const handleConfirmPartnerWord = () => {
@@ -69,6 +120,7 @@ const CodeWordTool = () => {
       setCodeWord(updatedCodeWord);
       setCurrentView('usage');
       setPartnerWord(null);
+      setHasNotification(false);
       
       toast({
         title: "Code word confirmed",
@@ -78,30 +130,57 @@ const CodeWordTool = () => {
   };
   
   const handleRejectPartnerWord = () => {
-    // Keep current code word but suggest a negotiation
+    // Enter negotiation mode by suggesting a new word
     setCurrentView('setup');
     setPartnerWord(null);
     
+    // If we're already in a code word workflow, mark it as in negotiation
+    if (codeWord) {
+      const updatedCodeWord: CodeWordInfo = {
+        ...codeWord,
+        status: 'negotiation',
+        updatedAt: new Date(),
+        userSuggestion: userSuggestion
+      };
+      setCodeWord(updatedCodeWord);
+    }
+    
     toast({
-      title: "New word suggested",
-      description: "You've suggested a new code word for you and your partner.",
+      title: "Suggest a new word",
+      description: "Please suggest a new code word for you and your partner to agree on.",
     });
   };
   
   const handleCodeWordUsed = () => {
     setIsDialogOpen(true);
+    
+    // In a real app, this would notify the partner
+    // and potentially update status in the database
   };
   
   const handleChangeCodeWord = () => {
     setCurrentView('setup');
+    setUserSuggestion(null);
+  };
+  
+  // This simulates a partner suggesting a word
+  // In a real app, this would come from a websocket or API
+  const simulatePartnerSuggestion = () => {
+    const partnerWords = ['Butterfly', 'Timeout', 'Breather', 'Reset', 'Pause'];
+    const randomWord = partnerWords[Math.floor(Math.random() * partnerWords.length)];
+    handlePartnerSuggestion(randomWord);
   };
   
   return (
     <div className="bg-white rounded-lg shadow-md p-6 border border-lavender-blue/10 mt-6 mb-10">
-      <CodeWordHeader />
+      <CodeWordHeader hasNotification={hasNotification} />
       
       {currentView === 'setup' && (
-        <CodeWordSetup onSetCodeWord={handleSetCodeWord} />
+        <CodeWordSetup 
+          onSetCodeWord={handleSetCodeWord} 
+          initialWord={userSuggestion || ''} 
+          onWordChange={setUserSuggestion}
+        />
       )}
       
       {currentView === 'sync' && partnerWord && (
@@ -117,6 +196,7 @@ const CodeWordTool = () => {
           codeWord={codeWord.word} 
           onCodeWordUsed={handleCodeWordUsed}
           onChangeCodeWord={handleChangeCodeWord}
+          status={codeWord.status}
         />
       )}
       
@@ -137,9 +217,16 @@ const CodeWordTool = () => {
 
 export default CodeWordTool;
 
-const CodeWordHeader = () => {
+const CodeWordHeader = ({ hasNotification = false }: { hasNotification?: boolean }) => {
   return (
-    <div className="text-center my-6">
+    <div className="text-center my-6 relative">
+      {hasNotification && (
+        <div className="absolute -top-2 right-0 md:right-20 lg:right-40">
+          <span className="inline-block px-3 py-1 bg-[#f7e0dc] text-[#5d4357] rounded-full animate-pulse text-xs">
+            New suggestion
+          </span>
+        </div>
+      )}
       <h2 className="text-5xl md:text-6xl font-cormorant text-[#5d4357] font-medium">
         Code Word
       </h2>
