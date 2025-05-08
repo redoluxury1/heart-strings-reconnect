@@ -1,9 +1,15 @@
+
 import React, { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import CodeWordSetup from './CodeWordSetup';
 import CodeWordUsage from './CodeWordUsage';
 import CodeWordSync from './CodeWordSync';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { 
+  Dialog, 
+  DialogContent,
+  DialogTitle,
+  DialogDescription
+} from '@/components/ui/dialog';
 import { CodeWordInfo } from '@/types/relationship';
 
 // Mock data for demonstration purposes (would be replaced with real data)
@@ -116,6 +122,12 @@ const CodeWordTool = () => {
       
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent className="bg-white p-6 rounded-lg max-w-md">
+          <DialogTitle className="text-2xl font-cormorant text-[#5d4357] mb-4">
+            Let's pause here
+          </DialogTitle>
+          <DialogDescription className="text-[#5d4357] mb-6">
+            You both agreed to stop when this word is used. Take a moment—restart later with care.
+          </DialogDescription>
           <CodeWordCoolDown onClose={() => setIsDialogOpen(false)} />
         </DialogContent>
       </Dialog>
@@ -141,12 +153,6 @@ const CodeWordHeader = () => {
 const CodeWordCoolDown = ({ onClose }: { onClose: () => void }) => {
   return (
     <div className="text-center">
-      <h3 className="text-2xl font-cormorant text-[#5d4357] mb-4">
-        Let's pause here
-      </h3>
-      <p className="text-[#5d4357] mb-6">
-        You both agreed to stop when this word is used. Take a moment—restart later with care.
-      </p>
       <div className="space-y-3">
         <button 
           onClick={onClose}

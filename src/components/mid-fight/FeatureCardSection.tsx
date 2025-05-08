@@ -6,7 +6,6 @@ import ContentContainer from '@/components/common/ContentContainer';
 import PausePhraseTool from './PausePhraseTool';
 import WhatsReallyGoingOn from './WhatsReallyGoingOn';
 import BuildBridgeCard from './build-bridge/BuildBridgeCard';
-import CodeWordTool from './code-word/CodeWordTool';
 
 // Feature data for other features (not including "say-instead" which will be displayed directly)
 const features: Feature[] = [
@@ -33,22 +32,8 @@ const FeatureCardSection: React.FC<FeatureCardSectionProps> = ({
 }) => {
   return (
     <>
-      {/* Timeout Timer and Code Word are side by side */}
-      <section className="py-6 md:py-8 bg-soft-blush/30">
-        <ContentContainer maxWidth="lg">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Left column: Timeout Timer (already in TimeoutTimer component) */}
-            <div className="bg-white rounded-lg shadow-md p-5 md:p-6 border border-lavender-blue/20">
-              {/* The TimeoutTimer component is rendered in the MidFight page */}
-            </div>
-            
-            {/* Right column: Code Word */}
-            <div className="bg-white rounded-lg shadow-md p-5 md:p-6 border border-lavender-blue/20">
-              <CodeWordTool />
-            </div>
-          </div>
-        </ContentContainer>
-      </section>
+      {/* Original TimeoutTimer and CodeWordTool section is in MidFight.tsx and does not need to be here */}
+      {/* Removed duplicate section */}
       
       {/* Pause Phrase Tool - Always visible with compact design */}
       <section className="py-6 md:py-8 bg-soft-blush/30">
