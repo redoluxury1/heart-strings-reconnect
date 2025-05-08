@@ -1,11 +1,11 @@
 
-import { Flag, Heart, Frown } from 'lucide-react';
+import { Flag, Heart, Frown, Pause } from 'lucide-react';
 
 export type FlagType = {
   id: string;
   title: string;
   description: string;
-  icon: typeof Flag | typeof Heart | typeof Frown;
+  icon: typeof Pause | typeof Heart | typeof Frown;
   messages: string[];
 };
 
@@ -14,7 +14,7 @@ export const flagTypes: FlagType[] = [
     id: 'pause',
     title: 'I need a pause',
     description: 'I\'m overwhelmed and need to step back for a bit.',
-    icon: Flag,
+    icon: Pause,
     messages: [
       'I need a little space to calm down, but I want to come back to this.',
       'I care about you. I just need to gather my thoughts before we talk more.',

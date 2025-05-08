@@ -77,7 +77,7 @@ const DailyLoveNote = () => {
         <div className="flex justify-center">
           <Button 
             onClick={handleSendNote} 
-            className="bg-[#b17f89] hover:bg-[#9c6a74] text-white font-medium text-lg px-8 py-6 rounded-full h-auto w-full max-w-md"
+            className="bg-[#b17f89] hover:bg-[#9c6a74] text-white px-6 py-2 rounded-full text-base max-w-xs"
           >
             Send Today's Note
           </Button>
