@@ -16,6 +16,16 @@ const CodeWordDisplay: React.FC<CodeWordDisplayProps> = ({
   onClick,
   showQuotes = true
 }) => {
+  // Dynamically adjust text size based on word length
+  const getFontSize = () => {
+    const length = codeWord.length;
+    if (length > 15) return 'text-xl';
+    if (length > 10) return 'text-2xl';
+    return textSize; // Default size for normal words
+  };
+
+  const dynamicTextSize = getFontSize();
+
   return (
     <div 
       className={className}
@@ -28,7 +38,7 @@ const CodeWordDisplay: React.FC<CodeWordDisplayProps> = ({
         }
       } : undefined}
     >
-      <span className={`${textSize} font-medium text-[#5d4357] block truncate max-w-full`}>
+      <span className={`${dynamicTextSize} font-medium text-[#5d4357] block w-full break-words`}>
         {showQuotes ? `"${codeWord}"` : codeWord}
       </span>
     </div>
