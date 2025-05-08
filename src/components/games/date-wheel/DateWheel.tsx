@@ -1,6 +1,5 @@
-
 import React, { useState, useEffect } from 'react';
-import { CirclePlay, Film, Pizza, Moon, Paintbrush, Heart, Home, MapPin, Mountain, Sun } from 'lucide-react';
+import { CirclePlay, Film, Pizza, Moon, Paintbrush, Heart, Home, MapPin, Mountain, Sun, Music, Eye, Coffee, Utensils, Star, MessageCircle, Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
@@ -87,6 +86,20 @@ const DateWheel: React.FC = () => {
         return <Mountain className="h-6 w-6 text-midnight-indigo" />;
       case 'Home':
         return <Home className="h-6 w-6 text-midnight-indigo" />;
+      case 'Music':
+        return <Music className="h-6 w-6 text-midnight-indigo" />;
+      case 'Eye':
+        return <Eye className="h-6 w-6 text-midnight-indigo" />;
+      case 'Coffee':
+        return <Coffee className="h-6 w-6 text-midnight-indigo" />;
+      case 'Utensils':
+        return <Utensils className="h-6 w-6 text-midnight-indigo" />;
+      case 'Star':
+        return <Star className="h-6 w-6 text-midnight-indigo" />;
+      case 'MessageCircle':
+        return <MessageCircle className="h-6 w-6 text-midnight-indigo" />;
+      case 'Calendar':
+        return <Calendar className="h-6 w-6 text-midnight-indigo" />;
       default:
         return <Heart className="h-6 w-6 text-midnight-indigo" />;
     }
