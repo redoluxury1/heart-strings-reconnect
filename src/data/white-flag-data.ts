@@ -31,7 +31,9 @@ export const flagTypes: FlagType[] = [
     messages: [
       'I miss you. Can we start over?',
       'I want to find our way back to each other. Can we try again?',
-      'What happened was hard, but I still want us.'
+      'What happened was hard, but I still want us.',
+      'I still love you. I\'d like to try again with a calmer approach.',
+      'This tension between us sucks. Can we try to come back to each other?'
     ]
   },
   {
