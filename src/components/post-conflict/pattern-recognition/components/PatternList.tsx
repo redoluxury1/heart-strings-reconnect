@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { ChevronRight, RefreshCcw, Users, Megaphone, PuzzlePiece } from 'lucide-react';
+import { ChevronRight, RefreshCcw, Users, Megaphone, Puzzle } from 'lucide-react';
 import { CommonPattern } from '../types';
 import PatternCard from './PatternCard';
 
@@ -38,7 +38,7 @@ const PatternList: React.FC<PatternListProps> = ({ patterns, onPatternSelect }) 
       case 'criticize-control':
         return <Megaphone className="h-8 w-8" />;
       case 'fix-reject':
-        return <PuzzlePiece className="h-8 w-8" />;
+        return <Puzzle className="h-8 w-8" />;
       case 'silent-tension-snap':
         return (
           <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
