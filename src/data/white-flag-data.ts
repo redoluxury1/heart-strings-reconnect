@@ -44,7 +44,9 @@ export const flagTypes: FlagType[] = [
     messages: [
       'I\'m still processing, but I don\'t want distance between us.',
       'This is hard for me, but I care about us more than being right.',
-      'I\'m hurting, but our relationship matters more than this argument.'
+      'I\'m hurting, but our relationship matters more than this argument.',
+      'I\'m not fully ready to talk about what happened but let\'s try to work through it slowly.',
+      'I\'m struggling to find the words, but I don\'t want to shut you out.'
     ]
   }
 ];
