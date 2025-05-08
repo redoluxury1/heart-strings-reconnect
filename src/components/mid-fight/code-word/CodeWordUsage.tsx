@@ -1,7 +1,10 @@
 
 import React from 'react';
-import { Button } from '@/components/ui/button';
-import { Flag, PauseCircle, Clock } from 'lucide-react';
+import { PauseCircle } from 'lucide-react';
+import CodeWordDisplay from './components/CodeWordDisplay';
+import StatusIndicator from './components/StatusIndicator';
+import ActionButtons from './components/ActionButtons';
+import ReminderToggle from './components/ReminderToggle';
 
 interface CodeWordUsageProps {
   codeWord: string;
@@ -18,6 +21,7 @@ const CodeWordUsage: React.FC<CodeWordUsageProps> = ({
 }) => {
   const isPending = status === 'pending';
   const isNegotiating = status === 'negotiation';
+  const isDisabled = isPending || isNegotiating;
   
   return (
     <div className="max-w-md mx-auto text-center">
@@ -31,61 +35,21 @@ const CodeWordUsage: React.FC<CodeWordUsageProps> = ({
         Your shared code word is:
       </h3>
       
-      <div className="bg-[#f7e0dc]/50 p-5 rounded-lg mb-6 text-center">
-        <span className="text-3xl font-medium text-[#5d4357]">
-          "{codeWord}"
-        </span>
-      </div>
+      <CodeWordDisplay codeWord={codeWord} />
       
-      {isPending && (
-        <div className="bg-[#f7e0dc]/30 p-3 rounded-lg mb-6 flex items-center justify-center gap-2">
-          <Clock size={16} className="text-[#5d4357]" />
-          <span className="text-sm text-[#5d4357]">
-            Waiting for partner confirmation
-          </span>
-        </div>
-      )}
-      
-      {isNegotiating && (
-        <div className="bg-[#f7e0dc]/30 p-3 rounded-lg mb-6 flex items-center justify-center gap-2">
-          <Clock size={16} className="text-[#5d4357]" />
-          <span className="text-sm text-[#5d4357]">
-            Negotiating word with partner
-          </span>
-        </div>
-      )}
+      <StatusIndicator status={status} />
       
       <p className="text-[#5d4357]/80 mb-8 italic">
         When either of you says this word, it means "let's pause this conversation" — no questions asked.
       </p>
       
-      <div className="space-y-4">
-        <Button
-          onClick={onCodeWordUsed}
-          className="w-full flex items-center justify-center gap-2 bg-[#5d4357] hover:bg-[#4d3347] text-white py-4"
-          disabled={isPending || isNegotiating}
-        >
-          <Flag size={18} />
-          <span>We used our code word</span>
-        </Button>
-        
-        <Button
-          onClick={onChangeCodeWord}
-          variant="outline"
-          className="w-full border-[#5d4357]/50 text-[#5d4357] hover:bg-[#5d4357]/10"
-        >
-          Change our code word
-        </Button>
-      </div>
+      <ActionButtons 
+        onCodeWordUsed={onCodeWordUsed}
+        onChangeCodeWord={onChangeCodeWord}
+        disabled={isDisabled}
+      />
       
-      <div className="mt-8 flex items-center justify-center">
-        <div className="inline-flex items-center gap-2 p-3 bg-[#f7e0dc]/30 rounded-lg">
-          <input type="checkbox" id="remind" className="rounded" />
-          <label htmlFor="remind" className="text-sm text-[#5d4357]">
-            Remind us about our code word during a fight
-          </label>
-        </div>
-      </div>
+      <ReminderToggle />
     </div>
   );
 };
