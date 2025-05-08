@@ -32,7 +32,8 @@ export const useSteps = (onExit: () => void) => {
           }} 
           onExit={onExit}
           onNext={() => {
-            // Advance to the next step when user clicks "Yes"
+            // Skip directly to the tone setting step (step 1)
+            // By directly setting currentStep to 1, we skip any duplicate slides
             setCurrentStep(1);
           }}
         />
