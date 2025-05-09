@@ -3,7 +3,7 @@ import React from 'react';
 import { Book } from 'lucide-react';
 import FeatureCard, { Feature } from './FeatureCard';
 import ContentContainer from '@/components/common/ContentContainer';
-import PausePhraseTool from './PausePhraseTool';
+import TryAgainTool from './TryAgainTool';
 import WhatsReallyGoingOn from './WhatsReallyGoingOn';
 import BuildBridgeCard from './build-bridge/BuildBridgeCard';
 
@@ -35,11 +35,11 @@ const FeatureCardSection: React.FC<FeatureCardSectionProps> = ({
       {/* Original TimeoutTimer and CodeWordTool section is in MidFight.tsx and does not need to be here */}
       {/* Removed duplicate section */}
       
-      {/* Pause Phrase Tool - Always visible with compact design */}
+      {/* Let's Try That Again Tool - Always visible with compact design */}
       <section className="py-6 md:py-8 bg-soft-blush/30">
         <ContentContainer maxWidth="lg">
           <div className="bg-white rounded-lg shadow-md p-5 md:p-6 border border-lavender-blue/20">
-            <PausePhraseTool onClose={() => {}} />
+            <TryAgainTool onClose={() => {}} />
           </div>
         </ContentContainer>
       </section>

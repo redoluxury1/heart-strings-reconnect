@@ -4,7 +4,7 @@ import { MessageCircle } from 'lucide-react';
 import SayItBetter from '@/components/mid-fight/whats-going-on/SayItBetter';
 import { Button } from '@/components/ui/button';
 import { useSession } from './context/SessionContext';
-import PausePhraseGraphic from '@/components/mid-fight/PausePhraseGraphic';
+import TryAgainGraphic from '@/components/mid-fight/TryAgainGraphic';
 
 interface PhraseRewindProps {
   onClose?: () => void;
@@ -27,7 +27,7 @@ const PhraseRewind: React.FC<PhraseRewindProps> = ({ onClose }) => {
       <div className="bg-white rounded-lg shadow-md p-5 md:p-6 border border-sage/20">
         <div className="flex flex-col items-center mb-6 cursor-pointer" onClick={() => setIsOpen(!isOpen)}>
           <MessageCircle className="h-16 md:h-20 w-16 md:w-20 text-[#E2725B] mb-3" />
-          <PausePhraseGraphic className="mx-auto" />
+          <TryAgainGraphic className="mx-auto" />
           <p className="text-[#07183D] text-center max-w-2xl mb-3 text-sm md:text-base">
             For next time: Discover gentler ways to express difficult feelings
           </p>

@@ -111,7 +111,6 @@ export const usePauseTimer = () => {
     setTimerActive(true);
     
     toast({
-      title: "Timer started",
       description: `Taking a ${minutes} minute pause.`
     });
     
@@ -163,7 +162,6 @@ export const usePauseTimer = () => {
     localStorage.setItem('bridge-restart-phrase', message);
     
     toast({
-      title: "Restart message saved",
       description: "Your message will be shown for review when the timer ends."
     });
   };
@@ -181,7 +179,6 @@ export const usePauseTimer = () => {
       setPauseStatus('activation');
       
       toast({
-        title: "Message sent",
         description: "Your restart message has been sent to your partner."
       });
     }
@@ -196,8 +193,7 @@ export const usePauseTimer = () => {
   const showReconnectNotification = () => {
     // In a real app, this would show a push notification
     toast({
-      title: "Time's up—ready to reconnect?",
-      description: "Choose a softer way to restart the conversation. Tap to view restart suggestions."
+      description: "Time's up—ready to reconnect? Choose a softer way to restart the conversation."
     });
   };
   
@@ -217,7 +213,6 @@ export const usePauseTimer = () => {
   const sendRestartMessage = (message: string) => {
     console.log("Sending restart message to partner:", message);
     toast({
-      title: "Restart message sent",
       description: "Your partner has been notified."
     });
   };
