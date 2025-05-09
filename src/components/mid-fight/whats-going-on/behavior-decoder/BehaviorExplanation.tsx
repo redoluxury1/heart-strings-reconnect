@@ -15,7 +15,7 @@ const BehaviorExplanation: React.FC<BehaviorExplanationProps> = ({
   isMobile
 }) => {
   return (
-    <div className="bg-white rounded-md border border-lavender-blue/20 p-4">
+    <div className="bg-teal-500/20 rounded-md border border-teal-500/30 p-4">
       <div className="mb-4">
         <h4 className={`font-medium ${isMobile ? 'text-base mb-2' : 'text-lg mb-3'} text-[#07183D]`}>
           {behavior.explanation.title}
@@ -25,9 +25,9 @@ const BehaviorExplanation: React.FC<BehaviorExplanationProps> = ({
         </p>
       </div>
       
-      <div className={`${isMobile ? 'mb-3 py-2' : 'mb-4 py-3'} border-t border-b border-lavender-blue/10`}>
+      <div className={`${isMobile ? 'mb-3 py-2' : 'mb-4 py-3'} border-t border-b border-teal-500/20`}>
         <p className="text-sm font-medium text-[#07183D] mb-1">Instead of reacting, try saying:</p>
-        <blockquote className="italic text-sm text-[#07183D] pl-2 border-l-2 border-lavender-blue/30">
+        <blockquote className="italic text-sm text-[#07183D] pl-2 border-l-2 border-teal-500/40">
           "{behavior.response}"
         </blockquote>
       </div>
