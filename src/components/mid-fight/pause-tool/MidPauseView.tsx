@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Clock, BookOpen, PenLine } from 'lucide-react';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import RestartPhrases from '@/components/mid-fight/restart-phrases/RestartPhrases';
+import { useNavigate } from 'react-router-dom';
 
 interface MidPauseViewProps {
   timeRemaining: string;
@@ -15,6 +16,11 @@ const MidPauseView: React.FC<MidPauseViewProps> = ({
   onEndPause 
 }) => {
   const [isRestartPhrasesOpen, setIsRestartPhrasesOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const handleNavigateToJournal = () => {
+    navigate('/archive', { state: { activeTab: 'thoughts' } });
+  };
 
   return (
     <div className="max-w-md mx-auto">
@@ -57,7 +63,7 @@ const MidPauseView: React.FC<MidPauseViewProps> = ({
         <Button 
           variant="outline"
           className="w-full border-[#5d4357]/20 text-[#5d4357] flex items-center justify-center gap-2 py-5"
-          onClick={() => console.log('Write private reflection')}
+          onClick={handleNavigateToJournal}
         >
           <PenLine size={18} />
           <span>Write a Private Reflection</span>

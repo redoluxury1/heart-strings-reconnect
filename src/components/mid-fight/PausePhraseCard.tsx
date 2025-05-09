@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { LightbulbIcon, HeartIcon, ShieldIcon } from 'lucide-react';
 import PausePhraseGraphic from './PausePhraseGraphic';
@@ -89,7 +90,7 @@ const PausePhraseCard: React.FC<PausePhraseCardProps> = ({ onOptionSelect }) => 
       
       <CategoryCard 
         title="Clarity" 
-        icon={<LightbulbIcon className="text-yellow-300" />}
+        icon={<LightbulbIcon className="text-[#a35757]" />}
         options={clarityOptions}
         onOptionSelect={onOptionSelect}
         backgroundColor="bg-mauve-rose/80"
@@ -97,7 +98,7 @@ const PausePhraseCard: React.FC<PausePhraseCardProps> = ({ onOptionSelect }) => 
       
       <CategoryCard 
         title="Vulnerability" 
-        icon={<HeartIcon className="text-pink-300" />}
+        icon={<HeartIcon className="text-[#a35757]" />}
         options={vulnerabilityOptions}
         onOptionSelect={onOptionSelect}
         backgroundColor="bg-mauve-rose/80"
@@ -105,7 +106,7 @@ const PausePhraseCard: React.FC<PausePhraseCardProps> = ({ onOptionSelect }) => 
       
       <CategoryCard 
         title="Repair" 
-        icon={<ShieldIcon className="text-orange-300" />}
+        icon={<ShieldIcon className="text-[#a35757]" />}
         options={repairOptions}
         onOptionSelect={onOptionSelect}
         backgroundColor="bg-mauve-rose/80"

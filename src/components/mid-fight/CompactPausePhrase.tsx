@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Lightbulb, Heart, Shield } from 'lucide-react';
 import PausePhraseGraphic from './PausePhraseGraphic';
@@ -23,7 +24,7 @@ const CompactPausePhrase: React.FC<CompactPausePhraseProps> = ({
       {/* Clarity Section */}
       <CategorySection 
         title="Clarity" 
-        icon={<Lightbulb className="text-yellow-300" />}
+        icon={<Lightbulb className="text-[#a35757]" />}
         options={[
           { id: 'explain-meant', text: 'Explain what I meant' },
           { id: 'ask-question', text: 'Ask a question calmly' },
@@ -36,7 +37,7 @@ const CompactPausePhrase: React.FC<CompactPausePhraseProps> = ({
       {/* Vulnerability Section */}
       <CategorySection 
         title="Vulnerability" 
-        icon={<Heart className="text-pink-300" />}
+        icon={<Heart className="text-[#a35757]" />}
         options={[
           { id: 'say-what-hurt', text: 'Say what hurt me' },
           { id: 'share-fear', text: 'Share a vulnerability' },
@@ -48,7 +49,7 @@ const CompactPausePhrase: React.FC<CompactPausePhraseProps> = ({
       {/* Repair Section */}
       <CategorySection 
         title="Repair" 
-        icon={<Shield className="text-orange-300" />}
+        icon={<Shield className="text-[#a35757]" />}
         options={[
           { id: 'suggest-solution', text: 'Suggest a compromise' },
           { id: 'request-appreciation', text: 'Ask for appreciation' },
@@ -80,7 +81,7 @@ const CategorySection: React.FC<CategorySectionProps> = ({
   return (
     <div className="bg-soft-cream/70 rounded-xl p-5 shadow-sm">
       <div className="flex items-center gap-2 mb-4">
-        <div className="text-2xl flex items-center justify-center w-8 h-8 rounded-full bg-white/30">
+        <div className="text-2xl">
           {icon}
         </div>
         <h3 className="text-midnight-indigo font-cormorant text-3xl">{title}</h3>
