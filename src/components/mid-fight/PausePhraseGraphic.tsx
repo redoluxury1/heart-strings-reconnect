@@ -8,7 +8,7 @@ const PausePhraseGraphic: React.FC = () => {
   // Preload the image when component mounts with higher priority
   useEffect(() => {
     const img = new Image();
-    img.src = "/lovable-uploads/09c6e370-f376-47e7-98ba-66452103b58b.png";
+    img.src = "/lovable-uploads/e1e5274e-42a4-478e-8034-e9e2ab658dda.png";
     img.onload = () => setImageLoaded(true);
     
     return () => {
@@ -22,7 +22,7 @@ const PausePhraseGraphic: React.FC = () => {
         <Skeleton className="h-32 w-full max-w-md mx-auto rounded-lg" />
       )}
       <img 
-        src="/lovable-uploads/09c6e370-f376-47e7-98ba-66452103b58b.png" 
+        src="/lovable-uploads/e1e5274e-42a4-478e-8034-e9e2ab658dda.png" 
         alt="Pause + Phrase" 
         className={`h-auto w-full max-w-md mx-auto transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
         onLoad={() => setImageLoaded(true)}

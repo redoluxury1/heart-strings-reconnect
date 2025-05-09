@@ -1,16 +1,48 @@
 
 import React from 'react';
+import { Button } from '@/components/ui/button';
+import { type PauseStatus } from '../PauseTool';
 
-const PauseToolHeader: React.FC = () => {
+interface PauseToolHeaderProps {
+  status: PauseStatus;
+  onSetupClick: () => void;
+}
+
+const PauseToolHeader: React.FC<PauseToolHeaderProps> = ({ 
+  status, 
+  onSetupClick 
+}) => {
+  const getStatusText = () => {
+    switch (status) {
+      case 'setup':
+        return 'Pause Tool';
+      case 'activation':
+        return 'Activate Code Word';
+      case 'activated':
+        return 'Select Pause Duration';
+      case 'custom-timer':
+        return 'Custom Timer';
+      default:
+        return 'Pause Tool';
+    }
+  };
+
   return (
-    <>
-      <h2 className="text-5xl md:text-6xl font-cormorant text-[#5d4357] font-medium text-center mb-6">
-        Code Word + Time Out
+    <div className="flex items-center justify-between mb-6">
+      <h2 className="text-xl font-medium text-[#5d4357]">
+        {getStatusText()}
       </h2>
-      <p className="text-xl md:text-2xl font-cormorant text-[#5d4357] mt-4 mb-10 text-center">
-        Use your code word or take a break when things get heated.
-      </p>
-    </>
+      
+      {status !== 'setup' && (
+        <Button
+          variant="ghost"
+          className="text-[#5d4357] hover:bg-[#5d4357]/10"
+          onClick={onSetupClick}
+        >
+          Back
+        </Button>
+      )}
+    </div>
   );
 };
 

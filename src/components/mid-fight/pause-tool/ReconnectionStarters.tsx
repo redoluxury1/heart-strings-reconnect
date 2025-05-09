@@ -14,7 +14,10 @@ const ReconnectionStarters: React.FC<ReconnectionStartersProps> = ({
 }) => {
   return (
     <DialogContent className="max-w-lg p-0 bg-transparent border-none shadow-none">
-      <RestartPhrases onClose={onClose} />
+      <RestartPhrases 
+        onClose={onClose} 
+        setRestartMessage={setRestartMessage}
+      />
     </DialogContent>
   );
 };

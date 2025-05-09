@@ -21,21 +21,22 @@ const PauseTool = () => {
     handleEndPause,
     handleViewReconnection,
     handleRemindLater,
-    setRestartMessage
+    setRestartMessage,
+    codeWord
   } = usePauseTimer();
 
   return (
     <div className="bg-white rounded-xl shadow-md p-6">
       {pauseStatus !== 'in-pause' && pauseStatus !== 'ended' && (
         <PauseToolHeader 
-          currentStatus={pauseStatus}
+          status={pauseStatus}
           onSetupClick={() => setPauseStatus('setup')}
         />
       )}
       
       {pauseStatus === 'activation' && (
         <CodeWordActivationView 
-          onActivateWord={handleActivateCodeWord} 
+          onActivate={handleActivateCodeWord} 
         />
       )}
       
@@ -43,12 +44,14 @@ const PauseTool = () => {
         <PauseActivatedView 
           onTimerSelect={handleTimerSelect}
           onCustomTimer={handleCustomTimer}
+          codeWord={codeWord || "pause"}
         />
       )}
       
       {pauseStatus === 'custom-timer' && (
         <CustomTimerView 
           onTimerSelect={handleTimerSelect}
+          onBack={() => setPauseStatus('activated')}
         />
       )}
       

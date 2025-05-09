@@ -11,9 +11,10 @@ import { Textarea } from '@/components/ui/textarea';
 interface RestartPhrasesProps {
   onClose: () => void;
   onNotReady?: () => void;
+  setRestartMessage?: (message: string) => void;
 }
 
-const RestartPhrases: React.FC<RestartPhrasesProps> = ({ onClose, onNotReady }) => {
+const RestartPhrases: React.FC<RestartPhrasesProps> = ({ onClose, onNotReady, setRestartMessage }) => {
   const [selectedPhrase, setSelectedPhrase] = useState<RestartPhrase | null>(null);
   const [showCustomInput, setShowCustomInput] = useState(false);
   const [customizingPhrase, setCustomizingPhrase] = useState(false);
@@ -53,6 +54,12 @@ const RestartPhrases: React.FC<RestartPhrasesProps> = ({ onClose, onNotReady }) 
       title: "Restart phrase prepared",
       description: "Your message will be sent to your partner when the timer ends."
     });
+    
+    // Set the restart message if the prop exists
+    if (setRestartMessage) {
+      setRestartMessage(customizedText || selectedPhrase?.text || '');
+    }
+    
     onClose();
     // In a real implementation, this would store the message to be sent when the timer ends
     console.log("Prepared restart phrase:", customizedText || selectedPhrase?.text);
