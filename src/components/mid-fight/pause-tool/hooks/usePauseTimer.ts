@@ -4,8 +4,8 @@ import { useToast } from '@/hooks/use-toast';
 import { PauseStatus } from '../PauseTool';
 
 export const usePauseTimer = () => {
-  // Default to 'activation' instead of 'setup' to show the code word input immediately
-  const [pauseStatus, setPauseStatus] = useState<PauseStatus>('activation');
+  // Change back to 'setup' as the initial state
+  const [pauseStatus, setPauseStatus] = useState<PauseStatus>('setup');
   const [pauseTimeMinutes, setPauseTimeMinutes] = useState<number | null>(null);
   const [timeRemaining, setTimeRemaining] = useState<number | null>(null);
   const [timerActive, setTimerActive] = useState(false);

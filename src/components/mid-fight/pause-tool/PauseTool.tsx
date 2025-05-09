@@ -7,6 +7,7 @@ import PauseTimerEndView from './PauseTimerEndView';
 import CustomTimerView from './CustomTimerView';
 import PauseToolHeader from './components/PauseToolHeader';
 import { usePauseTimer } from './hooks/usePauseTimer';
+import CodeWordSetupView from './CodeWordSetupView'; 
 
 export type PauseStatus = 'setup' | 'activation' | 'activated' | 'custom-timer' | 'in-pause' | 'ended';
 
@@ -32,6 +33,12 @@ const PauseTool = () => {
         <PauseToolHeader 
           status={pauseStatus}
           onSetupClick={() => setPauseStatus('activation')}
+        />
+      )}
+      
+      {pauseStatus === 'setup' && (
+        <CodeWordSetupView 
+          onGetStarted={() => setPauseStatus('activation')}
         />
       )}
       
