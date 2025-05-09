@@ -1,10 +1,21 @@
 
 import { useState, useEffect } from 'react';
-import { toast } from 'sonner';
+import { useToast } from '@/hooks/use-toast';
 import { PauseStatus } from '../PauseTool';
+import { 
+  saveToLocalStorage, 
+  loadFromLocalStorage, 
+  removeFromLocalStorage 
+} from './utils/storageUtils';
+import { 
+  showReconnectNotification,
+  notifyPartner,
+  syncTimerWithPartner,
+  sendRestartMessage 
+} from './utils/notificationUtils';
+import { formatTimeDisplay } from './utils/timeUtils';
 
 export const usePauseTimer = () => {
-  // Change back to 'setup' as the initial state
   const [pauseStatus, setPauseStatus] = useState<PauseStatus>('setup');
   const [pauseTimeMinutes, setPauseTimeMinutes] = useState<number | null>(null);
   const [timeRemaining, setTimeRemaining] = useState<number | null>(null);
@@ -14,14 +25,15 @@ export const usePauseTimer = () => {
   const [showRestartConfirmation, setShowRestartConfirmation] = useState(false);
   const [showNotReadyOptions, setShowNotReadyOptions] = useState(false);
   const [codeWordEstablished, setCodeWordEstablished] = useState(false);
+  const { toast } = useToast();
 
   // Check for existing pause on load
   useEffect(() => {
-    const savedEndTime = localStorage.getItem('bridge-pause-end-time');
-    const savedTimerActive = localStorage.getItem('bridge-timer-active');
-    const savedRestartPhrase = localStorage.getItem('bridge-restart-phrase');
-    const savedCodeWord = localStorage.getItem('bridge-code-word');
-    const savedCodeWordEstablished = localStorage.getItem('bridge-code-word-established');
+    const savedEndTime = loadFromLocalStorage('bridge-pause-end-time');
+    const savedTimerActive = loadFromLocalStorage('bridge-timer-active');
+    const savedRestartPhrase = loadFromLocalStorage('bridge-restart-phrase');
+    const savedCodeWord = loadFromLocalStorage('bridge-code-word');
+    const savedCodeWordEstablished = loadFromLocalStorage('bridge-code-word-established');
     
     if (savedRestartPhrase) {
       setRestartPhrase(savedRestartPhrase);
@@ -52,14 +64,14 @@ export const usePauseTimer = () => {
         } else {
           setPauseStatus('ended');
           // Show notification prompt to reconnect
-          showReconnectNotification();
+          showReconnectNotification(toast);
         }
         
-        localStorage.removeItem('bridge-pause-end-time');
-        localStorage.removeItem('bridge-timer-active');
+        removeFromLocalStorage('bridge-pause-end-time');
+        removeFromLocalStorage('bridge-timer-active');
       }
     }
-  }, []);
+  }, [toast]);
 
   // When pause is activated, check if a timer was selected
   useEffect(() => {
@@ -68,8 +80,8 @@ export const usePauseTimer = () => {
       const endTime = Date.now() + pauseTimeMinutes * 60 * 1000;
       
       // Store in localStorage for persistence
-      localStorage.setItem('bridge-pause-end-time', endTime.toString());
-      localStorage.setItem('bridge-timer-active', 'true');
+      saveToLocalStorage('bridge-pause-end-time', endTime.toString());
+      saveToLocalStorage('bridge-timer-active', 'true');
       
       const timer = setInterval(() => {
         const remaining = Math.max(0, Math.floor((endTime - Date.now()) / 1000));
@@ -85,17 +97,17 @@ export const usePauseTimer = () => {
           } else {
             setPauseStatus('ended');
             // Show notification prompt to reconnect
-            showReconnectNotification();
+            showReconnectNotification(toast);
           }
           
-          localStorage.removeItem('bridge-pause-end-time');
-          localStorage.removeItem('bridge-timer-active');
+          removeFromLocalStorage('bridge-pause-end-time');
+          removeFromLocalStorage('bridge-timer-active');
         }
       }, 1000);
       
       return () => clearInterval(timer);
     }
-  }, [pauseStatus, pauseTimeMinutes, timerActive, restartPhrase]);
+  }, [pauseStatus, pauseTimeMinutes, timerActive, restartPhrase, toast]);
 
   const handleActivateCodeWord = () => {
     setPauseStatus('activated');
@@ -104,9 +116,9 @@ export const usePauseTimer = () => {
 
   const handleChangeCodeWord = (word: string) => {
     setCodeWord(word);
-    localStorage.setItem('bridge-code-word', word);
+    saveToLocalStorage('bridge-code-word', word);
     setCodeWordEstablished(true);
-    localStorage.setItem('bridge-code-word-established', 'true');
+    saveToLocalStorage('bridge-code-word-established', 'true');
   };
 
   const handleTimerSelect = (minutes: number | null) => {
@@ -136,9 +148,9 @@ export const usePauseTimer = () => {
     setTimeRemaining(null);
     setTimerActive(false);
     setShowRestartConfirmation(false);
-    localStorage.removeItem('bridge-pause-end-time');
-    localStorage.removeItem('bridge-timer-active');
-    localStorage.removeItem('bridge-restart-phrase');
+    removeFromLocalStorage('bridge-pause-end-time');
+    removeFromLocalStorage('bridge-timer-active');
+    removeFromLocalStorage('bridge-restart-phrase');
     setRestartPhrase(null);
   };
 
@@ -157,7 +169,7 @@ export const usePauseTimer = () => {
     setTimeout(() => {
       setPauseStatus('ended');
       // Show notification prompt to reconnect
-      showReconnectNotification();
+      showReconnectNotification(toast);
     }, 5 * 60 * 1000); // 5 minutes
     
     // Go back to in-pause state for now
@@ -167,7 +179,7 @@ export const usePauseTimer = () => {
   
   const setRestartMessage = (message: string) => {
     setRestartPhrase(message);
-    localStorage.setItem('bridge-restart-phrase', message);
+    saveToLocalStorage('bridge-restart-phrase', message);
     
     toast({
       title: "Your message will be shown for review when the timer ends."
@@ -177,74 +189,27 @@ export const usePauseTimer = () => {
   const handleSendRestartMessage = () => {
     if (restartPhrase) {
       // Send the message to partner
-      sendRestartMessage(restartPhrase);
+      sendRestartMessage(restartPhrase, toast);
       // Clear the stored restart message
-      localStorage.removeItem('bridge-restart-phrase');
+      removeFromLocalStorage('bridge-restart-phrase');
       setRestartPhrase(null);
       setShowRestartConfirmation(false);
       
       // Back to activation view
       setPauseStatus('activation');
-      
-      toast({
-        title: "Your restart message has been sent to your partner."
-      });
     }
   };
   
   const handleEditRestartMessage = (message: string) => {
     setRestartPhrase(message);
-    localStorage.setItem('bridge-restart-phrase', message);
-  };
-  
-  // This function would be replaced with actual push notification logic in a production app
-  const showReconnectNotification = () => {
-    // In a real app, this would show a push notification
-    toast({
-      title: "Time's up—ready to reconnect? Choose a softer way to restart the conversation."
-    });
-  };
-  
-  // In a real app, this would send an actual notification
-  const notifyPartner = () => {
-    console.log("Notifying partner about pause activation");
-    // In a real app, this would send a push notification to the partner
-  };
-  
-  // In a real app, this would sync the timer with the partner
-  const syncTimerWithPartner = (minutes: number) => {
-    console.log(`Syncing ${minutes} minute timer with partner`);
-    // In a real app, this would use a real-time database or websocket
-  };
-  
-  // This function would be replaced with actual messaging logic in a production app
-  const sendRestartMessage = (message: string) => {
-    console.log("Sending restart message to partner:", message);
-    toast({
-      title: "Your partner has been notified."
-    });
-  };
-
-  // Format time for display (MM:SS or HH:MM:SS for longer times)
-  const formatTime = () => {
-    if (!timeRemaining) return '00:00';
-    
-    const hours = Math.floor(timeRemaining / 3600);
-    const minutes = Math.floor((timeRemaining % 3600) / 60);
-    const seconds = timeRemaining % 60;
-    
-    if (hours > 0) {
-      return `${hours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-    }
-    
-    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    saveToLocalStorage('bridge-restart-phrase', message);
   };
 
   return {
     pauseStatus,
     setPauseStatus,
     timeRemaining,
-    formatTime,
+    formatTime: () => formatTimeDisplay(timeRemaining),
     handleActivateCodeWord,
     handleChangeCodeWord,
     handleTimerSelect,

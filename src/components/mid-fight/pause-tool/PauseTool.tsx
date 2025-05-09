@@ -1,4 +1,3 @@
-
 import React from 'react';
 import CodeWordActivationView from './CodeWordActivationView';
 import PauseActivatedView from './PauseActivatedView';
