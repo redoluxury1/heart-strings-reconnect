@@ -16,6 +16,11 @@ const PauseToolHeader: React.FC<PauseToolHeaderProps> = ({
   const isInitialView = status === 'setup';
   const hasCodeWord = codeWordExists;
   
+  // Don't show the pause button and text if we already have a code word established
+  if (hasCodeWord && isInitialView) {
+    return null;
+  }
+  
   return (
     <div className="flex items-center justify-between mb-6">
       <div className="flex items-center">

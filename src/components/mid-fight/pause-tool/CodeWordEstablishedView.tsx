@@ -7,7 +7,7 @@ interface CodeWordEstablishedViewProps {
   codeWord: string;
   onActivate: () => void;
   onChangeCodeWord: () => void;
-  onActivateTimer: () => void; // New prop for direct timer activation
+  onActivateTimer: () => void;
 }
 
 const CodeWordEstablishedView: React.FC<CodeWordEstablishedViewProps> = ({ 
@@ -20,8 +20,9 @@ const CodeWordEstablishedView: React.FC<CodeWordEstablishedViewProps> = ({
     <div className="max-w-md mx-auto text-center">
       <div className="flex justify-center mb-6">
         <button 
-          onClick={onActivateTimer} // Changed to onActivateTimer
+          onClick={onActivateTimer}
           className="bg-[#f7e0dc]/60 p-4 rounded-full hover:bg-[#f7e0dc] transition-colors"
+          aria-label="Activate pause timer"
         >
           <PauseCircle className="w-16 h-16 text-[#E2725B]" />
         </button>
@@ -40,8 +41,7 @@ const CodeWordEstablishedView: React.FC<CodeWordEstablishedViewProps> = ({
       </div>
       
       <p className="text-[#5d4357]/80 mb-6">
-        Click the pause button above or anywhere on this card to 
-        activate your pause when you need a break.
+        Click the pause button above to start a timer when you need a break.
       </p>
       
       <Button 
