@@ -16,6 +16,7 @@ const PauseTool = () => {
     setPauseStatus,
     formatTime,
     handleActivateCodeWord,
+    handleChangeCodeWord,
     handleTimerSelect,
     handleCustomTimer,
     handleEndPause,
@@ -37,6 +38,8 @@ const PauseTool = () => {
       {pauseStatus === 'activation' && (
         <CodeWordActivationView 
           onActivate={handleActivateCodeWord} 
+          codeWord={codeWord}
+          onChangeCodeWord={handleChangeCodeWord}
         />
       )}
       

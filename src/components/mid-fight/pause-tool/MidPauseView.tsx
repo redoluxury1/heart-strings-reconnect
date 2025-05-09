@@ -30,16 +30,6 @@ const MidPauseView: React.FC<MidPauseViewProps> = ({
 
   return (
     <div className="max-w-md mx-auto">
-      <div className="bg-[#F1F0FB] p-4 rounded-lg mb-6 flex items-center justify-between">
-        <span className="text-[#5d4357]">You're in a pause</span>
-        <button 
-          onClick={onEndPause}
-          className="text-[#5d4357]/70 text-sm hover:text-[#5d4357]"
-        >
-          Dismiss
-        </button>
-      </div>
-      
       <div className="text-center mb-8">
         <h3 className="text-2xl text-[#5d4357] font-medium mb-4">
           You're in a pause
@@ -98,7 +88,7 @@ const MidPauseView: React.FC<MidPauseViewProps> = ({
         <DialogContent className="max-w-lg p-0 bg-transparent border-none shadow-none">
           <RestartPhrases 
             onClose={handleRestartPhrasesClose} 
-            onNotReady={() => setIsRestartPhrasesOpen(false)}
+            setRestartMessage={setRestartMessage}
           />
         </DialogContent>
       </Dialog>

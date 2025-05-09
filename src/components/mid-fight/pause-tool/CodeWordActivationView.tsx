@@ -1,60 +1,59 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { CodeWordInfo } from '@/types/relationship';
-import CodeWordDisplay from '../code-word/components/CodeWordDisplay';
-import { useToast } from '@/hooks/use-toast';
+import { Input } from '@/components/ui/input';
 
-interface CodeWordActivationViewProps {
-  codeWord: CodeWordInfo;
+export interface CodeWordActivationViewProps {
+  codeWord: string;
+  onChangeCodeWord: (codeWord: string) => void;
   onActivate: () => void;
-  onChangeCodeWord: () => void;
 }
 
 const CodeWordActivationView: React.FC<CodeWordActivationViewProps> = ({
   codeWord,
-  onActivate,
-  onChangeCodeWord
+  onChangeCodeWord,
+  onActivate
 }) => {
-  const { toast } = useToast();
-  
-  const handleActivateClick = () => {
+  const [localCodeWord, setLocalCodeWord] = useState(codeWord);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onChangeCodeWord(localCodeWord);
     onActivate();
-    toast({
-      title: "Code word activated",
-      description: "Let's take a pause."
-    });
   };
-  
+
   return (
-    <div className="max-w-md mx-auto text-center">
-      <h3 className="text-2xl text-[#5d4357] mb-6 font-medium text-center">
-        Your code word is set
-      </h3>
-      
-      <CodeWordDisplay 
-        codeWord={codeWord.word} 
-        className="bg-[#f7e0dc]/50 p-8 rounded-lg mb-8 text-center cursor-pointer hover:bg-[#f7e0dc]/70 transition-colors"
-        textSize="text-4xl"
-        onClick={handleActivateClick}
-        showQuotes={false}
-      />
-      
-      <p className="text-[#5d4357]/80 mb-8">
-        Click your code word above to activate a pause when needed.
-      </p>
-      
-      <Button
-        variant="outline" 
-        onClick={onChangeCodeWord}
-        className="text-[#5d4357] border-[#5d4357]/30 hover:bg-[#f7e0dc]/20 hover:text-[#5d4357]"
-      >
-        Change code word
-      </Button>
-      
-      <div className="mt-8 text-[#5d4357]/70 text-sm">
-        When you use your code word in real life, come here to activate a cooldown timer.
+    <div className="max-w-md mx-auto">
+      <div className="text-center mb-8">
+        <h3 className="text-xl font-medium text-[#5d4357] mb-2">
+          Set your pause code word
+        </h3>
+        <p className="text-sm text-[#5d4357]/70 mb-6">
+          This is a word you'll use with your partner to signal that you need a pause in the conversation.
+        </p>
       </div>
+
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div>
+          <label htmlFor="codeWord" className="block text-sm font-medium text-[#5d4357] mb-2">
+            Your Code Word
+          </label>
+          <Input
+            id="codeWord"
+            placeholder="e.g., pause, timeout, breather"
+            value={localCodeWord}
+            onChange={(e) => setLocalCodeWord(e.target.value)}
+            className="w-full border-[#5d4357]/20 focus:border-[#5d4357] focus:ring-1 focus:ring-[#5d4357]"
+          />
+        </div>
+
+        <Button
+          type="submit"
+          className="w-full bg-[#5d4357] hover:bg-[#5d4357]/90 text-white"
+        >
+          Activate Code Word
+        </Button>
+      </form>
     </div>
   );
 };
