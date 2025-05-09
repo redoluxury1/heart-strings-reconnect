@@ -12,7 +12,7 @@ const PhraseOption: React.FC<PhraseOptionProps> = ({ text, onClick }) => {
   return (
     <button 
       onClick={onClick}
-      className="bg-midnight-indigo hover:bg-midnight-indigo/90 text-white rounded-full py-3 px-5 text-sm md:text-base transition-colors"
+      className="bg-[#07183D] hover:bg-[#07183D]/90 text-white rounded-full py-3 px-5 text-sm md:text-base transition-colors"
     >
       {text}
     </button>
@@ -40,7 +40,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
         <div className="text-2xl text-rosewood-tint">
           {icon}
         </div>
-        <h3 className="text-midnight-indigo font-cormorant text-3xl">{title}</h3>
+        <h3 className="text-[#07183D] font-cormorant text-3xl">{title}</h3>
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -83,7 +83,7 @@ const PausePhraseCard: React.FC<PausePhraseCardProps> = ({ onOptionSelect }) => 
     <div className="space-y-6 max-w-2xl mx-auto">
       <div className="text-center mb-6">
         <PausePhraseGraphic className="mx-auto" />
-        <p className="text-midnight-indigo text-lg mt-3 max-w-lg mx-auto">
+        <p className="text-[#07183D] text-lg mt-3 max-w-lg mx-auto">
           We'll help you phrase what's on your heart, in a way they can actually hear.
         </p>
       </div>

@@ -16,7 +16,7 @@ const CompactPausePhrase: React.FC<CompactPausePhraseProps> = ({
     <div className="flex flex-col space-y-6 max-w-2xl mx-auto">
       <div className="text-center mb-4">
         <PausePhraseGraphic className="mx-auto" />
-        <p className="text-midnight-indigo text-lg mt-3">
+        <p className="text-[#07183D] text-lg mt-3">
           We'll help you phrase what's on your heart, in a way they can actually hear.
         </p>
       </div>
@@ -84,7 +84,7 @@ const CategorySection: React.FC<CategorySectionProps> = ({
         <div className="text-2xl">
           {icon}
         </div>
-        <h3 className="text-midnight-indigo font-cormorant text-3xl">{title}</h3>
+        <h3 className="text-[#07183D] font-cormorant text-3xl">{title}</h3>
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -92,7 +92,7 @@ const CategorySection: React.FC<CategorySectionProps> = ({
           <button 
             key={option.id} 
             onClick={() => onOptionSelect(option.id)}
-            className="bg-midnight-indigo hover:bg-midnight-indigo/90 text-white rounded-full py-1.5 px-3 text-sm md:text-base transition-colors text-start shadow-sm"
+            className="bg-[#07183D] hover:bg-[#07183D]/90 text-white rounded-full py-1.5 px-3 text-sm md:text-base transition-colors text-start shadow-sm"
           >
             {option.text}
           </button>
