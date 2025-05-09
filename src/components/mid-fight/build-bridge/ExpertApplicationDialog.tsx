@@ -26,7 +26,7 @@ const ExpertApplicationDialog: React.FC<ExpertApplicationDialogProps> = ({
           </Button>
         )}
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto bg-[#F7ECD9]">
         <ExpertApplicationForm onClose={() => setOpen(false)} />
       </DialogContent>
     </Dialog>

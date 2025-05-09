@@ -11,7 +11,7 @@ const BuildBridgeCard: React.FC = () => {
           Build a Bridge
         </h2>
         
-        <div className="bg-[#F1D6CC] text-midnight-indigo px-6 py-2 rounded-full text-sm font-medium mb-6">
+        <div className="text-midnight-indigo text-sm italic mb-6">
           Coming Soon
         </div>
         
