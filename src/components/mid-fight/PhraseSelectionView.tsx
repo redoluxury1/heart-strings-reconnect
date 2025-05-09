@@ -1,15 +1,7 @@
+
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, ArrowRight, Edit, RotateCcw } from 'lucide-react';
-
-// Define the color options
-const colorOptions = [
-  { bg: "bg-lavender-blue/20", border: "border-lavender-blue/30", hoverBg: "hover:bg-lavender-blue/30" },
-  { bg: "bg-mauve-rose/20", border: "border-mauve-rose/30", hoverBg: "hover:bg-mauve-rose/30" },
-  { bg: "bg-midnight-indigo/20", border: "border-midnight-indigo/30", hoverBg: "hover:bg-midnight-indigo/30" },
-  { bg: "bg-rosewood-tint/20", border: "border-rosewood-tint/30", hoverBg: "hover:bg-rosewood-tint/30" },
-  { bg: "bg-soft-cream/20", border: "border-soft-cream/30", hoverBg: "hover:bg-soft-cream/30" },
-];
 
 interface PhraseSelectionViewProps {
   selectedGoal: {
@@ -45,13 +37,6 @@ const PhraseSelectionView: React.FC<PhraseSelectionViewProps> = ({
   
   const currentPhrase = selectedGoal.phrases[currentPhraseIndex];
   const phrasesCount = selectedGoal.phrases.length;
-  
-  // Using teal color instead of the previous color options
-  const tealColorSet = { 
-    bg: "bg-teal-500/20", 
-    border: "border-teal-500/30", 
-    hoverBg: "hover:bg-teal-500/30" 
-  };
   
   const goToNextPhrase = () => {
     setCurrentPhraseIndex((prev) => (prev + 1) % phrasesCount);
@@ -102,23 +87,23 @@ const PhraseSelectionView: React.FC<PhraseSelectionViewProps> = ({
   return (
     <>
       <div className="mb-4">
-        <p className="text-sm text-midnight-indigo/70 italic">
+        <p className="text-sm text-mauve-rose italic">
           This might feel big. You're doing something important.
         </p>
-        <h3 className="text-xl font-cormorant font-medium text-[#07183D] mt-2">
+        <h3 className="text-xl font-cormorant font-semibold text-[#07183D] mt-2">
           Try saying it like this...
         </h3>
       </div>
       
-      <div className={`p-4 rounded-lg mb-6 border ${tealColorSet.bg} ${tealColorSet.border}`}>
-        <p className="text-[#07183D] mb-3 font-light italic">{currentPhrase}</p>
+      <div className="p-5 rounded-lg mb-6 border border-mauve-rose/40 bg-white/80">
+        <p className="text-[#07183D] mb-3 font-light italic text-base">{currentPhrase}</p>
         
         {/* Why this works - centered below the phrase */}
         <div className="flex justify-center mb-3">
           <Button 
             variant="ghost" 
             size="sm" 
-            className="text-xs text-[#07183D]/80 justify-center hover:text-[#07183D] px-0"
+            className="text-xs text-mauve-rose justify-center hover:text-mauve-rose/80 px-0"
             onClick={toggleWhyItWorks}
           >
             {showWhyItWorks ? "Hide explanation" : "Why this works"}
@@ -126,7 +111,7 @@ const PhraseSelectionView: React.FC<PhraseSelectionViewProps> = ({
         </div>
         
         {showWhyItWorks && (
-          <div className="bg-white/70 p-3 rounded-lg mb-3">
+          <div className="border border-mauve-rose/20 bg-white/50 p-3 rounded-lg mb-3">
             <p className="text-sm text-[#07183D] mb-1">
               <span className="font-medium">Why this works:</span> 
             </p>
@@ -137,12 +122,12 @@ const PhraseSelectionView: React.FC<PhraseSelectionViewProps> = ({
         )}
         
         {/* Navigation buttons - moved to bottom and made smaller */}
-        <div className="flex justify-center gap-3 mt-4">
+        <div className="flex justify-center gap-3 mt-5">
           <Button 
             variant="outline"
             size="sm"
             onClick={goToPreviousPhrase}
-            className="border-lavender-blue/40 text-[#07183D] hover:bg-mauve-rose/10 hover:text-mauve-rose hover:border-mauve-rose/40 h-7 px-2 py-0 text-xs"
+            className="border-mauve-rose/40 text-[#07183D] hover:bg-mauve-rose/10 hover:text-mauve-rose hover:border-mauve-rose/40 h-7 px-2 py-0 text-xs"
           >
             <ArrowLeft className="h-3 w-3 mr-1" /> Go back
           </Button>
@@ -150,7 +135,7 @@ const PhraseSelectionView: React.FC<PhraseSelectionViewProps> = ({
             variant="outline"
             size="sm"
             onClick={goToNextPhrase}
-            className="border-lavender-blue/40 text-[#07183D] hover:bg-mauve-rose/10 hover:text-mauve-rose hover:border-mauve-rose/40 h-7 px-2 py-0 text-xs"
+            className="border-mauve-rose/40 text-[#07183D] hover:bg-mauve-rose/10 hover:text-mauve-rose hover:border-mauve-rose/40 h-7 px-2 py-0 text-xs"
           >
             Try again <ArrowRight className="h-3 w-3 ml-1" />
           </Button>
@@ -160,8 +145,8 @@ const PhraseSelectionView: React.FC<PhraseSelectionViewProps> = ({
       {/* Action buttons for customization and starting over */}
       <div className="flex flex-col items-center gap-3">
         <Button 
-          variant="outline" 
-          className="text-xs flex items-center gap-1 border-lavender-blue/50 text-lavender-blue hover:bg-lavender-blue/10"
+          variant="default" 
+          className="text-sm flex items-center gap-1 bg-[#536878] hover:bg-[#536878]/90 text-white"
           onClick={() => onCustomizePhrase(currentPhrase)}
         >
           <Edit className="h-3.5 w-3.5" />
