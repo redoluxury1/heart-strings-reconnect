@@ -7,18 +7,20 @@ interface CodeWordEstablishedViewProps {
   codeWord: string;
   onActivate: () => void;
   onChangeCodeWord: () => void;
+  onActivateTimer: () => void; // New prop for direct timer activation
 }
 
 const CodeWordEstablishedView: React.FC<CodeWordEstablishedViewProps> = ({ 
   codeWord,
   onActivate,
-  onChangeCodeWord
+  onChangeCodeWord,
+  onActivateTimer
 }) => {
   return (
     <div className="max-w-md mx-auto text-center">
       <div className="flex justify-center mb-6">
         <button 
-          onClick={onActivate}
+          onClick={onActivateTimer} // Changed to onActivateTimer
           className="bg-[#f7e0dc]/60 p-4 rounded-full hover:bg-[#f7e0dc] transition-colors"
         >
           <PauseCircle className="w-16 h-16 text-[#E2725B]" />

@@ -1,10 +1,10 @@
 
-import { Toast } from "@/components/ui/use-toast";
+import { type ToastActionElement } from "@/components/ui/toast";
 
 /**
  * Show notification prompt to reconnect
  */
-export const showReconnectNotification = (toast: Toast): void => {
+export const showReconnectNotification = (toast: any): void => {
   // In a real app, this would show a push notification
   toast({
     title: "Time's up—ready to reconnect? Choose a softer way to restart the conversation."
@@ -30,7 +30,7 @@ export const syncTimerWithPartner = (minutes: number): void => {
 /**
  * Send restart message to partner
  */
-export const sendRestartMessage = (message: string, toast: Toast): void => {
+export const sendRestartMessage = (message: string, toast: any): void => {
   console.log("Sending restart message to partner:", message);
   toast({
     title: "Your partner has been notified."

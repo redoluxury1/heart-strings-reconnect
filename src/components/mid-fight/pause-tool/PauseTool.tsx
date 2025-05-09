@@ -1,3 +1,4 @@
+
 import React from 'react';
 import CodeWordActivationView from './CodeWordActivationView';
 import PauseActivatedView from './PauseActivatedView';
@@ -34,12 +35,21 @@ const PauseTool = () => {
     codeWordEstablished
   } = usePauseTimer();
 
+  // Function to go directly to timer selection
+  const handleDirectTimerActivation = () => {
+    setPauseStatus('activated');
+    notifyPartner();
+  };
+
+  // Import notification utility
+  const { notifyPartner } = require('./hooks/utils/notificationUtils');
+
   return (
     <div className="bg-white rounded-xl shadow-md p-6">
       {pauseStatus !== 'in-pause' && pauseStatus !== 'ended' && pauseStatus !== 'confirm-restart' && pauseStatus !== 'not-ready' && (
         <PauseToolHeader 
           status={pauseStatus}
-          onSetupClick={() => setPauseStatus('activation')}
+          onSetupClick={codeWordEstablished ? handleDirectTimerActivation : () => setPauseStatus('activation')}
           codeWordExists={codeWordEstablished}
         />
       )}
@@ -55,6 +65,7 @@ const PauseTool = () => {
           codeWord={codeWord || "pause"}
           onActivate={handleActivateCodeWord}
           onChangeCodeWord={() => setPauseStatus('activation')}
+          onActivateTimer={handleDirectTimerActivation}
         />
       )}
       

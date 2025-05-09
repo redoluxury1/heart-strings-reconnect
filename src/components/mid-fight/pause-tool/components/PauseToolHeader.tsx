@@ -32,7 +32,6 @@ const PauseToolHeader: React.FC<PauseToolHeaderProps> = ({
         </button>
         
         <div>
-          <h3 className="text-xl font-medium text-[#5d4357]">Let's Try That Again</h3>
           <p className="text-sm text-[#5d4357]/80">
             {hasCodeWord 
               ? "Click the pause button to activate your code word" 
