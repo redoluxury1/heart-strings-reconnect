@@ -1,13 +1,11 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { CodeWordInfo } from '@/types/relationship';
-import CodeWordDisplay from '../code-word/components/CodeWordDisplay';
-import { useToast } from '@/hooks/use-toast';
 import { Clock } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 interface PauseActivatedViewProps {
-  codeWord: CodeWordInfo;
+  codeWord: string;
   onTimerSelect: (minutes: number | null) => void;
   onCustomTimer: () => void;
 }
@@ -26,7 +24,7 @@ const PauseActivatedView: React.FC<PauseActivatedViewProps> = ({
           Code Word Activated
         </h3>
         <p className="text-[#5d4357] mb-6">
-          Your code word <span className="font-medium">{codeWord.word}</span> was used. 
+          Your code word <span className="font-medium">{codeWord}</span> was used. 
           That means you both agreed to pause—right now.
         </p>
       </div>
