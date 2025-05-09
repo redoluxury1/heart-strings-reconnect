@@ -31,7 +31,7 @@ const PauseTool = () => {
       {pauseStatus !== 'in-pause' && pauseStatus !== 'ended' && (
         <PauseToolHeader 
           status={pauseStatus}
-          onSetupClick={() => setPauseStatus('setup')}
+          onSetupClick={() => setPauseStatus('activation')}
         />
       )}
       

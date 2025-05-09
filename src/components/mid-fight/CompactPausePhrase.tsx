@@ -24,7 +24,7 @@ const CompactPausePhrase: React.FC<CompactPausePhraseProps> = ({
       {/* Clarity Section */}
       <CategorySection 
         title="Clarity" 
-        icon={<Lightbulb className="text-rosewood-tint" />}
+        icon={<Lightbulb className="text-[#E2725B]" />}
         options={[
           { id: 'explain-meant', text: 'Explain what I meant' },
           { id: 'ask-question', text: 'Ask a question calmly' },
@@ -37,7 +37,7 @@ const CompactPausePhrase: React.FC<CompactPausePhraseProps> = ({
       {/* Vulnerability Section */}
       <CategorySection 
         title="Vulnerability" 
-        icon={<Heart className="text-rosewood-tint" />}
+        icon={<Heart className="text-[#E2725B]" />}
         options={[
           { id: 'say-what-hurt', text: 'Say what hurt me' },
           { id: 'share-fear', text: 'Share a vulnerability' },
@@ -49,7 +49,7 @@ const CompactPausePhrase: React.FC<CompactPausePhraseProps> = ({
       {/* Repair Section */}
       <CategorySection 
         title="Repair" 
-        icon={<Shield className="text-rosewood-tint" />}
+        icon={<Shield className="text-[#E2725B]" />}
         options={[
           { id: 'suggest-solution', text: 'Suggest a compromise' },
           { id: 'request-appreciation', text: 'Ask for appreciation' },
@@ -92,7 +92,7 @@ const CategorySection: React.FC<CategorySectionProps> = ({
           <button 
             key={option.id} 
             onClick={() => onOptionSelect(option.id)}
-            className="bg-[#07183D] hover:bg-[#07183D]/90 text-white rounded-full py-1.5 px-3 text-sm md:text-base transition-colors text-start shadow-sm"
+            className="bg-[#536878] hover:bg-[#536878]/90 text-white rounded-full py-1.5 px-3 text-sm md:text-base transition-colors text-start shadow-sm"
           >
             {option.text}
           </button>

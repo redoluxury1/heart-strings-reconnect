@@ -4,7 +4,8 @@ import { useToast } from '@/hooks/use-toast';
 import { PauseStatus } from '../PauseTool';
 
 export const usePauseTimer = () => {
-  const [pauseStatus, setPauseStatus] = useState<PauseStatus>('setup');
+  // Default to 'activation' instead of 'setup' to show the code word input immediately
+  const [pauseStatus, setPauseStatus] = useState<PauseStatus>('activation');
   const [pauseTimeMinutes, setPauseTimeMinutes] = useState<number | null>(null);
   const [timeRemaining, setTimeRemaining] = useState<number | null>(null);
   const [timerActive, setTimerActive] = useState(false);
@@ -153,7 +154,6 @@ export const usePauseTimer = () => {
       title: "Restart message sent",
       description: "Your partner has been notified."
     });
-    // In a real implementation, this would send a push notification to the partner
   };
 
   // Format time for display (MM:SS or HH:MM:SS for longer times)

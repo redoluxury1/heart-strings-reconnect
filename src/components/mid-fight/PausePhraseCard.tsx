@@ -12,7 +12,7 @@ const PhraseOption: React.FC<PhraseOptionProps> = ({ text, onClick }) => {
   return (
     <button 
       onClick={onClick}
-      className="bg-[#07183D] hover:bg-[#07183D]/90 text-white rounded-full py-3 px-5 text-sm md:text-base transition-colors"
+      className="bg-[#536878] hover:bg-[#536878]/90 text-white rounded-full py-3 px-5 text-sm md:text-base transition-colors"
     >
       {text}
     </button>
@@ -37,7 +37,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
   return (
     <div className={`${backgroundColor} rounded-xl p-5 mb-4 shadow-sm`}>
       <div className="flex items-center gap-2 mb-4">
-        <div className="text-2xl text-rosewood-tint">
+        <div className="text-2xl text-[#E2725B]">
           {icon}
         </div>
         <h3 className="text-[#07183D] font-cormorant text-3xl">{title}</h3>
@@ -90,7 +90,7 @@ const PausePhraseCard: React.FC<PausePhraseCardProps> = ({ onOptionSelect }) => 
       
       <CategoryCard 
         title="Clarity" 
-        icon={<LightbulbIcon className="text-rosewood-tint" />}
+        icon={<LightbulbIcon className="text-[#E2725B]" />}
         options={clarityOptions}
         onOptionSelect={onOptionSelect}
         backgroundColor="bg-soft-cream/70"
@@ -98,7 +98,7 @@ const PausePhraseCard: React.FC<PausePhraseCardProps> = ({ onOptionSelect }) => 
       
       <CategoryCard 
         title="Vulnerability" 
-        icon={<HeartIcon className="text-rosewood-tint" />}
+        icon={<HeartIcon className="text-[#E2725B]" />}
         options={vulnerabilityOptions}
         onOptionSelect={onOptionSelect}
         backgroundColor="bg-soft-cream/70"
@@ -106,7 +106,7 @@ const PausePhraseCard: React.FC<PausePhraseCardProps> = ({ onOptionSelect }) => 
       
       <CategoryCard 
         title="Repair" 
-        icon={<ShieldIcon className="text-rosewood-tint" />}
+        icon={<ShieldIcon className="text-[#E2725B]" />}
         options={repairOptions}
         onOptionSelect={onOptionSelect}
         backgroundColor="bg-soft-cream/70"

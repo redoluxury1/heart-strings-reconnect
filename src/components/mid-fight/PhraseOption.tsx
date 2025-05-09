@@ -10,13 +10,13 @@ interface PhraseOptionProps {
   colorIndex?: number;
 }
 
-// Define an array of color combinations with the new deep indigo color
+// Define an array of color combinations with the new color
 const colorOptions = [
-  { bg: "bg-[#07183D]/20", border: "border-[#07183D]/30", hoverBg: "hover:bg-[#07183D]/30" },
-  { bg: "bg-[#07183D]/20", border: "border-[#07183D]/30", hoverBg: "hover:bg-[#07183D]/30" },
-  { bg: "bg-[#07183D]/20", border: "border-[#07183D]/30", hoverBg: "hover:bg-[#07183D]/30" },
-  { bg: "bg-[#07183D]/20", border: "border-[#07183D]/30", hoverBg: "hover:bg-[#07183D]/30" },
-  { bg: "bg-[#07183D]/20", border: "border-[#07183D]/30", hoverBg: "hover:bg-[#07183D]/30" },
+  { bg: "bg-[#536878]/20", border: "border-[#536878]/30", hoverBg: "hover:bg-[#536878]/30" },
+  { bg: "bg-[#536878]/20", border: "border-[#536878]/30", hoverBg: "hover:bg-[#536878]/30" },
+  { bg: "bg-[#536878]/20", border: "border-[#536878]/30", hoverBg: "hover:bg-[#536878]/30" },
+  { bg: "bg-[#536878]/20", border: "border-[#536878]/30", hoverBg: "hover:bg-[#536878]/30" },
+  { bg: "bg-[#536878]/20", border: "border-[#536878]/30", hoverBg: "hover:bg-[#536878]/30" },
 ];
 
 const PhraseOption: React.FC<PhraseOptionProps> = ({ text, onNewTopic, onCustomize, colorIndex = 0 }) => {
