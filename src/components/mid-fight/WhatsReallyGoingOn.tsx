@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Edit, Target, MessageSquare, ChevronRight } from 'lucide-react';
@@ -17,17 +18,17 @@ const WhatsReallyGoingOn = () => {
     'sayitbetter': {
       title: 'Say It Better',
       description: 'Find better ways to express difficult feelings without causing harm.',
-      icon: <Edit className="h-5 w-5 text-mauve-rose" />
+      icon: <Edit className="h-5 w-5 text-[#E2725B]" />
     },
     'realfight': {
       title: 'Cut to the Point',
       description: '', // Removed the description as requested
-      icon: <Target className="h-5 w-5 text-mauve-rose" />
+      icon: <Target className="h-5 w-5 text-[#E2725B]" />
     },
     'behaviors': {
       title: 'He Said, She Said',
       description: 'Translate behaviors across different perspectives and communication styles.',
-      icon: <MessageSquare className="h-5 w-5 text-mauve-rose" />
+      icon: <MessageSquare className="h-5 w-5 text-[#E2725B]" />
     }
   };
 
@@ -36,10 +37,10 @@ const WhatsReallyGoingOn = () => {
     return (
       <div className="space-y-6 py-4 md:py-8">
         <div className="mb-6 text-center">
-          <h2 className="text-3xl font-cormorant font-medium text-midnight-indigo mb-3">
+          <h2 className="text-3xl font-cormorant font-medium text-[#07183D] mb-3">
             What's really going on?
           </h2>
-          <h3 className="text-xl md:text-2xl font-medium text-midnight-indigo mb-2">
+          <h3 className="text-xl md:text-2xl font-medium text-[#07183D] mb-2">
             Tap a tool to decode what's happening underneath the conflict.
           </h3>
         </div>
@@ -52,10 +53,8 @@ const WhatsReallyGoingOn = () => {
               className="bg-white rounded-2xl p-5 shadow-sm border border-lavender-blue/10 hover:border-lavender-blue/30 transition-all duration-200 text-left"
             >
               <div className="flex items-center mb-3">
-                <div className="w-10 h-10 rounded-full bg-soft-cream/50 flex items-center justify-center mr-3">
-                  {info.icon}
-                </div>
-                <h4 className="text-lg font-medium text-midnight-indigo">{info.title}</h4>
+                {info.icon}
+                <h4 className="text-lg font-medium text-[#07183D] ml-3">{info.title}</h4>
               </div>
             </button>
           ))}
@@ -70,7 +69,7 @@ const WhatsReallyGoingOn = () => {
     <div className="space-y-6 py-4 md:py-8">
       <button 
         onClick={() => setActiveTool(null)}
-        className="flex items-center text-sm text-lavender-blue mb-4 hover:text-mauve-rose transition-colors"
+        className="flex items-center text-sm text-[#07183D] mb-4 hover:text-[#E2725B] transition-colors"
       >
         <span className="transform rotate-180"><ChevronRight className="h-4 w-4 inline" /></span>
         <span className="ml-1">Back to tools</span>
@@ -79,10 +78,10 @@ const WhatsReallyGoingOn = () => {
       <Card className="border-lavender-blue/20 shadow-md">
         <div className="p-6">
           <div className="mb-6">
-            <h3 className="text-2xl md:text-3xl font-cormorant text-midnight-indigo text-center mb-2">
+            <h3 className="text-2xl md:text-3xl font-cormorant text-[#07183D] text-center mb-2">
               {currentTool.title}
             </h3>
-            <p className="text-midnight-indigo/80 text-center text-sm md:text-base">
+            <p className="text-[#07183D] text-center text-sm md:text-base">
               {currentTool.description}
             </p>
           </div>

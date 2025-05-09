@@ -20,7 +20,7 @@ const BehaviorDropdown: React.FC<BehaviorDropdownProps> = ({
 }) => {
   return (
     <div className="space-y-2">
-      <p className="text-center text-midnight-indigo/80 mb-3">
+      <p className="text-center text-[#07183D] mb-3">
         {genderTab === 'female' ? "Select what she's doing:" : "Select what he's doing:"}
       </p>
       
@@ -34,7 +34,7 @@ const BehaviorDropdown: React.FC<BehaviorDropdownProps> = ({
                 ? genderTab === 'female' 
                   ? 'bg-mauve-rose text-white border-mauve-rose'
                   : 'bg-midnight-indigo text-white border-midnight-indigo'
-                : 'border-lavender-blue/20 hover:bg-lavender-blue/5 hover:text-midnight-indigo text-midnight-indigo'
+                : 'border-lavender-blue/20 hover:bg-lavender-blue/5 hover:text-midnight-indigo text-[#07183D]'
             }`}
             onClick={() => onBehaviorSelect(behavior.id)}
           >

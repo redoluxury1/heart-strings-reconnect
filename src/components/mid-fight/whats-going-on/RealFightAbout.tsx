@@ -76,13 +76,11 @@ const RealFightAbout = () => {
   return (
     <div className="space-y-6">
       <div className="flex justify-center mb-6">
-        <div className="w-12 h-12 rounded-full bg-soft-cream/70 flex items-center justify-center">
-          <Target className="h-6 w-6 text-mauve-rose" />
-        </div>
+        <Target className="h-6 w-6 text-[#E2725B]" />
       </div>
       
       <div className="mb-4">
-        <p className="text-center text-midnight-indigo/90 mb-4">
+        <p className="text-center text-[#07183D] mb-4">
           Tap what's actually bothering you underneath it all
         </p>
       </div>
@@ -95,7 +93,7 @@ const RealFightAbout = () => {
               className={`text-left justify-start h-auto py-3 px-4 w-full whitespace-normal ${
                 selectedIssue?.id === issue.id 
                   ? "bg-mauve-rose/90 text-white" 
-                  : "border-mauve-rose/30 hover:bg-mauve-rose/10 hover:text-mauve-rose text-midnight-indigo"
+                  : "border-mauve-rose/30 hover:bg-mauve-rose/10 hover:text-mauve-rose text-[#07183D]"
               }`}
               onClick={() => handleSelectIssue(issue)}
             >
@@ -109,14 +107,14 @@ const RealFightAbout = () => {
               >
                 <div>
                   <h4 className="text-md font-medium text-mauve-rose mb-2">What's Really Going On:</h4>
-                  <p className="text-midnight-indigo text-sm">
+                  <p className="text-[#07183D] text-sm">
                     {selectedIssue.explanation}
                   </p>
                 </div>
                 
                 <div>
                   <h4 className="text-md font-medium text-lavender-blue mb-2">Express It This Way:</h4>
-                  <p className="bg-white p-4 rounded border border-lavender-blue/30 text-midnight-indigo">
+                  <p className="bg-white p-4 rounded border border-lavender-blue/30 text-[#07183D]">
                     "{selectedIssue.suggestion}"
                   </p>
                 </div>

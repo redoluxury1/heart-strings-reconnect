@@ -17,17 +17,17 @@ const BehaviorExplanation: React.FC<BehaviorExplanationProps> = ({
   return (
     <div className="bg-white rounded-md border border-lavender-blue/20 p-4">
       <div className="mb-4">
-        <h4 className={`font-medium ${isMobile ? 'text-base mb-2' : 'text-lg mb-3'} text-midnight-indigo`}>
+        <h4 className={`font-medium ${isMobile ? 'text-base mb-2' : 'text-lg mb-3'} text-[#07183D]`}>
           {behavior.explanation.title}
         </h4>
-        <p className="text-sm text-midnight-indigo/80 leading-relaxed">
+        <p className="text-sm text-[#07183D] leading-relaxed">
           {behavior.explanation.description}
         </p>
       </div>
       
       <div className={`${isMobile ? 'mb-3 py-2' : 'mb-4 py-3'} border-t border-b border-lavender-blue/10`}>
-        <p className="text-sm font-medium text-midnight-indigo mb-1">Instead of reacting, try saying:</p>
-        <blockquote className="italic text-sm text-midnight-indigo/90 pl-2 border-l-2 border-lavender-blue/30">
+        <p className="text-sm font-medium text-[#07183D] mb-1">Instead of reacting, try saying:</p>
+        <blockquote className="italic text-sm text-[#07183D] pl-2 border-l-2 border-lavender-blue/30">
           "{behavior.response}"
         </blockquote>
       </div>
