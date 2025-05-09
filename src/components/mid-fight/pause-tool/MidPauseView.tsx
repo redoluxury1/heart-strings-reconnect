@@ -9,17 +9,23 @@ import { useNavigate } from 'react-router-dom';
 interface MidPauseViewProps {
   timeRemaining: string;
   onEndPause: () => void;
+  setRestartMessage?: (message: string) => void;
 }
 
 const MidPauseView: React.FC<MidPauseViewProps> = ({ 
   timeRemaining, 
-  onEndPause 
+  onEndPause,
+  setRestartMessage 
 }) => {
   const [isRestartPhrasesOpen, setIsRestartPhrasesOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleNavigateToJournal = () => {
     navigate('/archive', { state: { activeTab: 'thoughts' } });
+  };
+
+  const handleRestartPhrasesClose = () => {
+    setIsRestartPhrasesOpen(false);
   };
 
   return (
@@ -91,7 +97,7 @@ const MidPauseView: React.FC<MidPauseViewProps> = ({
       <Dialog open={isRestartPhrasesOpen} onOpenChange={setIsRestartPhrasesOpen}>
         <DialogContent className="max-w-lg p-0 bg-transparent border-none shadow-none">
           <RestartPhrases 
-            onClose={() => setIsRestartPhrasesOpen(false)} 
+            onClose={handleRestartPhrasesClose} 
             onNotReady={() => setIsRestartPhrasesOpen(false)}
           />
         </DialogContent>

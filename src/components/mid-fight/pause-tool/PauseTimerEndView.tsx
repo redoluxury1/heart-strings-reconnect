@@ -8,14 +8,20 @@ interface PauseTimerEndViewProps {
   onViewReconnection: () => void;
   onNotYet: () => void;
   onRemindLater: () => void;
+  setRestartMessage?: (message: string) => void;
 }
 
 const PauseTimerEndView: React.FC<PauseTimerEndViewProps> = ({
   onViewReconnection,
   onNotYet,
-  onRemindLater
+  onRemindLater,
+  setRestartMessage
 }) => {
   const [isRestartPhrasesOpen, setIsRestartPhrasesOpen] = useState(false);
+
+  const handleRestartPhrasesClose = () => {
+    setIsRestartPhrasesOpen(false);
+  };
 
   return (
     <div className="max-w-md mx-auto text-center">
@@ -59,7 +65,7 @@ const PauseTimerEndView: React.FC<PauseTimerEndViewProps> = ({
       <Dialog open={isRestartPhrasesOpen} onOpenChange={setIsRestartPhrasesOpen}>
         <DialogContent className="max-w-lg p-0 bg-transparent border-none shadow-none">
           <RestartPhrases 
-            onClose={() => setIsRestartPhrasesOpen(false)}
+            onClose={handleRestartPhrasesClose}
           />
         </DialogContent>
       </Dialog>
