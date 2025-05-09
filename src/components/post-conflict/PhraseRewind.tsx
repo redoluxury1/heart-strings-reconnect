@@ -28,7 +28,7 @@ const PhraseRewind: React.FC<PhraseRewindProps> = ({ onClose }) => {
         <div className="flex flex-col items-center mb-6 cursor-pointer" onClick={() => setIsOpen(!isOpen)}>
           <MessageCircle className="h-16 md:h-20 w-16 md:w-20 text-sage mb-3" />
           <PausePhraseGraphic className="mx-auto" />
-          <p className="text-midnight-indigo/80 text-center max-w-2xl mb-3 text-sm md:text-base">
+          <p className="text-midnight-indigo text-center max-w-2xl mb-3 text-sm md:text-base">
             For next time: Discover gentler ways to express difficult feelings
           </p>
           <Button 

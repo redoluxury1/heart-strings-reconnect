@@ -21,7 +21,7 @@ const PausePhraseGraphic: React.FC<PausePhraseGraphicProps> = ({ className = '' 
   }, []);
   
   return (
-    <div className={`relative ${className}`}>
+    <div className={`flex items-center justify-center ${className}`}>
       {!imageLoaded && (
         <Skeleton className="h-24 w-48 rounded-lg" />
       )}

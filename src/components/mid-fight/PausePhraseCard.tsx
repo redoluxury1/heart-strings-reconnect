@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { LightbulbIcon, HeartIcon, ShieldIcon } from 'lucide-react';
 import PausePhraseGraphic from './PausePhraseGraphic';
@@ -11,7 +12,7 @@ const PhraseOption: React.FC<PhraseOptionProps> = ({ text, onClick }) => {
   return (
     <button 
       onClick={onClick}
-      className="bg-rosewood-tint/80 hover:bg-rosewood-tint/90 text-white rounded-full py-3 px-5 text-sm md:text-base transition-colors"
+      className="bg-midnight-indigo hover:bg-midnight-indigo/90 text-white rounded-full py-3 px-5 text-sm md:text-base transition-colors"
     >
       {text}
     </button>
@@ -80,18 +81,16 @@ const PausePhraseCard: React.FC<PausePhraseCardProps> = ({ onOptionSelect }) => 
 
   return (
     <div className="space-y-6 max-w-2xl mx-auto">
-      <div className="text-center mb-8">
-        <div className="flex justify-center mb-3">
-          <PausePhraseGraphic className="mx-auto" />
-        </div>
-        <p className="text-midnight-indigo/80 text-lg max-w-lg mx-auto">
+      <div className="text-center mb-6">
+        <PausePhraseGraphic className="mx-auto" />
+        <p className="text-midnight-indigo text-lg mt-3 max-w-lg mx-auto">
           We'll help you phrase what's on your heart, in a way they can actually hear.
         </p>
       </div>
       
       <CategoryCard 
         title="Clarity" 
-        icon={<LightbulbIcon className="text-[#a35757]" />}
+        icon={<LightbulbIcon className="text-white" />}
         options={clarityOptions}
         onOptionSelect={onOptionSelect}
         backgroundColor="bg-mauve-rose/80"
@@ -99,7 +98,7 @@ const PausePhraseCard: React.FC<PausePhraseCardProps> = ({ onOptionSelect }) => 
       
       <CategoryCard 
         title="Vulnerability" 
-        icon={<HeartIcon className="text-[#a35757]" />}
+        icon={<HeartIcon className="text-white" />}
         options={vulnerabilityOptions}
         onOptionSelect={onOptionSelect}
         backgroundColor="bg-mauve-rose/80"
@@ -107,7 +106,7 @@ const PausePhraseCard: React.FC<PausePhraseCardProps> = ({ onOptionSelect }) => 
       
       <CategoryCard 
         title="Repair" 
-        icon={<ShieldIcon className="text-[#a35757]" />}
+        icon={<ShieldIcon className="text-white" />}
         options={repairOptions}
         onOptionSelect={onOptionSelect}
         backgroundColor="bg-mauve-rose/80"

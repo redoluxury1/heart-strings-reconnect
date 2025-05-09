@@ -14,9 +14,9 @@ const CompactPausePhrase: React.FC<CompactPausePhraseProps> = ({
 }) => {
   return (
     <div className="flex flex-col space-y-6 max-w-2xl mx-auto">
-      <div className="text-center">
+      <div className="text-center mb-4">
         <PausePhraseGraphic className="mx-auto" />
-        <p className="text-midnight-indigo/80 text-lg">
+        <p className="text-midnight-indigo text-lg mt-3">
           We'll help you phrase what's on your heart, in a way they can actually hear.
         </p>
       </div>
@@ -24,7 +24,7 @@ const CompactPausePhrase: React.FC<CompactPausePhraseProps> = ({
       {/* Clarity Section */}
       <CategorySection 
         title="Clarity" 
-        icon={<Lightbulb className="text-[#a35757]" />}
+        icon={<Lightbulb className="text-midnight-indigo" />}
         options={[
           { id: 'explain-meant', text: 'Explain what I meant' },
           { id: 'ask-question', text: 'Ask a question calmly' },
@@ -37,7 +37,7 @@ const CompactPausePhrase: React.FC<CompactPausePhraseProps> = ({
       {/* Vulnerability Section */}
       <CategorySection 
         title="Vulnerability" 
-        icon={<Heart className="text-[#a35757]" />}
+        icon={<Heart className="text-midnight-indigo" />}
         options={[
           { id: 'say-what-hurt', text: 'Say what hurt me' },
           { id: 'share-fear', text: 'Share a vulnerability' },
@@ -49,7 +49,7 @@ const CompactPausePhrase: React.FC<CompactPausePhraseProps> = ({
       {/* Repair Section */}
       <CategorySection 
         title="Repair" 
-        icon={<Shield className="text-[#a35757]" />}
+        icon={<Shield className="text-midnight-indigo" />}
         options={[
           { id: 'suggest-solution', text: 'Suggest a compromise' },
           { id: 'request-appreciation', text: 'Ask for appreciation' },
@@ -92,7 +92,7 @@ const CategorySection: React.FC<CategorySectionProps> = ({
           <button 
             key={option.id} 
             onClick={() => onOptionSelect(option.id)}
-            className="bg-midnight-indigo hover:bg-midnight-indigo/90 text-white rounded-full py-1.5 px-3 text-sm md:text-base transition-colors text-start shadow-sm max-w-[80%]"
+            className="bg-midnight-indigo hover:bg-midnight-indigo/90 text-white rounded-full py-1.5 px-3 text-sm md:text-base transition-colors text-start shadow-sm"
           >
             {option.text}
           </button>
