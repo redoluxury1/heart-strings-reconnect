@@ -11,6 +11,7 @@ import CodeWordSetupView from './CodeWordSetupView';
 import RestartPhraseConfirmationView from './RestartPhraseConfirmationView';
 import NotReadyOptionsView from './NotReadyOptionsView';
 import CodeWordEstablishedView from './CodeWordEstablishedView';
+import { notifyPartner } from './hooks/utils/notificationUtils';
 
 export type PauseStatus = 'setup' | 'activation' | 'activated' | 'custom-timer' | 'in-pause' | 'ended' | 'confirm-restart' | 'not-ready';
 
@@ -31,6 +32,8 @@ const PauseTool = () => {
     setRestartMessage,
     handleSendRestartMessage,
     handleEditRestartMessage,
+    showRestartConfirmation,
+    showNotReadyOptions,
     codeWord,
     codeWordEstablished
   } = usePauseTimer();
@@ -40,9 +43,6 @@ const PauseTool = () => {
     setPauseStatus('activated');
     notifyPartner();
   };
-
-  // Import notification utility
-  const { notifyPartner } = require('./hooks/utils/notificationUtils');
 
   return (
     <div className="bg-white rounded-xl shadow-md p-6">
