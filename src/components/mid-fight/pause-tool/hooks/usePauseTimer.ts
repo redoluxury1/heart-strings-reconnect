@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { toast } from '@/components/ui/sonner';
+import { toast } from 'sonner';
 import { PauseStatus } from '../PauseTool';
 
 export const usePauseTimer = () => {
@@ -13,6 +13,7 @@ export const usePauseTimer = () => {
   const [codeWord, setCodeWord] = useState('pause');
   const [showRestartConfirmation, setShowRestartConfirmation] = useState(false);
   const [showNotReadyOptions, setShowNotReadyOptions] = useState(false);
+  const [codeWordEstablished, setCodeWordEstablished] = useState(false);
 
   // Check for existing pause on load
   useEffect(() => {
@@ -20,6 +21,7 @@ export const usePauseTimer = () => {
     const savedTimerActive = localStorage.getItem('bridge-timer-active');
     const savedRestartPhrase = localStorage.getItem('bridge-restart-phrase');
     const savedCodeWord = localStorage.getItem('bridge-code-word');
+    const savedCodeWordEstablished = localStorage.getItem('bridge-code-word-established');
     
     if (savedRestartPhrase) {
       setRestartPhrase(savedRestartPhrase);
@@ -27,6 +29,10 @@ export const usePauseTimer = () => {
     
     if (savedCodeWord) {
       setCodeWord(savedCodeWord);
+    }
+    
+    if (savedCodeWordEstablished === 'true') {
+      setCodeWordEstablished(true);
     }
     
     if (savedEndTime && savedTimerActive === 'true') {
@@ -99,6 +105,8 @@ export const usePauseTimer = () => {
   const handleChangeCodeWord = (word: string) => {
     setCodeWord(word);
     localStorage.setItem('bridge-code-word', word);
+    setCodeWordEstablished(true);
+    localStorage.setItem('bridge-code-word-established', 'true');
   };
 
   const handleTimerSelect = (minutes: number | null) => {
@@ -111,7 +119,7 @@ export const usePauseTimer = () => {
     setTimerActive(true);
     
     toast({
-      description: `Taking a ${minutes} minute pause.`
+      title: `Taking a ${minutes} minute pause.`
     });
     
     // This would sync the timer with the partner
@@ -162,7 +170,7 @@ export const usePauseTimer = () => {
     localStorage.setItem('bridge-restart-phrase', message);
     
     toast({
-      description: "Your message will be shown for review when the timer ends."
+      title: "Your message will be shown for review when the timer ends."
     });
   };
   
@@ -179,7 +187,7 @@ export const usePauseTimer = () => {
       setPauseStatus('activation');
       
       toast({
-        description: "Your restart message has been sent to your partner."
+        title: "Your restart message has been sent to your partner."
       });
     }
   };
@@ -193,7 +201,7 @@ export const usePauseTimer = () => {
   const showReconnectNotification = () => {
     // In a real app, this would show a push notification
     toast({
-      description: "Time's up—ready to reconnect? Choose a softer way to restart the conversation."
+      title: "Time's up—ready to reconnect? Choose a softer way to restart the conversation."
     });
   };
   
@@ -213,7 +221,7 @@ export const usePauseTimer = () => {
   const sendRestartMessage = (message: string) => {
     console.log("Sending restart message to partner:", message);
     toast({
-      description: "Your partner has been notified."
+      title: "Your partner has been notified."
     });
   };
 
@@ -253,6 +261,7 @@ export const usePauseTimer = () => {
     setShowRestartConfirmation,
     showNotReadyOptions,
     setShowNotReadyOptions,
-    codeWord
+    codeWord,
+    codeWordEstablished
   };
 };

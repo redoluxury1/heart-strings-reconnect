@@ -2,7 +2,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Clock } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
+import { toast } from 'sonner';
 
 interface PauseActivatedViewProps {
   codeWord: string;
@@ -15,8 +15,6 @@ const PauseActivatedView: React.FC<PauseActivatedViewProps> = ({
   onTimerSelect,
   onCustomTimer
 }) => {
-  const { toast } = useToast();
-
   return (
     <div className="max-w-md mx-auto text-center">
       <div className="bg-[#FDE1D3]/50 p-5 rounded-lg mb-6">
