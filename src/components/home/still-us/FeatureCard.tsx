@@ -14,10 +14,10 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
   const isMobile = useIsMobile();
   const { colors } = useInterface();
   
-  // Text colors for the emotional interface - using dark indigo blue for better readability
-  const textColor = "text-midnight-indigo"; // Changed from plum to midnight-indigo
-  const textColorMuted = "text-midnight-indigo"; // Changed from midnight-indigo/80 to full color
-  const bulletColor = "bg-midnight-indigo"; // Changed from plum to midnight-indigo
+  // Updated text colors to use #07183D
+  const textColor = "text-[#07183D]";
+  const textColorMuted = "text-[#07183D]";
+  const bulletColor = "bg-[#07183D]";
   const buttonStyles = "border-2 border-[#6A4A74] text-[#6A4A74] hover:bg-[#6A4A74]/10 font-medium";
 
   // Safely render the icon
@@ -61,7 +61,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
                 {card.comingSoonTools?.map((tool, idx) => (
                   <li key={idx} className="flex items-center">
                     <span className={`h-1.5 w-1.5 rounded-full ${bulletColor} mr-2`}></span>
-                    <span className={textColorMuted}>{tool} <span className={`text-xs text-midnight-indigo/70`}>(Coming Soon)</span></span>
+                    <span className={textColorMuted}>{tool} <span className={`text-xs text-[#07183D]/70`}>(Coming Soon)</span></span>
                   </li>
                 ))}
               </ul>
@@ -107,7 +107,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
                 {card.comingSoonTools?.map((tool, idx) => (
                   <div key={idx} className="flex items-center">
                     <span className={`h-1.5 w-1.5 rounded-full ${bulletColor} mr-2`}></span>
-                    <span className={textColorMuted}>{tool} <span className={`text-xs text-midnight-indigo/70`}>(Coming Soon)</span></span>
+                    <span className={textColorMuted}>{tool} <span className={`text-xs text-[#07183D]/70`}>(Coming Soon)</span></span>
                   </div>
                 ))}
               </div>
