@@ -15,7 +15,7 @@ const CompactPausePhrase: React.FC<CompactPausePhraseProps> = ({
   return (
     <div className="flex flex-col space-y-6 max-w-2xl mx-auto">
       <div className="text-center">
-        <PausePhraseGraphic />
+        <PausePhraseGraphic className="mx-auto" />
         <p className="text-midnight-indigo/80 text-lg">
           We'll help you phrase what's on your heart, in a way they can actually hear.
         </p>

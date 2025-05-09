@@ -81,9 +81,8 @@ const PausePhraseCard: React.FC<PausePhraseCardProps> = ({ onOptionSelect }) => 
   return (
     <div className="space-y-6 max-w-2xl mx-auto">
       <div className="text-center mb-8">
-        <div className="flex items-center justify-center gap-3 mb-3">
-          <PausePhraseGraphic className="inline-block" />
-          <h2 className="text-midnight-indigo text-3xl font-cormorant">Pause + Phrase</h2>
+        <div className="flex justify-center mb-3">
+          <PausePhraseGraphic className="mx-auto" />
         </div>
         <p className="text-midnight-indigo/80 text-lg max-w-lg mx-auto">
           We'll help you phrase what's on your heart, in a way they can actually hear.

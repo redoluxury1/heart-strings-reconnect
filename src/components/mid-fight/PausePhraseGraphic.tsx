@@ -12,7 +12,7 @@ const PausePhraseGraphic: React.FC<PausePhraseGraphicProps> = ({ className = '' 
   // Preload the image when component mounts with higher priority
   useEffect(() => {
     const img = new Image();
-    img.src = "/lovable-uploads/e1e5274e-42a4-478e-8034-e9e2ab658dda.png";
+    img.src = "/lovable-uploads/22992d10-c235-493a-9181-b535e7e1e7c3.png";
     img.onload = () => setImageLoaded(true);
     
     return () => {
@@ -23,12 +23,12 @@ const PausePhraseGraphic: React.FC<PausePhraseGraphicProps> = ({ className = '' 
   return (
     <div className={`relative ${className}`}>
       {!imageLoaded && (
-        <Skeleton className="h-24 w-24 rounded-lg" />
+        <Skeleton className="h-24 w-48 rounded-lg" />
       )}
       <img 
-        src="/lovable-uploads/e1e5274e-42a4-478e-8034-e9e2ab658dda.png" 
+        src="/lovable-uploads/22992d10-c235-493a-9181-b535e7e1e7c3.png" 
         alt="Pause + Phrase" 
-        className={`h-24 w-auto transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+        className={`h-auto w-full max-w-[200px] transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
         onLoad={() => setImageLoaded(true)}
         loading="eager"
         fetchPriority="high"
