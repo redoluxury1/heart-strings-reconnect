@@ -38,7 +38,7 @@ const PauseTool = () => {
       {pauseStatus === 'activation' && (
         <CodeWordActivationView 
           onActivate={handleActivateCodeWord} 
-          codeWord={codeWord}
+          codeWord={codeWord || ''}
           onChangeCodeWord={handleChangeCodeWord}
         />
       )}

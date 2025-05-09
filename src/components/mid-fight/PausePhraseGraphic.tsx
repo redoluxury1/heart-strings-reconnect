@@ -2,7 +2,11 @@
 import React, { useState, useEffect } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
 
-const PausePhraseGraphic: React.FC = () => {
+interface PausePhraseGraphicProps {
+  className?: string;
+}
+
+const PausePhraseGraphic: React.FC<PausePhraseGraphicProps> = ({ className = '' }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
   
   // Preload the image when component mounts with higher priority
@@ -17,14 +21,14 @@ const PausePhraseGraphic: React.FC = () => {
   }, []);
   
   return (
-    <div className="relative text-center my-4">
+    <div className={`relative ${className}`}>
       {!imageLoaded && (
-        <Skeleton className="h-32 w-full max-w-md mx-auto rounded-lg" />
+        <Skeleton className="h-24 w-24 rounded-lg" />
       )}
       <img 
         src="/lovable-uploads/e1e5274e-42a4-478e-8034-e9e2ab658dda.png" 
         alt="Pause + Phrase" 
-        className={`h-auto w-full max-w-md mx-auto transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+        className={`h-24 w-auto transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
         onLoad={() => setImageLoaded(true)}
         loading="eager"
         fetchPriority="high"

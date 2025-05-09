@@ -14,7 +14,7 @@ const CodeWordActivationView: React.FC<CodeWordActivationViewProps> = ({
   onChangeCodeWord,
   onActivate
 }) => {
-  const [localCodeWord, setLocalCodeWord] = useState(codeWord);
+  const [localCodeWord, setLocalCodeWord] = useState(codeWord || '');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
