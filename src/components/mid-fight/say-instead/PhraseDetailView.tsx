@@ -96,10 +96,10 @@ const PhraseDetailView: React.FC<PhraseDetailViewProps> = ({ phrase, onBack }) =
         <Dialog open={showSaveConfirmation} onOpenChange={setShowSaveConfirmation}>
           <DialogContent className="sm:max-w-md">
             <DialogHeader>
-              <DialogTitle className="text-center font-cormorant text-midnight-indigo text-xl">
+              <DialogTitle className="text-center font-cormorant text-[#22254a] text-xl">
                 You're changing the way you communicate
               </DialogTitle>
-              <DialogDescription className="text-center">
+              <DialogDescription className="text-center text-[#22254a]/70">
                 —one rephrase at a time.
                 <br />
                 This message just got saved to your Journal for future you to come back to.
@@ -108,7 +108,7 @@ const PhraseDetailView: React.FC<PhraseDetailViewProps> = ({ phrase, onBack }) =
             <DialogFooter className="sm:justify-center">
               <Button 
                 onClick={handleGoToJournal}
-                className="bg-lavender-blue hover:bg-lavender-blue/90 text-white"
+                className="bg-[#8A8AC9] hover:bg-[#8A8AC9]/90 text-white"
               >
                 <Book className="h-4 w-4 mr-1" />
                 Go to My Journal
@@ -127,24 +127,24 @@ const PhraseDetailView: React.FC<PhraseDetailViewProps> = ({ phrase, onBack }) =
         variant="ghost" 
         size="sm"
         onClick={onBack} 
-        className="text-xs text-lavender-blue hover:text-mauve-rose mb-3 -ml-2"
+        className="text-xs text-[#8A8AC9] hover:text-[#C7747F] mb-3 -ml-2"
       >
         <ArrowLeft className="h-4 w-4 mr-1" />
         Back to list
       </Button>
       
-      <h4 className="font-medium text-lg text-midnight-indigo mb-3">"{phrase.original}"</h4>
+      <h4 className="font-medium text-lg text-[#22254a] mb-3">"{phrase.original}"</h4>
       
       <div className="flex flex-wrap gap-1 mb-3">
         {phrase.categories.map((category, index) => (
-          <Badge key={index} variant="outline" className="bg-white/50 text-midnight-indigo/70 border-lavender-blue/20">
+          <Badge key={index} variant="outline" className="bg-white/50 text-[#22254a]/70 border-[#8A8AC9]/20">
             {category}
           </Badge>
         ))}
       </div>
       
       <div className="space-y-3 mb-3">
-        <p className="font-medium text-midnight-indigo">Say this instead:</p>
+        <p className="font-medium text-[#22254a]">Say this instead:</p>
         {phrase.alternatives.map((alternative, index) => (
           <AlternativeOption 
             key={index} 
@@ -159,7 +159,7 @@ const PhraseDetailView: React.FC<PhraseDetailViewProps> = ({ phrase, onBack }) =
         <Button 
           variant="ghost" 
           size="sm" 
-          className="text-xs text-lavender-blue justify-center hover:text-mauve-rose"
+          className="text-xs text-[#8A8AC9] justify-center hover:text-[#C7747F]"
           onClick={() => setShowWhyItWorks(!showWhyItWorks)}
         >
           {showWhyItWorks ? "Hide explanation" : "Why this works"}
@@ -168,7 +168,7 @@ const PhraseDetailView: React.FC<PhraseDetailViewProps> = ({ phrase, onBack }) =
       
       {showWhyItWorks && (
         <div className="bg-white/70 p-3 rounded-lg mt-2">
-          <p className="text-sm text-midnight-indigo/80">
+          <p className="text-sm text-[#22254a]/80">
             <span className="font-medium">Why this works:</span> {phrase.whyItWorks}
           </p>
         </div>

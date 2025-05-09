@@ -58,7 +58,7 @@ const SayItBetter: React.FC<SayItBetterProps> = ({ allowSave = false }) => {
           value={selectedCategory} 
           onValueChange={setSelectedCategory}
         >
-          <SelectTrigger className="w-full bg-white border-lavender-blue/30 hover:border-lavender-blue focus:border-lavender-blue py-3">
+          <SelectTrigger className="w-full bg-white border-[#536878]/30 hover:border-[#536878] focus:border-[#536878] py-3 text-[#22254a]">
             <SelectValue placeholder="Select a category" />
           </SelectTrigger>
           <SelectContent className="bg-white">

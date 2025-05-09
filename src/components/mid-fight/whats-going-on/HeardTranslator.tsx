@@ -78,10 +78,10 @@ const HeardTranslator = () => {
   return (
     <div className="space-y-6">
       <div className="mb-6">
-        <h3 className="text-lg font-medium text-midnight-indigo mb-3">
+        <h3 className="text-lg font-medium text-[#22254a] mb-3">
           Say It Better
         </h3>
-        <p className="text-sm text-midnight-indigo/70 mb-2">
+        <p className="text-sm text-[#22254a]/70 mb-2">
           Type what you want to say, and we'll translate how it might be received
         </p>
       </div>
@@ -92,7 +92,7 @@ const HeardTranslator = () => {
             key={index}
             variant="outline"
             size="sm"
-            className="text-xs bg-white border-lavender-blue/20 hover:bg-lavender-blue/10 mb-1 py-2 px-3 h-auto"
+            className="text-xs bg-white border-[#536878]/30 text-[#536878] hover:bg-[#536878]/10 mb-1 py-2 px-3 h-auto"
             onClick={() => handleExampleClick(phrase)}
           >
             "{phrase}"
@@ -104,12 +104,12 @@ const HeardTranslator = () => {
         placeholder="Type what you want to say... (e.g., 'This is not a big deal.')"
         value={inputText}
         onChange={(e) => setInputText(e.target.value)}
-        className="min-h-[100px]"
+        className="min-h-[100px] border-[#536878]/30 focus:border-[#536878]"
       />
       
       <Button 
         onClick={handleTranslate} 
-        className="w-full bg-midnight-indigo hover:bg-midnight-indigo/90 mt-5 py-3"
+        className="w-full bg-[#22254a] hover:bg-[#22254a]/90 mt-5 py-3"
         disabled={!inputText.trim()}
       >
         Translate
@@ -118,22 +118,22 @@ const HeardTranslator = () => {
       {translation && (
         <div className="mt-8 space-y-5 bg-soft-blush/20 p-5 rounded-md">
           <div>
-            <h4 className="text-md font-medium text-mauve-rose mb-2">How It Might Land:</h4>
-            <p className="bg-white p-4 rounded border border-mauve-rose/20 text-midnight-indigo/90">
+            <h4 className="text-md font-medium text-[#C7747F] mb-2">How It Might Land:</h4>
+            <p className="bg-white p-4 rounded border border-[#C7747F]/20 text-[#22254a]/90">
               "{translation.heardAs}"
             </p>
           </div>
           
           <div>
-            <h4 className="text-md font-medium text-lavender-blue mb-2">Try Saying Instead:</h4>
-            <p className="bg-white p-4 rounded border border-lavender-blue/30 text-midnight-indigo/90">
+            <h4 className="text-md font-medium text-[#8A8AC9] mb-2">Try Saying Instead:</h4>
+            <p className="bg-white p-4 rounded border border-[#8A8AC9]/30 text-[#22254a]/90">
               "{translation.trySaying}"
             </p>
           </div>
           
           <Button 
             onClick={handleStartChat} 
-            className="bg-lavender-blue hover:bg-lavender-blue/90 text-white mt-5 w-full py-3"
+            className="bg-[#C7747F] hover:bg-[#C7747F]/90 text-white mt-5 w-full py-3"
           >
             <MessageCircle className="h-4 w-4 mr-2" />
             Start a Chat

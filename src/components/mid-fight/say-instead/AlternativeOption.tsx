@@ -16,12 +16,12 @@ const AlternativeOption: React.FC<AlternativeOptionProps> = ({
 }) => {
   return (
     <div className="bg-white rounded-lg p-3 shadow-sm">
-      <p className="text-sm text-midnight-indigo mb-2">"{alternative}"</p>
+      <p className="text-sm text-[#22254a] mb-2">"{alternative}"</p>
       <div className="flex flex-wrap gap-2 justify-end">
         <Button
           variant="outline"
           size="sm"
-          className="text-xs border-lavender-blue text-lavender-blue hover:bg-lavender-blue/10"
+          className="text-xs border-[#8A8AC9] text-[#8A8AC9] hover:bg-[#8A8AC9]/10"
           onClick={onCustomize}
         >
           <Edit className="h-3 w-3 mr-1" />
@@ -30,7 +30,7 @@ const AlternativeOption: React.FC<AlternativeOptionProps> = ({
         <Button
           variant="outline"
           size="sm"
-          className="text-xs border-mauve-rose text-mauve-rose hover:bg-mauve-rose/10"
+          className="text-xs border-[#C7747F] text-[#C7747F] hover:bg-[#C7747F]/10"
           onClick={onSaveToLibrary}
         >
           <BookmarkPlus className="h-3 w-3 mr-1" />
