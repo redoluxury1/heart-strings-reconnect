@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import RestartPhrases from '@/components/mid-fight/restart-phrases/RestartPhrases';
+import { Clock } from 'lucide-react';
 
 interface PauseTimerEndViewProps {
   onViewReconnection: () => void;
@@ -52,8 +53,9 @@ const PauseTimerEndView: React.FC<PauseTimerEndViewProps> = ({
         <Button
           onClick={onRemindLater}
           variant="outline"
-          className="w-full border-[#5d4357]/20 text-[#5d4357] hover:bg-[#5d4357]/10 py-5"
+          className="w-full border-[#5d4357]/20 text-[#5d4357] hover:bg-[#5d4357]/10 flex items-center justify-center py-5"
         >
+          <Clock size={18} className="mr-2" />
           Remind Me Again Later
         </Button>
       </div>
@@ -66,6 +68,7 @@ const PauseTimerEndView: React.FC<PauseTimerEndViewProps> = ({
         <DialogContent className="max-w-lg p-0 bg-transparent border-none shadow-none">
           <RestartPhrases 
             onClose={handleRestartPhrasesClose}
+            setRestartMessage={setRestartMessage}
           />
         </DialogContent>
       </Dialog>

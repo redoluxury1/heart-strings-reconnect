@@ -24,8 +24,8 @@ const MidPauseView: React.FC<MidPauseViewProps> = ({
     navigate('/archive', { state: { activeTab: 'thoughts' } });
   };
 
-  const handleExploreElse = () => {
-    navigate('/');
+  const handleNavigateToCalming = () => {
+    navigate('/post-conflict');
   };
 
   const handleRestartPhrasesClose = () => {
@@ -72,10 +72,10 @@ const MidPauseView: React.FC<MidPauseViewProps> = ({
         <Button 
           variant="outline"
           className="w-full border-[#5d4357]/20 text-[#5d4357] flex items-center justify-center gap-2 py-5"
-          onClick={handleExploreElse}
+          onClick={handleNavigateToCalming}
         >
           <BookOpen size={18} />
-          <span>Explore Something Else</span>
+          <span>Try a Calming Tool</span>
         </Button>
       </div>
       

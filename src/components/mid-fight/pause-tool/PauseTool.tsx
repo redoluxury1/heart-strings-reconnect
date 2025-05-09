@@ -8,8 +8,10 @@ import CustomTimerView from './CustomTimerView';
 import PauseToolHeader from './components/PauseToolHeader';
 import { usePauseTimer } from './hooks/usePauseTimer';
 import CodeWordSetupView from './CodeWordSetupView'; 
+import RestartPhraseConfirmationView from './RestartPhraseConfirmationView';
+import NotReadyOptionsView from './NotReadyOptionsView';
 
-export type PauseStatus = 'setup' | 'activation' | 'activated' | 'custom-timer' | 'in-pause' | 'ended';
+export type PauseStatus = 'setup' | 'activation' | 'activated' | 'custom-timer' | 'in-pause' | 'ended' | 'confirm-restart' | 'not-ready';
 
 const PauseTool = () => {
   const {
@@ -23,13 +25,17 @@ const PauseTool = () => {
     handleEndPause,
     handleViewReconnection,
     handleRemindLater,
+    handleNotReadyYet,
+    restartPhrase,
     setRestartMessage,
+    handleSendRestartMessage,
+    handleEditRestartMessage,
     codeWord
   } = usePauseTimer();
 
   return (
     <div className="bg-white rounded-xl shadow-md p-6">
-      {pauseStatus !== 'in-pause' && pauseStatus !== 'ended' && (
+      {pauseStatus !== 'in-pause' && pauseStatus !== 'ended' && pauseStatus !== 'confirm-restart' && pauseStatus !== 'not-ready' && (
         <PauseToolHeader 
           status={pauseStatus}
           onSetupClick={() => setPauseStatus('activation')}
@@ -76,9 +82,25 @@ const PauseTool = () => {
       {pauseStatus === 'ended' && (
         <PauseTimerEndView 
           onViewReconnection={handleViewReconnection}
-          onNotYet={handleEndPause}
+          onNotYet={handleNotReadyYet}
           onRemindLater={handleRemindLater}
           setRestartMessage={setRestartMessage}
+        />
+      )}
+      
+      {pauseStatus === 'confirm-restart' && restartPhrase && (
+        <RestartPhraseConfirmationView
+          restartPhrase={restartPhrase}
+          onSend={handleSendRestartMessage}
+          onEdit={(message) => handleEditRestartMessage(message)}
+          onNotReady={handleNotReadyYet}
+        />
+      )}
+      
+      {pauseStatus === 'not-ready' && (
+        <NotReadyOptionsView
+          onRemindLater={handleRemindLater}
+          onEndPause={handleEndPause}
         />
       )}
     </div>
