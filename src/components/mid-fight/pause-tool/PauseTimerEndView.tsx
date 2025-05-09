@@ -1,6 +1,8 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
+import RestartPhrases from '@/components/mid-fight/restart-phrases/RestartPhrases';
 
 interface PauseTimerEndViewProps {
   onViewReconnection: () => void;
@@ -13,6 +15,8 @@ const PauseTimerEndView: React.FC<PauseTimerEndViewProps> = ({
   onNotYet,
   onRemindLater
 }) => {
+  const [isRestartPhrasesOpen, setIsRestartPhrasesOpen] = useState(false);
+
   return (
     <div className="max-w-md mx-auto text-center">
       <h3 className="text-2xl text-[#5d4357] font-medium mb-4">
@@ -25,10 +29,10 @@ const PauseTimerEndView: React.FC<PauseTimerEndViewProps> = ({
       
       <div className="space-y-4">
         <Button
-          onClick={onViewReconnection}
+          onClick={() => setIsRestartPhrasesOpen(true)}
           className="w-full bg-[#5d4357] text-white hover:bg-[#5d4357]/90 py-5"
         >
-          View Reconnection Starters
+          View Restart Phrases
         </Button>
         
         <Button
@@ -51,6 +55,14 @@ const PauseTimerEndView: React.FC<PauseTimerEndViewProps> = ({
       <p className="text-[#5d4357]/70 text-sm mt-8 italic">
         You don't have to rush back in. Take the time you need.
       </p>
+
+      <Dialog open={isRestartPhrasesOpen} onOpenChange={setIsRestartPhrasesOpen}>
+        <DialogContent className="max-w-lg p-0 bg-transparent border-none shadow-none">
+          <RestartPhrases 
+            onClose={() => setIsRestartPhrasesOpen(false)}
+          />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

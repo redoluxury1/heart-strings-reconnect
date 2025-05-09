@@ -1,7 +1,9 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Clock, BookOpen, PenLine } from 'lucide-react';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
+import RestartPhrases from '@/components/mid-fight/restart-phrases/RestartPhrases';
 
 interface MidPauseViewProps {
   timeRemaining: string;
@@ -12,6 +14,8 @@ const MidPauseView: React.FC<MidPauseViewProps> = ({
   timeRemaining, 
   onEndPause 
 }) => {
+  const [isRestartPhrasesOpen, setIsRestartPhrasesOpen] = useState(false);
+
   return (
     <div className="max-w-md mx-auto">
       <div className="bg-[#F1F0FB] p-4 rounded-lg mb-6 flex items-center justify-between">
@@ -44,7 +48,7 @@ const MidPauseView: React.FC<MidPauseViewProps> = ({
         <Button 
           variant="outline"
           className="w-full border-[#5d4357]/20 text-[#5d4357] flex items-center justify-center gap-2 py-5"
-          onClick={() => console.log('View restart phrases')}
+          onClick={() => setIsRestartPhrasesOpen(true)}
         >
           <Clock size={18} />
           <span>View Restart Phrases</span>
@@ -77,6 +81,15 @@ const MidPauseView: React.FC<MidPauseViewProps> = ({
           End Pause
         </Button>
       </div>
+
+      <Dialog open={isRestartPhrasesOpen} onOpenChange={setIsRestartPhrasesOpen}>
+        <DialogContent className="max-w-lg p-0 bg-transparent border-none shadow-none">
+          <RestartPhrases 
+            onClose={() => setIsRestartPhrasesOpen(false)} 
+            onNotReady={() => setIsRestartPhrasesOpen(false)}
+          />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
