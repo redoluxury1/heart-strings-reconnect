@@ -37,10 +37,10 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
   return (
     <div className={`${backgroundColor} rounded-xl p-5 mb-4 shadow-sm`}>
       <div className="flex items-center gap-2 mb-4">
-        <div className="text-2xl">
+        <div className="text-2xl text-rosewood-tint">
           {icon}
         </div>
-        <h3 className="text-white font-cormorant text-3xl">{title}</h3>
+        <h3 className="text-midnight-indigo font-cormorant text-3xl">{title}</h3>
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -90,26 +90,26 @@ const PausePhraseCard: React.FC<PausePhraseCardProps> = ({ onOptionSelect }) => 
       
       <CategoryCard 
         title="Clarity" 
-        icon={<LightbulbIcon className="text-white" />}
+        icon={<LightbulbIcon className="text-rosewood-tint" />}
         options={clarityOptions}
         onOptionSelect={onOptionSelect}
-        backgroundColor="bg-mauve-rose/80"
+        backgroundColor="bg-soft-cream/70"
       />
       
       <CategoryCard 
         title="Vulnerability" 
-        icon={<HeartIcon className="text-white" />}
+        icon={<HeartIcon className="text-rosewood-tint" />}
         options={vulnerabilityOptions}
         onOptionSelect={onOptionSelect}
-        backgroundColor="bg-mauve-rose/80"
+        backgroundColor="bg-soft-cream/70"
       />
       
       <CategoryCard 
         title="Repair" 
-        icon={<ShieldIcon className="text-white" />}
+        icon={<ShieldIcon className="text-rosewood-tint" />}
         options={repairOptions}
         onOptionSelect={onOptionSelect}
-        backgroundColor="bg-mauve-rose/80"
+        backgroundColor="bg-soft-cream/70"
       />
     </div>
   );
