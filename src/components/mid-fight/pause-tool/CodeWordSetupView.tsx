@@ -16,10 +16,6 @@ const CodeWordSetupView: React.FC<CodeWordSetupViewProps> = ({ onGetStarted }) =
         </div>
       </div>
       
-      <h3 className="text-2xl text-[#07183D] mb-4 font-medium">
-        Take a moment to pause
-      </h3>
-      
       <p className="text-[#07183D]/80 mb-6">
         When a conversation gets heated, sometimes the best thing to do is pause. 
         Set up a code word that signals you both need space.
