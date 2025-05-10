@@ -1,6 +1,5 @@
 
 import React from 'react';
-import GroundingStep from '../steps/GroundingStep';
 import ToneSettingStep from '../steps/ToneSettingStep';
 import PerspectiveStep from '../steps/PerspectiveStep';
 import EmotionalCheckIn from '../steps/EmotionalCheckIn';
@@ -23,21 +22,6 @@ export const useSteps = (onExit: () => void) => {
   };
 
   const steps = [
-    {
-      id: 'grounding',
-      component: 
-        <GroundingStep 
-          onResponse={(response) => {
-            handleResponse('partner1', 'grounding', response);
-          }} 
-          onExit={onExit}
-          onNext={() => {
-            // Skip directly to the tone setting step (step 1)
-            // By directly setting currentStep to 1, we skip any duplicate slides
-            setCurrentStep(1);
-          }}
-        />
-    },
     {
       id: 'tone',
       component: 

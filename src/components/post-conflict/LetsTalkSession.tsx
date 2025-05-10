@@ -32,12 +32,7 @@ const WorkThroughSessionContent: React.FC<{ onExit: () => void }> = ({ onExit })
 };
 
 const LetsTalkSession: React.FC<WorkThroughSessionProps> = ({ onExit }) => {
-  // Use a single SessionProvider for the entire session
-  return (
-    <SessionProvider>
-      <WorkThroughSessionContent onExit={onExit} />
-    </SessionProvider>
-  );
+  return <WorkThroughSessionContent onExit={onExit} />;
 };
 
 export default LetsTalkSession;

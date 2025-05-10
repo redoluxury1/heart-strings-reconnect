@@ -4,11 +4,13 @@ import { Button } from '@/components/ui/button';
 import { useInterface } from '../../hooks/useInterfaceContext';
 import LetsTalkSession from './LetsTalkSession';
 import { useSession } from './context/SessionContext';
+import { useNavigate } from 'react-router-dom';
 
 const LetsTalkThisOut = () => {
   const { colors } = useInterface();
   const [isSessionStarted, setIsSessionStarted] = useState(false);
   const { setCurrentStep } = useSession();
+  const navigate = useNavigate();
   
   if (isSessionStarted) {
     return <LetsTalkSession onExit={() => setIsSessionStarted(false)} />;
@@ -17,8 +19,12 @@ const LetsTalkThisOut = () => {
   const handleReady = () => {
     // Set session as started
     setIsSessionStarted(true);
-    // Start at step 0 (grounding step) to ensure proper flow
-    setCurrentStep(0); 
+    // Skip the grounding step (0) completely and go straight to tone setting step (1)
+    setCurrentStep(1); 
+  };
+  
+  const handleNotReady = () => {
+    navigate('/during-conflict');
   };
 
   return (
@@ -53,7 +59,7 @@ const LetsTalkThisOut = () => {
         <Button 
           variant="outline" 
           className="border-gray-300 text-[#7d6272] hover:text-[#6d5262] bg-white hover:bg-gray-100 py-1 w-full max-w-md mb-6 rounded-full"
-          onClick={() => window.location.href = '/during-conflict'}
+          onClick={handleNotReady}
         >
           <span className="text-sm px-2">Not yet — I need to decompress first</span>
         </Button>
