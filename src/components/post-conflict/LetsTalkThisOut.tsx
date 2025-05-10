@@ -26,15 +26,15 @@ const LetsTalkThisOut = () => {
       <div className="flex flex-col items-center max-w-xl mx-auto">
         <img 
           src="/lovable-uploads/088d792b-f2dc-44de-9679-9ff534e02d4e.png" 
-          alt="Couple sitting together" 
+          alt="Couple sitting together having a calm conversation" 
           className="h-24 w-auto mb-6" 
           loading="eager"
           fetchPriority="high"
         />
         
-        <h2 className="text-4xl md:text-5xl font-cormorant font-medium mb-4 text-center text-midnight-indigo">
+        <h1 className="text-4xl md:text-5xl font-cormorant font-medium mb-4 text-center text-midnight-indigo">
           Let's work this out
-        </h2>
+        </h1>
         
         <p className="text-center text-gray-700 mb-3 text-lg">
           Ready to work through what happened?
