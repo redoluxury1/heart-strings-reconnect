@@ -16,8 +16,8 @@ const PauseToolHeader: React.FC<PauseToolHeaderProps> = ({
   const isInitialView = status === 'setup';
   const hasCodeWord = codeWordExists;
   
-  // Don't show the pause button and text if we already have a code word established
-  if (hasCodeWord && isInitialView) {
+  // Don't show the pause button and text if we're in setup view or already have a code word established
+  if ((hasCodeWord && isInitialView) || (!hasCodeWord && isInitialView)) {
     return null;
   }
   
@@ -40,7 +40,7 @@ const PauseToolHeader: React.FC<PauseToolHeaderProps> = ({
           <p className="text-sm text-[#5d4357]/80">
             {hasCodeWord 
               ? "Click the pause button to activate your code word" 
-              : "Set a shared word that signals you need a pause"}
+              : ""}
           </p>
         </div>
       </div>
