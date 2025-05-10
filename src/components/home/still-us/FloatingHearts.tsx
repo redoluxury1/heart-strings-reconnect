@@ -13,6 +13,10 @@ export const FloatingHeart = () => {
     transform: `scale(${Math.random() * 0.6 + 0.4})`,
   });
 
+  // Randomly choose between mauve and terracotta colors
+  const colors = ['text-[#8a6f8e]', 'text-[#c97c5d]']; // Mauve and Terracotta
+  const colorClass = colors[Math.floor(Math.random() * colors.length)];
+
   return (
     <div 
       className="absolute pointer-events-none animate-float"
@@ -25,7 +29,7 @@ export const FloatingHeart = () => {
         opacity: style.opacity,
       }}
     >
-      <Heart fill="currentColor" className="h-4 w-4 text-mauve-rose" />
+      <Heart fill="currentColor" className={`h-4 w-4 ${colorClass}`} />
     </div>
   );
 };
