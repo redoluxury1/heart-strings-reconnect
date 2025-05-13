@@ -1,23 +1,20 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { RotateCw, Flag, Compass } from 'lucide-react';
+import { RotateCw, Flag } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import PatternRecognitionFlow from './pattern-recognition/PatternRecognitionFlow';
 import { useState } from 'react';
 import WhiteFlagTool from './white-flag/WhiteFlagTool';
-import LetsWorkThisOut from './lets-work-this-out/LetsWorkThisOut';
 
 const OkayButNowWhat = () => {
   const navigate = useNavigate();
   const [showPatternTool, setShowPatternTool] = useState(false);
   const [showFlagTool, setShowFlagTool] = useState(false);
-  const [showWorkThisOut, setShowWorkThisOut] = useState(false);
   
   const handlePatternToolToggle = () => {
     setShowPatternTool(!showPatternTool);
     setShowFlagTool(false);
-    setShowWorkThisOut(false);
     // When opening pattern tool, scroll to top to ensure full view
     if (!showPatternTool) {
       window.scrollTo(0, 0);
@@ -27,13 +24,6 @@ const OkayButNowWhat = () => {
   const handleFlagToolToggle = () => {
     setShowFlagTool(!showFlagTool);
     setShowPatternTool(false);
-    setShowWorkThisOut(false);
-  };
-  
-  const handleWorkThisOutToggle = () => {
-    setShowWorkThisOut(!showWorkThisOut);
-    setShowPatternTool(false);
-    setShowFlagTool(false);
   };
   
   // If pattern tool is shown in full-screen mode
@@ -57,7 +47,7 @@ const OkayButNowWhat = () => {
           You made it through the hard part. This section helps you keep it from happening again.
         </p>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           {/* Pattern Recognition Button */}
           <div 
             className={`bg-white rounded-lg border shadow-sm hover:shadow-md transition-shadow cursor-pointer ${showPatternTool ? 'ring-2 ring-[#2e2a63]' : ''}`} 
@@ -89,22 +79,6 @@ const OkayButNowWhat = () => {
               </p>
             </div>
           </div>
-          
-          {/* Let's Work This Out Button */}
-          <div 
-            className={`bg-white rounded-lg border shadow-sm hover:shadow-md transition-shadow cursor-pointer ${showWorkThisOut ? 'ring-2 ring-[#C47463]' : ''}`}
-            onClick={handleWorkThisOutToggle}
-          >
-            <div className="flex flex-col items-center text-center p-4">
-              <div className="bg-[#F1EAE8] p-3 rounded-full mb-4">
-                <Compass className="h-8 w-8 text-[#C47463]" />
-              </div>
-              <h3 className="text-xl font-medium text-[#2e2a63] mb-2">Let's Work This Out</h3>
-              <p className="text-[#2e2a63]">
-                Reflect together on what happened and find a path forward.
-              </p>
-            </div>
-          </div>
         </div>
         
         {/* White Flag Tool Content Display (only shown if flag tool is active) */}
@@ -113,15 +87,6 @@ const OkayButNowWhat = () => {
             <div className="bg-white rounded-xl shadow-sm p-4 md:p-6">
               <WhiteFlagTool />
             </div>
-          </div>
-        )}
-
-        {/* Let's Work This Out Content Display (only shown if work this out tool is active) */}
-        {showWorkThisOut && (
-          <div className="mt-8 transition-all duration-300">
-            <LetsWorkThisOut 
-              onClose={() => setShowWorkThisOut(false)} 
-            />
           </div>
         )}
       </div>

@@ -7,6 +7,7 @@ import SometimesItStillHurts from '@/components/post-conflict/SometimesItStillHu
 import PhraseRewind from '@/components/post-conflict/PhraseRewind';
 import FloatingTextBubbles from '@/components/post-conflict/FloatingTextBubbles';
 import OkayButNowWhat from '@/components/post-conflict/OkayButNowWhat';
+import LetsWorkThisOut from '@/components/post-conflict/lets-work-this-out/LetsWorkThisOut';
 import { SessionProvider, useSession } from '@/components/post-conflict/context/SessionContext';
 
 // Wrapper to access session context
@@ -30,6 +31,11 @@ const PostConflictContent = () => {
                 Okay, take a breath. Let's work through what happened- no judgment, just space to be honest and figure it out side by side.
               </p>
             )}
+            
+            {/* Add Let's Work This Out at the top, above other components */}
+            <div className="mb-16">
+              <LetsWorkThisOut />
+            </div>
             
             <div className="space-y-32">
               <OkayButNowWhat />
