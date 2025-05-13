@@ -164,6 +164,36 @@
   }
 }
 
+/* Icon-specific animations */
+@keyframes flameFlicker {
+  0%, 100% {
+    filter: drop-shadow(0 0 2px rgba(178, 90, 68, 0));
+    opacity: 1;
+  }
+  50% {
+    filter: drop-shadow(0 0 8px rgba(178, 90, 68, 0.6));
+    opacity: 1.15;
+  }
+}
+
+@keyframes heartBreak {
+  0% {
+    clip-path: inset(0 0 100% 0);
+  }
+  100% {
+    clip-path: inset(0 0 0% 0);
+  }
+}
+
+@keyframes puzzleFit {
+  0% {
+    transform: translateX(10px) rotate(5deg);
+  }
+  100% {
+    transform: translateX(0) rotate(0deg);
+  }
+}
+
 /* Animation utility classes */
 .animate-wave-right {
   animation: waveRight 8s ease-in-out infinite;
@@ -203,4 +233,28 @@
 
 .animate-bounce-soft {
   animation: bounce 2s ease-in-out infinite;
+}
+
+.animate-flame-flicker {
+  animation: flameFlicker 2s ease-in-out infinite;
+}
+
+.group:hover .group-hover-flame-flicker {
+  animation: flameFlicker 1.5s ease-in-out infinite;
+}
+
+.heart-break-line {
+  clip-path: inset(0 0 100% 0);
+}
+
+.group:hover .group-hover-heart-break {
+  animation: heartBreak 1s ease-out forwards;
+}
+
+.puzzle-piece {
+  transform: translateX(10px) rotate(5deg);
+}
+
+.group:hover .group-hover-puzzle-fit {
+  animation: puzzleFit 0.5s ease-out forwards;
 }

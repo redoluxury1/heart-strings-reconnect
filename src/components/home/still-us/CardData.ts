@@ -1,14 +1,14 @@
 
-import { Flame, HeartCrack, Puzzle } from 'lucide-react';
 import React from 'react';
 import { CardContent } from './types';
+import { FlameIcon, HeartBreakIcon, PuzzleIcon } from './IconComponents';
 
 export const getCardData = (): CardContent[] => {
   return [
     {
       title: "Mid-Fight",
       description: "Emotions are high? That's okay. Here's where you can pause, breathe, and calm things down before saying more.",
-      icon: React.createElement(Flame, { className: "h-7 w-7 text-[#b25a44]" }),
+      icon: React.createElement(FlameIcon),
       tools: ["Time Out Timer", "Let's Try That Again", "What's Really Going On?"],
       comingSoonTools: ["Build a Bridge"],
       link: "/during-conflict",
@@ -23,7 +23,7 @@ export const getCardData = (): CardContent[] => {
     {
       title: "Post-Fight",
       description: "That was a lot. This space helps you process what just happened, understand what you need, and find clarity before reconnecting.",
-      icon: React.createElement(HeartCrack, { className: "h-7 w-7 text-[#2f3975]" }),
+      icon: React.createElement(HeartBreakIcon),
       tools: ["Let's Work This Out", "Okay, but now what?", "How to Move Forward", "Glossary"],
       comingSoonTools: ["Build a Bridge"],
       link: "/post-conflict",
@@ -38,7 +38,7 @@ export const getCardData = (): CardContent[] => {
     {
       title: "Reconnecting",
       description: "Not fighting? Beautiful. Come here for small ways to feel closer, learn more about each other, and have fun.",
-      icon: React.createElement(Puzzle, { className: "h-7 w-7 text-mauve-rose" }),
+      icon: React.createElement(PuzzleIcon),
       tools: ["Would You Rather: Couples Game", "Spin the Date Night Wheel", "Love Code Quiz", "Personality Blueprint"],
       link: "/reconnect",
       gradientClass: "bg-[#FDFBF9]",
