@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Flame, HeartCrack, Puzzle } from 'lucide-react';
 import { useScrollReveal } from '@/hooks/use-scroll-reveal';
@@ -26,8 +25,9 @@ export const HeartBreakIcon: React.FC<{ className?: string }> = ({ className }) 
       <HeartCrack 
         className={`h-7 w-7 text-[#2f3975] ${className}`} 
       />
+      {/* Only keeping the zigzag line that animates for the heart break effect */}
       <div 
-        className={`absolute top-1/2 left-1/2 w-[2px] h-[60%] bg-[#2f3975] transform -translate-x-1/2 -translate-y-1/2 heart-break-line ${
+        className={`absolute top-1/2 left-1/2 w-[2px] h-[60%] bg-[#2f3975] transform -translate-x-1/2 -translate-y-1/2 zigzag-line ${
           isVisible ? 'animate-heart-break' : ''
         }`}
       />
@@ -40,12 +40,16 @@ export const PuzzleIcon: React.FC<{ className?: string }> = ({ className }) => {
   
   return (
     <div ref={ref as React.RefObject<HTMLDivElement>} className="relative flex items-center justify-center">
+      {/* First puzzle piece (positioned on the left) */}
       <Puzzle 
-        className={`h-7 w-7 text-mauve-rose transition-all ${className}`} 
+        className={`h-7 w-7 text-mauve-rose transition-all left-puzzle-piece ${
+          isVisible ? 'animate-puzzle-left' : ''
+        }`} 
       />
+      {/* Second puzzle piece (positioned on the right) */}
       <Puzzle 
-        className={`h-5 w-5 text-mauve-rose/70 absolute transition-all ${
-          isVisible ? 'animate-puzzle-fit' : 'puzzle-piece'
+        className={`h-7 w-7 text-mauve-rose/70 absolute transition-all right-puzzle-piece ${
+          isVisible ? 'animate-puzzle-right' : ''
         }`} 
       />
     </div>

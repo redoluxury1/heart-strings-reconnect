@@ -20,12 +20,22 @@
   }
 }
 
-@keyframes puzzleFit {
+/* Updated puzzle piece animations for two pieces coming together */
+@keyframes puzzleLeft {
   0% {
-    transform: translateX(10px) rotate(5deg);
+    transform: translateX(-10px);
   }
   100% {
-    transform: translateX(0) rotate(0deg);
+    transform: translateX(-2px);
+  }
+}
+
+@keyframes puzzleRight {
+  0% {
+    transform: translateX(10px);
+  }
+  100% {
+    transform: translateX(2px);
   }
 }
 
@@ -37,8 +47,30 @@
   animation: heartBreak 1s ease-out forwards;
 }
 
-.animate-puzzle-fit {
-  animation: puzzleFit 0.5s ease-out forwards;
+.animate-puzzle-left {
+  animation: puzzleLeft 0.5s ease-out forwards;
+}
+
+.animate-puzzle-right {
+  animation: puzzleRight 0.5s ease-out forwards;
+}
+
+/* Position styles for puzzle pieces */
+.left-puzzle-piece {
+  transform: translateX(-10px);
+}
+
+.right-puzzle-piece {
+  transform: translateX(10px);
+}
+
+/* Zigzag line style for heart break effect */
+.zigzag-line {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  background-image: linear-gradient(to bottom, transparent, transparent 45%, #2f3975 45%, #2f3975 55%, transparent 55%, transparent);
+  background-size: 100% 20px;
+  background-repeat: repeat-y;
+  clip-path: inset(0 0 100% 0);
 }
 
 /* The following group-hover classes are kept for backward compatibility */
