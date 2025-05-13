@@ -1,92 +1,44 @@
-@keyframes pulseSlow {
-  0% {
-    transform: scale(0.95);
-    opacity: 0.3;
-  }
-  50% {
-    transform: scale(1.1);
-    opacity: 0.5;
-  }
-  100% {
-    transform: scale(0.95);
-    opacity: 0.3;
-  }
-}
-
-@keyframes floatSlow {
-  0% {
-    transform: translateY(0);
-    opacity: 0.3;
-  }
-  50% {
-    transform: translateY(-15px);
-    opacity: 0.5;
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 0.3;
-  }
-}
-
-@keyframes expand {
+/* Custom pulse animation */
+@keyframes pulse {
   0% {
     transform: scale(1);
-    opacity: 0.3;
+    opacity: 0.7;
   }
   50% {
-    transform: scale(1.3);
-    opacity: 0.5;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 0.3;
-  }
-}
-
-@keyframes gentle-pulse {
-  0% {
-    transform: scale(1);
-    opacity: 0.9;
-  }
-  50% {
-    transform: scale(1.05);
+    transform: scale(1.15);
     opacity: 1;
   }
   100% {
     transform: scale(1);
-    opacity: 0.9;
+    opacity: 0.7;
   }
 }
 
+.animate-pulse-fast {
+  animation: pulse 1s ease-in-out infinite;
+}
+
+.animate-pulse-medium {
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
 .animate-pulse-slow {
-  animation: pulseSlow 6s ease-in-out infinite;
+    animation: pulse 2s ease-in-out infinite;
 }
 
-.animate-float-slow {
-  animation: floatSlow 10s ease-in-out infinite;
-}
-
-.animate-expand {
-  animation: expand 12s ease-in-out infinite;
+/* Custom gentle pulse animation for the heart icon */
+@keyframes gentle-pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .animate-gentle-pulse {
   animation: gentle-pulse 2s ease-in-out infinite;
-}
-
-/* Rotating compass animation */
-@keyframes rotate-compass {
-  0% {
-    transform: rotate(-10deg);
-  }
-  50% {
-    transform: rotate(10deg);
-  }
-  100% {
-    transform: rotate(-10deg);
-  }
-}
-
-.animate-rotate-compass {
-  animation: rotate-compass 3s ease-in-out 2;
 }
