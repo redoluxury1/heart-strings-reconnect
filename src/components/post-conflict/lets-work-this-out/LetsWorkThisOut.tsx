@@ -4,6 +4,8 @@ import { Compass } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { useNavigate } from 'react-router-dom';
+import SetToneTool from './SetToneTool';
+import { useSession } from '@/components/post-conflict/context/SessionContext';
 
 interface LetsWorkThisOutProps {
   onClose?: () => void;
@@ -19,16 +21,14 @@ const LetsWorkThisOut: React.FC<LetsWorkThisOutProps> = ({
   const { toast } = useToast();
   const navigate = useNavigate();
   const [isAnimating, setIsAnimating] = useState(true);
+  const { setCurrentStep } = useSession();
+  const [flow, setFlow] = useState<'intro' | 'set-tone'>('intro');
+  const [selectedIntent, setSelectedIntent] = useState<string>('');
   
   const handleReadyClick = () => {
+    setFlow('set-tone');
     if (onReady) {
       onReady();
-    } else {
-      toast({
-        title: "Great!",
-        description: "Let's start working through this together.",
-      });
-      // Here we could navigate to the next step in the future
     }
   };
   
@@ -45,6 +45,24 @@ const LetsWorkThisOut: React.FC<LetsWorkThisOutProps> = ({
       }
     }
   };
+
+  const handleToneSelected = (intent: string) => {
+    setSelectedIntent(intent);
+    toast({
+      title: "Intention set",
+      description: "You've set the tone for your conversation.",
+    });
+    setCurrentStep(1); // Move to the next step in the session flow
+  };
+
+  const handleBackToIntro = () => {
+    setFlow('intro');
+  };
+  
+  // Show the appropriate screen based on the current flow state
+  if (flow === 'set-tone') {
+    return <SetToneTool onComplete={handleToneSelected} onBack={handleBackToIntro} />;
+  }
   
   return (
     <div className="bg-[#FDFBF9] rounded-xl border border-[#D7B4A8] shadow-sm p-6 max-w-xl mx-auto">
