@@ -14,17 +14,20 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
   const isMobile = useIsMobile();
   const { colors } = useInterface();
   
-  // Updated text colors to use #07183D
-  const textColor = "text-[#07183D]";
-  const textColorMuted = "text-[#07183D]";
-  const bulletColor = "bg-[#07183D]";
+  // Check if this is the Post-Fight card to apply white text
+  const isPostFight = card.title === "Post-Fight";
+  
+  // Updated text colors - use white for Post-Fight, navy for others
+  const textColor = isPostFight ? "text-white" : "text-[#07183D]";
+  const textColorMuted = isPostFight ? "text-white/90" : "text-[#07183D]";
+  const bulletColor = isPostFight ? "bg-white" : "bg-[#07183D]";
   const buttonStyles = "border-2 border-[#6A4A74] text-[#6A4A74] hover:bg-[#6A4A74]/10 font-medium";
 
   // Safely render the icon
   const renderIcon = () => {
     if (React.isValidElement(card.icon)) {
       return React.cloneElement(card.icon as React.ReactElement, { 
-        className: "text-[#6A4A74]"
+        className: isPostFight ? "text-white" : "text-[#6A4A74]"
       });
     }
     return card.icon;
@@ -37,7 +40,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
           // Mobile layout (vertical)
           <>
             <div className="mb-5 flex items-center">
-              <div className="p-3 rounded-full bg-[#6A4A74]/20">
+              <div className={`p-3 rounded-full ${isPostFight ? 'bg-white/20' : 'bg-[#6A4A74]/20'}`}>
                 {renderIcon()}
               </div>
               <h3 className={`ml-3 text-2xl md:text-3xl font-cormorant font-semibold ${textColor}`}>
@@ -61,7 +64,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
                 {card.comingSoonTools?.map((tool, idx) => (
                   <li key={idx} className="flex items-center">
                     <span className={`h-1.5 w-1.5 rounded-full ${bulletColor} mr-2`}></span>
-                    <span className={textColorMuted}>{tool} <span className={`text-xs text-[#07183D]/70`}>(Coming Soon)</span></span>
+                    <span className={textColorMuted}>{tool} <span className={`text-xs ${isPostFight ? "text-white/70" : "text-[#07183D]/70"}`}>(Coming Soon)</span></span>
                   </li>
                 ))}
               </ul>
@@ -70,7 +73,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
             <Link to={card.link} className="block mt-auto">
               <Button 
                 variant="outline" 
-                className={`w-full ${buttonStyles} transition-colors`}
+                className={`w-full ${isPostFight ? "border-white text-white hover:bg-white/10" : buttonStyles} transition-colors`}
               >
                 {card.buttonText}
               </Button>
@@ -81,7 +84,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
           <div className="flex flex-col">
             {/* Header with icon and title together */}
             <div className="flex items-center mb-2">
-              <div className="p-3 rounded-full bg-[#6A4A74]/20 mr-2">
+              <div className={`p-3 rounded-full ${isPostFight ? 'bg-white/20' : 'bg-[#6A4A74]/20'} mr-2`}>
                 {renderIcon()}
               </div>
               <h3 className={`text-2xl md:text-3xl font-cormorant font-semibold ${textColor}`}>
@@ -107,7 +110,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
                 {card.comingSoonTools?.map((tool, idx) => (
                   <div key={idx} className="flex items-center">
                     <span className={`h-1.5 w-1.5 rounded-full ${bulletColor} mr-2`}></span>
-                    <span className={textColorMuted}>{tool} <span className={`text-xs text-[#07183D]/70`}>(Coming Soon)</span></span>
+                    <span className={textColorMuted}>{tool} <span className={`text-xs ${isPostFight ? "text-white/70" : "text-[#07183D]/70"}`}>(Coming Soon)</span></span>
                   </div>
                 ))}
               </div>
@@ -117,7 +120,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
             <Link to={card.link} className="block">
               <Button 
                 variant="outline" 
-                className={`w-full ${buttonStyles} transition-colors`}
+                className={`w-full ${isPostFight ? "border-white text-white hover:bg-white/10" : buttonStyles} transition-colors`}
               >
                 {card.buttonText}
               </Button>

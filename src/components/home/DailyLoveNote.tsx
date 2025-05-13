@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/components/ui/sonner";
-import { Heart } from "lucide-react";
 import { useInterface } from '../common/InterfaceProvider';
 
 // Array of daily prompts that will rotate
@@ -52,7 +51,7 @@ const DailyLoveNote = () => {
   
   return (
     <div className="bg-soft-cream py-12 md:py-16">
-      <div className="container mx-auto px-4 max-w-xl">
+      <div className="container mx-auto px-4 max-w-md">
         <div className="text-center mb-6">
           <h2 className="font-cormorant text-4xl md:text-5xl text-[#743f4f] mb-3">
             Today's Love Note
@@ -67,11 +66,9 @@ const DailyLoveNote = () => {
             placeholder={todaysPrompt}
             value={loveNote}
             onChange={(e) => setLoveNote(e.target.value)}
-            className="min-h-[140px] md:min-h-[160px] p-6 text-[#743f4f] bg-white border-2 border-[#d3a6a6] rounded-3xl text-lg placeholder:text-[#743f4f]/70 focus-visible:ring-[#d3a6a6] focus-visible:ring-offset-0 focus-visible:border-[#d3a6a6]"
+            className="min-h-[120px] md:min-h-[140px] p-6 text-[#743f4f] bg-white border-2 border-[#d3a6a6] rounded-3xl text-lg placeholder:text-[#743f4f]/70 focus-visible:ring-[#d3a6a6] focus-visible:ring-offset-0 focus-visible:border-[#d3a6a6]"
           />
-          <div className="absolute top-4 right-4">
-            <Heart className="h-5 w-5 text-[#d3a6a6]" fill="#d3a6a6" />
-          </div>
+          {/* Heart icon removed as requested */}
         </div>
         
         <div className="flex justify-center">

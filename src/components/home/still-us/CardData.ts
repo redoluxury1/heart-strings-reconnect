@@ -24,9 +24,9 @@ export const getCardData = (): CardContent[] => {
       tools: ["Let's Work This Out", "Okay, but now what?", "Color Healing"],
       comingSoonTools: ["Build a Bridge"],
       link: "/post-conflict",
-      // Updated from a teal-like color to a more vibrant ocean blue with less transparency
-      gradientClass: "from-[#0EA5E9]/60 to-[#0EA5E9]/30",
-      iconBgClass: "bg-[#0EA5E9]/40",
+      // Updated to navy blue with white text
+      gradientClass: "from-[#22254a]/80 to-[#22254a]/50",
+      iconBgClass: "bg-[#22254a]/60",
       buttonText: "Let's Reflect",
       sectionHeader: "How to Move Forward:",
     },
