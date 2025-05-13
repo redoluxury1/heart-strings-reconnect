@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Compass } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
@@ -18,6 +18,7 @@ const LetsWorkThisOut: React.FC<LetsWorkThisOutProps> = ({
 }) => {
   const { toast } = useToast();
   const navigate = useNavigate();
+  const [isAnimating, setIsAnimating] = useState(true);
   
   const handleReadyClick = () => {
     if (onReady) {
@@ -48,9 +49,12 @@ const LetsWorkThisOut: React.FC<LetsWorkThisOutProps> = ({
   return (
     <div className="bg-[#FDFBF9] rounded-xl border border-[#D7B4A8] shadow-sm p-6 max-w-xl mx-auto">
       <div className="flex flex-col items-center">
-        {/* Icon */}
+        {/* Icon with animation */}
         <div className="w-16 h-16 rounded-full bg-[#D3876A]/10 flex items-center justify-center mb-6">
-          <Compass className="h-7 w-7 text-[#D3876A]" />
+          <Compass 
+            className={`h-7 w-7 text-[#D3876A] ${isAnimating ? 'animate-rotate-compass' : ''}`} 
+            onAnimationEnd={() => setIsAnimating(false)}
+          />
         </div>
         
         {/* Header */}

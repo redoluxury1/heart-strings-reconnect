@@ -39,6 +39,16 @@
   }
 }
 
+/* New compass rotation animation */
+@keyframes rotateCompass {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .animate-flame-flicker {
   animation: flameFlicker 2s ease-in-out infinite;
 }
@@ -53,6 +63,11 @@
 
 .animate-puzzle-right {
   animation: puzzleRight 0.5s ease-out forwards;
+}
+
+/* New compass rotation class */
+.animate-rotate-compass {
+  animation: rotateCompass 1.2s ease-in-out forwards;
 }
 
 /* Position styles for puzzle pieces */
