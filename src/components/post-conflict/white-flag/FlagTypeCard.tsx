@@ -19,13 +19,11 @@ const FlagTypeCard = ({ flagType, isSelected, onClick }: FlagTypeCardProps) => {
       onClick={onClick}
     >
       <div className="flex items-center gap-2">
-        <div className={`h-8 w-8 flex items-center justify-center ${
-          isSelected ? 'text-[#c06b6b]' : 'text-[#c06b6b]'
-        }`}>
+        <div className="text-white">
           {flagType.id === 'reconnect' ? (
-            <IconComponent size={20} fill="#c06b6b" stroke="#c06b6b" />
+            <IconComponent size={20} fill="white" stroke="white" />
           ) : (
-            <IconComponent size={20} stroke="#c06b6b" />
+            <IconComponent size={20} stroke="white" />
           )}
         </div>
         
