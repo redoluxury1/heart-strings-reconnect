@@ -5,7 +5,6 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import FeatureCard from './still-us/FeatureCard';
 import getCardData from './still-us/CardData';
 import { useInterface } from '../../hooks/useInterfaceContext';
-import FloatingHearts from './still-us/FloatingHearts';
 
 const StillUsSection = () => {
   const isMobile = useIsMobile();
@@ -13,11 +12,6 @@ const StillUsSection = () => {
   
   return (
     <section className="py-12 bg-soft-blush border-t-2 border-b-2 border-[#6A4A74]/20 relative overflow-hidden">
-      {/* Add floating hearts as decorative background elements */}
-      <div className="absolute inset-0 pointer-events-none">
-        <FloatingHearts count={20} />
-      </div>
-      
       <ContentContainer>
         <div className="text-center mb-14 relative z-10">
           {/* Updated to use the new image */}
