@@ -8,7 +8,7 @@ export const getCardData = (): CardContent[] => {
     {
       title: "Mid-Fight",
       description: "Emotions are high? That's okay. Here's where you can pause, breathe, and calm things down before saying more.",
-      icon: React.createElement(Flame, { className: "h-6 w-6" }),
+      icon: React.createElement(Flame, { className: "h-6 w-6 text-white" }),
       tools: ["Time Out Timer", "Let's Try That Again", "What's Really Going On?"],
       comingSoonTools: ["Build a Bridge"],
       link: "/during-conflict",
@@ -22,7 +22,7 @@ export const getCardData = (): CardContent[] => {
     {
       title: "Post-Fight",
       description: "That was a lot. This space helps you process what just happened, understand what you need, and find clarity before reconnecting.",
-      icon: React.createElement(HeartCrack, { className: "h-6 w-6" }),
+      icon: React.createElement(HeartCrack, { className: "h-6 w-6 text-white" }),
       tools: ["Let's Work This Out", "Okay, but now what?", "Color Healing"],
       comingSoonTools: ["Build a Bridge"],
       link: "/post-conflict",
@@ -36,8 +36,8 @@ export const getCardData = (): CardContent[] => {
     {
       title: "Reconnecting",
       description: "Not fighting? Beautiful. Come here for small ways to feel closer, learn more about each other, and have fun.",
-      // Updated puzzle icon to have navy blue color
-      icon: React.createElement(Puzzle, { className: "h-6 w-6 text-[#2f3975]" }),
+      // Updated puzzle icon to have white color
+      icon: React.createElement(Puzzle, { className: "h-6 w-6 text-white" }),
       tools: ["Would You Rather: Couples Game", "Spin the Date Night Wheel", "Love Code Quiz", "Personality Blueprint"],
       link: "/reconnect",
       // Updated to mauve to light plum gradient

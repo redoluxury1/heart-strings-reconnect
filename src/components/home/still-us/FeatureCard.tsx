@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Link } from 'react-router-dom';
@@ -107,14 +108,8 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
             // Mobile layout (vertical)
             <>
               <div className="mb-5 flex items-center">
-                <div className={`p-3 rounded-full ${
-                  isPostFight ? 'bg-white/20' : 
-                  isReconnecting ? 'bg-mauve-rose/20' : 
-                  isMidFight ? 'bg-[#b25a44]/20' : 
-                  'bg-[#6A4A74]/20'
-                }`}>
-                  {renderIcon()}
-                </div>
+                {/* Removed the circular background div */}
+                {renderIcon()}
                 <h3 className={`ml-3 text-2xl md:text-3xl font-cormorant font-semibold ${textColor}`}>
                   {card.title}
                 </h3>
@@ -156,15 +151,9 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
             <div className="flex flex-col">
               {/* Header with icon and title together */}
               <div className="flex items-center mb-2">
-                <div className={`p-3 rounded-full ${
-                  isPostFight ? 'bg-white/20' : 
-                  isReconnecting ? 'bg-mauve-rose/20' : 
-                  isMidFight ? 'bg-[#b25a44]/20' : 
-                  'bg-[#6A4A74]/20'
-                } mr-2`}>
-                  {renderIcon()}
-                </div>
-                <h3 className={`text-2xl md:text-3xl font-cormorant font-semibold ${textColor}`}>
+                {/* Removed the circular background div */}
+                {renderIcon()}
+                <h3 className={`ml-2 text-2xl md:text-3xl font-cormorant font-semibold ${textColor}`}>
                   {card.title}
                 </h3>
               </div>
