@@ -12,9 +12,9 @@ export const getCardData = (): CardContent[] => {
       tools: ["Time Out Timer", "Let's Try That Again", "What's Really Going On?"],
       comingSoonTools: ["Build a Bridge"],
       link: "/during-conflict",
-      // Updated to terracotta-to-beige gradient
-      gradientClass: "bg-gradient-to-br from-peachy-terracotta to-[#f5f0e6]",
-      iconBgClass: "bg-peachy-terracotta/40",
+      // Adjusted to be a more true terracotta color rather than orange
+      gradientClass: "bg-gradient-to-br from-[#b25a44] to-[#f5f0e6]",
+      iconBgClass: "bg-[#b25a44]/40",
       buttonText: "Let's Slow Down",
       sectionHeader: "Let's Start Here:",
       visualEffect: "terracotta-plum-blend"
@@ -26,9 +26,9 @@ export const getCardData = (): CardContent[] => {
       tools: ["Let's Work This Out", "Okay, but now what?", "Color Healing"],
       comingSoonTools: ["Build a Bridge"],
       link: "/post-conflict",
-      // Updated to navy blue to lighter blue/grey gradient
-      gradientClass: "bg-gradient-to-br from-[#22254a] to-[#a8b1c1]",
-      iconBgClass: "bg-[#22254a]/70",
+      // Updated to a lighter navy blue gradient
+      gradientClass: "bg-gradient-to-br from-[#2f3975] to-[#a8b1c1]",
+      iconBgClass: "bg-[#2f3975]/70",
       buttonText: "Let's Reflect",
       sectionHeader: "How to Move Forward:",
       visualEffect: "starry-navy"
@@ -36,7 +36,8 @@ export const getCardData = (): CardContent[] => {
     {
       title: "Reconnecting",
       description: "Not fighting? Beautiful. Come here for small ways to feel closer, learn more about each other, and have fun.",
-      icon: React.createElement(Puzzle, { className: "h-6 w-6" }),
+      // Updated puzzle icon to have navy blue color
+      icon: React.createElement(Puzzle, { className: "h-6 w-6 text-[#2f3975]" }),
       tools: ["Would You Rather: Couples Game", "Spin the Date Night Wheel", "Love Code Quiz", "Personality Blueprint"],
       link: "/reconnect",
       // Updated to mauve to light plum gradient
@@ -44,7 +45,7 @@ export const getCardData = (): CardContent[] => {
       iconBgClass: "bg-mauve-rose/40",
       buttonText: "Let's Grow Closer",
       sectionHeader: "Grow Stronger:",
-      visualEffect: "playful-dots"
+      visualEffect: null // Removed the playful-dots visual effect
     },
   ];
 };

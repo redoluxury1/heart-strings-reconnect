@@ -26,7 +26,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
   // Button styles based on card type
   const defaultButtonStyles = "border-2 border-[#6A4A74] text-[#6A4A74] hover:bg-[#6A4A74]/10 font-medium";
   const reconnectingButtonStyles = "border-2 border-mauve-rose text-mauve-rose hover:bg-mauve-rose/10 font-medium";
-  const midFightButtonStyles = "border-2 border-peachy-terracotta text-peachy-terracotta hover:bg-peachy-terracotta/10 font-medium";
+  const midFightButtonStyles = "border-2 border-[#b25a44] text-[#b25a44] hover:bg-[#b25a44]/10 font-medium";
   
   let buttonStyles = defaultButtonStyles;
   if (isReconnecting) buttonStyles = reconnectingButtonStyles;
@@ -35,20 +35,16 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
   // Safely render the icon
   const renderIcon = () => {
     if (React.isValidElement(card.icon)) {
-      let iconColor = "text-[#6A4A74]";
-      if (isPostFight) iconColor = "text-white";
-      if (isReconnecting) iconColor = "text-mauve-rose";
-      if (isMidFight) iconColor = "text-peachy-terracotta";
-      
-      return React.cloneElement(card.icon as React.ReactElement, { 
-        className: iconColor
-      });
+      // We don't need to add classes here as they're already being set in the CardData.ts file
+      return card.icon;
     }
     return card.icon;
   };
   
   // Generate decorative elements based on visualEffect
   const renderDecorativeElements = () => {
+    if (!card.visualEffect) return null;
+    
     switch(card.visualEffect) {
       case 'starry-navy':
         return Array.from({ length: 12 }).map((_, i) => (
@@ -66,22 +62,6 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
           />
         ));
       
-      case 'playful-dots':
-        return Array.from({ length: 10 }).map((_, i) => (
-          <div 
-            key={i}
-            className="absolute rounded-full bg-white animate-bounce-soft"
-            style={{
-              width: `${Math.random() * 4 + 2}px`,
-              height: `${Math.random() * 4 + 2}px`,
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 2}s`,
-              opacity: 0.7
-            }}
-          />
-        ));
-      
       case 'terracotta-plum-blend':
         return Array.from({ length: 8 }).map((_, i) => (
           <div 
@@ -92,7 +72,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
               height: `${Math.random() * 25 + 15}px`,
               top: `${Math.random() * 100}%`,
               left: `${Math.random() * 100}%`,
-              background: i % 2 === 0 ? '#c97c5d' : '#e8dfea',
+              background: i % 2 === 0 ? '#b25a44' : '#e8dfea',
               opacity: 0.15,
               animationDelay: `${Math.random() * 3}s`,
               filter: 'blur(8px)'
@@ -110,7 +90,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
       <div className={`relative overflow-hidden h-full rounded-xl shadow-md p-6 md:p-7 ${card.gradientClass} border-2 ${
         isPostFight ? 'border-[#22254a]/30' : 
         isReconnecting ? 'border-mauve-rose/30' : 
-        isMidFight ? 'border-peachy-terracotta/30' : 
+        isMidFight ? 'border-[#b25a44]/30' : 
         'border-[#6A4A74]/30'
       }`}>
         {/* Visual effects decorative elements */}
@@ -130,7 +110,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
                 <div className={`p-3 rounded-full ${
                   isPostFight ? 'bg-white/20' : 
                   isReconnecting ? 'bg-mauve-rose/20' : 
-                  isMidFight ? 'bg-peachy-terracotta/20' : 
+                  isMidFight ? 'bg-[#b25a44]/20' : 
                   'bg-[#6A4A74]/20'
                 }`}>
                   {renderIcon()}
@@ -179,7 +159,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
                 <div className={`p-3 rounded-full ${
                   isPostFight ? 'bg-white/20' : 
                   isReconnecting ? 'bg-mauve-rose/20' : 
-                  isMidFight ? 'bg-peachy-terracotta/20' : 
+                  isMidFight ? 'bg-[#b25a44]/20' : 
                   'bg-[#6A4A74]/20'
                 } mr-2`}>
                   {renderIcon()}
