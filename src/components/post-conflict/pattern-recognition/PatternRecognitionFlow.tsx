@@ -1,155 +1,115 @@
-
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, ChevronRight } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 import { useSession } from '../context/SessionContext';
-import { patternQuizzes, commonPatterns } from './data/pattern-data';
-import { usePatternRecognition, PatternId } from './hooks/usePatternRecognition';
-import PatternList from './components/PatternList';
-import ReconnectionTips from './components/ReconnectionTips';
-import PatternIntroScreen from './components/PatternIntroScreen';
-import CyclePatternScreen from './components/CyclePatternScreen';
-import PatternDetailScreen from './components/PatternDetailScreen';
-import PatternRepairScreen from './components/PatternRepairScreen';
-import PursueDistanceDetailScreen from './components/PursueDistanceDetailScreen';
-import PursueDistanceRepairScreen from './components/PursueDistanceRepairScreen';
+import { useNavigate } from 'react-router-dom';
+import { RepairItem } from './types';
+import CreatePlanStep from './CreatePlanStep';
+import PlanCreatedStep from './PlanCreatedStep';
 import { reconnectionTips } from '@/data/reconnection-tips';
+import PatternRecognitionFlow from './PatternRecognitionFlow';
 
 interface PatternRecognitionFlowProps {
-  onClose?: () => void;
   fullScreen?: boolean;
+  onClose?: () => void;
 }
 
-const PatternRecognitionFlow: React.FC<PatternRecognitionFlowProps> = ({ 
-  onClose,
-  fullScreen = false
-}) => {
-  const navigate = useNavigate();
-  const { state, actions, helpers } = usePatternRecognition();
+const PatternRecognitionFlow: React.FC<PatternRecognitionFlowProps> = ({ fullScreen, onClose }) => {
+  const [currentStep, setCurrentStep] = useState(1);
   const { sessionData } = useSession();
+  const { toast } = useToast();
+  const navigate = useNavigate();
   
-  // Preload key images when component mounts
-  useEffect(() => {
-    const preloadImages = [
-      '/lovable-uploads/39110aa2-d4b1-4586-bd3f-56a1ae1053c8.png',
-      '/lovable-uploads/ff2e4176-28cc-47b9-b205-8c36e2d8aafe.png',
-    ];
-    
-    preloadImages.forEach(src => {
-      const img = new Image();
-      img.src = src;
-    });
-  }, []);
+  // Initialize repair actions from reconnection tips
+  const initialRepairItems = reconnectionTips
+    .slice(0, 8)
+    .map(tip => ({
+      id: tip.id,
+      text: tip.text,
+      selected: false
+    }));
   
-  const { 
-    selectedPattern, 
-    isShowingTips, 
-    showIntro,
-    showCyclePattern,
-    showPatternDetail,
-    showPatternRepair
-  } = state;
+  const [repairItems, setRepairItems] = useState<RepairItem[]>(initialRepairItems);
   
-  const { 
-    handlePatternSelect, 
-    handleGoBack, 
-    handleIntroComplete,
-    handleCyclePatternComplete,
-    handlePatternDetailComplete,
-  } = actions;
-  
-  const { getPatternSpecificTips } = helpers;
-  
-  const selectedPatternData = selectedPattern !== null 
-    ? commonPatterns.find(p => p.id.toString() === selectedPattern)
-    : null;
-  
-  const patternType = selectedPatternData?.patternType || null;
-  
-  const tipsToDisplay = selectedPatternData && patternType
-    ? getPatternSpecificTips(patternType)
-    : reconnectionTips.sort(() => 0.5 - Math.random()).slice(0, 3);
-  
-  // Navigate to Pause+Phrase section
-  const handleNavigateToPausePhrase = () => {
-    navigate('/during-conflict?section=pause-phrase');
+  const handleToggleItem = (id: number) => {
+    setRepairItems(items => 
+      items.map(item => 
+        item.id === id ? { ...item, selected: !item.selected } : item
+      )
+    );
   };
   
+  const handleAddCustomItem = (text: string) => {
+    const newId = Math.max(...repairItems.map(i => i.id)) + 1;
+    setRepairItems([
+      ...repairItems,
+      { id: newId, text, selected: true }
+    ]);
+  };
+  
+  const handleCreatePlan = () => {
+    const selectedItems = repairItems.filter(item => item.selected);
+    
+    if (selectedItems.length === 0) {
+      toast({
+        title: "No actions selected",
+        description: "Please select at least one repair action for your plan.",
+      });
+      return;
+    }
+    
+    setCurrentStep(2);
+    
+    toast({
+      title: "Repair plan created",
+      description: "Your custom repair plan has been saved.",
+    });
+  };
+
+  const handleSavePlan = () => {
+    toast({
+      title: "Plan saved",
+      description: "Your repair plan has been saved to your archive.",
+    });
+    
+    // Redirect to the archive page with the repair-plans tab active
+    navigate('/archive', { state: { activeTab: 'repair-plans' } });
+  };
+  
+  const handleGoBack = () => {
+    if (currentStep > 1) {
+      setCurrentStep(currentStep - 1);
+    }
+  };
+
+  const selectedItems = repairItems.filter(item => item.selected);
+
   return (
-    <div className="fixed inset-0 z-[100] bg-white overflow-y-auto">
-      <div className="min-h-screen p-6 md:p-8">
-        {/* Back to tools button for fullScreen mode */}
-        {(fullScreen && onClose) && (
-          <Button
-            variant="ghost"
-            className="mb-4"
-            onClick={onClose}
-            size="sm"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to tools
-          </Button>
-        )}
-        
-        {/* Show back button to pattern list specifically on pattern detail screens */}
-        {selectedPattern !== null && showPatternDetail && (
-          <Button
-            variant="ghost"
-            className="mb-4"
-            onClick={() => handlePatternSelect(null)}
-            size="sm"
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to patterns
-          </Button>
-        )}
-        
-        {/* For all other views, show back button when applicable except intro and cycle pattern */}
-        {!showIntro && !showCyclePattern && !showPatternDetail && (selectedPattern !== null || isShowingTips) && (
+    <div className="bg-white rounded-xl shadow-md overflow-hidden">
+      <div className="p-6 md:p-8">
+        {currentStep > 1 && (
           <Button
             variant="ghost"
             className="mb-4"
             onClick={handleGoBack}
-            size="sm"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back
           </Button>
         )}
         
-        {showIntro ? (
-          <PatternIntroScreen onContinue={handleIntroComplete} />
-        ) : showCyclePattern ? (
-          <CyclePatternScreen onContinue={handleCyclePatternComplete} />
-        ) : showPatternDetail ? (
-          patternType === 'pursue-distance' ? (
-            <PursueDistanceDetailScreen onContinue={handlePatternDetailComplete} />
-          ) : (
-            <PatternDetailScreen 
-              pattern={selectedPatternData} 
-              onContinue={handlePatternDetailComplete} 
-            />
-          )
-        ) : showPatternRepair ? (
-          patternType === 'pursue-distance' ? (
-            <PursueDistanceRepairScreen onContinue={handleNavigateToPausePhrase} />
-          ) : (
-            <PatternRepairScreen 
-              pattern={selectedPatternData}
-              onContinue={handleNavigateToPausePhrase}
-              buttonText="Practice in real life"
-            />
-          )
-        ) : isShowingTips ? (
-          <ReconnectionTips 
-            selectedPattern={selectedPatternData || null}
-            tipsToDisplay={tipsToDisplay}
+        {currentStep === 1 ? (
+          <CreatePlanStep 
+            repairItems={repairItems}
+            onToggleItem={handleToggleItem}
+            onCreatePlan={handleCreatePlan}
+            onAddCustomItem={handleAddCustomItem}
           />
         ) : (
-          <PatternList 
-            patterns={commonPatterns}
-            onPatternSelect={(patternId) => handlePatternSelect(patternId.toString())}
+          <PlanCreatedStep 
+            selectedItems={selectedItems}
+            onSavePlan={handleSavePlan}
           />
         )}
       </div>
