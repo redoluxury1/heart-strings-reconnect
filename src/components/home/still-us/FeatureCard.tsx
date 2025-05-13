@@ -18,7 +18,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
   // Text colors based on card
   const textColor = card.headerColor || "text-[#07183D]";
   const textColorMuted = "text-[#2E2E2E]";
-  const bulletColor = card.headerColor?.replace('text-', 'bg-') || "bg-[#07183D]";
+  const bulletColor = card.borderColor?.replace('border-', 'bg-') || "bg-[#07183D]";
   
   // Button styles based on UI spec
   const buttonStyles = "border-none bg-[#1C1C28] text-white hover:bg-[#2d2d3d] font-medium";
