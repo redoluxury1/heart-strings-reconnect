@@ -5,7 +5,7 @@ import { ArrowLeft } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useSession } from '../context/SessionContext';
 import { useNavigate } from 'react-router-dom';
-import { CommonPattern, PatternType } from './types';
+import { CommonPattern } from './types';
 import PatternIntroScreen from './components/PatternIntroScreen';
 import PatternList from './components/PatternList';
 import PatternDetailScreen from './components/PatternDetailScreen';
@@ -91,20 +91,20 @@ const PatternRecognitionFlow: React.FC<PatternRecognitionFlowProps> = ({ fullScr
         )}
         
         {currentStep === 'list' && (
-          <PatternList onSelectPattern={handlePatternSelect} />
+          <PatternList onPatternSelect={handlePatternSelect} />
         )}
         
         {currentStep === 'detail' && selectedPattern && (
           <PatternDetailScreen 
             pattern={selectedPattern} 
-            onContinueToRepair={handleGoToRepair} 
+            onContinue={handleGoToRepair} 
           />
         )}
         
         {currentStep === 'repair' && selectedPattern && (
           <PatternRepairScreen 
             pattern={selectedPattern}
-            onFinish={handleStartOver}
+            onContinue={handleStartOver}
           />
         )}
       </div>
