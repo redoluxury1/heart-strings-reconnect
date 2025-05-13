@@ -16,18 +16,33 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
   
   // Check if this is the Post-Fight card to apply white text
   const isPostFight = card.title === "Post-Fight";
+  const isReconnecting = card.title === "Reconnecting";
+  const isMidFight = card.title === "Mid-Fight";
   
-  // Updated text colors - use white for Post-Fight, navy for others
+  // Updated text colors based on card type
   const textColor = isPostFight ? "text-white" : "text-[#07183D]";
   const textColorMuted = isPostFight ? "text-white/90" : "text-[#07183D]";
   const bulletColor = isPostFight ? "bg-white" : "bg-[#07183D]";
-  const buttonStyles = "border-2 border-[#6A4A74] text-[#6A4A74] hover:bg-[#6A4A74]/10 font-medium";
+  
+  // Button styles based on card type
+  const defaultButtonStyles = "border-2 border-[#6A4A74] text-[#6A4A74] hover:bg-[#6A4A74]/10 font-medium";
+  const reconnectingButtonStyles = "border-2 border-mauve-rose text-mauve-rose hover:bg-mauve-rose/10 font-medium";
+  const midFightButtonStyles = "border-2 border-peachy-terracotta text-peachy-terracotta hover:bg-peachy-terracotta/10 font-medium";
+  
+  let buttonStyles = defaultButtonStyles;
+  if (isReconnecting) buttonStyles = reconnectingButtonStyles;
+  if (isMidFight) buttonStyles = midFightButtonStyles;
 
   // Safely render the icon
   const renderIcon = () => {
     if (React.isValidElement(card.icon)) {
+      let iconColor = "text-[#6A4A74]";
+      if (isPostFight) iconColor = "text-white";
+      if (isReconnecting) iconColor = "text-mauve-rose";
+      if (isMidFight) iconColor = "text-peachy-terracotta";
+      
       return React.cloneElement(card.icon as React.ReactElement, { 
-        className: isPostFight ? "text-white" : "text-[#6A4A74]"
+        className: iconColor
       });
     }
     return card.icon;
@@ -35,12 +50,22 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
 
   return (
     <div className="transition-all duration-300 hover:scale-[1.02] focus-within:scale-[1.02]">
-      <div className={`h-full rounded-xl shadow-md p-6 md:p-7 bg-gradient-to-b ${card.gradientClass} border-2 border-[#6A4A74]/30`}>
+      <div className={`h-full rounded-xl shadow-md p-6 md:p-7 bg-gradient-to-b ${card.gradientClass} border-2 ${
+        isPostFight ? 'border-[#22254a]/30' : 
+        isReconnecting ? 'border-mauve-rose/30' : 
+        isMidFight ? 'border-peachy-terracotta/30' : 
+        'border-[#6A4A74]/30'
+      }`}>
         {isMobile ? (
           // Mobile layout (vertical)
           <>
             <div className="mb-5 flex items-center">
-              <div className={`p-3 rounded-full ${isPostFight ? 'bg-white/20' : 'bg-[#6A4A74]/20'}`}>
+              <div className={`p-3 rounded-full ${
+                isPostFight ? 'bg-white/20' : 
+                isReconnecting ? 'bg-mauve-rose/20' : 
+                isMidFight ? 'bg-peachy-terracotta/20' : 
+                'bg-[#6A4A74]/20'
+              }`}>
                 {renderIcon()}
               </div>
               <h3 className={`ml-3 text-2xl md:text-3xl font-cormorant font-semibold ${textColor}`}>
@@ -84,7 +109,12 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
           <div className="flex flex-col">
             {/* Header with icon and title together */}
             <div className="flex items-center mb-2">
-              <div className={`p-3 rounded-full ${isPostFight ? 'bg-white/20' : 'bg-[#6A4A74]/20'} mr-2`}>
+              <div className={`p-3 rounded-full ${
+                isPostFight ? 'bg-white/20' : 
+                isReconnecting ? 'bg-mauve-rose/20' : 
+                isMidFight ? 'bg-peachy-terracotta/20' : 
+                'bg-[#6A4A74]/20'
+              } mr-2`}>
                 {renderIcon()}
               </div>
               <h3 className={`text-2xl md:text-3xl font-cormorant font-semibold ${textColor}`}>

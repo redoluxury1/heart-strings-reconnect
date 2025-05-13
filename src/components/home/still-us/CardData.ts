@@ -12,8 +12,9 @@ export const getCardData = (): CardContent[] => {
       tools: ["Time Out Timer", "Let's Try That Again", "What's Really Going On?"],
       comingSoonTools: ["Build a Bridge"],
       link: "/during-conflict",
-      gradientClass: "from-[#E2725B]/30 to-[#E2725B]/10",
-      iconBgClass: "bg-[#E2725B]/30",
+      // Updated to peachy-terracotta color
+      gradientClass: "from-peachy-terracotta/30 to-peachy-terracotta/10",
+      iconBgClass: "bg-peachy-terracotta/30",
       buttonText: "Let's Slow Down",
       sectionHeader: "Let's Start Here:",
     },
@@ -24,7 +25,7 @@ export const getCardData = (): CardContent[] => {
       tools: ["Let's Work This Out", "Okay, but now what?", "Color Healing"],
       comingSoonTools: ["Build a Bridge"],
       link: "/post-conflict",
-      // Updated to navy blue with white text
+      // Kept navy blue with white text
       gradientClass: "from-[#22254a]/80 to-[#22254a]/50",
       iconBgClass: "bg-[#22254a]/60",
       buttonText: "Let's Reflect",
@@ -36,8 +37,9 @@ export const getCardData = (): CardContent[] => {
       icon: React.createElement(Puzzle, { className: "h-6 w-6" }),
       tools: ["Would You Rather: Couples Game", "Spin the Date Night Wheel", "Love Code Quiz", "Personality Blueprint"],
       link: "/reconnect",
-      gradientClass: "from-soft-cream/50 to-soft-cream/20",
-      iconBgClass: "bg-soft-cream/50",
+      // Updated to mauve-rose color
+      gradientClass: "from-mauve-rose/30 to-mauve-rose/10",
+      iconBgClass: "bg-mauve-rose/30",
       buttonText: "Let's Grow Closer",
       sectionHeader: "Grow Stronger:",
     },
