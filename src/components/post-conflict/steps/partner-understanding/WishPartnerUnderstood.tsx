@@ -51,10 +51,9 @@ const WishPartnerUnderstood: React.FC<WishPartnerUnderstoodProps> = ({
   return (
     <div className="bg-[#FDFBF9] rounded-xl border border-[#E8DAD3] shadow-sm p-6 max-w-xl mx-auto">
       <div className="flex flex-col items-center">
-        {/* Updated icon with new styling */}
-        <div className="w-16 h-16 rounded-full bg-[#D3876A]/10 flex items-center justify-center mb-6 relative">
+        {/* Updated icon with refined styling - removed sparkle */}
+        <div className="w-16 h-16 rounded-full bg-[#D3876A]/10 flex items-center justify-center mb-6">
           <HeartHandshake className="h-8 w-8 text-[#D3876A] animate-pulse-slow" strokeWidth={1.5} />
-          <span className="absolute top-3 right-3 text-[#D3876A] animate-sparkle">✨</span>
         </div>
 
         {/* Header */}
