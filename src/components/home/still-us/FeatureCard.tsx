@@ -29,8 +29,8 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
     bulletColor = "bg-mauve-rose"; // Pink for reconnecting
   }
   
-  // Button styles based on UI spec
-  const buttonStyles = "border-none bg-[#1C1C28] text-white hover:bg-[#2d2d3d] font-medium";
+  // Button styles changed to navy blue instead of dark gray/black
+  const buttonStyles = "border-none bg-[#2f3975] text-white hover:bg-[#3f4985] font-medium";
 
   // Safely render the icon
   const renderIcon = () => {
