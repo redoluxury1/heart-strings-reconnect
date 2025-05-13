@@ -18,7 +18,16 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
   // Text colors based on card
   const textColor = card.headerColor || "text-[#07183D]";
   const textColorMuted = "text-[#2E2E2E]";
-  const bulletColor = card.borderColor?.replace('border-', 'bg-') || "bg-[#07183D]";
+  
+  // Ensure bullet color is properly set for each card type
+  let bulletColor = "bg-[#07183D]"; // Default
+  if (card.title === "Post-Fight") {
+    bulletColor = "bg-[#2f3975]"; // Navy for post-fight
+  } else if (card.title === "Mid-Fight") {
+    bulletColor = "bg-[#b25a44]"; // Red for mid-fight
+  } else if (card.title === "Reconnecting") {
+    bulletColor = "bg-mauve-rose"; // Pink for reconnecting
+  }
   
   // Button styles based on UI spec
   const buttonStyles = "border-none bg-[#1C1C28] text-white hover:bg-[#2d2d3d] font-medium";
