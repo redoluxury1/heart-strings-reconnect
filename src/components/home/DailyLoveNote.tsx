@@ -50,25 +50,24 @@ const DailyLoveNote = () => {
   };
   
   return (
-    <div className="bg-soft-cream py-12 md:py-16">
-      <div className="container mx-auto px-4 max-w-md">
-        <div className="text-center mb-6">
-          <h2 className="font-cormorant text-4xl md:text-5xl text-[#743f4f] mb-3">
+    <div className="bg-soft-cream py-8 md:py-12">
+      <div className="container mx-auto px-4 max-w-sm">
+        <div className="text-center mb-4">
+          <h2 className="font-cormorant text-3xl md:text-4xl text-[#743f4f] mb-2">
             Today's Love Note
           </h2>
-          <p className="text-[#743f4f] text-lg md:text-xl font-cormorant">
+          <p className="text-[#743f4f] text-base font-cormorant">
             A moment of appreciation, in your own words.
           </p>
         </div>
         
-        <div className="relative mt-8 mb-6">
+        <div className="relative mt-6 mb-5">
           <Textarea
             placeholder={todaysPrompt}
             value={loveNote}
             onChange={(e) => setLoveNote(e.target.value)}
-            className="min-h-[120px] md:min-h-[140px] p-6 text-[#743f4f] bg-white border-2 border-[#d3a6a6] rounded-3xl text-lg placeholder:text-[#743f4f]/70 focus-visible:ring-[#d3a6a6] focus-visible:ring-offset-0 focus-visible:border-[#d3a6a6]"
+            className="min-h-[100px] md:min-h-[120px] p-5 text-[#743f4f] bg-white border-2 border-[#d3a6a6] rounded-3xl text-lg placeholder:text-[#743f4f]/70 focus-visible:ring-[#d3a6a6] focus-visible:ring-offset-0 focus-visible:border-[#d3a6a6]"
           />
-          {/* Heart icon removed as requested */}
         </div>
         
         <div className="flex justify-center">
