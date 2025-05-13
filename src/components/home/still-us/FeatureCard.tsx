@@ -73,7 +73,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
             <Link to={card.link} className="block mt-auto">
               <Button 
                 variant="outline" 
-                className={`w-full ${isPostFight ? "border-white text-white hover:bg-white/10" : buttonStyles} transition-colors`}
+                className={`w-full ${isPostFight ? "border-white text-[#07183D] hover:bg-white/10" : buttonStyles} transition-colors`}
               >
                 {card.buttonText}
               </Button>
@@ -120,7 +120,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
             <Link to={card.link} className="block">
               <Button 
                 variant="outline" 
-                className={`w-full ${isPostFight ? "border-white text-white hover:bg-white/10" : buttonStyles} transition-colors`}
+                className={`w-full ${isPostFight ? "border-white text-[#07183D] hover:bg-white/10" : buttonStyles} transition-colors`}
               >
                 {card.buttonText}
               </Button>
