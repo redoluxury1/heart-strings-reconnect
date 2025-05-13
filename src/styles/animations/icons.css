@@ -64,11 +64,13 @@
   transform: translateX(10px);
 }
 
-/* Zigzag line style for heart break effect */
+/* Zigzag line style for heart break effect - updated to only use zigzag pattern */
 .zigzag-line {
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-  background-image: linear-gradient(to bottom, transparent, transparent 45%, #2f3975 45%, #2f3975 55%, transparent 55%, transparent);
-  background-size: 100% 20px;
+  background-image: linear-gradient(to bottom, 
+    transparent, transparent 45%, 
+    #2f3975 45%, #2f3975 55%, 
+    transparent 55%, transparent);
+  background-size: 8px 8px;
   background-repeat: repeat-y;
   clip-path: inset(0 0 100% 0);
 }

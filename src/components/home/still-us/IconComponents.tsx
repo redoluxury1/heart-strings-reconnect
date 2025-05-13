@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Flame, HeartCrack, Puzzle } from 'lucide-react';
 import { useScrollReveal } from '@/hooks/use-scroll-reveal';
@@ -25,9 +26,9 @@ export const HeartBreakIcon: React.FC<{ className?: string }> = ({ className }) 
       <HeartCrack 
         className={`h-7 w-7 text-[#2f3975] ${className}`} 
       />
-      {/* Only keeping the zigzag line that animates for the heart break effect */}
+      {/* Only using the zigzag line for the heart break effect, removing the straight line */}
       <div 
-        className={`absolute top-1/2 left-1/2 w-[2px] h-[60%] bg-[#2f3975] transform -translate-x-1/2 -translate-y-1/2 zigzag-line ${
+        className={`absolute top-1/4 left-1/2 w-[2px] h-[60%] transform -translate-x-1/2 zigzag-line ${
           isVisible ? 'animate-heart-break' : ''
         }`}
       />
