@@ -1,5 +1,4 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Compass } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
@@ -29,6 +28,11 @@ const LetsWorkThisOut: React.FC<LetsWorkThisOutProps> = ({
   const [selectedIntent, setSelectedIntent] = useState<string>('');
   const [userPerspective, setUserPerspective] = useState<string>('');
   const [userUnderstanding, setUserUnderstanding] = useState<string>('');
+  
+  // Add effect to scroll to top whenever the currentStep changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentStep]);
   
   const handleReadyClick = () => {
     setFlow('set-tone');
