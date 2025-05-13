@@ -12,11 +12,12 @@ export const getCardData = (): CardContent[] => {
       tools: ["Time Out Timer", "Let's Try That Again", "What's Really Going On?"],
       comingSoonTools: ["Build a Bridge"],
       link: "/during-conflict",
-      // Updated to peachy-terracotta color
-      gradientClass: "from-peachy-terracotta/30 to-peachy-terracotta/10",
-      iconBgClass: "bg-peachy-terracotta/30",
+      // Updated to terracotta-to-plum gradient
+      gradientClass: "bg-gradient-to-br from-peachy-terracotta/80 to-[#8a6f8e]/60",
+      iconBgClass: "bg-peachy-terracotta/40",
       buttonText: "Let's Slow Down",
       sectionHeader: "Let's Start Here:",
+      visualEffect: "terracotta-plum-blend"
     },
     {
       title: "Post-Fight",
@@ -25,11 +26,12 @@ export const getCardData = (): CardContent[] => {
       tools: ["Let's Work This Out", "Okay, but now what?", "Color Healing"],
       comingSoonTools: ["Build a Bridge"],
       link: "/post-conflict",
-      // Kept navy blue with white text
-      gradientClass: "from-[#22254a]/80 to-[#22254a]/50",
-      iconBgClass: "bg-[#22254a]/60",
+      // Kept navy blue with starry speckle effect
+      gradientClass: "bg-gradient-to-br from-[#22254a]/90 to-[#22254a]/70",
+      iconBgClass: "bg-[#22254a]/70",
       buttonText: "Let's Reflect",
       sectionHeader: "How to Move Forward:",
+      visualEffect: "starry-navy"
     },
     {
       title: "Reconnecting",
@@ -37,11 +39,12 @@ export const getCardData = (): CardContent[] => {
       icon: React.createElement(Puzzle, { className: "h-6 w-6" }),
       tools: ["Would You Rather: Couples Game", "Spin the Date Night Wheel", "Love Code Quiz", "Personality Blueprint"],
       link: "/reconnect",
-      // Updated to mauve-rose color
-      gradientClass: "from-mauve-rose/30 to-mauve-rose/10",
-      iconBgClass: "bg-mauve-rose/30",
+      // Updated to mauve with light dots
+      gradientClass: "bg-gradient-to-br from-mauve-rose/70 to-mauve-rose/40",
+      iconBgClass: "bg-mauve-rose/40",
       buttonText: "Let's Grow Closer",
       sectionHeader: "Grow Stronger:",
+      visualEffect: "playful-dots"
     },
   ];
 };

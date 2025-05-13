@@ -13,4 +13,5 @@ export type CardContent = {
   iconBgClass: string;
   buttonText: string;
   sectionHeader: string;
+  visualEffect?: string;
 };
