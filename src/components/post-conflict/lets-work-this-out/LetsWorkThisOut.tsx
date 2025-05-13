@@ -6,6 +6,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useNavigate } from 'react-router-dom';
 import SetToneTool from './SetToneTool';
 import WhereIsYourHeadAt from '@/components/post-conflict/steps/emotional-check-in/WhereIsYourHeadAt';
+import YourPerspective from '@/components/post-conflict/steps/perspective/YourPerspective';
 import { useSession } from '@/components/post-conflict/context/SessionContext';
 
 interface LetsWorkThisOutProps {
@@ -25,6 +26,7 @@ const LetsWorkThisOut: React.FC<LetsWorkThisOutProps> = ({
   const { currentStep, setCurrentStep } = useSession();
   const [flow, setFlow] = useState<'intro' | 'set-tone'>('intro');
   const [selectedIntent, setSelectedIntent] = useState<string>('');
+  const [userPerspective, setUserPerspective] = useState<string>('');
   
   const handleReadyClick = () => {
     setFlow('set-tone');
@@ -60,6 +62,19 @@ const LetsWorkThisOut: React.FC<LetsWorkThisOutProps> = ({
   const handleBackToIntro = () => {
     setFlow('intro');
     setCurrentStep(0); // Go back to the intro step
+  };
+
+  const handleEmotionalCheckComplete = () => {
+    setCurrentStep(3); // Move to the perspective step
+  };
+
+  const handlePerspectiveComplete = (perspective: string) => {
+    setUserPerspective(perspective);
+    toast({
+      title: "Perspective saved",
+      description: "Thank you for sharing your perspective.",
+    });
+    // Setting step 4 would be handled by the component itself
   };
   
   // Show the appropriate content based on current step
@@ -116,7 +131,10 @@ const LetsWorkThisOut: React.FC<LetsWorkThisOutProps> = ({
         return <SetToneTool onComplete={handleToneSelected} onBack={handleBackToIntro} />;
         
       case 2: // Emotional check-in
-        return <WhereIsYourHeadAt />;
+        return <WhereIsYourHeadAt onComplete={handleEmotionalCheckComplete} />;
+        
+      case 3: // Your perspective
+        return <YourPerspective onComplete={handlePerspectiveComplete} />;
         
       default:
         return <div>Loading...</div>;

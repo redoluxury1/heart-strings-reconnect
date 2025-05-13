@@ -46,15 +46,15 @@
 @keyframes gentle-pulse {
   0% {
     transform: scale(1);
-    opacity: 0.8;
+    opacity: 0.9;
   }
   50% {
-    transform: scale(1.1);
+    transform: scale(1.05);
     opacity: 1;
   }
   100% {
     transform: scale(1);
-    opacity: 0.8;
+    opacity: 0.9;
   }
 }
 
@@ -72,4 +72,21 @@
 
 .animate-gentle-pulse {
   animation: gentle-pulse 2s ease-in-out infinite;
+}
+
+/* Rotating compass animation */
+@keyframes rotate-compass {
+  0% {
+    transform: rotate(-10deg);
+  }
+  50% {
+    transform: rotate(10deg);
+  }
+  100% {
+    transform: rotate(-10deg);
+  }
+}
+
+.animate-rotate-compass {
+  animation: rotate-compass 3s ease-in-out 2;
 }

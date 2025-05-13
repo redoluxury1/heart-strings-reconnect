@@ -12,7 +12,12 @@ interface EmotionChip {
   category: string;
 }
 
-const WhereIsYourHeadAt = () => {
+interface WhereIsYourHeadAtProps {
+  onComplete?: () => void;
+  onBack?: () => void;
+}
+
+const WhereIsYourHeadAt: React.FC<WhereIsYourHeadAtProps> = ({ onComplete, onBack }) => {
   const { toast } = useToast();
   const { setCurrentStep } = useSession();
   const [selectedEmotions, setSelectedEmotions] = useState<string[]>([]);
@@ -106,9 +111,22 @@ const WhereIsYourHeadAt = () => {
     }
 
     // Here you would typically save the selected emotions to your state
-    // For now, we'll just log them and advance to the next step
     console.log("Selected emotions:", selectedEmotions);
-    setCurrentStep(prevStep => prevStep + 1);
+    
+    // Fixed: Now setting a fixed number instead of using a function
+    setCurrentStep(3);
+    
+    // Call the onComplete callback if provided
+    if (onComplete) {
+      onComplete();
+    }
+  };
+
+  const handleBack = () => {
+    if (onBack) {
+      onBack();
+    }
+    setCurrentStep(1);
   };
 
   // Function to get all emotions (predefined + custom)
@@ -213,13 +231,22 @@ const WhereIsYourHeadAt = () => {
           </div>
         </div>
 
-        {/* CTA Button */}
-        <Button
-          className="mt-8 bg-[#5D3A5A] hover:bg-[#5D3A5A]/90 text-white rounded-full px-6 py-3 font-medium"
-          onClick={handleNext}
-        >
-          Next
-        </Button>
+        {/* Navigation buttons */}
+        <div className="flex w-full justify-between items-center mt-8">
+          <Button
+            variant="outline"
+            onClick={handleBack}
+            className="border-[#D9B9AF] text-[#3A3A3A] hover:bg-[#F8F5F3]"
+          >
+            Back
+          </Button>
+          <Button
+            className="bg-[#5D3A5A] hover:bg-[#5D3A5A]/90 text-white rounded-full px-6"
+            onClick={handleNext}
+          >
+            Next
+          </Button>
+        </div>
       </div>
     </div>
   );
