@@ -14,4 +14,6 @@ export type CardContent = {
   buttonText: string;
   sectionHeader: string;
   visualEffect?: string;
+  borderColor?: string;
+  headerColor?: string;
 };

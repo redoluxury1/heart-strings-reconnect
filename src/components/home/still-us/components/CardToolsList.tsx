@@ -6,7 +6,6 @@ interface CardToolsListProps {
   comingSoonTools?: string[];
   bulletColor: string;
   textColorMuted: string;
-  isPostFight: boolean;
   isDesktop?: boolean;
 }
 
@@ -15,7 +14,6 @@ const CardToolsList: React.FC<CardToolsListProps> = ({
   comingSoonTools, 
   bulletColor, 
   textColorMuted, 
-  isPostFight,
   isDesktop = false
 }) => {
   return (
@@ -30,7 +28,7 @@ const CardToolsList: React.FC<CardToolsListProps> = ({
         <div key={idx} className="flex items-center">
           <span className={`h-1.5 w-1.5 rounded-full ${bulletColor} mr-2`}></span>
           <span className={textColorMuted}>
-            {tool} <span className={`text-xs ${isPostFight ? "text-white/70" : "text-[#07183D]/70"}`}>(Coming Soon)</span>
+            {tool} <span className="text-xs text-[#3A3A3A]/70">(Coming Soon)</span>
           </span>
         </div>
       ))}

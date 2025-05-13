@@ -10,7 +10,6 @@ interface MobileCardContentProps {
   textColor: string;
   textColorMuted: string;
   bulletColor: string;
-  isPostFight: boolean;
   buttonStyles: string;
   renderIcon: () => React.ReactNode;
 }
@@ -20,20 +19,21 @@ const MobileCardContent: React.FC<MobileCardContentProps> = ({
   textColor,
   textColorMuted,
   bulletColor,
-  isPostFight,
   buttonStyles,
   renderIcon
 }) => {
   return (
     <>
-      <div className="mb-5 flex items-center">
-        {renderIcon()}
-        <h3 className={`ml-3 text-2xl md:text-3xl font-cormorant font-semibold ${textColor}`}>
+      <div className="mb-4 flex items-center">
+        <div className="mr-3">
+          {renderIcon()}
+        </div>
+        <h3 className={`text-2xl md:text-3xl font-cormorant font-semibold ${textColor}`}>
           {card.title}
         </h3>
       </div>
       
-      <p className={`${textColorMuted} text-sm md:text-base mb-5`}>
+      <p className={`${textColorMuted} text-base mb-5 leading-relaxed`}>
         {card.description}
       </p>
       
@@ -43,15 +43,13 @@ const MobileCardContent: React.FC<MobileCardContentProps> = ({
           tools={card.tools} 
           comingSoonTools={card.comingSoonTools} 
           bulletColor={bulletColor} 
-          textColorMuted={textColorMuted} 
-          isPostFight={isPostFight}
+          textColorMuted={textColorMuted}
         />
       </div>
       
       <Link to={card.link} className="block mt-auto">
         <Button 
-          variant="outline" 
-          className={`w-full ${isPostFight ? "border-white text-white hover:bg-white/10" : buttonStyles} transition-colors`}
+          className={`w-full ${buttonStyles} py-3 px-5 rounded-lg transition-colors`}
         >
           {card.buttonText}
         </Button>

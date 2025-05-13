@@ -15,24 +15,13 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
   const isMobile = useIsMobile();
   const { colors } = useInterface();
   
-  // Check if this is the Post-Fight card to apply white text
-  const isPostFight = card.title === "Post-Fight";
-  const isReconnecting = card.title === "Reconnecting";
-  const isMidFight = card.title === "Mid-Fight";
+  // Text colors based on card
+  const textColor = card.headerColor || "text-[#07183D]";
+  const textColorMuted = "text-[#2E2E2E]";
+  const bulletColor = card.headerColor?.replace('text-', 'bg-') || "bg-[#07183D]";
   
-  // Updated text colors based on card type
-  const textColor = isPostFight ? "text-white" : "text-[#07183D]";
-  const textColorMuted = isPostFight ? "text-white/90" : "text-[#07183D]/90";
-  const bulletColor = isPostFight ? "bg-white" : "bg-[#07183D]";
-  
-  // Button styles based on card type
-  const defaultButtonStyles = "border-2 border-[#6A4A74] text-[#6A4A74] hover:bg-[#6A4A74]/10 font-medium";
-  const reconnectingButtonStyles = "border-2 border-mauve-rose text-mauve-rose hover:bg-mauve-rose/10 font-medium";
-  const midFightButtonStyles = "border-2 border-[#b25a44] text-[#b25a44] hover:bg-[#b25a44]/10 font-medium";
-  
-  let buttonStyles = defaultButtonStyles;
-  if (isReconnecting) buttonStyles = reconnectingButtonStyles;
-  if (isMidFight) buttonStyles = midFightButtonStyles;
+  // Button styles based on UI spec
+  const buttonStyles = "border-none bg-[#1C1C28] text-white hover:bg-[#2d2d3d] font-medium";
 
   // Safely render the icon
   const renderIcon = () => {
@@ -43,20 +32,10 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
   };
 
   return (
-    <div className="transition-all duration-300 hover:scale-[1.02] focus-within:scale-[1.02]">
-      <div className={`relative overflow-hidden h-full rounded-xl shadow-md p-6 md:p-7 ${card.gradientClass} border-2 ${
-        isPostFight ? 'border-[#22254a]/30' : 
-        isReconnecting ? 'border-mauve-rose/30' : 
-        isMidFight ? 'border-[#b25a44]/30' : 
-        'border-[#6A4A74]/30'
-      }`}>
+    <div className="transition-all duration-300 mb-5">
+      <div className={`relative overflow-hidden h-full rounded-xl shadow-sm p-6 ${card.gradientClass} border ${card.borderColor || 'border-[#6A4A74]/30'}`}>
         {/* Visual effects decorative elements */}
         <DecorativeElements visualEffect={card.visualEffect} />
-        
-        {/* Add vignette effect for Post-Fight card */}
-        {isPostFight && (
-          <div className="absolute inset-0 pointer-events-none rounded-xl bg-gradient-to-t from-[#161929]/40 via-transparent to-transparent" />
-        )}
         
         {/* Content with proper z-index to appear above decorations */}
         <div className="relative z-10">
@@ -66,7 +45,6 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
               textColor={textColor}
               textColorMuted={textColorMuted}
               bulletColor={bulletColor}
-              isPostFight={isPostFight}
               buttonStyles={buttonStyles}
               renderIcon={renderIcon}
             />
@@ -76,7 +54,6 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
               textColor={textColor}
               textColorMuted={textColorMuted}
               bulletColor={bulletColor}
-              isPostFight={isPostFight}
               buttonStyles={buttonStyles}
               renderIcon={renderIcon}
             />

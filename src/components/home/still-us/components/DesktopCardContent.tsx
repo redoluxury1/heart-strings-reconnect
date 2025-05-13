@@ -10,7 +10,6 @@ interface DesktopCardContentProps {
   textColor: string;
   textColorMuted: string;
   bulletColor: string;
-  isPostFight: boolean;
   buttonStyles: string;
   renderIcon: () => React.ReactNode;
 }
@@ -20,20 +19,21 @@ const DesktopCardContent: React.FC<DesktopCardContentProps> = ({
   textColor,
   textColorMuted,
   bulletColor,
-  isPostFight,
   buttonStyles,
   renderIcon
 }) => {
   return (
     <div className="flex flex-col">
-      <div className="flex items-center mb-2">
-        {renderIcon()}
-        <h3 className={`ml-2 text-2xl md:text-3xl font-cormorant font-semibold ${textColor}`}>
+      <div className="flex items-center mb-3">
+        <div className="mr-3">
+          {renderIcon()}
+        </div>
+        <h3 className={`text-2xl md:text-3xl font-cormorant font-semibold ${textColor}`}>
           {card.title}
         </h3>
       </div>
       
-      <p className={`${textColorMuted} text-sm md:text-base mb-4`}>
+      <p className={`${textColorMuted} text-base mb-4 leading-relaxed`}>
         {card.description}
       </p>
       
@@ -43,16 +43,14 @@ const DesktopCardContent: React.FC<DesktopCardContentProps> = ({
           tools={card.tools} 
           comingSoonTools={card.comingSoonTools} 
           bulletColor={bulletColor} 
-          textColorMuted={textColorMuted} 
-          isPostFight={isPostFight}
+          textColorMuted={textColorMuted}
           isDesktop={true}
         />
       </div>
       
       <Link to={card.link} className="block">
         <Button 
-          variant="outline" 
-          className={`w-full ${isPostFight ? "border-white text-white hover:bg-white/10" : buttonStyles} transition-colors`}
+          className={`w-full ${buttonStyles} py-3 px-5 rounded-lg transition-colors`}
         >
           {card.buttonText}
         </Button>
