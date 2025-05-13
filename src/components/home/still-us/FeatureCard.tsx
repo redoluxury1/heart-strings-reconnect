@@ -1,10 +1,11 @@
 
 import React from 'react';
-import { Button } from "@/components/ui/button";
-import { Link } from 'react-router-dom';
 import { CardContent } from './types';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useInterface } from '@/hooks/useInterfaceContext';
+import DecorativeElements from './components/DecorativeElements';
+import MobileCardContent from './components/MobileCardContent';
+import DesktopCardContent from './components/DesktopCardContent';
 
 interface FeatureCardProps {
   card: CardContent;
@@ -36,54 +37,9 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
   // Safely render the icon
   const renderIcon = () => {
     if (React.isValidElement(card.icon)) {
-      // We don't need to add classes here as they're already being set in the CardData.ts file
       return card.icon;
     }
     return card.icon;
-  };
-  
-  // Generate decorative elements based on visualEffect
-  const renderDecorativeElements = () => {
-    if (!card.visualEffect) return null;
-    
-    switch(card.visualEffect) {
-      case 'starry-navy':
-        return Array.from({ length: 12 }).map((_, i) => (
-          <div 
-            key={i}
-            className="absolute rounded-full bg-white animate-twinkle"
-            style={{
-              width: `${Math.random() * 2 + 1}px`,
-              height: `${Math.random() * 2 + 1}px`,
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 3}s`,
-              opacity: 0.7
-            }}
-          />
-        ));
-      
-      case 'terracotta-plum-blend':
-        return Array.from({ length: 8 }).map((_, i) => (
-          <div 
-            key={i}
-            className="absolute rounded-full animate-float bg-opacity-30"
-            style={{
-              width: `${Math.random() * 25 + 15}px`,
-              height: `${Math.random() * 25 + 15}px`,
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-              background: i % 2 === 0 ? '#b25a44' : '#e8dfea',
-              opacity: 0.15,
-              animationDelay: `${Math.random() * 3}s`,
-              filter: 'blur(8px)'
-            }}
-          />
-        ));
-        
-      default:
-        return null;
-    }
   };
 
   return (
@@ -95,7 +51,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
         'border-[#6A4A74]/30'
       }`}>
         {/* Visual effects decorative elements */}
-        {renderDecorativeElements()}
+        <DecorativeElements visualEffect={card.visualEffect} />
         
         {/* Add vignette effect for Post-Fight card */}
         {isPostFight && (
@@ -105,93 +61,25 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
         {/* Content with proper z-index to appear above decorations */}
         <div className="relative z-10">
           {isMobile ? (
-            // Mobile layout (vertical)
-            <>
-              <div className="mb-5 flex items-center">
-                {/* Removed the circular background div */}
-                {renderIcon()}
-                <h3 className={`ml-3 text-2xl md:text-3xl font-cormorant font-semibold ${textColor}`}>
-                  {card.title}
-                </h3>
-              </div>
-              
-              <p className={`${textColorMuted} text-sm md:text-base mb-5`}>
-                {card.description}
-              </p>
-              
-              <div className="mb-6">
-                <p className={`font-semibold text-sm ${textColor} mb-2`}>{card.sectionHeader}</p>
-                <ul className="text-sm space-y-1.5">
-                  {card.tools.map((tool, idx) => (
-                    <li key={idx} className="flex items-center">
-                      <span className={`h-1.5 w-1.5 rounded-full ${bulletColor} mr-2`}></span>
-                      <span className={textColorMuted}>{tool}</span>
-                    </li>
-                  ))}
-                  {card.comingSoonTools?.map((tool, idx) => (
-                    <li key={idx} className="flex items-center">
-                      <span className={`h-1.5 w-1.5 rounded-full ${bulletColor} mr-2`}></span>
-                      <span className={textColorMuted}>{tool} <span className={`text-xs ${isPostFight ? "text-white/70" : "text-[#07183D]/70"}`}>(Coming Soon)</span></span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              
-              <Link to={card.link} className="block mt-auto">
-                <Button 
-                  variant="outline" 
-                  className={`w-full ${isPostFight ? "border-white text-white hover:bg-white/10" : buttonStyles} transition-colors`}
-                >
-                  {card.buttonText}
-                </Button>
-              </Link>
-            </>
+            <MobileCardContent
+              card={card}
+              textColor={textColor}
+              textColorMuted={textColorMuted}
+              bulletColor={bulletColor}
+              isPostFight={isPostFight}
+              buttonStyles={buttonStyles}
+              renderIcon={renderIcon}
+            />
           ) : (
-            // Desktop layout (horizontal) - reorganized
-            <div className="flex flex-col">
-              {/* Header with icon and title together */}
-              <div className="flex items-center mb-2">
-                {/* Removed the circular background div */}
-                {renderIcon()}
-                <h3 className={`ml-2 text-2xl md:text-3xl font-cormorant font-semibold ${textColor}`}>
-                  {card.title}
-                </h3>
-              </div>
-              
-              {/* Description */}
-              <p className={`${textColorMuted} text-sm md:text-base mb-4`}>
-                {card.description}
-              </p>
-              
-              {/* Tools list */}
-              <div className="mb-5 flex-grow">
-                <p className={`font-semibold text-sm ${textColor} mb-2`}>{card.sectionHeader}</p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-1.5">
-                  {card.tools.map((tool, idx) => (
-                    <div key={idx} className="flex items-center">
-                      <span className={`h-1.5 w-1.5 rounded-full ${bulletColor} mr-2`}></span>
-                      <span className={textColorMuted}>{tool}</span>
-                    </div>
-                  ))}
-                  {card.comingSoonTools?.map((tool, idx) => (
-                    <div key={idx} className="flex items-center">
-                      <span className={`h-1.5 w-1.5 rounded-full ${bulletColor} mr-2`}></span>
-                      <span className={textColorMuted}>{tool} <span className={`text-xs ${isPostFight ? "text-white/70" : "text-[#07183D]/70"}`}>(Coming Soon)</span></span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              
-              {/* Button at the bottom */}
-              <Link to={card.link} className="block">
-                <Button 
-                  variant="outline" 
-                  className={`w-full ${isPostFight ? "border-white text-white hover:bg-white/10" : buttonStyles} transition-colors`}
-                >
-                  {card.buttonText}
-                </Button>
-              </Link>
-            </div>
+            <DesktopCardContent
+              card={card}
+              textColor={textColor}
+              textColorMuted={textColorMuted}
+              bulletColor={bulletColor}
+              isPostFight={isPostFight}
+              buttonStyles={buttonStyles}
+              renderIcon={renderIcon}
+            />
           )}
         </div>
       </div>
