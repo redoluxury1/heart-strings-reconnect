@@ -74,3 +74,23 @@
 .animate-rotate-compass {
   animation: rotateCompass 1s ease-in-out;
 }
+
+/* Add pulse animation for the message icon */
+@keyframes gentle-pulse {
+  0% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+}
+
+.animate-pulse {
+  animation: gentle-pulse 2s ease-in-out infinite;
+}
