@@ -27,7 +27,7 @@ const StillUsSection = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-5 relative z-10 max-w-2xl mx-auto">
+        <div className="grid grid-cols-1 gap-6 relative z-10 max-w-2xl mx-auto">
           {getCardData().map((card, index) => (
             <FeatureCard key={index} card={card} />
           ))}

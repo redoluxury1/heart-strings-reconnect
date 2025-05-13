@@ -33,7 +33,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
 
   return (
     <div className="transition-all duration-300 mb-5">
-      <div className={`relative overflow-hidden h-full rounded-xl shadow-sm p-6 ${card.gradientClass} border ${card.borderColor || 'border-[#6A4A74]/30'}`}>
+      <div className={`relative overflow-hidden h-full rounded-xl shadow-md hover:shadow-lg p-6 ${card.gradientClass} border ${card.borderColor || 'border-[#6A4A74]/30'}`}>
         {/* Visual effects decorative elements */}
         <DecorativeElements visualEffect={card.visualEffect} />
         
