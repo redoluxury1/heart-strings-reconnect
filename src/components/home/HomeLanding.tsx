@@ -8,11 +8,11 @@ const HomeLanding = () => {
   
   return (
     <div className="text-center pt-16 pb-4 md:py-14">
-      <h1 className="font-cormorant text-4xl md:text-5xl lg:text-6xl font-medium mb-5 text-midnight-indigo">
+      <h1 className="font-cormorant text-4xl md:text-5xl lg:text-6xl font-medium mb-5 text-navy-800">
         {dailyQuote.headline}
       </h1>
       
-      <p className="text-sm max-w-2xl mx-auto text-lavender-blue/70 mb-8">
+      <p className="text-sm max-w-2xl mx-auto text-navy-800/80 mb-8">
         {dailyQuote.subtext}
       </p>
     </div>
