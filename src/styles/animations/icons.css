@@ -1,112 +1,76 @@
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+}
 
-/* Icon-specific animations */
-@keyframes flameFlicker {
-  0%, 100% {
-    filter: drop-shadow(0 0 2px rgba(178, 90, 68, 0));
-    opacity: 1;
+.animate-pulse-slow {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+.animate-bounce-slow {
+    animation: bounce 3s infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.animate-spin-slow {
+    animation: spin 3s linear infinite;
+}
+
+@keyframes pulse-heart {
+  0% {
+    transform: scale(1);
   }
   50% {
-    filter: drop-shadow(0 0 8px rgba(178, 90, 68, 0.6));
-    opacity: 1.15;
-  }
-}
-
-@keyframes heartBreak {
-  0% {
-    clip-path: inset(0 0 100% 0);
+    transform: scale(1.1);
   }
   100% {
-    clip-path: inset(0 0 0% 0);
+    transform: scale(1);
   }
 }
 
-/* Updated puzzle piece animations for two pieces coming together */
-@keyframes puzzleLeft {
-  0% {
-    transform: translateX(-10px);
-  }
-  100% {
-    transform: translateX(-2px);
-  }
+.animate-pulse-heart {
+  animation: pulse-heart 2s ease-in-out infinite;
 }
 
-@keyframes puzzleRight {
-  0% {
-    transform: translateX(10px);
-  }
-  100% {
-    transform: translateX(2px);
-  }
-}
-
-/* New compass rotation animation */
 @keyframes rotateCompass {
-  from {
+  0% {
     transform: rotate(0deg);
   }
-  to {
+  100% {
     transform: rotate(360deg);
   }
 }
 
-.animate-flame-flicker {
-  animation: flameFlicker 2s ease-in-out infinite;
-}
-
-.animate-heart-break {
-  animation: heartBreak 1s ease-out forwards;
-}
-
-.animate-puzzle-left {
-  animation: puzzleLeft 0.5s ease-out forwards;
-}
-
-.animate-puzzle-right {
-  animation: puzzleRight 0.5s ease-out forwards;
-}
-
-/* New compass rotation class */
 .animate-rotate-compass {
-  animation: rotateCompass 1.2s ease-in-out forwards;
-}
-
-/* Position styles for puzzle pieces */
-.left-puzzle-piece {
-  transform: translateX(-10px);
-}
-
-.right-puzzle-piece {
-  transform: translateX(10px);
-}
-
-/* Zigzag line style for heart break effect - updated to only use zigzag pattern */
-.zigzag-line {
-  background-image: linear-gradient(to bottom, 
-    transparent, transparent 45%, 
-    #2f3975 45%, #2f3975 55%, 
-    transparent 55%, transparent);
-  background-size: 8px 8px;
-  background-repeat: repeat-y;
-  clip-path: inset(0 0 100% 0);
-}
-
-/* The following group-hover classes are kept for backward compatibility */
-.group:hover .group-hover-flame-flicker {
-  animation: flameFlicker 1.5s ease-in-out infinite;
-}
-
-.heart-break-line {
-  clip-path: inset(0 0 100% 0);
-}
-
-.group:hover .group-hover-heart-break {
-  animation: heartBreak 1s ease-out forwards;
-}
-
-.puzzle-piece {
-  transform: translateX(10px) rotate(5deg);
-}
-
-.group:hover .group-hover-puzzle-fit {
-  animation: puzzleFit 0.5s ease-out forwards;
+  animation: rotateCompass 1s ease-in-out;
 }
