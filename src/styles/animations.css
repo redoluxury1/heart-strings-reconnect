@@ -1,4 +1,3 @@
-
 /* Message bubble animations */
 @keyframes fadeIn {
   0% {
@@ -239,6 +238,16 @@
   animation: flameFlicker 2s ease-in-out infinite;
 }
 
+.animate-heart-break {
+  animation: heartBreak 1s ease-out forwards;
+}
+
+.animate-puzzle-fit {
+  animation: puzzleFit 0.5s ease-out forwards;
+}
+
+/* The following group-hover classes are kept for backward compatibility but 
+   we're now using the scroll-triggered animations above instead */
 .group:hover .group-hover-flame-flicker {
   animation: flameFlicker 1.5s ease-in-out infinite;
 }
