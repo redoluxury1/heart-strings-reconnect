@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Heart } from 'lucide-react';
+import { HeartHandshake } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { useSession } from '@/components/post-conflict/context/SessionContext';
@@ -51,10 +51,10 @@ const WishPartnerUnderstood: React.FC<WishPartnerUnderstoodProps> = ({
   return (
     <div className="bg-[#FDFBF9] rounded-xl border border-[#E8DAD3] shadow-sm p-6 max-w-xl mx-auto">
       <div className="flex flex-col items-center">
-        {/* Icon */}
+        {/* Updated icon with new styling */}
         <div className="w-16 h-16 rounded-full bg-[#D3876A]/10 flex items-center justify-center mb-6 relative">
-          <Heart className="h-8 w-8 text-[#D3876A] animate-pulse" />
-          <span className="absolute top-3 right-3 text-[#D3876A]">✨</span>
+          <HeartHandshake className="h-8 w-8 text-[#D3876A] animate-pulse-slow" strokeWidth={1.5} />
+          <span className="absolute top-3 right-3 text-[#D3876A] animate-sparkle">✨</span>
         </div>
 
         {/* Header */}
