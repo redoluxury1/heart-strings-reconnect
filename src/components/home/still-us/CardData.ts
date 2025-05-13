@@ -12,8 +12,8 @@ export const getCardData = (): CardContent[] => {
       tools: ["Time Out Timer", "Let's Try That Again", "What's Really Going On?"],
       comingSoonTools: ["Build a Bridge"],
       link: "/during-conflict",
-      // Updated to terracotta-to-plum gradient
-      gradientClass: "bg-gradient-to-br from-peachy-terracotta/80 to-[#8a6f8e]/60",
+      // Updated to terracotta-to-beige gradient
+      gradientClass: "bg-gradient-to-br from-peachy-terracotta to-[#f5f0e6]",
       iconBgClass: "bg-peachy-terracotta/40",
       buttonText: "Let's Slow Down",
       sectionHeader: "Let's Start Here:",
@@ -26,8 +26,8 @@ export const getCardData = (): CardContent[] => {
       tools: ["Let's Work This Out", "Okay, but now what?", "Color Healing"],
       comingSoonTools: ["Build a Bridge"],
       link: "/post-conflict",
-      // Kept navy blue with starry speckle effect
-      gradientClass: "bg-gradient-to-br from-[#22254a]/90 to-[#22254a]/70",
+      // Updated to navy blue to lighter blue/grey gradient
+      gradientClass: "bg-gradient-to-br from-[#22254a] to-[#a8b1c1]",
       iconBgClass: "bg-[#22254a]/70",
       buttonText: "Let's Reflect",
       sectionHeader: "How to Move Forward:",
@@ -39,8 +39,8 @@ export const getCardData = (): CardContent[] => {
       icon: React.createElement(Puzzle, { className: "h-6 w-6" }),
       tools: ["Would You Rather: Couples Game", "Spin the Date Night Wheel", "Love Code Quiz", "Personality Blueprint"],
       link: "/reconnect",
-      // Updated to mauve with light dots
-      gradientClass: "bg-gradient-to-br from-mauve-rose/70 to-mauve-rose/40",
+      // Updated to mauve to light plum gradient
+      gradientClass: "bg-gradient-to-br from-mauve-rose to-[#e8dfea]",
       iconBgClass: "bg-mauve-rose/40",
       buttonText: "Let's Grow Closer",
       sectionHeader: "Grow Stronger:",

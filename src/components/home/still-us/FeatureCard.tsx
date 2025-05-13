@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Link } from 'react-router-dom';
@@ -21,7 +20,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
   
   // Updated text colors based on card type
   const textColor = isPostFight ? "text-white" : "text-[#07183D]";
-  const textColorMuted = isPostFight ? "text-white/90" : "text-[#07183D]";
+  const textColorMuted = isPostFight ? "text-white/90" : "text-[#07183D]/90";
   const bulletColor = isPostFight ? "bg-white" : "bg-[#07183D]";
   
   // Button styles based on card type
@@ -93,7 +92,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ card }) => {
               height: `${Math.random() * 25 + 15}px`,
               top: `${Math.random() * 100}%`,
               left: `${Math.random() * 100}%`,
-              background: i % 2 === 0 ? '#c97c5d' : '#8a6f8e',
+              background: i % 2 === 0 ? '#c97c5d' : '#e8dfea',
               opacity: 0.15,
               animationDelay: `${Math.random() * 3}s`,
               filter: 'blur(8px)'
