@@ -94,3 +94,27 @@
 .animate-pulse {
   animation: gentle-pulse 2s ease-in-out infinite;
 }
+
+/* Add rotate compass animation */
+@keyframes rotate-compass {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(90deg); }
+  50% { transform: rotate(180deg); }
+  75% { transform: rotate(270deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.animate-rotate-compass {
+  animation: rotate-compass 2s ease-in-out;
+}
+
+/* Add a subtle sparkle animation */
+@keyframes sparkle {
+  0% { opacity: 0.4; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.1); }
+  100% { opacity: 0.4; transform: scale(0.8); }
+}
+
+.animate-sparkle {
+  animation: sparkle 1.5s infinite ease-in-out;
+}
