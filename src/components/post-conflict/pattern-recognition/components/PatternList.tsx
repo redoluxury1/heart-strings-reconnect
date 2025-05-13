@@ -41,15 +41,15 @@ const samplePatterns: CommonPattern[] = [
     id: 2,
     name: 'Pursue-Distance Dynamic',
     description: 'One of you chases connection. The other pulls away.',
-    examples: ['Why won't you talk to me?', 'I just need some space', 'You never want to discuss our issues'],
-    breakingTips: ['Set a specific time to talk later', 'Respect each other's timing needs'],
+    examples: ["Why won't you talk to me?", 'I just need some space', 'You never want to discuss our issues'],
+    breakingTips: ['Set a specific time to talk later', "Respect each other's timing needs"],
     patternType: 'pursue-distance'
   },
   {
     id: 3,
     name: 'Silent Tension & Explosion',
     description: 'It builds up... until it bursts.',
-    examples: ['I'm fine. (I'm not fine)', 'Suddenly exploding over small issues', 'Feeling resentful'],
+    examples: ["I'm fine. (I'm not fine)", 'Suddenly exploding over small issues', 'Feeling resentful'],
     breakingTips: ['Address small issues before they grow', 'Create regular check-in times'],
     patternType: 'silent-tension-snap'
   },
@@ -57,15 +57,15 @@ const samplePatterns: CommonPattern[] = [
     id: 4,
     name: 'Control & Criticism Pattern',
     description: 'Everything feels like a correction.',
-    examples: ['That's not how you do it', 'Let me show you', 'You should...'],
+    examples: ["That's not how you do it", 'Let me show you', 'You should...'],
     breakingTips: ['Ask before offering help', 'Focus on appreciating efforts'],
     patternType: 'criticize-control'
   },
   {
     id: 5,
     name: 'Fix-It vs Feel-It Pattern',
-    description: 'One wants to solve. The other isn't ready.',
-    examples: ['Here's what we should do...', 'I don't want solutions right now', 'Can you just listen?'],
+    description: 'One wants to solve. The other isn\'t ready.',
+    examples: ["Here's what we should do...", "I don't want solutions right now", 'Can you just listen?'],
     breakingTips: ['Ask if they want solutions or just listening', 'Be clear about your needs'],
     patternType: 'fix-reject'
   },
