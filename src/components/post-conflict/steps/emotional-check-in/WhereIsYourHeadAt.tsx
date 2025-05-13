@@ -82,7 +82,8 @@ const WhereIsYourHeadAt: React.FC<WhereIsYourHeadAtProps> = ({ onComplete, onBac
           {emotionCategories.map((category) => (
             <EmotionCategory
               key={category.name}
-              category={category}
+              category={category.name}
+              emotions={category.emotions.map(e => e.label)}
               selectedEmotions={selectedEmotions}
               onEmotionToggle={handleEmotionToggle}
             />
