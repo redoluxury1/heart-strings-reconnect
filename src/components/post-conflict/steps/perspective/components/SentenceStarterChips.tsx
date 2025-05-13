@@ -18,7 +18,7 @@ const SentenceStarterChips: React.FC<SentenceStarterChipsProps> = ({
           onClick={() => onStarterClick(starter)}
           className="rounded-full px-4 py-2 text-sm bg-[#F8F5F3] border border-[#D9B9AF] text-[#3A3A3A] hover:bg-[#F8F5F3]/80 transition-colors"
         >
-          {starter.substring(0, 20)}...
+          {starter}
         </button>
       ))}
     </div>
