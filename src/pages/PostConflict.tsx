@@ -1,9 +1,7 @@
-
 import React from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import ContentContainer from '@/components/common/ContentContainer';
-import LetsTalkThisOut from '@/components/post-conflict/LetsTalkThisOut';
 import SometimesItStillHurts from '@/components/post-conflict/SometimesItStillHurts';
 import PhraseRewind from '@/components/post-conflict/PhraseRewind';
 import FloatingTextBubbles from '@/components/post-conflict/FloatingTextBubbles';
@@ -33,8 +31,6 @@ const PostConflictContent = () => {
             )}
             
             <div className="space-y-32">
-              <LetsTalkThisOut />
-              
               <OkayButNowWhat />
               
               <SometimesItStillHurts />
