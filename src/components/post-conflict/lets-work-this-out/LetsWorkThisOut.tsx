@@ -7,6 +7,7 @@ import SetToneTool from './SetToneTool';
 import WhereIsYourHeadAt from '@/components/post-conflict/steps/emotional-check-in/WhereIsYourHeadAt';
 import YourPerspective from '@/components/post-conflict/steps/perspective/YourPerspective';
 import WishPartnerUnderstood from '@/components/post-conflict/steps/partner-understanding/WishPartnerUnderstood';
+import WhatDoYouNeed from '@/components/post-conflict/steps/needs/WhatDoYouNeed';
 import { useSession } from '@/components/post-conflict/context/SessionContext';
 
 interface LetsWorkThisOutProps {
@@ -28,6 +29,7 @@ const LetsWorkThisOut: React.FC<LetsWorkThisOutProps> = ({
   const [selectedIntent, setSelectedIntent] = useState<string>('');
   const [userPerspective, setUserPerspective] = useState<string>('');
   const [userUnderstanding, setUserUnderstanding] = useState<string>('');
+  const [userNeeds, setUserNeeds] = useState<string>('');
   
   // Add effect to scroll to top whenever the currentStep changes
   useEffect(() => {
@@ -89,7 +91,16 @@ const LetsWorkThisOut: React.FC<LetsWorkThisOutProps> = ({
       title: "Understanding saved",
       description: "Thank you for sharing what you wish your partner understood.",
     });
-    // Setting step 5 would be handled by the component itself
+    setCurrentStep(5); // Move to the what do you need step
+  };
+  
+  const handleNeedsComplete = (needs: string) => {
+    setUserNeeds(needs);
+    toast({
+      title: "Needs saved",
+      description: "Thank you for sharing what you need to move forward.",
+    });
+    setCurrentStep(6); // Move to the next step after needs (to be implemented)
   };
   
   // Show the appropriate content based on current step
@@ -153,6 +164,9 @@ const LetsWorkThisOut: React.FC<LetsWorkThisOutProps> = ({
       
       case 4: // What do you wish your partner understood
         return <WishPartnerUnderstood onComplete={handleUnderstandingComplete} />;
+      
+      case 5: // What do you need to move forward
+        return <WhatDoYouNeed onComplete={handleNeedsComplete} />;
         
       default:
         return <div>Loading...</div>;
