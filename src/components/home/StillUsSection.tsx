@@ -15,10 +15,10 @@ const StillUsSection = () => {
       
       <ContentContainer>
         <div className="text-center mb-14 relative z-10">
-          {/* Replace text heading with the image */}
+          {/* Updated to use the new image */}
           <div className="flex justify-center mb-4">
             <img 
-              src="/lovable-uploads/b1c8f509-f8ea-4a0a-97a9-3dce6eacb685.png" 
+              src="/lovable-uploads/ed843aef-2d34-4870-86bd-de0f4340f3fd.png" 
               alt="We're still US" 
               className="h-32 w-auto"
             />
