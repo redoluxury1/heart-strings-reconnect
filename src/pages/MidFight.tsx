@@ -8,18 +8,8 @@ import BackgroundPhrases from '@/components/mid-fight/BackgroundPhrases';
 import PauseTool from '@/components/mid-fight/pause-tool/PauseTool';
 
 const MidFight = () => {
-  const [selectedFeature, setSelectedFeature] = useState<string | null>(null);
   const [animationsEnabled, setAnimationsEnabled] = useState(true);
   
-  // Toggle feature display
-  const toggleFeature = (featureId: string) => {
-    if (selectedFeature === featureId) {
-      setSelectedFeature(null);
-    } else {
-      setSelectedFeature(featureId);
-    }
-  };
-
   // Check if animations are disabled in localStorage on mount
   useEffect(() => {
     const savedPreference = localStorage.getItem('animations-enabled');
@@ -43,10 +33,7 @@ const MidFight = () => {
         </section>
 
         {/* Feature cards including the always-visible Pause & Phrase tool */}
-        <FeatureCardSection 
-          selectedFeature={selectedFeature}
-          toggleFeature={toggleFeature}
-        />
+        <FeatureCardSection />
       </main>
       
       <Footer showCTA={false} />
