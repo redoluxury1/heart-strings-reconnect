@@ -39,7 +39,7 @@ export const getCardData = (): CardContent[] => {
       title: "Reconnecting",
       description: "Not fighting? Beautiful. Come here for small ways to feel closer, learn more about each other, and have fun.",
       icon: React.createElement(PuzzleIcon),
-      tools: ["Would You Rather: Couples Game", "Spin the Date Night Wheel", "Love Code Quiz", "Personality Blueprint"],
+      tools: ["Would You Rather: Couples Game", "Spin the Date Night Wheel"],
       link: "/reconnect",
       gradientClass: "bg-[#FDFBF9]",
       iconBgClass: "",

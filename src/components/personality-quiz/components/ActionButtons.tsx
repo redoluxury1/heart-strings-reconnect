@@ -1,8 +1,7 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { UserPlus, Heart } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { UserPlus } from 'lucide-react';
 import { QuizResult } from '@/types/personality-quiz';
 import DownloadResultsMenu from './DownloadResultsMenu';
 
@@ -12,15 +11,9 @@ interface ActionButtonsProps {
 }
 
 const ActionButtons: React.FC<ActionButtonsProps> = ({ results, onDownloadPdf }) => {
-  const navigate = useNavigate();
-  
   const handlePartnerInvite = () => {
     // For now, just log
     console.log('Invite partner flow would start here');
-  };
-
-  const navigateToLoveCodeQuiz = () => {
-    navigate('/love-code-quiz');
   };
 
   return (
@@ -34,7 +27,7 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({ results, onDownloadPdf })
           Continue Your Relationship Journey
         </h3>
         <p className="text-midnight-indigo/70 mb-6 max-w-2xl mx-auto">
-          Deepen your connection by inviting your partner to take the quiz or discover your Love Code for even more insights.
+          Deepen your connection by inviting your partner to take the quiz.
         </p>
         
         <div className="flex flex-wrap gap-4 justify-center">
@@ -44,14 +37,6 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({ results, onDownloadPdf })
           >
             <UserPlus className="mr-2 h-4 w-4" />
             Invite Your Partner
-          </Button>
-          
-          <Button 
-            onClick={navigateToLoveCodeQuiz}
-            className="bg-mauve-rose hover:bg-mauve-rose/90 text-white"
-          >
-            <Heart className="mr-2 h-4 w-4" />
-            Take Love Code Quiz
           </Button>
         </div>
       </div>

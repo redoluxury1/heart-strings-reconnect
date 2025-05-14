@@ -1,35 +1,42 @@
 
 import React from 'react';
 import ContentContainer from '../common/ContentContainer';
-import { useIsMobile } from '@/hooks/use-mobile';
-import FeatureCard from './still-us/FeatureCard';
+import StillUsCard from './still-us/StillUsCard';
 import getCardData from './still-us/CardData';
-import { useInterface } from '../../hooks/useInterfaceContext';
 
-const StillUsSection = () => {
-  const isMobile = useIsMobile();
-  const { colors } = useInterface();
+const StillUsSection: React.FC = () => {
+  const cardData = getCardData();
   
   return (
-    <section className="py-12 bg-slate-50 relative overflow-hidden">
+    <section className="py-16 bg-white">
       <ContentContainer>
-        <div className="text-center mb-14 relative z-10">
-          {/* Updated to use the new image */}
-          <div className="flex justify-center mb-4">
-            <img 
-              src="/lovable-uploads/ed843aef-2d34-4870-86bd-de0f4340f3fd.png" 
-              alt="We're still US" 
-              className="h-32 w-auto"
-            />
-          </div>
-          <p className="text-center text-[#3A3A3A] font-inter font-light max-w-2xl mx-auto">
-            For the hard moments, the quiet pauses, and the choice to reconnect — this space meets you wherever you are.
+        <div className="text-center mb-12">
+          <h2 className="font-cormorant text-3xl md:text-4xl font-medium text-[#2C3E50] mb-3">
+            Start Here
+          </h2>
+          <p className="text-[#2C3E50]/70 max-w-2xl mx-auto">
+            Every relationship has cycles. Choose where you are right now, and we'll guide you forward with simple, research-backed tools.
           </p>
         </div>
-
-        <div className="grid grid-cols-1 gap-6 relative z-10 max-w-2xl mx-auto">
-          {getCardData().map((card, index) => (
-            <FeatureCard key={index} card={card} />
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          {cardData.map((card, index) => (
+            <StillUsCard 
+              key={index}
+              title={card.title}
+              description={card.description}
+              icon={card.icon}
+              tools={card.tools}
+              comingSoonTools={card.comingSoonTools || []}
+              link={card.link}
+              gradientClass={card.gradientClass}
+              iconBgClass={card.iconBgClass}
+              buttonText={card.buttonText}
+              sectionHeader={card.sectionHeader}
+              visualEffect={card.visualEffect}
+              borderColor={card.borderColor}
+              headerColor={card.headerColor}
+            />
           ))}
         </div>
       </ContentContainer>
