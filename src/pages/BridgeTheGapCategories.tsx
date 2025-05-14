@@ -2,8 +2,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
-  Users, Heart, MessageSquare, Trash2, DollarSign, 
-  Hand, Users as UsersTwo, Octagon, User 
+  Baby, Heart, MessageSquare, Trash2, DollarSign, 
+  Hand, Users, Octagon, User 
 } from 'lucide-react';
 import BrandSection from '@/components/common/BrandSection';
 import ContentContainer from '@/components/common/ContentContainer';
@@ -27,7 +27,7 @@ const BridgeTheGapCategories: React.FC = () => {
     {
       id: 'parenting',
       name: 'Parenting',
-      icon: <Users className="h-12 w-12" />,
+      icon: <Baby className="h-12 w-12" />, // Updated to Baby icon
       color: 'text-sage',
       bgColor: 'bg-sage/10'
     },
@@ -69,7 +69,7 @@ const BridgeTheGapCategories: React.FC = () => {
     {
       id: 'in-laws',
       name: 'In-Laws',
-      icon: <UsersTwo className="h-12 w-12" />,
+      icon: <Users className="h-12 w-12" />,
       color: 'text-midnight-indigo',
       bgColor: 'bg-midnight-indigo/10'
     },
@@ -109,7 +109,7 @@ const BridgeTheGapCategories: React.FC = () => {
               </h2>
             </div>
             
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
               {categories.map((category) => (
                 <button
                   key={category.id}
