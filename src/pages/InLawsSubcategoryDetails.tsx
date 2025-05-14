@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
@@ -26,6 +26,39 @@ const InLawsSubcategoryDetails: React.FC = () => {
     hasNextPrompt,
     hasPrevPrompt
   } = useInLawsPrompts(subcategoryId || '');
+  
+  // Track responses and sent state for each prompt
+  const [responses, setResponses] = useState<Record<string, string>>({});
+  const [sentStates, setSentStates] = useState<Record<string, boolean>>({});
+  const [selectedValues, setSelectedValues] = useState<Record<string, string>>({});
+  
+  // Handle text response changes
+  const handleResponseChange = (text: string) => {
+    if (currentOpenEndedPrompt) {
+      setResponses(prev => ({
+        ...prev,
+        [currentOpenEndedPrompt]: text
+      }));
+    }
+  };
+  
+  // Handle sending a response
+  const handleSendResponse = () => {
+    if (currentOpenEndedPrompt) {
+      setSentStates(prev => ({
+        ...prev,
+        [currentOpenEndedPrompt]: true
+      }));
+    }
+  };
+  
+  // Handle selection for yes/no/sometimes questions
+  const handleSelection = (prompt: string, value: string) => {
+    setSelectedValues(prev => ({
+      ...prev,
+      [prompt]: value
+    }));
+  };
   
   if (!subcategory) {
     return (
@@ -81,24 +114,47 @@ const InLawsSubcategoryDetails: React.FC = () => {
                 </h2>
                 
                 <DiscussionPromptCard
-                  prompts={[currentOpenEndedPrompt]}
-                  currentIndex={currentPromptIndex}
-                  totalCount={openEndedPrompts.length}
-                  onNext={goToNextPrompt}
-                  onPrevious={goToPrevPrompt}
-                  hasNext={hasNextPrompt}
-                  hasPrevious={hasPrevPrompt}
+                  text={currentOpenEndedPrompt}
+                  response={responses[currentOpenEndedPrompt] || ''}
+                  sent={sentStates[currentOpenEndedPrompt] || false}
+                  onChange={handleResponseChange}
+                  onSend={handleSendResponse}
                 />
+                
+                <div className="flex justify-between">
+                  <Button 
+                    variant="outline"
+                    className="text-midnight-indigo border-midnight-indigo"
+                    onClick={goToPrevPrompt}
+                    disabled={!hasPrevPrompt}
+                  >
+                    Previous Prompt
+                  </Button>
+                  
+                  <Button 
+                    variant="outline"
+                    className="text-midnight-indigo border-midnight-indigo"
+                    onClick={goToNextPrompt}
+                    disabled={!hasNextPrompt}
+                  >
+                    Next Prompt
+                  </Button>
+                </div>
               </div>
               
               {/* Yes/No/Sometimes prompts */}
               <div className="space-y-6">
                 <h2 className="font-cormorant text-2xl font-medium text-midnight-indigo mb-4">
-                  Quick Check-in Questions
+                  Quick Check-In
                 </h2>
                 
                 {yesNoSometimesPrompts.map((prompt, index) => (
-                  <MultiChoicePromptCard key={index} prompts={[prompt]} />
+                  <MultiChoicePromptCard 
+                    key={index} 
+                    text={prompt}
+                    selectedValue={selectedValues[prompt]}
+                    onSelect={(value) => handleSelection(prompt, value)}
+                  />
                 ))}
               </div>
             </div>

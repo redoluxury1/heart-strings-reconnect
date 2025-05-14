@@ -24,13 +24,7 @@ const CommunicationSubcategories: React.FC = () => {
           <CommunicationSubcategoriesHeader />
           
           <SubcategoriesGrid 
-            subcategories={communicationSubcategories.map(sub => ({
-              id: sub.id,
-              name: sub.name,
-              icon: sub.icon,
-              color: sub.color,
-              bgColor: sub.bgColor
-            }))}
+            subcategories={communicationSubcategories}
             onSubcategoryClick={handleSubcategoryClick}
           />
         </BrandSection>
