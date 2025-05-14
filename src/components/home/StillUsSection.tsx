@@ -1,7 +1,7 @@
 
 import React from 'react';
 import ContentContainer from '../common/ContentContainer';
-import StillUsCard from './still-us/StillUsCard';
+import FeatureCard from './still-us/FeatureCard';
 import getCardData from './still-us/CardData';
 
 const StillUsSection: React.FC = () => {
@@ -21,21 +21,9 @@ const StillUsSection: React.FC = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
           {cardData.map((card, index) => (
-            <StillUsCard 
+            <FeatureCard 
               key={index}
-              title={card.title}
-              description={card.description}
-              icon={card.icon}
-              tools={card.tools}
-              comingSoonTools={card.comingSoonTools || []}
-              link={card.link}
-              gradientClass={card.gradientClass}
-              iconBgClass={card.iconBgClass}
-              buttonText={card.buttonText}
-              sectionHeader={card.sectionHeader}
-              visualEffect={card.visualEffect}
-              borderColor={card.borderColor}
-              headerColor={card.headerColor}
+              card={card}
             />
           ))}
         </div>
