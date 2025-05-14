@@ -7,6 +7,10 @@ import { useNavigate } from 'react-router-dom';
 const BridgeTheGapCard: React.FC = () => {
   const navigate = useNavigate();
 
+  const handleNavigate = () => {
+    navigate('/bridge-the-gap/categories');
+  };
+
   return (
     <div className="bg-[#162137] rounded-xl shadow-md p-6 md:p-8 text-center border-2 border-soft-cream">
       <div className="max-w-md mx-auto py-4">
@@ -20,7 +24,7 @@ const BridgeTheGapCard: React.FC = () => {
         
         <Button 
           className="bg-[#C2635C] hover:bg-[#C2635C]/90 text-white font-medium px-6 py-5 text-lg rounded-md shadow-sm flex items-center gap-2"
-          onClick={() => navigate('/bridge-the-gap/categories')}
+          onClick={handleNavigate}
         >
           Try Bridge the Gap <ArrowRight className="h-5 w-5" />
         </Button>
