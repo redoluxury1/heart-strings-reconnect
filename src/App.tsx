@@ -22,6 +22,8 @@ import BridgeTheGapCategories from "./pages/BridgeTheGapCategories";
 import BridgeTheGapCategoryDetails from "./pages/BridgeTheGapCategoryDetails";
 import ParentingSubcategories from "./pages/ParentingSubcategories";
 import ParentingSubcategoryDetails from "./pages/ParentingSubcategoryDetails";
+import IntimacySubcategories from "./pages/IntimacySubcategories";
+import IntimacySubcategoryDetails from "./pages/IntimacySubcategoryDetails";
 
 // Scroll to top on route change
 function ScrollToTop() {
@@ -60,6 +62,8 @@ const App = () => (
             <Route path="/bridge-the-gap/categories/:categoryId" element={<BridgeTheGapCategoryDetails />} />
             <Route path="/bridge-the-gap/categories/parenting" element={<ParentingSubcategories />} />
             <Route path="/bridge-the-gap/categories/parenting/:subcategoryId" element={<ParentingSubcategoryDetails />} />
+            <Route path="/bridge-the-gap/categories/intimacy" element={<IntimacySubcategories />} />
+            <Route path="/bridge-the-gap/categories/intimacy/:subcategoryId" element={<IntimacySubcategoryDetails />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
