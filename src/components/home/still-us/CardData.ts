@@ -24,7 +24,7 @@ export const getCardData = (): CardContent[] => {
       title: "Post-Fight",
       description: "That was a lot. This space helps you process what just happened, understand what you need, and find clarity before reconnecting.",
       icon: React.createElement(HeartBreakIcon),
-      tools: ["Okay, but now what?", "Let's Work This Out", "Bridge the Gap", "Color Healing Method"],
+      tools: ["Okay, but now what?", "Let's Work This Out", "Bridge the Gap"],
       comingSoonTools: [],
       link: "/post-conflict",
       gradientClass: "bg-[#FDFBF9]",
