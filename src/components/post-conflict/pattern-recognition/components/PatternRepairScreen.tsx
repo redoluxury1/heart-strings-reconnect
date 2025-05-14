@@ -1,10 +1,10 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Smile, Zap, MessageSquare } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { useNavigate } from 'react-router-dom';
 import { CommonPattern } from '../types';
+import { RepairIcon } from './PatternRecognitionIcons';
 
 interface PatternRepairScreenProps {
   pattern?: CommonPattern | null;
@@ -123,14 +123,8 @@ const PatternRepairScreen: React.FC<PatternRepairScreenProps> = ({
         </h2>
       </div>
       
-      <div className="w-full my-6">
-        <img
-          src="/lovable-uploads/3b284c19-cb83-4bd1-85b3-a1d36fd5aaab.png"
-          alt="Couple calmly connecting and seated together after conflict"
-          className="w-[65%] mx-auto h-auto"
-          loading="eager"
-          fetchPriority="high"
-        />
+      <div className="w-full my-6 flex justify-center">
+        <RepairIcon className="w-64 h-64 text-[#14213d]" />
       </div>
       
       <div className="w-full space-y-4 mt-4">

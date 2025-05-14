@@ -1,8 +1,8 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { CommonPattern } from '../types';
 import { MessageSquare, Shield, X } from 'lucide-react';
+import { CycleIcon } from './PatternRecognitionIcons';
 
 interface PatternDetailScreenProps {
   pattern: CommonPattern | null;
@@ -22,9 +22,6 @@ const PatternDetailScreen: React.FC<PatternDetailScreenProps> = ({ pattern, onCo
     { icon: <X size={20} className="text-[#07183D]" />, title: "Withdrawal:", text: "Walking away, shutting down, or changing the subject" }
   ];
   
-  // Pattern-specific image path
-  let imagePath = "/lovable-uploads/a78585f2-fd9c-49e3-864e-810019b50b4c.png"; // Default to new blame/defend image
-  
   // Override configuration based on pattern type
   switch(pattern.patternType) {
     case "silent-tension-snap":
@@ -36,7 +33,6 @@ const PatternDetailScreen: React.FC<PatternDetailScreenProps> = ({ pattern, onCo
         { icon: <Shield size={20} className="text-[#07183D]" />, title: "Bottled-up frustration:", text: "Small irritations pile up without being addressed" },
         { icon: <X size={20} className="text-[#07183D]" />, title: "Big reaction:", text: "Explosive outburst followed by shame or regret" }
       ];
-      imagePath = "/lovable-uploads/3b284c19-cb83-4bd1-85b3-a1d36fd5aaab.png";
       break;
     case "criticize-control":
       title = "Everything feels like a correction.";
@@ -47,7 +43,6 @@ const PatternDetailScreen: React.FC<PatternDetailScreenProps> = ({ pattern, onCo
         { icon: <Shield size={20} className="text-[#07183D]" />, title: "Hyper-focus:", text: "Noticing mistakes more than successes" },
         { icon: <X size={20} className="text-[#07183D]" />, title: "Rebellion:", text: "Partner pulls away or rebels against perceived control" }
       ];
-      imagePath = "/lovable-uploads/3b284c19-cb83-4bd1-85b3-a1d36fd5aaab.png";
       break;
     case "fix-reject":
       title = "One of you wants to fix it. The other isn't ready.";
@@ -58,11 +53,9 @@ const PatternDetailScreen: React.FC<PatternDetailScreenProps> = ({ pattern, onCo
         { icon: <Shield size={20} className="text-[#07183D]" />, title: "Emotional pause:", text: "\"I can't talk about this right now.\"" },
         { icon: <X size={20} className="text-[#07183D]" />, title: "Disconnect:", text: "One over-explains, the other shuts down" }
       ];
-      imagePath = "/lovable-uploads/3b284c19-cb83-4bd1-85b3-a1d36fd5aaab.png";
       break;
     default:
       // Keep default configuration for Blame/Defend/Withdraw
-      // Using the new image for this pattern
   }
 
   return (
@@ -77,14 +70,8 @@ const PatternDetailScreen: React.FC<PatternDetailScreenProps> = ({ pattern, onCo
         </h2>
       </div>
       
-      <div className="w-full my-6">
-        <img
-          src={imagePath}
-          alt="Couple in pattern of conflict"
-          className="w-full h-auto mx-auto"
-          loading="eager"
-          fetchPriority="high"
-        />
+      <div className="w-full my-6 flex justify-center">
+        <CycleIcon className="w-64 h-64 text-[#14213d]" />
       </div>
       
       <div className="w-full px-6 py-5">

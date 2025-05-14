@@ -10,6 +10,7 @@ interface OptimizedImageProps {
   height?: number;
   priority?: boolean;
   onLoad?: () => void;
+  style?: React.CSSProperties; // Added style prop support
 }
 
 const OptimizedImage: React.FC<OptimizedImageProps> = ({
@@ -20,6 +21,7 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
   height,
   priority = false,
   onLoad,
+  style = {}, // Default to empty object
 }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [error, setError] = useState(false);
@@ -50,13 +52,14 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
   }, [src, onLoad, priority]);
 
   const aspectRatio = width && height ? { aspectRatio: `${width} / ${height}` } : {};
+  const combinedStyle = { ...aspectRatio, ...style };
   
   return (
     <>
       {!imageLoaded && !error && (
         <Skeleton 
           className={`${className} bg-slate-200`} 
-          style={aspectRatio}
+          style={combinedStyle}
         />
       )}
       
@@ -71,7 +74,7 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
           if (onLoad) onLoad();
         }}
         onError={() => setError(true)}
-        style={aspectRatio}
+        style={combinedStyle}
       />
     </>
   );

@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
 import { User, Speaker, ConnectIcon } from './PursueDistanceIcons';
+import { RepairIcon } from './PatternRecognitionIcons';
 
 interface PursueDistanceRepairScreenProps {
   onContinue: () => void;
@@ -27,14 +28,8 @@ const PursueDistanceRepairScreen: React.FC<PursueDistanceRepairScreenProps> = ({
         </h2>
       </div>
       
-      <div className="w-full my-6">
-        <img
-          src="/lovable-uploads/90ca9d1d-4881-4b84-bc51-96d9cb10c80a.png"
-          alt="Couple seated calmly, reconnecting after emotional distance"
-          className="w-[80%] mx-auto h-auto"
-          loading="eager"
-          fetchPriority="high"
-        />
+      <div className="w-full my-6 flex justify-center">
+        <RepairIcon className="w-64 h-64 text-[#14213d]" />
       </div>
       
       <div className="w-full space-y-4 mt-4">

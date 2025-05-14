@@ -1,8 +1,9 @@
 
-/* Main animation file that imports all animation modules */
-@import './message.css';
-@import './waves.css';
-@import './pulse.css';
+/* Main animations index file - imports all animation modules */
 @import './card-effects.css';
 @import './icons.css';
+@import './message.css';
+@import './pulse.css';
 @import './toast.css';
+@import './waves.css';
+@import './pattern-icons.css';

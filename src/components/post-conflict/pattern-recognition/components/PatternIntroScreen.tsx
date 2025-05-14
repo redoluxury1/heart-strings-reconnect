@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import OptimizedImage from '@/components/common/OptimizedImage';
+import { PatternsIcon } from './PatternRecognitionIcons';
 
 interface PatternIntroScreenProps {
   onContinue: () => void;
@@ -25,13 +25,8 @@ const PatternIntroScreen: React.FC<PatternIntroScreenProps> = ({ onContinue }) =
         the cycle before it catches you.
       </p>
       
-      <div className="relative w-full max-w-sm mb-8">
-        <OptimizedImage
-          src="/lovable-uploads/39110aa2-d4b1-4586-bd3f-56a1ae1053c8.png"
-          alt="Couple sitting back to back with arms crossed"
-          className="w-full h-auto rounded-lg"
-          priority={true}
-        />
+      <div className="relative w-full max-w-sm mb-8 flex justify-center">
+        <PatternsIcon className="w-64 h-64 text-[#14213d]" />
       </div>
       
       <Button

@@ -1,0 +1,59 @@
+
+/* Pattern Recognition Icon Animations */
+
+@keyframes subtle-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.03);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes gentle-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(1deg);
+  }
+  75% {
+    transform: rotate(-1deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes dash-move {
+  to {
+    stroke-dashoffset: -20;
+  }
+}
+
+/* Apply animations */
+.patterns-icon-animate {
+  animation: gentle-rotate 8s infinite ease-in-out;
+}
+
+.patterns-icon-animate path[stroke-dasharray] {
+  animation: dash-move 12s infinite linear;
+}
+
+.cycle-icon-animate {
+  animation: subtle-pulse 5s infinite ease-in-out;
+}
+
+.repair-icon-animate {
+  animation: subtle-pulse 4s infinite ease-in-out;
+}
+
+.conversation-icon-animate {
+  animation: gentle-rotate 10s infinite alternate ease-in-out;
+}
