@@ -43,8 +43,8 @@ const BridgeTheGapCategories: React.FC = () => {
       id: 'household-duties',
       name: 'Household Duties',
       icon: <Trash2 className="h-12 w-12" />,
-      color: 'text-peachy-terracotta',
-      bgColor: 'bg-peachy-terracotta/10'
+      color: 'text-purple-600',
+      bgColor: 'bg-purple-600/10'
     },
     {
       id: 'money',

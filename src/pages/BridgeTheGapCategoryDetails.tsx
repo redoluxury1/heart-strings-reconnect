@@ -12,12 +12,14 @@ const BridgeTheGapCategoryDetails: React.FC = () => {
   const { categoryId } = useParams<{ categoryId: string }>();
   const navigate = useNavigate();
   
-  // Check if this is the parenting or intimacy category, which has its own subcategories page
+  // Check if this is a category that has its own subcategories page
   React.useEffect(() => {
     if (categoryId === 'parenting') {
       navigate('/bridge-the-gap/categories/parenting');
     } else if (categoryId === 'intimacy') {
       navigate('/bridge-the-gap/categories/intimacy');
+    } else if (categoryId === 'household-duties') {
+      navigate('/bridge-the-gap/categories/household-duties');
     }
   }, [categoryId, navigate]);
 
@@ -26,8 +28,8 @@ const BridgeTheGapCategoryDetails: React.FC = () => {
     switch(id) {
       case 'parenting': return 'Parenting';
       case 'intimacy': return 'Intimacy';
-      case 'communication': return 'Communication';
       case 'household-duties': return 'Household Duties';
+      case 'communication': return 'Communication';
       case 'money': return 'Money';
       case 'feeling-dismissed': return 'Feeling Dismissed';
       case 'in-laws': return 'In-Laws';
@@ -37,8 +39,8 @@ const BridgeTheGapCategoryDetails: React.FC = () => {
     }
   };
 
-  // If this is the parenting or intimacy category, we'll redirect, so we don't need to render anything
-  if (categoryId === 'parenting' || categoryId === 'intimacy') return null;
+  // If this is a category with subcategories, we'll redirect, so we don't need to render anything
+  if (categoryId === 'parenting' || categoryId === 'intimacy' || categoryId === 'household-duties') return null;
 
   return (
     <div className="min-h-screen flex flex-col bg-soft-cream">
