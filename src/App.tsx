@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -28,6 +27,8 @@ import HouseholdSubcategories from "./pages/HouseholdSubcategories";
 import HouseholdSubcategoryDetails from "./pages/HouseholdSubcategoryDetails";
 import MoneySubcategories from "./pages/MoneySubcategories";
 import MoneySubcategoryDetails from "./pages/MoneySubcategoryDetails";
+import FeelingDismissedSubcategories from "./pages/FeelingDismissedSubcategories";
+import FeelingDismissedSubcategoryDetails from "./pages/FeelingDismissedSubcategoryDetails";
 
 // Scroll to top on route change
 function ScrollToTop() {
@@ -72,6 +73,8 @@ const App = () => (
             <Route path="/bridge-the-gap/categories/household-duties/:subcategoryId" element={<HouseholdSubcategoryDetails />} />
             <Route path="/bridge-the-gap/categories/money" element={<MoneySubcategories />} />
             <Route path="/bridge-the-gap/categories/money/:subcategoryId" element={<MoneySubcategoryDetails />} />
+            <Route path="/bridge-the-gap/categories/feeling-dismissed" element={<FeelingDismissedSubcategories />} />
+            <Route path="/bridge-the-gap/categories/feeling-dismissed/:subcategoryId" element={<FeelingDismissedSubcategoryDetails />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

@@ -57,8 +57,8 @@ const BridgeTheGapCategories: React.FC = () => {
       id: 'feeling-dismissed',
       name: 'Feeling Dismissed',
       icon: <Hand className="h-12 w-12" />,
-      color: 'text-mauve-rose',
-      bgColor: 'bg-mauve-rose/10'
+      color: 'text-peachy-terracotta',
+      bgColor: 'bg-peachy-terracotta/10'
     },
     {
       id: 'in-laws',
