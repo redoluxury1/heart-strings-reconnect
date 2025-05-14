@@ -18,7 +18,7 @@ export const communicationSubcategories: CommunicationSubcategoryData[] = [
   {
     id: 'talking-past-each-other',
     name: 'Talking Past Each Other',
-    icon: <MessageSquare className="h-8 w-8" />,
+    icon: <MessageSquare className="h-5 w-5" />,
     color: 'text-lavender-blue',
     bgColor: 'bg-lavender-blue/10',
     prompts: {
@@ -36,7 +36,7 @@ export const communicationSubcategories: CommunicationSubcategoryData[] = [
   {
     id: 'defensiveness',
     name: 'Defensiveness',
-    icon: <Bell className="h-8 w-8" />,
+    icon: <Bell className="h-5 w-5" />,
     color: 'text-mauve-rose',
     bgColor: 'bg-mauve-rose/10',
     prompts: {
@@ -54,7 +54,7 @@ export const communicationSubcategories: CommunicationSubcategoryData[] = [
   {
     id: 'avoidance',
     name: 'Avoidance',
-    icon: <User className="h-8 w-8" />,
+    icon: <User className="h-5 w-5" />,
     color: 'text-sage',
     bgColor: 'bg-sage/15',
     prompts: {
@@ -72,7 +72,7 @@ export const communicationSubcategories: CommunicationSubcategoryData[] = [
   {
     id: 'misinterpretation',
     name: 'Misinterpretation',
-    icon: <Volume className="h-8 w-8" />,
+    icon: <Volume className="h-5 w-5" />,
     color: 'text-peachy-terracotta',
     bgColor: 'bg-peachy-terracotta/10',
     prompts: {
@@ -90,7 +90,7 @@ export const communicationSubcategories: CommunicationSubcategoryData[] = [
   {
     id: 'timing-mismatches',
     name: 'Timing Mismatches',
-    icon: <Clock className="h-8 w-8" />,
+    icon: <Clock className="h-5 w-5" />,
     color: 'text-golden-mustard',
     bgColor: 'bg-golden-mustard/15',
     prompts: {

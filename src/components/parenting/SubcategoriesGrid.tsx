@@ -28,7 +28,7 @@ const SubcategoriesGrid: React.FC<SubcategoriesGridProps> = ({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10"
+      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mt-6"
     >
       {subcategories.map((subcategory, index) => (
         <SubcategoryCard

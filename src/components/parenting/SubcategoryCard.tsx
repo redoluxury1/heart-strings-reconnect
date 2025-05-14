@@ -18,15 +18,15 @@ const SubcategoryCard: React.FC<SubcategoryCardProps> = ({
 
   return (
     <button
-      className="flex flex-col items-center p-5 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 border border-gray-100"
+      className="flex items-center p-3 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 border border-gray-100 w-full"
       onClick={() => onClick(id)}
     >
       {icon && (
-        <div className={`flex items-center justify-center rounded-full p-3 ${bgColor} ${color} mb-2`}>
+        <div className={`flex items-center justify-center rounded-full p-2 ${bgColor} ${color} mr-3`}>
           {icon}
         </div>
       )}
-      <span className="font-cormorant font-medium text-base text-midnight-indigo text-center">
+      <span className="font-cormorant text-sm font-medium text-midnight-indigo text-left">
         {name}
       </span>
     </button>
