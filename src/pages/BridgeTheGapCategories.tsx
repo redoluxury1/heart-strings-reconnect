@@ -64,8 +64,8 @@ const BridgeTheGapCategories: React.FC = () => {
       id: 'in-laws',
       name: 'In-Laws',
       icon: <Users className="h-12 w-12" />,
-      color: 'text-midnight-indigo',
-      bgColor: 'bg-midnight-indigo/10'
+      color: 'text-[#9b87f5]',
+      bgColor: 'bg-[#9b87f5]/10'
     },
     {
       id: 'boundaries',

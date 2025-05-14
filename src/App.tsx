@@ -29,6 +29,8 @@ import MoneySubcategories from "./pages/MoneySubcategories";
 import MoneySubcategoryDetails from "./pages/MoneySubcategoryDetails";
 import FeelingDismissedSubcategories from "./pages/FeelingDismissedSubcategories";
 import FeelingDismissedSubcategoryDetails from "./pages/FeelingDismissedSubcategoryDetails";
+import InLawsSubcategories from "./pages/InLawsSubcategories";
+import InLawsSubcategoryDetails from "./pages/InLawsSubcategoryDetails";
 
 // Scroll to top on route change
 function ScrollToTop() {
@@ -75,6 +77,8 @@ const App = () => (
             <Route path="/bridge-the-gap/categories/money/:subcategoryId" element={<MoneySubcategoryDetails />} />
             <Route path="/bridge-the-gap/categories/feeling-dismissed" element={<FeelingDismissedSubcategories />} />
             <Route path="/bridge-the-gap/categories/feeling-dismissed/:subcategoryId" element={<FeelingDismissedSubcategoryDetails />} />
+            <Route path="/bridge-the-gap/categories/in-laws" element={<InLawsSubcategories />} />
+            <Route path="/bridge-the-gap/categories/in-laws/:subcategoryId" element={<InLawsSubcategoryDetails />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
