@@ -1,8 +1,8 @@
 
 import React from 'react';
-import { IconProps } from 'lucide-react';
+import type { LucideProps } from 'lucide-react';
 
 // This function creates icon components that can be referenced in .ts files
-export const createIconComponent = (Icon: React.ComponentType<IconProps>, size: string) => {
+export const createIconComponent = (Icon: React.ComponentType<LucideProps>, size: string) => {
   return () => React.createElement(Icon, { className: size });
 };

@@ -20,7 +20,7 @@ const ParentingSubcategories: React.FC = () => {
       <Navbar />
       
       <main className="flex-1">
-        <BrandSection className="py-10 md:py-16">
+        <BrandSection className="py-10 md:py-16" showLogo={false}>
           <ParentingSubcategoriesHeader />
           <SubcategoriesGrid 
             subcategories={SUBCATEGORY_DATA} 

@@ -36,7 +36,7 @@ const ParentingSubcategoryDetails: React.FC = () => {
       <Navbar />
       
       <main className="flex-1">
-        <BrandSection className="py-10 md:py-16">
+        <BrandSection className="py-10 md:py-16" showLogo={false}>
           <ContentContainer maxWidth="lg">
             <Button 
               variant="ghost" 

@@ -17,13 +17,13 @@ const BrandSection = ({
   className, 
   title, 
   subtitle, 
-  showLogo = true,
+  showLogo = false, // Changed default to false
   darkBackground = false 
 }: BrandSectionProps) => {
   return (
     <section className={cn("py-16", className)}>
       <ContentContainer>
-        {(title || subtitle || showLogo) && (
+        {(title || subtitle) && (
           <div className="text-center mb-12">
             {showLogo && (
               <div className="flex justify-center mb-4">

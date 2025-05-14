@@ -100,7 +100,7 @@ const BridgeTheGapCategories: React.FC = () => {
       <Navbar />
       
       <main className="flex-1">
-        <BrandSection className="py-10 md:py-16">
+        <BrandSection className="py-10 md:py-16" showLogo={false}>
           <ContentContainer maxWidth="xl">
             <div className="text-center mb-10">
               <h1 className="font-cormorant text-3xl md:text-4xl font-semibold text-[#162137] mb-3">
