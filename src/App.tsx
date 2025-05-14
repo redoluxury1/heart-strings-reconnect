@@ -36,6 +36,8 @@ import FeelingUnseenSubcategories from "./pages/FeelingUnseenSubcategories";
 import FeelingUnseenSubcategoryDetails from "./pages/FeelingUnseenSubcategoryDetails";
 import CommunicationSubcategories from "./pages/CommunicationSubcategories";
 import CommunicationSubcategoryDetails from "./pages/CommunicationSubcategoryDetails";
+import BoundariesSubcategories from "./pages/BoundariesSubcategories";
+import BoundariesSubcategoryDetails from "./pages/BoundariesSubcategoryDetails";
 
 // Scroll to top on route change
 function ScrollToTop() {
@@ -88,6 +90,8 @@ const App = () => (
             <Route path="/bridge-the-gap/categories/feeling-unseen/:subcategoryId" element={<FeelingUnseenSubcategoryDetails />} />
             <Route path="/bridge-the-gap/categories/communication" element={<CommunicationSubcategories />} />
             <Route path="/bridge-the-gap/categories/communication/:subcategoryId" element={<CommunicationSubcategoryDetails />} />
+            <Route path="/bridge-the-gap/categories/boundaries" element={<BoundariesSubcategories />} />
+            <Route path="/bridge-the-gap/categories/boundaries/:subcategoryId" element={<BoundariesSubcategoryDetails />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

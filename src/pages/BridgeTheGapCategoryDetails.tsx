@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
@@ -29,6 +30,8 @@ const BridgeTheGapCategoryDetails: React.FC = () => {
       navigate('/bridge-the-gap/categories/feeling-unseen');
     } else if (categoryId === 'communication') {
       navigate('/bridge-the-gap/categories/communication');
+    } else if (categoryId === 'boundaries') {
+      navigate('/bridge-the-gap/categories/boundaries');
     }
   }, [categoryId, navigate]);
 
@@ -51,7 +54,7 @@ const BridgeTheGapCategoryDetails: React.FC = () => {
   // If this is a category with subcategories, we'll redirect, so we don't need to render anything
   if (categoryId === 'parenting' || categoryId === 'intimacy' || categoryId === 'household-duties' || 
       categoryId === 'money' || categoryId === 'feeling-dismissed' || categoryId === 'in-laws' ||
-      categoryId === 'feeling-unseen' || categoryId === 'communication') return null;
+      categoryId === 'feeling-unseen' || categoryId === 'communication' || categoryId === 'boundaries') return null;
 
   return (
     <div className="min-h-screen flex flex-col bg-soft-cream">
