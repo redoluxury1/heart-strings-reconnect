@@ -17,13 +17,15 @@ const Footer = ({ showCTA = false }: FooterProps) => {
       {/* Main Footer Content */}
       <div className="bg-[#fce9e7] rounded-3xl max-w-4xl mx-auto px-6 py-16 md:px-12">
         <div className="flex flex-col items-center relative z-20">
-          {/* Logo */}
+          {/* Logo - Now wrapped in a Link to homepage */}
           <div className="mb-12">
-            <img 
-              src="/lovable-uploads/43d77678-108c-4565-978c-3afdead85010.png" 
-              alt="Bridge For Couples" 
-              className="h-24 md:h-28 w-auto" 
-            />
+            <Link to="/">
+              <img 
+                src="/lovable-uploads/43d77678-108c-4565-978c-3afdead85010.png" 
+                alt="Bridge For Couples" 
+                className="h-24 md:h-28 w-auto" 
+              />
+            </Link>
           </div>
           
           {/* Tagline */}
