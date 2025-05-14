@@ -8,6 +8,7 @@ import DailyLoveNote from '../components/home/DailyLoveNote';
 import StillUsSection from '../components/home/StillUsSection';
 import RelationshipStatsSection from '../components/home/RelationshipStatsSection';
 import HomeLanding from '../components/home/HomeLanding';
+import StillUsImage from '../components/home/StillUsImage';
 
 const Index = () => {
   const [hasNewLoveNote, setHasNewLoveNote] = useState(false);
@@ -34,6 +35,8 @@ const Index = () => {
           <ContentContainer>
             <HomeLanding />
           </ContentContainer>
+          {/* Added the "We're still us" image here */}
+          <StillUsImage />
         </div>
         
         <StillUsSection />
