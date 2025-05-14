@@ -78,6 +78,20 @@ const IntentSelectionView: React.FC<IntentSelectionViewProps> = ({
         )}
       </div>
       
+      {/* Text customization area - added back */}
+      {selectedIntent && (
+        <div className="w-full mb-6">
+          <p className="text-sm text-[#2C2C2C]/70 mb-2">Customize your intention:</p>
+          <SpeechToTextInput
+            value={intentText}
+            onChange={onIntentTextChange}
+            placeholder="Edit your intention..."
+            className="w-full rounded-lg bg-[#F5F2F0] border-[#D9B9AF] p-4 text-[#2C2C2C]"
+            minHeight="80px"
+          />
+        </div>
+      )}
+      
       {/* Actions */}
       <div className="flex flex-col w-full mt-4">
         <Button 
