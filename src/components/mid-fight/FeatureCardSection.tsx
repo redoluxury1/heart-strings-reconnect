@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { MessageCircle, ArrowCircleRight, Heart } from 'lucide-react';
+import { MessageCircle, ArrowLeftRight, Heart } from 'lucide-react';
 import FeatureCard from './FeatureCard';
 import SayThisInsteadTool from './SayThisInsteadTool';
 import BuildBridgeCard from './build-bridge/BuildBridgeCard';
@@ -26,14 +26,17 @@ const FeatureCardSection: React.FC<FeatureCardSectionProps> = ({
             id="say-instead-section"
           >
             <FeatureCard 
-              title="Say This Instead"
-              description="Reframe heated phrases into more productive ones"
-              isExpanded={selectedFeature === 'say-instead'}
-              onToggle={() => toggleFeature('say-instead')}
-              icon={<MessageCircle className="h-8 w-8" />}
-              expandedContent={<SayThisInsteadTool />}
-              color="bg-[#7D5248]"
-              textColor="text-white"
+              feature={{
+                id: 'say-instead',
+                title: "Say This Instead",
+                description: "Reframe heated phrases into more productive ones",
+                icon: <MessageCircle className="h-8 w-8" />,
+                comingSoon: false,
+                alwaysVisible: false
+              }}
+              isSelected={selectedFeature === 'say-instead'}
+              toggleFeature={toggleFeature}
+              customContent={<SayThisInsteadTool />}
             />
           </div>
           
@@ -43,14 +46,17 @@ const FeatureCardSection: React.FC<FeatureCardSectionProps> = ({
             id="whats-going-on-section"
           >
             <FeatureCard 
-              title="What's Really Going On"
-              description="Decode what your partner's behavior means"
-              isExpanded={selectedFeature === 'whats-going-on'}
-              onToggle={() => toggleFeature('whats-going-on')}
-              icon={<ArrowCircleRight className="h-8 w-8" />}
-              expandedContent={<WhatsReallyGoingOn />}
-              color="bg-[#2E2A63]"
-              textColor="text-white"
+              feature={{
+                id: 'whats-going-on',
+                title: "What's Really Going On",
+                description: "Decode what your partner's behavior means",
+                icon: <ArrowLeftRight className="h-8 w-8" />,
+                comingSoon: false,
+                alwaysVisible: false
+              }}
+              isSelected={selectedFeature === 'whats-going-on'}
+              toggleFeature={toggleFeature}
+              customContent={<WhatsReallyGoingOn />}
             />
           </div>
           
@@ -60,14 +66,17 @@ const FeatureCardSection: React.FC<FeatureCardSectionProps> = ({
             id="build-bridge-section"
           >
             <FeatureCard 
-              title="Build a Bridge"
-              description="Get expert help navigating a tough conversation"
-              isExpanded={selectedFeature === 'build-bridge'}
-              onToggle={() => toggleFeature('build-bridge')}
-              icon={<Heart className="h-8 w-8" />}
-              expandedContent={<BuildBridgeCard />}
-              color="bg-[#F7ECD9]"
-              textColor="text-[#1A2641]"
+              feature={{
+                id: 'build-bridge',
+                title: "Build a Bridge",
+                description: "Get expert help navigating a tough conversation",
+                icon: <Heart className="h-8 w-8" />,
+                comingSoon: false,
+                alwaysVisible: false
+              }}
+              isSelected={selectedFeature === 'build-bridge'}
+              toggleFeature={toggleFeature}
+              customContent={<BuildBridgeCard />}
             />
           </div>
         </div>
