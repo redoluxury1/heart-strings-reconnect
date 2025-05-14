@@ -350,6 +350,274 @@ export const reflectionPackBatch6: ReflectionInsight[] = [
   }
 ];
 
+// Seventh batch of reflection insights
+export const reflectionPackBatch7: ReflectionInsight[] = [
+  {
+    "triggers": [
+      "I can't trust you",
+      "you're hiding something",
+      "suspicious",
+      "you're being secretive",
+      "not telling the whole truth"
+    ],
+    "category": "trust_and_transparency",
+    "insight": "This conflict may reflect a deeper concern around trust or transparency.",
+    "reflection": "When trust feels shaky, even small actions—like tone, timing, or privacy—can feel loaded. Lack of transparency doesn't always mean deception, but it does create emotional distance. Rebuilding trust is slow, consistent, and grounded in clarity.",
+    "recommendation": "This week, pick one area where you can offer proactive transparency—whether it's plans, feelings, or context. Trust grows in the small moments."
+  },
+  {
+    "triggers": [
+      "you never initiate",
+      "I always reach out",
+      "you don't try",
+      "it's one-sided",
+      "you don't make an effort"
+    ],
+    "category": "effort_imbalance",
+    "insight": "Someone may be feeling like they're carrying the emotional or relational weight alone.",
+    "reflection": "When one partner constantly initiates—whether it's conversation, affection, or repair—it creates a quiet fatigue. Relationships need mutual pursuit, not just mutual tolerance. Even small acts of effort can restore balance.",
+    "recommendation": "Ask: 'What's one way I could show you I'm in this with you?'—and don't wait for conflict to answer it."
+  },
+  {
+    "triggers": [
+      "you flipped it on me",
+      "gaslighting",
+      "made me feel crazy",
+      "twisted my words",
+      "denied it happened"
+    ],
+    "category": "manipulation_or_gaslighting",
+    "insight": "This moment may have involved emotional manipulation or misrepresentation of truth.",
+    "reflection": "When someone's reality is denied or twisted, it creates emotional erosion. They start to question themselves more than the relationship. Even if gaslighting isn't intentional, the impact is lasting. Repair means choosing truth—even when it's uncomfortable.",
+    "recommendation": "Take time to validate one specific detail your partner shared—even if it's hard to hear. It's not about who's right. It's about creating safety."
+  },
+  {
+    "triggers": [
+      "we're just roommates",
+      "no spark",
+      "nothing exciting anymore",
+      "bored",
+      "we don't laugh"
+    ],
+    "category": "emotional_disconnection",
+    "insight": "This conflict may be highlighting a deeper disconnection or emotional drift.",
+    "reflection": "Many couples hit seasons where connection fades into function. It doesn't mean love is gone—it means intention is missing. The spark doesn't disappear—it just needs oxygen. That usually starts with laughter, presence, and curiosity again.",
+    "recommendation": "Plan one low-effort, high-connection moment this week. No pressure, just play. Then come back and send each other a Love Note about it."
+  },
+  {
+    "triggers": [
+      "you shut me out",
+      "stonewalling",
+      "refused to talk",
+      "ignored me",
+      "cold"
+    ],
+    "category": "stonewalling_and_emotional_distance",
+    "insight": "Someone may have emotionally withdrawn in a way that triggered deeper fear or anger.",
+    "reflection": "Stonewalling isn't about silence—it's about emotional detachment. It can feel like abandonment to the person on the other side. Learning to signal the need for space while still staying emotionally present is key.",
+    "recommendation": "Try agreeing on a simple phrase that signals pause but not punishment—like 'I need 15 minutes to reset.' It can be the difference between distance and repair."
+  }
+];
+
+// Eighth batch of reflection insights
+export const reflectionPackBatch8: ReflectionInsight[] = [
+  {
+    "triggers": [
+      "why do I always have to explain",
+      "you never get it",
+      "I'm tired of spelling it out",
+      "still don't understand"
+    ],
+    "category": "mental_exhaustion",
+    "insight": "Someone may be emotionally exhausted from having to explain themselves over and over.",
+    "reflection": "When someone feels like they have to make space for their partner's learning process—or have unknowingly leaned too hard on their emotional labor—emotional fatigue sets in. It can start to feel like the relationship depends on their effort alone. This isn't just about misunderstanding—it's about depletion.",
+    "recommendation": "Pause and reflect: Have I made space for my partner's learning process—or have I unknowingly leaned too hard on their emotional labor? Ask each other what hasn't been said clearly yet."
+  },
+  {
+    "triggers": [
+      "I feel judged",
+      "you're critical",
+      "nothing I do is right",
+      "always picking on me",
+      "I can't win"
+    ],
+    "category": "criticism_and_shame",
+    "insight": "There may be a dynamic of criticism that is triggering shame and disconnection.",
+    "reflection": "Criticism erodes connection faster than almost anything. Even well-meaning feedback, when delivered without softness, can feel like an attack. Over time, the relationship starts to feel like a performance instead of a partnership.",
+    "recommendation": "Try a compliment sandwich this week: when you need to offer feedback, start and end with what your partner is doing well. Not to soften truth—but to restore balance."
+  },
+  {
+    "triggers": [
+      "it's always about you",
+      "you never ask how I am",
+      "I'm invisible",
+      "you don't notice"
+    ],
+    "category": "self-centeredness_or_emotional_neglect",
+    "insight": "Someone may be feeling emotionally invisible or overlooked.",
+    "reflection": "When only one person's needs, feelings, or experiences are centered, the relationship starts to tilt. Even subtle patterns of emotional neglect lead to deep loneliness. Sometimes, just being asked 'how are you really doing?' can begin the healing process.",
+    "recommendation": "Build a new habit: once a day, ask your partner a check-in question—no agenda, no distractions. A small moment of attention can recalibrate everything."
+  },
+  {
+    "triggers": [
+      "I'm walking on eggshells",
+      "afraid to speak up",
+      "you'll explode",
+      "can't be honest",
+      "emotional landmine"
+    ],
+    "category": "fear_based_silence",
+    "insight": "One of you may be afraid to speak honestly because of emotional volatility.",
+    "reflection": "If someone feels like they have to manage your emotions in order to stay safe, you're not in a relationship—you're in a minefield. That fear silences truth, blocks growth, and builds resentment. Safety is the soil where honesty can grow.",
+    "recommendation": "Create a 'safe start' ritual. Begin any hard conversation with the phrase: 'I want to bring something up, and I need us both to stay grounded.' That invitation sets the tone before the tension."
+  },
+  {
+    "triggers": [
+      "this again",
+      "we never fix anything",
+      "same issue",
+      "nothing changes",
+      "you don't learn"
+    ],
+    "category": "stuck_in_cycles",
+    "insight": "This argument may be part of a larger pattern you haven't been able to break.",
+    "reflection": "Repeating the same fight isn't always a sign of incompatibility—it's a sign that something deeper hasn't been named clearly enough. You're not stuck because you're broken. You're stuck because the cycle hasn't been interrupted with intention.",
+    "recommendation": "Try the 'Let's Find the Pattern' tool. It helps you name what loop you keep getting caught in—so you can begin to build something new together."
+  }
+];
+
+// Ninth batch of reflection insights
+export const reflectionPackBatch9: ReflectionInsight[] = [
+  {
+    "triggers": [
+      "don't touch me",
+      "too tired",
+      "I'm not in the mood",
+      "leave me alone",
+      "stop asking"
+    ],
+    "category": "tension_around_physical_affection",
+    "insight": "There may be emotional tension manifesting as physical withdrawal.",
+    "reflection": "When emotional disconnect shows up as physical avoidance, it can feel like rejection—even if it's not. Sometimes the issue isn't intimacy—it's exhaustion, resentment, or lack of trust. Without emotional closeness, physical closeness often suffers too.",
+    "recommendation": "Instead of initiating physical affection, ask: 'What would help you feel more connected to me today?' Emotional safety often unlocks physical comfort."
+  },
+  {
+    "triggers": [
+      "you don't respect me",
+      "talk down to me",
+      "treat me like a child",
+      "condescending"
+    ],
+    "category": "respect_and_power_dynamics",
+    "insight": "This conflict may be rooted in a perceived power imbalance or lack of mutual respect.",
+    "reflection": "Respect is foundational in any relationship. When one partner feels belittled—especially in conflict—it shifts the dynamic from partnership to hierarchy. Repair starts with language, tone, and the willingness to see your partner as an equal, even when you disagree.",
+    "recommendation": "Next time you disagree, try saying: 'I see where you're coming from, even if I see it differently.' Respect doesn't require agreement—just dignity."
+  },
+  {
+    "triggers": [
+      "you never let me finish",
+      "interrupted",
+      "you just talk over me",
+      "I couldn't say anything"
+    ],
+    "category": "communication_dominance",
+    "insight": "One of you may be dominating the conversation, even without realizing it.",
+    "reflection": "When someone repeatedly interrupts, over-explains, or monopolizes dialogue, the quieter partner can feel erased. It's not just about airtime—it's about emotional presence. Conversation isn't a competition. It's a dance.",
+    "recommendation": "Try a simple turn-taking practice: set a 2-minute timer where each person speaks without interruption. When the timer ends, switch roles. Use this for harder conversations moving forward."
+  },
+  {
+    "triggers": [
+      "you joke too much",
+      "you never take it seriously",
+      "everything's a joke",
+      "you made fun of me"
+    ],
+    "category": "deflection_through_humor",
+    "insight": "Humor may be masking discomfort—or invalidating emotional truth.",
+    "reflection": "Humor can be a beautiful connector, but it can also be a shield. When jokes show up in the middle of emotional moments, they often deflect vulnerability. If your partner shares something serious and is met with a punchline, they may stop opening up.",
+    "recommendation": "If you're tempted to joke, pause and ask: 'Is this a moment for laughter, or for listening?' Let humor connect you—don't let it cover up what's real."
+  },
+  {
+    "triggers": [
+      "I feel like I'm parenting you",
+      "I already have kids",
+      "why do I have to remind you",
+      "do everything for you"
+    ],
+    "category": "parentified_partner_dynamic",
+    "insight": "This moment may reflect a dynamic where one partner feels overly responsible for the other.",
+    "reflection": "When a partner starts to feel like they're 'parenting' the other, it creates resentment, imbalance, and burnout. Often this stems from unspoken expectations, role confusion, or a lack of follow-through. You're equals—not parent and child.",
+    "recommendation": "Each partner should write down one responsibility they've been avoiding and one thing they're proud of managing. Share them aloud. Rebalance begins with clarity."
+  }
+];
+
+// Tenth batch of reflection insights
+export const reflectionPackBatch10: ReflectionInsight[] = [
+  {
+    "triggers": [
+      "you made me feel stupid",
+      "humiliated",
+      "mocked",
+      "laughed at me",
+      "shamed"
+    ],
+    "category": "shame_and_public_embarrassment",
+    "insight": "This moment may have triggered deep shame or embarrassment for one of you.",
+    "reflection": "Shame is one of the hardest emotions to process—and one of the most damaging when it shows up in relationships. If your partner feels mocked, dismissed, or made to feel 'less than,' even unintentionally, it creates lasting disconnection. Dignity must be protected, especially in conflict.",
+    "recommendation": "Use this phrase as a repair tool: 'I realize what I said might've made you feel small—and that wasn't my intention. I'm sorry.' Simple, sincere dignity restores connection."
+  },
+  {
+    "triggers": [
+      "you didn't have my back",
+      "you sided with them",
+      "I felt betrayed",
+      "you threw me under the bus"
+    ],
+    "category": "betrayal_or_loyalty_wound",
+    "insight": "There may be a wound around loyalty, where one partner didn't feel emotionally protected.",
+    "reflection": "In moments of tension with outsiders—friends, family, strangers—your partner is looking to see if you're beside them, not against them. Even neutrality can feel like betrayal when support is expected. Repair starts with choosing each other, publicly and privately.",
+    "recommendation": "Have a conversation this week about what 'having each other's back' means to each of you. Define it together before the next moment calls for it."
+  },
+  {
+    "triggers": [
+      "you're so cold",
+      "no emotion",
+      "you're like a robot",
+      "shut off",
+      "no reaction"
+    ],
+    "category": "emotional_flatness_or_numbness",
+    "insight": "There may be numbness showing up as emotional distance or flatness.",
+    "reflection": "When someone is emotionally flat or unresponsive, it often means they've hit their capacity. It's not that they don't care—it's that they're overwhelmed, shut down, or emotionally exhausted. The challenge is to restore safety gently—not force a reaction.",
+    "recommendation": "Instead of asking for emotion, ask: 'Is there something you're not saying right now that feels hard to name?' That opens the door without pressure."
+  },
+  {
+    "triggers": [
+      "you never change",
+      "fake apology",
+      "just say sorry to move on",
+      "don't mean it",
+      "empty words"
+    ],
+    "category": "empty_repair_or_performative_apologies",
+    "insight": "There may be a pattern of surface-level apologies that don't lead to change.",
+    "reflection": "A repair without behavior change is just emotional currency. When apologies are used to move on quickly or avoid accountability, trust deteriorates. What people want isn't perfection—it's evidence. Words backed by action.",
+    "recommendation": "Start with this: 'Here's what I'm going to try to do differently next time…' Then ask your partner, 'What would repair look like for you?'"
+  },
+  {
+    "triggers": [
+      "you blame everything on me",
+      "I'm always the bad guy",
+      "you never own your part",
+      "it's always my fault"
+    ],
+    "category": "unbalanced_blame",
+    "insight": "This moment may reflect a pattern where one partner feels they carry all the blame.",
+    "reflection": "When only one person in the relationship feels responsible for every mistake or misunderstanding, it creates deep resentment. Accountability should be mutual. Without shared ownership, even love begins to feel like judgment.",
+    "recommendation": "Before resolving the next disagreement, ask each other: 'What's one part of this that might be mine to own?' Shared reflection creates shared growth."
+  }
+];
+
 // Combine all reflection packs into a single collection
 export const reflectionPacks: ReflectionPackBatch = {
   1: reflectionPackBatch1,
@@ -357,5 +625,9 @@ export const reflectionPacks: ReflectionPackBatch = {
   3: reflectionPackBatch3,
   4: reflectionPackBatch4,
   5: reflectionPackBatch5,
-  6: reflectionPackBatch6
+  6: reflectionPackBatch6,
+  7: reflectionPackBatch7,
+  8: reflectionPackBatch8,
+  9: reflectionPackBatch9,
+  10: reflectionPackBatch10
 };
