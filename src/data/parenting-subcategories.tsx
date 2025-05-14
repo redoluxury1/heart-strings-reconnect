@@ -3,6 +3,7 @@ import { ReactNode } from 'react';
 import { 
   Gavel, Moon, UserRound, Scale, AlertCircle, Users 
 } from 'lucide-react';
+import { createIconComponent } from '@/utils/iconUtils';
 
 export interface Prompt {
   text: string;
@@ -18,6 +19,14 @@ export interface SubcategoryData {
   bgColor?: string;
 }
 
+// Create icon components
+const GavelIcon = createIconComponent(Gavel, "h-12 w-12");
+const MoonIcon = createIconComponent(Moon, "h-12 w-12");
+const UserRoundIcon = createIconComponent(UserRound, "h-12 w-12");
+const ScaleIcon = createIconComponent(Scale, "h-12 w-12");
+const AlertCircleIcon = createIconComponent(AlertCircle, "h-12 w-12");
+const UsersIcon = createIconComponent(Users, "h-12 w-12");
+
 export const SUBCATEGORY_DATA: SubcategoryData[] = [
   {
     id: 'discipline-styles',
@@ -29,7 +38,7 @@ export const SUBCATEGORY_DATA: SubcategoryData[] = [
       { text: 'Do you feel like we agree on what discipline should look like?', type: 'yes-no' },
       { text: 'Do you trust me to handle tough moments calmly?', type: 'yes-no' },
     ],
-    icon: <Gavel className="h-12 w-12" />,
+    icon: <GavelIcon />,
     color: 'text-peachy-terracotta',
     bgColor: 'bg-peachy-terracotta/10'
   },
@@ -43,7 +52,7 @@ export const SUBCATEGORY_DATA: SubcategoryData[] = [
       { text: 'Do you feel like nighttime duties are evenly shared?', type: 'yes-no' },
       { text: 'Do you think we give each other enough recovery time?', type: 'yes-no' },
     ],
-    icon: <Moon className="h-12 w-12" />,
+    icon: <MoonIcon />,
     color: 'text-lavender-blue',
     bgColor: 'bg-lavender-blue/10'
   },
@@ -57,7 +66,7 @@ export const SUBCATEGORY_DATA: SubcategoryData[] = [
       { text: "Do you feel like I notice when you're overwhelmed?", type: 'yes-no' },
       { text: "Do you feel appreciated for what you do as a parent?", type: 'yes-no' },
     ],
-    icon: <UserRound className="h-12 w-12" />,
+    icon: <UserRoundIcon />,
     color: 'text-mauve-rose',
     bgColor: 'bg-mauve-rose/10'
   },
@@ -71,7 +80,7 @@ export const SUBCATEGORY_DATA: SubcategoryData[] = [
       { text: "Do you feel like we both understand what the other is carrying?", type: 'yes-no' },
       { text: "Do we regularly talk about what's working and what's not?", type: 'yes-no' },
     ],
-    icon: <Scale className="h-12 w-12" />,
+    icon: <ScaleIcon />,
     color: 'text-sage',
     bgColor: 'bg-sage/10'
   },
@@ -85,7 +94,7 @@ export const SUBCATEGORY_DATA: SubcategoryData[] = [
       { text: "Do you feel like I notice when you're at your limit?", type: 'yes-no' },
       { text: "Do you think we give ourselves enough grace?", type: 'yes-no' },
     ],
-    icon: <AlertCircle className="h-12 w-12" />,
+    icon: <AlertCircleIcon />,
     color: 'text-golden-mustard',
     bgColor: 'bg-golden-mustard/10'
   },
@@ -99,7 +108,7 @@ export const SUBCATEGORY_DATA: SubcategoryData[] = [
       { text: "Do you feel like we respect each other's parenting instincts?", type: 'yes-no' },
       { text: "Do we check in often about how things are going?", type: 'yes-no' },
     ],
-    icon: <Users className="h-12 w-12" />,
+    icon: <UsersIcon />,
     color: 'text-midnight-indigo',
     bgColor: 'bg-midnight-indigo/10'
   }
