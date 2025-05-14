@@ -1,13 +1,18 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Send } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import ContentContainer from '@/components/common/ContentContainer';
 import BrandSection from '@/components/common/BrandSection';
 import { Button } from '@/components/ui/button';
 import Card from '@/components/common/Card';
+import { Input } from '@/components/ui/input';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { toast } from '@/hooks/use-toast';
 
 interface Prompt {
   text: string;
@@ -18,6 +23,13 @@ interface SubcategoryData {
   id: string;
   name: string;
   prompts: Prompt[];
+}
+
+interface ResponseData {
+  [promptId: string]: {
+    response: string;
+    sent: boolean;
+  }
 }
 
 const SUBCATEGORY_DATA: SubcategoryData[] = [
@@ -93,12 +105,77 @@ const ParentingSubcategoryDetails: React.FC = () => {
   const { subcategoryId } = useParams<{ subcategoryId: string }>();
   const navigate = useNavigate();
   
+  // State for tracking responses to each prompt
+  const [responses, setResponses] = useState<ResponseData>({});
+  
   // Find the subcategory data based on the ID
   const subcategory = SUBCATEGORY_DATA.find(item => item.id === subcategoryId);
 
   // If subcategory doesn't exist, provide default content
   const subcategoryName = subcategory?.name || 'Subcategory';
   const prompts = subcategory?.prompts || [];
+
+  // Handle text input change
+  const handleOpenResponseChange = (promptIndex: number, value: string) => {
+    const promptId = `${subcategoryId}-${promptIndex}`;
+    setResponses(prev => ({
+      ...prev,
+      [promptId]: {
+        ...prev[promptId],
+        response: value,
+        sent: false
+      }
+    }));
+  };
+
+  // Handle yes/no/sometimes selection
+  const handleMultiChoiceSelect = (promptIndex: number, value: string) => {
+    const promptId = `${subcategoryId}-${promptIndex}`;
+    setResponses(prev => ({
+      ...prev,
+      [promptId]: {
+        ...prev[promptId],
+        response: value,
+        sent: true
+      }
+    }));
+    
+    // Show toast notification for multiple choice responses
+    toast({
+      title: "Response saved",
+      description: "Your answer has been recorded."
+    });
+  };
+
+  // Handle sending a response
+  const handleSendResponse = (promptIndex: number) => {
+    const promptId = `${subcategoryId}-${promptIndex}`;
+    const response = responses[promptId]?.response;
+    
+    if (!response || response.trim() === '') {
+      toast({
+        title: "Empty response",
+        description: "Please write a response before sending.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    // In a real app, here we would send the response to the partner
+    setResponses(prev => ({
+      ...prev,
+      [promptId]: {
+        ...prev[promptId],
+        sent: true
+      }
+    }));
+    
+    // Show confirmation toast
+    toast({
+      title: "Response sent",
+      description: "Your response has been sent to your partner."
+    });
+  };
 
   // Split prompts by type
   const openEndedPrompts = prompts.filter(prompt => prompt.type === 'open-ended');
@@ -130,23 +207,29 @@ const ParentingSubcategoryDetails: React.FC = () => {
             
             <div className="space-y-4 max-w-3xl mx-auto">
               {/* Open-ended prompts */}
-              <div className="space-y-3 mb-6">
+              <div className="space-y-6 mb-8">
+                <h2 className="font-medium text-lg text-midnight-indigo">Discussion Questions</h2>
                 {openEndedPrompts.map((prompt, index) => (
-                  <PromptCard 
-                    key={index} 
-                    text={prompt.text} 
-                    type="open-ended"
+                  <DiscussionPromptCard 
+                    key={index}
+                    text={prompt.text}
+                    response={responses[`${subcategoryId}-${index}`]?.response || ""}
+                    sent={responses[`${subcategoryId}-${index}`]?.sent || false}
+                    onChange={(value) => handleOpenResponseChange(index, value)}
+                    onSend={() => handleSendResponse(index)}
                   />
                 ))}
               </div>
               
               {/* Yes/No prompts */}
-              <div className="space-y-3">
+              <div className="space-y-6">
+                <h2 className="font-medium text-lg text-midnight-indigo">Quick Response Questions</h2>
                 {yesNoPrompts.map((prompt, index) => (
-                  <PromptCard 
-                    key={index} 
-                    text={prompt.text} 
-                    type="yes-no"
+                  <MultiChoicePromptCard 
+                    key={index + openEndedPrompts.length}
+                    text={prompt.text}
+                    selectedValue={responses[`${subcategoryId}-${index + openEndedPrompts.length}`]?.response}
+                    onSelect={(value) => handleMultiChoiceSelect(index + openEndedPrompts.length, value)}
                   />
                 ))}
               </div>
@@ -181,28 +264,114 @@ const ParentingSubcategoryDetails: React.FC = () => {
   );
 };
 
-interface PromptCardProps {
+interface DiscussionPromptCardProps {
   text: string;
-  type: 'open-ended' | 'yes-no';
+  response: string;
+  sent: boolean;
+  onChange: (value: string) => void;
+  onSend: () => void;
 }
 
-const PromptCard: React.FC<PromptCardProps> = ({ text, type }) => {
+const DiscussionPromptCard: React.FC<DiscussionPromptCardProps> = ({ 
+  text, 
+  response, 
+  sent, 
+  onChange, 
+  onSend 
+}) => {
   return (
-    <Card className="p-5 bg-white hover:shadow-md transition-shadow duration-200">
-      <div className="flex justify-between items-start">
-        <p className="text-midnight-indigo text-lg font-medium pr-4">{text}</p>
-        <Button 
-          variant="outline" 
-          size="sm" 
-          className="shrink-0 border-mauve-rose/50 text-mauve-rose hover:bg-mauve-rose/10"
-        >
-          Send
-        </Button>
+    <Card className="p-5 bg-white hover:shadow-sm transition-shadow duration-200">
+      <div>
+        <p className="text-midnight-indigo text-lg font-medium mb-3">{text}</p>
+        
+        <div className="mt-3">
+          <Textarea 
+            placeholder="Write your response..." 
+            className="w-full resize-none bg-gray-50"
+            value={response}
+            onChange={(e) => onChange(e.target.value)}
+            disabled={sent}
+            rows={3}
+          />
+        </div>
+        
+        <div className="flex justify-between items-center mt-3">
+          <span className="inline-block rounded-full px-2.5 py-0.5 text-xs bg-slate-100 text-slate-600">
+            Discussion question
+          </span>
+          
+          {sent ? (
+            <span className="text-xs text-green-600 font-medium flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+              </svg>
+              Sent to partner
+            </span>
+          ) : (
+            <Button 
+              onClick={onSend}
+              size="sm" 
+              className="bg-mauve-rose hover:bg-mauve-rose/90 text-white"
+              disabled={!response || response.trim() === ''}
+            >
+              <Send className="h-4 w-4 mr-1" /> Send
+            </Button>
+          )}
+        </div>
       </div>
-      <div className="mt-2">
-        <span className="inline-block rounded-full px-2.5 py-0.5 text-xs bg-slate-100 text-slate-600">
-          {type === 'open-ended' ? 'Discussion question' : 'Yes / No / Sometimes'}
-        </span>
+    </Card>
+  );
+};
+
+interface MultiChoicePromptCardProps {
+  text: string;
+  selectedValue?: string;
+  onSelect: (value: string) => void;
+}
+
+const MultiChoicePromptCard: React.FC<MultiChoicePromptCardProps> = ({ 
+  text, 
+  selectedValue, 
+  onSelect 
+}) => {
+  return (
+    <Card className="p-5 bg-white hover:shadow-sm transition-shadow duration-200">
+      <div>
+        <p className="text-midnight-indigo text-lg font-medium mb-3">{text}</p>
+        
+        <RadioGroup 
+          value={selectedValue} 
+          onValueChange={onSelect}
+          className="mt-3 space-y-1"
+        >
+          <div className="flex items-center space-x-2">
+            <RadioGroupItem value="yes" id={`yes-${text.substring(0, 10)}`} />
+            <Label htmlFor={`yes-${text.substring(0, 10)}`} className="text-gray-700">Yes</Label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <RadioGroupItem value="no" id={`no-${text.substring(0, 10)}`} />
+            <Label htmlFor={`no-${text.substring(0, 10)}`} className="text-gray-700">No</Label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <RadioGroupItem value="sometimes" id={`sometimes-${text.substring(0, 10)}`} />
+            <Label htmlFor={`sometimes-${text.substring(0, 10)}`} className="text-gray-700">Sometimes</Label>
+          </div>
+        </RadioGroup>
+        
+        <div className="flex justify-between items-center mt-3">
+          <span className="inline-block rounded-full px-2.5 py-0.5 text-xs bg-slate-100 text-slate-600">
+            Yes / No / Sometimes
+          </span>
+          
+          {selectedValue && (
+            <span className="text-xs text-green-600 font-medium flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+              </svg>
+              Response saved
+            </span>
+          )}
+        </div>
       </div>
     </Card>
   );
