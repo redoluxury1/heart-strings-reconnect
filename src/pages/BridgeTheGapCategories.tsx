@@ -2,7 +2,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
-  Users, Heart, MessageSquare, Broom, DollarSign, 
+  Users, Heart, MessageSquare, Trash2, DollarSign, 
   Hand, Users as UsersTwo, Octagon, User 
 } from 'lucide-react';
 import BrandSection from '@/components/common/BrandSection';
@@ -48,7 +48,7 @@ const BridgeTheGapCategories: React.FC = () => {
     {
       id: 'household-duties',
       name: 'Household Duties',
-      icon: <Broom className="h-12 w-12" />,
+      icon: <Trash2 className="h-12 w-12" />,
       color: 'text-peachy-terracotta',
       bgColor: 'bg-peachy-terracotta/10'
     },
