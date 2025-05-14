@@ -1,12 +1,10 @@
 
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import ColorHealingMethod from './color-healing/ColorHealingMethod';
 import { Card } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 
 const SometimesItStillHurts = () => {
-  const [showColorHealing, setShowColorHealing] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   
   // Preload the image when component mounts
@@ -19,10 +17,6 @@ const SometimesItStillHurts = () => {
       img.onload = null; // Clean up
     };
   }, []);
-  
-  if (showColorHealing) {
-    return <ColorHealingMethod />;
-  }
 
   return (
     <Card className="border-none overflow-hidden rounded-xl shadow-md">
@@ -55,17 +49,15 @@ const SometimesItStillHurts = () => {
             />
           </div>
           
-          {/* Button to start the color healing flow */}
-          <Button 
-            onClick={() => setShowColorHealing(true)}
-            className="bg-[#7D5248] hover:bg-[#6a443b] text-white rounded-full px-8 py-6 text-lg"
-          >
-            Try Color Healing Method
-          </Button>
+          {/* Descriptive text about healing */}
+          <p className="text-[#7D5248] mt-4 text-lg max-w-xl mx-auto">
+            It's normal for emotions to linger even after you've worked through a conflict. 
+            True healing takes time, and that's okay.
+          </p>
           
-          {/* Descriptive text about the color healing method */}
-          <p className="text-[#7D5248] opacity-80 mt-4 text-sm max-w-sm mx-auto">
-            A calming breathwork and visualization tool to release lingering emotional tension.
+          {/* Additional supportive text */}
+          <p className="text-[#7D5248] opacity-80 mt-6 text-base max-w-sm mx-auto">
+            Remember that healing isn't linear. Some days will be easier than others, and that's part of the process.
           </p>
         </div>
       </div>
