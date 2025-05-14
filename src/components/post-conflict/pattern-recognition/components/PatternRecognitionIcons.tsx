@@ -47,6 +47,122 @@ export const CycleIcon: React.FC<{ className?: string }> = ({ className }) => {
   );
 };
 
+export const SilentTensionIcon: React.FC<{ className?: string }> = ({ className }) => {
+  return (
+    <svg 
+      width="200" 
+      height="200" 
+      viewBox="0 0 200 200" 
+      fill="none" 
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
+      {/* Pressure cooker with explosion */}
+      <path d="M70 120C70 91.5279 93.5279 68 122 68C150.472 68 174 91.5279 174 120" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+      <path d="M70 120v20c0 5.523 4.477 10 10 10h90c5.523 0 10-4.477 10-10v-20" stroke="currentColor" strokeWidth="2.5" />
+      <path d="M95 68c0-12.15 9.85-22 22-22s22 9.85 22 22" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+      <path d="M122 50V30" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+      
+      {/* Building pressure lines */}
+      <path d="M90 100c10.667 0 10.667-10 21.333-10s10.667 10 21.333 10 10.667-10 21.334-10 10.666 10 21.333 10" stroke="currentColor" strokeWidth="2.5" strokeDasharray="2 4" />
+      <path d="M90 115c10.667 0 10.667-10 21.333-10s10.667 10 21.333 10 10.667-10 21.334-10 10.666 10 21.333 10" stroke="currentColor" strokeWidth="2.5" strokeDasharray="1 3" />
+      
+      {/* Explosion */}
+      <path d="M55 70L35 50M55 30L35 50M15 70L35 50M15 30L35 50" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+    </svg>
+  );
+};
+
+export const CriticizeControlIcon: React.FC<{ className?: string }> = ({ className }) => {
+  return (
+    <svg 
+      width="200" 
+      height="200" 
+      viewBox="0 0 200 200" 
+      fill="none" 
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
+      {/* Correction/micromanaging concept */}
+      <circle cx="100" cy="100" r="50" stroke="currentColor" strokeWidth="2" strokeDasharray="4 4" />
+      
+      {/* Control dial */}
+      <circle cx="100" cy="100" r="30" stroke="currentColor" strokeWidth="2.5" />
+      <path d="M100 70L100 85" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+      <path d="M115 100L130 100" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+      <path d="M100 115L100 130" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+      <path d="M85 100L70 100" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+      
+      {/* Direction/control arrows */}
+      <path d="M155 60L145 70M155 140L145 130M45 60L55 70M45 140L55 130" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      
+      {/* Control pointer */}
+      <path d="M100 100L120 80" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+      <circle cx="100" cy="100" r="5" fill="currentColor" />
+    </svg>
+  );
+};
+
+export const FixRejectIcon: React.FC<{ className?: string }> = ({ className }) => {
+  return (
+    <svg 
+      width="200" 
+      height="200" 
+      viewBox="0 0 200 200" 
+      fill="none" 
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
+      {/* Solutions vs feelings concept */}
+      <path d="M60 80L100 60L140 80L140 130L100 150L60 130L60 80Z" stroke="currentColor" strokeWidth="2.5" />
+      
+      {/* Fix/Tools */}
+      <path d="M80 100V110M90 95V115M100 90V120" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+      
+      {/* Reject/X */}
+      <path d="M120 95L130 115M130 95L120 115" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+      
+      {/* Division line */}
+      <path d="M110 80L110 130" stroke="currentColor" strokeWidth="2" strokeDasharray="4 4" />
+      
+      {/* Emotion heart vs wrench */}
+      <path d="M75 70C75 65 78 60 83 60C88 60 90 65 90 65C90 65 92 60 97 60C102 60 105 65 105 70C105 80 90 85 90 85C90 85 75 80 75 70Z" stroke="currentColor" strokeWidth="2" />
+      <path d="M125 65L135 75M135 65L125 75" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path d="M130 60C130 60 135 55 140 60C145 65 140 70 140 70" stroke="currentColor" strokeWidth="2" />
+    </svg>
+  );
+};
+
+export const PursueDistanceIcon: React.FC<{ className?: string }> = ({ className }) => {
+  return (
+    <svg 
+      width="200" 
+      height="200" 
+      viewBox="0 0 200 200" 
+      fill="none" 
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
+      {/* Pursue-distance dynamic */}
+      <circle cx="70" cy="100" r="25" stroke="currentColor" strokeWidth="2.5" />
+      <circle cx="130" cy="100" r="25" stroke="currentColor" strokeWidth="2.5" />
+      
+      {/* Direction arrows */}
+      <path d="M85 85L115 85" stroke="currentColor" strokeWidth="2.5" />
+      <path d="M110 80L115 85L110 90" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+      
+      <path d="M115 115L85 115" stroke="currentColor" strokeWidth="2.5" />
+      <path d="M90 110L85 115L90 120" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+      
+      {/* Pursuit indicators */}
+      <path d="M60 85L65 90L70 85L75 90L80 85" stroke="currentColor" strokeWidth="2" />
+      
+      {/* Distance indicators */}
+      <path d="M120 115L125 120L130 115L135 120L140 115" stroke="currentColor" strokeWidth="2" />
+    </svg>
+  );
+};
+
 export const RepairIcon: React.FC<{ className?: string }> = ({ className }) => {
   return (
     <svg 

@@ -1,3 +1,36 @@
 
+
 /* This file is kept for backward compatibility, but now just imports the modular files */
 @import './animations/index.css';
+
+/* Add animations for pattern icons */
+@keyframes cycle-rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.animate-cycle-icon path {
+  transform-origin: center;
+  animation: cycle-rotate 12s infinite linear;
+}
+
+@keyframes pressure-build {
+  0% { opacity: 0.2; }
+  50% { opacity: 1; }
+  100% { opacity: 0.2; }
+}
+
+.animate-pressure-build path[stroke-dasharray] {
+  animation: pressure-build 3s infinite ease-in-out;
+}
+
+@keyframes control-pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.animate-control-pulse circle {
+  animation: control-pulse 4s infinite ease-in-out;
+}
+

@@ -1,8 +1,9 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { CommonPattern } from '../types';
 import { MessageSquare, Shield, X } from 'lucide-react';
-import { CycleIcon } from './PatternRecognitionIcons';
+import { CycleIcon, SilentTensionIcon, CriticizeControlIcon, FixRejectIcon, PursueDistanceIcon } from './PatternRecognitionIcons';
 
 interface PatternDetailScreenProps {
   pattern: CommonPattern | null;
@@ -21,6 +22,7 @@ const PatternDetailScreen: React.FC<PatternDetailScreenProps> = ({ pattern, onCo
     { icon: <Shield size={20} className="text-[#07183D]" />, title: "Defense:", text: "\"That's not fair. I did the dishes yesterday!\"" },
     { icon: <X size={20} className="text-[#07183D]" />, title: "Withdrawal:", text: "Walking away, shutting down, or changing the subject" }
   ];
+  let CycleIconComponent = CycleIcon;
   
   // Override configuration based on pattern type
   switch(pattern.patternType) {
@@ -33,6 +35,7 @@ const PatternDetailScreen: React.FC<PatternDetailScreenProps> = ({ pattern, onCo
         { icon: <Shield size={20} className="text-[#07183D]" />, title: "Bottled-up frustration:", text: "Small irritations pile up without being addressed" },
         { icon: <X size={20} className="text-[#07183D]" />, title: "Big reaction:", text: "Explosive outburst followed by shame or regret" }
       ];
+      CycleIconComponent = SilentTensionIcon;
       break;
     case "criticize-control":
       title = "Everything feels like a correction.";
@@ -43,6 +46,7 @@ const PatternDetailScreen: React.FC<PatternDetailScreenProps> = ({ pattern, onCo
         { icon: <Shield size={20} className="text-[#07183D]" />, title: "Hyper-focus:", text: "Noticing mistakes more than successes" },
         { icon: <X size={20} className="text-[#07183D]" />, title: "Rebellion:", text: "Partner pulls away or rebels against perceived control" }
       ];
+      CycleIconComponent = CriticizeControlIcon;
       break;
     case "fix-reject":
       title = "One of you wants to fix it. The other isn't ready.";
@@ -53,6 +57,18 @@ const PatternDetailScreen: React.FC<PatternDetailScreenProps> = ({ pattern, onCo
         { icon: <Shield size={20} className="text-[#07183D]" />, title: "Emotional pause:", text: "\"I can't talk about this right now.\"" },
         { icon: <X size={20} className="text-[#07183D]" />, title: "Disconnect:", text: "One over-explains, the other shuts down" }
       ];
+      CycleIconComponent = FixRejectIcon;
+      break;
+    case "pursue-distance":
+      title = "One of you chases connection. The other pulls away.";
+      subtitle = "The more one pursues, the more the other distances. Round and round it goes.";
+      description = "This dynamic creates a painful loop. One partner seeks closeness and conversation, while the other feels overwhelmed and retreats. The pursuit intensifies the withdrawal, and the withdrawal intensifies the pursuit.";
+      signs = [
+        { icon: <MessageSquare size={20} className="text-[#07183D]" />, title: "Pursuit:", text: "\"Why won't you talk to me about this?\"" },
+        { icon: <Shield size={20} className="text-[#07183D]" />, title: "Distance:", text: "\"I just need some space right now.\"" },
+        { icon: <X size={20} className="text-[#07183D]" />, title: "Escalation:", text: "The cycle gets more intense with each rotation" }
+      ];
+      CycleIconComponent = PursueDistanceIcon;
       break;
     default:
       // Keep default configuration for Blame/Defend/Withdraw
@@ -71,7 +87,7 @@ const PatternDetailScreen: React.FC<PatternDetailScreenProps> = ({ pattern, onCo
       </div>
       
       <div className="w-full my-6 flex justify-center">
-        <CycleIcon className="w-64 h-64 text-[#14213d]" />
+        <CycleIconComponent className="w-64 h-64 text-[#14213d]" />
       </div>
       
       <div className="w-full px-6 py-5">

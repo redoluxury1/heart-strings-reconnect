@@ -26,7 +26,7 @@ const PatternIntroScreen: React.FC<PatternIntroScreenProps> = ({ onContinue }) =
       </p>
       
       <div className="relative w-full max-w-sm mb-8 flex justify-center">
-        <PatternsIcon className="w-64 h-64 text-[#14213d]" />
+        <PatternsIcon className="w-64 h-64 text-[#C7747F]" />
       </div>
       
       <Button
