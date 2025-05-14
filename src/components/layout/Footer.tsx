@@ -12,18 +12,26 @@ const Footer = ({ showCTA = false }: FooterProps) => {
   const { isEmotional } = useInterface();
   const currentYear = new Date().getFullYear();
 
+  // Function to scroll to top when logo is clicked
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
   return (
     <footer className="pt-8 pb-10 relative z-10">
       {/* Main Footer Content */}
       <div className="bg-[#fce9e7] rounded-3xl max-w-4xl mx-auto px-6 py-16 md:px-12">
         <div className="flex flex-col items-center relative z-20">
-          {/* Logo - Now wrapped in a Link to homepage */}
+          {/* Logo - Now wrapped in a Link with an onClick handler */}
           <div className="mb-12">
-            <Link to="/">
+            <Link to="/" onClick={scrollToTop}>
               <img 
                 src="/lovable-uploads/43d77678-108c-4565-978c-3afdead85010.png" 
                 alt="Bridge For Couples" 
-                className="h-24 md:h-28 w-auto" 
+                className="h-24 md:h-28 w-auto"
               />
             </Link>
           </div>
