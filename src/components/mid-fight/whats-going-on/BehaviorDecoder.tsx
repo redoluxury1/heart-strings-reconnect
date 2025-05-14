@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { MessageSquare } from 'lucide-react';
 import CustomizePhraseView from '../CustomizePhraseView';
 import ConversationDialog from '../ConversationDialog';
 import BehaviorDropdown from './behavior-decoder/BehaviorDropdown';
@@ -62,13 +63,14 @@ const BehaviorDecoder = () => {
   
   return (
     <div className="space-y-6">
-      {/* Replace icon with the new image */}
+      {/* Replace image with MessageSquare icon */}
       <div className="flex justify-center mb-6">
-        <img 
-          src="/lovable-uploads/eb3c8d62-6a87-4dac-a8e1-ef2dc24dbe91.png" 
-          alt="He said She said" 
-          className="h-20 w-auto"
-        />
+        <div className="bg-gradient-to-r from-mauve-rose to-midnight-indigo p-4 rounded-full">
+          <MessageSquare 
+            size={64} 
+            className="text-white"
+          />
+        </div>
       </div>
 
       {/* Gender Toggle Buttons */}
