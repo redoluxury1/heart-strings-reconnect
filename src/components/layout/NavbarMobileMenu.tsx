@@ -39,9 +39,6 @@ const NavbarMobileMenu: React.FC<NavbarMobileMenuProps> = ({ isOpen, onClose, na
         <NavLink to="/post-conflict" className={getNavLinkClassName} onClick={onClose}>
           After Conflict
         </NavLink>
-        <NavLink to="/bridge-the-gap" className={getNavLinkClassName} onClick={onClose}>
-          Bridge the Gap
-        </NavLink>
         <NavLink to="/love-notes" className={getNavLinkClassName} onClick={onClose}>
           Love Notes
         </NavLink>

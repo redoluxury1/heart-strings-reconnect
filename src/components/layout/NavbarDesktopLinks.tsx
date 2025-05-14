@@ -25,9 +25,6 @@ const NavbarDesktopLinks: React.FC<NavbarDesktopLinksProps> = ({ hasNewLoveNote,
       <NavLink to="/post-conflict" className={getNavLinkClassName}>
         After Conflict
       </NavLink>
-      <NavLink to="/bridge-the-gap" className={getNavLinkClassName}>
-        Bridge the Gap
-      </NavLink>
       <NavLink to="/love-notes" className={getNavLinkClassName}>
         Love Notes
       </NavLink>

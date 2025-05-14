@@ -3,12 +3,12 @@ import React from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import ContentContainer from '@/components/common/ContentContainer';
-import SometimesItStillHurts from '@/components/post-conflict/SometimesItStillHurts';
 import PhraseRewind from '@/components/post-conflict/PhraseRewind';
 import FloatingTextBubbles from '@/components/post-conflict/FloatingTextBubbles';
 import OkayButNowWhat from '@/components/post-conflict/OkayButNowWhat';
 import LetsWorkThisOut from '@/components/post-conflict/lets-work-this-out/LetsWorkThisOut';
 import { SessionProvider, useSession } from '@/components/post-conflict/context/SessionContext';
+import BridgeTheGapIntroScreen from '@/components/bridge-the-gap/BridgeTheGapIntroScreen';
 
 // Wrapper to access session context
 const PostConflictContent = () => {
@@ -48,7 +48,9 @@ const PostConflictContent = () => {
             {showOtherComponents && (
               <div className="space-y-32">
                 <OkayButNowWhat />
-                <SometimesItStillHurts />
+                <div className="mb-16">
+                  <BridgeTheGapIntroScreen />
+                </div>
               </div>
             )}
           </div>
