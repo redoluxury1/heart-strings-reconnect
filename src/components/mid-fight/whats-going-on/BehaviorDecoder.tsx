@@ -6,7 +6,7 @@ import CustomizePhraseView from '../CustomizePhraseView';
 import ConversationDialog from '../ConversationDialog';
 import BehaviorDropdown from './behavior-decoder/BehaviorDropdown';
 import BehaviorExplanation from './behavior-decoder/BehaviorExplanation';
-import { behaviorOptions } from '@/data/behavior-data';
+import { Behavior, getFemaleBehaviors, getMaleBehaviors, getBehaviorById } from '@/data/behavior-data';
 
 // Component type definitions
 type BehaviorType = 'her' | 'him';
@@ -20,7 +20,7 @@ const BehaviorDecoder = () => {
   
   // Dialog state
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [customizedPhrases, setCustomizedPhrases] = useState<string[]>([]);
+  const [customPhrase, setCustomPhrase] = useState('');
 
   const handleBehaviorSelect = (behavior: string) => {
     setSelectedBehavior(behavior);
@@ -39,19 +39,29 @@ const BehaviorDecoder = () => {
     setSelectedBehavior(null);
   };
   
-  const openDialog = (phrases: string[]) => {
-    setCustomizedPhrases(phrases);
+  const openDialog = (phrase: string) => {
+    setCustomPhrase(phrase);
     setIsDialogOpen(true);
   };
   
   const handleCloseDialog = () => {
     setIsDialogOpen(false);
   };
+
+  const handleCustomPhraseChange = (phrase: string) => {
+    setCustomPhrase(phrase);
+  };
+
+  const handleStartConversation = () => {
+    // Handle conversation start
+    setIsDialogOpen(false);
+  };
   
-  // Filter options based on selected gender
-  const filteredOptions = behaviorOptions.filter(
-    option => option.gender === selectedGender
-  );
+  // Get behaviors based on selected gender
+  const behaviors = selectedGender === 'her' ? getFemaleBehaviors() : getMaleBehaviors();
+  
+  // Get the behavior object if selectedBehavior is not null
+  const behaviorObject = selectedBehavior ? getBehaviorById(selectedBehavior) : undefined;
   
   return (
     <div className="space-y-6">
@@ -90,30 +100,39 @@ const BehaviorDecoder = () => {
       {/* Content based on current view */}
       {currentView === 'select' ? (
         <BehaviorDropdown 
-          options={filteredOptions} 
-          onSelect={handleBehaviorSelect} 
-          selectedGender={selectedGender}
+          behaviors={behaviors} 
+          selectedBehaviorId={selectedBehavior || ''}
+          onBehaviorSelect={handleBehaviorSelect}
+          genderTab={selectedGender === 'her' ? 'female' : 'male'} 
+          isMobile={isMobile}
         />
       ) : (
-        <BehaviorExplanation 
-          behavior={selectedBehavior!}
-          gender={selectedGender}
-          onBack={handleBackToSelect}
-          onUsePhrase={openDialog}
-        />
+        behaviorObject && (
+          <BehaviorExplanation 
+            behavior={behaviorObject}
+            onStartChat={() => openDialog(behaviorObject.response)}
+            isMobile={isMobile}
+          />
+        )
       )}
 
       {/* Dialog for customizing phrases */}
       <ConversationDialog 
         isOpen={isDialogOpen} 
-        onClose={handleCloseDialog}
-        title="Start a conversation"
-      >
-        <CustomizePhraseView 
-          phrases={customizedPhrases}
-          onClose={handleCloseDialog}
+        onOpenChange={setIsDialogOpen}
+        partnerName="Partner"
+        onSendInvite={handleStartConversation}
+      />
+
+      {/* Need to wrap CustomizePhraseView in a component that accepts the right props */}
+      {isDialogOpen && (
+        <CustomizePhraseView
+          customPhrase={customPhrase}
+          onCustomPhraseChange={handleCustomPhraseChange}
+          onBackToTopics={handleCloseDialog}
+          onStartConversation={handleStartConversation}
         />
-      </ConversationDialog>
+      )}
     </div>
   );
 };
