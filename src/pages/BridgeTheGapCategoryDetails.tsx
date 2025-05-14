@@ -12,6 +12,13 @@ const BridgeTheGapCategoryDetails: React.FC = () => {
   const { categoryId } = useParams<{ categoryId: string }>();
   const navigate = useNavigate();
   
+  // Check if this is the parenting category, which has its own subcategories page
+  React.useEffect(() => {
+    if (categoryId === 'parenting') {
+      navigate('/bridge-the-gap/categories/parenting');
+    }
+  }, [categoryId, navigate]);
+
   // Function to get category name from ID
   const getCategoryName = (id: string): string => {
     switch(id) {
@@ -27,6 +34,9 @@ const BridgeTheGapCategoryDetails: React.FC = () => {
       default: return 'Category';
     }
   };
+
+  // If this is the parenting category, we'll redirect, so we don't need to render anything
+  if (categoryId === 'parenting') return null;
 
   return (
     <div className="min-h-screen flex flex-col bg-soft-cream">
