@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Book, Gamepad } from 'lucide-react';
+import { Book } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 
 interface NavbarMobileMenuProps {
@@ -49,20 +49,12 @@ const NavbarMobileMenu: React.FC<NavbarMobileMenuProps> = ({
           Reconnecting
         </Link>
         <Link 
-          to="/games" 
-          className="text-midnight-indigo hover:text-mauve-rose px-4 py-2 hover:bg-soft-blush rounded flex items-center"
-          onClick={onClose}
-        >
-          <Gamepad className="h-4 w-4 mr-2" />
-          Games
-        </Link>
-        <Link 
           to="/archive" 
           className="text-midnight-indigo hover:text-mauve-rose px-4 py-2 hover:bg-soft-blush rounded flex items-center"
           onClick={onClose}
         >
           <Book className="h-4 w-4 mr-2" />
-          Archive
+          Journal
         </Link>
         <Button 
           variant="outline" 

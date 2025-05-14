@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Book, Gamepad } from 'lucide-react';
+import { Book } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
@@ -44,15 +44,9 @@ const NavbarDesktopLinks: React.FC<NavbarDesktopLinksProps> = ({
             </Link>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <Link to="/games" className="text-sm font-medium hover:text-mauve-rose transition-colors px-3 py-2">
-              <Gamepad className="h-4 w-4 mr-1 inline" />
-              Games
-            </Link>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
             <Link to="/archive" className="text-sm font-medium hover:text-mauve-rose transition-colors px-3 py-2">
               <Book className="h-4 w-4 mr-1 inline" />
-              Archive
+              Journal
             </Link>
           </NavigationMenuItem>
           
