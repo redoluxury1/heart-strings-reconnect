@@ -1,7 +1,8 @@
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { SessionData } from '@/components/post-conflict/context/SessionContext';
+import { PartnerData } from '../types/partner-data';
 
 interface SharedInsightProps {
   sessionData: SessionData;
@@ -9,17 +10,17 @@ interface SharedInsightProps {
 
 const SharedInsight: React.FC<SharedInsightProps> = ({ sessionData }) => {
   // Extract the relevant data for display
-  const partner1 = {
+  const partner1 = useMemo(() => ({
     emotions: sessionData.partner1.responses.emotions || [],
     tone: sessionData.partner1.responses.complete?.intent || "Unknown",
     need: sessionData.partner1.responses.complete?.needs || ""
-  };
+  }), [sessionData.partner1]);
   
-  const partner2 = {
+  const partner2 = useMemo(() => ({ 
     emotions: sessionData.partner2.responses.emotions || [],
     tone: sessionData.partner2.responses.complete?.intent || "Unknown",
     need: sessionData.partner2.responses.complete?.needs || ""
-  };
+  }), [sessionData.partner2]);
   
   // Generate the shared insight based on the data
   const generateSharedInsight = () => {
@@ -31,22 +32,41 @@ const SharedInsight: React.FC<SharedInsightProps> = ({ sessionData }) => {
     );
     
     if (sharedEmotions.length > 0) {
-      return `You both felt ${sharedEmotions[0]} during this. Naming it is a step toward clarity.`;
+      return `You both felt ${sharedEmotions.join(' and ')} during this conversation. Naming these shared emotions creates a foundation for understanding.`;
     }
     
-    // Check for shared tone
-    if (partner1.tone === partner2.tone) {
-      return "You both approached this with the same intention. That's a great foundation for moving forward.";
+    // Check for similar intentions in tone
+    const tone1 = partner1.tone.toLowerCase();
+    const tone2 = partner2.tone.toLowerCase();
+    
+    if (tone1.includes('listen') && tone2.includes('listen')) {
+      return "You both expressed a desire to listen to each other. This shared intention is a powerful starting point for connection.";
+    }
+    
+    if ((tone1.includes('understand') || tone1.includes('perspective')) && 
+        (tone2.includes('understand') || tone2.includes('perspective'))) {
+      return "You both want to understand each other's perspectives. That openness to see things differently is key to moving forward together.";
     }
     
     // Check for similarities in needs
-    if (partner1.need.toLowerCase().includes("listen") && 
-        partner2.need.toLowerCase().includes("listen")) {
-      return "You both expressed a need to be listened to. Creating space for each other is key.";
+    const need1 = partner1.need.toLowerCase();
+    const need2 = partner2.need.toLowerCase();
+    
+    if ((need1.includes('listen') || need1.includes('hear')) && 
+        (need2.includes('listen') || need2.includes('hear'))) {
+      return "You both expressed a need to be heard. Creating space for each other to speak and truly listen is essential for connection.";
     }
     
-    // Default insight
-    return "You each had different emotional needs in this moment—that's common. What matters now is listening with care.";
+    if (need1.includes('respect') && need2.includes('respect')) {
+      return "You both highlighted respect as important. Building on this shared value will strengthen your relationship.";
+    }
+    
+    if (need1.includes('time') && need2.includes('time')) {
+      return "You both mentioned needing time. Recognizing this shared need can help you create a healthy pace for working through challenges.";
+    }
+    
+    // Default insight based on showing up
+    return "You each came to this conversation with your own emotional needs—that's completely normal. What matters now is that you both showed up to work through it together.";
   };
   
   const sharedInsight = generateSharedInsight();

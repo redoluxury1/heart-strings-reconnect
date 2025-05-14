@@ -14,10 +14,10 @@ const ReflectionCards: React.FC<ReflectionCardsProps> = ({ reflections }) => {
   
   // Render a reflection card
   const renderReflectionCard = (reflection: ReflectionInsight, index: number) => (
-    <Card key={index} className="mb-4 bg-[#F8F5F3] border-[#D9B9AF]">
+    <Card key={index} className="mb-4 bg-[#F8F5F3] border-[#D9B9AF] hover:shadow-md transition-all">
       <CardHeader className="pb-2">
         <CardTitle className="text-lg text-[#2C2C2C]">{reflection.insight}</CardTitle>
-        <CardDescription className="text-[#65595D] italic">Relationship Insight</CardDescription>
+        <CardDescription className="text-[#65595D] italic">Therapist Insight</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-[#3A3A3A] leading-relaxed">{reflection.reflection}</p>
@@ -30,8 +30,7 @@ const ReflectionCards: React.FC<ReflectionCardsProps> = ({ reflections }) => {
   );
 
   return (
-    <div className="w-full mb-8">
-      <h3 className="font-medium text-[#2C2C2C] mb-4">Relationship Insights</h3>
+    <div className="w-full space-y-4">
       {reflections.map((reflection, index) => (
         renderReflectionCard(reflection, index)
       ))}
