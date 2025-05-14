@@ -95,18 +95,18 @@ const PatternList: React.FC<PatternListProps> = ({ patterns = samplePatterns, on
   };
 
   return (
-    <div className="space-y-6 max-w-lg mx-auto">
-      <div className="text-center mb-8">
-        <h1 className="text-5xl font-cormorant font-bold text-[#14213d] mb-5">
+    <div className="space-y-4 max-w-lg mx-auto">
+      <div className="text-center mb-6">
+        <h1 className="text-3xl md:text-4xl font-cormorant font-bold text-[#14213d] mb-3">
           Which pattern sounds like your relationship?
         </h1>
-        <p className="text-lg text-[#14213d]/80 mb-2 max-w-lg mx-auto leading-relaxed">
+        <p className="text-sm md:text-base text-[#14213d]/80 mb-2 max-w-md mx-auto leading-relaxed">
           These common loops show up in many couples. 
           Tap one to explore how it plays out—and how to break it.
         </p>
       </div>
       
-      <div className="space-y-3">
+      <div className="space-y-2 max-w-md mx-auto">
         {patterns.map(pattern => (
           <PatternCard
             key={pattern.id}
@@ -114,11 +114,11 @@ const PatternList: React.FC<PatternListProps> = ({ patterns = samplePatterns, on
             icon={getPatternIcon(pattern.patternType)}
             title={friendlyPatternNames[pattern.patternType] || pattern.name}
           >
-            <p className="text-[#14213d]/80 text-sm leading-relaxed">
+            <p className="text-[#14213d]/80 text-xs md:text-sm leading-relaxed">
               {friendlyDescriptions[pattern.patternType] || pattern.description}
             </p>
-            <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
-              <ChevronRight className="h-6 w-6 text-[#14213d]/40" />
+            <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+              <ChevronRight className="h-5 w-5 text-[#14213d]/40" />
             </div>
           </PatternCard>
         ))}

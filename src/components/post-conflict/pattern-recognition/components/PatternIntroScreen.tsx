@@ -28,26 +28,25 @@ const PatternIntroScreen: React.FC<PatternIntroScreenProps> = ({ onContinue }) =
   };
 
   return (
-    <div className="flex flex-col items-center justify-center text-center max-w-3xl mx-auto py-4">
-      <h2 className="text-5xl font-cormorant font-medium text-[#14213d] mb-6 tracking-tight">
+    <div className="flex flex-col items-center justify-center text-center max-w-2xl mx-auto py-4">
+      <h2 className="text-3xl md:text-4xl font-cormorant font-medium text-[#14213d] mb-4 tracking-tight">
         Let's break the cycle.
       </h2>
       
-      <p className="text-xl text-[#14213d] mb-10 max-w-2xl">
+      <p className="text-sm md:text-base text-[#14213d] mb-8 max-w-md">
         Every couple has patterns. The goal isn't to be perfect—it's to catch 
         the cycle before it catches you.
       </p>
       
-      <div className="relative w-full max-w-md mb-10">
+      <div className="relative w-full max-w-sm mb-8">
         {!imageLoaded && (
-          <Skeleton className="w-full h-64 rounded-lg" />
+          <Skeleton className="w-full h-48 rounded-lg" />
         )}
         <img
           src="/lovable-uploads/39110aa2-d4b1-4586-bd3f-56a1ae1053c8.png"
           alt="Couple sitting back to back with arms crossed"
           className={`w-full h-auto rounded-lg transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
           loading="eager"
-          fetchPriority="high"
           onLoad={() => setImageLoaded(true)}
         />
       </div>
