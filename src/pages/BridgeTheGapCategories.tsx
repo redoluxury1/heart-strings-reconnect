@@ -28,7 +28,7 @@ const BridgeTheGapCategories: React.FC = () => {
     {
       id: 'parenting',
       name: 'Parenting',
-      icon: <Baby className="h-12 w-12" />, // Updated to Baby icon
+      icon: <Baby className="h-12 w-12" />, 
       color: 'text-sage',
       bgColor: 'bg-sage/10'
     },
