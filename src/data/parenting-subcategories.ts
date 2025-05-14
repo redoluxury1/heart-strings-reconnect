@@ -104,4 +104,3 @@ export const SUBCATEGORY_DATA: SubcategoryData[] = [
     bgColor: 'bg-midnight-indigo/10'
   }
 ];
-
