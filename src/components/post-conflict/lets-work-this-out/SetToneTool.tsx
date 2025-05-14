@@ -4,7 +4,7 @@ import { Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
-import { Textarea } from '@/components/ui/textarea';
+import SpeechToTextInput from '@/components/common/SpeechToTextInput';
 
 interface IntentOption {
   id: string;
@@ -27,26 +27,56 @@ interface SetToneToolProps {
 const SetToneTool: React.FC<SetToneToolProps> = ({ onComplete, onBack }) => {
   const [selectedIntent, setSelectedIntent] = useState<string | null>(null);
   const [customIntent, setCustomIntent] = useState<string>('');
+  const [intentText, setIntentText] = useState<string>('');
   const [viewState, setViewState] = useState<'select' | 'customize'>('select');
-  const [customizedText, setCustomizedText] = useState<string>('');
   
   const handleSelectIntent = (intentId: string) => {
-    setSelectedIntent(intentId === selectedIntent ? null : intentId);
+    const previouslySelected = selectedIntent === intentId;
+    
+    // Clear the selection if already selected
+    if (previouslySelected) {
+      setSelectedIntent(null);
+      setIntentText('');
+      return;
+    }
+    
+    setSelectedIntent(intentId);
+    
+    // Set the text in the input field based on selection
+    if (intentId === 'custom') {
+      setIntentText(customIntent);
+    } else {
+      const selectedOption = intentOptions.find(option => option.id === intentId);
+      if (selectedOption) {
+        setIntentText(selectedOption.text);
+      }
+    }
+  };
+  
+  const handleCustomIntentChange = (value: string) => {
+    setCustomIntent(value);
+    if (selectedIntent === 'custom') {
+      setIntentText(value);
+    }
+  };
+  
+  const handleIntentTextChange = (value: string) => {
+    setIntentText(value);
   };
   
   const handleContinueToCustomize = () => {
+    setViewState('customize');
     if (selectedIntent === 'custom') {
-      setCustomizedText(customIntent);
+      setIntentText(customIntent);
     } else {
       const selectedOption = intentOptions.find(option => option.id === selectedIntent);
-      setCustomizedText(selectedOption?.text || '');
+      setIntentText(selectedOption?.text || '');
     }
-    setViewState('customize');
   };
   
   const handleNext = () => {
     if (onComplete) {
-      onComplete(customizedText);
+      onComplete(intentText);
     }
   };
 
@@ -112,14 +142,28 @@ const SetToneTool: React.FC<SetToneToolProps> = ({ onComplete, onBack }) => {
             
             {/* Custom input field (only shown when custom is selected) */}
             {selectedIntent === 'custom' && (
-              <Input
+              <SpeechToTextInput
                 value={customIntent}
-                onChange={(e) => setCustomIntent(e.target.value)}
+                onChange={handleCustomIntentChange}
                 placeholder="Enter your intention..."
                 className="rounded-full bg-[#F5F2F0] border-[#D9B9AF] px-5 py-3 mt-3"
+                minHeight="60px"
               />
             )}
           </div>
+          
+          {/* Text display area for selected intent */}
+          {selectedIntent && selectedIntent !== 'custom' && (
+            <div className="w-full mb-6">
+              <SpeechToTextInput
+                value={intentText}
+                onChange={handleIntentTextChange}
+                placeholder="Edit your intention..."
+                className="w-full rounded-lg bg-[#F5F2F0] border-[#D9B9AF] p-4 text-[#2C2C2C]"
+                minHeight="80px"
+              />
+            </div>
+          )}
           
           {/* Actions */}
           <div className="flex flex-col w-full mt-4">
@@ -167,11 +211,12 @@ const SetToneTool: React.FC<SetToneToolProps> = ({ onComplete, onBack }) => {
         
         {/* Customization textarea */}
         <div className="w-full mb-6">
-          <Textarea
-            value={customizedText}
-            onChange={(e) => setCustomizedText(e.target.value)}
+          <SpeechToTextInput
+            value={intentText}
+            onChange={setIntentText}
             placeholder="Edit your intention..."
-            className="w-full min-h-[120px] rounded-lg bg-[#F5F2F0] border-[#D9B9AF] p-4 text-[#2C2C2C]"
+            className="w-full rounded-lg bg-[#F5F2F0] border-[#D9B9AF] p-4 text-[#2C2C2C]"
+            minHeight="120px"
           />
         </div>
         
@@ -180,7 +225,7 @@ const SetToneTool: React.FC<SetToneToolProps> = ({ onComplete, onBack }) => {
           <Button 
             className="rounded-full bg-[#5D3A5A] hover:bg-[#5D3A5A]/90 text-white font-medium py-3 px-6 w-full"
             onClick={handleNext}
-            disabled={!customizedText.trim()}
+            disabled={!intentText.trim()}
           >
             Next
           </Button>

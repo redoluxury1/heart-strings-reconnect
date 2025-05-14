@@ -1,11 +1,11 @@
 
 import React from 'react';
 import { MessageSquare } from 'lucide-react';
-import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import SentenceStarterChips from './SentenceStarterChips';
 import { sentenceStarters } from '../data/sentenceStartersData';
 import { usePerspectiveInput } from '../hooks/usePerspectiveInput';
+import SpeechToTextInput from '@/components/common/SpeechToTextInput';
 
 interface PerspectiveFormProps {
   onBack: () => void;
@@ -50,14 +50,14 @@ const PerspectiveForm: React.FC<PerspectiveFormProps> = ({ onBack, onSubmit }) =
         onStarterClick={handleStarterClick} 
       />
 
-      {/* Text input area */}
+      {/* Text input area with speech-to-text */}
       <div className="w-full mb-6">
-        <Textarea
-          ref={textareaRef}
+        <SpeechToTextInput
           value={perspective}
-          onChange={(e) => setPerspective(e.target.value)}
+          onChange={setPerspective}
           placeholder="Write it out here in your own words..."
           className="min-h-[150px] p-4 bg-[#FAF6F4] border-[#D9B9AF] rounded-xl text-[#3A3A3A] focus:ring-[#D3876A] focus:border-[#D3876A]"
+          minHeight="150px"
         />
       </div>
 

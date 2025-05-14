@@ -1,12 +1,12 @@
 
 import React from 'react';
 import { HeartHandshake } from 'lucide-react';
-import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { useSession } from '@/components/post-conflict/context/SessionContext';
 import SentenceStarterChips from './components/SentenceStarterChips';
 import { sentenceStarters } from './data/understandingStartersData';
 import { useUnderstandingInput } from './hooks/useUnderstandingInput';
+import SpeechToTextInput from '@/components/common/SpeechToTextInput';
 
 interface WishPartnerUnderstoodProps {
   onBack?: () => void;
@@ -72,14 +72,14 @@ const WishPartnerUnderstood: React.FC<WishPartnerUnderstoodProps> = ({
           onStarterClick={handleStarterClick} 
         />
 
-        {/* Text input area */}
+        {/* Text input area with speech-to-text */}
         <div className="w-full mb-6">
-          <Textarea
-            ref={textareaRef}
+          <SpeechToTextInput
             value={understanding}
-            onChange={(e) => setUnderstanding(e.target.value)}
+            onChange={setUnderstanding}
             placeholder="Write it in your own words..."
             className="min-h-[150px] p-4 bg-[#FAF6F4] border-[#D9B9AF] rounded-xl text-[#3A3A3A] focus:ring-[#D3876A] focus:border-[#D3876A]"
+            minHeight="150px"
           />
         </div>
 
