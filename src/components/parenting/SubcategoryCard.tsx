@@ -14,7 +14,7 @@ const SubcategoryCard: React.FC<SubcategoryCardProps> = ({
   index,
   onClick
 }) => {
-  const { id, name, icon, color = '', bgColor = '' } = subcategory;
+  const { id, name, icon, color = '' } = subcategory;
 
   return (
     <button
@@ -22,11 +22,11 @@ const SubcategoryCard: React.FC<SubcategoryCardProps> = ({
       onClick={() => onClick(id)}
     >
       {icon && (
-        <div className={`flex items-center justify-center rounded-full p-1.5 ${bgColor} ${color} mr-2`}>
+        <div className={`flex items-center justify-center mr-2 ${color}`}>
           {icon}
         </div>
       )}
-      <span className="font-cormorant text-xs font-medium text-midnight-indigo text-left">
+      <span className="font-cormorant text-sm font-medium text-midnight-indigo text-left">
         {name}
       </span>
     </button>

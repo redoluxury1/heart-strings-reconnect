@@ -7,7 +7,7 @@ export interface CommunicationSubcategoryData {
   name: string;
   icon: React.ReactNode;
   color: string;
-  bgColor: string;
+  bgColor?: string;
   prompts: {
     openEnded: string[];
     yesNoSometimes: string[];
@@ -20,7 +20,6 @@ export const communicationSubcategories: CommunicationSubcategoryData[] = [
     name: 'Talking Past Each Other',
     icon: <MessageSquare className="h-4 w-4" />,
     color: 'text-lavender-blue',
-    bgColor: 'bg-lavender-blue/10',
     prompts: {
       openEnded: [
         "Do you feel like we hear the words but miss the meaning?",
@@ -38,7 +37,6 @@ export const communicationSubcategories: CommunicationSubcategoryData[] = [
     name: 'Defensiveness',
     icon: <Bell className="h-4 w-4" />,
     color: 'text-mauve-rose',
-    bgColor: 'bg-mauve-rose/10',
     prompts: {
       openEnded: [
         "Do I get defensive when you bring up hard things?",
@@ -56,7 +54,6 @@ export const communicationSubcategories: CommunicationSubcategoryData[] = [
     name: 'Avoidance',
     icon: <User className="h-4 w-4" />,
     color: 'text-sage',
-    bgColor: 'bg-sage/15',
     prompts: {
       openEnded: [
         "What topics do we avoid, and why?",
@@ -74,7 +71,6 @@ export const communicationSubcategories: CommunicationSubcategoryData[] = [
     name: 'Misinterpretation',
     icon: <Volume className="h-4 w-4" />,
     color: 'text-peachy-terracotta',
-    bgColor: 'bg-peachy-terracotta/10',
     prompts: {
       openEnded: [
         "Do you feel like your tone or intent is often misunderstood?",
@@ -92,7 +88,6 @@ export const communicationSubcategories: CommunicationSubcategoryData[] = [
     name: 'Timing Mismatches',
     icon: <Clock className="h-4 w-4" />,
     color: 'text-golden-mustard',
-    bgColor: 'bg-golden-mustard/15',
     prompts: {
       openEnded: [
         "Do you prefer to talk things out right away or after a pause?",

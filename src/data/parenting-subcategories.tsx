@@ -39,8 +39,7 @@ export const SUBCATEGORY_DATA: SubcategoryData[] = [
       { text: 'Do you trust me to handle tough moments calmly?', type: 'yes-no' },
     ],
     icon: <GavelIcon />,
-    color: 'text-peachy-terracotta',
-    bgColor: 'bg-peachy-terracotta/10'
+    color: 'text-peachy-terracotta'
   },
   {
     id: 'nighttime-duties',
@@ -53,8 +52,7 @@ export const SUBCATEGORY_DATA: SubcategoryData[] = [
       { text: 'Do you think we give each other enough recovery time?', type: 'yes-no' },
     ],
     icon: <MoonIcon />,
-    color: 'text-lavender-blue',
-    bgColor: 'bg-lavender-blue/10'
+    color: 'text-lavender-blue'
   },
   {
     id: 'feeling-unsupported',
@@ -67,8 +65,7 @@ export const SUBCATEGORY_DATA: SubcategoryData[] = [
       { text: "Do you feel appreciated for what you do as a parent?", type: 'yes-no' },
     ],
     icon: <UserRoundIcon />,
-    color: 'text-mauve-rose',
-    bgColor: 'bg-mauve-rose/10'
+    color: 'text-mauve-rose'
   },
   {
     id: 'division-of-labor',
@@ -81,8 +78,7 @@ export const SUBCATEGORY_DATA: SubcategoryData[] = [
       { text: "Do we regularly talk about what's working and what's not?", type: 'yes-no' },
     ],
     icon: <ScaleIcon />,
-    color: 'text-sage',
-    bgColor: 'bg-sage/10'
+    color: 'text-sage'
   },
   {
     id: 'overwhelm',
@@ -95,8 +91,7 @@ export const SUBCATEGORY_DATA: SubcategoryData[] = [
       { text: "Do you think we give ourselves enough grace?", type: 'yes-no' },
     ],
     icon: <AlertCircleIcon />,
-    color: 'text-golden-mustard',
-    bgColor: 'bg-golden-mustard/10'
+    color: 'text-golden-mustard'
   },
   {
     id: 'different-parenting-approaches',
@@ -109,7 +104,6 @@ export const SUBCATEGORY_DATA: SubcategoryData[] = [
       { text: "Do we check in often about how things are going?", type: 'yes-no' },
     ],
     icon: <UsersIcon />,
-    color: 'text-midnight-indigo',
-    bgColor: 'bg-midnight-indigo/10'
+    color: 'text-midnight-indigo'
   }
 ];
