@@ -6,6 +6,7 @@ import ContentContainer from '@/components/common/ContentContainer';
 import TryAgainTool from './TryAgainTool';
 import WhatsReallyGoingOn from './WhatsReallyGoingOn';
 import BuildBridgeCard from './build-bridge/BuildBridgeCard';
+import SometimesItStillHurts from './SometimesItStillHurts';
 
 // Feature data for other features (not including "say-instead" which will be displayed directly)
 const features: Feature[] = [
@@ -53,8 +54,15 @@ const FeatureCardSection: React.FC<FeatureCardSectionProps> = ({
         </ContentContainer>
       </section>
       
-      {/* Build a Bridge Section */}
+      {/* Color Healing Method - Added above Build a Bridge */}
       <section className="py-6 md:py-8 bg-soft-blush/30">
+        <ContentContainer maxWidth="lg">
+          <SometimesItStillHurts />
+        </ContentContainer>
+      </section>
+      
+      {/* Build a Bridge Section */}
+      <section className="py-6 md:py-8 bg-soft-cream/30">
         <ContentContainer maxWidth="lg">
           <BuildBridgeCard />
         </ContentContainer>
