@@ -19,13 +19,13 @@ export interface SubcategoryData {
   bgColor?: string;
 }
 
-// Create icon components
-const GavelIcon = createIconComponent(Gavel, "h-12 w-12");
-const MoonIcon = createIconComponent(Moon, "h-12 w-12");
-const UserRoundIcon = createIconComponent(UserRound, "h-12 w-12");
-const ScaleIcon = createIconComponent(Scale, "h-12 w-12");
-const AlertCircleIcon = createIconComponent(AlertCircle, "h-12 w-12");
-const UsersIcon = createIconComponent(Users, "h-12 w-12");
+// Create icon components with smaller size
+const GavelIcon = createIconComponent(Gavel, "h-4 w-4");
+const MoonIcon = createIconComponent(Moon, "h-4 w-4");
+const UserRoundIcon = createIconComponent(UserRound, "h-4 w-4");
+const ScaleIcon = createIconComponent(Scale, "h-4 w-4");
+const AlertCircleIcon = createIconComponent(AlertCircle, "h-4 w-4");
+const UsersIcon = createIconComponent(Users, "h-4 w-4");
 
 export const SUBCATEGORY_DATA: SubcategoryData[] = [
   {

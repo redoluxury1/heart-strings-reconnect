@@ -18,7 +18,7 @@ export const inLawsSubcategories: InLawsSubcategoryData[] = [
   {
     id: 'squeezed-between-family',
     name: 'Feeling Squeezed Between Family & Partner',
-    icon: <Users className="h-8 w-8" />,
+    icon: <Users className="h-4 w-4" />,
     color: 'text-purple-600',
     bgColor: 'bg-purple-600/10',
     prompts: {
@@ -36,7 +36,7 @@ export const inLawsSubcategories: InLawsSubcategoryData[] = [
   {
     id: 'conflict-with-one-side',
     name: 'Conflict With One Side',
-    icon: <Shield className="h-8 w-8" />,
+    icon: <Shield className="h-4 w-4" />,
     color: 'text-[#9b87f5]',
     bgColor: 'bg-[#9b87f5]/10',
     prompts: {
@@ -54,7 +54,7 @@ export const inLawsSubcategories: InLawsSubcategoryData[] = [
   {
     id: 'grandparent-boundaries',
     name: 'Grandparent Boundaries',
-    icon: <Home className="h-8 w-8" />,
+    icon: <Home className="h-4 w-4" />,
     color: 'text-[#7E69AB]',
     bgColor: 'bg-[#7E69AB]/10',
     prompts: {
@@ -72,7 +72,7 @@ export const inLawsSubcategories: InLawsSubcategoryData[] = [
   {
     id: 'unequal-time',
     name: 'Unequal Time or Energy',
-    icon: <Clock className="h-8 w-8" />,
+    icon: <Clock className="h-4 w-4" />,
     color: 'text-[#6E59A5]',
     bgColor: 'bg-[#6E59A5]/10',
     prompts: {
@@ -90,7 +90,7 @@ export const inLawsSubcategories: InLawsSubcategoryData[] = [
   {
     id: 'undermining-relationship',
     name: 'In-Laws Undermining the Relationship',
-    icon: <Scale className="h-8 w-8" />,
+    icon: <Scale className="h-4 w-4" />,
     color: 'text-[#D6BCFA]',
     bgColor: 'bg-[#D6BCFA]/20',
     prompts: {

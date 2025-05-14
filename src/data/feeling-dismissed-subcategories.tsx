@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { 
   MessageCircleOff,
@@ -14,7 +13,7 @@ export const feelingDismissedSubcategories: SubcategoryData[] = [
   {
     id: 'brushed-off-in-conversation',
     name: 'Brushed Off in Conversation',
-    icon: <MessageCircleOff className="h-8 w-8" />,
+    icon: <MessageCircleOff className="h-4 w-4" />,
     color: 'text-mauve-rose',
     bgColor: 'bg-mauve-rose/10',
     prompts: [
@@ -43,7 +42,7 @@ export const feelingDismissedSubcategories: SubcategoryData[] = [
   {
     id: 'dismissed-during-conflict',
     name: 'Dismissed During Conflict',
-    icon: <AlertCircle className="h-8 w-8" />,
+    icon: <AlertCircle className="h-4 w-4" />,
     color: 'text-peachy-terracotta',
     bgColor: 'bg-peachy-terracotta/10',
     prompts: [
@@ -72,7 +71,7 @@ export const feelingDismissedSubcategories: SubcategoryData[] = [
   {
     id: 'tone-overreaction',
     name: 'Tone Overreaction',
-    icon: <VolumeX className="h-8 w-8" />,
+    icon: <VolumeX className="h-4 w-4" />,
     color: 'text-midnight-indigo',
     bgColor: 'bg-midnight-indigo/10',
     prompts: [
@@ -101,7 +100,7 @@ export const feelingDismissedSubcategories: SubcategoryData[] = [
   {
     id: 'logical-vs-emotional',
     name: 'Logical vs. Emotional Disconnect',
-    icon: <Brain className="h-8 w-8" />,
+    icon: <Brain className="h-4 w-4" />,
     color: 'text-mauve-rose',
     bgColor: 'bg-mauve-rose/10',
     prompts: [
@@ -130,7 +129,7 @@ export const feelingDismissedSubcategories: SubcategoryData[] = [
   {
     id: 'ignored-or-talked-over',
     name: 'Ignored or Talked Over',
-    icon: <MicOff className="h-8 w-8" />,
+    icon: <MicOff className="h-4 w-4" />,
     color: 'text-peachy-terracotta',
     bgColor: 'bg-peachy-terracotta/10',
     prompts: [

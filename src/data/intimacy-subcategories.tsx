@@ -20,7 +20,7 @@ export const SUBCATEGORY_DATA: SubcategoryData[] = [
   {
     id: 'initiation-imbalance',
     name: 'Initiation Imbalance',
-    icon: <ArrowRightLeft className="h-10 w-10" />,
+    icon: <ArrowRightLeft className="h-4 w-4" />,
     color: 'text-peachy-terracotta',
     bgColor: 'bg-peachy-terracotta/10',
     prompts: [
@@ -34,7 +34,7 @@ export const SUBCATEGORY_DATA: SubcategoryData[] = [
   {
     id: 'emotional-disconnect',
     name: 'Emotional Disconnect',
-    icon: <MessageSquareOff className="h-10 w-10" />,
+    icon: <MessageSquareOff className="h-4 w-4" />,
     color: 'text-mauve-rose',
     bgColor: 'bg-mauve-rose/10',
     prompts: [
@@ -48,7 +48,7 @@ export const SUBCATEGORY_DATA: SubcategoryData[] = [
   {
     id: 'affection-outside-of-sex',
     name: 'Physical Affection Outside of Sex',
-    icon: <HandHeart className="h-10 w-10" />,
+    icon: <HandHeart className="h-4 w-4" />,
     color: 'text-lavender-blue',
     bgColor: 'bg-lavender-blue/10',
     prompts: [
@@ -62,7 +62,7 @@ export const SUBCATEGORY_DATA: SubcategoryData[] = [
   {
     id: 'mismatched-desire',
     name: 'Mismatched Desire',
-    icon: <Flame className="h-10 w-10" />,
+    icon: <Flame className="h-4 w-4" />,
     color: 'text-sage',
     bgColor: 'bg-sage/10',
     prompts: [
@@ -76,7 +76,7 @@ export const SUBCATEGORY_DATA: SubcategoryData[] = [
   {
     id: 'feeling-unwanted',
     name: 'Feeling Undesired or Unwanted',
-    icon: <HeartOff className="h-10 w-10" />,
+    icon: <HeartOff className="h-4 w-4" />,
     color: 'text-golden-mustard',
     bgColor: 'bg-golden-mustard/10',
     prompts: [

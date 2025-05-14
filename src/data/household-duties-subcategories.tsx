@@ -20,7 +20,7 @@ export const SUBCATEGORY_DATA: SubcategoryData[] = [
   {
     id: 'division-of-labor',
     name: 'Division of Labor',
-    icon: <Divide className="h-10 w-10" />,
+    icon: <Divide className="h-4 w-4" />,
     color: 'text-purple-600',
     bgColor: 'bg-purple-600/10',
     prompts: [
@@ -34,7 +34,7 @@ export const SUBCATEGORY_DATA: SubcategoryData[] = [
   {
     id: 'invisible-labor',
     name: 'Invisible Labor',
-    icon: <EyeOff className="h-10 w-10" />,
+    icon: <EyeOff className="h-4 w-4" />,
     color: 'text-indigo-500',
     bgColor: 'bg-indigo-500/10',
     prompts: [
@@ -48,7 +48,7 @@ export const SUBCATEGORY_DATA: SubcategoryData[] = [
   {
     id: 'resentment-about-roles',
     name: 'Resentment About Roles',
-    icon: <Wrench className="h-10 w-10" />,
+    icon: <Wrench className="h-4 w-4" />,
     color: 'text-blue-500',
     bgColor: 'bg-blue-500/10',
     prompts: [
@@ -62,7 +62,7 @@ export const SUBCATEGORY_DATA: SubcategoryData[] = [
   {
     id: 'mental-load',
     name: 'Mental Load Management',
-    icon: <Brain className="h-10 w-10" />,
+    icon: <Brain className="h-4 w-4" />,
     color: 'text-teal-500',
     bgColor: 'bg-teal-500/10',
     prompts: [
@@ -76,7 +76,7 @@ export const SUBCATEGORY_DATA: SubcategoryData[] = [
   {
     id: 'cleanliness-clashes',
     name: 'Cleanliness & Clutter Clashes',
-    icon: <Trash className="h-10 w-10" />,
+    icon: <Trash className="h-4 w-4" />,
     color: 'text-emerald-500',
     bgColor: 'bg-emerald-500/10',
     prompts: [
