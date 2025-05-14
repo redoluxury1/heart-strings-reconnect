@@ -35,10 +35,10 @@ const PhraseCard: React.FC<PhraseCardProps> = ({
           onClick={() => onPhraseClick(phrase.id)}
         >
           <div>
-            <h4 className="font-medium text-midnight-indigo mb-1">"{phrase.original}"</h4>
-            <p className="text-sm text-gray-600">{phrase.emotionalSubtext}</p>
+            <h4 className="font-medium text-[#22254a] mb-1">"{phrase.original}"</h4>
+            <p className="text-sm text-[#22254a]/70">{phrase.emotionalSubtext}</p>
           </div>
-          <Button variant="ghost" size="sm" className="text-gray-500">
+          <Button variant="ghost" size="sm" className="text-[#22254a]/60">
             {isExpanded ? '−' : '+'}
           </Button>
         </div>
@@ -48,14 +48,14 @@ const PhraseCard: React.FC<PhraseCardProps> = ({
           <div className="mt-4 space-y-4 border-t pt-4">
             <div>
               <h5 className="text-sm font-medium text-mauve-rose mb-1">How It Might Land:</h5>
-              <p className="text-sm bg-gray-50 p-3 rounded border border-gray-100">
+              <p className="text-sm bg-gray-50 p-3 rounded border border-gray-100 text-[#22254a]/80">
                 {phrase.howItMightLand}
               </p>
             </div>
             
             <div>
-              <h5 className="text-sm font-medium text-lavender-blue mb-1">Try Saying Instead:</h5>
-              <p className="text-sm bg-lavender-blue/10 p-3 rounded border border-lavender-blue/20">
+              <h5 className="text-sm font-medium text-[#C7747F] mb-1">Try Saying Instead:</h5>
+              <p className="text-sm bg-lavender-blue/10 p-3 rounded border border-lavender-blue/20 text-[#22254a]/80">
                 "{phrase.trySayingInstead}"
               </p>
             </div>
@@ -64,7 +64,7 @@ const PhraseCard: React.FC<PhraseCardProps> = ({
               {phrase.categories.map(category => (
                 <span 
                   key={category} 
-                  className="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded-full"
+                  className="text-xs px-2 py-1 bg-gray-100 text-[#22254a]/70 rounded-full"
                 >
                   {category}
                 </span>
@@ -75,7 +75,7 @@ const PhraseCard: React.FC<PhraseCardProps> = ({
               <Button
                 variant="outline"
                 size="sm"
-                className="text-xs flex items-center"
+                className="text-xs flex items-center border-[#C7747F] text-[#C7747F] hover:bg-[#C7747F]/10"
                 onClick={() => onCustomize(phrase)}
               >
                 <Edit className="h-3.5 w-3.5 mr-1.5" />
@@ -86,7 +86,7 @@ const PhraseCard: React.FC<PhraseCardProps> = ({
                 <Button
                   variant="outline"
                   size="sm"
-                  className="text-xs"
+                  className="text-xs border-[#536878] text-[#536878] hover:bg-[#536878]/10"
                   onClick={() => onSavePhrase && onSavePhrase(phrase)}
                 >
                   Save for Later

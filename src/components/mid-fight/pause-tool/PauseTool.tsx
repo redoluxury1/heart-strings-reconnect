@@ -10,6 +10,8 @@ import { usePauseTimer } from './hooks/usePauseTimer';
 import CodeWordSetupView from './CodeWordSetupView'; 
 import RestartPhraseConfirmationView from './RestartPhraseConfirmationView';
 import NotReadyOptionsView from './NotReadyOptionsView';
+import CodeWordEstablishedView from './CodeWordEstablishedView';
+import { notifyPartner } from './hooks/utils/notificationUtils';
 
 export type PauseStatus = 'setup' | 'activation' | 'activated' | 'custom-timer' | 'in-pause' | 'ended' | 'confirm-restart' | 'not-ready';
 
@@ -30,21 +32,40 @@ const PauseTool = () => {
     setRestartMessage,
     handleSendRestartMessage,
     handleEditRestartMessage,
-    codeWord
+    showRestartConfirmation,
+    showNotReadyOptions,
+    codeWord,
+    codeWordEstablished
   } = usePauseTimer();
+
+  // Function to go directly to timer selection
+  const handleDirectTimerActivation = () => {
+    setPauseStatus('activated');
+    notifyPartner();
+  };
 
   return (
     <div className="bg-white rounded-xl shadow-md p-6">
       {pauseStatus !== 'in-pause' && pauseStatus !== 'ended' && pauseStatus !== 'confirm-restart' && pauseStatus !== 'not-ready' && (
         <PauseToolHeader 
           status={pauseStatus}
-          onSetupClick={() => setPauseStatus('activation')}
+          onSetupClick={codeWordEstablished ? handleDirectTimerActivation : () => setPauseStatus('activation')}
+          codeWordExists={codeWordEstablished}
         />
       )}
       
-      {pauseStatus === 'setup' && (
+      {pauseStatus === 'setup' && !codeWordEstablished && (
         <CodeWordSetupView 
           onGetStarted={() => setPauseStatus('activation')}
+        />
+      )}
+      
+      {pauseStatus === 'setup' && codeWordEstablished && (
+        <CodeWordEstablishedView 
+          codeWord={codeWord || "pause"}
+          onActivate={handleActivateCodeWord}
+          onChangeCodeWord={() => setPauseStatus('activation')}
+          onActivateTimer={handleDirectTimerActivation}
         />
       )}
       

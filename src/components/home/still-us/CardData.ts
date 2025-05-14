@@ -1,44 +1,53 @@
 
-import { Flame, HeartCrack, Puzzle } from 'lucide-react';
 import React from 'react';
 import { CardContent } from './types';
+import { FlameIcon, HeartBreakIcon, PuzzleIcon } from './IconComponents';
 
 export const getCardData = (): CardContent[] => {
   return [
     {
       title: "Mid-Fight",
       description: "Emotions are high? That's okay. Here's where you can pause, breathe, and calm things down before saying more.",
-      icon: React.createElement(Flame, { className: "h-6 w-6" }),
-      tools: ["Time Out Timer", "Let's Try That Again", "What's Really Going On?"],
+      icon: React.createElement(FlameIcon),
+      tools: ["Code Word/Time Out Timer", "Let's Try That Again", "What's Really Going On?"],
       comingSoonTools: ["Build a Bridge"],
       link: "/during-conflict",
-      gradientClass: "from-[#E2725B]/30 to-[#E2725B]/10",
-      iconBgClass: "bg-[#E2725B]/30",
+      gradientClass: "bg-[#FDFBF9]",
+      iconBgClass: "",
       buttonText: "Let's Slow Down",
       sectionHeader: "Let's Start Here:",
+      visualEffect: null,
+      borderColor: "border-[#b25a44]",
+      headerColor: "text-[#b25a44]"
     },
     {
       title: "Post-Fight",
       description: "That was a lot. This space helps you process what just happened, understand what you need, and find clarity before reconnecting.",
-      icon: React.createElement(HeartCrack, { className: "h-6 w-6" }),
-      tools: ["Let's Work This Out", "Okay, but now what?", "Color Healing"],
+      icon: React.createElement(HeartBreakIcon),
+      tools: ["Okay, but now what?", "Color Healing Method"],
       comingSoonTools: ["Build a Bridge"],
       link: "/post-conflict",
-      gradientClass: "from-[#536878]/50 to-[#536878]/20",
-      iconBgClass: "bg-[#536878]/40",
+      gradientClass: "bg-[#FDFBF9]",
+      iconBgClass: "",
       buttonText: "Let's Reflect",
       sectionHeader: "How to Move Forward:",
+      visualEffect: null,
+      borderColor: "border-[#2f3975]",
+      headerColor: "text-[#2f3975]"
     },
     {
       title: "Reconnecting",
       description: "Not fighting? Beautiful. Come here for small ways to feel closer, learn more about each other, and have fun.",
-      icon: React.createElement(Puzzle, { className: "h-6 w-6" }),
+      icon: React.createElement(PuzzleIcon),
       tools: ["Would You Rather: Couples Game", "Spin the Date Night Wheel", "Love Code Quiz", "Personality Blueprint"],
       link: "/reconnect",
-      gradientClass: "from-soft-cream/50 to-soft-cream/20",
-      iconBgClass: "bg-soft-cream/50",
+      gradientClass: "bg-[#FDFBF9]",
+      iconBgClass: "",
       buttonText: "Let's Grow Closer",
       sectionHeader: "Grow Stronger:",
+      visualEffect: null,
+      borderColor: "border-mauve-rose",
+      headerColor: "text-mauve-rose"
     },
   ];
 };

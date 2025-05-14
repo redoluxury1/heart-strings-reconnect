@@ -1,0 +1,7 @@
+
+/* Main animation file that imports all animation modules */
+@import './message.css';
+@import './waves.css';
+@import './pulse.css';
+@import './card-effects.css';
+@import './icons.css';

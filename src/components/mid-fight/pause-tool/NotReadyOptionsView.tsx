@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Clock, Heart, BookOpen, PenLine, RotateCcw } from 'lucide-react';
+import { Clock, Heart, PenLine, RotateCcw } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 interface NotReadyOptionsViewProps {
@@ -43,15 +43,6 @@ const NotReadyOptionsView: React.FC<NotReadyOptionsViewProps> = ({
         >
           <Heart size={18} />
           <span>Try Color Healing</span>
-        </Button>
-        
-        <Button
-          onClick={handleNavigateToPostConflict}
-          variant="outline"
-          className="w-full border-[#5d4357]/20 text-[#5d4357] hover:bg-[#5d4357]/10 flex items-center justify-center gap-2 py-5"
-        >
-          <BookOpen size={18} />
-          <span>Let's Work This Out</span>
         </Button>
         
         <Button

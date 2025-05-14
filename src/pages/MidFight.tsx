@@ -34,7 +34,7 @@ const MidFight = () => {
       <Navbar />
       
       <main className="pb-16 relative z-10">
-        {/* Unified Pause Tool Section */}
+        {/* Let's Try That Again Section */}
         <section className="py-8 bg-soft-blush/30">
           <ContentContainer maxWidth="lg">
             {/* Unified Pause Tool */}

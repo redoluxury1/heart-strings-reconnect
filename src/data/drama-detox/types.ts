@@ -5,10 +5,4 @@ export type ScenarioComment = {
   comments: string[];
 };
 
-// Speech Recognition API types
-declare global {
-  interface Window {
-    SpeechRecognition: any;
-    webkitSpeechRecognition: any;
-  }
-}
+// Note: We're removing the duplicate SpeechRecognition declarations here since they're already declared in src/types/speech-recognition.d.ts

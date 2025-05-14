@@ -6,133 +6,129 @@ import CustomizePhraseView from '../CustomizePhraseView';
 import ConversationDialog from '../ConversationDialog';
 import BehaviorDropdown from './behavior-decoder/BehaviorDropdown';
 import BehaviorExplanation from './behavior-decoder/BehaviorExplanation';
-import { Behavior, getFemaleBehaviors, getMaleBehaviors, getBehaviorById } from '@/data/behavior-data';
 
-// Component type definitions
-type BehaviorType = 'her' | 'him';
-type ViewType = 'select' | 'explanation';
+// Import behavior data functions
+import { getFemaleBehaviors, getMaleBehaviors, Behavior } from '@/data/behavior-data';
 
 const BehaviorDecoder = () => {
-  const isMobile = useIsMobile();
-  const [selectedBehavior, setSelectedBehavior] = useState<string | null>(null);
-  const [selectedGender, setSelectedGender] = useState<BehaviorType>('her');
-  const [currentView, setCurrentView] = useState<ViewType>('select');
-  
-  // Dialog state
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [selectedFemaleBehaviorId, setSelectedFemaleBehaviorId] = useState<string>('');
+  const [selectedMaleBehaviorId, setSelectedMaleBehaviorId] = useState<string>('');
+  const [genderTab, setGenderTab] = useState<'female' | 'male'>('female');
+  const [isCustomizing, setIsCustomizing] = useState(false);
   const [customPhrase, setCustomPhrase] = useState('');
-
-  const handleBehaviorSelect = (behavior: string) => {
-    setSelectedBehavior(behavior);
-    setCurrentView('explanation');
-  };
+  const [startConversationOpen, setStartConversationOpen] = useState(false);
   
-  const handleBackToSelect = () => {
-    setCurrentView('select');
-    setSelectedBehavior(null);
-  };
+  const isMobile = useIsMobile();
   
-  const handleGenderToggle = (gender: BehaviorType) => {
-    setSelectedGender(gender);
-    // Reset to selection view when switching genders
-    setCurrentView('select');
-    setSelectedBehavior(null);
-  };
-  
-  const openDialog = (phrase: string) => {
-    setCustomPhrase(phrase);
-    setIsDialogOpen(true);
-  };
-  
-  const handleCloseDialog = () => {
-    setIsDialogOpen(false);
-  };
-
-  const handleCustomPhraseChange = (phrase: string) => {
-    setCustomPhrase(phrase);
+  const handleStartChat = () => {
+    const selectedBehavior = genderTab === 'female' 
+      ? getFemaleBehaviors().find(b => b.id === selectedFemaleBehaviorId)
+      : getMaleBehaviors().find(b => b.id === selectedMaleBehaviorId);
+    
+    if (selectedBehavior) {
+      setCustomPhrase(selectedBehavior.response);
+      setIsCustomizing(true);
+    }
   };
 
   const handleStartConversation = () => {
-    // Handle conversation start
-    setIsDialogOpen(false);
+    setStartConversationOpen(true);
   };
-  
-  // Get behaviors based on selected gender
-  const behaviors = selectedGender === 'her' ? getFemaleBehaviors() : getMaleBehaviors();
-  
-  // Get the behavior object if selectedBehavior is not null
-  const behaviorObject = selectedBehavior ? getBehaviorById(selectedBehavior) : undefined;
+
+  const handleSendInvite = () => {
+    setStartConversationOpen(false);
+    setIsCustomizing(false);
+  };
+
+  if (isCustomizing) {
+    return (
+      <div className="mt-2">
+        <CustomizePhraseView
+          customPhrase={customPhrase}
+          onCustomPhraseChange={setCustomPhrase}
+          onBackToTopics={() => setIsCustomizing(false)}
+          onStartConversation={handleStartConversation}
+        />
+        
+        <ConversationDialog
+          isOpen={startConversationOpen}
+          onOpenChange={setStartConversationOpen}
+          partnerName="Partner"
+          onSendInvite={handleSendInvite}
+        />
+      </div>
+    );
+  }
   
   return (
     <div className="space-y-6">
-      {/* Two text boxes facing opposite directions design */}
-      <div className="flex justify-center items-center gap-4 mb-6">
-        <div className="bg-lavender-blue/20 p-3 rounded-lg transform -rotate-6">
-          <div className="text-[#07183D] font-medium border-2 border-lavender-blue/40 rounded-lg px-4 py-2 shadow-sm">
-            He said...
-          </div>
-        </div>
-        <div className="bg-mauve-rose/20 p-3 rounded-lg transform rotate-6">
-          <div className="text-[#07183D] font-medium border-2 border-mauve-rose/40 rounded-lg px-4 py-2 shadow-sm">
-            She said...
-          </div>
-        </div>
+      {/* Replace icon with the new uploaded image */}
+      <div className="flex justify-center mb-6">
+        <img 
+          src="/lovable-uploads/da34a9fe-3a8e-4fa8-b3de-0f9cc2ac9b96.png" 
+          alt="He said She said" 
+          className="h-20 w-auto"
+        />
       </div>
 
       {/* Gender Toggle Buttons */}
-      <div className="flex justify-center gap-3 mb-4">
-        <Button 
-          variant={selectedGender === 'her' ? 'default' : 'outline'} 
-          onClick={() => handleGenderToggle('her')}
-          className={`rounded-full px-5 py-2 ${selectedGender === 'her' ? 'bg-mauve-rose text-white' : 'border-mauve-rose text-mauve-rose'}`}
+      <div className="flex flex-col gap-3 mb-4">
+        <Button
+          variant="outline"
+          className={`rounded-full px-4 py-1.5 text-sm flex items-center justify-center h-auto ${
+            genderTab === 'male' 
+              ? 'bg-midnight-indigo text-white border-midnight-indigo' 
+              : 'bg-white text-midnight-indigo/80 border-midnight-indigo/30 hover:bg-midnight-indigo/10'
+          }`}
+          onClick={() => {
+            setGenderTab('male');
+            setSelectedFemaleBehaviorId('');
+          }}
         >
-          She Says
+          <span className="text-center">He doesn't hate you, he...</span>
         </Button>
-        <Button 
-          variant={selectedGender === 'him' ? 'default' : 'outline'} 
-          onClick={() => handleGenderToggle('him')}
-          className={`rounded-full px-5 py-2 ${selectedGender === 'him' ? 'bg-lavender-blue text-white' : 'border-lavender-blue text-lavender-blue'}`}
+        
+        <Button
+          variant="outline"
+          className={`rounded-full px-4 py-1.5 text-sm flex items-center justify-center h-auto ${
+            genderTab === 'female' 
+              ? 'bg-mauve-rose text-white border-mauve-rose' 
+              : 'bg-white text-midnight-indigo/80 border-mauve-rose/30 hover:bg-mauve-rose/10'
+          }`}
+          onClick={() => {
+            setGenderTab('female');
+            setSelectedMaleBehaviorId('');
+          }}
         >
-          He Says
+          <span className="text-center">She's not mad, she...</span>
         </Button>
       </div>
 
-      {/* Content based on current view */}
-      {currentView === 'select' ? (
-        <BehaviorDropdown 
-          behaviors={behaviors} 
-          selectedBehaviorId={selectedBehavior || ''}
-          onBehaviorSelect={handleBehaviorSelect}
-          genderTab={selectedGender === 'her' ? 'female' : 'male'} 
-          isMobile={isMobile}
-        />
-      ) : (
-        behaviorObject && (
-          <BehaviorExplanation 
-            behavior={behaviorObject}
-            onStartChat={() => openDialog(behaviorObject.response)}
+      <div className={`${isMobile ? "flex flex-col" : "grid grid-cols-5 gap-4"}`}>
+        <div className={`${isMobile ? "mb-4" : "col-span-5"}`}>
+          <BehaviorDropdown
+            behaviors={genderTab === 'female' ? getFemaleBehaviors() : getMaleBehaviors()}
+            selectedBehaviorId={genderTab === 'female' ? selectedFemaleBehaviorId : selectedMaleBehaviorId}
+            onBehaviorSelect={genderTab === 'female' ? setSelectedFemaleBehaviorId : setSelectedMaleBehaviorId}
+            genderTab={genderTab}
             isMobile={isMobile}
           />
-        )
-      )}
-
-      {/* Dialog for customizing phrases */}
-      <ConversationDialog 
-        isOpen={isDialogOpen} 
-        onOpenChange={setIsDialogOpen}
-        partnerName="Partner"
-        onSendInvite={handleStartConversation}
-      />
-
-      {/* Need to wrap CustomizePhraseView in a component that accepts the right props */}
-      {isDialogOpen && (
-        <CustomizePhraseView
-          customPhrase={customPhrase}
-          onCustomPhraseChange={handleCustomPhraseChange}
-          onBackToTopics={handleCloseDialog}
-          onStartConversation={handleStartConversation}
-        />
-      )}
+        </div>
+        
+        {/* Show explanation when behavior is selected */}
+        {((genderTab === 'female' && selectedFemaleBehaviorId) || 
+          (genderTab === 'male' && selectedMaleBehaviorId)) && (
+          <div className={`${isMobile ? "" : "col-span-5"} mt-4`}>
+            <BehaviorExplanation 
+              behavior={genderTab === 'female' 
+                ? getFemaleBehaviors().find(b => b.id === selectedFemaleBehaviorId)!
+                : getMaleBehaviors().find(b => b.id === selectedMaleBehaviorId)!}
+              onStartChat={handleStartChat}
+              isMobile={isMobile}
+            />
+          </div>
+        )}
+      </div>
     </div>
   );
 };

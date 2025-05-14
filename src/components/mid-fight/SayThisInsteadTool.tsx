@@ -87,11 +87,11 @@ const SayThisInsteadTool: React.FC = () => {
   return (
     <div className="space-y-6">
       <div className="flex flex-col items-center mb-5">
-        <MessageCircle className="h-16 md:h-20 w-16 md:w-20 text-mauve-rose mb-3" />
-        <h3 className="text-2xl font-cormorant font-medium text-midnight-indigo mb-2 text-center">
+        <MessageCircle className="h-16 md:h-20 w-16 md:w-20 text-[#C7747F] mb-3" />
+        <h3 className="text-2xl font-cormorant font-medium text-[#22254a] mb-2 text-center">
           Say This Instead
         </h3>
-        <p className="text-midnight-indigo/80 mb-4 text-center max-w-2xl">
+        <p className="text-[#22254a]/80 mb-4 text-center max-w-2xl">
           Turn common conflict phrases into calmer alternatives that keep the conversation productive.
         </p>
       </div>
@@ -101,7 +101,7 @@ const SayThisInsteadTool: React.FC = () => {
         {commonPhrases.map((phrase, index) => (
           <button
             key={index}
-            className="text-xs px-3 py-1 rounded-full bg-lavender-blue/10 text-midnight-indigo border border-lavender-blue/20 hover:bg-lavender-blue/20"
+            className="text-xs px-3 py-1 rounded-full bg-[#8A8AC9]/10 text-[#22254a] border border-[#8A8AC9]/20 hover:bg-[#8A8AC9]/20"
             onClick={() => handleQuickPhraseSelect(phrase)}
           >
             "{phrase}"
@@ -111,12 +111,12 @@ const SayThisInsteadTool: React.FC = () => {
       
       {/* Search input */}
       <div className="relative mb-4">
-        <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
+        <Search className="absolute left-3 top-2.5 h-4 w-4 text-[#536878]/70" />
         <Input
           placeholder="Type a phrase or feeling..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="pl-9 bg-white border-lavender-blue/30 focus:border-lavender-blue"
+          className="pl-9 bg-white border-[#536878]/30 focus:border-[#536878]"
         />
       </div>
       
@@ -126,7 +126,7 @@ const SayThisInsteadTool: React.FC = () => {
           value={selectedCategory} 
           onValueChange={setSelectedCategory}
         >
-          <SelectTrigger className="w-full bg-white border-lavender-blue/30 focus:border-lavender-blue">
+          <SelectTrigger className="w-full bg-white border-[#536878]/30 focus:border-[#536878] text-[#22254a]">
             <SelectValue placeholder="Filter by category" />
           </SelectTrigger>
           <SelectContent className="bg-white">

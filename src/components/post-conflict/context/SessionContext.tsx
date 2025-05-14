@@ -2,40 +2,46 @@
 import React, { createContext, useContext } from 'react';
 import { useSessionManagement } from '../hooks/useSessionManagement';
 
-// Define the session data types
-export type PartnerData = {
+// Define partner data structure
+export interface PartnerData {
+  name?: string; // Make name optional
   responses: Record<string, any>;
   ready: boolean;
-};
+}
 
-export type SessionData = {
+// Define overall session data structure
+export interface SessionData {
   partner1: PartnerData;
   partner2: PartnerData;
-  currentStep?: number;
-};
+}
 
-type SessionContextType = {
+// Define the context shape
+interface SessionContextType {
   sessionData: SessionData;
   currentStep: number;
   setCurrentStep: (step: number) => void;
   handleResponse: (partner: 'partner1' | 'partner2', stepId: string, response: any) => void;
   bothPartnersReady: boolean;
   handleRestart: () => void;
-};
+}
 
+// Create the context with a default undefined value
 const SessionContext = createContext<SessionContextType | undefined>(undefined);
 
-export const SessionProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const sessionManagement = useSessionManagement();
+// Provider component
+export const SessionProvider: React.FC<{children: React.ReactNode}> = ({ children }) => {
+  // Use our hook to manage session state
+  const sessionState = useSessionManagement();
   
   return (
-    <SessionContext.Provider value={sessionManagement}>
+    <SessionContext.Provider value={sessionState}>
       {children}
     </SessionContext.Provider>
   );
 };
 
-export const useSession = (): SessionContextType => {
+// Custom hook to use the session context
+export const useSession = () => {
   const context = useContext(SessionContext);
   if (context === undefined) {
     throw new Error('useSession must be used within a SessionProvider');

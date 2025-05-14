@@ -1,0 +1,80 @@
+
+/* Wave animations for color healing page */
+@keyframes waveRight {
+  0% {
+    transform: translateX(-5px) translateY(0) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateX(20px) translateY(-10px) scale(1.2);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateX(-5px) translateY(0) scale(1);
+    opacity: 0.3;
+  }
+}
+
+@keyframes waveLeft {
+  0% {
+    transform: translateX(5px) translateY(0) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateX(-20px) translateY(10px) scale(1.2);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateX(5px) translateY(0) scale(1);
+    opacity: 0.3;
+  }
+}
+
+/* Top wave animation */
+@keyframes waveTop {
+  0% {
+    transform: translateY(5px) translateX(0) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-15px) translateX(-10px) scale(1.25);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(5px) translateX(0) scale(1);
+    opacity: 0.3;
+  }
+}
+
+/* Circular motion animation */
+@keyframes waveCircle {
+  0% {
+    transform: rotate(0deg) translateX(10px) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: rotate(180deg) translateX(-5px) scale(1.15);
+    opacity: 0.5;
+  }
+  100% {
+    transform: rotate(360deg) translateX(10px) scale(1);
+    opacity: 0.3;
+  }
+}
+
+/* Animation utility classes */
+.animate-wave-right {
+  animation: waveRight 8s ease-in-out infinite;
+}
+
+.animate-wave-left {
+  animation: waveLeft 8s ease-in-out infinite;
+}
+
+.animate-wave-top {
+  animation: waveTop 9s ease-in-out infinite;
+}
+
+.animate-wave-circle {
+  animation: waveCircle 12s ease-in-out infinite;
+}
