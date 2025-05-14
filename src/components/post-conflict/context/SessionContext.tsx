@@ -4,6 +4,7 @@ import { useSessionManagement } from '../hooks/useSessionManagement';
 
 // Define partner data structure
 export interface PartnerData {
+  name?: string; // Make name optional
   responses: Record<string, any>;
   ready: boolean;
 }

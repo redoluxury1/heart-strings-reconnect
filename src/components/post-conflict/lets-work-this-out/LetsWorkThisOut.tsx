@@ -10,6 +10,7 @@ import YourPerspective from '@/components/post-conflict/steps/perspective/YourPe
 import WishPartnerUnderstood from '@/components/post-conflict/steps/partner-understanding/WishPartnerUnderstood';
 import WhatDoYouNeed from '@/components/post-conflict/steps/needs/WhatDoYouNeed';
 import PartnerWaitingState from '@/components/post-conflict/steps/final/PartnerWaitingState';
+import ReflectionSummary from '@/components/post-conflict/steps/summary/ReflectionSummary';
 import { useSession } from '@/components/post-conflict/context/SessionContext';
 
 interface LetsWorkThisOutProps {
@@ -26,7 +27,7 @@ const LetsWorkThisOut: React.FC<LetsWorkThisOutProps> = ({
   const { toast } = useToast();
   const navigate = useNavigate();
   const [isAnimating, setIsAnimating] = useState(true);
-  const { currentStep, setCurrentStep, sessionData, handleResponse } = useSession();
+  const { currentStep, setCurrentStep, sessionData, handleResponse, bothPartnersReady } = useSession();
   const [flow, setFlow] = useState<'intro' | 'set-tone'>('intro');
   const [selectedIntent, setSelectedIntent] = useState<string>('');
   const [userPerspective, setUserPerspective] = useState<string>('');
@@ -39,7 +40,6 @@ const LetsWorkThisOut: React.FC<LetsWorkThisOutProps> = ({
   }, [currentStep]);
   
   // Check if both partners have completed their responses
-  const bothPartnersReady = sessionData.partner1.ready && sessionData.partner2.ready;
   const userCompleted = sessionData.partner1.ready && !sessionData.partner2.ready;
   
   const handleReadyClick = () => {
@@ -118,9 +118,32 @@ const LetsWorkThisOut: React.FC<LetsWorkThisOutProps> = ({
     
     setCurrentStep(6); // Move to the partner waiting state
   };
+
+  // Set mock data for partner2 for demo purposes
+  useEffect(() => {
+    // This is just for demonstration - in a real app, this would be handled by the actual partner
+    if (sessionData.partner1.ready && currentStep === 6) {
+      // Simulate partner completing their responses after a delay
+      const timer = setTimeout(() => {
+        handleResponse('partner2', 'complete', {
+          perspective: "I felt like we weren't really listening to each other. I was trying to explain my feelings but it seemed like we were talking past each other.",
+          understanding: "I wish you understood that sometimes I need time to process before discussing things. When I'm pushed to respond immediately, I get defensive.",
+          needs: "I need us to set aside dedicated time for important conversations when we're both calm and can really listen.",
+          intent: "Let's work through this together"
+        });
+      }, 5000); // 5 second delay for demo purposes
+      
+      return () => clearTimeout(timer);
+    }
+  }, [sessionData.partner1.ready, currentStep, handleResponse]);
   
   // Show the appropriate content based on current step
   const renderStepContent = () => {
+    // If both partners are ready, show the summary screen
+    if (bothPartnersReady) {
+      return <ReflectionSummary />;
+    }
+    
     switch (currentStep) {
       case 0: // Intro - ready check
         return (

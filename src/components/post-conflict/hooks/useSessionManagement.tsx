@@ -47,6 +47,23 @@ export const useSessionManagement = () => {
     }));
   }, [sessionData, currentStep]);
 
+  // Show notification when partner completes (userA already completed and userB just completed)
+  useEffect(() => {
+    if (sessionData.partner1.ready && sessionData.partner2.ready && !partnerNotificationShown) {
+      toast({
+        title: "Your partner has completed their side",
+        description: "Your summary is ready to view.",
+      });
+      setPartnerNotificationShown(true);
+      
+      // Play notification sound
+      const audio = new Audio('/notification-sound.mp3');
+      audio.play().catch(error => {
+        console.error("Could not play notification sound:", error);
+      });
+    }
+  }, [sessionData.partner1.ready, sessionData.partner2.ready, partnerNotificationShown]);
+
   const handleResponse = (partner: 'partner1' | 'partner2', stepId: string, response: any) => {
     setSessionData(prev => ({
       ...prev,

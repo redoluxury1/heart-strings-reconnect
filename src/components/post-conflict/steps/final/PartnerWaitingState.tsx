@@ -10,9 +10,9 @@ const PartnerWaitingState: React.FC = () => {
   const navigate = useNavigate();
   const { sessionData } = useSession();
   
-  // Helper function to get partner name (would be replaced with real implementation)
+  // Helper function to get partner display name (using a default if no name is available)
   const getPartnerName = () => {
-    return sessionData?.partner2?.name || "your partner";
+    return "your partner";
   };
   
   const handleWriteLoveNote = () => {
