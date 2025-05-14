@@ -19,8 +19,8 @@ export const feelingUnseenSubcategories: FeelingUnseenSubcategoryData[] = [
     id: 'lack-of-appreciation',
     name: 'Lack of Appreciation',
     icon: <HandHeart className="h-4 w-4" />,
-    color: 'text-[#9b87f5]',
-    bgColor: 'bg-[#9b87f5]/10',
+    color: 'text-peachy-terracotta',
+    bgColor: 'bg-peachy-terracotta/10',
     prompts: {
       openEnded: [
         "What's something you wish I noticed more often?",
@@ -37,8 +37,8 @@ export const feelingUnseenSubcategories: FeelingUnseenSubcategoryData[] = [
     id: 'not-feeling-valued',
     name: 'Not Feeling Valued in the Relationship',
     icon: <Heart className="h-4 w-4" />,
-    color: 'text-[#7E69AB]',
-    bgColor: 'bg-[#7E69AB]/10',
+    color: 'text-mauve-rose',
+    bgColor: 'bg-mauve-rose/10',
     prompts: {
       openEnded: [
         "Do you ever feel taken for granted in our relationship?",
@@ -55,8 +55,8 @@ export const feelingUnseenSubcategories: FeelingUnseenSubcategoryData[] = [
     id: 'ignored-during-big-moments',
     name: 'Ignored During Big Moments',
     icon: <Star className="h-4 w-4" />,
-    color: 'text-[#6E59A5]',
-    bgColor: 'bg-[#6E59A5]/15',
+    color: 'text-golden-mustard',
+    bgColor: 'bg-golden-mustard/15',
     prompts: {
       openEnded: [
         "Can you name a time when you felt invisible during something important to you?",
@@ -73,8 +73,8 @@ export const feelingUnseenSubcategories: FeelingUnseenSubcategoryData[] = [
     id: 'lack-of-presence',
     name: 'Lack of Eye Contact or Presence',
     icon: <Eye className="h-4 w-4" />,
-    color: 'text-[#D6BCFA]',
-    bgColor: 'bg-[#D6BCFA]/20',
+    color: 'text-lavender-blue',
+    bgColor: 'bg-lavender-blue/15',
     prompts: {
       openEnded: [
         "What helps you feel like I'm really present with you?",
@@ -91,8 +91,8 @@ export const feelingUnseenSubcategories: FeelingUnseenSubcategoryData[] = [
     id: 'emotional-anchor',
     name: 'Being the Emotional Anchor',
     icon: <Lightbulb className="h-4 w-4" />,
-    color: 'text-[#9b87f5]',
-    bgColor: 'bg-[#9b87f5]/15',
+    color: 'text-sage',
+    bgColor: 'bg-sage/15',
     prompts: {
       openEnded: [
         "Do you feel like you're always the strong one in our relationship?",

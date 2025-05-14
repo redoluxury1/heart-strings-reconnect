@@ -94,12 +94,12 @@ const FeelingUnseenSubcategoryDetails: React.FC = () => {
             
             <div className="text-center mb-10">
               <div 
-                className={`inline-flex items-center justify-center rounded-full p-4 ${subcategory.bgColor} ${subcategory.color} mb-4`}
+                className={`inline-flex items-center justify-center rounded-full p-4 ${subcategory?.bgColor} ${subcategory?.color} mb-4`}
               >
-                {subcategory.icon}
+                {subcategory?.icon}
               </div>
               <h1 className="font-cormorant text-3xl md:text-4xl font-semibold text-[#162137] mb-3">
-                {subcategory.name}
+                {subcategory?.name}
               </h1>
               <p className="text-midnight-indigo/70 text-lg max-w-2xl mx-auto">
                 Use these prompts to guide your conversation about this topic.
