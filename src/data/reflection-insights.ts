@@ -1,4 +1,3 @@
-
 import { ReflectionInsight, ReflectionPackBatch } from "@/types/reflection-insights";
 
 // First batch of reflection insights
@@ -151,9 +150,212 @@ export const reflectionPackBatch3: ReflectionInsight[] = [
   }
 ];
 
+// Fourth batch of reflection insights
+export const reflectionPackBatch4: ReflectionInsight[] = [
+  {
+    "triggers": [
+      "you don't care",
+      "I'm not a priority",
+      "last on your list",
+      "forgot about me",
+      "not important to you"
+    ],
+    "category": "feeling_deprioritized",
+    "insight": "One of you may be feeling like you're no longer a priority.",
+    "reflection": "Feeling deprioritized in a relationship often doesn't come from grand betrayals—it comes from small moments of absence. When gestures of connection fade, it can leave someone feeling unseen, even if love is still present. This isn't about blame—it's about recalibrating attention.",
+    "recommendation": "Each of you choose one simple ritual this week—a daily check-in, a shared meal, a hug in the morning. Small consistency builds trust faster than big gestures."
+  },
+  {
+    "triggers": [
+      "always defensive",
+      "can't talk to you",
+      "you twist everything",
+      "I'm walking on eggshells"
+    ],
+    "category": "communication_breakdown",
+    "insight": "There may be a pattern of defensiveness that makes open communication feel unsafe.",
+    "reflection": "When one or both partners are constantly bracing for criticism, real dialogue shuts down. Conversations become performances or battles. The goal is to make room for truth without triggering protection mode.",
+    "recommendation": "Try using 'I' language next time conflict arises: 'I felt... when...' instead of 'You never...'. This small shift reduces defensiveness and increases connection."
+  },
+  {
+    "triggers": [
+      "you don't get it",
+      "I'm alone in this",
+      "why do I always have to explain",
+      "nobody understands me"
+    ],
+    "category": "emotional_isolation",
+    "insight": "Someone may be carrying the weight of emotional isolation.",
+    "reflection": "Emotional isolation in a relationship often feels worse than being physically alone. It's not just about needing attention—it's about needing resonance. That sense of 'you see me in this.' Without it, we start to question whether our experiences are valid.",
+    "recommendation": "Take five minutes tonight to ask your partner: 'What felt hard for you this week that I might've missed?' Then reflect it back in your own words—just to show you heard."
+  },
+  {
+    "triggers": [
+      "bring this up again",
+      "you never let it go",
+      "still mad about that",
+      "can't move on",
+      "old fight"
+    ],
+    "category": "unresolved_wounds",
+    "insight": "This conflict may be touching an older wound that never fully healed.",
+    "reflection": "When an old wound is reactivated, it often gets mislabeled as overreacting. But repeated conflict is often repeated pain. Until something is resolved, your body and brain treat it like it just happened. That's not immaturity—it's memory.",
+    "recommendation": "If this issue has come up more than once, try journaling individually about what part still hurts. Then swap journals and read silently—no defense, just understanding."
+  },
+  {
+    "triggers": [
+      "don't touch me",
+      "not in the mood",
+      "stop trying",
+      "cold",
+      "you always want something"
+    ],
+    "category": "disconnected_intimacy",
+    "insight": "There may be a growing disconnect around emotional or physical closeness.",
+    "reflection": "When physical affection becomes a source of tension, it often means emotional safety is out of sync. One partner may seek touch as connection; the other may avoid it to protect themselves. It's rarely about rejection—it's about emotional mismatch.",
+    "recommendation": "Spend 10 minutes together in silence—just sitting near each other. No fixing, no expectation. Sometimes rebuilding safety begins in stillness, not words."
+  }
+];
+
+// Fifth batch of reflection insights
+export const reflectionPackBatch5: ReflectionInsight[] = [
+  {
+    "triggers": [
+      "you embarrassed me",
+      "not in front of them",
+      "don't talk about me like that",
+      "you made me look stupid"
+    ],
+    "category": "public_disrespect",
+    "insight": "This conflict may have been fueled by feeling disrespected or criticized in front of others.",
+    "reflection": "Being criticized publicly by a partner hits differently—it can feel like betrayal. Even small jokes or throwaway comments can trigger shame or humiliation, especially if they echo deeper insecurities. Dignity matters in conflict, especially when others are watching.",
+    "recommendation": "Make a shared agreement to only address conflict in private. If something slips in public, use a short phrase like 'Let's pause this for later'—then return to it calmly once alone."
+  },
+  {
+    "triggers": [
+      "you don't show up",
+      "I can't count on you",
+      "you forgot",
+      "you flaked again",
+      "didn't follow through"
+    ],
+    "category": "reliability_and_follow_through",
+    "insight": "One of you may be struggling to feel consistently supported or prioritized.",
+    "reflection": "Trust isn't just about honesty—it's about follow-through. When promises or plans fall apart repeatedly, it sends a message that someone—or something else—comes first. The goal isn't perfection. It's consistency with care.",
+    "recommendation": "Choose one recurring commitment—big or small—that you'll protect this week. Whether it's bedtime, dinner, or a check-in call—let your actions show what matters."
+  },
+  {
+    "triggers": [
+      "you never apologize",
+      "you don't take ownership",
+      "always my fault",
+      "blame me for everything"
+    ],
+    "category": "accountability_and_repair",
+    "insight": "Someone may be craving true accountability, not just closure.",
+    "reflection": "Accountability isn't about blame—it's about naming impact. When hurt isn't acknowledged, it festers. Even a simple, sincere apology can shift the entire tone of a relationship. But it has to be real. Not rushed. Not transactional. Real.",
+    "recommendation": "Try using this phrase: 'I can see how that landed for you, and I'm sorry it hurt.' You don't have to be the villain to acknowledge their pain."
+  },
+  {
+    "triggers": [
+      "you're always on your phone",
+      "never present",
+      "you don't even look at me",
+      "checked out",
+      "you're somewhere else"
+    ],
+    "category": "presence_and_attention",
+    "insight": "This conflict may be about a lack of emotional presence—not just screen time.",
+    "reflection": "When we feel ignored or emotionally abandoned, we often reach for irritation to cover up hurt. The real issue might not be about phones or distractions—it's about wanting to feel important, chosen, prioritized. That's a human need.",
+    "recommendation": "Try setting aside 20 uninterrupted minutes each evening this week—phones away, eyes on each other. Not to solve problems, just to reconnect."
+  },
+  {
+    "triggers": [
+      "you never change",
+      "always the same fight",
+      "why bother",
+      "it doesn't matter what I say"
+    ],
+    "category": "conflict_fatigue",
+    "insight": "This may be a sign of conflict fatigue—where the same unresolved pattern keeps looping.",
+    "reflection": "When a fight happens again and again, it becomes less about the content and more about the hopelessness. Conflict fatigue is when you feel like nothing you say will make a difference. But real change starts with interrupting the cycle—not perfectly, just intentionally.",
+    "recommendation": "Before your next disagreement, agree on one phrase you can both use to pause the spiral. Maybe it's 'Let's try that again.' Sometimes stopping the loop is the first breakthrough."
+  }
+];
+
+// Sixth batch of reflection insights
+export const reflectionPackBatch6: ReflectionInsight[] = [
+  {
+    "triggers": [
+      "you compared me",
+      "just like your ex",
+      "why aren't you more like",
+      "never enough"
+    ],
+    "category": "comparison_and_insecurity",
+    "insight": "There may be feelings of comparison or not being enough fueling this tension.",
+    "reflection": "Being compared—whether to an ex, a parent, or someone imaginary—can erode confidence in a relationship. It makes love feel conditional. When we feel like we're being measured, we stop feeling safe to show up as ourselves.",
+    "recommendation": "If comparison has shown up lately, start a new ritual: share one thing you love about who your partner is—not who you wish they'd be."
+  },
+  {
+    "triggers": [
+      "you always shut me down",
+      "nothing I say matters",
+      "dismissive",
+      "brush it off",
+      "you minimize everything"
+    ],
+    "category": "dismissal_and_misattunement",
+    "insight": "It sounds like one of you may be feeling emotionally dismissed.",
+    "reflection": "Minimizing or brushing off a partner's concern doesn't make the issue go away—it makes it go inward. When we feel dismissed, we stop sharing. That silence can feel like safety at first, but it slowly erodes trust.",
+    "recommendation": "Try reflecting one sentence back the next time your partner brings something up—even if you disagree. 'What I hear you saying is…' goes a long way in building safety."
+  },
+  {
+    "triggers": [
+      "too much pressure",
+      "expectations",
+      "I can't live up",
+      "never good enough",
+      "perfection"
+    ],
+    "category": "performance_pressure",
+    "insight": "Someone may be feeling like they're being evaluated—not accepted.",
+    "reflection": "Relationships thrive in a space where we're allowed to be whole and flawed. If one partner feels like they're constantly performing or being measured, emotional closeness starts to feel like a test. That's not love—it's stress.",
+    "recommendation": "Pause this week to ask each other: 'Do you feel like I expect too much from you?' and actually listen. Sometimes love softens just by naming the pressure."
+  },
+  {
+    "triggers": [
+      "you don't support me",
+      "I feel alone in this",
+      "you don't back me up",
+      "I'm on my own"
+    ],
+    "category": "lack_of_support",
+    "insight": "This moment may have highlighted a deeper need for support and solidarity.",
+    "reflection": "Support isn't just about logistics—it's about emotional presence. Feeling like your partner isn't in your corner—especially when life gets hard—can lead to a loneliness that words can't fix. The cure? Showing up. Repeatedly. Quietly. Faithfully.",
+    "recommendation": "Ask: 'What's one thing I could do this week that would help you feel supported?' Then do it—without making it about earning points."
+  },
+  {
+    "triggers": [
+      "you used this against me",
+      "threw it in my face",
+      "weaponized",
+      "you said you forgave me but",
+      "you brought it back up"
+    ],
+    "category": "weaponized_vulnerability",
+    "insight": "It sounds like someone's past vulnerability may have been used as a weapon in this conflict.",
+    "reflection": "When we open up and share something hard—and later hear it thrown back at us—it teaches our nervous system not to trust again. Weaponized vulnerability is a silent killer of intimacy. Repair starts with accountability and renewed care for emotional safety.",
+    "recommendation": "If something was shared in the past and reused during conflict, acknowledge it. A good phrase: 'I was wrong to use that against you. That wasn't fair.' Then ask: 'What would help you feel safer going forward?'"
+  }
+];
+
 // Combine all reflection packs into a single collection
 export const reflectionPacks: ReflectionPackBatch = {
   1: reflectionPackBatch1,
   2: reflectionPackBatch2,
-  3: reflectionPackBatch3
+  3: reflectionPackBatch3,
+  4: reflectionPackBatch4,
+  5: reflectionPackBatch5,
+  6: reflectionPackBatch6
 };
