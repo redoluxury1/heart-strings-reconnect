@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import IntentSelectionView from './tone-tool/IntentSelectionView';
-import CustomizeIntentView from './tone-tool/CustomizeIntentView';
 import { intentOptions } from './tone-tool/intent-options';
 
 interface SetToneToolProps {
@@ -15,7 +14,6 @@ const SetToneTool: React.FC<SetToneToolProps> = ({ onComplete, onBack }) => {
   const [selectedIntent, setSelectedIntent] = useState<string | null>(null);
   const [customIntent, setCustomIntent] = useState<string>('');
   const [intentText, setIntentText] = useState<string>('');
-  const [viewState, setViewState] = useState<'select' | 'customize'>('select');
   
   const handleSelectIntent = (intentId: string) => {
     const previouslySelected = selectedIntent === intentId;
@@ -51,51 +49,25 @@ const SetToneTool: React.FC<SetToneToolProps> = ({ onComplete, onBack }) => {
     setIntentText(value);
   };
   
-  const handleContinueToCustomize = () => {
-    setViewState('customize');
-    if (selectedIntent === 'custom') {
-      setIntentText(customIntent);
-    } else {
-      const selectedOption = intentOptions.find(option => option.id === selectedIntent);
-      setIntentText(selectedOption?.text || '');
-    }
-  };
-  
-  const handleNext = () => {
+  const handleContinue = () => {
     if (onComplete) {
+      // Use the final text as the selected intent
       onComplete(intentText);
-    }
-  };
-
-  const handleBack = () => {
-    if (viewState === 'customize') {
-      setViewState('select');
-    } else if (onBack) {
-      onBack();
     }
   };
   
   return (
     <div className="bg-[#FDFBF9] rounded-xl border border-[#D7B4A8] shadow-sm p-6 max-w-xl mx-auto">
-      {viewState === 'select' ? (
-        <IntentSelectionView 
-          selectedIntent={selectedIntent}
-          customIntent={customIntent}
-          intentText={intentText}
-          onSelectIntent={handleSelectIntent}
-          onCustomIntentChange={handleCustomIntentChange}
-          onIntentTextChange={handleIntentTextChange}
-          onContinue={handleContinueToCustomize}
-          onBack={onBack}
-        />
-      ) : (
-        <CustomizeIntentView 
-          intentText={intentText}
-          onIntentTextChange={setIntentText}
-          onNext={handleNext}
-          onBack={handleBack}
-        />
-      )}
+      <IntentSelectionView 
+        selectedIntent={selectedIntent}
+        customIntent={customIntent}
+        intentText={intentText}
+        onSelectIntent={handleSelectIntent}
+        onCustomIntentChange={handleCustomIntentChange}
+        onIntentTextChange={handleIntentTextChange}
+        onContinue={handleContinue}
+        onBack={onBack}
+      />
     </div>
   );
 };

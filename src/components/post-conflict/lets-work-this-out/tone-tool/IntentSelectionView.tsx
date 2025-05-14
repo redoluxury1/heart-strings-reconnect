@@ -78,19 +78,6 @@ const IntentSelectionView: React.FC<IntentSelectionViewProps> = ({
         )}
       </div>
       
-      {/* Text display area for selected intent */}
-      {selectedIntent && selectedIntent !== 'custom' && (
-        <div className="w-full mb-6">
-          <SpeechToTextInput
-            value={intentText}
-            onChange={onIntentTextChange}
-            placeholder="Edit your intention..."
-            className="w-full rounded-lg bg-[#F5F2F0] border-[#D9B9AF] p-4 text-[#2C2C2C]"
-            minHeight="80px"
-          />
-        </div>
-      )}
-      
       {/* Actions */}
       <div className="flex flex-col w-full mt-4">
         <Button 
