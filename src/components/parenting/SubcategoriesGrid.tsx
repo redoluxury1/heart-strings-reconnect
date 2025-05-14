@@ -8,7 +8,7 @@ import { ReactNode } from 'react';
 export interface GenericSubcategoryData {
   id: string;
   name: string;
-  icon: ReactNode;
+  icon?: ReactNode; // Make icon optional with the ? symbol
   color: string;
   bgColor: string;
   prompts?: any; // Make prompts optional and accept any type
