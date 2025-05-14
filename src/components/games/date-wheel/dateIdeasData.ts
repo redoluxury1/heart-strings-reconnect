@@ -1,4 +1,3 @@
-
 import { DateIdea } from '@/types/date-wheel';
 
 // Create date idea data
@@ -403,6 +402,14 @@ const dateIdeas: DateIdea[] = [
     category: ['home', 'low-effort'],
     icon: 'Coffee',
     tip: 'Sometimes, peace is the best reset of all.'
+  },
+  {
+    id: 'random-cookbook',
+    title: 'Random Cookbook Recipe',
+    description: 'Grab a cookbook (or Pinterest board), randomly choose a page or recipe, then shop for the ingredients and cook it together.',
+    category: ['home', 'adventure'],
+    icon: 'Utensils',
+    tip: 'Stepping outside your comfort zone together builds connection and creates memorable experiences.'
   }
 ];
 
