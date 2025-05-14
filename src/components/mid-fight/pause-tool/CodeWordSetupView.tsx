@@ -11,14 +11,8 @@ const CodeWordSetupView: React.FC<CodeWordSetupViewProps> = ({ onGetStarted }) =
   return (
     <div className="max-w-md mx-auto text-center">
       <div className="flex justify-center mb-6">
-        <div className="relative">
-          {/* Pulsing background effect */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 rounded-full bg-[#f7e0dc]/30 animate-pulse"></div>
-          
-          {/* Original background and icon */}
-          <div className="bg-[#f7e0dc]/60 p-4 rounded-full relative z-10">
-            <PauseCircle className="w-16 h-16 text-[#E2725B]" />
-          </div>
+        <div className="bg-[#f7e0dc]/60 p-4 rounded-full">
+          <PauseCircle className="w-16 h-16 text-[#E2725B]" />
         </div>
       </div>
       

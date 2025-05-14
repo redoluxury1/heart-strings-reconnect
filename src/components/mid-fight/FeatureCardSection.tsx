@@ -1,69 +1,65 @@
 
 import React from 'react';
-import { MessageCircle, ArrowLeftRight, Heart } from 'lucide-react';
-import SayThisInsteadTool from './SayThisInsteadTool';
+import { Book } from 'lucide-react';
+import FeatureCard, { Feature } from './FeatureCard';
+import ContentContainer from '@/components/common/ContentContainer';
+import TryAgainTool from './TryAgainTool';
 import WhatsReallyGoingOn from './WhatsReallyGoingOn';
 import BuildBridgeCard from './build-bridge/BuildBridgeCard';
-import ColorHealingMethod from '@/components/post-conflict/color-healing/ColorHealingMethod';
 
-const FeatureCardSection: React.FC = () => {
+// Feature data for other features (not including "say-instead" which will be displayed directly)
+const features: Feature[] = [
+  {
+    id: 'whats-going-on',
+    title: "What's Really Going On?",
+    description: "Decode what's happening when emotions are high with tools that translate intent, unpack real issues, and explain behaviors.",
+    icon: null,
+    comingSoon: false,
+    alwaysVisible: false,
+    microtext: "",
+    customTitle: true
+  }
+];
+
+interface FeatureCardSectionProps {
+  selectedFeature: string | null;
+  toggleFeature: (featureId: string) => void;
+}
+
+const FeatureCardSection: React.FC<FeatureCardSectionProps> = ({ 
+  selectedFeature,
+  toggleFeature
+}) => {
   return (
-    <div className="py-8 pt-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="space-y-16">
-          {/* Say This Instead Tool (always visible) */}
-          <div className="bg-white rounded-xl shadow-md p-6 mb-16">
-            <div className="flex flex-col items-center mb-5">
-              <MessageCircle className="h-16 md:h-20 w-16 md:w-20 text-[#C7747F] mb-3" />
-              <h3 className="text-2xl font-cormorant font-medium text-[#22254a] mb-2 text-center">
-                Say This Instead
-              </h3>
-              <p className="text-[#22254a]/80 mb-4 text-center max-w-2xl">
-                Turn common conflict phrases into calmer alternatives that keep the conversation productive.
-              </p>
-            </div>
-            <SayThisInsteadTool />
+    <>
+      {/* Original TimeoutTimer and CodeWordTool section is in MidFight.tsx and does not need to be here */}
+      {/* Removed duplicate section */}
+      
+      {/* Let's Try That Again Tool - Always visible with compact design */}
+      <section className="py-6 md:py-8 bg-soft-blush/30">
+        <ContentContainer maxWidth="lg">
+          <div className="bg-white rounded-lg shadow-md p-5 md:p-6 border border-lavender-blue/20">
+            <TryAgainTool onClose={() => {}} />
           </div>
-          
-          {/* What's Going On Tool (always visible) */}
-          <div className="bg-white rounded-xl shadow-md p-6 mb-16">
-            <div className="flex flex-col items-center mb-5">
-              <ArrowLeftRight className="h-16 md:h-20 w-16 md:w-20 text-[#536878] mb-3" />
-              <h3 className="text-2xl font-cormorant font-medium text-[#22254a] mb-2 text-center">
-                What's Really Going On
-              </h3>
-              <p className="text-[#22254a]/80 mb-4 text-center max-w-2xl">
-                Decode what your partner's behavior means
-              </p>
-            </div>
+        </ContentContainer>
+      </section>
+      
+      {/* What's Really Going On Feature */}
+      <section className="py-6 md:py-8 bg-soft-cream/30">
+        <ContentContainer maxWidth="lg">
+          <div className="bg-white rounded-lg shadow-md p-5 md:p-6 border border-lavender-blue/20">
             <WhatsReallyGoingOn />
           </div>
-          
-          {/* Color Healing Method */}
-          <div className="mt-16">
-            <div className="max-w-3xl mx-auto">
-              <ColorHealingMethod />
-            </div>
-          </div>
-          
-          {/* Build Bridge Card - Simple Version */}
-          <div className="bg-[#F7ECD9] rounded-2xl p-6 md:p-8 text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-cormorant font-bold text-midnight-indigo mb-4">
-              Build a Bridge
-            </h2>
-            
-            <div className="text-midnight-indigo text-sm italic mb-6">
-              Coming Soon
-            </div>
-            
-            <p className="text-midnight-indigo text-base md:text-lg max-w-md mx-auto mb-8">
-              Sometimes we just need a third party to help us navigate something hard.
-              We are building our team of experts to bring this feature to life.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
+        </ContentContainer>
+      </section>
+      
+      {/* Build a Bridge Section */}
+      <section className="py-6 md:py-8 bg-soft-blush/30">
+        <ContentContainer maxWidth="lg">
+          <BuildBridgeCard />
+        </ContentContainer>
+      </section>
+    </>
   );
 };
 

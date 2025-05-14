@@ -24,13 +24,13 @@ const messages = [
   "Even if it's messy, it's progress"
 ];
 
-// Updated color schemes for bubbles with new palette colors
+// Color schemes for bubbles
 const getBubbleStyles = () => [
-  { bgColor: "bg-[#2e4059]", textColor: "text-white", position: "after:border-t-[#2e4059]" }, // Navy
-  { bgColor: "bg-[#8a6f8e]", textColor: "text-white", position: "after:border-t-[#8a6f8e]" }, // Mauve
-  { bgColor: "bg-[#c97c5d]", textColor: "text-white", position: "after:border-t-[#c97c5d]" }, // Terracotta
-  { bgColor: "bg-[#dbd0e0]", textColor: "text-[#2e4059]", position: "after:border-t-[#dbd0e0]" }, // Light Mauve
-  { bgColor: "bg-[#e6c7bc]", textColor: "text-[#2e4059]", position: "after:border-t-[#e6c7bc]" }, // Light Terracotta
+  { bgColor: "bg-rosewood-tint", textColor: "text-white", position: "after:border-t-rosewood-tint" },
+  { bgColor: "bg-mauve-rose", textColor: "text-white", position: "after:border-t-mauve-rose" },
+  { bgColor: "bg-lavender-blue", textColor: "text-white", position: "after:border-t-lavender-blue" },
+  { bgColor: "bg-soft-cream", textColor: "text-midnight-indigo", position: "after:border-t-soft-cream" },
+  { bgColor: "bg-soft-blush", textColor: "text-midnight-indigo", position: "after:border-t-soft-blush" },
 ];
 
 // Text bubble positions and tails (for variety, coming from different corners)

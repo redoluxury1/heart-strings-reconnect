@@ -1,56 +1,26 @@
 
 import React from 'react';
-import { PauseCircle } from 'lucide-react';
+import { PauseStatus } from '../PauseTool';
 
 interface PauseToolHeaderProps {
-  status: 'setup' | 'activation' | 'activated' | 'custom-timer' | 'in-pause' | 'ended' | 'confirm-restart' | 'not-ready';
+  status: PauseStatus;
   onSetupClick: () => void;
-  codeWordExists?: boolean;
 }
 
-const PauseToolHeader: React.FC<PauseToolHeaderProps> = ({ 
-  status, 
-  onSetupClick,
-  codeWordExists = false 
-}) => {
-  const isInitialView = status === 'setup';
-  const hasCodeWord = codeWordExists;
-  
-  // Don't show the pause button and text if we're in setup view or already have a code word established
-  if ((hasCodeWord && isInitialView) || (!hasCodeWord && isInitialView)) {
-    return null;
-  }
+const PauseToolHeader: React.FC<PauseToolHeaderProps> = ({ status, onSetupClick }) => {
+  const isActive = status !== 'setup';
   
   return (
-    <div className="flex items-center justify-between mb-6">
-      <div className="flex items-center">
+    <div className="flex justify-between items-center mb-6">
+      <h2 className="text-2xl font-cormorant text-[#07183D] font-medium">
+        Take a Pause
+      </h2>
+      {isActive && (
         <button 
+          className="text-sm text-[#E2725B] hover:underline"
           onClick={onSetupClick}
-          className={`mr-4 relative ${hasCodeWord ? 'cursor-pointer hover:opacity-80' : ''} transition-opacity`}
-          disabled={!hasCodeWord}
-          aria-label={hasCodeWord ? "Activate code word" : "Pause button"}
         >
-          <PauseCircle className={`w-12 h-12 ${hasCodeWord ? 'text-[#E2725B]' : 'text-[#536878]'}`} />
-          {hasCodeWord && (
-            <span className="absolute -right-1 -bottom-1 bg-green-500 w-4 h-4 rounded-full border-2 border-white" />
-          )}
-        </button>
-        
-        <div>
-          <p className="text-sm text-[#5d4357]/80">
-            {hasCodeWord 
-              ? "Click the pause button to activate your code word" 
-              : ""}
-          </p>
-        </div>
-      </div>
-      
-      {!isInitialView && !hasCodeWord && (
-        <button 
-          onClick={onSetupClick}
-          className="text-sm text-[#536878] hover:underline"
-        >
-          Change Settings
+          Restart
         </button>
       )}
     </div>

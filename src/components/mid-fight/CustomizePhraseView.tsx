@@ -26,10 +26,10 @@ const CustomizePhraseView: React.FC<CustomizePhraseViewProps> = ({
   return (
     <>
       <div className="mb-4">
-        <h3 className="text-xl font-cormorant font-medium text-[#22254a] mb-2">
+        <h3 className="text-xl font-cormorant font-medium text-midnight-indigo mb-2">
           {isFromSayThisInstead ? "Make it yours" : "Customize your phrase"}
         </h3>
-        <p className="text-sm text-[#22254a]/70 italic">
+        <p className="text-sm text-midnight-indigo/70 italic">
           {isFromSayThisInstead 
             ? "You're rewriting the way you speak when it's hardest. Say it how you would—but softer."
             : "Speak in your own voice—but let it come from a calm place."}
@@ -39,13 +39,13 @@ const CustomizePhraseView: React.FC<CustomizePhraseViewProps> = ({
       <Textarea
         value={customPhrase}
         onChange={(e) => onCustomPhraseChange(e.target.value)}
-        className="w-full border border-[#8A8AC9]/30 rounded-lg p-3 mb-4 h-32 focus:outline-none focus:ring-1 focus:ring-[#8A8AC9]"
+        className="w-full border border-lavender-blue/30 rounded-lg p-3 mb-4 h-32 focus:outline-none focus:ring-1 focus:ring-lavender-blue"
       />
       
       <div className="flex flex-col items-center gap-3">
         <Button
           variant="default"
-          className="bg-[#C7747F] hover:bg-[#C7747F]/90 text-white"
+          className="bg-lavender-blue hover:bg-lavender-blue/90 text-white"
           onClick={onStartConversation}
         >
           <MessageCircle className="h-4 w-4 mr-1" />
@@ -55,7 +55,7 @@ const CustomizePhraseView: React.FC<CustomizePhraseViewProps> = ({
         <Button
           variant="outline"
           size="sm"
-          className="border-[#536878]/40 text-[#22254a] hover:bg-[#536878]/10 hover:text-[#536878] hover:border-[#536878]/40 h-7 px-2 py-0 text-xs"
+          className="border-lavender-blue/40 text-midnight-indigo hover:bg-mauve-rose/10 hover:text-mauve-rose hover:border-mauve-rose/40 h-7 px-2 py-0 text-xs"
           onClick={onBackToTopics}
         >
           <RotateCcw className="h-3.5 w-3.5 mr-1.5" />
@@ -65,7 +65,7 @@ const CustomizePhraseView: React.FC<CustomizePhraseViewProps> = ({
         {showSaveOption && onSaveToLibrary && (
           <Button
             variant="outline"
-            className="border-[#8A8AC9] text-[#8A8AC9] hover:bg-[#8A8AC9]/10 hover:text-[#8A8AC9]"
+            className="border-lavender-blue text-lavender-blue hover:bg-lavender-blue/10 hover:text-lavender-blue"
             onClick={onSaveToLibrary}
           >
             <BookmarkPlus className="h-4 w-4 mr-1" />

@@ -15,9 +15,8 @@ const initialSessionData: SessionData = {
 };
 
 export const useSessionManagement = () => {
-  // Start with step 0 for the LetsTalkThis component, but will skip to step 1 when session starts
-  const [currentStep, setCurrentStep] = useState(0); 
   const [sessionData, setSessionData] = useState<SessionData>(initialSessionData);
+  const [currentStep, setCurrentStep] = useState(0);
   const [partnerNotificationShown, setPartnerNotificationShown] = useState(false);
   const bothPartnersReady = sessionData.partner1.ready && sessionData.partner2.ready;
 
@@ -47,23 +46,6 @@ export const useSessionManagement = () => {
     }));
   }, [sessionData, currentStep]);
 
-  // Show notification when partner completes (userA already completed and userB just completed)
-  useEffect(() => {
-    if (sessionData.partner1.ready && sessionData.partner2.ready && !partnerNotificationShown) {
-      toast({
-        title: "Your partner has completed their side",
-        description: "Your summary is ready to view.",
-      });
-      setPartnerNotificationShown(true);
-      
-      // Play notification sound
-      const audio = new Audio('/notification-sound.mp3');
-      audio.play().catch(error => {
-        console.error("Could not play notification sound:", error);
-      });
-    }
-  }, [sessionData.partner1.ready, sessionData.partner2.ready, partnerNotificationShown]);
-
   const handleResponse = (partner: 'partner1' | 'partner2', stepId: string, response: any) => {
     setSessionData(prev => ({
       ...prev,
@@ -76,6 +58,9 @@ export const useSessionManagement = () => {
         ready: true
       }
     }));
+    
+    // Skip the partner simulation entirely - we'll remove this automatic partner behavior
+    // This avoids unnecessary notifications that distract the user
   };
   
   const handleRestart = () => {

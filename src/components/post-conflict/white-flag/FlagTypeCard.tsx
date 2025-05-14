@@ -19,12 +19,15 @@ const FlagTypeCard = ({ flagType, isSelected, onClick }: FlagTypeCardProps) => {
       onClick={onClick}
     >
       <div className="flex items-center gap-2">
-        {/* Removed the background div that was creating a circle effect */}
-        {flagType.id === 'reconnect' ? (
-          <IconComponent size={20} fill="white" stroke="white" />
-        ) : (
-          <IconComponent size={20} stroke="white" />
-        )}
+        <div className={`h-8 w-8 flex items-center justify-center ${
+          isSelected ? 'text-[#c06b6b]' : 'text-[#c06b6b]'
+        }`}>
+          {flagType.id === 'reconnect' ? (
+            <IconComponent size={20} fill="#c06b6b" stroke="#c06b6b" />
+          ) : (
+            <IconComponent size={20} stroke="#c06b6b" />
+          )}
+        </div>
         
         <div>
           <h3 className="text-base font-medium text-[#1A1F2C] mb-0.5">{flagType.title}</h3>

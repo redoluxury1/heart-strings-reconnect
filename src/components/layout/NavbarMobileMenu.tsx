@@ -1,54 +1,77 @@
 
 import React from 'react';
-import { NavLink } from 'react-router-dom';
-import { X } from 'lucide-react';
-import { cn } from "@/lib/utils";
+import { Link } from 'react-router-dom';
+import { Book, Gamepad } from 'lucide-react';
+import { Button } from "@/components/ui/button";
 
 interface NavbarMobileMenuProps {
   isOpen: boolean;
   onClose: () => void;
-  navRef?: React.RefObject<HTMLDivElement>;
+  navRef: React.RefObject<HTMLDivElement>;
 }
 
-const NavbarMobileMenu: React.FC<NavbarMobileMenuProps> = ({ isOpen, onClose, navRef }) => {
+const NavbarMobileMenu: React.FC<NavbarMobileMenuProps> = ({ 
+  isOpen,
+  onClose,
+  navRef
+}) => {
   if (!isOpen) return null;
-
-  const getNavLinkClassName = ({ isActive }: { isActive: boolean }) => cn(
-    "block px-4 py-3 text-base font-medium text-slate-900 hover:bg-slate-100",
-    isActive && "bg-slate-100"
-  );
-
+  
   return (
-    <div ref={navRef} className="fixed inset-0 z-50 bg-white">
-      <div className="flex justify-end p-4">
-        <button 
-          onClick={onClose} 
-          className="p-2 rounded-md text-slate-500 hover:text-slate-700 hover:bg-slate-100"
+    <div ref={navRef} className="absolute top-16 left-0 right-0 bg-white shadow-md z-50 md:hidden">
+      <div className="flex flex-col p-4 space-y-3">
+        <Link 
+          to="/" 
+          className="text-midnight-indigo hover:text-mauve-rose px-4 py-2 hover:bg-soft-blush rounded"
+          onClick={onClose}
         >
-          <X size={24} />
-        </button>
-      </div>
-
-      <nav className="px-4 py-2 space-y-1">
-        <NavLink to="/" end className={getNavLinkClassName} onClick={onClose}>
           Home
-        </NavLink>
-        <NavLink to="/during-conflict" className={getNavLinkClassName} onClick={onClose}>
-          During Conflict
-        </NavLink>
-        <NavLink to="/post-conflict" className={getNavLinkClassName} onClick={onClose}>
-          After Conflict
-        </NavLink>
-        <NavLink to="/love-notes" className={getNavLinkClassName} onClick={onClose}>
-          Love Notes
-        </NavLink>
-        <NavLink to="/games" className={getNavLinkClassName} onClick={onClose}>
+        </Link>
+        <Link 
+          to="/during-conflict" 
+          className="text-midnight-indigo hover:text-mauve-rose px-4 py-2 hover:bg-soft-blush rounded"
+          onClick={onClose}
+        >
+          Mid-Fight
+        </Link>
+        <Link 
+          to="/post-conflict" 
+          className="text-midnight-indigo hover:text-mauve-rose px-4 py-2 hover:bg-soft-blush rounded"
+          onClick={onClose}
+        >
+          Post-Fight
+        </Link>
+        <Link 
+          to="/reconnect" 
+          className="text-midnight-indigo hover:text-mauve-rose px-4 py-2 hover:bg-soft-blush rounded"
+          onClick={onClose}
+        >
+          Reconnecting
+        </Link>
+        <Link 
+          to="/games" 
+          className="text-midnight-indigo hover:text-mauve-rose px-4 py-2 hover:bg-soft-blush rounded flex items-center"
+          onClick={onClose}
+        >
+          <Gamepad className="h-4 w-4 mr-2" />
           Games
-        </NavLink>
-        <NavLink to="/archive" className={getNavLinkClassName} onClick={onClose}>
+        </Link>
+        <Link 
+          to="/archive" 
+          className="text-midnight-indigo hover:text-mauve-rose px-4 py-2 hover:bg-soft-blush rounded flex items-center"
+          onClick={onClose}
+        >
+          <Book className="h-4 w-4 mr-2" />
           Archive
-        </NavLink>
-      </nav>
+        </Link>
+        <Button 
+          variant="outline" 
+          className="text-midnight-indigo border-midnight-indigo hover:bg-soft-blush rounded-full w-full"
+          onClick={onClose}
+        >
+          Get Started
+        </Button>
+      </div>
     </div>
   );
 };

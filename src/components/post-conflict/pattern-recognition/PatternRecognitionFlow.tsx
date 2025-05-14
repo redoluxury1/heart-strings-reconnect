@@ -1,110 +1,155 @@
 
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
-import { useSession } from '../context/SessionContext';
+import { ArrowLeft, ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { CommonPattern } from './types';
-import PatternIntroScreen from './components/PatternIntroScreen';
+import { useSession } from '../context/SessionContext';
+import { patternQuizzes, commonPatterns } from './data/pattern-data';
+import { usePatternRecognition, PatternId } from './hooks/usePatternRecognition';
 import PatternList from './components/PatternList';
+import ReconnectionTips from './components/ReconnectionTips';
+import PatternIntroScreen from './components/PatternIntroScreen';
+import CyclePatternScreen from './components/CyclePatternScreen';
 import PatternDetailScreen from './components/PatternDetailScreen';
 import PatternRepairScreen from './components/PatternRepairScreen';
+import PursueDistanceDetailScreen from './components/PursueDistanceDetailScreen';
+import PursueDistanceRepairScreen from './components/PursueDistanceRepairScreen';
+import { reconnectionTips } from '@/data/reconnection-tips';
 
 interface PatternRecognitionFlowProps {
-  fullScreen?: boolean;
   onClose?: () => void;
+  fullScreen?: boolean;
 }
 
-const PatternRecognitionFlow: React.FC<PatternRecognitionFlowProps> = ({ fullScreen, onClose }) => {
-  const [currentStep, setCurrentStep] = useState<'intro' | 'list' | 'detail' | 'repair'>('intro');
-  const [selectedPattern, setSelectedPattern] = useState<CommonPattern | null>(null);
-  const { sessionData } = useSession();
-  const { toast } = useToast();
+const PatternRecognitionFlow: React.FC<PatternRecognitionFlowProps> = ({ 
+  onClose,
+  fullScreen = false
+}) => {
   const navigate = useNavigate();
+  const { state, actions, helpers } = usePatternRecognition();
+  const { sessionData } = useSession();
   
-  const handlePatternSelect = (pattern: CommonPattern) => {
-    setSelectedPattern(pattern);
-    setCurrentStep('detail');
+  // Preload key images when component mounts
+  useEffect(() => {
+    const preloadImages = [
+      '/lovable-uploads/39110aa2-d4b1-4586-bd3f-56a1ae1053c8.png',
+      '/lovable-uploads/ff2e4176-28cc-47b9-b205-8c36e2d8aafe.png',
+    ];
+    
+    preloadImages.forEach(src => {
+      const img = new Image();
+      img.src = src;
+    });
+  }, []);
+  
+  const { 
+    selectedPattern, 
+    isShowingTips, 
+    showIntro,
+    showCyclePattern,
+    showPatternDetail,
+    showPatternRepair
+  } = state;
+  
+  const { 
+    handlePatternSelect, 
+    handleGoBack, 
+    handleIntroComplete,
+    handleCyclePatternComplete,
+    handlePatternDetailComplete,
+  } = actions;
+  
+  const { getPatternSpecificTips } = helpers;
+  
+  const selectedPatternData = selectedPattern !== null 
+    ? commonPatterns.find(p => p.id.toString() === selectedPattern)
+    : null;
+  
+  const patternType = selectedPatternData?.patternType || null;
+  
+  const tipsToDisplay = selectedPatternData && patternType
+    ? getPatternSpecificTips(patternType)
+    : reconnectionTips.sort(() => 0.5 - Math.random()).slice(0, 3);
+  
+  // Navigate to Pause+Phrase section
+  const handleNavigateToPausePhrase = () => {
+    navigate('/during-conflict?section=pause-phrase');
   };
   
-  const handleGoToRepair = () => {
-    if (selectedPattern) {
-      setCurrentStep('repair');
-    }
-  };
-  
-  const handleBackToList = () => {
-    setCurrentStep('list');
-    setSelectedPattern(null);
-  };
-  
-  const handleBackToDetail = () => {
-    setCurrentStep('detail');
-  };
-  
-  const handleStartOver = () => {
-    setCurrentStep('intro');
-    setSelectedPattern(null);
-  };
-  
-  const handleGoToPatternList = () => {
-    setCurrentStep('list');
-  };
-
-  const handleClose = () => {
-    if (onClose) {
-      onClose();
-    }
-  };
-
   return (
-    <div className="bg-white rounded-xl shadow-md overflow-hidden">
-      <div className="p-6 md:p-8">
-        {currentStep !== 'intro' && (
+    <div className="fixed inset-0 z-[100] bg-white overflow-y-auto">
+      <div className="min-h-screen p-6 md:p-8">
+        {/* Back to tools button for fullScreen mode */}
+        {(fullScreen && onClose) && (
           <Button
             variant="ghost"
             className="mb-4"
-            onClick={() => {
-              if (currentStep === 'list') handleStartOver();
-              else if (currentStep === 'detail') handleBackToList();
-              else if (currentStep === 'repair') handleBackToDetail();
-            }}
+            onClick={onClose}
+            size="sm"
+          >
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to tools
+          </Button>
+        )}
+        
+        {/* Show back button to pattern list specifically on pattern detail screens */}
+        {selectedPattern !== null && showPatternDetail && (
+          <Button
+            variant="ghost"
+            className="mb-4"
+            onClick={() => handlePatternSelect(null)}
+            size="sm"
+          >
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to patterns
+          </Button>
+        )}
+        
+        {/* For all other views, show back button when applicable except intro and cycle pattern */}
+        {!showIntro && !showCyclePattern && !showPatternDetail && (selectedPattern !== null || isShowingTips) && (
+          <Button
+            variant="ghost"
+            className="mb-4"
+            onClick={handleGoBack}
+            size="sm"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back
           </Button>
         )}
         
-        {fullScreen && (
-          <Button
-            variant="ghost"
-            className="mb-4 ml-auto"
-            onClick={handleClose}
-          >
-            Close
-          </Button>
-        )}
-        
-        {currentStep === 'intro' && (
-          <PatternIntroScreen onContinue={handleGoToPatternList} />
-        )}
-        
-        {currentStep === 'list' && (
-          <PatternList onPatternSelect={handlePatternSelect} />
-        )}
-        
-        {currentStep === 'detail' && selectedPattern && (
-          <PatternDetailScreen 
-            pattern={selectedPattern} 
-            onContinue={handleGoToRepair} 
+        {showIntro ? (
+          <PatternIntroScreen onContinue={handleIntroComplete} />
+        ) : showCyclePattern ? (
+          <CyclePatternScreen onContinue={handleCyclePatternComplete} />
+        ) : showPatternDetail ? (
+          patternType === 'pursue-distance' ? (
+            <PursueDistanceDetailScreen onContinue={handlePatternDetailComplete} />
+          ) : (
+            <PatternDetailScreen 
+              pattern={selectedPatternData} 
+              onContinue={handlePatternDetailComplete} 
+            />
+          )
+        ) : showPatternRepair ? (
+          patternType === 'pursue-distance' ? (
+            <PursueDistanceRepairScreen onContinue={handleNavigateToPausePhrase} />
+          ) : (
+            <PatternRepairScreen 
+              pattern={selectedPatternData}
+              onContinue={handleNavigateToPausePhrase}
+              buttonText="Practice in real life"
+            />
+          )
+        ) : isShowingTips ? (
+          <ReconnectionTips 
+            selectedPattern={selectedPatternData || null}
+            tipsToDisplay={tipsToDisplay}
           />
-        )}
-        
-        {currentStep === 'repair' && selectedPattern && (
-          <PatternRepairScreen 
-            pattern={selectedPattern}
-            onContinue={handleStartOver}
+        ) : (
+          <PatternList 
+            patterns={commonPatterns}
+            onPatternSelect={(patternId) => handlePatternSelect(patternId.toString())}
           />
         )}
       </div>

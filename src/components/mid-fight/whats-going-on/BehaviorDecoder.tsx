@@ -62,10 +62,10 @@ const BehaviorDecoder = () => {
   
   return (
     <div className="space-y-6">
-      {/* Replace icon with the new uploaded image */}
+      {/* Replace icon with the new image */}
       <div className="flex justify-center mb-6">
         <img 
-          src="/lovable-uploads/da34a9fe-3a8e-4fa8-b3de-0f9cc2ac9b96.png" 
+          src="/lovable-uploads/eb3c8d62-6a87-4dac-a8e1-ef2dc24dbe91.png" 
           alt="He said She said" 
           className="h-20 w-auto"
         />

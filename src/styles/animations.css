@@ -1,3 +1,164 @@
 
-/* This file is kept for backward compatibility, but now just imports the modular files */
-@import './animations/index.css';
+/* Message bubble animations */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+  }
+}
+
+/* Wave animations for color healing page */
+@keyframes waveRight {
+  0% {
+    transform: translateX(-5px) translateY(0) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateX(20px) translateY(-10px) scale(1.2);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateX(-5px) translateY(0) scale(1);
+    opacity: 0.3;
+  }
+}
+
+@keyframes waveLeft {
+  0% {
+    transform: translateX(5px) translateY(0) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateX(-20px) translateY(10px) scale(1.2);
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateX(5px) translateY(0) scale(1);
+    opacity: 0.3;
+  }
+}
+
+/* Top wave animation */
+@keyframes waveTop {
+  0% {
+    transform: translateY(5px) translateX(0) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-15px) translateX(-10px) scale(1.25);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(5px) translateX(0) scale(1);
+    opacity: 0.3;
+  }
+}
+
+/* Circular motion animation */
+@keyframes waveCircle {
+  0% {
+    transform: rotate(0deg) translateX(10px) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: rotate(180deg) translateX(-5px) scale(1.15);
+    opacity: 0.5;
+  }
+  100% {
+    transform: rotate(360deg) translateX(10px) scale(1);
+    opacity: 0.3;
+  }
+}
+
+@keyframes pulseSlow {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(0.95);
+    opacity: 0.3;
+  }
+}
+
+@keyframes floatSlow {
+  0% {
+    transform: translateY(0);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-15px);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 0.3;
+  }
+}
+
+@keyframes expand {
+  0% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+}
+
+/* Animation utility classes */
+.animate-wave-right {
+  animation: waveRight 8s ease-in-out infinite;
+}
+
+.animate-wave-left {
+  animation: waveLeft 8s ease-in-out infinite;
+}
+
+.animate-wave-top {
+  animation: waveTop 9s ease-in-out infinite;
+}
+
+.animate-wave-circle {
+  animation: waveCircle 12s ease-in-out infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulseSlow 6s ease-in-out infinite;
+}
+
+.animate-float-slow {
+  animation: floatSlow 10s ease-in-out infinite;
+}
+
+.animate-expand {
+  animation: expand 12s ease-in-out infinite;
+}

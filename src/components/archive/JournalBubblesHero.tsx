@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { cn } from "@/lib/utils";
 
@@ -35,19 +36,19 @@ const messages = [
   "I recognized their love language."
 ];
 
-// Special bubbles for tab categories with new palette colors
+// Special bubbles for tab categories
 const specialBubbles = [
-  { message: "Love Notes", style: "bg-[#8a6f8e] text-white" }, // Mauve
-  { message: "Thoughts", style: "bg-[#e6c7bc] text-[#2e4059]" } // Light Terracotta with Navy text
+  { message: "Love Notes", style: "bg-mauve-rose text-white" },
+  { message: "Thoughts", style: "bg-soft-blush text-midnight-indigo" }
 ];
 
-// Color schemes for bubbles with new palette colors
+// Color schemes for bubbles
 const bubbleStyles = [
-  { bgColor: "bg-[#2e4059]", textColor: "text-white", position: "after:border-t-[#2e4059]" }, // Navy
-  { bgColor: "bg-[#8a6f8e]", textColor: "text-white", position: "after:border-t-[#8a6f8e]" }, // Mauve
-  { bgColor: "bg-[#c97c5d]", textColor: "text-white", position: "after:border-t-[#c97c5d]" }, // Terracotta
-  { bgColor: "bg-[#dbd0e0]", textColor: "text-[#2e4059]", position: "after:border-t-[#dbd0e0]" }, // Light Mauve
-  { bgColor: "bg-[#e6c7bc]", textColor: "text-[#2e4059]", position: "after:border-t-[#e6c7bc]" }, // Light Terracotta
+  { bgColor: "bg-rosewood-tint", textColor: "text-white", position: "after:border-t-rosewood-tint" },
+  { bgColor: "bg-mauve-rose", textColor: "text-white", position: "after:border-t-mauve-rose" },
+  { bgColor: "bg-lavender-blue", textColor: "text-white", position: "after:border-t-lavender-blue" },
+  { bgColor: "bg-soft-cream", textColor: "text-midnight-indigo", position: "after:border-t-soft-cream" },
+  { bgColor: "bg-soft-blush", textColor: "text-midnight-indigo", position: "after:border-t-soft-blush" },
 ];
 
 // Text bubble positions and tails (for variety, coming from different corners)
@@ -128,9 +129,9 @@ const JournalBubblesHero = () => {
       id: `special-${index}`,
       message: bubble.message,
       style: {
-        bgColor: bubble.message === "Love Notes" ? "bg-[#8a6f8e]" : "bg-[#e6c7bc]",
-        textColor: bubble.message === "Love Notes" ? "text-white" : "text-[#2e4059]",
-        position: bubble.message === "Love Notes" ? "after:border-t-[#8a6f8e]" : "after:border-t-[#e6c7bc]"
+        bgColor: bubble.message === "Love Notes" ? "bg-mauve-rose" : "bg-soft-blush",
+        textColor: bubble.message === "Love Notes" ? "text-white" : "text-midnight-indigo",
+        position: bubble.message === "Love Notes" ? "after:border-t-mauve-rose" : "after:border-t-soft-blush"
       },
       positionStyle: specialBubblePositions[index].position,
       tailPosition: specialBubblePositions[index].tail,

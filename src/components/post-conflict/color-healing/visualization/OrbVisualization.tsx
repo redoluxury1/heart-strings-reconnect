@@ -22,8 +22,8 @@ const OrbVisualization: React.FC<OrbVisualizationProps> = ({
     }
   };
   
-  // Use the provided color or default to mauve if not provided
-  const enhancedColor = selectedColor || '#8a6f8e'; // Default to mauve if no color provided
+  // Enhance color brightness by adding 20% opacity to the original color
+  const enhancedColor = selectedColor;
   
   return (
     <div className="h-72 w-full flex items-center justify-center">
