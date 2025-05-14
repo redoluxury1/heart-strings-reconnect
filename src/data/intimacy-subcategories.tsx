@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Heart, ArrowRightLeft, HandHeart, Flame, Star } from 'lucide-react';
+import { Heart, ArrowRightLeft, HandHeart, Flame, MessageSquareOff, HeartOff } from 'lucide-react';
 
 export interface IntimacyPrompt {
   text: string;
@@ -21,8 +21,8 @@ export const SUBCATEGORY_DATA: SubcategoryData[] = [
     id: 'initiation-imbalance',
     name: 'Initiation Imbalance',
     icon: <ArrowRightLeft className="h-12 w-12" />,
-    color: 'text-[#9b87f5]',
-    bgColor: 'bg-[#9b87f5]/10',
+    color: 'text-peachy-terracotta',
+    bgColor: 'bg-peachy-terracotta/10',
     prompts: [
       { text: "Do you ever feel like one of us wants it more than the other?", type: 'open-ended' },
       { text: "What makes it easier—or harder—to initiate closeness?", type: 'open-ended' },
@@ -35,8 +35,8 @@ export const SUBCATEGORY_DATA: SubcategoryData[] = [
     id: 'affection-outside-of-sex',
     name: 'Physical Affection Outside of Sex',
     icon: <HandHeart className="h-12 w-12" />,
-    color: 'text-[#7E69AB]',
-    bgColor: 'bg-[#7E69AB]/10',
+    color: 'text-lavender-blue',
+    bgColor: 'bg-lavender-blue/10',
     prompts: [
       { text: "What kind of non-sexual touch helps you feel close to me?", type: 'open-ended' },
       { text: "Do you ever feel like affection is tied to expectations?", type: 'open-ended' },
@@ -48,9 +48,9 @@ export const SUBCATEGORY_DATA: SubcategoryData[] = [
   {
     id: 'emotional-disconnect',
     name: 'Emotional Disconnect',
-    icon: <Heart className="h-12 w-12" />,
-    color: 'text-[#6E59A5]',
-    bgColor: 'bg-[#6E59A5]/10',
+    icon: <MessageSquareOff className="h-12 w-12" />,
+    color: 'text-mauve-rose',
+    bgColor: 'bg-mauve-rose/10',
     prompts: [
       { text: "When do you feel most emotionally close to me?", type: 'open-ended' },
       { text: "What do you need more of from me to feel connected?", type: 'open-ended' },
@@ -63,8 +63,8 @@ export const SUBCATEGORY_DATA: SubcategoryData[] = [
     id: 'mismatched-desire',
     name: 'Mismatched Desire',
     icon: <Flame className="h-12 w-12" />,
-    color: 'text-[#D6BCFA]',
-    bgColor: 'bg-[#D6BCFA]/10',
+    color: 'text-sage',
+    bgColor: 'bg-sage/10',
     prompts: [
       { text: "What's one thing you wish I understood about your desire?", type: 'open-ended' },
       { text: "How do we tend to handle it when we're not on the same page sexually?", type: 'open-ended' },
@@ -76,9 +76,9 @@ export const SUBCATEGORY_DATA: SubcategoryData[] = [
   {
     id: 'feeling-unwanted',
     name: 'Feeling Undesired or Unwanted',
-    icon: <Star className="h-12 w-12" />,
-    color: 'text-[#8B5CF6]',
-    bgColor: 'bg-[#8B5CF6]/10',
+    icon: <HeartOff className="h-12 w-12" />,
+    color: 'text-golden-mustard',
+    bgColor: 'bg-golden-mustard/10',
     prompts: [
       { text: "When do you feel most wanted or desired by me?", type: 'open-ended' },
       { text: "What makes you feel emotionally or physically rejected?", type: 'open-ended' },
