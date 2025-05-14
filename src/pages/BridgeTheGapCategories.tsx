@@ -17,6 +17,7 @@ interface Category {
   icon: React.ReactNode;
   color: string;
   bgColor: string;
+  isWide?: boolean;
 }
 
 const BridgeTheGapCategories: React.FC = () => {
@@ -37,13 +38,6 @@ const BridgeTheGapCategories: React.FC = () => {
       icon: <Heart className="h-12 w-12" />,
       color: 'text-mauve-rose',
       bgColor: 'bg-mauve-rose/10'
-    },
-    {
-      id: 'communication',
-      name: 'Communication',
-      icon: <MessageSquare className="h-12 w-12" />,
-      color: 'text-midnight-indigo',
-      bgColor: 'bg-midnight-indigo/10'
     },
     {
       id: 'household-duties',
@@ -86,6 +80,14 @@ const BridgeTheGapCategories: React.FC = () => {
       icon: <User className="h-12 w-12" />,
       color: 'text-lavender-blue',
       bgColor: 'bg-lavender-blue/10'
+    },
+    {
+      id: 'communication',
+      name: 'Communication',
+      icon: <MessageSquare className="h-12 w-12" />,
+      color: 'text-midnight-indigo',
+      bgColor: 'bg-midnight-indigo/10',
+      isWide: true // This item will be wider on mobile
     }
   ];
 
@@ -109,11 +111,13 @@ const BridgeTheGapCategories: React.FC = () => {
               </h2>
             </div>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
               {categories.map((category) => (
                 <button
                   key={category.id}
-                  className="flex flex-col items-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 border border-gray-100"
+                  className={`flex flex-col items-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 border border-gray-100 ${
+                    category.isWide ? 'col-span-2 md:col-span-1' : ''
+                  }`}
                   onClick={() => handleCategoryClick(category.id)}
                 >
                   <div className={`flex items-center justify-center rounded-full p-4 ${category.bgColor} ${category.color} mb-3`}>
