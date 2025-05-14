@@ -1,16 +1,18 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import ColorHealingMethod from '@/components/post-conflict/color-healing/ColorHealingMethod';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const MidFightColorHealing: React.FC = () => {
   const [showColorHealing, setShowColorHealing] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   
   // Preload the image when component mounts
-  React.useEffect(() => {
+  useEffect(() => {
     const img = new Image();
-    img.src = "/lovable-uploads/bfee4335-5a61-4d5c-bdc2-cda58c3beb29.png";
+    img.src = "/lovable-uploads/c8f75296-51f7-4d50-84f0-68f55b65e7bc.png";
     img.onload = () => setImageLoaded(true);
     
     return () => {
@@ -30,22 +32,22 @@ const MidFightColorHealing: React.FC = () => {
         <div className="max-w-2xl mx-auto text-center">
           {/* Title using the serif font and warm brown color */}
           <h2 className="font-cormorant text-5xl md:text-6xl lg:text-7xl mb-4 text-[#7D5248] leading-tight">
-            Take a Breath
+            Sometimes,<br />it still hurts.
           </h2>
           
           {/* Subtitle text */}
           <p className="text-[#7D5248] text-xl md:text-2xl mb-8 max-w-lg mx-auto">
-            Find calm in the midst of strong emotions
+            Find calm when forgiveness doesn't erase the pain.
           </p>
           
-          {/* New illustration of the couple */}
+          {/* Image of person with emotions */}
           <div className="mb-8 flex justify-center">
             {!imageLoaded && (
-              <div className="w-full max-w-md h-64 bg-gray-100 animate-pulse rounded-lg" />
+              <Skeleton className="w-full max-w-md h-64" />
             )}
             <img 
-              src="/lovable-uploads/bfee4335-5a61-4d5c-bdc2-cda58c3beb29.png" 
-              alt="Person with closed eyes in a peaceful state"
+              src="/lovable-uploads/c8f75296-51f7-4d50-84f0-68f55b65e7bc.png" 
+              alt="Person crying with partner comforting them"
               className={`w-full max-w-md h-auto ${!imageLoaded ? 'opacity-0' : 'opacity-100'} transition-opacity duration-300`} 
               onLoad={() => setImageLoaded(true)}
               loading="eager"
@@ -53,17 +55,17 @@ const MidFightColorHealing: React.FC = () => {
             />
           </div>
           
-          {/* Button to start the color healing flow */}
-          <button 
+          {/* Smaller button to start the color healing flow */}
+          <Button 
             onClick={() => setShowColorHealing(true)}
-            className="bg-[#7D5248] hover:bg-[#6a443b] text-white rounded-full px-8 py-6 text-lg"
+            className="bg-[#7D5248] hover:bg-[#6a443b] text-white rounded-full px-4 py-2 text-sm"
           >
             Try Color Healing Method
-          </button>
+          </Button>
           
           {/* Descriptive text about the color healing method */}
-          <p className="text-[#7D5248] opacity-80 mt-4 text-sm max-w-sm mx-auto">
-            A calming breathwork and visualization tool to release emotional tension during conflict.
+          <p className="text-[#7D5248] opacity-80 mt-4 text-xs max-w-sm mx-auto">
+            A calming breathwork and visualization tool to release lingering emotional tension.
           </p>
         </div>
       </div>
