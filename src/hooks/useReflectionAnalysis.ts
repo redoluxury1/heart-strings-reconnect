@@ -4,8 +4,8 @@ import { reflectionPacks } from '@/data/reflection-insights';
 import { ReflectionInsight } from '@/types/reflection-insights';
 import { SessionData } from '@/components/post-conflict/context/SessionContext';
 
-// Maximum number of reflections to return
-const MAX_REFLECTIONS = 3;
+// Maximum number of reflections to return - changed from 3 to 2
+const MAX_REFLECTIONS = 2;
 
 export const useReflectionAnalysis = (sessionData: SessionData) => {
   const [matchedReflections, setMatchedReflections] = useState<ReflectionInsight[]>([]);
@@ -99,7 +99,7 @@ export const useReflectionAnalysis = (sessionData: SessionData) => {
     // Sort matches by priority (highest to lowest)
     matches.sort((a, b) => b.priority - a.priority || b.matchCount - a.matchCount);
 
-    // Take only the top matches (up to MAX_REFLECTIONS)
+    // Take only the top matches (up to MAX_REFLECTIONS, now 2 instead of 3)
     const topMatches = matches.slice(0, MAX_REFLECTIONS).map(match => match.reflection);
     
     console.log('Top matches:', topMatches);

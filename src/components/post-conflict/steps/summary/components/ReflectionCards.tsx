@@ -17,7 +17,7 @@ const ReflectionCards: React.FC<ReflectionCardsProps> = ({ reflections }) => {
     <Card key={index} className="mb-4 bg-[#F8F5F3] border-[#D9B9AF] hover:shadow-md transition-all">
       <CardHeader className="pb-2">
         <CardTitle className="text-lg text-[#2C2C2C]">{reflection.insight}</CardTitle>
-        <CardDescription className="text-[#65595D] italic">Therapist Insight</CardDescription>
+        <CardDescription className="text-[#65595D] italic">Unbiased Insight</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-[#3A3A3A] leading-relaxed">{reflection.reflection}</p>
