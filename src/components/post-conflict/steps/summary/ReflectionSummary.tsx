@@ -7,11 +7,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { useSession } from '@/components/post-conflict/context/SessionContext';
 import { Badge } from '@/components/ui/badge';
+import { useReflectionAnalysis } from '@/hooks/useReflectionAnalysis';
 
 const ReflectionSummary: React.FC = () => {
   const navigate = useNavigate();
   const { sessionData } = useSession();
   const [activeTab, setActiveTab] = useState<string>("side-by-side");
+  const { matchedReflections } = useReflectionAnalysis(sessionData);
   
   // Extract the relevant data for display
   const partner1 = {
@@ -93,6 +95,23 @@ const ReflectionSummary: React.FC = () => {
       </div>
     );
   };
+
+  // Render a reflection card
+  const renderReflectionCard = (reflection: any) => (
+    <Card className="mb-4 bg-[#F8F5F3] border-[#D9B9AF]">
+      <CardHeader className="pb-2">
+        <CardTitle className="text-lg text-[#2C2C2C]">{reflection.insight}</CardTitle>
+        <CardDescription className="text-[#65595D] italic">Relationship Insight</CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <p className="text-[#3A3A3A] leading-relaxed">{reflection.reflection}</p>
+        <div className="pt-2 border-t border-[#E8DAD3]">
+          <h4 className="font-medium text-[#2C2C2C] mb-1">Try this:</h4>
+          <p className="text-[#3A3A3A]">{reflection.recommendation}</p>
+        </div>
+      </CardContent>
+    </Card>
+  );
   
   return (
     <div className="bg-[#FDFBF9] rounded-xl border border-[#E8DAD3] shadow-sm p-6 max-w-4xl mx-auto">
@@ -267,7 +286,7 @@ const ReflectionSummary: React.FC = () => {
         </div>
         
         {/* Shared Insight Section */}
-        <Card className="w-full mb-8 bg-[#F8F5F3] border-[#D9B9AF]">
+        <Card className="w-full mb-6 bg-[#F8F5F3] border-[#D9B9AF]">
           <CardHeader className="pb-2">
             <CardTitle className="text-lg text-[#2C2C2C]">Shared Insight</CardTitle>
           </CardHeader>
@@ -275,6 +294,16 @@ const ReflectionSummary: React.FC = () => {
             <p className="text-[#3A3A3A]">{sharedInsight}</p>
           </CardContent>
         </Card>
+        
+        {/* Therapist Reflection Cards - NEW SECTION */}
+        {matchedReflections.length > 0 && (
+          <div className="w-full mb-8">
+            <h3 className="font-medium text-[#2C2C2C] mb-4">Relationship Insights</h3>
+            {matchedReflections.map((reflection, index) => (
+              renderReflectionCard(reflection)
+            ))}
+          </div>
+        )}
         
         {/* CTA Section */}
         <div className="w-full">
