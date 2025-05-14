@@ -1,11 +1,21 @@
 
 import React from 'react';
-import { SubcategoryData } from '@/data/parenting-subcategories';
 import SubcategoryCard from './SubcategoryCard';
 import ContentContainer from '@/components/common/ContentContainer';
+import { ReactNode } from 'react';
+
+// Generic interface that can work with all our subcategory types
+export interface GenericSubcategoryData {
+  id: string;
+  name: string;
+  icon: ReactNode;
+  color: string;
+  bgColor: string;
+  prompts?: any; // Make prompts optional and accept any type
+}
 
 interface SubcategoriesGridProps {
-  subcategories: SubcategoryData[];
+  subcategories: GenericSubcategoryData[];
   onSubcategoryClick: (subcategoryId: string) => void;
 }
 
