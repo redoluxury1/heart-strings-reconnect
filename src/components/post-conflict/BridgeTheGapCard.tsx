@@ -1,0 +1,32 @@
+
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import { ArrowRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+
+const BridgeTheGapCard: React.FC = () => {
+  const navigate = useNavigate();
+
+  return (
+    <div className="bg-[#162137] rounded-xl shadow-md p-6 md:p-8 text-center">
+      <div className="max-w-2xl mx-auto">
+        <h2 className="text-4xl md:text-5xl font-cormorant font-medium text-[#F9F5EF] mb-4">
+          Bridge the Gap
+        </h2>
+        
+        <p className="text-[#F9F5EF] text-lg mb-8">
+          Guided prompts to help you understand each other better—even when things feel stuck.
+        </p>
+        
+        <Button 
+          className="bg-[#C2635C] hover:bg-[#C2635C]/90 text-white font-medium px-6 py-5 text-lg rounded-md shadow-sm flex items-center gap-2"
+          onClick={() => navigate('/bridge-the-gap/categories')}
+        >
+          Try 'Bridge the Gap' <ArrowRight className="h-5 w-5" />
+        </Button>
+      </div>
+    </div>
+  );
+};
+
+export default BridgeTheGapCard;

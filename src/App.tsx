@@ -52,6 +52,7 @@ const App = () => (
             <Route path="/archive" element={<Archive />} />
             <Route path="/games" element={<Games />} />
             <Route path="/invite" element={<PartnerInvite />} />
+            <Route path="/bridge-the-gap/*" element={<NotFound />} /> {/* Temporary placeholder */}
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

@@ -7,6 +7,7 @@ import PhraseRewind from '@/components/post-conflict/PhraseRewind';
 import FloatingTextBubbles from '@/components/post-conflict/FloatingTextBubbles';
 import OkayButNowWhat from '@/components/post-conflict/OkayButNowWhat';
 import LetsWorkThisOut from '@/components/post-conflict/lets-work-this-out/LetsWorkThisOut';
+import BridgeTheGapCard from '@/components/post-conflict/BridgeTheGapCard';
 import { SessionProvider, useSession } from '@/components/post-conflict/context/SessionContext';
 
 // Wrapper to access session context
@@ -47,6 +48,11 @@ const PostConflictContent = () => {
             {showOtherComponents && (
               <div className="space-y-32">
                 <OkayButNowWhat />
+                
+                {/* New Bridge the Gap card with spacing */}
+                <div className="mt-10 md:mt-12">
+                  <BridgeTheGapCard />
+                </div>
               </div>
             )}
           </div>
