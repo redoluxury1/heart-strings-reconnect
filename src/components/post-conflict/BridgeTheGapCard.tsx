@@ -22,7 +22,7 @@ const BridgeTheGapCard: React.FC = () => {
           className="bg-[#C2635C] hover:bg-[#C2635C]/90 text-white font-medium px-6 py-5 text-lg rounded-md shadow-sm flex items-center gap-2"
           onClick={() => navigate('/bridge-the-gap/categories')}
         >
-          Try 'Bridge the Gap' <ArrowRight className="h-5 w-5" />
+          Try Bridge the Gap <ArrowRight className="h-5 w-5" />
         </Button>
       </div>
     </div>
