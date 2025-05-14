@@ -24,7 +24,13 @@ const InLawsSubcategories: React.FC = () => {
           <InLawsSubcategoriesHeader />
           
           <SubcategoriesGrid 
-            subcategories={inLawsSubcategories} 
+            subcategories={inLawsSubcategories.map(sub => ({
+              id: sub.id,
+              name: sub.name,
+              icon: sub.icon,
+              color: sub.color,
+              bgColor: sub.bgColor
+            }))} 
             onSubcategoryClick={handleSubcategoryClick}
           />
         </BrandSection>

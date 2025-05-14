@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import ContentContainer from '@/components/common/ContentContainer';
@@ -81,7 +81,7 @@ const InLawsSubcategoryDetails: React.FC = () => {
                 </h2>
                 
                 <DiscussionPromptCard
-                  prompt={currentOpenEndedPrompt}
+                  prompts={[currentOpenEndedPrompt]}
                   currentIndex={currentPromptIndex}
                   totalCount={openEndedPrompts.length}
                   onNext={goToNextPrompt}
@@ -98,7 +98,7 @@ const InLawsSubcategoryDetails: React.FC = () => {
                 </h2>
                 
                 {yesNoSometimesPrompts.map((prompt, index) => (
-                  <MultiChoicePromptCard key={index} prompt={prompt} />
+                  <MultiChoicePromptCard key={index} prompts={[prompt]} />
                 ))}
               </div>
             </div>

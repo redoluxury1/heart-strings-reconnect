@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Users, Shield, Family, Clock, Balance } from 'lucide-react';
+import { Users, Shield, Home, Clock, Scale } from 'lucide-react';
 
 export interface InLawsSubcategoryData {
   id: string;
@@ -54,7 +54,7 @@ export const inLawsSubcategories: InLawsSubcategoryData[] = [
   {
     id: 'grandparent-boundaries',
     name: 'Grandparent Boundaries',
-    icon: <Family className="h-8 w-8" />,
+    icon: <Home className="h-8 w-8" />,
     color: 'text-[#7E69AB]',
     bgColor: 'bg-[#7E69AB]/10',
     prompts: {
@@ -90,7 +90,7 @@ export const inLawsSubcategories: InLawsSubcategoryData[] = [
   {
     id: 'undermining-relationship',
     name: 'In-Laws Undermining the Relationship',
-    icon: <Balance className="h-8 w-8" />,
+    icon: <Scale className="h-8 w-8" />,
     color: 'text-[#D6BCFA]',
     bgColor: 'bg-[#D6BCFA]/20',
     prompts: {
