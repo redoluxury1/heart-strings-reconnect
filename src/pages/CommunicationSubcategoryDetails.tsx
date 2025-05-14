@@ -19,12 +19,6 @@ const CommunicationSubcategoryDetails: React.FC = () => {
     subcategory,
     openEndedPrompts,
     yesNoSometimesPrompts,
-    currentPromptIndex,
-    currentOpenEndedPrompt,
-    goToNextPrompt,
-    goToPrevPrompt,
-    hasNextPrompt,
-    hasPrevPrompt
   } = useCommunicationPrompts(subcategoryId || '');
   
   // Track responses and sent state for each prompt
@@ -33,23 +27,19 @@ const CommunicationSubcategoryDetails: React.FC = () => {
   const [selectedValues, setSelectedValues] = useState<Record<string, string>>({});
   
   // Handle text response changes
-  const handleResponseChange = (text: string) => {
-    if (currentOpenEndedPrompt) {
-      setResponses(prev => ({
-        ...prev,
-        [currentOpenEndedPrompt]: text
-      }));
-    }
+  const handleResponseChange = (promptId: string, text: string) => {
+    setResponses(prev => ({
+      ...prev,
+      [promptId]: text
+    }));
   };
   
   // Handle sending a response
-  const handleSendResponse = () => {
-    if (currentOpenEndedPrompt) {
-      setSentStates(prev => ({
-        ...prev,
-        [currentOpenEndedPrompt]: true
-      }));
-    }
+  const handleSendResponse = (promptId: string) => {
+    setSentStates(prev => ({
+      ...prev,
+      [promptId]: true
+    }));
   };
   
   // Handle selection for yes/no/sometimes questions
@@ -107,39 +97,22 @@ const CommunicationSubcategoryDetails: React.FC = () => {
             </div>
             
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
-              {/* Open-ended discussion prompts */}
+              {/* Open-ended discussion prompts - now stacked instead of carousel */}
               <div className="space-y-6">
                 <h2 className="font-cormorant text-2xl font-medium text-midnight-indigo mb-4">
                   Discussion Prompts
                 </h2>
                 
-                <DiscussionPromptCard
-                  text={currentOpenEndedPrompt}
-                  response={responses[currentOpenEndedPrompt] || ''}
-                  sent={sentStates[currentOpenEndedPrompt] || false}
-                  onChange={handleResponseChange}
-                  onSend={handleSendResponse}
-                />
-                
-                <div className="flex justify-between">
-                  <Button 
-                    variant="outline"
-                    className="text-midnight-indigo border-midnight-indigo"
-                    onClick={goToPrevPrompt}
-                    disabled={!hasPrevPrompt}
-                  >
-                    Previous Prompt
-                  </Button>
-                  
-                  <Button 
-                    variant="outline"
-                    className="text-midnight-indigo border-midnight-indigo"
-                    onClick={goToNextPrompt}
-                    disabled={!hasNextPrompt}
-                  >
-                    Next Prompt
-                  </Button>
-                </div>
+                {openEndedPrompts.map((prompt, index) => (
+                  <DiscussionPromptCard
+                    key={index}
+                    text={prompt}
+                    response={responses[prompt] || ''}
+                    sent={sentStates[prompt] || false}
+                    onChange={(text) => handleResponseChange(prompt, text)}
+                    onSend={() => handleSendResponse(prompt)}
+                  />
+                ))}
               </div>
               
               {/* Yes/No/Sometimes prompts */}
