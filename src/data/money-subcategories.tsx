@@ -37,7 +37,7 @@ export const SUBCATEGORY_DATA: SubcategoryData[] = [
         type: 'open-ended'
       },
       {
-        text: 'Do we trust each other's judgment when it comes to spending?',
+        text: 'Do we trust each other\'s judgment when it comes to spending?',
         type: 'yes-no'
       },
       {
@@ -112,7 +112,7 @@ export const SUBCATEGORY_DATA: SubcategoryData[] = [
     bgColor: 'bg-mauve-rose/10',
     prompts: [
       {
-        text: 'What's your biggest fear when it comes to our financial future?',
+        text: 'What\'s your biggest fear when it comes to our financial future?',
         type: 'open-ended'
       },
       {
@@ -128,7 +128,7 @@ export const SUBCATEGORY_DATA: SubcategoryData[] = [
         type: 'yes-no'
       },
       {
-        text: 'Do you feel like we're tackling financial stress as a team?',
+        text: 'Do you feel like we\'re tackling financial stress as a team?',
         type: 'yes-no'
       }
     ]
@@ -149,11 +149,11 @@ export const SUBCATEGORY_DATA: SubcategoryData[] = [
         type: 'open-ended'
       },
       {
-        text: 'How can we rebuild financial trust if it's been broken?',
+        text: 'How can we rebuild financial trust if it\'s been broken?',
         type: 'open-ended'
       },
       {
-        text: 'Do you feel like we're fully honest with each other about money?',
+        text: 'Do you feel like we\'re fully honest with each other about money?',
         type: 'yes-no'
       },
       {
