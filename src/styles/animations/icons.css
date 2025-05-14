@@ -1,120 +1,31 @@
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-        opacity: 0.8;
-    }
-    50% {
-        transform: scale(1.1);
-        opacity: 1;
-    }
-    100% {
-        transform: scale(1);
-        opacity: 0.8;
-    }
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
 }
 
 .animate-pulse-slow {
-    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  animation: pulse-slow 2s ease-in-out infinite;
 }
 
-@keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {
-        transform: translateY(0);
-    }
-    40% {
-        transform: translateY(-10px);
-    }
-    60% {
-        transform: translateY(-5px);
-    }
-}
-
-.animate-bounce-slow {
-    animation: bounce 3s infinite;
-}
-
-@keyframes spin {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-.animate-spin-slow {
-    animation: spin 3s linear infinite;
-}
-
-@keyframes pulse-heart {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.1);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-.animate-pulse-heart {
-  animation: pulse-heart 2s ease-in-out infinite;
-}
-
-@keyframes rotateCompass {
+@keyframes rotate-compass {
   0% {
     transform: rotate(0deg);
   }
-  100% {
-    transform: rotate(360deg);
+  25% {
+    transform: rotate(15deg);
   }
-}
-
-.animate-rotate-compass {
-  animation: rotateCompass 1s ease-in-out;
-}
-
-/* Add pulse animation for the message icon */
-@keyframes gentle-pulse {
-  0% {
-    opacity: 0.8;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.05);
+  75% {
+    transform: rotate(-15deg);
   }
   100% {
-    opacity: 0.8;
-    transform: scale(1);
+    transform: rotate(0deg);
   }
-}
-
-.animate-pulse {
-  animation: gentle-pulse 2s ease-in-out infinite;
-}
-
-/* Add rotate compass animation */
-@keyframes rotate-compass {
-  0% { transform: rotate(0deg); }
-  25% { transform: rotate(90deg); }
-  50% { transform: rotate(180deg); }
-  75% { transform: rotate(270deg); }
-  100% { transform: rotate(360deg); }
 }
 
 .animate-rotate-compass {
   animation: rotate-compass 2s ease-in-out;
-}
-
-/* Add a subtle sparkle animation */
-@keyframes sparkle {
-  0% { opacity: 0.4; transform: scale(0.8); }
-  50% { opacity: 1; transform: scale(1.1); }
-  100% { opacity: 0.4; transform: scale(0.8); }
-}
-
-.animate-sparkle {
-  animation: sparkle 1.5s infinite ease-in-out;
 }

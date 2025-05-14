@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Compass } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -8,6 +9,7 @@ import WhereIsYourHeadAt from '@/components/post-conflict/steps/emotional-check-
 import YourPerspective from '@/components/post-conflict/steps/perspective/YourPerspective';
 import WishPartnerUnderstood from '@/components/post-conflict/steps/partner-understanding/WishPartnerUnderstood';
 import WhatDoYouNeed from '@/components/post-conflict/steps/needs/WhatDoYouNeed';
+import PartnerWaitingState from '@/components/post-conflict/steps/final/PartnerWaitingState';
 import { useSession } from '@/components/post-conflict/context/SessionContext';
 
 interface LetsWorkThisOutProps {
@@ -24,7 +26,7 @@ const LetsWorkThisOut: React.FC<LetsWorkThisOutProps> = ({
   const { toast } = useToast();
   const navigate = useNavigate();
   const [isAnimating, setIsAnimating] = useState(true);
-  const { currentStep, setCurrentStep } = useSession();
+  const { currentStep, setCurrentStep, sessionData, handleResponse } = useSession();
   const [flow, setFlow] = useState<'intro' | 'set-tone'>('intro');
   const [selectedIntent, setSelectedIntent] = useState<string>('');
   const [userPerspective, setUserPerspective] = useState<string>('');
@@ -35,6 +37,10 @@ const LetsWorkThisOut: React.FC<LetsWorkThisOutProps> = ({
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [currentStep]);
+  
+  // Check if both partners have completed their responses
+  const bothPartnersReady = sessionData.partner1.ready && sessionData.partner2.ready;
+  const userCompleted = sessionData.partner1.ready && !sessionData.partner2.ready;
   
   const handleReadyClick = () => {
     setFlow('set-tone');
@@ -96,11 +102,21 @@ const LetsWorkThisOut: React.FC<LetsWorkThisOutProps> = ({
   
   const handleNeedsComplete = (needs: string) => {
     setUserNeeds(needs);
+    
+    // Mark user as completed
+    handleResponse('partner1', 'complete', {
+      perspective: userPerspective,
+      understanding: userUnderstanding,
+      needs: needs,
+      intent: selectedIntent
+    });
+    
     toast({
-      title: "Needs saved",
+      title: "Responses saved",
       description: "Thank you for sharing what you need to move forward.",
     });
-    setCurrentStep(6); // Move to the next step after needs (to be implemented)
+    
+    setCurrentStep(6); // Move to the partner waiting state
   };
   
   // Show the appropriate content based on current step
@@ -167,6 +183,9 @@ const LetsWorkThisOut: React.FC<LetsWorkThisOutProps> = ({
       
       case 5: // What do you need to move forward
         return <WhatDoYouNeed onComplete={handleNeedsComplete} />;
+        
+      case 6: // Partner waiting state
+        return <PartnerWaitingState />;
         
       default:
         return <div>Loading...</div>;

@@ -12,10 +12,17 @@ import { SessionProvider, useSession } from '@/components/post-conflict/context/
 
 // Wrapper to access session context
 const PostConflictContent = () => {
-  const { currentStep } = useSession();
+  const { currentStep, sessionData } = useSession();
   
   // Only show bubbles and intro text on step 0 (ready check)
   const showIntro = currentStep === 0;
+
+  // Check if user has completed the flow
+  const userCompleted = sessionData.partner1.ready;
+  const bothPartnersReady = sessionData.partner1.ready && sessionData.partner2.ready;
+  
+  // Only show other components if the user has not started or completed the flow
+  const showOtherComponents = !userCompleted || bothPartnersReady;
   
   return (
     <div className="min-h-screen bg-slate-50">
@@ -37,19 +44,23 @@ const PostConflictContent = () => {
               <LetsWorkThisOut />
             </div>
             
-            <div className="space-y-32">
-              <OkayButNowWhat />
-              
-              <SometimesItStillHurts />
-            </div>
+            {/* Only show these components if user hasn't completed the flow or both partners are ready */}
+            {showOtherComponents && (
+              <div className="space-y-32">
+                <OkayButNowWhat />
+                <SometimesItStillHurts />
+              </div>
+            )}
           </div>
         </ContentContainer>
         
-        <ContentContainer maxWidth="lg">
-          <div className="max-w-3xl mx-auto mt-32">
-            <PhraseRewind />
-          </div>
-        </ContentContainer>
+        {showOtherComponents && (
+          <ContentContainer maxWidth="lg">
+            <div className="max-w-3xl mx-auto mt-32">
+              <PhraseRewind />
+            </div>
+          </ContentContainer>
+        )}
       </main>
       
       <Footer showCTA={false} />
