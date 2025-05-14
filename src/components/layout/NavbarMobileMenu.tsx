@@ -7,9 +7,10 @@ import { cn } from "@/lib/utils";
 interface NavbarMobileMenuProps {
   isOpen: boolean;
   onClose: () => void;
+  navRef?: React.RefObject<HTMLDivElement>;
 }
 
-const NavbarMobileMenu: React.FC<NavbarMobileMenuProps> = ({ isOpen, onClose }) => {
+const NavbarMobileMenu: React.FC<NavbarMobileMenuProps> = ({ isOpen, onClose, navRef }) => {
   if (!isOpen) return null;
 
   const getNavLinkClassName = ({ isActive }: { isActive: boolean }) => cn(
@@ -18,7 +19,7 @@ const NavbarMobileMenu: React.FC<NavbarMobileMenuProps> = ({ isOpen, onClose }) 
   );
 
   return (
-    <div className="fixed inset-0 z-50 bg-white">
+    <div ref={navRef} className="fixed inset-0 z-50 bg-white">
       <div className="flex justify-end p-4">
         <button 
           onClick={onClose} 
