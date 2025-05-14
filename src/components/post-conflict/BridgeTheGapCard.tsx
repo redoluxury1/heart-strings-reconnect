@@ -8,13 +8,13 @@ const BridgeTheGapCard: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="bg-[#162137] rounded-xl shadow-md p-6 md:p-8 text-center">
-      <div className="max-w-2xl mx-auto">
-        <h2 className="text-4xl md:text-5xl font-cormorant font-medium text-[#F9F5EF] mb-4">
+    <div className="bg-[#162137] rounded-xl shadow-md p-6 md:p-8 text-center border-2 border-soft-cream">
+      <div className="max-w-md mx-auto py-4">
+        <h2 className="text-4xl md:text-5xl font-cormorant font-medium text-[#F9F5EF] mb-6">
           Bridge the Gap
         </h2>
         
-        <p className="text-[#F9F5EF] text-lg mb-8">
+        <p className="text-[#F9F5EF] text-lg mb-10">
           Guided prompts to help you understand each other better—even when things feel stuck.
         </p>
         
