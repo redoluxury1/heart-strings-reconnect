@@ -13,12 +13,16 @@ const OkayButNowWhat = () => {
   const [showFlagTool, setShowFlagTool] = useState(false);
   
   const handlePatternToolToggle = () => {
+    // Save the current scroll position
+    const currentScrollPos = window.scrollY;
+    
     setShowPatternTool(!showPatternTool);
     setShowFlagTool(false);
-    // When opening pattern tool, scroll to top to ensure full view
-    if (!showPatternTool) {
-      window.scrollTo(0, 0);
-    }
+    
+    // Use setTimeout to allow the component to render before restoring the scroll position
+    setTimeout(() => {
+      window.scrollTo(0, currentScrollPos);
+    }, 0);
   };
   
   const handleFlagToolToggle = () => {
@@ -31,7 +35,12 @@ const OkayButNowWhat = () => {
     return (
       <PatternRecognitionFlow 
         fullScreen={true} 
-        onClose={() => setShowPatternTool(false)} 
+        onClose={() => {
+          const currentScrollPos = window.scrollY;
+          setShowPatternTool(false);
+          // Restore scroll position after closing
+          setTimeout(() => window.scrollTo(0, currentScrollPos), 0);
+        }} 
       />
     );
   }

@@ -21,6 +21,12 @@ const PatternIntroScreen: React.FC<PatternIntroScreenProps> = ({ onContinue }) =
     };
   }, []);
 
+  const handleContinueClick = (e: React.MouseEvent) => {
+    // Prevent default behavior to avoid page jumps
+    e.preventDefault();
+    onContinue();
+  };
+
   return (
     <div className="flex flex-col items-center justify-center text-center max-w-3xl mx-auto py-4">
       <h2 className="text-5xl font-cormorant font-medium text-[#14213d] mb-6 tracking-tight">
@@ -47,7 +53,7 @@ const PatternIntroScreen: React.FC<PatternIntroScreenProps> = ({ onContinue }) =
       </div>
       
       <Button
-        onClick={onContinue}
+        onClick={handleContinueClick}
         className="bg-[#14213d] hover:bg-[#14213d]/90 text-white font-medium py-2 px-5 rounded-full text-sm"
       >
         Start Recognizing the Pattern

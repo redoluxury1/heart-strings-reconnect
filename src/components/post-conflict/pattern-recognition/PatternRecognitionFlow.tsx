@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
@@ -23,33 +23,47 @@ const PatternRecognitionFlow: React.FC<PatternRecognitionFlowProps> = ({ fullScr
   const { toast } = useToast();
   const navigate = useNavigate();
   
+  // Prevent scrolling to top when changing steps
+  const handleStepChange = (step: 'intro' | 'list' | 'detail' | 'repair') => {
+    // Save current scroll position
+    const currentScrollPos = window.scrollY;
+    
+    // Update the step
+    setCurrentStep(step);
+    
+    // Use setTimeout to allow the component to render before scrolling
+    setTimeout(() => {
+      window.scrollTo(0, currentScrollPos);
+    }, 0);
+  };
+  
   const handlePatternSelect = (pattern: CommonPattern) => {
     setSelectedPattern(pattern);
-    setCurrentStep('detail');
+    handleStepChange('detail');
   };
   
   const handleGoToRepair = () => {
     if (selectedPattern) {
-      setCurrentStep('repair');
+      handleStepChange('repair');
     }
   };
   
   const handleBackToList = () => {
-    setCurrentStep('list');
+    handleStepChange('list');
     setSelectedPattern(null);
   };
   
   const handleBackToDetail = () => {
-    setCurrentStep('detail');
+    handleStepChange('detail');
   };
   
   const handleStartOver = () => {
-    setCurrentStep('intro');
+    handleStepChange('intro');
     setSelectedPattern(null);
   };
   
   const handleGoToPatternList = () => {
-    setCurrentStep('list');
+    handleStepChange('list');
   };
 
   const handleClose = () => {
