@@ -20,7 +20,7 @@ export const SUBCATEGORY_DATA: SubcategoryData[] = [
   {
     id: 'initiation-imbalance',
     name: 'Initiation Imbalance',
-    icon: <ArrowRightLeft className="h-12 w-12" />,
+    icon: <ArrowRightLeft className="h-10 w-10" />,
     color: 'text-peachy-terracotta',
     bgColor: 'bg-peachy-terracotta/10',
     prompts: [
@@ -32,23 +32,9 @@ export const SUBCATEGORY_DATA: SubcategoryData[] = [
     ]
   },
   {
-    id: 'affection-outside-of-sex',
-    name: 'Physical Affection Outside of Sex',
-    icon: <HandHeart className="h-12 w-12" />,
-    color: 'text-lavender-blue',
-    bgColor: 'bg-lavender-blue/10',
-    prompts: [
-      { text: "What kind of non-sexual touch helps you feel close to me?", type: 'open-ended' },
-      { text: "Do you ever feel like affection is tied to expectations?", type: 'open-ended' },
-      { text: "How can we add more small moments of warmth throughout the day?", type: 'open-ended' },
-      { text: "Do you feel like we're physically close outside the bedroom?", type: 'yes-no' },
-      { text: "Do you think we show each other love in everyday ways?", type: 'yes-no' }
-    ]
-  },
-  {
     id: 'emotional-disconnect',
     name: 'Emotional Disconnect',
-    icon: <MessageSquareOff className="h-12 w-12" />,
+    icon: <MessageSquareOff className="h-10 w-10" />,
     color: 'text-mauve-rose',
     bgColor: 'bg-mauve-rose/10',
     prompts: [
@@ -60,9 +46,23 @@ export const SUBCATEGORY_DATA: SubcategoryData[] = [
     ]
   },
   {
+    id: 'affection-outside-of-sex',
+    name: 'Physical Affection Outside of Sex',
+    icon: <HandHeart className="h-10 w-10" />,
+    color: 'text-lavender-blue',
+    bgColor: 'bg-lavender-blue/10',
+    prompts: [
+      { text: "What kind of non-sexual touch helps you feel close to me?", type: 'open-ended' },
+      { text: "Do you ever feel like affection is tied to expectations?", type: 'open-ended' },
+      { text: "How can we add more small moments of warmth throughout the day?", type: 'open-ended' },
+      { text: "Do you feel like we're physically close outside the bedroom?", type: 'yes-no' },
+      { text: "Do you think we show each other love in everyday ways?", type: 'yes-no' }
+    ]
+  },
+  {
     id: 'mismatched-desire',
     name: 'Mismatched Desire',
-    icon: <Flame className="h-12 w-12" />,
+    icon: <Flame className="h-10 w-10" />,
     color: 'text-sage',
     bgColor: 'bg-sage/10',
     prompts: [
@@ -76,7 +76,7 @@ export const SUBCATEGORY_DATA: SubcategoryData[] = [
   {
     id: 'feeling-unwanted',
     name: 'Feeling Undesired or Unwanted',
-    icon: <HeartOff className="h-12 w-12" />,
+    icon: <HeartOff className="h-10 w-10" />,
     color: 'text-golden-mustard',
     bgColor: 'bg-golden-mustard/10',
     prompts: [
