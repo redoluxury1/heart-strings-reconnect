@@ -3,7 +3,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   Baby, Heart, MessageSquare, Trash2, DollarSign, 
-  Hand, Users, Octagon, User 
+  Hand, Users, Octagon, Eye 
 } from 'lucide-react';
 import BrandSection from '@/components/common/BrandSection';
 import ContentContainer from '@/components/common/ContentContainer';
@@ -68,18 +68,18 @@ const BridgeTheGapCategories: React.FC = () => {
       bgColor: 'bg-[#9b87f5]/10'
     },
     {
+      id: 'feeling-unseen',
+      name: 'Feeling Unseen',
+      icon: <Eye className="h-12 w-12" />,
+      color: 'text-[#9b87f5]',
+      bgColor: 'bg-[#9b87f5]/10'
+    },
+    {
       id: 'boundaries',
       name: 'Boundaries',
       icon: <Octagon className="h-12 w-12" />,
       color: 'text-golden-mustard',
       bgColor: 'bg-golden-mustard/10'
-    },
-    {
-      id: 'feeling-unseen',
-      name: 'Feeling Unseen',
-      icon: <User className="h-12 w-12" />,
-      color: 'text-lavender-blue',
-      bgColor: 'bg-lavender-blue/10'
     },
     {
       id: 'communication',

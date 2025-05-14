@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -31,6 +32,10 @@ import FeelingDismissedSubcategories from "./pages/FeelingDismissedSubcategories
 import FeelingDismissedSubcategoryDetails from "./pages/FeelingDismissedSubcategoryDetails";
 import InLawsSubcategories from "./pages/InLawsSubcategories";
 import InLawsSubcategoryDetails from "./pages/InLawsSubcategoryDetails";
+import FeelingUnseenSubcategories from "./pages/FeelingUnseenSubcategories";
+import FeelingUnseenSubcategoryDetails from "./pages/FeelingUnseenSubcategoryDetails";
+import CommunicationSubcategories from "./pages/CommunicationSubcategories";
+import CommunicationSubcategoryDetails from "./pages/CommunicationSubcategoryDetails";
 
 // Scroll to top on route change
 function ScrollToTop() {
@@ -79,6 +84,10 @@ const App = () => (
             <Route path="/bridge-the-gap/categories/feeling-dismissed/:subcategoryId" element={<FeelingDismissedSubcategoryDetails />} />
             <Route path="/bridge-the-gap/categories/in-laws" element={<InLawsSubcategories />} />
             <Route path="/bridge-the-gap/categories/in-laws/:subcategoryId" element={<InLawsSubcategoryDetails />} />
+            <Route path="/bridge-the-gap/categories/feeling-unseen" element={<FeelingUnseenSubcategories />} />
+            <Route path="/bridge-the-gap/categories/feeling-unseen/:subcategoryId" element={<FeelingUnseenSubcategoryDetails />} />
+            <Route path="/bridge-the-gap/categories/communication" element={<CommunicationSubcategories />} />
+            <Route path="/bridge-the-gap/categories/communication/:subcategoryId" element={<CommunicationSubcategoryDetails />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

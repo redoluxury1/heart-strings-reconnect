@@ -25,6 +25,10 @@ const BridgeTheGapCategoryDetails: React.FC = () => {
       navigate('/bridge-the-gap/categories/feeling-dismissed');
     } else if (categoryId === 'in-laws') {
       navigate('/bridge-the-gap/categories/in-laws');
+    } else if (categoryId === 'feeling-unseen') {
+      navigate('/bridge-the-gap/categories/feeling-unseen');
+    } else if (categoryId === 'communication') {
+      navigate('/bridge-the-gap/categories/communication');
     }
   }, [categoryId, navigate]);
 
@@ -46,7 +50,8 @@ const BridgeTheGapCategoryDetails: React.FC = () => {
 
   // If this is a category with subcategories, we'll redirect, so we don't need to render anything
   if (categoryId === 'parenting' || categoryId === 'intimacy' || categoryId === 'household-duties' || 
-      categoryId === 'money' || categoryId === 'feeling-dismissed' || categoryId === 'in-laws') return null;
+      categoryId === 'money' || categoryId === 'feeling-dismissed' || categoryId === 'in-laws' ||
+      categoryId === 'feeling-unseen' || categoryId === 'communication') return null;
 
   return (
     <div className="min-h-screen flex flex-col bg-soft-cream">
