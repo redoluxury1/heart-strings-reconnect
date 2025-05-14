@@ -139,6 +139,38 @@ function dispatch(action: Action) {
 
 type Toast = Omit<ToasterToast, "id">
 
+// Create a preloaded audio instance
+let notificationSound: HTMLAudioElement | null = null;
+
+// Preload the notification sound
+try {
+  notificationSound = new Audio('/notification-sound.mp3');
+  notificationSound.preload = 'auto';
+  
+  // Trigger load but keep volume at 0
+  notificationSound.volume = 0;
+  notificationSound.play().then(() => {
+    notificationSound!.pause();
+    notificationSound!.currentTime = 0;
+    notificationSound!.volume = 1;
+  }).catch(err => {
+    // Silently fail - audio will load when first used
+    console.log("Audio preload requires user interaction");
+  });
+} catch (e) {
+  console.log("Audio preload failed", e);
+}
+
+// When playing notification sound, use the preloaded instance if available
+const playNotificationSound = () => {
+  if (notificationSound) {
+    notificationSound.currentTime = 0;
+    notificationSound.play().catch(err => {
+      console.log("Could not play notification sound", err);
+    });
+  }
+};
+
 function toast({ ...props }: Toast) {
   const id = genId()
 

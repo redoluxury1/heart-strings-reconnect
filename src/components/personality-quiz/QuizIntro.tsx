@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Button } from "@/components/ui/button";
+import OptimizedImage from '@/components/common/OptimizedImage';
 
 interface QuizIntroProps {
   onStart: () => void;
@@ -10,10 +11,11 @@ const QuizIntro: React.FC<QuizIntroProps> = ({ onStart }) => {
   return (
     <div className="max-w-3xl mx-auto text-center bg-white p-8 md:p-10 rounded-xl shadow-md">
       <div className="mb-8">
-        <img 
+        <OptimizedImage 
           src="/public/lovable-uploads/99edd396-a932-4643-a801-ce8e4d438035.png" 
           alt="Personality Blueprint Types" 
           className="max-w-full h-auto mx-auto"
+          priority={true}
         />
       </div>
       

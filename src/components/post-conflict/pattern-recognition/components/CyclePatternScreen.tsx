@@ -1,39 +1,20 @@
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Skeleton } from '@/components/ui/skeleton';
+import OptimizedImage from '@/components/common/OptimizedImage';
 
 interface CyclePatternScreenProps {
   onContinue: () => void;
 }
 
 const CyclePatternScreen: React.FC<CyclePatternScreenProps> = ({ onContinue }) => {
-  const [imageLoaded, setImageLoaded] = useState(false);
-  
-  // Preload the image when component mounts
-  useEffect(() => {
-    const img = new Image();
-    img.src = "/lovable-uploads/ff2e4176-28cc-47b9-b205-8c36e2d8aafe.png";
-    img.onload = () => setImageLoaded(true);
-    
-    return () => {
-      img.onload = null; // Clean up
-    };
-  }, []);
-
   return (
     <div className="flex flex-col items-center justify-center text-center max-w-md mx-auto py-4">
-      {/* Show skeleton while image is loading */}
-      {!imageLoaded && (
-        <Skeleton className="w-full h-64 mb-6" />
-      )}
-      <img
+      <OptimizedImage
         src="/lovable-uploads/ff2e4176-28cc-47b9-b205-8c36e2d8aafe.png"
         alt="Relationship Cycle Diagram showing Frustrated, React, Hurt, Distance"
-        className={`w-full h-auto mb-6 transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
-        loading="eager"
-        fetchPriority="high"
-        onLoad={() => setImageLoaded(true)}
+        className="w-full h-auto mb-6"
+        priority={true}
       />
       
       <h2 className="text-5xl font-cormorant font-medium text-[#14213d] mb-4">

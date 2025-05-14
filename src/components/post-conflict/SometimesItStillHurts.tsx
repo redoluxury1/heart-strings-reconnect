@@ -1,23 +1,9 @@
 
-import React, { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
+import React from 'react';
 import { Card } from '@/components/ui/card';
-import { Skeleton } from '@/components/ui/skeleton';
+import OptimizedImage from '@/components/common/OptimizedImage';
 
 const SometimesItStillHurts = () => {
-  const [imageLoaded, setImageLoaded] = useState(false);
-  
-  // Preload the image when component mounts
-  useEffect(() => {
-    const img = new Image();
-    img.src = "/lovable-uploads/c8f75296-51f7-4d50-84f0-68f55b65e7bc.png";
-    img.onload = () => setImageLoaded(true);
-    
-    return () => {
-      img.onload = null; // Clean up
-    };
-  }, []);
-
   return (
     <Card className="border-none overflow-hidden rounded-xl shadow-md">
       <div 
@@ -36,16 +22,11 @@ const SometimesItStillHurts = () => {
           
           {/* New illustration of the couple */}
           <div className="mb-8 flex justify-center">
-            {!imageLoaded && (
-              <Skeleton className="w-full max-w-md h-64" />
-            )}
-            <img 
+            <OptimizedImage 
               src="/lovable-uploads/c8f75296-51f7-4d50-84f0-68f55b65e7bc.png" 
               alt="Person crying with partner comforting them"
-              className={`w-full max-w-md h-auto ${!imageLoaded ? 'opacity-0' : 'opacity-100'} transition-opacity duration-300`} 
-              onLoad={() => setImageLoaded(true)}
-              loading="eager"
-              fetchPriority="high"
+              className="w-full max-w-md h-auto" 
+              priority={true}
             />
           </div>
           

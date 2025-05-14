@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
+import OptimizedImage from '@/components/common/OptimizedImage';
 
 interface OnboardingWelcomeProps {
   onContinue: () => void;
@@ -10,10 +11,11 @@ const OnboardingWelcome: React.FC<OnboardingWelcomeProps> = ({ onContinue }) => 
   return (
     <div className="text-center">
       <div className="flex justify-center mb-6">
-        <img 
+        <OptimizedImage 
           src="/lovable-uploads/f11235c1-f453-4752-bb91-b9417445b517.png"
           alt="Bridge For Couples"
           className="h-16 w-auto"
+          priority={true}
         />
       </div>
       

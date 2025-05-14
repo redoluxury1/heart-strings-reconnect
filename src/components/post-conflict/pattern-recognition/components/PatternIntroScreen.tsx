@@ -1,26 +1,13 @@
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Skeleton } from '@/components/ui/skeleton';
+import OptimizedImage from '@/components/common/OptimizedImage';
 
 interface PatternIntroScreenProps {
   onContinue: () => void;
 }
 
 const PatternIntroScreen: React.FC<PatternIntroScreenProps> = ({ onContinue }) => {
-  const [imageLoaded, setImageLoaded] = useState(false);
-  
-  // Preload the image when component mounts
-  useEffect(() => {
-    const img = new Image();
-    img.src = "/lovable-uploads/39110aa2-d4b1-4586-bd3f-56a1ae1053c8.png";
-    img.onload = () => setImageLoaded(true);
-    
-    return () => {
-      img.onload = null; // Clean up
-    };
-  }, []);
-
   const handleContinueClick = (e: React.MouseEvent) => {
     // Prevent default behavior to avoid page jumps
     e.preventDefault();
@@ -39,15 +26,11 @@ const PatternIntroScreen: React.FC<PatternIntroScreenProps> = ({ onContinue }) =
       </p>
       
       <div className="relative w-full max-w-sm mb-8">
-        {!imageLoaded && (
-          <Skeleton className="w-full h-48 rounded-lg" />
-        )}
-        <img
+        <OptimizedImage
           src="/lovable-uploads/39110aa2-d4b1-4586-bd3f-56a1ae1053c8.png"
           alt="Couple sitting back to back with arms crossed"
-          className={`w-full h-auto rounded-lg transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
-          loading="eager"
-          onLoad={() => setImageLoaded(true)}
+          className="w-full h-auto rounded-lg"
+          priority={true}
         />
       </div>
       
