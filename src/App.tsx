@@ -18,6 +18,8 @@ import PartnerInvite from "./pages/PartnerInvite";
 import Onboarding from "./pages/Onboarding";
 import Reconnect from "./pages/Reconnect";
 import PersonalityQuiz from "./pages/PersonalityQuiz";
+import BridgeTheGapCategories from "./pages/BridgeTheGapCategories";
+import BridgeTheGapCategoryDetails from "./pages/BridgeTheGapCategoryDetails";
 
 // Scroll to top on route change
 function ScrollToTop() {
@@ -52,7 +54,8 @@ const App = () => (
             <Route path="/archive" element={<Archive />} />
             <Route path="/games" element={<Games />} />
             <Route path="/invite" element={<PartnerInvite />} />
-            <Route path="/bridge-the-gap/*" element={<NotFound />} /> {/* Temporary placeholder */}
+            <Route path="/bridge-the-gap/categories" element={<BridgeTheGapCategories />} />
+            <Route path="/bridge-the-gap/categories/:categoryId" element={<BridgeTheGapCategoryDetails />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
