@@ -110,9 +110,7 @@ export const usePauseTimer = () => {
     setPauseStatus('in-pause');
     setTimerActive(true);
     
-    toast({
-      description: `Taking a ${minutes} minute pause.`
-    });
+    toast(`Taking a ${minutes} minute pause.`);
     
     // This would sync the timer with the partner
     syncTimerWithPartner(minutes);
@@ -161,9 +159,7 @@ export const usePauseTimer = () => {
     setRestartPhrase(message);
     localStorage.setItem('bridge-restart-phrase', message);
     
-    toast({
-      description: "Your message will be shown for review when the timer ends."
-    });
+    toast(`Your message will be shown for review when the timer ends.`);
   };
   
   const handleSendRestartMessage = () => {
@@ -178,9 +174,7 @@ export const usePauseTimer = () => {
       // Back to activation view
       setPauseStatus('activation');
       
-      toast({
-        description: "Your restart message has been sent to your partner."
-      });
+      toast(`Your restart message has been sent to your partner.`);
     }
   };
   
@@ -192,9 +186,7 @@ export const usePauseTimer = () => {
   // This function would be replaced with actual push notification logic in a production app
   const showReconnectNotification = () => {
     // In a real app, this would show a push notification
-    toast({
-      description: "Time's up—ready to reconnect? Choose a softer way to restart the conversation."
-    });
+    toast(`Time's up—ready to reconnect? Choose a softer way to restart the conversation.`);
   };
   
   // In a real app, this would send an actual notification
@@ -212,9 +204,7 @@ export const usePauseTimer = () => {
   // This function would be replaced with actual messaging logic in a production app
   const sendRestartMessage = (message: string) => {
     console.log("Sending restart message to partner:", message);
-    toast({
-      description: "Your partner has been notified."
-    });
+    toast(`Your partner has been notified.`);
   };
 
   // Format time for display (MM:SS or HH:MM:SS for longer times)
