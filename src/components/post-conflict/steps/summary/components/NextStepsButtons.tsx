@@ -3,9 +3,11 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { HeartHandshake, MessageCircle, Heart, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useSession } from '@/components/post-conflict/context/SessionContext';
 
 const NextStepsButtons: React.FC = () => {
   const navigate = useNavigate();
+  const { handleRestart } = useSession();
   
   const handleTalkTogether = () => {
     navigate('/reconnect');
@@ -20,6 +22,8 @@ const NextStepsButtons: React.FC = () => {
   };
   
   const handleRetry = () => {
+    // Reset the session state before navigating back to the beginning
+    handleRestart();
     // Navigate back to the beginning of the flow
     navigate('/post-conflict');
   };
