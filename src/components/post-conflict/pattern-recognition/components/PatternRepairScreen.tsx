@@ -1,8 +1,8 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Smile, Zap, MessageSquare, ArrowLeft } from 'lucide-react';
+import { Smile, Clock, Heart, ArrowLeft, Link } from 'lucide-react';
 import { Card } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
 import { useNavigate } from 'react-router-dom';
 import { CommonPattern } from '../types';
 import { RepairIcon } from './PatternRecognitionIcons';
@@ -24,144 +24,166 @@ const PatternRepairScreen: React.FC<PatternRepairScreenProps> = ({
   
   if (!pattern) return null;
 
-  // Default configuration for Blame/Defend/Withdraw pattern
-  let title = "You're not enemies—you're overwhelmed.";
-  let subtitle = "Try these steps to interrupt the cycle and reconnect.";
+  // Default configuration for Criticize-Defend-Shutdown pattern
+  let title = "What to Try Instead";
   let steps = [
     { 
-      icon: <Smile size={28} className="text-[#14213d]" />,
-      title: "Soften the Start",
-      description: "Use gentle language, not blame. Try \"I'm feeling...\" instead of \"You always...\""
+      icon: <Clock size={24} className="text-[#2e2a63]" />,
+      title: "Pause to Reset",
+      description: "Take a 5-minute break with intention.",
+      example: "Say: "I want to talk about this, but I need a second to calm down so I don't just react.""
     },
     { 
-      icon: <Zap size={28} className="text-[#14213d]" />,
-      title: "Breathe Before You Defend",
-      description: "Pause and reflect instead of reacting. Defensiveness blocks connection."
+      icon: <Heart size={24} className="text-[#2e2a63]" />,
+      title: "Lead with Your Own Emotion",
+      description: "Start from your hurt, not their fault.",
+      example: "Say: "I felt really discouraged when that happened. Can we talk about it?""
     },
     { 
-      icon: <MessageSquare size={28} className="text-[#14213d]" />,
-      title: "Repair Before You Retreat",
-      description: "Instead of shutting down, say: \"Can we reset?\" or \"I need a sec, but I want to come back.\""
+      icon: <Link size={24} className="text-[#2e2a63]" />,
+      title: "Make Repair Easier",
+      description: "Ask for what you need in a non-accusing way.",
+      example: "Say: "I think I just need to feel like we're on the same team again. Can we reset?""
     }
   ];
+  let tagline = "It's not about blame—it's about rebuilding connection.";
   
   // Override configuration based on pattern type
   switch(pattern.patternType) {
     case "silent-tension-snap":
-      title = "Your silence isn't protection—it's pressure.";
-      subtitle = "Try these steps to express yourself earlier and gentler.";
       steps = [
         { 
-          icon: <Smile size={28} className="text-[#14213d]" />,
+          icon: <Clock size={24} className="text-[#2e2a63]" />,
           title: "Check in Sooner",
-          description: "Don't wait until you're boiling. Name small frustrations before they grow."
+          description: "Don't wait until you're boiling.",
+          example: "Say: "Something small has been bothering me. Can we talk about it before it gets bigger?""
         },
         { 
-          icon: <Zap size={28} className="text-[#14213d]" />,
+          icon: <Heart size={24} className="text-[#2e2a63]" />,
           title: "Name the Build-Up",
-          description: "Try \"Something's been bothering me...\" instead of exploding when it's too much."
+          description: "Acknowledge the pattern without blame.",
+          example: "Say: "I notice I've been holding things in. I want to share this with you before it becomes too much.""
         },
         { 
-          icon: <MessageSquare size={28} className="text-[#14213d]" />,
+          icon: <Link size={24} className="text-[#2e2a63]" />,
           title: "Repair the Aftershock",
-          description: "Apologize for your tone, not for your feelings or needs."
+          description: "Take responsibility for your reaction.",
+          example: "Say: "I'm sorry I exploded. The issue matters to me, but I should have brought it up differently.""
         }
       ];
+      tagline = "Small conversations now prevent big explosions later.";
       break;
     case "criticize-control":
-      title = "It's not about being right—it's about being kind.";
-      subtitle = "Try these steps to give feedback that feels like support, not criticism.";
       steps = [
         { 
-          icon: <Smile size={28} className="text-[#14213d]" />,
+          icon: <Clock size={24} className="text-[#2e2a63]" />,
           title: "Shift from Fixing to Understanding",
-          description: "Ask what your partner needs before offering your solution."
+          description: "Listen first, suggest later (if asked).",
+          example: "Say: "I want to understand how you see this before I share my thoughts.""
         },
         { 
-          icon: <Zap size={28} className="text-[#14213d]" />,
+          icon: <Heart size={24} className="text-[#2e2a63]" />,
           title: "Ask, Don't Instruct",
-          description: "\"Would it help if...\" feels better than \"You should...\""
+          description: "Phrase suggestions as questions.",
+          example: "Say: "Would it be helpful if..." instead of "You should...""
         },
         { 
-          icon: <MessageSquare size={28} className="text-[#14213d]" />,
+          icon: <Link size={24} className="text-[#2e2a63]" />,
           title: "Celebrate Progress, Not Perfection",
-          description: "Notice what's going well, not just what could be better."
+          description: "Notice what's going well, not just what could be better.",
+          example: "Say: "I really appreciate how you handled that. It made a difference.""
         }
       ];
+      tagline = "Support feels different than criticism, even when addressing the same issue.";
       break;
     case "fix-reject":
-      title = "Solutions without safety don't stick.";
-      subtitle = "Try these steps to create emotional safety before problem-solving.";
       steps = [
         { 
-          icon: <Smile size={28} className="text-[#14213d]" />,
+          icon: <Clock size={24} className="text-[#2e2a63]" />,
           title: "Honor the Pause",
-          description: "Don't force closure. Emotional processing has its own timeline."
+          description: "Emotional processing has its own timeline.",
+          example: "Say: "I can see you're still processing. When would be a good time to talk solutions?""
         },
         { 
-          icon: <Zap size={28} className="text-[#14213d]" />,
-          title: "Ask, \"Is now okay?\"",
-          description: "Get consent before offering solutions."
+          icon: <Heart size={24} className="text-[#2e2a63]" />,
+          title: "Ask, "Is now okay?"",
+          description: "Get consent before offering solutions.",
+          example: "Say: "I have some thoughts that might help, but I want to make sure you're ready to hear them.""
         },
         { 
-          icon: <MessageSquare size={28} className="text-[#14213d]" />,
+          icon: <Link size={24} className="text-[#2e2a63]" />,
           title: "Come Back Later with Softness",
-          description: "Start with connection, not the problem that needs fixing."
+          description: "Start with connection, not the problem.",
+          example: "Say: "I've been thinking about what you shared earlier. How are you feeling about it now?""
         }
       ];
+      tagline = "Solutions land better when emotions are heard first.";
       break;
     default:
-      // Keep default configuration for Blame/Defend/Withdraw
+      // Keep default configuration for Criticize-Defend-Shutdown
   }
 
   return (
-    <div className="flex flex-col items-center text-center max-w-md mx-auto py-6">
-      <div className="mb-4 w-full flex justify-start">
+    <div className="flex flex-col items-center text-center max-w-md mx-auto py-6 bg-[#f8f5f0] rounded-lg">
+      <div className="mb-2 w-full flex justify-start">
         <Button 
           variant="ghost" 
           size="sm" 
           onClick={onBack} 
-          className="text-xs flex items-center text-[#14213d]/70 hover:text-[#14213d]"
+          className="text-xs flex items-center text-[#07183D]/70 hover:text-[#07183D]"
         >
           <ArrowLeft className="h-4 w-4 mr-1" />
           Back to pattern
         </Button>
       </div>
       
-      <div className="mb-4 w-full">
-        <h1 className="text-4xl md:text-5xl font-medium text-[#14213d] mb-4">
+      {/* Section title */}
+      <div className="w-full px-6 text-left mb-4">
+        <h2 className="text-2xl font-serif font-medium text-[#2e2a63]">
           {title}
-        </h1>
-        
-        <h2 className="text-xl text-[#14213d] leading-relaxed">
-          {subtitle}
         </h2>
       </div>
       
-      <div className="w-full my-6 flex justify-center">
-        <RepairIcon className="w-64 h-64 text-[#14213d]" />
+      {/* Illustration */}
+      <div className="w-full my-4 flex justify-center">
+        <RepairIcon className="w-44 h-44 text-[#2e2a63]" />
       </div>
       
-      <div className="w-full space-y-4 mt-4">
+      {/* Steps cards */}
+      <div className="w-full space-y-4 mt-4 px-6">
         {steps.map((step, index) => (
-          <Card key={index} className="p-4 flex items-start">
-            <div className="mr-4 mt-1">
-              {step.icon}
-            </div>
-            <div className="text-left">
-              <h3 className="font-bold text-lg text-[#14213d]">{step.title}</h3>
-              <p className="text-[#333333]">
-                {step.description}
-              </p>
+          <Card key={index} className="p-4 bg-white border-[#2e2a63]/10 shadow-sm">
+            <div className="flex items-start">
+              <div className="mr-3 p-2 bg-[#f8f5f0] rounded-full">
+                {step.icon}
+              </div>
+              <div className="text-left">
+                <h3 className="font-bold text-lg text-[#2e2a63] mb-1">{step.title}</h3>
+                <p className="text-[#333333] mb-2">
+                  {step.description}
+                </p>
+                <p className="text-[#333333]/80 italic text-sm">
+                  {step.example}
+                </p>
+              </div>
             </div>
           </Card>
         ))}
       </div>
       
-      <div className="w-full mt-10">
+      {/* Tagline */}
+      <div className="w-full px-6 mt-6 mb-4">
+        <Separator className="w-8 h-[2px] mx-auto bg-[#2e2a63]/30 mb-4" />
+        <p className="text-center text-[#2e2a63] italic">
+          {tagline}
+        </p>
+      </div>
+      
+      {/* Continue button */}
+      <div className="w-full px-6 mt-4">
         <Button
           onClick={onContinue}
-          className="bg-[#14213d] hover:bg-[#14213d]/90 text-white font-medium py-2 px-5 rounded-full text-sm"
+          className="bg-[#2e2a63] hover:bg-[#2e2a63]/90 text-white font-medium py-2 px-5 rounded-full text-sm"
         >
           {buttonText}
         </Button>
