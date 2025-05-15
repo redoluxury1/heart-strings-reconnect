@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { RotateCw, Flag } from 'lucide-react';
@@ -13,16 +12,8 @@ const OkayButNowWhat = () => {
   const [showFlagTool, setShowFlagTool] = useState(false);
   
   const handlePatternToolToggle = () => {
-    // Save the current scroll position
-    const currentScrollPos = window.scrollY;
-    
-    setShowPatternTool(!showPatternTool);
-    setShowFlagTool(false);
-    
-    // Use setTimeout to allow the component to render before restoring the scroll position
-    setTimeout(() => {
-      window.scrollTo(0, currentScrollPos);
-    }, 0);
+    // This function is now disabled since the feature is coming soon
+    // Keeping for future implementation
   };
   
   const handleFlagToolToggle = () => {
@@ -42,12 +33,14 @@ const OkayButNowWhat = () => {
         </p>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          {/* Pattern Recognition Button */}
+          {/* Pattern Recognition Button - Now with Coming Soon flag */}
           <div 
-            className={`bg-white rounded-lg border shadow-sm hover:shadow-md transition-shadow cursor-pointer ${showPatternTool ? 'ring-2 ring-[#2e2a63]' : ''}`} 
-            onClick={handlePatternToolToggle}
+            className={`bg-white/70 rounded-lg border shadow-sm relative cursor-default`}
           >
-            <div className="flex flex-col items-center text-center p-4">
+            <div className="absolute top-0 right-0 bg-[#2e2a63] text-white text-xs font-medium px-2 py-1 rounded-tl-none rounded-br-none rounded">
+              Coming Soon
+            </div>
+            <div className="flex flex-col items-center text-center p-4 opacity-80">
               <div className="bg-[#e1d8ed] p-3 rounded-full mb-4">
                 <RotateCw className="h-8 w-8 text-[#2e2a63]" />
               </div>
@@ -58,7 +51,7 @@ const OkayButNowWhat = () => {
             </div>
           </div>
           
-          {/* Send a White Flag Button */}
+          {/* Send a White Flag Button - Still functional */}
           <div 
             className={`bg-white rounded-lg border shadow-sm hover:shadow-md transition-shadow cursor-pointer ${showFlagTool ? 'ring-2 ring-[#c06b6b]' : ''}`}
             onClick={handleFlagToolToggle}
@@ -75,14 +68,7 @@ const OkayButNowWhat = () => {
           </div>
         </div>
         
-        {/* Pattern Recognition Tool Content Display (only shown if pattern tool is active) */}
-        {showPatternTool && (
-          <div className="mt-8 transition-all duration-300">
-            <div className="bg-white rounded-xl shadow-sm p-6">
-              <PatternRecognitionFlow onClose={handlePatternToolToggle} />
-            </div>
-          </div>
-        )}
+        {/* Pattern Recognition Tool Content Display has been removed since it's now coming soon */}
         
         {/* White Flag Tool Content Display (only shown if flag tool is active) */}
         {showFlagTool && (
