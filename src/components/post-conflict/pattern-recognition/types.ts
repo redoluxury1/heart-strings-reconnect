@@ -1,4 +1,5 @@
 
+
 /**
  * Types for the Pattern Recognition feature
  */
@@ -18,8 +19,9 @@ export type PatternType =
   | 'criticize-control'
   | 'fix-reject';
 
+// Base pattern interface
 export interface Pattern {
-  id: number | string;
+  id: number; // Changed from string | number to just number for consistency
   name: string;
   description: string;
   examples: string[];
@@ -85,3 +87,4 @@ export interface PursueDistanceRepairScreenProps {
   onContinue: () => void;
   buttonText?: string;
 }
+

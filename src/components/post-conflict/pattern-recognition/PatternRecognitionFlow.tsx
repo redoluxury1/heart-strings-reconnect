@@ -18,7 +18,7 @@ interface PatternRecognitionFlowProps {
 
 const PatternRecognitionFlow: React.FC<PatternRecognitionFlowProps> = ({ fullScreen, onClose }) => {
   const [currentView, setCurrentView] = useState<'intro' | 'list' | 'detail' | 'cycle' | 'repair' | 'pdDetail' | 'pdRepair'>('intro');
-  const [selectedPattern, setSelectedPattern] = useState<Pattern | null>(null);
+  const [selectedPattern, setSelectedPattern] = useState<CommonPattern | null>(null);
   
   // Sample cycle data (could be expanded later)
   const cycleData = {};
@@ -34,7 +34,7 @@ const PatternRecognitionFlow: React.FC<PatternRecognitionFlowProps> = ({ fullScr
   };
   
   const handleSelectPattern = (pattern: CommonPattern) => {
-    setSelectedPattern(pattern as Pattern);
+    setSelectedPattern(pattern);
     if (pattern.patternType === 'pursue-distance') {
       setCurrentView('pdDetail');
     } else {
@@ -117,6 +117,8 @@ const PatternRecognitionFlow: React.FC<PatternRecognitionFlowProps> = ({ fullScr
         <PatternList 
           patterns={patterns}
           onPatternSelect={handleSelectPattern}
+          togglePatternSelection={togglePatternSelection}
+          selectedPatterns={selectedPatterns}
         />
       )}
       
@@ -140,6 +142,9 @@ const PatternRecognitionFlow: React.FC<PatternRecognitionFlowProps> = ({ fullScr
       {currentView === 'cycle' && (
         <CyclePatternScreen
           pattern={selectedPattern}
+          cycleData={cycleData}
+          onBack={handleBack}
+          onViewRepair={handleViewRepair}
           onContinue={handleContinueFromCycle}
         />
       )}

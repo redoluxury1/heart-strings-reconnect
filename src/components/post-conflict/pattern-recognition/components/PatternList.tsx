@@ -73,7 +73,7 @@ const samplePatterns: CommonPattern[] = [
   },
 ];
 
-const PatternList: React.FC<PatternListProps> = ({ patterns = samplePatterns, onPatternSelect }) => {
+const PatternList: React.FC<PatternListProps> = ({ patterns = samplePatterns, onPatternSelect, togglePatternSelection, selectedPatterns }) => {
   // Get appropriate icon based on pattern type
   const getPatternIcon = (patternType: string) => {
     switch(patternType) {
