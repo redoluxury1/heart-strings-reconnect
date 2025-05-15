@@ -30,8 +30,8 @@ export async function generateShareableImage(quote: string): Promise<string> {
     ctx.fillStyle = '#f8fafc'; // Light background (slate-50)
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     
-    // Create a border
-    ctx.strokeStyle = '#cbd5e1'; // slate-300
+    // Create a border with terracotta color
+    ctx.strokeStyle = '#DF8152'; // Peachy-terracotta color
     ctx.lineWidth = 10;
     ctx.strokeRect(40, 40, canvas.width - 80, canvas.height - 80);
     
@@ -47,11 +47,11 @@ export async function generateShareableImage(quote: string): Promise<string> {
         ctx.textAlign = 'center';
         ctx.font = 'bold 48px Cormorant, serif';
         
-        // Word wrap the quote
+        // Word wrap the quote with a narrower max width to create more lines
         const words = quote.split(' ');
         let line = '';
         const lines = [];
-        const maxWidth = canvas.width - 160; // Padding on both sides
+        const maxWidth = canvas.width - 240; // Narrower width to force more line breaks
         
         for (let i = 0; i < words.length; i++) {
           const testLine = line + words[i] + ' ';
@@ -67,7 +67,7 @@ export async function generateShareableImage(quote: string): Promise<string> {
         lines.push(line);
         
         // Calculate the total height of all the lines
-        const lineHeight = 65;
+        const lineHeight = 70; // Increased line height for better readability
         const totalTextHeight = lines.length * lineHeight;
         
         // Draw each line of text centered in the canvas
@@ -77,19 +77,19 @@ export async function generateShareableImage(quote: string): Promise<string> {
           y += lineHeight;
         });
         
-        // Calculate logo size and position (center bottom)
+        // Calculate logo size and position (center, moved higher up from bottom)
         const logoWidth = 200;
         const logoHeight = (logoWidth / logo.width) * logo.height;
         const logoX = (canvas.width - logoWidth) / 2;
-        const logoY = canvas.height - logoHeight - 80; // 80px from bottom
+        const logoY = canvas.height - logoHeight - 140; // Moved up from 80px to 140px from bottom
         
         // Draw the logo
         ctx.drawImage(logo, logoX, logoY, logoWidth, logoHeight);
         
-        // Add Instagram handle
+        // Add Instagram handle (moved up as well)
         ctx.fillStyle = '#64748b'; // Slate-500
         ctx.font = '24px system-ui, sans-serif';
-        ctx.fillText('@bridgeforcouplesapp', canvas.width / 2, canvas.height - 40);
+        ctx.fillText('@bridgeforcouplesapp', canvas.width / 2, canvas.height - 100); // Moved up from 40px to 100px from bottom
         
         // Convert canvas to data URL
         const dataUrl = canvas.toDataURL('image/png');
