@@ -1,6 +1,7 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Smile, Zap, MessageSquare } from 'lucide-react';
+import { Smile, Zap, MessageSquare, ArrowLeft } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { useNavigate } from 'react-router-dom';
 import { CommonPattern } from '../types';
@@ -8,12 +9,14 @@ import { RepairIcon } from './PatternRecognitionIcons';
 
 interface PatternRepairScreenProps {
   pattern?: CommonPattern | null;
+  onBack: () => void;
   onContinue: () => void;
   buttonText?: string;
 }
 
 const PatternRepairScreen: React.FC<PatternRepairScreenProps> = ({ 
   pattern, 
+  onBack,
   onContinue,
   buttonText = "Continue"
 }) => {
@@ -113,6 +116,18 @@ const PatternRepairScreen: React.FC<PatternRepairScreenProps> = ({
 
   return (
     <div className="flex flex-col items-center text-center max-w-md mx-auto py-6">
+      <div className="mb-4 w-full flex justify-start">
+        <Button 
+          variant="ghost" 
+          size="sm" 
+          onClick={onBack} 
+          className="text-xs flex items-center text-[#14213d]/70 hover:text-[#14213d]"
+        >
+          <ArrowLeft className="h-4 w-4 mr-1" />
+          Back to pattern
+        </Button>
+      </div>
+      
       <div className="mb-4 w-full">
         <h1 className="text-4xl md:text-5xl font-medium text-[#14213d] mb-4">
           {title}

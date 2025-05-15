@@ -2,15 +2,17 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { CommonPattern } from '../types';
-import { MessageSquare, Shield, X } from 'lucide-react';
+import { MessageSquare, Shield, X, ArrowLeft } from 'lucide-react';
 import { CycleIcon, SilentTensionIcon, CriticizeControlIcon, FixRejectIcon, PursueDistanceIcon } from './PatternRecognitionIcons';
 
 interface PatternDetailScreenProps {
   pattern: CommonPattern | null;
-  onContinue: () => void;
+  onBack: () => void;
+  onViewCycle: () => void;
+  onViewRepair: () => void;
 }
 
-const PatternDetailScreen: React.FC<PatternDetailScreenProps> = ({ pattern, onContinue }) => {
+const PatternDetailScreen: React.FC<PatternDetailScreenProps> = ({ pattern, onBack, onViewCycle, onViewRepair }) => {
   if (!pattern) return null;
   
   // Default configuration for Blame/Defend/Withdraw pattern
@@ -76,6 +78,18 @@ const PatternDetailScreen: React.FC<PatternDetailScreenProps> = ({ pattern, onCo
 
   return (
     <div className="flex flex-col items-center text-center max-w-md mx-auto py-6">
+      <div className="mb-4 w-full flex justify-start">
+        <Button 
+          variant="ghost" 
+          size="sm" 
+          onClick={onBack} 
+          className="text-xs flex items-center text-[#07183D]/70 hover:text-[#07183D]"
+        >
+          <ArrowLeft className="h-4 w-4 mr-1" />
+          Back to patterns
+        </Button>
+      </div>
+      
       <div className="mb-4 w-full">
         <h1 className="text-4xl md:text-5xl font-medium text-[#07183D] mb-4">
           {title}
@@ -116,7 +130,7 @@ const PatternDetailScreen: React.FC<PatternDetailScreenProps> = ({ pattern, onCo
       
       <div className="w-full px-6 mt-10">
         <Button
-          onClick={onContinue}
+          onClick={onViewRepair}
           className="bg-[#14213d] hover:bg-[#14213d]/90 text-white font-medium py-2 px-5 rounded-full text-sm"
         >
           What to Try Instead
