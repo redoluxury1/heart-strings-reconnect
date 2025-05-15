@@ -28,9 +28,9 @@ const HomeLanding = () => {
           {dailyQuote.headline}
         </h1>
         
-        {/* Micro text that appears on hover */}
+        {/* Micro text that appears on hover - added more bottom margin */}
         <div 
-          className={`absolute left-0 right-0 bottom-0 text-xs text-navy-800/60 italic transition-opacity duration-300 cursor-pointer ${
+          className={`absolute left-0 right-0 bottom-[-24px] text-xs text-navy-800/60 italic transition-opacity duration-300 cursor-pointer ${
             isHovered ? 'opacity-100' : 'opacity-0'
           }`}
           onClick={() => setIsShareOpen(true)}
