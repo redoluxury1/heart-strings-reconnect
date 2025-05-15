@@ -7,7 +7,8 @@ interface InterfaceProviderProps {
   children: ReactNode;
 }
 
-export const InterfaceProvider: React.FC<InterfaceProviderProps> = ({ children }) => {
+const InterfaceProvider: React.FC<InterfaceProviderProps> = ({ children }) => {
+  // Move all useState calls inside the component function body
   const [partnerStatus, setPartnerStatus] = useState<PartnerStatus>('solo');
   const [isPartnerInvited, setIsPartnerInvited] = useState(false);
   const [interfaceStyle, setInterfaceStyle] = useState<InterfaceStyle>('emotionally-reflective');
