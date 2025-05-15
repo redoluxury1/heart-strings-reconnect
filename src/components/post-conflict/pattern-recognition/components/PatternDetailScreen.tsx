@@ -29,13 +29,13 @@ const PatternDetailScreen: React.FC<PatternDetailScreenProps> = ({ pattern, onBa
     { 
       icon: <MessageSquare size={18} className="text-[#07183D] mr-2" />, 
       title: "Criticism:", 
-      text: ""You never care about what I need."", 
+      text: '"You never care about what I need."', 
       subtext: "(Blame disguised as hurt)"
     },
     { 
       icon: <Shield size={18} className="text-[#07183D] mr-2" />, 
       title: "Defensiveness:", 
-      text: ""That's not true! I didn't do anything wrong."", 
+      text: '"That\'s not true! I didn\'t do anything wrong."', 
       subtext: "(Protecting self over repairing connection)"
     },
     { 
@@ -72,7 +72,7 @@ const PatternDetailScreen: React.FC<PatternDetailScreenProps> = ({ pattern, onBa
         { 
           icon: <Shield size={18} className="text-[#07183D] mr-2" />, 
           title: "Avoidance:", 
-          text: ""It's fine. Nothing's wrong."", 
+          text: '"It\'s fine. Nothing\'s wrong."', 
           subtext: "(When it's clearly not fine)"
         },
         { 
@@ -101,7 +101,7 @@ const PatternDetailScreen: React.FC<PatternDetailScreenProps> = ({ pattern, onBa
         { 
           icon: <MessageSquare size={18} className="text-[#07183D] mr-2" />, 
           title: "Scrutiny:", 
-          text: ""Why did you load the dishwasher that way?"", 
+          text: '"Why did you load the dishwasher that way?"', 
           subtext: "(Constant commentary on how things are done)"
         },
         { 
@@ -136,19 +136,19 @@ const PatternDetailScreen: React.FC<PatternDetailScreenProps> = ({ pattern, onBa
         { 
           icon: <MessageSquare size={18} className="text-[#07183D] mr-2" />, 
           title: "Quick solutions:", 
-          text: ""Here's what we should do to fix this right now."", 
+          text: '"Here\'s what we should do to fix this right now."', 
           subtext: "(Before emotions are processed)"
         },
         { 
           icon: <Shield size={18} className="text-[#07183D] mr-2" />, 
           title: "Emotional pause:", 
-          text: ""I can't talk about solutions yet. I'm still upset."", 
+          text: '"I can\'t talk about solutions yet. I\'m still upset."', 
           subtext: "(Need to feel before fixing)"
         },
         { 
           icon: <X size={18} className="text-[#07183D] mr-2" />, 
           title: "Frustrated fixer:", 
-          text: ""Why won't you just let me help? Why make this harder?""
+          text: '"Why won\'t you just let me help? Why make this harder?"'
         },
         { 
           icon: <X size={18} className="text-[#07183D] mr-2" />, 
@@ -171,13 +171,13 @@ const PatternDetailScreen: React.FC<PatternDetailScreenProps> = ({ pattern, onBa
         { 
           icon: <MessageSquare size={18} className="text-[#07183D] mr-2" />, 
           title: "Persistent pursuit:", 
-          text: ""Why won't you talk to me about this? Where are you going?"", 
+          text: '"Why won\'t you talk to me about this? Where are you going?"', 
           subtext: "(Attempts to force connection)"
         },
         { 
           icon: <Shield size={18} className="text-[#07183D] mr-2" />, 
           title: "Defensive distance:", 
-          text: ""I just need some space right now. Leave me alone."", 
+          text: '"I just need some space right now. Leave me alone."', 
           subtext: "(Creating physical or emotional space)"
         },
         { 
