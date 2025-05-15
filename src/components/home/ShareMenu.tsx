@@ -3,6 +3,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Mail, Twitter, Instagram } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
+import { generateShareableImage } from '@/lib/utils';
 
 interface ShareMenuProps {
   quote: string;
@@ -10,7 +11,7 @@ interface ShareMenuProps {
 }
 
 const ShareMenu = ({ quote, onSubmitOwn }: ShareMenuProps) => {
-  const handleShare = (platform: string) => {
+  const handleShare = async (platform: string) => {
     const encodedQuote = encodeURIComponent(quote);
     
     switch (platform) {
@@ -21,14 +22,35 @@ const ShareMenu = ({ quote, onSubmitOwn }: ShareMenuProps) => {
         window.open(`mailto:?subject=Check out this quote&body=${encodedQuote}`, '_blank');
         break;
       case 'instagram':
-        // Instagram doesn't have a direct share API, copy to clipboard instead
-        navigator.clipboard.writeText(quote).then(() => {
+        try {
+          // Generate shareable image with quote and logo
+          const imageUrl = await generateShareableImage(quote);
+          
+          // First save the image to the user's device
+          const response = await fetch(imageUrl);
+          const blob = await response.blob();
+          const url = URL.createObjectURL(blob);
+          
+          // Create a temporary anchor element to trigger download
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'bridge-for-couples-quote.png';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          
           toast({
-            title: "Copied to clipboard",
-            description: "Now you can paste it into Instagram",
+            title: "Image saved to your device",
+            description: "Share this image on Instagram and tag @bridgeforcouplesapp",
             variant: "success"
           });
-        });
+        } catch (error) {
+          toast({
+            title: "Couldn't generate image",
+            description: "Please try again later",
+            variant: "destructive"
+          });
+        }
         break;
       case 'text':
         // Copy to clipboard for text message
