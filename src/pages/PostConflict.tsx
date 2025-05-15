@@ -8,6 +8,7 @@ import FloatingTextBubbles from '@/components/post-conflict/FloatingTextBubbles'
 import OkayButNowWhat from '@/components/post-conflict/OkayButNowWhat';
 import LetsWorkThisOut from '@/components/post-conflict/lets-work-this-out/LetsWorkThisOut';
 import BridgeTheGapCard from '@/components/post-conflict/BridgeTheGapCard';
+import BuildBridgeCard from '@/components/mid-fight/build-bridge/BuildBridgeCard';
 import { SessionProvider, useSession } from '@/components/post-conflict/context/SessionContext';
 
 // Wrapper to access session context
@@ -66,6 +67,13 @@ const PostConflictContent = () => {
             </div>
           </ContentContainer>
         )}
+        
+        {/* Add Build a Bridge card to the bottom of the page */}
+        <ContentContainer maxWidth="lg">
+          <div className="max-w-3xl mx-auto mt-32 mb-20">
+            <BuildBridgeCard />
+          </div>
+        </ContentContainer>
       </main>
       
       <Footer showCTA={false} />

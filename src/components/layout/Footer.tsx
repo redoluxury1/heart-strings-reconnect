@@ -22,30 +22,31 @@ const Footer = ({ showCTA = false }: FooterProps) => {
 
   return (
     <footer className="pt-8 pb-10 relative z-10">
-      {/* Main Footer Content */}
-      <div className="bg-[#fce9e7] rounded-3xl max-w-4xl mx-auto px-6 py-16 md:px-12">
-        <div className="flex flex-col items-center relative z-20">
+      {/* Updated Footer Content with more horizontal layout */}
+      <div className="bg-[#fce9e7] max-w-6xl mx-auto px-6 py-12 rounded-xl">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between relative z-20">
           {/* Logo - Now wrapped in a Link with an onClick handler */}
-          <div className="mb-12">
+          <div className="mb-8 md:mb-0 flex justify-center md:justify-start">
             <Link to="/" onClick={scrollToTop}>
               <img 
                 src="/lovable-uploads/43d77678-108c-4565-978c-3afdead85010.png" 
                 alt="Bridge For Couples" 
-                className="h-24 md:h-28 w-auto"
+                className="h-20 md:h-24 w-auto"
               />
             </Link>
           </div>
           
           {/* Tagline */}
-          <p className="text-[#3c3543] text-center text-xl md:text-3xl lg:text-4xl font-cormorant mb-16">
-            Keep building your bridge—one<br />
-            conversation at a time.
-          </p>
-          
-          {/* Copyright */}
-          <p className="text-[#3c3543] text-sm md:text-base font-cormorant">
-            ©{currentYear} Bridge For Couples
-          </p>
+          <div className="flex-1 text-center md:text-right">
+            <p className="text-[#3c3543] text-xl md:text-2xl lg:text-3xl font-cormorant mb-4">
+              Keep building your bridge—one conversation at a time.
+            </p>
+            
+            {/* Copyright */}
+            <p className="text-[#3c3543] text-sm md:text-base font-cormorant">
+              ©{currentYear} Bridge For Couples
+            </p>
+          </div>
         </div>
       </div>
     </footer>
