@@ -2,12 +2,15 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import OptimizedImage from '@/components/common/OptimizedImage';
+import { CyclePatternScreenProps } from '../types';
 
-interface CyclePatternScreenProps {
-  onContinue: () => void;
-}
-
-const CyclePatternScreen: React.FC<CyclePatternScreenProps> = ({ onContinue }) => {
+const CyclePatternScreen: React.FC<CyclePatternScreenProps> = ({ 
+  onContinue,
+  pattern,
+  cycleData,
+  onBack,
+  onViewRepair 
+}) => {
   return (
     <div className="flex flex-col items-center justify-center text-center max-w-md mx-auto py-4">
       <OptimizedImage
@@ -31,6 +34,16 @@ const CyclePatternScreen: React.FC<CyclePatternScreenProps> = ({ onContinue }) =
       >
         See Common Patterns
       </Button>
+      
+      {onBack && (
+        <Button
+          onClick={onBack}
+          variant="outline"
+          className="mt-4"
+        >
+          Back
+        </Button>
+      )}
     </div>
   );
 };
