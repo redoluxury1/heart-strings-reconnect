@@ -1,5 +1,4 @@
 
-
 /**
  * Types for the Pattern Recognition feature
  */
@@ -55,7 +54,7 @@ export interface PatternListProps {
 }
 
 export interface PatternDetailScreenProps {
-  pattern: Pattern | null;
+  pattern: CommonPattern | null;
   onBack: () => void;
   onViewCycle: () => void;
   onViewRepair: () => void;
@@ -68,7 +67,7 @@ export interface PursueDistanceDetailScreenProps {
 }
 
 export interface CyclePatternScreenProps {
-  pattern?: Pattern | null;
+  pattern?: CommonPattern | null;
   cycleData?: any;
   onBack?: () => void;
   onViewRepair?: () => void;
@@ -76,7 +75,7 @@ export interface CyclePatternScreenProps {
 }
 
 export interface PatternRepairScreenProps {
-  pattern?: Pattern | null;
+  pattern?: CommonPattern | null;
   onBack: () => void;
   onContinue?: () => void;
   buttonText?: string;
@@ -87,4 +86,3 @@ export interface PursueDistanceRepairScreenProps {
   onContinue: () => void;
   buttonText?: string;
 }
-

@@ -8,7 +8,6 @@ import FloatingTextBubbles from '@/components/post-conflict/FloatingTextBubbles'
 import OkayButNowWhat from '@/components/post-conflict/OkayButNowWhat';
 import LetsWorkThisOut from '@/components/post-conflict/lets-work-this-out/LetsWorkThisOut';
 import BridgeTheGapCard from '@/components/post-conflict/BridgeTheGapCard';
-import PatternRecognitionFlow from '@/components/post-conflict/pattern-recognition/PatternRecognitionFlow';
 import { SessionProvider, useSession } from '@/components/post-conflict/context/SessionContext';
 
 // Wrapper to access session context
@@ -48,11 +47,7 @@ const PostConflictContent = () => {
             {/* Only show these components if user hasn't completed the flow or both partners are ready */}
             {showOtherComponents && (
               <div className="space-y-32">
-                {/* Add Pattern Recognition Flow here */}
-                <div className="mt-10 mb-32">
-                  <PatternRecognitionFlow />
-                </div>
-                
+                {/* OkayButNowWhat section with Pattern Recognition and White Flag Tools */}
                 <OkayButNowWhat />
                 
                 {/* New Bridge the Gap card with spacing */}

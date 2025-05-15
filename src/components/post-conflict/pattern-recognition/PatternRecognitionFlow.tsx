@@ -8,7 +8,7 @@ import PursueDistanceRepairScreen from './components/PursueDistanceRepairScreen'
 import PatternRepairScreen from './components/PatternRepairScreen';
 import CyclePatternScreen from './components/CyclePatternScreen';
 import { usePatternRecognition } from './hooks/usePatternRecognition';
-import { Pattern, CommonPattern } from './types';
+import { CommonPattern } from './types';
 import { commonPatterns } from './data/pattern-data';
 
 interface PatternRecognitionFlowProps {
@@ -98,7 +98,7 @@ const PatternRecognitionFlow: React.FC<PatternRecognitionFlowProps> = ({ fullScr
   const patterns = commonPatterns;
   
   return (
-    <div className={`mb-16 ${fullScreen ? 'fixed inset-0 z-50 bg-white p-4 overflow-auto' : ''}`}>
+    <div className={`${fullScreen ? 'fixed inset-0 z-50 bg-white p-4 overflow-auto' : ''}`}>
       {fullScreen && (
         <button 
           onClick={onClose} 

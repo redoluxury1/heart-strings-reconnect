@@ -30,21 +30,6 @@ const OkayButNowWhat = () => {
     setShowPatternTool(false);
   };
   
-  // If pattern tool is shown in full-screen mode
-  if (showPatternTool) {
-    return (
-      <PatternRecognitionFlow 
-        fullScreen={true} 
-        onClose={() => {
-          const currentScrollPos = window.scrollY;
-          setShowPatternTool(false);
-          // Restore scroll position after closing
-          setTimeout(() => window.scrollTo(0, currentScrollPos), 0);
-        }} 
-      />
-    );
-  }
-  
   return (
     <section id="okay-but-now-what" className="bg-[#f8f5f0] rounded-xl shadow-sm p-6 md:p-8">
       <div className="max-w-3xl mx-auto">
@@ -89,6 +74,15 @@ const OkayButNowWhat = () => {
             </div>
           </div>
         </div>
+        
+        {/* Pattern Recognition Tool Content Display (only shown if pattern tool is active) */}
+        {showPatternTool && (
+          <div className="mt-8 transition-all duration-300">
+            <div className="bg-white rounded-xl shadow-sm p-6">
+              <PatternRecognitionFlow onClose={handlePatternToolToggle} />
+            </div>
+          </div>
+        )}
         
         {/* White Flag Tool Content Display (only shown if flag tool is active) */}
         {showFlagTool && (
