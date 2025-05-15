@@ -1,127 +1,124 @@
 
-import React, { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { ArrowLeft } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
-import { useSession } from '../context/SessionContext';
-import { useNavigate } from 'react-router-dom';
-import { CommonPattern } from './types';
+import React, { useState } from 'react';
 import PatternIntroScreen from './components/PatternIntroScreen';
 import PatternList from './components/PatternList';
 import PatternDetailScreen from './components/PatternDetailScreen';
+import PursueDistanceDetailScreen from './components/PursueDistanceDetailScreen';
+import PursueDistanceRepairScreen from './components/PursueDistanceRepairScreen';
 import PatternRepairScreen from './components/PatternRepairScreen';
+import CyclePatternScreen from './components/CyclePatternScreen';
+import { usePatternRecognition } from './hooks/usePatternRecognition';
+import { Pattern } from './types';
 
-interface PatternRecognitionFlowProps {
-  fullScreen?: boolean;
-  onClose?: () => void;
-}
-
-const PatternRecognitionFlow: React.FC<PatternRecognitionFlowProps> = ({ fullScreen, onClose }) => {
-  const [currentStep, setCurrentStep] = useState<'intro' | 'list' | 'detail' | 'repair'>('intro');
-  const [selectedPattern, setSelectedPattern] = useState<CommonPattern | null>(null);
-  const { sessionData } = useSession();
-  const { toast } = useToast();
-  const navigate = useNavigate();
+const PatternRecognitionFlow: React.FC = () => {
+  const [currentView, setCurrentView] = useState<'intro' | 'list' | 'detail' | 'cycle' | 'repair' | 'pdDetail' | 'pdRepair'>('intro');
+  const [selectedPattern, setSelectedPattern] = useState<Pattern | null>(null);
+  const { patterns, cycleData, togglePatternSelection, selectedPatterns } = usePatternRecognition();
   
-  // Prevent scrolling to top when changing steps
-  const handleStepChange = (step: 'intro' | 'list' | 'detail' | 'repair') => {
-    // Save current scroll position
-    const currentScrollPos = window.scrollY;
-    
-    // Update the step
-    setCurrentStep(step);
-    
-    // Use setTimeout to allow the component to render before scrolling
-    setTimeout(() => {
-      window.scrollTo(0, currentScrollPos);
-    }, 0);
+  const handleContinueFromIntro = () => {
+    setCurrentView('list');
   };
   
-  const handlePatternSelect = (pattern: CommonPattern) => {
+  const handleSelectPattern = (pattern: Pattern) => {
     setSelectedPattern(pattern);
-    handleStepChange('detail');
-  };
-  
-  const handleGoToRepair = () => {
-    if (selectedPattern) {
-      handleStepChange('repair');
+    if (pattern.id === 'pursue-distance') {
+      setCurrentView('pdDetail');
+    } else {
+      setCurrentView('detail');
     }
   };
   
-  const handleBackToList = () => {
-    handleStepChange('list');
-    setSelectedPattern(null);
+  const handleViewCycle = () => {
+    setCurrentView('cycle');
   };
   
-  const handleBackToDetail = () => {
-    handleStepChange('detail');
-  };
-  
-  const handleStartOver = () => {
-    handleStepChange('intro');
-    setSelectedPattern(null);
-  };
-  
-  const handleGoToPatternList = () => {
-    handleStepChange('list');
-  };
-
-  const handleClose = () => {
-    if (onClose) {
-      onClose();
+  const handleViewRepair = () => {
+    if (selectedPattern?.id === 'pursue-distance') {
+      setCurrentView('pdRepair');
+    } else {
+      setCurrentView('repair');
     }
   };
-
+  
+  const handleBack = () => {
+    switch (currentView) {
+      case 'detail':
+      case 'pdDetail':
+        setCurrentView('list');
+        break;
+      case 'cycle':
+        if (selectedPattern?.id === 'pursue-distance') {
+          setCurrentView('pdDetail');
+        } else {
+          setCurrentView('detail');
+        }
+        break;
+      case 'repair':
+      case 'pdRepair':
+        if (selectedPattern?.id === 'pursue-distance') {
+          setCurrentView('pdDetail');
+        } else {
+          setCurrentView('detail');
+        }
+        break;
+      default:
+        setCurrentView('intro');
+    }
+  };
+  
   return (
-    <div className="bg-white rounded-xl shadow-md overflow-hidden">
-      <div className="p-6 md:p-8">
-        {currentStep !== 'intro' && (
-          <Button
-            variant="ghost"
-            className="mb-4"
-            onClick={() => {
-              if (currentStep === 'list') handleStartOver();
-              else if (currentStep === 'detail') handleBackToList();
-              else if (currentStep === 'repair') handleBackToDetail();
-            }}
-          >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back
-          </Button>
-        )}
-        
-        {fullScreen && (
-          <Button
-            variant="ghost"
-            className="mb-4 ml-auto"
-            onClick={handleClose}
-          >
-            Close
-          </Button>
-        )}
-        
-        {currentStep === 'intro' && (
-          <PatternIntroScreen onContinue={handleGoToPatternList} />
-        )}
-        
-        {currentStep === 'list' && (
-          <PatternList onPatternSelect={handlePatternSelect} />
-        )}
-        
-        {currentStep === 'detail' && selectedPattern && (
-          <PatternDetailScreen 
-            pattern={selectedPattern} 
-            onContinue={handleGoToRepair} 
-          />
-        )}
-        
-        {currentStep === 'repair' && selectedPattern && (
-          <PatternRepairScreen 
-            pattern={selectedPattern}
-            onContinue={handleStartOver}
-          />
-        )}
-      </div>
+    <div className="mb-16">
+      {currentView === 'intro' && (
+        <PatternIntroScreen onContinue={handleContinueFromIntro} />
+      )}
+      
+      {currentView === 'list' && (
+        <PatternList 
+          patterns={patterns}
+          onSelectPattern={handleSelectPattern}
+          togglePatternSelection={togglePatternSelection}
+          selectedPatterns={selectedPatterns}
+        />
+      )}
+      
+      {currentView === 'detail' && selectedPattern && (
+        <PatternDetailScreen 
+          pattern={selectedPattern}
+          onBack={handleBack}
+          onViewCycle={handleViewCycle}
+          onViewRepair={handleViewRepair}
+        />
+      )}
+      
+      {currentView === 'pdDetail' && selectedPattern && (
+        <PursueDistanceDetailScreen
+          onBack={handleBack}
+          onViewCycle={handleViewCycle}
+          onViewRepair={handleViewRepair}
+        />
+      )}
+      
+      {currentView === 'cycle' && selectedPattern && (
+        <CyclePatternScreen
+          pattern={selectedPattern}
+          cycleData={cycleData}
+          onBack={handleBack}
+          onViewRepair={handleViewRepair}
+        />
+      )}
+      
+      {currentView === 'repair' && selectedPattern && (
+        <PatternRepairScreen
+          pattern={selectedPattern}
+          onBack={handleBack}
+        />
+      )}
+      
+      {currentView === 'pdRepair' && (
+        <PursueDistanceRepairScreen
+          onBack={handleBack}
+        />
+      )}
     </div>
   );
 };
