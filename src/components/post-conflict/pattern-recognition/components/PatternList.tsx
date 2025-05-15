@@ -89,16 +89,16 @@ const PatternList: React.FC<PatternListProps> = ({ patterns = samplePatterns, on
   const getPatternIcon = (patternType: string) => {
     switch(patternType) {
       case 'criticism-defensiveness':
-        return <RefreshCcw className={`h-8 w-8 ${patternColors[patternType].text} pattern-icon`} />;
+        return <RefreshCcw className={`h-5 w-5 ${patternColors[patternType].text} pattern-icon`} />;
       case 'pursue-distance':
-        return <Users className={`h-8 w-8 ${patternColors[patternType].text} pattern-icon`} />;
+        return <Users className={`h-5 w-5 ${patternColors[patternType].text} pattern-icon`} />;
       case 'criticize-control':
-        return <Megaphone className={`h-8 w-8 ${patternColors[patternType].text} pattern-icon`} />;
+        return <Megaphone className={`h-5 w-5 ${patternColors[patternType].text} pattern-icon`} />;
       case 'fix-reject':
-        return <Puzzle className={`h-8 w-8 ${patternColors[patternType].text} pattern-icon`} />;
+        return <Puzzle className={`h-5 w-5 ${patternColors[patternType].text} pattern-icon`} />;
       case 'silent-tension-snap':
         return (
-          <svg width="32" height="32" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className={`${patternColors[patternType].text} pattern-icon`}>
+          <svg width="20" height="20" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" className={`${patternColors[patternType].text} pattern-icon`}>
             <path d="M22 16L14 28H22L20 36L28 24H20L22 16Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         );
@@ -109,17 +109,17 @@ const PatternList: React.FC<PatternListProps> = ({ patterns = samplePatterns, on
 
   return (
     <div className="space-y-4 max-w-lg mx-auto">
-      <div className="text-center mb-8">
-        <h1 className="text-3xl md:text-4xl font-cormorant font-bold text-[#14213d] mb-3">
+      <div className="text-center mb-6">
+        <h1 className="text-2xl md:text-3xl font-cormorant font-bold text-[#14213d] mb-2">
           Which pattern sounds like your relationship?
         </h1>
-        <p className="text-sm md:text-base text-[#14213d]/80 mb-4 max-w-md mx-auto leading-relaxed">
+        <p className="text-xs md:text-sm text-[#14213d]/80 mb-4 max-w-md mx-auto leading-relaxed">
           These common loops show up in many couples. 
           Tap one to explore how it plays out—and how to break it.
         </p>
       </div>
       
-      <div className="space-y-4 max-w-md mx-auto">
+      <div className="space-y-3 max-w-md mx-auto">
         {patterns.map(pattern => {
           const colors = patternColors[pattern.patternType] || { bg: 'bg-[#f8f5f0]', text: 'text-[#14213d]', iconBg: 'bg-[#f8f5f0]' };
           
@@ -128,26 +128,27 @@ const PatternList: React.FC<PatternListProps> = ({ patterns = samplePatterns, on
               key={pattern.id}
               onClick={() => onPatternSelect(pattern)}
               className={cn(
-                "w-full p-4 hover:shadow-md border border-transparent",
+                "w-full py-3 px-4 hover:shadow-md border border-transparent",
                 "transition-all duration-300 cursor-pointer pattern-card",
                 colors.bg
               )}
             >
               <div className="flex items-center">
-                <div className={`flex-shrink-0 mr-4 p-3 rounded-full ${colors.iconBg}`}>
+                {/* Icon without the rounded background */}
+                <div className="flex-shrink-0 mr-3">
                   {getPatternIcon(pattern.patternType)}
                 </div>
                 
                 <div className="flex-1">
-                  <h3 className="text-lg font-medium text-[#14213d] mb-1">
+                  <h3 className="text-sm font-medium text-[#14213d]">
                     {friendlyPatternNames[pattern.patternType] || pattern.name}
                   </h3>
-                  <p className="text-[#14213d]/70 text-sm">
+                  <p className="text-[#14213d]/70 text-xs">
                     {friendlyDescriptions[pattern.patternType] || pattern.description}
                   </p>
                 </div>
                 
-                <ChevronRight className="h-5 w-5 text-[#14213d]/40" />
+                <ChevronRight className="h-4 w-4 text-[#14213d]/40" />
               </div>
             </Card>
           );
