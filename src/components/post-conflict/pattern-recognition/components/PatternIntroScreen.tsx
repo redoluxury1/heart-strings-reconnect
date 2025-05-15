@@ -15,26 +15,32 @@ const PatternIntroScreen: React.FC<PatternIntroScreenProps> = ({ onContinue }) =
   };
 
   return (
-    <div className="flex flex-col items-center justify-center text-center max-w-2xl mx-auto py-4">
-      <h2 className="text-3xl md:text-4xl font-cormorant font-medium text-[#14213d] mb-4 tracking-tight">
-        Let's break the cycle.
-      </h2>
-      
-      <p className="text-sm md:text-base text-[#14213d] mb-8 max-w-md">
-        Every couple has patterns. The goal isn't to be perfect—it's to catch 
-        the cycle before it catches you.
-      </p>
-      
-      <div className="relative w-full max-w-sm mb-8 flex justify-center">
-        <PatternsIcon className="w-64 h-64 text-[#C7747F]" />
+    <div className="bg-[#FDFBF9] rounded-xl border border-[#E7D9C9] shadow-sm p-6 max-w-xl mx-auto">
+      <div className="flex flex-col items-center text-center">
+        {/* Icon at the top */}
+        <div className="w-20 h-20 rounded-full bg-[#C7747F]/10 flex items-center justify-center mb-6">
+          <PatternsIcon className="w-12 h-12 text-[#C7747F]" />
+        </div>
+        
+        {/* Title */}
+        <h2 className="font-cormorant text-2xl md:text-3xl font-medium text-[#14213d] mb-4">
+          Let's break the cycle.
+        </h2>
+        
+        {/* Description */}
+        <p className="text-sm md:text-base text-[#14213d]/80 mb-8 max-w-md">
+          Every couple has patterns. The goal isn't to be perfect—it's to catch 
+          the cycle before it catches you.
+        </p>
+        
+        {/* Button */}
+        <Button
+          onClick={handleContinueClick}
+          className="bg-[#14213d] hover:bg-[#14213d]/90 text-white font-medium py-2 px-6 rounded-full"
+        >
+          Start Recognizing the Pattern
+        </Button>
       </div>
-      
-      <Button
-        onClick={handleContinueClick}
-        className="bg-[#14213d] hover:bg-[#14213d]/90 text-white font-medium py-2 px-5 rounded-full text-sm"
-      >
-        Start Recognizing the Pattern
-      </Button>
     </div>
   );
 };
