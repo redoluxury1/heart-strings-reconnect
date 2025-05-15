@@ -29,7 +29,7 @@ const PostConflictContent = () => {
     <div className="min-h-screen bg-slate-50">
       <Navbar />
       
-      <main className="py-0 pb-36">
+      <main className="py-0 pb-20">
         {showIntro && <FloatingTextBubbles />}
         
         <ContentContainer maxWidth="lg">
@@ -68,9 +68,9 @@ const PostConflictContent = () => {
           </ContentContainer>
         )}
         
-        {/* Add Build a Bridge card to the bottom of the page */}
+        {/* Add Build a Bridge card to the bottom of the page with reduced bottom margin */}
         <ContentContainer maxWidth="lg">
-          <div className="max-w-3xl mx-auto mt-32 mb-20">
+          <div className="max-w-3xl mx-auto mt-32 mb-8">
             <BuildBridgeCard />
           </div>
         </ContentContainer>

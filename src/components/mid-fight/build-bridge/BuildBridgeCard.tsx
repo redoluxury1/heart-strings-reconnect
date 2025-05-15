@@ -7,15 +7,15 @@ const BuildBridgeCard: React.FC = () => {
   return (
     <Card className="border-0 shadow-md bg-[#F7ECD9] rounded-2xl overflow-hidden">
       <div className="p-6 md:p-8 flex flex-col items-center text-center">
-        <h2 className="text-4xl md:text-5xl font-cormorant font-bold text-midnight-indigo mb-4">
+        <h2 className="text-4xl md:text-5xl font-cormorant font-bold text-[#162137] mb-4">
           Build a Bridge
         </h2>
         
-        <div className="text-midnight-indigo text-sm italic mb-6">
+        <div className="text-[#162137] text-sm italic mb-6">
           Coming Soon
         </div>
         
-        <p className="text-midnight-indigo text-base md:text-lg max-w-md mb-8">
+        <p className="text-[#162137] text-base md:text-lg max-w-md mb-8">
           Sometimes we just need a third party to help us navigate something hard.
           We are building our team of experts to bring this feature to life.
         </p>
