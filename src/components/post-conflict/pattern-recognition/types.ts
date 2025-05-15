@@ -20,7 +20,7 @@ export type PatternType =
 
 // Base pattern interface
 export interface Pattern {
-  id: number; // Changed from string | number to just number for consistency
+  id: number;
   name: string;
   description: string;
   examples: string[];
@@ -77,7 +77,7 @@ export interface CyclePatternScreenProps {
 export interface PatternRepairScreenProps {
   pattern?: CommonPattern | null;
   onBack: () => void;
-  onContinue?: () => void;
+  onContinue: () => void;
   buttonText?: string;
 }
 
