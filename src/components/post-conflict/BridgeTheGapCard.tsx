@@ -20,7 +20,7 @@ const BridgeTheGapCard: React.FC = () => {
         
         {/* Bridge icon between title and description */}
         <div className="flex justify-center mb-5">
-          <ArrowRightLeft className="h-12 w-12 text-[#C7747F]" strokeWidth={1.5} />
+          <ArrowRightLeft className="h-12 w-12 text-[#D3876A]" strokeWidth={1.5} />
         </div>
         
         <p className="text-[#162137] text-lg mb-14">
