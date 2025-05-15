@@ -19,7 +19,8 @@ export const communicationSubcategories: CommunicationSubcategoryData[] = [
     id: 'talking-past-each-other',
     name: 'Talking Past Each Other',
     icon: <MessageSquare className="h-4 w-4" />,
-    color: 'text-lavender-blue',
+    color: 'text-[#9b87f5]',
+    bgColor: 'bg-[#9b87f5]/10',
     prompts: {
       openEnded: [
         "Do you feel like we hear the words but miss the meaning?",
@@ -36,7 +37,8 @@ export const communicationSubcategories: CommunicationSubcategoryData[] = [
     id: 'defensiveness',
     name: 'Defensiveness',
     icon: <Bell className="h-4 w-4" />,
-    color: 'text-mauve-rose',
+    color: 'text-[#D3876A]',
+    bgColor: 'bg-[#D3876A]/10',
     prompts: {
       openEnded: [
         "Do I get defensive when you bring up hard things?",
@@ -53,7 +55,8 @@ export const communicationSubcategories: CommunicationSubcategoryData[] = [
     id: 'avoidance',
     name: 'Avoidance',
     icon: <User className="h-4 w-4" />,
-    color: 'text-sage',
+    color: 'text-[#162137]',
+    bgColor: 'bg-[#162137]/10',
     prompts: {
       openEnded: [
         "What topics do we avoid, and why?",
@@ -70,7 +73,8 @@ export const communicationSubcategories: CommunicationSubcategoryData[] = [
     id: 'misinterpretation',
     name: 'Misinterpretation',
     icon: <Volume className="h-4 w-4" />,
-    color: 'text-peachy-terracotta',
+    color: 'text-[#5D3A5A]',
+    bgColor: 'bg-[#5D3A5A]/10',
     prompts: {
       openEnded: [
         "Do you feel like your tone or intent is often misunderstood?",
@@ -87,7 +91,8 @@ export const communicationSubcategories: CommunicationSubcategoryData[] = [
     id: 'timing-mismatches',
     name: 'Timing Mismatches',
     icon: <Clock className="h-4 w-4" />,
-    color: 'text-golden-mustard',
+    color: 'text-[#9b87f5]',
+    bgColor: 'bg-[#9b87f5]/10',
     prompts: {
       openEnded: [
         "Do you prefer to talk things out right away or after a pause?",

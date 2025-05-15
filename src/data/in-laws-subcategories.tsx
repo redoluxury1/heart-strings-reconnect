@@ -19,8 +19,8 @@ export const inLawsSubcategories: InLawsSubcategoryData[] = [
     id: 'squeezed-between-family',
     name: 'Feeling Squeezed Between Family & Partner',
     icon: <Users className="h-4 w-4" />,
-    color: 'text-purple-600',
-    bgColor: 'bg-purple-600/10',
+    color: 'text-[#9b87f5]',
+    bgColor: 'bg-[#9b87f5]/10',
     prompts: {
       openEnded: [
         'Do you ever feel like you\'re caught in the middle between me and your family?',
@@ -37,8 +37,8 @@ export const inLawsSubcategories: InLawsSubcategoryData[] = [
     id: 'conflict-with-one-side',
     name: 'Conflict With One Side',
     icon: <Shield className="h-4 w-4" />,
-    color: 'text-[#9b87f5]',
-    bgColor: 'bg-[#9b87f5]/10',
+    color: 'text-[#D3876A]',
+    bgColor: 'bg-[#D3876A]/10',
     prompts: {
       openEnded: [
         'Is there a recurring issue that keeps showing up with one side of the family?',
@@ -55,8 +55,8 @@ export const inLawsSubcategories: InLawsSubcategoryData[] = [
     id: 'grandparent-boundaries',
     name: 'Grandparent Boundaries',
     icon: <Home className="h-4 w-4" />,
-    color: 'text-[#7E69AB]',
-    bgColor: 'bg-[#7E69AB]/10',
+    color: 'text-[#5D3A5A]',
+    bgColor: 'bg-[#5D3A5A]/10',
     prompts: {
       openEnded: [
         'Do you feel like your parenting choices are respected by grandparents?',
@@ -73,8 +73,8 @@ export const inLawsSubcategories: InLawsSubcategoryData[] = [
     id: 'unequal-time',
     name: 'Unequal Time or Energy',
     icon: <Clock className="h-4 w-4" />,
-    color: 'text-[#6E59A5]',
-    bgColor: 'bg-[#6E59A5]/10',
+    color: 'text-[#162137]',
+    bgColor: 'bg-[#162137]/10',
     prompts: {
       openEnded: [
         'Do we spend more time or effort with one side of the family?',
@@ -91,8 +91,8 @@ export const inLawsSubcategories: InLawsSubcategoryData[] = [
     id: 'undermining-relationship',
     name: 'In-Laws Undermining the Relationship',
     icon: <Scale className="h-4 w-4" />,
-    color: 'text-[#D6BCFA]',
-    bgColor: 'bg-[#D6BCFA]/20',
+    color: 'text-[#9b87f5]',
+    bgColor: 'bg-[#9b87f5]/10',
     prompts: {
       openEnded: [
         'Has there been a moment where it felt like your family didn\'t respect our relationship?',

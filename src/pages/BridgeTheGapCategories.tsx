@@ -46,7 +46,7 @@ const BridgeTheGapCategories: React.FC = () => {
       id: 'household-duties',
       name: 'Household Duties',
       icon: <Trash2 className="h-12 w-12" />,
-      color: 'text-[#9b87f5]', // Mauve/Primary Purple
+      color: 'text-[#9b87f5]', // Mauve
     },
     {
       id: 'money',
@@ -64,7 +64,7 @@ const BridgeTheGapCategories: React.FC = () => {
       id: 'in-laws',
       name: 'In-Laws',
       icon: <Users className="h-12 w-12" />,
-      color: 'text-[#9b87f5]', // Mauve/Primary Purple
+      color: 'text-[#9b87f5]', // Mauve
     },
     {
       id: 'feeling-unseen',
@@ -82,7 +82,7 @@ const BridgeTheGapCategories: React.FC = () => {
       id: 'communication',
       name: 'Communication',
       icon: <MessageSquare className="h-12 w-12" />,
-      color: 'text-[#162137]', // Navy/Midnight Indigo
+      color: 'text-[#9b87f5]', // Mauve
       isWide: true // This item will be wider on mobile
     }
   ];
