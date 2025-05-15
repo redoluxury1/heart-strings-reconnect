@@ -46,14 +46,12 @@ const PostConflictContent = () => {
             
             {/* Only show these components if user hasn't completed the flow or both partners are ready */}
             {showOtherComponents && (
-              <div className="space-y-32">
+              <div className="space-y-16">
                 {/* OkayButNowWhat section with Pattern Recognition and White Flag Tools */}
                 <OkayButNowWhat />
                 
-                {/* New Bridge the Gap card with spacing */}
-                <div className="mt-10 md:mt-12">
-                  <BridgeTheGapCard />
-                </div>
+                {/* Bridge the Gap card placed directly below OkayButNowWhat */}
+                <BridgeTheGapCard />
               </div>
             )}
           </div>

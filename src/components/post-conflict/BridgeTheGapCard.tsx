@@ -23,7 +23,7 @@ const BridgeTheGapCard: React.FC = () => {
         </p>
         
         <Button 
-          className="bg-[#162137] hover:bg-[#162137]/90 text-white font-medium px-6 py-5 text-lg rounded-md shadow-sm flex items-center gap-2 w-full md:w-auto"
+          className="bg-[#D3876A] hover:bg-[#D3876A]/90 text-white font-medium px-6 py-5 text-lg rounded-md shadow-sm flex items-center gap-2 w-full md:w-auto"
           onClick={handleNavigate}
         >
           Try Bridge the Gap <ArrowRight className="h-5 w-5" />

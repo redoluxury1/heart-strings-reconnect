@@ -3,7 +3,6 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { RotateCw, Flag } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import BridgeTheGapCard from './BridgeTheGapCard';
 
 const OkayButNowWhat: React.FC = () => {
   const navigate = useNavigate();
@@ -25,7 +24,7 @@ const OkayButNowWhat: React.FC = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           {/* Pattern Recognition Button - Now with Coming Soon flag and overlay */}
           <div 
             className="bg-white rounded-lg border shadow-sm relative overflow-hidden cursor-default"
@@ -64,11 +63,6 @@ const OkayButNowWhat: React.FC = () => {
                 Simple messages to help de-escalate when things start to heat up.
               </p>
             </div>
-          </div>
-          
-          {/* Bridge the Gap card - now in the grid */}
-          <div className="h-full">
-            <BridgeTheGapCard />
           </div>
         </div>
       </div>
