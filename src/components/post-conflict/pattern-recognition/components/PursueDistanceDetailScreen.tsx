@@ -5,10 +5,12 @@ import { MessageCircle, PersonStanding, HeartCrack } from 'lucide-react';
 import { ConversationIcon } from './PatternRecognitionIcons';
 
 interface PursueDistanceDetailScreenProps {
-  onContinue: () => void;
+  onBack: () => void;
+  onViewCycle: () => void;
+  onViewRepair: () => void;
 }
 
-const PursueDistanceDetailScreen: React.FC<PursueDistanceDetailScreenProps> = ({ onContinue }) => {
+const PursueDistanceDetailScreen: React.FC<PursueDistanceDetailScreenProps> = ({ onBack, onViewCycle, onViewRepair }) => {
   return (
     <div className="flex flex-col items-center text-center max-w-md mx-auto py-6">
       <div className="mb-4 w-full">
@@ -68,9 +70,16 @@ const PursueDistanceDetailScreen: React.FC<PursueDistanceDetailScreenProps> = ({
         </ul>
       </div>
       
-      <div className="w-full px-6 mt-10">
+      <div className="w-full px-6 mt-10 flex items-center justify-between">
         <Button
-          onClick={onContinue}
+          onClick={onBack}
+          variant="ghost"
+          className="text-[#14213d] hover:text-[#14213d]/90 font-medium"
+        >
+          Back
+        </Button>
+        <Button
+          onClick={onViewRepair}
           className="bg-[#14213d] hover:bg-[#14213d]/90 text-white font-medium py-2 px-5 rounded-full text-sm"
         >
           What to Try Instead

@@ -7,6 +7,8 @@ import PatternCard from './PatternCard';
 interface PatternListProps {
   patterns?: CommonPattern[];
   onPatternSelect: (pattern: CommonPattern) => void;
+  togglePatternSelection?: (id: number | string) => void;
+  selectedPatterns?: (number | string)[];
 }
 
 // Friendly pattern names for display

@@ -1,17 +1,18 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { useNavigate } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
 import { User, Speaker, ConnectIcon } from './PursueDistanceIcons';
 import { RepairIcon } from './PatternRecognitionIcons';
 
 interface PursueDistanceRepairScreenProps {
+  onBack?: () => void;
   onContinue: () => void;
   buttonText?: string;
 }
 
 const PursueDistanceRepairScreen: React.FC<PursueDistanceRepairScreenProps> = ({ 
+  onBack,
   onContinue, 
   buttonText = "Continue" 
 }) => {
@@ -70,13 +71,24 @@ const PursueDistanceRepairScreen: React.FC<PursueDistanceRepairScreenProps> = ({
         </Card>
       </div>
       
-      <div className="w-full mt-10">
-        <Button
-          onClick={onContinue}
-          className="bg-[#14213d] hover:bg-[#14213d]/90 text-white font-medium py-2 px-5 rounded-full text-sm"
-        >
-          {buttonText}
-        </Button>
+      <div className="w-full mt-10 flex items-center justify-between">
+        {onBack && (
+          <Button
+            onClick={onBack}
+            variant="ghost"
+            className="text-[#14213d] hover:text-[#14213d]/90 font-medium"
+          >
+            Back
+          </Button>
+        )}
+        <div className={onBack ? "" : "w-full flex justify-center"}>
+          <Button
+            onClick={onContinue}
+            className="bg-[#14213d] hover:bg-[#14213d]/90 text-white font-medium py-2 px-5 rounded-full text-sm"
+          >
+            {buttonText}
+          </Button>
+        </div>
       </div>
     </div>
   );

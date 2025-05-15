@@ -47,7 +47,7 @@ export interface PatternIntroScreenProps {
 
 export interface PatternListProps {
   patterns?: CommonPattern[];
-  onSelectPattern: (pattern: CommonPattern) => void;
+  onPatternSelect: (pattern: CommonPattern) => void;
   togglePatternSelection?: (id: number | string) => void;
   selectedPatterns?: (number | string)[];
 }

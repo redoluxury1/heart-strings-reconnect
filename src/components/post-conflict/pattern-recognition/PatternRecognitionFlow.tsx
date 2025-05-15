@@ -9,6 +9,7 @@ import PatternRepairScreen from './components/PatternRepairScreen';
 import CyclePatternScreen from './components/CyclePatternScreen';
 import { usePatternRecognition } from './hooks/usePatternRecognition';
 import { Pattern, CommonPattern } from './types';
+import { commonPatterns } from './data/pattern-data';
 
 interface PatternRecognitionFlowProps {
   fullScreen?: boolean;
@@ -19,30 +20,7 @@ const PatternRecognitionFlow: React.FC<PatternRecognitionFlowProps> = ({ fullScr
   const [currentView, setCurrentView] = useState<'intro' | 'list' | 'detail' | 'cycle' | 'repair' | 'pdDetail' | 'pdRepair'>('intro');
   const [selectedPattern, setSelectedPattern] = useState<Pattern | null>(null);
   
-  // Sample patterns data to use when the hook doesn't provide them
-  const samplePatterns: CommonPattern[] = [
-    {
-      id: 1,
-      name: 'Criticism-Defensiveness Cycle',
-      description: 'You feel blamed, so you shut down. They get louder. Repeat.',
-      examples: ['You always...', 'I never said that!', 'Why are you making this my fault?'],
-      breakingTips: ['Use "I" statements instead of "you" accusations', 'Take a pause before responding defensively'],
-      patternType: 'criticism-defensiveness'
-    },
-    {
-      id: 2,
-      name: 'Pursue-Distance Dynamic',
-      description: 'One of you chases connection. The other pulls away.',
-      examples: ["Why won't you talk to me?", 'I just need some space', 'You never want to discuss our issues'],
-      breakingTips: ['Set a specific time to talk later', "Respect each other's timing needs"],
-      patternType: 'pursue-distance'
-    },
-    // ... more patterns could be added here
-  ];
-  
-  const patternRecognition = usePatternRecognition();
-  // Use sample data as fallback
-  const patterns = samplePatterns;
+  // Sample cycle data (could be expanded later)
   const cycleData = {};
   const selectedPatterns: number[] = [];
   
@@ -116,6 +94,9 @@ const PatternRecognitionFlow: React.FC<PatternRecognitionFlowProps> = ({ fullScr
     }
   };
   
+  // We're using the common patterns from the data file
+  const patterns = commonPatterns;
+  
   return (
     <div className={`mb-16 ${fullScreen ? 'fixed inset-0 z-50 bg-white p-4 overflow-auto' : ''}`}>
       {fullScreen && (
@@ -135,9 +116,7 @@ const PatternRecognitionFlow: React.FC<PatternRecognitionFlowProps> = ({ fullScr
       {currentView === 'list' && (
         <PatternList 
           patterns={patterns}
-          onSelectPattern={handleSelectPattern} 
-          togglePatternSelection={togglePatternSelection}
-          selectedPatterns={selectedPatterns}
+          onPatternSelect={handleSelectPattern}
         />
       )}
       
