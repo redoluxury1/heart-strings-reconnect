@@ -30,8 +30,8 @@ export async function generateShareableImage(quote: string): Promise<string> {
     ctx.fillStyle = '#f8fafc'; // Light background (slate-50)
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     
-    // Create a border with terracotta color
-    ctx.strokeStyle = '#DF8152'; // Peachy-terracotta color
+    // Create a border with dark navy blue color
+    ctx.strokeStyle = '#4A448C'; // Midnight-indigo color
     ctx.lineWidth = 10;
     ctx.strokeRect(40, 40, canvas.width - 80, canvas.height - 80);
     
