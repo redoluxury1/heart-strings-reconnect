@@ -10,6 +10,9 @@ import CyclePatternScreen from './components/CyclePatternScreen';
 import { usePatternRecognition } from './hooks/usePatternRecognition';
 import { CommonPattern } from './types';
 import { commonPatterns } from './data/pattern-data';
+import { Card } from '@/components/ui/card';
+import { X } from 'lucide-react';
+import '../../styles/animations/pattern-recognition.css';
 
 interface PatternRecognitionFlowProps {
   fullScreen?: boolean;
@@ -102,67 +105,69 @@ const PatternRecognitionFlow: React.FC<PatternRecognitionFlowProps> = ({ fullScr
       {fullScreen && (
         <button 
           onClick={onClose} 
-          className="absolute top-4 right-4 p-2 rounded-full bg-gray-100 hover:bg-gray-200"
+          className="absolute top-4 right-4 p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
           aria-label="Close"
         >
-          ✕
+          <X className="h-5 w-5" />
         </button>
       )}
-      
-      {currentView === 'intro' && (
-        <PatternIntroScreen onContinue={handleContinueFromIntro} />
-      )}
-      
-      {currentView === 'list' && (
-        <PatternList 
-          patterns={patterns}
-          onPatternSelect={handleSelectPattern}
-          togglePatternSelection={togglePatternSelection}
-          selectedPatterns={selectedPatterns}
-        />
-      )}
-      
-      {currentView === 'detail' && selectedPattern && (
-        <PatternDetailScreen 
-          pattern={selectedPattern}
-          onBack={handleBack}
-          onViewCycle={handleViewCycle}
-          onViewRepair={handleViewRepair}
-        />
-      )}
-      
-      {currentView === 'pdDetail' && (
-        <PursueDistanceDetailScreen
-          onBack={handleBack}
-          onViewCycle={handleViewCycle}
-          onViewRepair={handleViewRepair}
-        />
-      )}
-      
-      {currentView === 'cycle' && (
-        <CyclePatternScreen
-          pattern={selectedPattern}
-          cycleData={cycleData}
-          onBack={handleBack}
-          onViewRepair={handleViewRepair}
-          onContinue={handleContinueFromCycle}
-        />
-      )}
-      
-      {currentView === 'repair' && selectedPattern && (
-        <PatternRepairScreen
-          pattern={selectedPattern}
-          onBack={handleBack}
-          onContinue={handleContinueFromRepair}
-        />
-      )}
-      
-      {currentView === 'pdRepair' && (
-        <PursueDistanceRepairScreen
-          onBack={handleBack}
-          onContinue={handleContinueFromRepair}
-        />
-      )}
+
+      <Card className={`border-none shadow-sm bg-white overflow-hidden transition-all duration-300 ${currentView !== 'intro' ? 'p-4 md:p-6' : 'p-0'}`}>
+        {currentView === 'intro' && (
+          <PatternIntroScreen onContinue={handleContinueFromIntro} />
+        )}
+        
+        {currentView === 'list' && (
+          <PatternList 
+            patterns={patterns}
+            onPatternSelect={handleSelectPattern}
+            togglePatternSelection={togglePatternSelection}
+            selectedPatterns={selectedPatterns}
+          />
+        )}
+        
+        {currentView === 'detail' && selectedPattern && (
+          <PatternDetailScreen 
+            pattern={selectedPattern}
+            onBack={handleBack}
+            onViewCycle={handleViewCycle}
+            onViewRepair={handleViewRepair}
+          />
+        )}
+        
+        {currentView === 'pdDetail' && (
+          <PursueDistanceDetailScreen
+            onBack={handleBack}
+            onViewCycle={handleViewCycle}
+            onViewRepair={handleViewRepair}
+          />
+        )}
+        
+        {currentView === 'cycle' && (
+          <CyclePatternScreen
+            pattern={selectedPattern}
+            cycleData={cycleData}
+            onBack={handleBack}
+            onViewRepair={handleViewRepair}
+            onContinue={handleContinueFromCycle}
+          />
+        )}
+        
+        {currentView === 'repair' && selectedPattern && (
+          <PatternRepairScreen
+            pattern={selectedPattern}
+            onBack={handleBack}
+            onContinue={handleContinueFromRepair}
+          />
+        )}
+        
+        {currentView === 'pdRepair' && (
+          <PursueDistanceRepairScreen
+            onBack={handleBack}
+            onContinue={handleContinueFromRepair}
+          />
+        )}
+      </Card>
     </div>
   );
 };

@@ -1,0 +1,55 @@
+
+@keyframes gentle-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(1deg);
+  }
+  75% {
+    transform: rotate(-1deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes subtle-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.03);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-gentle-rotate {
+  animation: gentle-rotate 8s infinite ease-in-out;
+}
+
+.animate-subtle-pulse {
+  animation: subtle-pulse 4s infinite ease-in-out;
+}
+
+.pattern-card {
+  transition: all 0.3s ease;
+}
+
+.pattern-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.pattern-icon {
+  transition: all 0.3s ease;
+}
+
+.pattern-card:hover .pattern-icon {
+  transform: scale(1.05);
+}

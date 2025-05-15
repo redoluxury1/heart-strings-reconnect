@@ -5,6 +5,7 @@ import { CommonPattern } from '../types';
 import { MessageSquare, Shield, X, ArrowLeft, Eye } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { CycleIcon, SilentTensionIcon, CriticizeControlIcon, FixRejectIcon, PursueDistanceIcon } from './PatternRecognitionIcons';
+import { Card } from '@/components/ui/card';
 
 interface PatternDetailScreenProps {
   pattern: CommonPattern | null;
@@ -29,13 +30,13 @@ const PatternDetailScreen: React.FC<PatternDetailScreenProps> = ({ pattern, onBa
     { 
       icon: <MessageSquare size={18} className="text-[#07183D] mr-2" />, 
       title: "Criticism:", 
-      text: '"You never care about what I need."', 
+      text: "\"You never care about what I need.\"", 
       subtext: "(Blame disguised as hurt)"
     },
     { 
       icon: <Shield size={18} className="text-[#07183D] mr-2" />, 
       title: "Defensiveness:", 
-      text: '"That\'s not true! I didn\'t do anything wrong."', 
+      text: "\"That's not true! I didn't do anything wrong.\"", 
       subtext: "(Protecting self over repairing connection)"
     },
     { 
@@ -198,7 +199,7 @@ const PatternDetailScreen: React.FC<PatternDetailScreenProps> = ({ pattern, onBa
   }
 
   return (
-    <div className="flex flex-col items-center max-w-md mx-auto py-6 bg-[#f8f5f0] rounded-lg">
+    <div className="flex flex-col items-center max-w-md mx-auto py-6 rounded-lg">
       <div className="mb-2 w-full flex justify-start">
         <Button 
           variant="ghost" 
@@ -211,78 +212,78 @@ const PatternDetailScreen: React.FC<PatternDetailScreenProps> = ({ pattern, onBa
         </Button>
       </div>
       
-      {/* Pattern title - small caps style */}
-      <div className="w-full px-6">
-        <p className="text-xs uppercase tracking-wide font-serif text-[#2e2a63]/80">
+      {/* Pattern visualization - larger and more prominent */}
+      <div className="w-full flex justify-center mb-4 bg-[#f8f5f0] rounded-lg p-6">
+        <CycleIconComponent className="w-44 h-44 md:w-56 md:h-56 text-[#2e2a63] animate-gentle-rotate" />
+      </div>
+      
+      {/* Pattern title and headline in a card */}
+      <Card className="w-full px-5 py-4 mb-4 border-l-4 border-l-[#2e2a63] bg-gradient-to-r from-[#f8f5f0] to-white">
+        <p className="text-xs uppercase tracking-wide font-medium text-[#2e2a63]/80 mb-1">
           Pattern: {title}
         </p>
-      </div>
-      
-      {/* Headline and subheadline */}
-      <div className="w-full px-6 mt-2">
-        <h1 className="text-3xl md:text-4xl font-serif font-medium text-[#07183D] mb-3">
+        <h1 className="text-2xl md:text-3xl font-serif font-medium text-[#07183D] mb-2">
           {headline}
         </h1>
-        
-        <h2 className="text-lg text-[#07183D] leading-relaxed font-sans">
+        <p className="text-md text-[#333333] leading-relaxed">
           {subheadline}
-        </h2>
-      </div>
+        </p>
+      </Card>
       
-      {/* Icon visualization */}
-      <div className="w-full my-6 flex justify-center">
-        <CycleIconComponent className="w-56 h-56 text-[#14213d]" />
-      </div>
-      
-      {/* Emotional insights as bullets */}
-      <div className="w-full px-6 bg-white/50 py-5 rounded-lg mx-2">
-        <ul className="space-y-3">
-          {insights.map((insight, index) => (
-            <li key={index} className="flex items-start">
-              <div className="min-w-5 h-5 flex items-center justify-center mr-2 mt-0.5">
+      {/* Key insights in separated cards */}
+      <div className="w-full grid grid-cols-1 gap-3 mb-6">
+        {insights.map((insight, index) => (
+          <Card 
+            key={index} 
+            className="p-3 bg-white border-[#C7747F]/20 shadow-sm"
+          >
+            <div className="flex items-start">
+              <div className="flex-shrink-0 mr-2 mt-1 h-5 w-5 rounded-full bg-[#2e2a63]/10 flex items-center justify-center">
                 <span className="text-[#2e2a63] font-bold">!</span>
               </div>
-              <span className="text-[#333333]">{insight}</span>
-            </li>
-          ))}
-        </ul>
+              <p className="text-[#333333] text-sm">{insight}</p>
+            </div>
+          </Card>
+        ))}
       </div>
-      
-      {/* Separator */}
-      <Separator className="w-10 h-[2px] bg-[#2e2a63]/30 my-6" />
-      
+
       {/* Spot the signs section */}
-      <div className="w-full px-6 text-left">
-        <div className="flex items-center mb-4">
-          <Eye size={18} className="text-[#2e2a63] mr-2" />
-          <h3 className="text-xl font-serif font-medium text-[#2e2a63]">Spot the Signs</h3>
+      <div className="w-full px-4 mb-6">
+        <div className="flex items-center bg-[#fbeaec]/30 p-3 rounded-lg mb-3">
+          <Eye size={18} className="text-[#C7747F] mr-2" />
+          <h3 className="text-lg font-medium text-[#333333]">Spot the Signs</h3>
         </div>
         
-        <ul className="space-y-4">
+        <div className="grid grid-cols-1 gap-3">
           {signs.map((sign, index) => (
-            <li key={index} className={`flex items-start p-3 rounded-md ${index % 2 === 0 ? 'bg-[#f8f5f0]' : 'bg-[#fbeaec]/30'}`}>
-              <div className="mt-0.5">
-                {sign.icon}
+            <Card 
+              key={index} 
+              className={`p-3 border-none ${index % 2 === 0 ? 'bg-[#f8f5f0]' : 'bg-white'}`}
+            >
+              <div className="flex items-start">
+                <div className="flex-shrink-0 mr-3 p-1.5 rounded-full bg-[#C7747F]/10">
+                  {sign.icon}
+                </div>
+                <div>
+                  <p className="font-medium text-[#07183D] mb-1">{sign.title}</p>
+                  <p className="text-[#333333] text-sm">{sign.text}</p>
+                  {sign.subtext && (
+                    <p className="text-[#333333]/70 text-xs italic mt-1">{sign.subtext}</p>
+                  )}
+                </div>
               </div>
-              <div>
-                <span className="font-bold text-[#07183D]">{sign.title} </span>
-                <span className="text-[#333333]">{sign.text} </span>
-                {sign.subtext && (
-                  <span className="text-[#333333]/70 text-sm italic">{sign.subtext}</span>
-                )}
-              </div>
-            </li>
+            </Card>
           ))}
-        </ul>
+        </div>
       </div>
       
-      {/* What to try instead button */}
-      <div className="w-full px-6 mt-8">
+      {/* Action button */}
+      <div className="w-full px-4 mt-2">
         <Button
           onClick={onViewRepair}
           className="bg-[#2e2a63] hover:bg-[#2e2a63]/90 text-white font-medium py-2 px-5 rounded-full text-sm w-full"
         >
-          What to Try Instead
+          Show Me How to Break This Pattern
         </Button>
       </div>
     </div>

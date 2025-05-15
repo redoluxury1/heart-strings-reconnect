@@ -32,19 +32,19 @@ const PatternRepairScreen: React.FC<PatternRepairScreenProps> = ({
       icon: <Clock size={24} className="text-[#2e2a63]" />,
       title: "Pause to Reset",
       description: "Take a 5-minute break with intention.",
-      example: 'Say: "I want to talk about this, but I need a second to calm down so I don\'t just react."'
+      example: "Say: \"I want to talk about this, but I need a second to calm down so I don't just react.\""
     },
     { 
       icon: <Heart size={24} className="text-[#2e2a63]" />,
       title: "Lead with Your Own Emotion",
       description: "Start from your hurt, not their fault.",
-      example: 'Say: "I felt really discouraged when that happened. Can we talk about it?"'
+      example: "Say: \"I felt really discouraged when that happened. Can we talk about it?\""
     },
     { 
       icon: <Link size={24} className="text-[#2e2a63]" />,
       title: "Make Repair Easier",
       description: "Ask for what you need in a non-accusing way.",
-      example: 'Say: "I think I just need to feel like we\'re on the same team again. Can we reset?"'
+      example: "Say: \"I think I just need to feel like we're on the same team again. Can we reset?\""
     }
   ];
   let tagline = "It's not about blame—it's about rebuilding connection.";
@@ -125,7 +125,7 @@ const PatternRepairScreen: React.FC<PatternRepairScreenProps> = ({
   }
 
   return (
-    <div className="flex flex-col items-center text-center max-w-md mx-auto py-6 bg-[#f8f5f0] rounded-lg">
+    <div className="flex flex-col items-center text-center max-w-md mx-auto py-6 rounded-lg">
       <div className="mb-2 w-full flex justify-start">
         <Button 
           variant="ghost" 
@@ -138,53 +138,57 @@ const PatternRepairScreen: React.FC<PatternRepairScreenProps> = ({
         </Button>
       </div>
       
-      {/* Section title */}
-      <div className="w-full px-6 text-left mb-4">
-        <h2 className="text-2xl font-serif font-medium text-[#2e2a63]">
+      {/* Large Icon */}
+      <div className="w-full mb-4 flex justify-center">
+        <div className="p-6 bg-[#fbeaec]/30 rounded-full">
+          <RepairIcon className="w-32 h-32 text-[#C7747F]" />
+        </div>
+      </div>
+      
+      {/* Title card */}
+      <Card className="w-full px-5 py-4 mb-6 border-l-4 border-l-[#C7747F] bg-gradient-to-r from-[#f8f5f0] to-white">
+        <h2 className="text-2xl font-serif font-medium text-[#07183D]">
           {title}
         </h2>
-      </div>
+        <p className="mt-2 text-center text-[#333333] italic">
+          {tagline}
+        </p>
+      </Card>
       
-      {/* Illustration */}
-      <div className="w-full my-4 flex justify-center">
-        <RepairIcon className="w-44 h-44 text-[#2e2a63]" />
-      </div>
-      
-      {/* Steps cards */}
-      <div className="w-full space-y-4 mt-4 px-6">
+      {/* Steps cards - visually separated with numbering */}
+      <div className="w-full space-y-4 mb-6">
         {steps.map((step, index) => (
-          <Card key={index} className="p-4 bg-white border-[#2e2a63]/10 shadow-sm">
-            <div className="flex items-start">
-              <div className="mr-3 p-2 bg-[#f8f5f0] rounded-full">
-                {step.icon}
-              </div>
-              <div className="text-left">
-                <h3 className="font-bold text-lg text-[#2e2a63] mb-1">{step.title}</h3>
-                <p className="text-[#333333] mb-2">
-                  {step.description}
-                </p>
-                <p className="text-[#333333]/80 italic text-sm">
-                  {step.example}
-                </p>
-              </div>
+          <div key={index} className="relative">
+            {/* Step number circle */}
+            <div className="absolute -left-2 top-3 w-7 h-7 rounded-full bg-[#C7747F] text-white flex items-center justify-center font-bold">
+              {index + 1}
             </div>
-          </Card>
+            
+            <Card className={`p-4 pl-8 border-none ${index % 2 === 0 ? 'bg-white' : 'bg-[#f8f5f0]'}`}>
+              <div className="flex items-start">
+                <div className="mr-3 p-2 rounded-full bg-[#fbeaec]/50">
+                  {step.icon}
+                </div>
+                <div className="text-left">
+                  <h3 className="font-bold text-[#2e2a63] mb-1">{step.title}</h3>
+                  <p className="text-[#333333] text-sm mb-2">
+                    {step.description}
+                  </p>
+                  <p className="text-[#333333]/80 italic text-xs bg-[#fbeaec]/20 p-2 rounded">
+                    {step.example}
+                  </p>
+                </div>
+              </div>
+            </Card>
+          </div>
         ))}
       </div>
       
-      {/* Tagline */}
-      <div className="w-full px-6 mt-6 mb-4">
-        <Separator className="w-8 h-[2px] mx-auto bg-[#2e2a63]/30 mb-4" />
-        <p className="text-center text-[#2e2a63] italic">
-          {tagline}
-        </p>
-      </div>
-      
       {/* Continue button */}
-      <div className="w-full px-6 mt-4">
+      <div className="w-full px-4 mt-2">
         <Button
           onClick={onContinue}
-          className="bg-[#2e2a63] hover:bg-[#2e2a63]/90 text-white font-medium py-2 px-5 rounded-full text-sm"
+          className="bg-[#C7747F] hover:bg-[#C7747F]/90 text-white font-medium py-2 px-5 rounded-full text-sm"
         >
           {buttonText}
         </Button>
