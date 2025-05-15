@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import PatternIntroScreen from './components/PatternIntroScreen';
 import PatternList from './components/PatternList';
@@ -12,7 +11,7 @@ import { CommonPattern } from './types';
 import { commonPatterns } from './data/pattern-data';
 import { Card } from '@/components/ui/card';
 import { X } from 'lucide-react';
-import '../../styles/animations/pattern-recognition.css';
+import '@/styles/animations/pattern-recognition.css';
 
 interface PatternRecognitionFlowProps {
   fullScreen?: boolean;
