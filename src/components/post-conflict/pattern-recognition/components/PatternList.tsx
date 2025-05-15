@@ -4,7 +4,7 @@ import { ChevronRight, RefreshCcw, Users, Megaphone, Puzzle } from 'lucide-react
 import { CommonPattern } from '../types';
 import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
-import '../../../styles/animations/pattern-recognition.css';
+import '@/styles/animations/pattern-recognition.css';
 
 interface PatternListProps {
   patterns?: CommonPattern[];
