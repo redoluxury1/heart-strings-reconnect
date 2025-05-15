@@ -26,7 +26,7 @@ const BridgeTheGapCategories: React.FC = () => {
   // Define categories with their icons and colors using brand colors
   // Navy: #162137 (midnight-indigo)
   // Terracotta: #D3876A (peachy-terracotta)
-  // Mauve: #9b87f5 (lavender-blue/primary purple)
+  // Mauve: #C7747F (mauve-rose)
   // Deep Plum: #5D3A5A (deep plum)
   
   const categories: Category[] = [
@@ -46,7 +46,7 @@ const BridgeTheGapCategories: React.FC = () => {
       id: 'household-duties',
       name: 'Household Duties',
       icon: <Trash2 className="h-12 w-12" />,
-      color: 'text-[#9b87f5]', // Mauve
+      color: 'text-[#C7747F]', // Mauve (updated from #9b87f5 to #C7747F)
     },
     {
       id: 'money',
@@ -64,7 +64,7 @@ const BridgeTheGapCategories: React.FC = () => {
       id: 'in-laws',
       name: 'In-Laws',
       icon: <Users className="h-12 w-12" />,
-      color: 'text-[#9b87f5]', // Mauve
+      color: 'text-[#C7747F]', // Mauve (updated from #9b87f5 to #C7747F)
     },
     {
       id: 'feeling-unseen',
@@ -82,7 +82,7 @@ const BridgeTheGapCategories: React.FC = () => {
       id: 'communication',
       name: 'Communication',
       icon: <MessageSquare className="h-12 w-12" />,
-      color: 'text-[#9b87f5]', // Mauve
+      color: 'text-[#C7747F]', // Mauve (updated from #9b87f5 to #C7747F)
       isWide: true // This item will be wider on mobile
     }
   ];

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Users, Shield, Home, Clock, Scale } from 'lucide-react';
 
@@ -19,8 +18,8 @@ export const inLawsSubcategories: InLawsSubcategoryData[] = [
     id: 'squeezed-between-family',
     name: 'Feeling Squeezed Between Family & Partner',
     icon: <Users className="h-4 w-4" />,
-    color: 'text-[#9b87f5]',
-    bgColor: 'bg-[#9b87f5]/10',
+    color: 'text-[#C7747F]',
+    bgColor: 'bg-[#C7747F]/10',
     prompts: {
       openEnded: [
         'Do you ever feel like you\'re caught in the middle between me and your family?',
@@ -91,8 +90,8 @@ export const inLawsSubcategories: InLawsSubcategoryData[] = [
     id: 'undermining-relationship',
     name: 'In-Laws Undermining the Relationship',
     icon: <Scale className="h-4 w-4" />,
-    color: 'text-[#9b87f5]',
-    bgColor: 'bg-[#9b87f5]/10',
+    color: 'text-[#C7747F]',
+    bgColor: 'bg-[#C7747F]/10',
     prompts: {
       openEnded: [
         'Has there been a moment where it felt like your family didn\'t respect our relationship?',

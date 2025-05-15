@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { MessageSquare, Bell, Volume, Clock, User } from 'lucide-react';
 
@@ -19,8 +18,8 @@ export const communicationSubcategories: CommunicationSubcategoryData[] = [
     id: 'talking-past-each-other',
     name: 'Talking Past Each Other',
     icon: <MessageSquare className="h-4 w-4" />,
-    color: 'text-[#9b87f5]',
-    bgColor: 'bg-[#9b87f5]/10',
+    color: 'text-[#C7747F]', // Updated mauve from #9b87f5 to #C7747F
+    bgColor: 'bg-[#C7747F]/10',
     prompts: {
       openEnded: [
         "Do you feel like we hear the words but miss the meaning?",
@@ -37,7 +36,7 @@ export const communicationSubcategories: CommunicationSubcategoryData[] = [
     id: 'defensiveness',
     name: 'Defensiveness',
     icon: <Bell className="h-4 w-4" />,
-    color: 'text-[#D3876A]',
+    color: 'text-[#D3876A]', // Terracotta
     bgColor: 'bg-[#D3876A]/10',
     prompts: {
       openEnded: [
@@ -55,7 +54,7 @@ export const communicationSubcategories: CommunicationSubcategoryData[] = [
     id: 'avoidance',
     name: 'Avoidance',
     icon: <User className="h-4 w-4" />,
-    color: 'text-[#162137]',
+    color: 'text-[#162137]', // Navy/Midnight Indigo
     bgColor: 'bg-[#162137]/10',
     prompts: {
       openEnded: [
@@ -73,7 +72,7 @@ export const communicationSubcategories: CommunicationSubcategoryData[] = [
     id: 'misinterpretation',
     name: 'Misinterpretation',
     icon: <Volume className="h-4 w-4" />,
-    color: 'text-[#5D3A5A]',
+    color: 'text-[#5D3A5A]', // Deep Plum
     bgColor: 'bg-[#5D3A5A]/10',
     prompts: {
       openEnded: [
@@ -91,8 +90,8 @@ export const communicationSubcategories: CommunicationSubcategoryData[] = [
     id: 'timing-mismatches',
     name: 'Timing Mismatches',
     icon: <Clock className="h-4 w-4" />,
-    color: 'text-[#9b87f5]',
-    bgColor: 'bg-[#9b87f5]/10',
+    color: 'text-[#C7747F]', // Updated mauve from #9b87f5 to #C7747F
+    bgColor: 'bg-[#C7747F]/10',
     prompts: {
       openEnded: [
         "Do you prefer to talk things out right away or after a pause?",

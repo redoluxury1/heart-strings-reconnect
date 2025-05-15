@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Divide, EyeOff, Wrench, Brain, Trash } from 'lucide-react';
 
@@ -21,8 +20,8 @@ export const SUBCATEGORY_DATA: SubcategoryData[] = [
     id: 'division-of-labor',
     name: 'Division of Labor',
     icon: <Divide className="h-4 w-4" />,
-    color: 'text-[#9b87f5]',
-    bgColor: 'bg-[#9b87f5]/10',
+    color: 'text-[#C7747F]',
+    bgColor: 'bg-[#C7747F]/10',
     prompts: [
       { text: "What do you think feels uneven when it comes to the daily workload?", type: 'open-ended' },
       { text: "Is there a task you dread doing that we could reassign or split?", type: 'open-ended' },
@@ -77,8 +76,8 @@ export const SUBCATEGORY_DATA: SubcategoryData[] = [
     id: 'cleanliness-clashes',
     name: 'Cleanliness & Clutter Clashes',
     icon: <Trash className="h-4 w-4" />,
-    color: 'text-[#9b87f5]',
-    bgColor: 'bg-[#9b87f5]/10',
+    color: 'text-[#C7747F]',
+    bgColor: 'bg-[#C7747F]/10',
     prompts: [
       { text: "What does \"clean\" mean to each of us—and how far apart are we?", type: 'open-ended' },
       { text: "When does clutter or mess impact your stress level?", type: 'open-ended' },
