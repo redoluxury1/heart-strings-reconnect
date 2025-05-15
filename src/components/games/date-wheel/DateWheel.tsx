@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { 
   CirclePlay, 
@@ -202,8 +203,8 @@ const DateWheel: React.FC = () => {
                   <div 
                     className="absolute"
                     style={{
-                      top: `${50 + 35 * Math.sin((startAngle + segmentSize / 2) * Math.PI / 180)}%`,
-                      left: `${50 + 35 * Math.cos((startAngle + segmentSize / 2) * Math.PI / 180)}%`,
+                      top: `${50 + 42 * Math.sin((startAngle + segmentSize / 2) * Math.PI / 180)}%`,
+                      left: `${50 + 42 * Math.cos((startAngle + segmentSize / 2) * Math.PI / 180)}%`,
                       transform: 'translate(-50%, -50%) rotate(90deg)',
                     }}
                   >
