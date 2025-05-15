@@ -3,37 +3,29 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { RotateCw, Flag } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import PatternRecognitionFlow from './pattern-recognition/PatternRecognitionFlow';
-import { useState } from 'react';
-import WhiteFlagTool from './white-flag/WhiteFlagTool';
+import BridgeTheGapCard from './BridgeTheGapCard';
 
-const OkayButNowWhat = () => {
+const OkayButNowWhat: React.FC = () => {
   const navigate = useNavigate();
-  const [showPatternTool, setShowPatternTool] = useState(false);
-  const [showFlagTool, setShowFlagTool] = useState(false);
-  
-  const handlePatternToolToggle = () => {
-    // This function is now disabled since the feature is coming soon
-    // Keeping for future implementation
+
+  const handleNavigateToWhiteFlag = () => {
+    navigate('/white-flag');
   };
-  
-  const handleFlagToolToggle = () => {
-    setShowFlagTool(!showFlagTool);
-    setShowPatternTool(false);
-  };
-  
+
   return (
-    <section id="okay-but-now-what" className="bg-[#f8f5f0] rounded-xl shadow-sm p-6 md:p-8">
-      <div className="max-w-3xl mx-auto">
-        <h2 className="text-4xl font-cormorant font-medium text-[#2e2a63] mb-3 text-center">
-          OK but now what?
-        </h2>
+    <section className="bg-white py-10 px-4 rounded-lg shadow-sm">
+      <div className="max-w-5xl mx-auto">
+        <div className="text-center mb-8">
+          <h2 className="text-3xl md:text-4xl font-cormorant font-bold text-[#2e2a63] mb-3">
+            Okay, but now what?
+          </h2>
+          
+          <p className="text-[#2e2a63] text-lg max-w-2xl mx-auto">
+            You've cooled down, but things still feel unresolved. Here are some ways to move forward—together.
+          </p>
+        </div>
         
-        <p className="text-center text-[#2e2a63] mb-10">
-          You made it through the hard part. This section helps you keep it from happening again.
-        </p>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           {/* Pattern Recognition Button - Now with Coming Soon flag and overlay */}
           <div 
             className="bg-white rounded-lg border shadow-sm relative overflow-hidden cursor-default"
@@ -58,33 +50,27 @@ const OkayButNowWhat = () => {
             </div>
           </div>
           
-          {/* Send a White Flag Button - Still functional */}
+          {/* White Flag Tool */}
           <div 
-            className={`bg-white rounded-lg border shadow-sm hover:shadow-md transition-shadow cursor-pointer ${showFlagTool ? 'ring-2 ring-[#c06b6b]' : ''}`}
-            onClick={handleFlagToolToggle}
+            className="bg-white rounded-lg border shadow-sm relative overflow-hidden cursor-pointer hover:shadow-md transition-shadow"
+            onClick={handleNavigateToWhiteFlag}
           >
             <div className="flex flex-col items-center text-center p-4">
-              <div className="bg-[#fce6d4] p-3 rounded-full mb-4">
-                <Flag className="h-8 w-8 text-[#c06b6b]" />
+              <div className="bg-[#FDF0E9] p-3 rounded-full mb-4">
+                <Flag className="h-8 w-8 text-[#D3876A]" />
               </div>
               <h3 className="text-xl font-medium text-[#2e2a63] mb-2">Send a White Flag</h3>
               <p className="text-[#2e2a63]">
-                Send a pause signal, call a truce, or say "I need space" without making it worse.
+                Simple messages to help de-escalate when things start to heat up.
               </p>
             </div>
           </div>
-        </div>
-        
-        {/* Pattern Recognition Tool Content Display has been removed since it's now coming soon */}
-        
-        {/* White Flag Tool Content Display (only shown if flag tool is active) */}
-        {showFlagTool && (
-          <div className="mt-8 transition-all duration-300">
-            <div className="bg-white rounded-xl shadow-sm p-4 md:p-6">
-              <WhiteFlagTool />
-            </div>
+          
+          {/* Bridge the Gap card - now in the grid */}
+          <div className="h-full">
+            <BridgeTheGapCard />
           </div>
-        )}
+        </div>
       </div>
     </section>
   );

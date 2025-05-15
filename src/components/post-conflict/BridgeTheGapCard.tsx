@@ -12,18 +12,18 @@ const BridgeTheGapCard: React.FC = () => {
   };
 
   return (
-    <div className="bg-[#162137] rounded-xl shadow-md p-6 md:p-8 text-center border-2 border-soft-cream">
+    <div className="bg-[#F9F5EF] rounded-xl shadow-md p-6 md:p-8 text-center border-2 border-[#162137] h-full flex flex-col justify-between">
       <div className="max-w-md mx-auto py-4">
-        <h2 className="text-4xl md:text-5xl font-cormorant font-medium text-[#F9F5EF] mb-6">
+        <h2 className="text-4xl md:text-5xl font-cormorant font-medium text-[#162137] mb-6">
           Bridge the Gap
         </h2>
         
-        <p className="text-[#F9F5EF] text-lg mb-10">
+        <p className="text-[#162137] text-lg mb-10">
           Guided prompts to help you understand each other better—even when things feel stuck.
         </p>
         
         <Button 
-          className="bg-[#C2635C] hover:bg-[#C2635C]/90 text-white font-medium px-6 py-5 text-lg rounded-md shadow-sm flex items-center gap-2"
+          className="bg-[#162137] hover:bg-[#162137]/90 text-white font-medium px-6 py-5 text-lg rounded-md shadow-sm flex items-center gap-2 w-full md:w-auto"
           onClick={handleNavigate}
         >
           Try Bridge the Gap <ArrowRight className="h-5 w-5" />
