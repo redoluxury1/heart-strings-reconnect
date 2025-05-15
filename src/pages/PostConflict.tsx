@@ -50,8 +50,10 @@ const PostConflictContent = () => {
                 {/* OkayButNowWhat section with Pattern Recognition and White Flag Tools */}
                 <OkayButNowWhat />
                 
-                {/* Bridge the Gap card placed directly below OkayButNowWhat */}
-                <BridgeTheGapCard />
+                {/* Bridge the Gap card with more vertical layout */}
+                <div className="max-w-sm mx-auto">
+                  <BridgeTheGapCard />
+                </div>
               </div>
             )}
           </div>
