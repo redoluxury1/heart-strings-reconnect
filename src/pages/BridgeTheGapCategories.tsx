@@ -3,12 +3,13 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   Baby, Heart, MessageSquare, Trash2, DollarSign, 
-  Hand, Users, Octagon, Eye 
+  Hand, Users, Octagon, Eye, ArrowLeft
 } from 'lucide-react';
 import BrandSection from '@/components/common/BrandSection';
 import ContentContainer from '@/components/common/ContentContainer';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
+import { Button } from '@/components/ui/button';
 
 // Category type definition
 interface Category {
@@ -16,83 +17,82 @@ interface Category {
   name: string;
   icon: React.ReactNode;
   color: string;
-  bgColor: string;
   isWide?: boolean;
 }
 
 const BridgeTheGapCategories: React.FC = () => {
   const navigate = useNavigate();
 
-  // Define categories with their icons and colors
+  // Define categories with their icons and colors using brand colors
+  // Navy: #162137 (midnight-indigo)
+  // Terracotta: #D3876A (peachy-terracotta)
+  // Mauve: #9b87f5 (lavender-blue/primary purple)
+  // Deep Plum: #5D3A5A (deep plum)
+  
   const categories: Category[] = [
     {
       id: 'parenting',
       name: 'Parenting',
       icon: <Baby className="h-12 w-12" />, 
-      color: 'text-sage',
-      bgColor: 'bg-sage/10'
+      color: 'text-[#D3876A]', // Terracotta
     },
     {
       id: 'intimacy',
       name: 'Intimacy',
       icon: <Heart className="h-12 w-12" />,
-      color: 'text-mauve-rose',
-      bgColor: 'bg-mauve-rose/10'
+      color: 'text-[#5D3A5A]', // Deep Plum
     },
     {
       id: 'household-duties',
       name: 'Household Duties',
       icon: <Trash2 className="h-12 w-12" />,
-      color: 'text-purple-600',
-      bgColor: 'bg-purple-600/10'
+      color: 'text-[#9b87f5]', // Mauve/Primary Purple
     },
     {
       id: 'money',
       name: 'Money',
       icon: <DollarSign className="h-12 w-12" />,
-      color: 'text-sage',
-      bgColor: 'bg-sage/10'
+      color: 'text-[#D3876A]', // Terracotta
     },
     {
       id: 'feeling-dismissed',
       name: 'Feeling Dismissed',
       icon: <Hand className="h-12 w-12" />,
-      color: 'text-peachy-terracotta',
-      bgColor: 'bg-peachy-terracotta/10'
+      color: 'text-[#162137]', // Navy/Midnight Indigo
     },
     {
       id: 'in-laws',
       name: 'In-Laws',
       icon: <Users className="h-12 w-12" />,
-      color: 'text-[#9b87f5]',
-      bgColor: 'bg-[#9b87f5]/10'
+      color: 'text-[#9b87f5]', // Mauve/Primary Purple
     },
     {
       id: 'feeling-unseen',
       name: 'Feeling Unseen',
       icon: <Eye className="h-12 w-12" />,
-      color: 'text-[#9b87f5]',
-      bgColor: 'bg-[#9b87f5]/10'
+      color: 'text-[#5D3A5A]', // Deep Plum
     },
     {
       id: 'boundaries',
       name: 'Boundaries',
       icon: <Octagon className="h-12 w-12" />,
-      color: 'text-golden-mustard',
-      bgColor: 'bg-golden-mustard/10'
+      color: 'text-[#D3876A]', // Terracotta
     },
     {
       id: 'communication',
       name: 'Communication',
       icon: <MessageSquare className="h-12 w-12" />,
-      color: 'text-midnight-indigo',
-      bgColor: 'bg-midnight-indigo/10',
+      color: 'text-[#162137]', // Navy/Midnight Indigo
       isWide: true // This item will be wider on mobile
     }
   ];
 
   const handleCategoryClick = (categoryId: string) => {
     navigate(`/bridge-the-gap/categories/${categoryId}`);
+  };
+  
+  const handleBackClick = () => {
+    navigate('/post-conflict');
   };
 
   return (
@@ -102,6 +102,14 @@ const BridgeTheGapCategories: React.FC = () => {
       <main className="flex-1">
         <BrandSection className="py-10 md:py-16" showLogo={false}>
           <ContentContainer maxWidth="xl">
+            <Button 
+              variant="ghost" 
+              className="mb-6 flex items-center text-midnight-indigo"
+              onClick={handleBackClick}
+            >
+              <ArrowLeft className="mr-2 h-4 w-4" /> Back to Post-Conflict
+            </Button>
+            
             <div className="text-center mb-10">
               <h1 className="font-cormorant text-3xl md:text-4xl font-semibold text-[#162137] mb-3">
                 What are you stuck on?
@@ -120,7 +128,7 @@ const BridgeTheGapCategories: React.FC = () => {
                   }`}
                   onClick={() => handleCategoryClick(category.id)}
                 >
-                  <div className={`flex items-center justify-center rounded-full p-4 ${category.bgColor} ${category.color} mb-3`}>
+                  <div className={`${category.color} mb-3`}>
                     {category.icon}
                   </div>
                   <span className="font-cormorant font-medium text-lg text-midnight-indigo">
