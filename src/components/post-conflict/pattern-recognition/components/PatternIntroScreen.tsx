@@ -33,10 +33,10 @@ const PatternIntroScreen: React.FC<PatternIntroScreenProps> = ({ onContinue }) =
           the cycle before it catches you.
         </p>
         
-        {/* Button */}
+        {/* Button - made smaller with more compact padding and text size */}
         <Button
           onClick={handleContinueClick}
-          className="bg-[#14213d] hover:bg-[#14213d]/90 text-white font-medium py-2 px-6 rounded-full"
+          className="bg-[#14213d] hover:bg-[#14213d]/90 text-white text-sm font-medium py-1.5 px-4 rounded-full"
         >
           Start Recognizing the Pattern
         </Button>
