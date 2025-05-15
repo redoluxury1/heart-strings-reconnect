@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Bridge } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const BridgeTheGapCard: React.FC = () => {
@@ -14,9 +14,14 @@ const BridgeTheGapCard: React.FC = () => {
   return (
     <div className="bg-[#F9F5EF] rounded-xl shadow-md p-6 md:p-8 text-center border-2 border-[#162137] flex flex-col justify-between" style={{ minHeight: '400px' }}>
       <div className="max-w-md mx-auto py-6">
-        <h2 className="text-4xl md:text-5xl font-cormorant font-medium text-[#162137] mb-8">
+        <h2 className="text-4xl md:text-5xl font-cormorant font-medium text-[#162137] mb-2">
           Bridge the Gap
         </h2>
+        
+        {/* Bridge icon between title and description */}
+        <div className="flex justify-center mb-5">
+          <Bridge className="h-12 w-12 text-[#C7747F]" strokeWidth={1.5} />
+        </div>
         
         <p className="text-[#162137] text-lg mb-14">
           Guided prompts to help you understand each other better—even when things feel stuck.
