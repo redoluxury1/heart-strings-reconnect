@@ -20,7 +20,7 @@ const AuthForm = ({ inviteToken }: AuthFormProps) => {
   const [name, setName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [activeTab, setActiveTab] = useState<"login" | "signup">(inviteToken ? "signup" : "login");
-  const [devMode, setDevMode] = useState(false);
+  const [devMode, setDevMode] = useState(true); // Default to true for easier testing
   
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -51,6 +51,7 @@ const AuthForm = ({ inviteToken }: AuthFormProps) => {
       
       navigate('/onboarding');
     } catch (error: any) {
+      console.error("Login error:", error);
       toast({
         title: "Login failed",
         description: error.message || "Please check your credentials and try again.",
@@ -76,25 +77,45 @@ const AuthForm = ({ inviteToken }: AuthFormProps) => {
     setIsLoading(true);
     
     try {
-      // If in development mode, we'll use signIn directly after signUp to bypass email verification
-      const { error } = await signUp(email, password);
-      if (error) throw error;
+      console.log("Starting signup process for email:", email);
+      const { error, data } = await signUp(email, password);
+      
+      if (error) {
+        console.error("Signup error:", error);
+        throw error;
+      }
+      
+      console.log("Signup successful, data:", data);
       
       if (devMode) {
+        console.log("Dev mode enabled, attempting immediate login");
         // In dev mode, automatically sign in after sign up
-        const { error: signInError } = await signIn(email, password);
-        if (signInError) throw signInError;
-        
-        toast({
-          title: "Dev mode activated",
-          description: "Bypassing email verification. You're now logged in!",
-        });
-        
-        // With invite token we'll redirect to onboarding with the token
-        if (inviteToken) {
-          navigate(`/onboarding?invite=${inviteToken}`);
-        } else {
-          navigate('/onboarding');
+        try {
+          const { error: signInError } = await signIn(email, password);
+          if (signInError) {
+            console.error("Dev mode login error:", signInError);
+            throw signInError;
+          }
+          
+          console.log("Dev mode login successful");
+          toast({
+            title: "Dev mode activated",
+            description: "Bypassing email verification. You're now logged in!",
+          });
+          
+          // With invite token we'll redirect to onboarding with the token
+          if (inviteToken) {
+            navigate(`/onboarding?invite=${inviteToken}`);
+          } else {
+            navigate('/onboarding');
+          }
+        } catch (signInError: any) {
+          console.error("Failed during dev mode login:", signInError);
+          toast({
+            title: "Dev mode login failed",
+            description: "Created account, but couldn't log in automatically. Please try logging in manually.",
+            variant: "destructive"
+          });
         }
       } else {
         toast({
@@ -103,9 +124,17 @@ const AuthForm = ({ inviteToken }: AuthFormProps) => {
         });
       }
     } catch (error: any) {
+      console.error("Signup process failed:", error);
+      let errorMessage = error.message || "There was a problem creating your account.";
+      
+      // Provide more helpful message for common errors
+      if (errorMessage.includes("User already registered")) {
+        errorMessage = "This email is already registered. Please try logging in instead.";
+      }
+      
       toast({
         title: "Signup failed",
-        description: error.message || "There was a problem creating your account.",
+        description: errorMessage,
         variant: "destructive"
       });
     } finally {

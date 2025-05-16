@@ -31,18 +31,25 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // Set up auth state listener first
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, session) => {
+        console.log("Auth state changed:", event, session ? "Session exists" : "No session");
         setSession(session);
         setUser(session?.user ?? null);
         
         if (!session) {
           setProfile(null);
           setRelationship(null);
+        } else if (session.user) {
+          // Use setTimeout to prevent potential deadlocks with Supabase auth
+          setTimeout(() => {
+            loadUserData(session.user.id);
+          }, 0);
         }
       }
     );
 
     // Then fetch initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
+      console.log("Initial session check:", session ? "Session exists" : "No session");
       setSession(session);
       setUser(session?.user ?? null);
       
@@ -60,21 +67,25 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   // When the user changes, load their profile and relationship data
   const loadUserData = async (userId: string) => {
+    console.log("Loading user data for:", userId);
     setLoading(true);
     
     try {
       // Load user profile
       const userProfile = await getProfile(userId);
+      console.log("User profile loaded:", userProfile);
       setProfile(userProfile);
       
       // Load or create relationship
       let userRelationship = await getRelationship(userId);
       
       if (!userRelationship) {
+        console.log("No relationship found, creating one");
         // Create new relationship if user doesn't have one
         userRelationship = await createRelationship(userId);
       }
       
+      console.log("Relationship data:", userRelationship);
       setRelationship(userRelationship);
     } catch (error) {
       console.error('Error loading user data:', error);
@@ -84,11 +95,27 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const signUp = async (email: string, password: string) => {
-    return await supabase.auth.signUp({ email, password });
+    console.log("Signing up user:", email);
+    const response = await supabase.auth.signUp({ 
+      email, 
+      password,
+      options: {
+        // Set data that will be accessible in the user meta data
+        data: {
+          name: email.split('@')[0], // Simple default name based on email
+        }
+      }
+    });
+    
+    console.log("Signup response:", response.error ? "Error" : "Success");
+    return response;
   };
 
   const signIn = async (email: string, password: string) => {
-    return await supabase.auth.signInWithPassword({ email, password });
+    console.log("Signing in user:", email);
+    const response = await supabase.auth.signInWithPassword({ email, password });
+    console.log("Sign in response:", response.error ? "Error" : "Success");
+    return response;
   };
 
   const signOut = async () => {
