@@ -1,11 +1,11 @@
 
 export interface Relationship {
   id: string;
-  userId: string;
-  partnerId: string | null;
-  inviteToken: string;
-  inviteEmail: string | null;
-  inviteName: string | null;
+  user_id: string;
+  partner_id: string | null;
+  invite_token: string;
+  invite_email: string | null;
+  invite_name: string | null;
   status: 'invited' | 'connected' | null;
   codeWord?: CodeWordInfo | null;
   createdAt: Date;

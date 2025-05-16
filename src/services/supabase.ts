@@ -46,7 +46,14 @@ export const getRelationship = async (userId: string): Promise<Relationship | nu
     return null;
   }
   
-  return data as Relationship;
+  if (!data) return null;
+  
+  return {
+    ...data,
+    createdAt: new Date(data.created_at),
+    updatedAt: new Date(data.updated_at),
+    codeWord: data.code_word
+  } as Relationship;
 };
 
 export const createRelationship = async (userId: string): Promise<Relationship | null> => {
@@ -69,7 +76,14 @@ export const createRelationship = async (userId: string): Promise<Relationship |
     return null;
   }
   
-  return data as Relationship;
+  if (!data) return null;
+  
+  return {
+    ...data,
+    createdAt: new Date(data.created_at),
+    updatedAt: new Date(data.updated_at),
+    codeWord: data.code_word
+  } as Relationship;
 };
 
 export const invitePartner = async (relationshipId: string, invite: InviteRequest): Promise<boolean> => {
@@ -106,5 +120,12 @@ export const acceptPartnerInvite = async (inviteToken: string, partnerId: string
     return null;
   }
   
-  return data as Relationship;
+  if (!data) return null;
+  
+  return {
+    ...data,
+    createdAt: new Date(data.created_at),
+    updatedAt: new Date(data.updated_at),
+    codeWord: data.code_word
+  } as Relationship;
 };
