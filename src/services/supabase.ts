@@ -1,6 +1,6 @@
 
 import { createClient } from '@supabase/supabase-js';
-import type { UserProfile, Relationship, InviteRequest } from '@/types/relationship';
+import type { UserProfile, Relationship, InviteRequest, CodeWordInfo } from '@/types/relationship';
 import { supabase } from '@/integrations/supabase/client';
 
 export const getProfile = async (userId: string): Promise<UserProfile | null> => {
@@ -49,10 +49,16 @@ export const getRelationship = async (userId: string): Promise<Relationship | nu
   if (!data) return null;
   
   return {
-    ...data,
+    id: data.id,
+    user_id: data.user_id,
+    partner_id: data.partner_id,
+    invite_token: data.invite_token,
+    invite_email: data.invite_email,
+    invite_name: data.invite_name,
+    status: data.status,
+    codeWord: data.code_word ? parseCodeWordInfo(data.code_word) : null,
     createdAt: new Date(data.created_at),
-    updatedAt: new Date(data.updated_at),
-    codeWord: data.code_word
+    updatedAt: new Date(data.updated_at)
   } as Relationship;
 };
 
@@ -79,10 +85,16 @@ export const createRelationship = async (userId: string): Promise<Relationship |
   if (!data) return null;
   
   return {
-    ...data,
+    id: data.id,
+    user_id: data.user_id,
+    partner_id: data.partner_id,
+    invite_token: data.invite_token,
+    invite_email: data.invite_email,
+    invite_name: data.invite_name,
+    status: data.status,
+    codeWord: data.code_word ? parseCodeWordInfo(data.code_word) : null,
     createdAt: new Date(data.created_at),
-    updatedAt: new Date(data.updated_at),
-    codeWord: data.code_word
+    updatedAt: new Date(data.updated_at)
   } as Relationship;
 };
 
@@ -123,9 +135,36 @@ export const acceptPartnerInvite = async (inviteToken: string, partnerId: string
   if (!data) return null;
   
   return {
-    ...data,
+    id: data.id,
+    user_id: data.user_id,
+    partner_id: data.partner_id,
+    invite_token: data.invite_token,
+    invite_email: data.invite_email,
+    invite_name: data.invite_name,
+    status: data.status,
+    codeWord: data.code_word ? parseCodeWordInfo(data.code_word) : null,
     createdAt: new Date(data.created_at),
-    updatedAt: new Date(data.updated_at),
-    codeWord: data.code_word
+    updatedAt: new Date(data.updated_at)
   } as Relationship;
 };
+
+// Helper function to parse the JSON codeWord data into our CodeWordInfo type
+function parseCodeWordInfo(codeWordJson: any): CodeWordInfo | null {
+  if (!codeWordJson) return null;
+
+  try {
+    // Ensure all required fields are present
+    return {
+      word: codeWordJson.word || '',
+      updatedAt: codeWordJson.updatedAt ? new Date(codeWordJson.updatedAt) : new Date(),
+      updatedBy: codeWordJson.updatedBy || '',
+      status: codeWordJson.status || 'pending',
+      partnerSuggestion: codeWordJson.partnerSuggestion,
+      userSuggestion: codeWordJson.userSuggestion,
+      lastUsed: codeWordJson.lastUsed ? new Date(codeWordJson.lastUsed) : undefined
+    };
+  } catch (error) {
+    console.error('Error parsing code word data:', error);
+    return null;
+  }
+}
