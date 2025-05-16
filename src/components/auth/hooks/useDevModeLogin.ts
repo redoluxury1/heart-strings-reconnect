@@ -22,8 +22,8 @@ export const useDevModeLogin = (): DevModeLoginResult => {
     signInFunction: (email: string, password: string) => Promise<{ error: any | null }>
   ): Promise<boolean> => {
     try {
-      const maxAttempts = 5; // Increased from 3 to 5 attempts
-      const delay = (attempt: number) => Math.min(3000 * Math.pow(2, attempt), 15000); // Increased initial delay and max cap
+      const maxAttempts = 6; // Increased to 6 attempts
+      const delay = (attempt: number) => Math.min(3000 * Math.pow(1.5, attempt), 15000); // More gradual increase
       
       console.log("Starting dev mode login sequence");
       
@@ -43,7 +43,7 @@ export const useDevModeLogin = (): DevModeLoginResult => {
           const waitTime = delay(attempt);
           toast({
             title: `Login attempt ${attempt + 1} failed`,
-            description: `Retrying in ${waitTime / 1000} seconds...`,
+            description: `Retrying in ${Math.round(waitTime / 1000)} seconds...`,
           });
           
           // Wait and try again

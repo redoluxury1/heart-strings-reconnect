@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
@@ -18,10 +18,27 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken }) => {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [devMode, setDevMode] = useState(true); // Default to true for easier testing
+  const [accountCreated, setAccountCreated] = useState(false);
   
   const navigate = useNavigate();
   const { signUp, signIn } = useAuth();
   const { isLoading, setIsLoading, attemptDevModeLogin } = useDevModeLogin();
+  
+  // Effect to handle redirect after successful account creation
+  useEffect(() => {
+    if (accountCreated && !isLoading) {
+      const timer = setTimeout(() => {
+        // Navigate to appropriate page after account creation
+        if (inviteToken) {
+          navigate(`/onboarding?invite=${inviteToken}`);
+        } else {
+          navigate('/onboarding');
+        }
+      }, 2000); // Short delay before redirecting
+      
+      return () => clearTimeout(timer);
+    }
+  }, [accountCreated, isLoading, navigate, inviteToken]);
   
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -55,7 +72,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken }) => {
           description: "Dev mode active: Attempting automatic login after a brief delay..."
         });
         
-        // Give Supabase more time to process the new account - increased from 2.5s to 5s
+        // Give Supabase more time to process the new account - increased from 5s to 8s
         setTimeout(async () => {
           console.log("Starting dev mode login sequence after signup");
           const loginSuccess = await attemptDevModeLogin(email, password, signIn);
@@ -66,26 +83,27 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken }) => {
               description: "You're now logged in!"
             });
             
-            if (inviteToken) {
-              navigate(`/onboarding?invite=${inviteToken}`);
-            } else {
-              navigate('/onboarding');
-            }
+            setAccountCreated(true);
           } else {
             setIsLoading(false);
             toast({
               title: "Automatic login failed",
-              description: "Account created successfully, but automatic login failed. Please try logging in manually.",
+              description: "Account created successfully. Please try logging in manually.",
               variant: "destructive"
             });
+            // Redirect to login page for manual login
+            setTimeout(() => navigate('/auth'), 1500);
           }
-        }, 5000); // Increased to wait 5 seconds before first login attempt
+        }, 8000); // Increased to wait 8 seconds before first login attempt
       } else {
         setIsLoading(false);
         toast({
           title: "Account created",
           description: "Welcome to Bridge For Couples! Check your email for confirmation.",
         });
+        
+        // For non-dev mode, set account as created so user can be redirected
+        setAccountCreated(true);
       }
     } catch (error: any) {
       setIsLoading(false);
@@ -140,10 +158,15 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken }) => {
       
       <Button 
         type="submit" 
-        disabled={isLoading}
+        disabled={isLoading || accountCreated}
         className="w-full rounded-full bg-[#C7747F] hover:bg-[#B56470] text-white"
       >
-        {isLoading ? "Creating Account..." : "Sign Up"}
+        {isLoading 
+          ? "Creating Account..." 
+          : accountCreated 
+            ? "Account Created! Redirecting..." 
+            : "Sign Up"
+        }
       </Button>
     </form>
   );
