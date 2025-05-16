@@ -22,8 +22,8 @@ export const useDevModeLogin = (): DevModeLoginResult => {
     signInFunction: (email: string, password: string) => Promise<{ error: any | null }>
   ): Promise<boolean> => {
     try {
-      const maxAttempts = 3;
-      const delay = (attempt: number) => Math.min(2000 * Math.pow(2, attempt), 10000); // Exponential backoff capped at 10 seconds
+      const maxAttempts = 5; // Increased from 3 to 5 attempts
+      const delay = (attempt: number) => Math.min(3000 * Math.pow(2, attempt), 15000); // Increased initial delay and max cap
       
       console.log("Starting dev mode login sequence");
       

@@ -55,7 +55,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken }) => {
           description: "Dev mode active: Attempting automatic login after a brief delay..."
         });
         
-        // Give Supabase time to process the new account
+        // Give Supabase more time to process the new account - increased from 2.5s to 5s
         setTimeout(async () => {
           console.log("Starting dev mode login sequence after signup");
           const loginSuccess = await attemptDevModeLogin(email, password, signIn);
@@ -79,7 +79,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken }) => {
               variant: "destructive"
             });
           }
-        }, 2500); // Wait 2.5 seconds before first login attempt
+        }, 5000); // Increased to wait 5 seconds before first login attempt
       } else {
         setIsLoading(false);
         toast({

@@ -38,6 +38,7 @@ export const LoginForm: React.FC = () => {
         description: "You've been successfully logged in."
       });
       
+      // Navigate to onboarding page after successful login
       navigate('/onboarding');
     } catch (error: any) {
       console.error("Login error:", error);
