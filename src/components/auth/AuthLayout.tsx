@@ -22,8 +22,6 @@ const AuthLayout = ({ children, title, description }: AuthLayoutProps) => {
           <div className="max-w-md mx-auto">
             <Card className="border-2 border-[#D36B4B]/20 shadow-lg">
               <CardHeader className="text-center space-y-4">
-                {children}
-                
                 <CardTitle className="font-cormorant text-3xl text-[#1E2A38]">
                   {title}
                 </CardTitle>

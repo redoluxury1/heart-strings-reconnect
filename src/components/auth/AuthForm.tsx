@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -101,7 +101,7 @@ const AuthForm = ({ inviteToken }: AuthFormProps) => {
   return (
     <>
       <div className="mx-auto">
-        <Heart className="h-16 w-16 text-[#D36B4B] drop-shadow-md" />
+        <Heart className="h-16 w-16 text-[#C7747F] drop-shadow-md" />
       </div>
 
       {!inviteToken && (
@@ -196,7 +196,7 @@ const AuthForm = ({ inviteToken }: AuthFormProps) => {
               <Button 
                 type="submit" 
                 disabled={isLoading}
-                className="w-full rounded-full bg-[#D36B4B] hover:bg-[#D36B4B]/90 text-white"
+                className="w-full rounded-full bg-[#C7747F] hover:bg-[#B56470] text-white"
               >
                 {isLoading ? "Creating Account..." : "Sign Up"}
               </Button>
@@ -251,7 +251,7 @@ const AuthForm = ({ inviteToken }: AuthFormProps) => {
           <Button 
             type="submit" 
             disabled={isLoading}
-            className="w-full rounded-full bg-[#D36B4B] hover:bg-[#D36B4B]/90 text-white"
+            className="w-full rounded-full bg-[#C7747F] hover:bg-[#B56470] text-white"
           >
             {isLoading ? "Creating Account..." : "Sign Up"}
           </Button>
