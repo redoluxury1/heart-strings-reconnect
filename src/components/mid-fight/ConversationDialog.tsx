@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { SendHorizontal, MessageSquare } from 'lucide-react';
 import { 
@@ -11,6 +11,8 @@ import {
   DialogTitle
 } from "@/components/ui/dialog";
 import { useInterface } from '@/hooks/useInterfaceContext';
+import { useAuth } from '@/contexts/AuthContext';
+import { createConversationSession, sendConversationNotification } from '@/services/conversation';
 
 interface ConversationDialogProps {
   isOpen: boolean;
@@ -28,11 +30,42 @@ const ConversationDialog: React.FC<ConversationDialogProps> = ({
   topicId = 'something-else'
 }) => {
   const [showSuccess, setShowSuccess] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { isEmotional } = useInterface();
+  const { user, relationship } = useAuth();
 
-  const handleSendInvite = () => {
-    onSendInvite();
-    setShowSuccess(true);
+  const handleSendInvite = async () => {
+    if (!user || !relationship?.id) {
+      console.error("User or relationship not found");
+      return;
+    }
+    
+    setIsLoading(true);
+    
+    try {
+      // Create a conversation session
+      const session = await createConversationSession(
+        relationship.id,
+        user.id,
+        'mid-fight',
+        { topicId, initiatedAt: new Date().toISOString() }
+      );
+      
+      if (session) {
+        // Send notification
+        sendConversationNotification(
+          "Conversation Request Sent",
+          `Your request to talk about ${topicId} has been sent to your partner.`
+        );
+        
+        setShowSuccess(true);
+        onSendInvite();
+      }
+    } catch (error) {
+      console.error("Error sending conversation invite:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleReturnToToolkit = () => {
@@ -111,8 +144,9 @@ const ConversationDialog: React.FC<ConversationDialogProps> = ({
                   : "bg-midnight-indigo hover:bg-midnight-indigo/90 text-white"
                 }
                 onClick={handleSendInvite}
+                disabled={isLoading}
               >
-                Begin {isEmotional ? "Reconnecting" : "Discussion"}
+                {isLoading ? "Sending..." : `Begin ${isEmotional ? "Reconnecting" : "Discussion"}`}
               </Button>
             </DialogFooter>
           </>

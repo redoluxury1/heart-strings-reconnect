@@ -5,6 +5,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ArrowLeft, Mail, Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from '@/contexts/AuthContext';
+import { invitePartner } from '@/services/supabase';
 
 interface PartnerInviteProps {
   onBack: () => void;
@@ -16,46 +18,69 @@ const PartnerInvite: React.FC<PartnerInviteProps> = ({
   onComplete
 }) => {
   const [partnerEmail, setPartnerEmail] = useState('');
-  const [partnerPhone, setPartnerPhone] = useState('');
+  const [partnerName, setPartnerName] = useState('');
   const [isSending, setIsSending] = useState(false);
   const { toast } = useToast();
+  const { relationship } = useAuth();
 
-  const handleSendInvite = () => {
-    if (!partnerEmail && !partnerPhone) {
+  const handleSendInvite = async () => {
+    if (!partnerEmail) {
       toast({
-        title: "Contact information required",
-        description: "Please enter your partner's email or phone number.",
+        title: "Email required",
+        description: "Please enter your partner's email address.",
         variant: "destructive"
       });
       return;
     }
     
-    // Validate email if provided
-    if (partnerEmail) {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(partnerEmail)) {
-        toast({
-          title: "Invalid email",
-          description: "Please enter a valid email address.",
-          variant: "destructive"
-        });
-        return;
-      }
+    // Validate email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(partnerEmail)) {
+      toast({
+        title: "Invalid email",
+        description: "Please enter a valid email address.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    if (!relationship) {
+      toast({
+        title: "Error",
+        description: "Something went wrong. Please try again later.",
+        variant: "destructive"
+      });
+      return;
     }
     
     setIsSending(true);
     
-    // Simulate sending invitation
-    setTimeout(() => {
-      setIsSending(false);
-      
-      toast({
-        title: "Invitation sent!",
-        description: "Your partner will receive a link to join Bridge For Couples.",
+    try {
+      const success = await invitePartner(relationship.id, {
+        partnerEmail,
+        partnerName: partnerName || undefined
       });
       
-      onComplete();
-    }, 1500);
+      if (success) {
+        toast({
+          title: "Invitation sent!",
+          description: "Your partner will receive a link to join Bridge For Couples.",
+        });
+        
+        onComplete();
+      } else {
+        throw new Error("Failed to send invitation");
+      }
+    } catch (error) {
+      console.error("Error sending invitation:", error);
+      toast({
+        title: "Failed to send invitation",
+        description: "Please try again later.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSending(false);
+    }
   };
   
   return (
@@ -79,6 +104,20 @@ const PartnerInvite: React.FC<PartnerInviteProps> = ({
       
       <div className="space-y-6 max-w-md mx-auto">
         <div className="space-y-2">
+          <Label htmlFor="partnerName" className="text-midnight-indigo font-medium">
+            Partner's Name (Optional)
+          </Label>
+          <Input
+            id="partnerName"
+            type="text"
+            placeholder="Their name"
+            value={partnerName}
+            onChange={(e) => setPartnerName(e.target.value)}
+            className="border-2 border-[#6A4A74]/30 focus:border-[#6A4A74] focus:ring-[#6A4A74]/20"
+          />
+        </div>
+        
+        <div className="space-y-2">
           <Label htmlFor="partnerEmail" className="text-midnight-indigo font-medium">
             Partner's Email
           </Label>
@@ -88,26 +127,6 @@ const PartnerInvite: React.FC<PartnerInviteProps> = ({
             placeholder="partner@example.com"
             value={partnerEmail}
             onChange={(e) => setPartnerEmail(e.target.value)}
-            className="border-2 border-[#6A4A74]/30 focus:border-[#6A4A74] focus:ring-[#6A4A74]/20"
-          />
-        </div>
-        
-        <div className="flex items-center">
-          <div className="flex-grow h-px bg-gray-300/20"></div>
-          <p className="px-4 text-sm text-midnight-indigo/60">or</p>
-          <div className="flex-grow h-px bg-gray-300/20"></div>
-        </div>
-        
-        <div className="space-y-2">
-          <Label htmlFor="partnerPhone" className="text-midnight-indigo font-medium">
-            Partner's Phone Number
-          </Label>
-          <Input
-            id="partnerPhone"
-            type="tel"
-            placeholder="+1 (555) 123-4567"
-            value={partnerPhone}
-            onChange={(e) => setPartnerPhone(e.target.value)}
             className="border-2 border-[#6A4A74]/30 focus:border-[#6A4A74] focus:ring-[#6A4A74]/20"
           />
         </div>

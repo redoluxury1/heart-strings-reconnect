@@ -3,10 +3,12 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { useEffect } from "react";
 import { InterfaceProvider } from "./components/common/InterfaceProvider";
+import { AuthProvider } from "./contexts/AuthContext";
 import Index from "./pages/Index";
+import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 import LoveNotesReceived from "./pages/LoveNotesReceived";
 import MidFight from "./pages/MidFight";
@@ -38,6 +40,7 @@ import CommunicationSubcategories from "./pages/CommunicationSubcategories";
 import CommunicationSubcategoryDetails from "./pages/CommunicationSubcategoryDetails";
 import BoundariesSubcategories from "./pages/BoundariesSubcategories";
 import BoundariesSubcategoryDetails from "./pages/BoundariesSubcategoryDetails";
+import { useAuth } from "./contexts/AuthContext";
 
 // Scroll to top on route change
 function ScrollToTop() {
@@ -50,53 +53,190 @@ function ScrollToTop() {
   return null;
 }
 
+// Protected route component
+const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
+  const { user, loading } = useAuth();
+  
+  if (loading) {
+    // Show loading state while checking auth
+    return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
+  }
+  
+  if (!user) {
+    // Redirect to auth page if not authenticated
+    return <Navigate to="/auth" replace />;
+  }
+  
+  return <>{children}</>;
+};
+
 const queryClient = new QueryClient();
+
+const AppContent = () => (
+  <>
+    <ScrollToTop />
+    <Routes>
+      <Route path="/" element={<Index />} />
+      <Route path="/auth" element={<Auth />} />
+      <Route path="/onboarding" element={
+        <ProtectedRoute>
+          <Onboarding />
+        </ProtectedRoute>
+      } />
+      <Route path="/during-conflict" element={
+        <ProtectedRoute>
+          <MidFight />
+        </ProtectedRoute>
+      } />
+      <Route path="/post-conflict" element={
+        <ProtectedRoute>
+          <PostConflict />
+        </ProtectedRoute>
+      } />
+      <Route path="/reconnect" element={
+        <ProtectedRoute>
+          <Reconnect />
+        </ProtectedRoute>
+      } />
+      <Route path="/love-notes" element={
+        <ProtectedRoute>
+          <LoveNotesReceived />
+        </ProtectedRoute>
+      } />
+      <Route path="/love-code-quiz" element={
+        <ProtectedRoute>
+          <LoveCodeQuiz />
+        </ProtectedRoute>
+      } />
+      <Route path="/personality-quiz" element={
+        <ProtectedRoute>
+          <PersonalityQuiz />
+        </ProtectedRoute>
+      } />
+      <Route path="/archive" element={
+        <ProtectedRoute>
+          <Archive />
+        </ProtectedRoute>
+      } />
+      <Route path="/games" element={<Games />} />
+      <Route path="/invite" element={<PartnerInvite />} />
+      <Route path="/bridge-the-gap/categories" element={
+        <ProtectedRoute>
+          <BridgeTheGapCategories />
+        </ProtectedRoute>
+      } />
+      <Route path="/bridge-the-gap/categories/:categoryId" element={
+        <ProtectedRoute>
+          <BridgeTheGapCategoryDetails />
+        </ProtectedRoute>
+      } />
+      <Route path="/bridge-the-gap/categories/parenting" element={
+        <ProtectedRoute>
+          <ParentingSubcategories />
+        </ProtectedRoute>
+      } />
+      <Route path="/bridge-the-gap/categories/parenting/:subcategoryId" element={
+        <ProtectedRoute>
+          <ParentingSubcategoryDetails />
+        </ProtectedRoute>
+      } />
+      <Route path="/bridge-the-gap/categories/intimacy" element={
+        <ProtectedRoute>
+          <IntimacySubcategories />
+        </ProtectedRoute>
+      } />
+      <Route path="/bridge-the-gap/categories/intimacy/:subcategoryId" element={
+        <ProtectedRoute>
+          <IntimacySubcategoryDetails />
+        </ProtectedRoute>
+      } />
+      <Route path="/bridge-the-gap/categories/household-duties" element={
+        <ProtectedRoute>
+          <HouseholdSubcategories />
+        </ProtectedRoute>
+      } />
+      <Route path="/bridge-the-gap/categories/household-duties/:subcategoryId" element={
+        <ProtectedRoute>
+          <HouseholdSubcategoryDetails />
+        </ProtectedRoute>
+      } />
+      <Route path="/bridge-the-gap/categories/money" element={
+        <ProtectedRoute>
+          <MoneySubcategories />
+        </ProtectedRoute>
+      } />
+      <Route path="/bridge-the-gap/categories/money/:subcategoryId" element={
+        <ProtectedRoute>
+          <MoneySubcategoryDetails />
+        </ProtectedRoute>
+      } />
+      <Route path="/bridge-the-gap/categories/feeling-dismissed" element={
+        <ProtectedRoute>
+          <FeelingDismissedSubcategories />
+        </ProtectedRoute>
+      } />
+      <Route path="/bridge-the-gap/categories/feeling-dismissed/:subcategoryId" element={
+        <ProtectedRoute>
+          <FeelingDismissedSubcategoryDetails />
+        </ProtectedRoute>
+      } />
+      <Route path="/bridge-the-gap/categories/in-laws" element={
+        <ProtectedRoute>
+          <InLawsSubcategories />
+        </ProtectedRoute>
+      } />
+      <Route path="/bridge-the-gap/categories/in-laws/:subcategoryId" element={
+        <ProtectedRoute>
+          <InLawsSubcategoryDetails />
+        </ProtectedRoute>
+      } />
+      <Route path="/bridge-the-gap/categories/feeling-unseen" element={
+        <ProtectedRoute>
+          <FeelingUnseenSubcategories />
+        </ProtectedRoute>
+      } />
+      <Route path="/bridge-the-gap/categories/feeling-unseen/:subcategoryId" element={
+        <ProtectedRoute>
+          <FeelingUnseenSubcategoryDetails />
+        </ProtectedRoute>
+      } />
+      <Route path="/bridge-the-gap/categories/communication" element={
+        <ProtectedRoute>
+          <CommunicationSubcategories />
+        </ProtectedRoute>
+      } />
+      <Route path="/bridge-the-gap/categories/communication/:subcategoryId" element={
+        <ProtectedRoute>
+          <CommunicationSubcategoryDetails />
+        </ProtectedRoute>
+      } />
+      <Route path="/bridge-the-gap/categories/boundaries" element={
+        <ProtectedRoute>
+          <BoundariesSubcategories />
+        </ProtectedRoute>
+      } />
+      <Route path="/bridge-the-gap/categories/boundaries/:subcategoryId" element={
+        <ProtectedRoute>
+          <BoundariesSubcategoryDetails />
+        </ProtectedRoute>
+      } />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  </>
+);
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <InterfaceProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner position="top-right" closeButton={true} />
-        <BrowserRouter>
-          <ScrollToTop />
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/onboarding" element={<Onboarding />} />
-            <Route path="/during-conflict" element={<MidFight />} />
-            <Route path="/post-conflict" element={<PostConflict />} />
-            <Route path="/reconnect" element={<Reconnect />} />
-            <Route path="/love-notes" element={<LoveNotesReceived />} />
-            <Route path="/love-code-quiz" element={<LoveCodeQuiz />} />
-            <Route path="/personality-quiz" element={<PersonalityQuiz />} />
-            <Route path="/archive" element={<Archive />} />
-            <Route path="/games" element={<Games />} />
-            <Route path="/invite" element={<PartnerInvite />} />
-            <Route path="/bridge-the-gap/categories" element={<BridgeTheGapCategories />} />
-            <Route path="/bridge-the-gap/categories/:categoryId" element={<BridgeTheGapCategoryDetails />} />
-            <Route path="/bridge-the-gap/categories/parenting" element={<ParentingSubcategories />} />
-            <Route path="/bridge-the-gap/categories/parenting/:subcategoryId" element={<ParentingSubcategoryDetails />} />
-            <Route path="/bridge-the-gap/categories/intimacy" element={<IntimacySubcategories />} />
-            <Route path="/bridge-the-gap/categories/intimacy/:subcategoryId" element={<IntimacySubcategoryDetails />} />
-            <Route path="/bridge-the-gap/categories/household-duties" element={<HouseholdSubcategories />} />
-            <Route path="/bridge-the-gap/categories/household-duties/:subcategoryId" element={<HouseholdSubcategoryDetails />} />
-            <Route path="/bridge-the-gap/categories/money" element={<MoneySubcategories />} />
-            <Route path="/bridge-the-gap/categories/money/:subcategoryId" element={<MoneySubcategoryDetails />} />
-            <Route path="/bridge-the-gap/categories/feeling-dismissed" element={<FeelingDismissedSubcategories />} />
-            <Route path="/bridge-the-gap/categories/feeling-dismissed/:subcategoryId" element={<FeelingDismissedSubcategoryDetails />} />
-            <Route path="/bridge-the-gap/categories/in-laws" element={<InLawsSubcategories />} />
-            <Route path="/bridge-the-gap/categories/in-laws/:subcategoryId" element={<InLawsSubcategoryDetails />} />
-            <Route path="/bridge-the-gap/categories/feeling-unseen" element={<FeelingUnseenSubcategories />} />
-            <Route path="/bridge-the-gap/categories/feeling-unseen/:subcategoryId" element={<FeelingUnseenSubcategoryDetails />} />
-            <Route path="/bridge-the-gap/categories/communication" element={<CommunicationSubcategories />} />
-            <Route path="/bridge-the-gap/categories/communication/:subcategoryId" element={<CommunicationSubcategoryDetails />} />
-            <Route path="/bridge-the-gap/categories/boundaries" element={<BoundariesSubcategories />} />
-            <Route path="/bridge-the-gap/categories/boundaries/:subcategoryId" element={<BoundariesSubcategoryDetails />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
+      <AuthProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner position="top-right" closeButton={true} />
+          <BrowserRouter>
+            <AppContent />
+          </BrowserRouter>
+        </TooltipProvider>
+      </AuthProvider>
     </InterfaceProvider>
   </QueryClientProvider>
 );

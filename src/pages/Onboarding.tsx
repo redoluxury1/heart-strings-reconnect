@@ -9,28 +9,84 @@ import PartnerInvite from '../components/onboarding/PartnerInvite';
 import { useToast } from '../hooks/use-toast';
 import { useInterface } from '../hooks/useInterfaceContext';
 import { PartnerStatus, InterfaceStyle } from '../contexts/InterfaceContext';
+import { useAuth } from '../contexts/AuthContext';
+import { acceptPartnerInvite } from '../services/supabase';
 
 const Onboarding = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { toast } = useToast();
   const { setPartnerStatus: updateGlobalPartnerStatus, setInterfaceStyle: updateGlobalInterfaceStyle } = useInterface();
+  const { user, relationship, loading } = useAuth();
+  
   const [step, setStep] = useState<number>(1);
   const [partnerStatus, setPartnerStatus] = useState<PartnerStatus>('solo');
   const [interfaceStyle, setInterfaceStyle] = useState<InterfaceStyle>('emotionally-reflective');
   const [isPartnerInvited, setIsPartnerInvited] = useState(false);
   const [isPartnerFlow, setIsPartnerFlow] = useState(false);
+  const [inviteToken, setInviteToken] = useState<string | null>(null);
+  
+  // Redirect if not logged in
+  useEffect(() => {
+    if (!loading && !user) {
+      navigate('/auth');
+    }
+  }, [user, loading, navigate]);
   
   // Check if this is a partner flow (coming from invite)
   useEffect(() => {
     const params = new URLSearchParams(location.search);
-    const inviteToken = params.get('invite');
-    if (inviteToken) {
+    const token = params.get('invite');
+    
+    if (token) {
       setIsPartnerFlow(true);
       setPartnerStatus('couple');
-      // In a real app, we would validate the token
+      setInviteToken(token);
     }
   }, [location.search]);
+
+  // Check if the user already has an active relationship
+  useEffect(() => {
+    if (relationship && relationship.status === 'connected') {
+      setIsPartnerInvited(true);
+      setPartnerStatus('couple');
+    } else if (relationship && relationship.status === 'invited') {
+      setIsPartnerInvited(true);
+      setPartnerStatus('couple');
+    }
+  }, [relationship]);
+  
+  // Handle invite token connection after user is loaded
+  useEffect(() => {
+    const connectWithInviteToken = async () => {
+      if (user && inviteToken) {
+        try {
+          const updatedRelationship = await acceptPartnerInvite(inviteToken, user.id);
+          
+          if (updatedRelationship) {
+            toast({
+              title: "Connection successful!",
+              description: "You've been connected with your partner."
+            });
+            setIsPartnerFlow(true);
+            setPartnerStatus('couple');
+            setIsPartnerInvited(true);
+          }
+        } catch (error) {
+          console.error("Error connecting with invite token:", error);
+          toast({
+            title: "Connection error",
+            description: "There was a problem connecting with your partner.",
+            variant: "destructive"
+          });
+        }
+      }
+    };
+    
+    if (!loading) {
+      connectWithInviteToken();
+    }
+  }, [user, inviteToken, loading, toast]);
   
   const handleNextStep = () => {
     if (step < 3) {  // Updated to include style selection step
@@ -69,6 +125,22 @@ const Onboarding = () => {
       description: "Your partner will receive an invitation to join Bridge For Couples.",
     });
   };
+
+  // Don't render the component until we've checked auth status
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-soft-blush">
+        <ContentContainer className="max-w-xl">
+          <div className="rounded-xl p-8 bg-white shadow-lg text-center">
+            <div className="animate-pulse space-y-4">
+              <div className="h-12 bg-lavender-blue/20 rounded"></div>
+              <div className="h-32 bg-lavender-blue/10 rounded"></div>
+            </div>
+          </div>
+        </ContentContainer>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-soft-blush">
