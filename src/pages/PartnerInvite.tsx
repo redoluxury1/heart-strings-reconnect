@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -90,8 +89,8 @@ const PartnerInvite = () => {
     setIsLoading(true);
     
     try {
-      // Create the user account
-      const { error, data } = await signUp(email, password);
+      // Create the user account - Fix: Pass name as the third argument
+      const { error, data } = await signUp(email, password, name);
       if (error) throw error;
       
       // The user is now created. The auth state change will trigger our
