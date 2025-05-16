@@ -14,53 +14,52 @@ import LoveCodeQuiz from "@/pages/LoveCodeQuiz";
 import PersonalityQuiz from "@/pages/PersonalityQuiz";
 import NotFound from "@/pages/NotFound";
 
-const MainAppRoutes = () => (
-  <>
-    <Route path="/" element={<Index />} />
-    <Route path="/onboarding" element={
-      <ProtectedRoute>
-        <Onboarding />
-      </ProtectedRoute>
-    } />
-    <Route path="/during-conflict" element={
-      <ProtectedRoute>
-        <MidFight />
-      </ProtectedRoute>
-    } />
-    <Route path="/post-conflict" element={
-      <ProtectedRoute>
-        <PostConflict />
-      </ProtectedRoute>
-    } />
-    <Route path="/reconnect" element={
-      <ProtectedRoute>
-        <Reconnect />
-      </ProtectedRoute>
-    } />
-    <Route path="/love-notes" element={
-      <ProtectedRoute>
-        <LoveNotesReceived />
-      </ProtectedRoute>
-    } />
-    <Route path="/love-code-quiz" element={
-      <ProtectedRoute>
-        <LoveCodeQuiz />
-      </ProtectedRoute>
-    } />
-    <Route path="/personality-quiz" element={
-      <ProtectedRoute>
-        <PersonalityQuiz />
-      </ProtectedRoute>
-    } />
-    <Route path="/archive" element={
-      <ProtectedRoute>
-        <Archive />
-      </ProtectedRoute>
-    } />
-    <Route path="/games" element={<Games />} />
-    <Route path="/invite" element={<PartnerInvite />} />
-    <Route path="*" element={<NotFound />} />
-  </>
-);
+// This function returns an array of Route elements
+const MainAppRoutes = () => [
+  <Route key="index" path="/" element={<Index />} />,
+  <Route key="onboarding" path="/onboarding" element={
+    <ProtectedRoute>
+      <Onboarding />
+    </ProtectedRoute>
+  } />,
+  <Route key="during-conflict" path="/during-conflict" element={
+    <ProtectedRoute>
+      <MidFight />
+    </ProtectedRoute>
+  } />,
+  <Route key="post-conflict" path="/post-conflict" element={
+    <ProtectedRoute>
+      <PostConflict />
+    </ProtectedRoute>
+  } />,
+  <Route key="reconnect" path="/reconnect" element={
+    <ProtectedRoute>
+      <Reconnect />
+    </ProtectedRoute>
+  } />,
+  <Route key="love-notes" path="/love-notes" element={
+    <ProtectedRoute>
+      <LoveNotesReceived />
+    </ProtectedRoute>
+  } />,
+  <Route key="love-code-quiz" path="/love-code-quiz" element={
+    <ProtectedRoute>
+      <LoveCodeQuiz />
+    </ProtectedRoute>
+  } />,
+  <Route key="personality-quiz" path="/personality-quiz" element={
+    <ProtectedRoute>
+      <PersonalityQuiz />
+    </ProtectedRoute>
+  } />,
+  <Route key="archive" path="/archive" element={
+    <ProtectedRoute>
+      <Archive />
+    </ProtectedRoute>
+  } />,
+  <Route key="games" path="/games" element={<Games />} />,
+  <Route key="invite" path="/invite" element={<PartnerInvite />} />,
+  <Route key="not-found" path="*" element={<NotFound />} />
+];
 
 export default MainAppRoutes;
