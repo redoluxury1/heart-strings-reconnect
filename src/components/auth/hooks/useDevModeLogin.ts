@@ -15,32 +15,32 @@ type DevModeLoginResult = {
 export const useDevModeLogin = (): DevModeLoginResult => {
   const [isLoading, setIsLoading] = useState(false);
 
-  // Helper function to attempt login with exponential backoff
+  // Simplified login function with clearer logging and more effective retry strategy
   const attemptDevModeLogin = async (
     email: string, 
     password: string, 
     signInFunction: (email: string, password: string) => Promise<{ error: any | null }>
   ): Promise<boolean> => {
     try {
-      const maxAttempts = 6; // Increased to 6 attempts
-      const delay = (attempt: number) => Math.min(3000 * Math.pow(1.5, attempt), 15000); // More gradual increase
+      const maxAttempts = 3; // Reduced to 3 attempts to avoid overloading
+      const baseDelay = 2000; // Start with 2 seconds
       
-      console.log("Starting dev mode login sequence");
+      console.log("Starting login attempt for:", email);
       
       for (let attempt = 0; attempt < maxAttempts; attempt++) {
-        console.log(`Dev mode login attempt ${attempt + 1} of ${maxAttempts}`);
+        console.log(`Login attempt ${attempt + 1} of ${maxAttempts}`);
         
         const { error } = await signInFunction(email, password);
         
         if (!error) {
-          console.log("Dev mode login successful!");
+          console.log("Login successful!");
           return true;
         }
         
-        console.log(`Dev mode login attempt ${attempt + 1} failed:`, error.message);
+        console.log(`Login attempt ${attempt + 1} failed:`, error.message);
         
         if (attempt < maxAttempts - 1) {
-          const waitTime = delay(attempt);
+          const waitTime = baseDelay * (attempt + 1); // Simple linear increase
           toast({
             title: `Login attempt ${attempt + 1} failed`,
             description: `Retrying in ${Math.round(waitTime / 1000)} seconds...`,
@@ -53,7 +53,7 @@ export const useDevModeLogin = (): DevModeLoginResult => {
       
       throw new Error("Maximum login attempts reached");
     } catch (error: any) {
-      console.error("Dev mode login failed after multiple attempts:", error);
+      console.error("Login failed after multiple attempts:", error);
       return false;
     }
   };
