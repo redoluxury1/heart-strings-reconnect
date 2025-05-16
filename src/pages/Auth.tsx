@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -297,7 +297,7 @@ const Auth = () => {
               </CardContent>
               
               <CardFooter className="flex justify-center text-xs text-center text-[#1E2A38]/60 px-6">
-                By continuing, you agree to our <a href="#" className="underline hover:text-[#D36B4B]">Terms of Service</a> and <a href="#" className="underline hover:text-[#D36B4B]">Privacy Policy</a>
+                By continuing, you agree to our <Link to="/terms" className="underline hover:text-[#D36B4B]">Terms of Service</Link> and <Link to="/privacy" className="underline hover:text-[#D36B4B]">Privacy Policy</Link>
               </CardFooter>
             </Card>
           </div>

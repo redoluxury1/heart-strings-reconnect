@@ -9,6 +9,8 @@ import { InterfaceProvider } from "./components/common/InterfaceProvider";
 import { AuthProvider } from "./contexts/AuthContext";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
+import Terms from "./pages/Terms";
+import Privacy from "./pages/Privacy";
 import NotFound from "./pages/NotFound";
 import LoveNotesReceived from "./pages/LoveNotesReceived";
 import MidFight from "./pages/MidFight";
@@ -78,6 +80,8 @@ const AppContent = () => (
     <Routes>
       <Route path="/" element={<Index />} />
       <Route path="/auth" element={<Auth />} />
+      <Route path="/terms" element={<Terms />} />
+      <Route path="/privacy" element={<Privacy />} />
       <Route path="/onboarding" element={
         <ProtectedRoute>
           <Onboarding />
