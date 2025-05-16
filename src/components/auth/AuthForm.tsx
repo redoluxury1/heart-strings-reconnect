@@ -65,7 +65,7 @@ const AuthForm = ({ inviteToken }: AuthFormProps) => {
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!email || !password || !name) {
+    if (!email || !password) {
       toast({
         title: "Missing fields",
         description: "Please fill in all required fields.",
@@ -78,7 +78,7 @@ const AuthForm = ({ inviteToken }: AuthFormProps) => {
     
     try {
       console.log("Starting signup process for email:", email);
-      const { error, data } = await signUp(email, password);
+      const { error, data } = await signUp(email, password, name);
       
       if (error) {
         console.error("Signup error:", error);
@@ -89,41 +89,84 @@ const AuthForm = ({ inviteToken }: AuthFormProps) => {
       
       if (devMode) {
         console.log("Dev mode enabled, attempting immediate login");
-        // In dev mode, automatically sign in after sign up
-        try {
-          const { error: signInError } = await signIn(email, password);
-          if (signInError) {
-            console.error("Dev mode login error:", signInError);
-            throw signInError;
+        
+        // In dev mode, wait a short delay then attempt to sign in
+        // This delay helps ensure the user is properly registered before login
+        toast({
+          title: "Account created",
+          description: "Dev mode active: Attempting automatic login..."
+        });
+        
+        // Give Supabase a moment to process the new account
+        setTimeout(async () => {
+          try {
+            const { error: signInError } = await signIn(email, password);
+            if (signInError) {
+              console.error("Dev mode login error:", signInError);
+              
+              // If first attempt fails, try once more after a longer delay
+              setTimeout(async () => {
+                try {
+                  const { error: retryError } = await signIn(email, password);
+                  if (retryError) {
+                    throw retryError;
+                  } else {
+                    console.log("Dev mode login successful on retry");
+                    toast({
+                      title: "Dev mode login successful",
+                      description: "You're now logged in!"
+                    });
+                    
+                    if (inviteToken) {
+                      navigate(`/onboarding?invite=${inviteToken}`);
+                    } else {
+                      navigate('/onboarding');
+                    }
+                  }
+                } catch (finalError: any) {
+                  console.error("Failed during dev mode login retry:", finalError);
+                  toast({
+                    title: "Dev mode login failed",
+                    description: "Created account, but couldn't log in automatically. Please try logging in manually.",
+                    variant: "destructive"
+                  });
+                }
+              }, 1500);
+              
+            } else {
+              console.log("Dev mode login successful");
+              toast({
+                title: "Dev mode activated",
+                description: "Bypassing email verification. You're now logged in!",
+              });
+              
+              // With invite token we'll redirect to onboarding with the token
+              if (inviteToken) {
+                navigate(`/onboarding?invite=${inviteToken}`);
+              } else {
+                navigate('/onboarding');
+              }
+            }
+          } catch (signInError: any) {
+            console.error("Failed during dev mode login:", signInError);
+            toast({
+              title: "Dev mode login failed",
+              description: "Created account, but couldn't log in automatically. Please try logging in manually.",
+              variant: "destructive"
+            });
+          } finally {
+            setIsLoading(false);
           }
-          
-          console.log("Dev mode login successful");
-          toast({
-            title: "Dev mode activated",
-            description: "Bypassing email verification. You're now logged in!",
-          });
-          
-          // With invite token we'll redirect to onboarding with the token
-          if (inviteToken) {
-            navigate(`/onboarding?invite=${inviteToken}`);
-          } else {
-            navigate('/onboarding');
-          }
-        } catch (signInError: any) {
-          console.error("Failed during dev mode login:", signInError);
-          toast({
-            title: "Dev mode login failed",
-            description: "Created account, but couldn't log in automatically. Please try logging in manually.",
-            variant: "destructive"
-          });
-        }
+        }, 1000);
       } else {
+        setIsLoading(false);
         toast({
           title: "Account created",
           description: "Welcome to Bridge For Couples! Check your email for confirmation.",
         });
       }
     } catch (error: any) {
+      setIsLoading(false);
       console.error("Signup process failed:", error);
       let errorMessage = error.message || "There was a problem creating your account.";
       
@@ -137,8 +180,6 @@ const AuthForm = ({ inviteToken }: AuthFormProps) => {
         description: errorMessage,
         variant: "destructive"
       });
-    } finally {
-      setIsLoading(false);
     }
   };
 

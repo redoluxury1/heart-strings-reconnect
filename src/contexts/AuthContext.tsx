@@ -10,7 +10,7 @@ interface AuthContextProps {
   user: User | null;
   profile: UserProfile | null;
   relationship: Relationship | null;
-  signUp: (email: string, password: string) => Promise<{ error: any | null, data: any }>;
+  signUp: (email: string, password: string, name: string) => Promise<{ error: any | null, data: any }>;
   signIn: (email: string, password: string) => Promise<{ error: any | null }>;
   signOut: () => Promise<void>;
   loading: boolean;
@@ -94,7 +94,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  const signUp = async (email: string, password: string) => {
+  const signUp = async (email: string, password: string, name: string) => {
     console.log("Signing up user:", email);
     const response = await supabase.auth.signUp({ 
       email, 
@@ -102,7 +102,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       options: {
         // Set data that will be accessible in the user meta data
         data: {
-          name: email.split('@')[0], // Simple default name based on email
+          name: name || email.split('@')[0], // Use provided name or fallback to email prefix
         }
       }
     });
