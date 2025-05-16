@@ -33,7 +33,15 @@ export const LoginForm: React.FC = () => {
       const { error } = await signIn(email, password);
       
       if (error) {
-        throw error;
+        console.error("Login error:", error);
+        
+        toast({
+          title: "Login failed",
+          description: error.message || "Please check your credentials and try again.",
+          variant: "destructive"
+        });
+        setIsLoading(false);
+        return;
       }
       
       toast({
@@ -47,7 +55,7 @@ export const LoginForm: React.FC = () => {
       console.error("Login error:", error);
       toast({
         title: "Login failed",
-        description: error.message || "Please check your credentials and try again.",
+        description: error.message || "An unexpected error occurred. Please try again.",
         variant: "destructive"
       });
       setIsLoading(false);

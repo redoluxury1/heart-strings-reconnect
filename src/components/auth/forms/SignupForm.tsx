@@ -7,7 +7,6 @@ import { Label } from "@/components/ui/label";
 import { toast } from "@/hooks/use-toast";
 import { useAuth } from '@/contexts/AuthContext';
 import { EmailField, PasswordField, NameField } from './FormFields';
-import { useDevModeLogin } from '../hooks/useDevModeLogin';
 
 interface SignupFormProps {
   inviteToken?: string | null;
@@ -18,11 +17,11 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken }) => {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [devMode, setDevMode] = useState(true); // Default to true for easier testing
+  const [isLoading, setIsLoading] = useState(false);
   const [accountCreated, setAccountCreated] = useState(false);
   
   const navigate = useNavigate();
-  const { signUp, signIn } = useAuth();
-  const { isLoading, setIsLoading, attemptDevModeLogin } = useDevModeLogin();
+  const { signUp } = useAuth();
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,31 +48,21 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken }) => {
       
       console.log("Signup successful, data:", data);
       
-      if (devMode) {
-        // Show success message immediately
-        toast({
-          title: "Account created!",
-          description: "Account created successfully. Redirecting to login page..."
-        });
-        
-        // Brief delay before redirecting to login
-        setTimeout(() => {
-          setIsLoading(false);
-          // Redirect to login page for manual login
-          navigate('/auth');
-        }, 2000);
-      } else {
+      setAccountCreated(true);
+      
+      toast({
+        title: "Account created successfully!",
+        description: devMode 
+          ? "Your account has been created. Please log in with your credentials." 
+          : "Your account has been created. Please check your email for confirmation."
+      });
+      
+      // Redirect to login page after successful signup
+      setTimeout(() => {
         setIsLoading(false);
-        toast({
-          title: "Account created",
-          description: "Welcome to Bridge For Couples! Check your email for confirmation.",
-        });
-        
-        // For non-dev mode, redirect to login page
-        setTimeout(() => {
-          navigate('/auth');
-        }, 2000);
-      }
+        navigate('/auth'); // Redirect back to auth page to login
+      }, 2000);
+      
     } catch (error: any) {
       setIsLoading(false);
       console.error("Signup process failed:", error);
@@ -127,14 +116,20 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken }) => {
       
       <Button 
         type="submit" 
-        disabled={isLoading}
+        disabled={isLoading || accountCreated}
         className="w-full rounded-full bg-[#C7747F] hover:bg-[#B56470] text-white"
       >
         {isLoading 
           ? "Creating Account..." 
-          : "Sign Up"
+          : (accountCreated ? "Account Created!" : "Sign Up")
         }
       </Button>
+      
+      {accountCreated && (
+        <p className="text-center text-sm text-[#1E2A38]/70 mt-4">
+          Account created successfully! Please log in with your credentials.
+        </p>
+      )}
     </form>
   );
 };
