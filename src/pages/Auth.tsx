@@ -10,6 +10,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import ContentContainer from '../components/common/ContentContainer';
+import { Heart } from 'lucide-react';
 
 const Auth = () => {
   const [email, setEmail] = useState('');
@@ -117,36 +118,40 @@ const Auth = () => {
   };
   
   return (
-    <div className="min-h-screen bg-soft-blush flex flex-col">
+    <div className="min-h-screen bg-[#FAF6F1] flex flex-col">
       <Navbar />
       
       <main className="flex-grow py-8 md:py-16">
         <ContentContainer>
           <div className="max-w-md mx-auto">
-            <Card className="border-2 border-lavender-blue/20 shadow-lg">
-              <CardHeader className="text-center">
-                <CardTitle className="font-cormorant text-3xl text-midnight-indigo">
-                  {inviteToken ? "Join Your Partner" : "Welcome to Bridge"}
+            <Card className="border-2 border-[#D36B4B]/20 shadow-lg">
+              <CardHeader className="text-center space-y-4">
+                {/* Heart icon with glow effect */}
+                <div className="mx-auto">
+                  <Heart className="h-16 w-16 text-[#D36B4B] drop-shadow-md" />
+                </div>
+                
+                <CardTitle className="font-cormorant text-3xl text-[#1E2A38]">
+                  Let's build better conversations—together.
                 </CardTitle>
-                <CardDescription>
-                  {inviteToken 
-                    ? "Create an account to connect with your partner" 
-                    : "Sign in or create an account to get started"}
+                
+                <CardDescription className="text-[#1E2A38]/80 text-base">
+                  Create an account or sign in to get started.
                 </CardDescription>
               </CardHeader>
               
               <CardContent>
                 {!inviteToken && (
                   <Tabs defaultValue={activeTab} onValueChange={(v) => setActiveTab(v as "login" | "signup")} className="w-full">
-                    <TabsList className="grid w-full grid-cols-2">
-                      <TabsTrigger value="login">Log In</TabsTrigger>
-                      <TabsTrigger value="signup">Sign Up</TabsTrigger>
+                    <TabsList className="grid w-full grid-cols-2 mb-6">
+                      <TabsTrigger value="login" className="text-[#1E2A38]">Log In</TabsTrigger>
+                      <TabsTrigger value="signup" className="text-[#1E2A38]">Sign Up</TabsTrigger>
                     </TabsList>
                     
                     <TabsContent value="login">
                       <form onSubmit={handleLogin} className="space-y-4 mt-4">
                         <div className="space-y-2">
-                          <label htmlFor="email" className="block text-sm font-medium">
+                          <label htmlFor="email" className="block text-sm font-medium text-[#1E2A38]">
                             Email
                           </label>
                           <Input
@@ -155,12 +160,12 @@ const Auth = () => {
                             placeholder="your@email.com"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            className="w-full"
+                            className="w-full border-[#C7747F]/30 focus:border-[#C7747F] focus:ring-[#C7747F]/20 placeholder-gray-400 text-[#1E2A38]"
                           />
                         </div>
                         
                         <div className="space-y-2">
-                          <label htmlFor="password" className="block text-sm font-medium">
+                          <label htmlFor="password" className="block text-sm font-medium text-[#1E2A38]">
                             Password
                           </label>
                           <Input
@@ -168,14 +173,14 @@ const Auth = () => {
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            className="w-full"
+                            className="w-full border-[#C7747F]/30 focus:border-[#C7747F] focus:ring-[#C7747F]/20 text-[#1E2A38]"
                           />
                         </div>
                         
                         <Button 
                           type="submit" 
                           disabled={isLoading}
-                          className="w-full bg-lavender-blue hover:bg-lavender-blue/90"
+                          className="w-full rounded-full bg-[#1E2A38] hover:bg-[#1E2A38]/90 text-white"
                         >
                           {isLoading ? "Logging in..." : "Log In"}
                         </Button>
@@ -185,7 +190,7 @@ const Auth = () => {
                     <TabsContent value="signup">
                       <form onSubmit={handleSignup} className="space-y-4 mt-4">
                         <div className="space-y-2">
-                          <label htmlFor="name" className="block text-sm font-medium">
+                          <label htmlFor="name" className="block text-sm font-medium text-[#1E2A38]">
                             Full Name
                           </label>
                           <Input
@@ -194,12 +199,12 @@ const Auth = () => {
                             placeholder="Your Name"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            className="w-full"
+                            className="w-full border-[#C7747F]/30 focus:border-[#C7747F] focus:ring-[#C7747F]/20 placeholder-gray-400 text-[#1E2A38]"
                           />
                         </div>
                         
                         <div className="space-y-2">
-                          <label htmlFor="signupEmail" className="block text-sm font-medium">
+                          <label htmlFor="signupEmail" className="block text-sm font-medium text-[#1E2A38]">
                             Email
                           </label>
                           <Input
@@ -208,12 +213,12 @@ const Auth = () => {
                             placeholder="your@email.com"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            className="w-full"
+                            className="w-full border-[#C7747F]/30 focus:border-[#C7747F] focus:ring-[#C7747F]/20 placeholder-gray-400 text-[#1E2A38]"
                           />
                         </div>
                         
                         <div className="space-y-2">
-                          <label htmlFor="signupPassword" className="block text-sm font-medium">
+                          <label htmlFor="signupPassword" className="block text-sm font-medium text-[#1E2A38]">
                             Password
                           </label>
                           <Input
@@ -221,14 +226,14 @@ const Auth = () => {
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            className="w-full"
+                            className="w-full border-[#C7747F]/30 focus:border-[#C7747F] focus:ring-[#C7747F]/20 text-[#1E2A38]"
                           />
                         </div>
                         
                         <Button 
                           type="submit" 
                           disabled={isLoading}
-                          className="w-full bg-mauve-rose hover:bg-mauve-rose/90 text-white"
+                          className="w-full rounded-full bg-[#D36B4B] hover:bg-[#D36B4B]/90 text-white"
                         >
                           {isLoading ? "Creating Account..." : "Sign Up"}
                         </Button>
@@ -240,7 +245,7 @@ const Auth = () => {
                 {inviteToken && (
                   <form onSubmit={handleSignup} className="space-y-4 mt-4">
                     <div className="space-y-2">
-                      <label htmlFor="name" className="block text-sm font-medium">
+                      <label htmlFor="name" className="block text-sm font-medium text-[#1E2A38]">
                         Full Name
                       </label>
                       <Input
@@ -249,12 +254,12 @@ const Auth = () => {
                         placeholder="Your Name"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        className="w-full"
+                        className="w-full border-[#C7747F]/30 focus:border-[#C7747F] focus:ring-[#C7747F]/20 placeholder-gray-400 text-[#1E2A38]"
                       />
                     </div>
                     
                     <div className="space-y-2">
-                      <label htmlFor="signupEmail" className="block text-sm font-medium">
+                      <label htmlFor="signupEmail" className="block text-sm font-medium text-[#1E2A38]">
                         Email
                       </label>
                       <Input
@@ -263,12 +268,12 @@ const Auth = () => {
                         placeholder="your@email.com"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="w-full"
+                        className="w-full border-[#C7747F]/30 focus:border-[#C7747F] focus:ring-[#C7747F]/20 placeholder-gray-400 text-[#1E2A38]"
                       />
                     </div>
                     
                     <div className="space-y-2">
-                      <label htmlFor="signupPassword" className="block text-sm font-medium">
+                      <label htmlFor="signupPassword" className="block text-sm font-medium text-[#1E2A38]">
                         Password
                       </label>
                       <Input
@@ -276,23 +281,23 @@ const Auth = () => {
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="w-full"
+                        className="w-full border-[#C7747F]/30 focus:border-[#C7747F] focus:ring-[#C7747F]/20 text-[#1E2A38]"
                       />
                     </div>
                     
                     <Button 
                       type="submit" 
                       disabled={isLoading}
-                      className="w-full bg-mauve-rose hover:bg-mauve-rose/90 text-white"
+                      className="w-full rounded-full bg-[#D36B4B] hover:bg-[#D36B4B]/90 text-white"
                     >
-                      {isLoading ? "Creating Account..." : "Join Your Partner"}
+                      {isLoading ? "Creating Account..." : "Sign Up"}
                     </Button>
                   </form>
                 )}
               </CardContent>
               
-              <CardFooter className="flex justify-center text-xs text-center text-muted-foreground">
-                By creating an account, you agree to our Terms of Service and Privacy Policy
+              <CardFooter className="flex justify-center text-xs text-center text-[#1E2A38]/60 px-6">
+                By continuing, you agree to our <a href="#" className="underline hover:text-[#D36B4B]">Terms of Service</a> and <a href="#" className="underline hover:text-[#D36B4B]">Privacy Policy</a>
               </CardFooter>
             </Card>
           </div>

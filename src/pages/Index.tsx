@@ -43,7 +43,7 @@ const Index = () => {
               <div className="text-center mt-8 mb-12">
                 <p className="text-lg mb-4">Ready to start your journey with Bridge For Couples?</p>
                 <Link to="/auth">
-                  <Button size="lg" className="bg-mauve-rose hover:bg-mauve-rose/90 text-white">
+                  <Button size="lg" className="rounded-full bg-[#D36B4B] hover:bg-[#D36B4B]/90 text-white">
                     Sign Up or Log In
                   </Button>
                 </Link>
