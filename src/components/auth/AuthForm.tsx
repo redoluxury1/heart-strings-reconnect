@@ -7,6 +7,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from '@/contexts/AuthContext';
 import { Heart } from 'lucide-react';
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 
 interface AuthFormProps {
   inviteToken?: string | null;
@@ -18,6 +20,7 @@ const AuthForm = ({ inviteToken }: AuthFormProps) => {
   const [name, setName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [activeTab, setActiveTab] = useState<"login" | "signup">(inviteToken ? "signup" : "login");
+  const [devMode, setDevMode] = useState(false);
   
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -73,19 +76,31 @@ const AuthForm = ({ inviteToken }: AuthFormProps) => {
     setIsLoading(true);
     
     try {
+      // If in development mode, we'll use signIn directly after signUp to bypass email verification
       const { error } = await signUp(email, password);
       if (error) throw error;
       
-      toast({
-        title: "Account created",
-        description: "Welcome to Bridge For Couples! Check your email for confirmation.",
-      });
-      
-      // With invite token we'll redirect to onboarding with the token
-      if (inviteToken) {
-        navigate(`/onboarding?invite=${inviteToken}`);
+      if (devMode) {
+        // In dev mode, automatically sign in after sign up
+        const { error: signInError } = await signIn(email, password);
+        if (signInError) throw signInError;
+        
+        toast({
+          title: "Dev mode activated",
+          description: "Bypassing email verification. You're now logged in!",
+        });
+        
+        // With invite token we'll redirect to onboarding with the token
+        if (inviteToken) {
+          navigate(`/onboarding?invite=${inviteToken}`);
+        } else {
+          navigate('/onboarding');
+        }
       } else {
-        navigate('/onboarding');
+        toast({
+          title: "Account created",
+          description: "Welcome to Bridge For Couples! Check your email for confirmation.",
+        });
       }
     } catch (error: any) {
       toast({
@@ -193,6 +208,13 @@ const AuthForm = ({ inviteToken }: AuthFormProps) => {
                 />
               </div>
               
+              <div className="flex items-center space-x-2 my-4">
+                <Switch id="dev-mode" checked={devMode} onCheckedChange={setDevMode} />
+                <Label htmlFor="dev-mode" className="text-sm text-[#1E2A38]/70">
+                  Development Mode (Skip Email Verification)
+                </Label>
+              </div>
+              
               <Button 
                 type="submit" 
                 disabled={isLoading}
@@ -246,6 +268,13 @@ const AuthForm = ({ inviteToken }: AuthFormProps) => {
               onChange={(e) => setPassword(e.target.value)}
               className="w-full border-[#C7747F]/30 focus:border-[#C7747F] focus:ring-[#C7747F]/20 text-[#1E2A38]"
             />
+          </div>
+          
+          <div className="flex items-center space-x-2 my-4">
+            <Switch id="dev-mode-partner" checked={devMode} onCheckedChange={setDevMode} />
+            <Label htmlFor="dev-mode-partner" className="text-sm text-[#1E2A38]/70">
+              Development Mode (Skip Email Verification)
+            </Label>
           </div>
           
           <Button 
