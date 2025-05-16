@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "@/hooks/use-toast";
 import { useAuth } from '@/contexts/AuthContext';
 import { Heart } from 'lucide-react';
 import { Switch } from "@/components/ui/switch";
@@ -21,9 +21,9 @@ const AuthForm = ({ inviteToken }: AuthFormProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [activeTab, setActiveTab] = useState<"login" | "signup">(inviteToken ? "signup" : "login");
   const [devMode, setDevMode] = useState(true); // Default to true for easier testing
+  const [loginAttempts, setLoginAttempts] = useState(0);
   
   const navigate = useNavigate();
-  const { toast } = useToast();
   const { signIn, signUp } = useAuth();
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -41,6 +41,7 @@ const AuthForm = ({ inviteToken }: AuthFormProps) => {
     setIsLoading(true);
     
     try {
+      console.log("Attempting to sign in with:", email);
       const { error } = await signIn(email, password);
       if (error) throw error;
       
@@ -62,10 +63,45 @@ const AuthForm = ({ inviteToken }: AuthFormProps) => {
     }
   };
   
+  // Helper function to attempt login with exponential backoff
+  const attemptDevModeLogin = async (email: string, password: string, attempt: number = 0): Promise<boolean> => {
+    try {
+      const maxAttempts = 3;
+      const delay = Math.min(2000 * Math.pow(2, attempt), 10000); // Exponential backoff capped at 10 seconds
+      
+      console.log(`Dev mode login attempt ${attempt + 1} of ${maxAttempts}`);
+      
+      const { error } = await signIn(email, password);
+      
+      if (!error) {
+        console.log("Dev mode login successful!");
+        return true;
+      } else {
+        console.log(`Dev mode login attempt ${attempt + 1} failed:`, error.message);
+        
+        if (attempt < maxAttempts - 1) {
+          toast({
+            title: `Login attempt ${attempt + 1} failed`,
+            description: `Retrying in ${delay / 1000} seconds...`,
+          });
+          
+          // Wait and try again
+          await new Promise(resolve => setTimeout(resolve, delay));
+          return attemptDevModeLogin(email, password, attempt + 1);
+        } else {
+          throw new Error("Maximum login attempts reached");
+        }
+      }
+    } catch (error: any) {
+      console.error("Dev mode login failed after multiple attempts:", error);
+      return false;
+    }
+  };
+  
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!email || !password) {
+    if (!email || !password || !name) {
       toast({
         title: "Missing fields",
         description: "Please fill in all required fields.",
@@ -88,76 +124,37 @@ const AuthForm = ({ inviteToken }: AuthFormProps) => {
       console.log("Signup successful, data:", data);
       
       if (devMode) {
-        console.log("Dev mode enabled, attempting immediate login");
-        
-        // In dev mode, wait a short delay then attempt to sign in
-        // This delay helps ensure the user is properly registered before login
+        // In dev mode, wait before attempting to sign in
         toast({
           title: "Account created",
-          description: "Dev mode active: Attempting automatic login..."
+          description: "Dev mode active: Attempting automatic login after a brief delay..."
         });
         
-        // Give Supabase a moment to process the new account
+        // Give Supabase time to process the new account
         setTimeout(async () => {
-          try {
-            const { error: signInError } = await signIn(email, password);
-            if (signInError) {
-              console.error("Dev mode login error:", signInError);
-              
-              // If first attempt fails, try once more after a longer delay
-              setTimeout(async () => {
-                try {
-                  const { error: retryError } = await signIn(email, password);
-                  if (retryError) {
-                    throw retryError;
-                  } else {
-                    console.log("Dev mode login successful on retry");
-                    toast({
-                      title: "Dev mode login successful",
-                      description: "You're now logged in!"
-                    });
-                    
-                    if (inviteToken) {
-                      navigate(`/onboarding?invite=${inviteToken}`);
-                    } else {
-                      navigate('/onboarding');
-                    }
-                  }
-                } catch (finalError: any) {
-                  console.error("Failed during dev mode login retry:", finalError);
-                  toast({
-                    title: "Dev mode login failed",
-                    description: "Created account, but couldn't log in automatically. Please try logging in manually.",
-                    variant: "destructive"
-                  });
-                }
-              }, 1500);
-              
-            } else {
-              console.log("Dev mode login successful");
-              toast({
-                title: "Dev mode activated",
-                description: "Bypassing email verification. You're now logged in!",
-              });
-              
-              // With invite token we'll redirect to onboarding with the token
-              if (inviteToken) {
-                navigate(`/onboarding?invite=${inviteToken}`);
-              } else {
-                navigate('/onboarding');
-              }
-            }
-          } catch (signInError: any) {
-            console.error("Failed during dev mode login:", signInError);
+          console.log("Starting dev mode login sequence after signup");
+          const loginSuccess = await attemptDevModeLogin(email, password);
+          
+          if (loginSuccess) {
             toast({
-              title: "Dev mode login failed",
-              description: "Created account, but couldn't log in automatically. Please try logging in manually.",
+              title: "Dev mode login successful",
+              description: "You're now logged in!"
+            });
+            
+            if (inviteToken) {
+              navigate(`/onboarding?invite=${inviteToken}`);
+            } else {
+              navigate('/onboarding');
+            }
+          } else {
+            setIsLoading(false);
+            toast({
+              title: "Automatic login failed",
+              description: "Account created successfully, but automatic login failed. Please try logging in manually.",
               variant: "destructive"
             });
-          } finally {
-            setIsLoading(false);
           }
-        }, 1000);
+        }, 2500); // Wait 2.5 seconds before first login attempt
       } else {
         setIsLoading(false);
         toast({
@@ -173,6 +170,7 @@ const AuthForm = ({ inviteToken }: AuthFormProps) => {
       // Provide more helpful message for common errors
       if (errorMessage.includes("User already registered")) {
         errorMessage = "This email is already registered. Please try logging in instead.";
+        setActiveTab("login");
       }
       
       toast({
@@ -248,6 +246,7 @@ const AuthForm = ({ inviteToken }: AuthFormProps) => {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   className="w-full border-[#C7747F]/30 focus:border-[#C7747F] focus:ring-[#C7747F]/20 placeholder-gray-400 text-[#1E2A38]"
+                  required
                 />
               </div>
               
@@ -262,6 +261,7 @@ const AuthForm = ({ inviteToken }: AuthFormProps) => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full border-[#C7747F]/30 focus:border-[#C7747F] focus:ring-[#C7747F]/20 placeholder-gray-400 text-[#1E2A38]"
+                  required
                 />
               </div>
               
@@ -275,6 +275,7 @@ const AuthForm = ({ inviteToken }: AuthFormProps) => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full border-[#C7747F]/30 focus:border-[#C7747F] focus:ring-[#C7747F]/20 text-[#1E2A38]"
+                  required
                 />
               </div>
               
@@ -310,6 +311,7 @@ const AuthForm = ({ inviteToken }: AuthFormProps) => {
               value={name}
               onChange={(e) => setName(e.target.value)}
               className="w-full border-[#C7747F]/30 focus:border-[#C7747F] focus:ring-[#C7747F]/20 placeholder-gray-400 text-[#1E2A38]"
+              required
             />
           </div>
           
@@ -324,6 +326,7 @@ const AuthForm = ({ inviteToken }: AuthFormProps) => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full border-[#C7747F]/30 focus:border-[#C7747F] focus:ring-[#C7747F]/20 placeholder-gray-400 text-[#1E2A38]"
+              required
             />
           </div>
           
@@ -337,6 +340,7 @@ const AuthForm = ({ inviteToken }: AuthFormProps) => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full border-[#C7747F]/30 focus:border-[#C7747F] focus:ring-[#C7747F]/20 text-[#1E2A38]"
+              required
             />
           </div>
           
