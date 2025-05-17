@@ -33,8 +33,8 @@ export const createReflection = async (
     id: data.id,
     couple_id: data.couple_id,
     prompt_type: data.prompt_type,
-    partner1_response: data.partner1_response,
-    partner2_response: data.partner2_response,
+    partner1_response: data.partner1_response as Record<string, any> | null,
+    partner2_response: data.partner2_response as Record<string, any> | null,
     created_at: new Date(data.created_at),
     updated_at: new Date(data.updated_at)
   };
@@ -70,8 +70,8 @@ export const updateReflection = async (
     id: data.id,
     couple_id: data.couple_id,
     prompt_type: data.prompt_type,
-    partner1_response: data.partner1_response,
-    partner2_response: data.partner2_response,
+    partner1_response: data.partner1_response as Record<string, any> | null,
+    partner2_response: data.partner2_response as Record<string, any> | null,
     created_at: new Date(data.created_at),
     updated_at: new Date(data.updated_at)
   };
@@ -105,8 +105,8 @@ export const getCoupleReflections = async (
     id: item.id,
     couple_id: item.couple_id,
     prompt_type: item.prompt_type,
-    partner1_response: item.partner1_response,
-    partner2_response: item.partner2_response,
+    partner1_response: item.partner1_response as Record<string, any> | null,
+    partner2_response: item.partner2_response as Record<string, any> | null,
     created_at: new Date(item.created_at),
     updated_at: new Date(item.updated_at)
   }));
@@ -131,8 +131,8 @@ export const getReflection = async (reflectionId: string): Promise<Reflection | 
     id: data.id,
     couple_id: data.couple_id,
     prompt_type: data.prompt_type,
-    partner1_response: data.partner1_response,
-    partner2_response: data.partner2_response,
+    partner1_response: data.partner1_response as Record<string, any> | null,
+    partner2_response: data.partner2_response as Record<string, any> | null,
     created_at: new Date(data.created_at),
     updated_at: new Date(data.updated_at)
   };
@@ -161,8 +161,8 @@ export const subscribeToReflectionUpdates = (
           id: payload.new.id,
           couple_id: payload.new.couple_id,
           prompt_type: payload.new.prompt_type,
-          partner1_response: payload.new.partner1_response,
-          partner2_response: payload.new.partner2_response,
+          partner1_response: payload.new.partner1_response as Record<string, any> | null,
+          partner2_response: payload.new.partner2_response as Record<string, any> | null,
           created_at: new Date(payload.new.created_at),
           updated_at: new Date(payload.new.updated_at)
         };

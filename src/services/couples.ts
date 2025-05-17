@@ -1,6 +1,7 @@
 
 import { supabase } from '../integrations/supabase/client';
-import { Couple, Reflection, SharedNote, UserProfile } from '../types';
+import { Couple, Reflection, SharedNote } from '../types/couple';
+import type { UserProfile } from '../types/relationship';
 
 /**
  * Creates a couple relationship between two users
@@ -108,7 +109,7 @@ export const updateUserWithCoupleId = async (userId: string, coupleId: string): 
     role: data.role || 'individual',
     usage_mode: data.usage_mode || 'solo',
     couple_id: data.couple_id,
-    partnerId: data.partner_id || null,
+    partnerId: null, // We don't have this info in the profile record
     relationshipId: null, // This would need to be fetched separately
     loveCode: null, // These would need to be fetched from user_meta
     secondaryLoveCode: null

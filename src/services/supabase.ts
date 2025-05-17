@@ -1,3 +1,4 @@
+
 import { createClient } from '@supabase/supabase-js';
 import type { UserProfile, Relationship, InviteRequest, CodeWordInfo } from '@/types/relationship';
 import { supabase } from '@/integrations/supabase/client';
@@ -18,8 +19,8 @@ export const getProfile = async (userId: string): Promise<UserProfile | null> =>
     id: data.id,
     name: data.name,
     email: data.email || '',
-    role: data.role || 'individual',
-    usage_mode: data.usage_mode || 'solo',
+    role: (data.role as 'individual' | 'partner') || 'individual',
+    usage_mode: (data.usage_mode as 'solo' | 'couple') || 'solo',
     couple_id: data.couple_id,
     partnerId: null, // These would need to be populated from relationship data
     relationshipId: null,
@@ -51,8 +52,8 @@ export const updateProfile = async (userId: string, updates: Partial<UserProfile
     id: data.id,
     name: data.name,
     email: data.email || '',
-    role: data.role || 'individual',
-    usage_mode: data.usage_mode || 'solo',
+    role: (data.role as 'individual' | 'partner') || 'individual',
+    usage_mode: (data.usage_mode as 'solo' | 'couple') || 'solo',
     couple_id: data.couple_id,
     partnerId: null,
     relationshipId: null,

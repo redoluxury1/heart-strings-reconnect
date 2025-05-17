@@ -1,4 +1,3 @@
-
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import { Session, User } from '@supabase/supabase-js';
 import { supabase } from '../integrations/supabase/client';
@@ -136,7 +135,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (!user) return;
     
     try {
-      const updatedProfile = await updateProfile(user.id, updates);
+      const updatedProfile = await getProfile(user.id);
       if (updatedProfile) {
         setProfile(updatedProfile);
       }
