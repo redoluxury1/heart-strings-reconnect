@@ -1,9 +1,9 @@
 
 import React, { useState } from 'react';
-import { Heart } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { LoginForm } from './forms/LoginForm';
 import { SignupForm } from './forms/SignupForm';
+import OptimizedImage from '@/components/common/OptimizedImage';
 
 interface AuthFormProps {
   inviteToken?: string | null;
@@ -14,8 +14,13 @@ const AuthForm = ({ inviteToken }: AuthFormProps) => {
   
   return (
     <>
-      <div className="mx-auto">
-        <Heart className="h-16 w-16 text-[#C7747F] drop-shadow-md" />
+      <div className="mx-auto mb-6">
+        <OptimizedImage 
+          src="/lovable-uploads/1630939c-5a23-4678-a75f-c4d384bbfce4.png"
+          alt="Bridge For Couples Hearts Logo"
+          className="h-24 w-auto"
+          priority={true}
+        />
       </div>
 
       {!inviteToken && (
