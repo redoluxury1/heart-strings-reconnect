@@ -22,10 +22,11 @@ const OnboardingPartnerStatus = ({
 }: OnboardingPartnerStatusProps) => {
   return (
     <div className="text-center">
-      <h2 className="text-2xl font-semibold mb-2">Who's using Bridge for Couples?</h2>
+      <h2 className="text-2xl font-semibold mb-2">Who's using</h2>
+      <h2 className="text-2xl font-semibold mb-6">Bridge for Couples?</h2>
       <p className="text-gray-600 mb-6">You can explore the app solo or invite your partner to join.</p>
       
-      <div className="flex flex-col sm:flex-row gap-4 mb-6">
+      <div className="flex gap-4 mb-8 mx-auto max-w-sm">
         <Button
           variant="outline"
           onClick={() => setPartnerStatus('solo')}
