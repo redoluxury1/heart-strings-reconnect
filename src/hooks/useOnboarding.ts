@@ -1,0 +1,154 @@
+
+import { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useToast } from '../hooks/use-toast';
+import { useInterface } from './useInterfaceContext';
+import { useAuth } from '../contexts/AuthContext';
+import { acceptPartnerInvite } from '../services/supabase';
+import { supabase } from '../integrations/supabase/client';
+import { PartnerStatus, InterfaceStyle } from '../contexts/InterfaceContext';
+
+export const useOnboarding = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { toast } = useToast();
+  const { setPartnerStatus: updateGlobalPartnerStatus, setInterfaceStyle: updateGlobalInterfaceStyle } = useInterface();
+  const { user, relationship, loading } = useAuth();
+  
+  const [step, setStep] = useState<number>(1);
+  const [partnerStatus, setPartnerStatus] = useState<PartnerStatus>('solo');
+  const [interfaceStyle, setInterfaceStyle] = useState<InterfaceStyle>('emotionally-reflective');
+  const [isPartnerInvited, setIsPartnerInvited] = useState(false);
+  const [isPartnerFlow, setIsPartnerFlow] = useState(false);
+  const [inviteToken, setInviteToken] = useState<string | null>(null);
+  
+  // Redirect if not logged in
+  useEffect(() => {
+    if (!loading && !user) {
+      navigate('/auth');
+    }
+  }, [user, loading, navigate]);
+  
+  // Check if this is a partner flow (coming from invite)
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const token = params.get('invite');
+    
+    if (token) {
+      setIsPartnerFlow(true);
+      setPartnerStatus('couple');
+      setInviteToken(token);
+    }
+  }, [location.search]);
+
+  // Check if the user already has an active relationship
+  useEffect(() => {
+    if (relationship && relationship.status === 'connected') {
+      setIsPartnerInvited(true);
+      setPartnerStatus('couple');
+    } else if (relationship && relationship.status === 'invited') {
+      setIsPartnerInvited(true);
+      setPartnerStatus('couple');
+    }
+  }, [relationship]);
+  
+  // Handle invite token connection after user is loaded
+  useEffect(() => {
+    const connectWithInviteToken = async () => {
+      if (user && inviteToken) {
+        try {
+          const updatedRelationship = await acceptPartnerInvite(inviteToken, user.id);
+          
+          if (updatedRelationship) {
+            toast({
+              title: "Connection successful!",
+              description: "You've been connected with your partner."
+            });
+            setIsPartnerFlow(true);
+            setPartnerStatus('couple');
+            setIsPartnerInvited(true);
+          }
+        } catch (error) {
+          console.error("Error connecting with invite token:", error);
+          toast({
+            title: "Connection error",
+            description: "There was a problem connecting with your partner.",
+            variant: "destructive"
+          });
+        }
+      }
+    };
+    
+    if (!loading) {
+      connectWithInviteToken();
+    }
+  }, [user, inviteToken, loading, toast]);
+  
+  const handleNextStep = async () => {
+    if (step < 3) {
+      // Update user metadata with their partner status choice
+      if (step === 2 && user) {
+        try {
+          await supabase.auth.updateUser({
+            data: {
+              usage_mode: partnerStatus
+            }
+          });
+          
+          console.log(`Updated user metadata: usage_mode = ${partnerStatus}`);
+        } catch (error) {
+          console.error("Error updating user metadata:", error);
+        }
+      }
+      
+      setStep(step + 1);
+    } else {
+      // Save preferences to localStorage
+      localStorage.setItem('bridge-partner-status', partnerStatus);
+      localStorage.setItem('bridge-interface-style', interfaceStyle);
+      updateGlobalPartnerStatus(partnerStatus);
+      updateGlobalInterfaceStyle(interfaceStyle);
+      
+      // Notify user of success
+      toast({
+        title: "You're all set!",
+        description: "Your preferences have been saved.",
+      });
+      
+      // Navigate to home page
+      navigate('/');
+    }
+  };
+  
+  const handleAddPartner = () => {
+    setStep(4); // Go to partner invite step
+  };
+  
+  const handleBackFromPartnerInvite = () => {
+    setStep(2); // Back to partner status step
+  };
+  
+  const handlePartnerInviteComplete = () => {
+    setIsPartnerInvited(true);
+    setStep(2);
+    toast({
+      title: "Partner invited",
+      description: "Your partner will receive an invitation to join Bridge For Couples.",
+    });
+  };
+  
+  return {
+    loading,
+    step,
+    partnerStatus,
+    setPartnerStatus,
+    interfaceStyle,
+    setInterfaceStyle,
+    isPartnerInvited,
+    isPartnerFlow,
+    handleNextStep,
+    handleAddPartner,
+    handleBackFromPartnerInvite,
+    handlePartnerInviteComplete
+  };
+};
