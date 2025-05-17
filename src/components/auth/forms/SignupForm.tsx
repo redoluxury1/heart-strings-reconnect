@@ -21,7 +21,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken }) => {
   const [accountCreated, setAccountCreated] = useState(false);
   
   const navigate = useNavigate();
-  const { signUp } = useAuth();
+  const { signUp, signIn } = useAuth();
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -57,11 +57,30 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken }) => {
           : "Your account has been created. Please check your email for confirmation."
       });
       
-      // Redirect to login page after successful signup
-      setTimeout(() => {
-        setIsLoading(false);
-        navigate('/auth'); // Redirect back to auth page to login
-      }, 2000);
+      if (devMode) {
+        // In dev mode, we can automatically log the user in
+        setTimeout(async () => {
+          try {
+            const { error: loginError } = await signIn(email, password);
+            if (!loginError) {
+              navigate('/onboarding');
+              return;
+            } else {
+              console.log("Auto login failed, redirecting to login page");
+            }
+          } catch (err) {
+            console.error("Error during auto-login:", err);
+          }
+          
+          // Fall back to redirecting to login page
+          navigate('/auth'); 
+        }, 1500);
+      } else {
+        // Redirect to login page after successful signup
+        setTimeout(() => {
+          navigate('/auth'); // Redirect back to auth page to login
+        }, 2000);
+      }
       
     } catch (error: any) {
       setIsLoading(false);
@@ -127,7 +146,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken }) => {
       
       {accountCreated && (
         <p className="text-center text-sm text-[#1E2A38]/70 mt-4">
-          Account created successfully! Please log in with your credentials.
+          Account created successfully!{devMode ? " Logging you in..." : " Please log in with your credentials."}
         </p>
       )}
     </form>

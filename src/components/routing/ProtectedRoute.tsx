@@ -23,7 +23,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   if (!user) {
     // Redirect to auth page if not authenticated
     console.log("User not authenticated, redirecting to auth page");
-    return <Navigate to="/auth" replace />;
+    return <Navigate to="/auth" replace state={{ from: location }} />;
   }
   
   console.log("User authenticated, rendering protected content");

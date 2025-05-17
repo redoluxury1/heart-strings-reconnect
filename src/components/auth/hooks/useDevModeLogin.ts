@@ -15,14 +15,14 @@ type DevModeLoginResult = {
 export const useDevModeLogin = (): DevModeLoginResult => {
   const [isLoading, setIsLoading] = useState(false);
 
-  // Simplified login function with basic retry logic
+  // Simplified login function with basic retry logic and better debugging
   const attemptDevModeLogin = async (
     email: string, 
     password: string, 
     signInFunction: (email: string, password: string) => Promise<{ error: any | null }>
   ): Promise<boolean> => {
     try {
-      console.log("Starting login attempt for:", email);
+      console.log("Starting dev mode login attempt for:", email);
       
       // First attempt
       const { error } = await signInFunction(email, password);
@@ -34,9 +34,14 @@ export const useDevModeLogin = (): DevModeLoginResult => {
       
       console.log("First login attempt failed:", error.message);
       
-      // Wait 2 seconds before second attempt
+      // Provide detailed error message
+      let errorMessage = "Initial login attempt failed";
+      if (error.message.includes("Invalid login credentials")) {
+        errorMessage += ": Email or password doesn't match our records";
+      }
+      
       toast({
-        title: "Initial login attempt failed",
+        title: errorMessage,
         description: "Waiting briefly before trying again...",
       });
       
@@ -44,6 +49,7 @@ export const useDevModeLogin = (): DevModeLoginResult => {
       await new Promise(resolve => setTimeout(resolve, 2000));
       
       // Second attempt
+      console.log("Attempting second login try for:", email);
       const secondAttempt = await signInFunction(email, password);
       
       if (!secondAttempt.error) {
@@ -60,7 +66,7 @@ export const useDevModeLogin = (): DevModeLoginResult => {
       
       return false;
     } catch (error: any) {
-      console.error("Login failed:", error);
+      console.error("Dev mode login failed:", error);
       return false;
     }
   };

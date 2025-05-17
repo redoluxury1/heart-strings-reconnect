@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { Session, User } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
@@ -95,29 +96,61 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signUp = async (email: string, password: string, name: string) => {
     console.log("Signing up user:", email);
-    const response = await supabase.auth.signUp({ 
-      email, 
-      password,
-      options: {
-        // Set data that will be accessible in the user meta data
-        data: {
-          name: name || email.split('@')[0], // Use provided name or fallback to email prefix
-        }
-      }
-    });
     
-    console.log("Signup response:", response.error ? "Error" : "Success");
-    return response;
+    // Add debugging for signup
+    try {
+      const response = await supabase.auth.signUp({ 
+        email, 
+        password,
+        options: {
+          // Set data that will be accessible in the user meta data
+          data: {
+            name: name || email.split('@')[0], // Use provided name or fallback to email prefix
+          }
+        }
+      });
+      
+      console.log("Signup response:", response.error ? "Error" : "Success");
+      if (response.error) {
+        console.error("Signup error details:", response.error);
+      } else {
+        console.log("User created successfully:", response.data.user?.id);
+      }
+      
+      return response;
+    } catch (err) {
+      console.error("Unexpected error during signup:", err);
+      return { error: err, data: null };
+    }
   };
 
   const signIn = async (email: string, password: string) => {
     console.log("Signing in user:", email);
-    const response = await supabase.auth.signInWithPassword({ email, password });
-    console.log("Sign in response:", response.error ? "Error" : "Success");
-    return response;
+    
+    try {
+      // Explicitly ensure we use email/password auth
+      const response = await supabase.auth.signInWithPassword({ 
+        email, 
+        password 
+      });
+      
+      console.log("Sign in response:", response.error ? "Error" : "Success");
+      
+      if (response.error) {
+        console.error("Sign in error details:", response.error);
+      } else {
+        console.log("User signed in successfully:", response.data.user?.id);
+      }
+      
+      return response;
+    } catch (err) {
+      console.error("Unexpected error during sign in:", err);
+      return { error: err };
+    }
   };
 
   const signOut = async () => {
+    console.log("Signing out user");
     await supabase.auth.signOut();
   };
 
