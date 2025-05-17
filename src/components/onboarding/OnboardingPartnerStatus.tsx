@@ -73,7 +73,7 @@ const OnboardingPartnerStatus = ({
       ) : (
         <>
           {isPartnerInvited ? (
-            <div className="text-sm text-green-500 mb-4">
+            <div className="text-sm text-[#D36B4B] mb-4 font-medium">
               Partner invited! Waiting for them to join.
             </div>
           ) : (
