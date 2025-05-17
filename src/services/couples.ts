@@ -26,7 +26,7 @@ export const createCouple = async (user1Id: string, user2Id: string): Promise<Co
     user1_id: data.user1_id,
     user2_id: data.user2_id,
     date_joined: new Date(data.date_joined),
-    shared_progress: data.shared_progress
+    shared_progress: data.shared_progress as Record<string, any> | null
   };
 };
 
@@ -52,7 +52,7 @@ export const getCouple = async (coupleId: string): Promise<Couple | null> => {
     user1_id: data.user1_id,
     user2_id: data.user2_id,
     date_joined: new Date(data.date_joined),
-    shared_progress: data.shared_progress
+    shared_progress: data.shared_progress as Record<string, any> | null
   };
 };
 
@@ -78,7 +78,7 @@ export const getCoupleByUserId = async (userId: string): Promise<Couple | null> 
     user1_id: data.user1_id,
     user2_id: data.user2_id,
     date_joined: new Date(data.date_joined),
-    shared_progress: data.shared_progress
+    shared_progress: data.shared_progress as Record<string, any> | null
   };
 };
 
@@ -106,8 +106,8 @@ export const updateUserWithCoupleId = async (userId: string, coupleId: string): 
     id: data.id,
     name: data.name,
     email: data.email || '',
-    role: data.role || 'individual',
-    usage_mode: data.usage_mode || 'solo',
+    role: (data.role as 'individual' | 'partner') || 'individual',
+    usage_mode: (data.usage_mode as 'solo' | 'couple') || 'solo',
     couple_id: data.couple_id,
     partnerId: null, // We don't have this info in the profile record
     relationshipId: null, // This would need to be fetched separately

@@ -53,7 +53,7 @@ const OnboardingPartnerStatus = ({
               ? "bg-[#1E2A38] text-white border-[#1E2A38]" 
               : "bg-[#E9DED9] text-[#1E2A38] border-[#E9DED9]"
           )}
-          disabled={isPartnerInvited}
+          // Removed the disabled prop that was preventing users from changing their selection
         >
           <div className="flex flex-col items-center">
             <Users className="h-5 w-5 mb-1" />
