@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { Heart } from 'lucide-react';
 import ContentContainer from '../components/common/ContentContainer';
 import OnboardingWelcome from '../components/onboarding/OnboardingWelcome';
 import OnboardingPartnerStatus from '../components/onboarding/OnboardingPartnerStatus';
