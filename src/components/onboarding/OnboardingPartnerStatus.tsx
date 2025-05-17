@@ -53,7 +53,6 @@ const OnboardingPartnerStatus = ({
               ? "bg-[#1E2A38] text-white border-[#1E2A38]" 
               : "bg-[#E9DED9] text-[#1E2A38] border-[#E9DED9]"
           )}
-          // Removed the disabled prop that was preventing users from changing their selection
         >
           <div className="flex flex-col items-center">
             <Users className="h-5 w-5 mb-1" />
@@ -72,18 +71,18 @@ const OnboardingPartnerStatus = ({
         </Button>
       ) : (
         <>
-          {isPartnerInvited ? (
+          {/* Only show this message if partner is actually invited, not just when couple is selected */}
+          {isPartnerInvited && (
             <div className="text-sm text-[#D36B4B] mb-4 font-medium">
               Partner invited! Waiting for them to join.
             </div>
-          ) : (
-            <Button 
-              onClick={onAddPartner} 
-              className="w-full mb-4 rounded-full bg-[#1E2A38] hover:bg-[#1E2A38]/90 text-white"
-            >
-              Invite Partner
-            </Button>
           )}
+          <Button 
+            onClick={onAddPartner} 
+            className="w-full mb-4 rounded-full bg-[#1E2A38] hover:bg-[#1E2A38]/90 text-white"
+          >
+            Invite Partner
+          </Button>
           <Button 
             variant="outline" 
             onClick={onContinue} 

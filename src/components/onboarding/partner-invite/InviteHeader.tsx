@@ -1,21 +1,14 @@
 
 import React from 'react';
 
-const InviteHeader: React.FC = () => {
+const InviteHeader = () => {
   return (
-    <>
-      <h1 className="font-cormorant text-3xl md:text-4xl font-semibold text-center mb-8 text-[#6A4A74]">
-        Invite your partner
-        <br />
-        to join you on
-        <br />
-        Bridge For Couples
-      </h1>
-      
-      <p className="text-center mb-8 text-midnight-indigo/80">
-        We will send your partner a link to download Bridge For Couples and sync with your account
+    <div className="text-center mb-8">
+      <h2 className="text-2xl font-semibold mb-2">Invite your partner</h2>
+      <p className="text-gray-600">
+        Send an invitation via email or text message to have your partner join you on Bridge for Couples.
       </p>
-    </>
+    </div>
   );
 };
 

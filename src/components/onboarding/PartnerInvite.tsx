@@ -20,7 +20,8 @@ const PartnerInvite: React.FC<PartnerInviteProps> = ({
     partnerName,
     setPartnerName,
     isSending,
-    handleSendInvite
+    handleSendInvite,
+    handleSendTextInvite
   } = usePartnerInvite(onComplete);
   
   return (
@@ -35,6 +36,7 @@ const PartnerInvite: React.FC<PartnerInviteProps> = ({
         setPartnerEmail={setPartnerEmail}
         isSending={isSending}
         onSendInvite={handleSendInvite}
+        onSendTextInvite={handleSendTextInvite}
       />
     </div>
   );

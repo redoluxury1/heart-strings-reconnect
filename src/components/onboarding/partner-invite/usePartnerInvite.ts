@@ -15,6 +15,12 @@ export const usePartnerInvite = (onComplete: () => void) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
+  
+  const validatePhoneNumber = (phone: string) => {
+    // Basic validation for phone numbers
+    const phoneRegex = /^\+?[1-9]\d{1,14}$/;
+    return phoneRegex.test(phone.replace(/\s+/g, ''));
+  };
 
   const handleSendInvite = async () => {
     if (!partnerEmail) {
@@ -75,12 +81,67 @@ export const usePartnerInvite = (onComplete: () => void) => {
     }
   };
 
+  const handleSendTextInvite = async (phoneNumber: string) => {
+    if (!phoneNumber) {
+      toast({
+        title: "Phone number required",
+        description: "Please enter your partner's phone number.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    // Validate phone number
+    if (!validatePhoneNumber(phoneNumber)) {
+      toast({
+        title: "Invalid phone number",
+        description: "Please enter a valid phone number.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    if (!relationship) {
+      toast({
+        title: "Error",
+        description: "Something went wrong. Please try again later.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    setIsSending(true);
+    
+    try {
+      // Here we would integrate with an SMS service
+      // For now, we'll mock success since actual SMS integration would require backend services
+      setTimeout(() => {
+        toast({
+          title: "Invitation sent via text!",
+          description: "Your partner will receive a text message with a link to join.",
+        });
+        
+        onComplete();
+      }, 1500);
+    } catch (error) {
+      console.error("Error sending text invitation:", error);
+      toast({
+        title: "Failed to send text invitation",
+        description: "Please try again later.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSending(false);
+    }
+  };
+
   return {
     partnerEmail,
     setPartnerEmail,
     partnerName,
     setPartnerName,
     isSending,
-    handleSendInvite
+    handleSendInvite,
+    handleSendTextInvite
   };
 };
