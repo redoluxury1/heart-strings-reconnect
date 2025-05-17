@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import NameInput from './NameInput';
 import EmailInput from './EmailInput';
-import InviteButton from './InviteButton';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
