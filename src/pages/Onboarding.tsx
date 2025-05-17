@@ -13,7 +13,6 @@ const Onboarding = () => {
     step,
     partnerStatus,
     setPartnerStatus,
-    isPartnerInvited,
     handleNextStep,
     handleAddPartner,
     handleBackFromPartnerInvite,
@@ -39,7 +38,6 @@ const Onboarding = () => {
           setPartnerStatus={setPartnerStatus}
           onContinue={handleNextStep}
           onAddPartner={handleAddPartner}
-          isPartnerInvited={isPartnerInvited}
         />
       )}
       

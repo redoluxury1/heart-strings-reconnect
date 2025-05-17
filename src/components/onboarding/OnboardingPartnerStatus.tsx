@@ -10,15 +10,13 @@ interface OnboardingPartnerStatusProps {
   setPartnerStatus: (status: PartnerStatus) => void;
   onContinue: () => void;
   onAddPartner: () => void;
-  isPartnerInvited: boolean;
 }
 
 const OnboardingPartnerStatus = ({ 
   partnerStatus, 
   setPartnerStatus, 
   onContinue, 
-  onAddPartner, 
-  isPartnerInvited 
+  onAddPartner
 }: OnboardingPartnerStatusProps) => {
   return (
     <div className="text-center">
@@ -71,12 +69,6 @@ const OnboardingPartnerStatus = ({
         </Button>
       ) : (
         <>
-          {/* Only show this message if partner is actually invited, not just when couple is selected */}
-          {isPartnerInvited && (
-            <div className="text-sm text-[#D36B4B] mb-4 font-medium">
-              Partner invited! Waiting for them to join.
-            </div>
-          )}
           <Button 
             onClick={onAddPartner} 
             className="w-full mb-4 rounded-full bg-[#1E2A38] hover:bg-[#1E2A38]/90 text-white"
