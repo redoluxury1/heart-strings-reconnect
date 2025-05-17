@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import OptimizedImage from '@/components/common/OptimizedImage';
 
 interface OnboardingWelcomeProps {
   onContinue: () => void;
@@ -13,15 +12,6 @@ const OnboardingWelcome: React.FC<OnboardingWelcomeProps> = ({ onContinue }) => 
       <h1 className="font-cormorant text-3xl md:text-4xl font-medium mb-6 text-midnight-indigo">
         We're here to help you communicate better — even when it's hard.
       </h1>
-      
-      <div className="flex justify-center my-8 w-full">
-        <OptimizedImage 
-          src="/lovable-uploads/1630939c-5a23-4678-a75f-c4d384bbfce4.png"
-          alt="Bridge For Couples Hearts Logo"
-          className="h-32 w-auto"
-          priority={true}
-        />
-      </div>
       
       <Button
         onClick={onContinue}
