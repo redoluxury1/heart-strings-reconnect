@@ -6,7 +6,7 @@ import { useInterface } from './useInterfaceContext';
 import { useAuth } from '../contexts/AuthContext';
 import { acceptPartnerInvite } from '../services/supabase';
 import { supabase } from '../integrations/supabase/client';
-import { PartnerStatus, InterfaceStyle } from '../contexts/InterfaceContext';
+import { PartnerStatus } from '../contexts/InterfaceContext';
 
 export const useOnboarding = () => {
   const navigate = useNavigate();
@@ -17,7 +17,6 @@ export const useOnboarding = () => {
   
   const [step, setStep] = useState<number>(1);
   const [partnerStatus, setPartnerStatus] = useState<PartnerStatus>('solo');
-  const [interfaceStyle, setInterfaceStyle] = useState<InterfaceStyle>('emotionally-reflective');
   const [isPartnerInvited, setIsPartnerInvited] = useState(false);
   const [isPartnerFlow, setIsPartnerFlow] = useState(false);
   const [inviteToken, setInviteToken] = useState<string | null>(null);
@@ -85,9 +84,11 @@ export const useOnboarding = () => {
   }, [user, inviteToken, loading, toast]);
   
   const handleNextStep = async () => {
-    if (step < 3) {
+    if (step === 1) {
+      setStep(step + 1);
+    } else if (step === 2) {
       // Update user metadata with their partner status choice
-      if (step === 2 && user) {
+      if (user) {
         try {
           await supabase.auth.updateUser({
             data: {
@@ -100,14 +101,15 @@ export const useOnboarding = () => {
           console.error("Error updating user metadata:", error);
         }
       }
-      
-      setStep(step + 1);
-    } else {
-      // Save preferences to localStorage
+
+      // Save partner status to localStorage
       localStorage.setItem('bridge-partner-status', partnerStatus);
-      localStorage.setItem('bridge-interface-style', interfaceStyle);
+      
+      // Set default interface style
+      updateGlobalInterfaceStyle('emotionally-reflective');
+      
+      // Update global partner status
       updateGlobalPartnerStatus(partnerStatus);
-      updateGlobalInterfaceStyle(interfaceStyle);
       
       // Notify user of success
       toast({
@@ -121,7 +123,7 @@ export const useOnboarding = () => {
   };
   
   const handleAddPartner = () => {
-    setStep(4); // Go to partner invite step
+    setStep(3); // Go to partner invite step
   };
   
   const handleBackFromPartnerInvite = () => {
@@ -142,8 +144,6 @@ export const useOnboarding = () => {
     step,
     partnerStatus,
     setPartnerStatus,
-    interfaceStyle,
-    setInterfaceStyle,
     isPartnerInvited,
     isPartnerFlow,
     handleNextStep,

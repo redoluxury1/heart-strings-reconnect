@@ -2,7 +2,6 @@
 import React from 'react';
 import OnboardingWelcome from '../components/onboarding/OnboardingWelcome';
 import OnboardingPartnerStatus from '../components/onboarding/OnboardingPartnerStatus';
-import OnboardingStyleSelector from '../components/onboarding/OnboardingStyleSelector';
 import PartnerInvite from '../components/onboarding/PartnerInvite';
 import OnboardingLoader from '../components/onboarding/OnboardingLoader';
 import OnboardingContainer from '../components/onboarding/OnboardingContainer';
@@ -14,8 +13,6 @@ const Onboarding = () => {
     step,
     partnerStatus,
     setPartnerStatus,
-    interfaceStyle,
-    setInterfaceStyle,
     isPartnerInvited,
     handleNextStep,
     handleAddPartner,
@@ -47,14 +44,6 @@ const Onboarding = () => {
       )}
       
       {step === 3 && (
-        <OnboardingStyleSelector
-          interfaceStyle={interfaceStyle}
-          setInterfaceStyle={setInterfaceStyle}
-          onContinue={handleNextStep}
-        />
-      )}
-      
-      {step === 4 && (
         <PartnerInvite
           onBack={handleBackFromPartnerInvite}
           onComplete={handlePartnerInviteComplete}
