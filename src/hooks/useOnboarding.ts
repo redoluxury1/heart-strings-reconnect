@@ -151,11 +151,6 @@ export const useOnboarding = () => {
       }
     }
     
-    toast({
-      title: "Partner invited",
-      description: "Your partner will receive an invitation to join Bridge For Couples.",
-    });
-    
     // Proceed to features intro step after inviting partner
     setStep(4);
   };
