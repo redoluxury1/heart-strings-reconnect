@@ -31,6 +31,9 @@ export interface UserProfile {
   id: string;
   name: string | null;
   email: string;
+  role: 'individual' | 'partner';
+  usage_mode: 'solo' | 'couple';
+  couple_id: string | null;
   partnerId: string | null;
   relationshipId: string | null;
   loveCode: string | null;

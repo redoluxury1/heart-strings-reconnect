@@ -1,63 +1,68 @@
 
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
 import { Session, User } from '@supabase/supabase-js';
-import { supabase } from '@/integrations/supabase/client';
-import { getProfile, getRelationship, createRelationship } from '@/services/supabase';
+import { supabase } from '../integrations/supabase/client';
+import { getProfile, getRelationship } from '../services/supabase';
 import type { UserProfile, Relationship } from '@/types/relationship';
+import { getCoupleByUserId } from '../services/couples';
+import { getUserMeta } from '../services/userMeta';
+import type { Couple, UserMeta } from '@/types/couple';
 
-interface AuthContextProps {
-  session: Session | null;
+interface AuthContextType {
   user: User | null;
+  session: Session | null;
   profile: UserProfile | null;
   relationship: Relationship | null;
-  signUp: (email: string, password: string, name: string) => Promise<{ error: any | null, data: any }>;
-  signIn: (email: string, password: string) => Promise<{ error: any | null }>;
-  signOut: () => Promise<void>;
+  couple: Couple | null;
+  userMeta: UserMeta | null;
   loading: boolean;
-  setProfile: React.Dispatch<React.SetStateAction<UserProfile | null>>;
-  setRelationship: React.Dispatch<React.SetStateAction<Relationship | null>>;
+  signUp: (email: string, password: string, name?: string) => Promise<{ error: Error | null, data: any }>;
+  signIn: (email: string, password: string) => Promise<{ error: Error | null, data: any }>;
+  signOut: () => Promise<void>;
+  resetPassword: (email: string) => Promise<{ error: Error | null, data: any }>;
+  updateProfile: (updates: Partial<UserProfile>) => Promise<void>;
 }
 
-const AuthContext = createContext<AuthContextProps>({} as AuthContextProps);
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [session, setSession] = useState<Session | null>(null);
   const [user, setUser] = useState<User | null>(null);
+  const [session, setSession] = useState<Session | null>(null);
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [relationship, setRelationship] = useState<Relationship | null>(null);
+  const [couple, setCouple] = useState<Couple | null>(null);
+  const [userMeta, setUserMeta] = useState<UserMeta | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Set up auth state listener first
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        console.log("Auth state changed:", event, session ? "Session exists" : "No session");
-        setSession(session);
-        setUser(session?.user ?? null);
-        
-        if (!session) {
-          setProfile(null);
-          setRelationship(null);
-        } else if (session.user) {
-          // Use setTimeout to prevent potential deadlocks with Supabase auth
-          setTimeout(() => {
-            loadUserData(session.user.id);
-          }, 0);
-        }
-      }
-    );
-
-    // Then fetch initial session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      console.log("Initial session check:", session ? "Session exists" : "No session");
-      setSession(session);
-      setUser(session?.user ?? null);
+    // Set up the auth state listener
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(async (event, currentSession) => {
+      setSession(currentSession);
+      setUser(currentSession?.user ?? null);
       
-      if (session?.user) {
-        loadUserData(session.user.id);
+      if (currentSession?.user) {
+        await loadUserData(currentSession.user.id);
       } else {
-        setLoading(false);
+        // Clear all user-related state when signing out
+        setProfile(null);
+        setRelationship(null);
+        setCouple(null);
+        setUserMeta(null);
       }
+    });
+
+    // Check if user is already signed in
+    supabase.auth.getSession().then(async ({ data: { session: currentSession } }) => {
+      setSession(currentSession);
+      setUser(currentSession?.user ?? null);
+      
+      if (currentSession?.user) {
+        await loadUserData(currentSession.user.id);
+      }
+      
+      setLoading(false);
     });
 
     return () => {
@@ -65,111 +70,105 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     };
   }, []);
 
-  // When the user changes, load their profile and relationship data
   const loadUserData = async (userId: string) => {
-    console.log("Loading user data for:", userId);
-    setLoading(true);
-    
-    try {
-      // Load user profile
-      const userProfile = await getProfile(userId);
-      console.log("User profile loaded:", userProfile);
-      setProfile(userProfile);
-      
-      // Load or create relationship
-      let userRelationship = await getRelationship(userId);
-      
-      if (!userRelationship) {
-        console.log("No relationship found, creating one");
-        // Create new relationship if user doesn't have one
-        userRelationship = await createRelationship(userId);
-      }
-      
-      console.log("Relationship data:", userRelationship);
-      setRelationship(userRelationship);
-    } catch (error) {
-      console.error('Error loading user data:', error);
-    } finally {
-      setLoading(false);
+    // Load user profile
+    const userProfile = await getProfile(userId);
+    setProfile(userProfile);
+
+    // Load relationship data
+    const userRelationship = await getRelationship(userId);
+    setRelationship(userRelationship);
+
+    // Load couple data if user is part of a couple
+    if (userProfile?.couple_id) {
+      const coupleData = await getCoupleByUserId(userId);
+      setCouple(coupleData);
     }
+
+    // Load user meta
+    const meta = await getUserMeta(userId);
+    setUserMeta(meta);
   };
 
-  const signUp = async (email: string, password: string, name: string) => {
-    console.log("Signing up user:", email);
-    
-    // Add debugging for signup
-    try {
-      const response = await supabase.auth.signUp({ 
-        email, 
-        password,
-        options: {
-          // Set data that will be accessible in the user meta data
-          data: {
-            name: name || email.split('@')[0], // Use provided name or fallback to email prefix
-          }
+  // Sign up function
+  const signUp = async (email: string, password: string, name?: string) => {
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          name,
+          usage_mode: 'solo',  // Default to solo mode
+          role: 'individual'    // Default to individual role
         }
-      });
-      
-      console.log("Signup response:", response.error ? "Error" : "Success");
-      if (response.error) {
-        console.error("Signup error details:", response.error);
-      } else {
-        console.log("User created successfully:", response.data.user?.id);
       }
-      
-      return response;
-    } catch (err) {
-      console.error("Unexpected error during signup:", err);
-      return { error: err, data: null };
-    }
-  };
-
-  const signIn = async (email: string, password: string) => {
-    console.log("Signing in user:", email);
+    });
     
-    try {
-      // Explicitly ensure we use email/password auth
-      const response = await supabase.auth.signInWithPassword({ 
-        email, 
-        password 
-      });
-      
-      console.log("Sign in response:", response.error ? "Error" : "Success");
-      
-      if (response.error) {
-        console.error("Sign in error details:", response.error);
-      } else {
-        console.log("User signed in successfully:", response.data.user?.id);
-      }
-      
-      return response;
-    } catch (err) {
-      console.error("Unexpected error during sign in:", err);
-      return { error: err };
-    }
+    return { data, error };
   };
 
+  // Sign in function
+  const signIn = async (email: string, password: string) => {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+    
+    return { data, error };
+  };
+
+  // Sign out function
   const signOut = async () => {
-    console.log("Signing out user");
     await supabase.auth.signOut();
   };
 
+  // Reset password function
+  const resetPassword = async (email: string) => {
+    const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: window.location.origin + '/reset-password',
+    });
+    
+    return { data, error };
+  };
+
+  // Update profile function
+  const updateProfile = async (updates: Partial<UserProfile>) => {
+    if (!user) return;
+    
+    try {
+      const updatedProfile = await updateProfile(user.id, updates);
+      if (updatedProfile) {
+        setProfile(updatedProfile);
+      }
+    } catch (error) {
+      console.error('Error updating profile:', error);
+    }
+  };
+
   const value = {
-    session,
     user,
+    session,
     profile,
     relationship,
+    couple,
+    userMeta,
+    loading,
     signUp,
     signIn,
     signOut,
-    loading,
-    setProfile,
-    setRelationship,
+    resetPassword,
+    updateProfile,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
-export const useAuth = () => {
-  return useContext(AuthContext);
+export const useAuth = (): AuthContextType => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
 };
+
+export default AuthContext;

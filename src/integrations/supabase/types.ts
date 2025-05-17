@@ -57,6 +57,30 @@ export type Database = {
           },
         ]
       }
+      couples: {
+        Row: {
+          date_joined: string | null
+          id: string
+          shared_progress: Json | null
+          user1_id: string
+          user2_id: string
+        }
+        Insert: {
+          date_joined?: string | null
+          id?: string
+          shared_progress?: Json | null
+          user1_id: string
+          user2_id: string
+        }
+        Update: {
+          date_joined?: string | null
+          id?: string
+          shared_progress?: Json | null
+          user1_id?: string
+          user2_id?: string
+        }
+        Relationships: []
+      }
       journal_entries: {
         Row: {
           content: string
@@ -137,29 +161,106 @@ export type Database = {
           },
         ]
       }
+      motivations: {
+        Row: {
+          content: string | null
+          created_at: string | null
+          date: string
+          id: string
+          status: string | null
+          type: string
+          user_id: string
+        }
+        Insert: {
+          content?: string | null
+          created_at?: string | null
+          date?: string
+          id?: string
+          status?: string | null
+          type: string
+          user_id: string
+        }
+        Update: {
+          content?: string | null
+          created_at?: string | null
+          date?: string
+          id?: string
+          status?: string | null
+          type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
+          couple_id: string | null
           created_at: string | null
           email: string | null
           id: string
           name: string | null
+          role: string | null
           updated_at: string | null
+          usage_mode: string | null
         }
         Insert: {
+          couple_id?: string | null
           created_at?: string | null
           email?: string | null
           id: string
           name?: string | null
+          role?: string | null
           updated_at?: string | null
+          usage_mode?: string | null
         }
         Update: {
+          couple_id?: string | null
           created_at?: string | null
           email?: string | null
           id?: string
           name?: string | null
+          role?: string | null
           updated_at?: string | null
+          usage_mode?: string | null
         }
         Relationships: []
+      }
+      reflections: {
+        Row: {
+          couple_id: string
+          created_at: string | null
+          id: string
+          partner1_response: Json | null
+          partner2_response: Json | null
+          prompt_type: string
+          updated_at: string | null
+        }
+        Insert: {
+          couple_id: string
+          created_at?: string | null
+          id?: string
+          partner1_response?: Json | null
+          partner2_response?: Json | null
+          prompt_type: string
+          updated_at?: string | null
+        }
+        Update: {
+          couple_id?: string
+          created_at?: string | null
+          id?: string
+          partner1_response?: Json | null
+          partner2_response?: Json | null
+          prompt_type?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reflections_couple_id_fkey"
+            columns: ["couple_id"]
+            isOneToOne: false
+            referencedRelation: "couples"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       relationships: {
         Row: {
@@ -214,6 +315,68 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      shared_notes: {
+        Row: {
+          author_id: string
+          couple_id: string
+          created_at: string | null
+          id: string
+          message: string
+          type: string
+        }
+        Insert: {
+          author_id: string
+          couple_id: string
+          created_at?: string | null
+          id?: string
+          message: string
+          type?: string
+        }
+        Update: {
+          author_id?: string
+          couple_id?: string
+          created_at?: string | null
+          id?: string
+          message?: string
+          type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "shared_notes_couple_id_fkey"
+            columns: ["couple_id"]
+            isOneToOne: false
+            referencedRelation: "couples"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_meta: {
+        Row: {
+          communication_style: string | null
+          default_tone: string | null
+          love_code: string | null
+          most_common_trigger: string | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          communication_style?: string | null
+          default_tone?: string | null
+          love_code?: string | null
+          most_common_trigger?: string | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          communication_style?: string | null
+          default_tone?: string | null
+          love_code?: string | null
+          most_common_trigger?: string | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
       }
     }
     Views: {

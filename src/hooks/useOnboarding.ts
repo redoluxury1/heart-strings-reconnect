@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useToast } from '../hooks/use-toast';
 import { useInterface } from './useInterfaceContext';
 import { useAuth } from '../contexts/AuthContext';
-import { acceptPartnerInvite } from '../services/supabase';
+import { acceptPartnerInvite, createRelationship, invitePartner } from '../services/supabase';
 import { supabase } from '../integrations/supabase/client';
 import { PartnerStatus } from '../contexts/InterfaceContext';
 
@@ -96,6 +96,14 @@ export const useOnboarding = () => {
             }
           });
           
+          // Also update the profile table
+          await supabase.from('profiles')
+            .update({ 
+              usage_mode: partnerStatus, 
+              role: partnerStatus === 'couple' ? 'partner' : 'individual' 
+            })
+            .eq('id', user.id);
+          
           console.log(`Updated user metadata: usage_mode = ${partnerStatus}`);
         } catch (error) {
           console.error("Error updating user metadata:", error);
@@ -130,9 +138,20 @@ export const useOnboarding = () => {
     setStep(2); // Back to partner status step
   };
   
-  const handlePartnerInviteComplete = () => {
+  const handlePartnerInviteComplete = async () => {
     setIsPartnerInvited(true);
     setStep(2);
+    
+    // If the relationship doesn't exist yet, create it
+    if (!relationship && user) {
+      try {
+        // Create a new relationship for this user
+        await createRelationship(user.id);
+      } catch (error) {
+        console.error("Error creating relationship:", error);
+      }
+    }
+    
     toast({
       title: "Partner invited",
       description: "Your partner will receive an invitation to join Bridge For Couples.",
