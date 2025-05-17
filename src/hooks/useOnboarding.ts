@@ -17,7 +17,6 @@ export const useOnboarding = () => {
   
   const [step, setStep] = useState<number>(1);
   const [partnerStatus, setPartnerStatus] = useState<PartnerStatus>('solo');
-  const [isPartnerInvited, setIsPartnerInvited] = useState(false);
   const [isPartnerFlow, setIsPartnerFlow] = useState(false);
   const [inviteToken, setInviteToken] = useState<string | null>(null);
   
@@ -42,12 +41,10 @@ export const useOnboarding = () => {
 
   // Check if the user already has an active relationship
   useEffect(() => {
-    if (relationship && relationship.status === 'connected') {
-      setIsPartnerInvited(true);
-      setPartnerStatus('couple');
-    } else if (relationship && relationship.status === 'invited') {
-      setIsPartnerInvited(true);
-      setPartnerStatus('couple');
+    if (relationship) {
+      if (relationship.status === 'connected' || relationship.status === 'invited') {
+        setPartnerStatus('couple');
+      }
     }
   }, [relationship]);
   
@@ -65,7 +62,6 @@ export const useOnboarding = () => {
             });
             setIsPartnerFlow(true);
             setPartnerStatus('couple');
-            setIsPartnerInvited(true);
           }
         } catch (error) {
           console.error("Error connecting with invite token:", error);
@@ -83,50 +79,56 @@ export const useOnboarding = () => {
     }
   }, [user, inviteToken, loading, toast]);
   
-  const handleNextStep = async () => {
-    if (step === 1) {
-      setStep(step + 1);
-    } else if (step === 2) {
-      // Update user metadata with their partner status choice
-      if (user) {
-        try {
-          await supabase.auth.updateUser({
-            data: {
-              usage_mode: partnerStatus
-            }
-          });
-          
-          // Also update the profile table
-          await supabase.from('profiles')
-            .update({ 
-              usage_mode: partnerStatus, 
-              role: partnerStatus === 'couple' ? 'partner' : 'individual' 
-            })
-            .eq('id', user.id);
-          
-          console.log(`Updated user metadata: usage_mode = ${partnerStatus}`);
-        } catch (error) {
-          console.error("Error updating user metadata:", error);
-        }
+  const completeOnboarding = async () => {
+    // Update user metadata with their partner status choice
+    if (user) {
+      try {
+        await supabase.auth.updateUser({
+          data: {
+            usage_mode: partnerStatus,
+            onboarding_complete: true
+          }
+        });
+        
+        // Also update the profile table
+        await supabase.from('profiles')
+          .update({ 
+            usage_mode: partnerStatus, 
+            role: partnerStatus === 'couple' ? 'partner' : 'individual',
+            onboarding_complete: true
+          })
+          .eq('id', user.id);
+        
+        console.log(`Updated user metadata: usage_mode = ${partnerStatus}, onboarding_complete = true`);
+      } catch (error) {
+        console.error("Error updating user metadata:", error);
       }
+    }
 
-      // Save partner status to localStorage
-      localStorage.setItem('bridge-partner-status', partnerStatus);
-      
-      // Set default interface style
-      updateGlobalInterfaceStyle('emotionally-reflective');
-      
-      // Update global partner status
-      updateGlobalPartnerStatus(partnerStatus);
-      
-      // Notify user of success
-      toast({
-        title: "You're all set!",
-        description: "Your preferences have been saved.",
-      });
-      
-      // Navigate to home page
-      navigate('/');
+    // Save partner status to localStorage
+    localStorage.setItem('bridge-partner-status', partnerStatus);
+    
+    // Set default interface style
+    updateGlobalInterfaceStyle('emotionally-reflective');
+    
+    // Update global partner status
+    updateGlobalPartnerStatus(partnerStatus);
+    
+    // Notify user of success
+    toast({
+      title: "You're all set!",
+      description: "Your preferences have been saved.",
+    });
+    
+    // Navigate to home page
+    navigate('/');
+  };
+  
+  const handleNextStep = () => {
+    if (step < 4) {
+      setStep(step + 1);
+    } else {
+      completeOnboarding();
     }
   };
   
@@ -139,9 +141,6 @@ export const useOnboarding = () => {
   };
   
   const handlePartnerInviteComplete = async () => {
-    setIsPartnerInvited(true);
-    setStep(2);
-    
     // If the relationship doesn't exist yet, create it
     if (!relationship && user) {
       try {
@@ -156,6 +155,9 @@ export const useOnboarding = () => {
       title: "Partner invited",
       description: "Your partner will receive an invitation to join Bridge For Couples.",
     });
+    
+    // Proceed to features intro step after inviting partner
+    setStep(4);
   };
   
   return {
@@ -163,7 +165,6 @@ export const useOnboarding = () => {
     step,
     partnerStatus,
     setPartnerStatus,
-    isPartnerInvited,
     isPartnerFlow,
     handleNextStep,
     handleAddPartner,

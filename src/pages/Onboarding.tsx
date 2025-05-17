@@ -5,6 +5,7 @@ import OnboardingPartnerStatus from '../components/onboarding/OnboardingPartnerS
 import PartnerInvite from '../components/onboarding/PartnerInvite';
 import OnboardingLoader from '../components/onboarding/OnboardingLoader';
 import OnboardingContainer from '../components/onboarding/OnboardingContainer';
+import OnboardingFeatures from '../components/onboarding/OnboardingFeatures';
 import { useOnboarding } from '../hooks/useOnboarding';
 
 const Onboarding = () => {
@@ -45,6 +46,12 @@ const Onboarding = () => {
         <PartnerInvite
           onBack={handleBackFromPartnerInvite}
           onComplete={handlePartnerInviteComplete}
+        />
+      )}
+
+      {step === 4 && (
+        <OnboardingFeatures
+          onContinue={handleNextStep}
         />
       )}
     </OnboardingContainer>
