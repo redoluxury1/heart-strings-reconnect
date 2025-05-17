@@ -1,6 +1,6 @@
 
 import { Action } from "./toast-actions";
-import { State, TOAST_REMOVE_DELAY } from "./types";
+import { State, TOAST_LIMIT, TOAST_REMOVE_DELAY } from "./types";
 
 // Map to store timeouts for toast removal
 export const toastTimeouts = new Map<string, ReturnType<typeof setTimeout>>();
