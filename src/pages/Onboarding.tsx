@@ -11,6 +11,7 @@ import { useInterface } from '../hooks/useInterfaceContext';
 import { PartnerStatus, InterfaceStyle } from '../contexts/InterfaceContext';
 import { useAuth } from '../contexts/AuthContext';
 import { acceptPartnerInvite } from '../services/supabase';
+import { supabase } from '../integrations/supabase/client';
 
 const Onboarding = () => {
   const navigate = useNavigate();
@@ -88,8 +89,23 @@ const Onboarding = () => {
     }
   }, [user, inviteToken, loading, toast]);
   
-  const handleNextStep = () => {
-    if (step < 3) {  // Updated to include style selection step
+  const handleNextStep = async () => {
+    if (step < 3) {
+      // Update user metadata with their partner status choice
+      if (step === 2 && user) {
+        try {
+          await supabase.auth.updateUser({
+            data: {
+              usage_mode: partnerStatus
+            }
+          });
+          
+          console.log(`Updated user metadata: usage_mode = ${partnerStatus}`);
+        } catch (error) {
+          console.error("Error updating user metadata:", error);
+        }
+      }
+      
       setStep(step + 1);
     } else {
       // Save preferences to localStorage
@@ -129,7 +145,7 @@ const Onboarding = () => {
   // Don't render the component until we've checked auth status
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-soft-blush">
+      <div className="min-h-screen flex items-center justify-center bg-[#F8F2F0]">
         <ContentContainer className="max-w-xl">
           <div className="rounded-xl p-8 bg-white shadow-lg text-center">
             <div className="animate-pulse space-y-4">
@@ -143,9 +159,14 @@ const Onboarding = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-soft-blush">
+    <div className="min-h-screen flex items-center justify-center bg-[#F8F2F0]">
       <ContentContainer className="max-w-xl">
-        <div className="rounded-xl p-8 bg-white shadow-lg">
+        <div className="rounded-xl p-8 bg-white shadow-lg relative">
+          {/* Optional Watermark */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-5">
+            <Heart className="text-[#D36B4B] h-40 w-40" />
+          </div>
+          
           {step === 1 && (
             <OnboardingWelcome 
               onContinue={handleNextStep}
