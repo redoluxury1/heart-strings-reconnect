@@ -8,6 +8,11 @@ interface OnboardingFeaturesProps {
 }
 
 const OnboardingFeatures: React.FC<OnboardingFeaturesProps> = ({ onContinue }) => {
+  const handleClick = () => {
+    console.log("Start Exploring button clicked");
+    onContinue();
+  };
+
   return (
     <div className="text-center space-y-8">
       <h2 className="text-2xl font-semibold mb-2">Welcome to Bridge for Couples</h2>
@@ -57,7 +62,7 @@ const OnboardingFeatures: React.FC<OnboardingFeaturesProps> = ({ onContinue }) =
       
       <div className="pt-6">
         <Button 
-          onClick={onContinue} 
+          onClick={handleClick} 
           className="w-full rounded-full bg-[#1E2A38] hover:bg-[#1E2A38]/90 text-white"
         >
           Start Exploring

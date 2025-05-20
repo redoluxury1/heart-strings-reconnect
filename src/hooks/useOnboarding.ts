@@ -80,6 +80,7 @@ export const useOnboarding = () => {
   }, [user, inviteToken, loading, toast]);
   
   const completeOnboarding = async () => {
+    console.log("Completing onboarding...");
     // Update user metadata with their partner status choice
     if (user) {
       try {
@@ -125,10 +126,15 @@ export const useOnboarding = () => {
   };
   
   const handleNextStep = () => {
-    if (step < 4) {
+    console.log(`Current step: ${step}, moving to next step`);
+    if (step < 3) {
       setStep(step + 1);
-    } else {
+    } else if (step === 4) {
+      // If we're on the final step (features intro), complete the onboarding
       completeOnboarding();
+    } else {
+      // For step 3 (partner invite), we handle progression in handlePartnerInviteComplete
+      setStep(4);
     }
   };
   
