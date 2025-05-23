@@ -87,5 +87,7 @@ export const heroQuotes: HeroQuote[] = [
 // Helper function to get daily quote based on date
 export const getDailyQuote = (): HeroQuote => {
   // Return the specific quote about feeding her and telling her she's pretty
-  return heroQuotes.find(quote => quote.id === 1) || heroQuotes[0];
+  const targetQuote = heroQuotes.find(quote => quote.id === 1);
+  console.log('getDailyQuote called, returning quote:', targetQuote);
+  return targetQuote || heroQuotes[0];
 };

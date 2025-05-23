@@ -13,6 +13,8 @@ import ShareMenu from './ShareMenu';
 const HomeLanding = () => {
   // Get the daily quote
   const dailyQuote = getDailyQuote();
+  console.log('HomeLanding received quote:', dailyQuote);
+  
   const [isHovered, setIsHovered] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isShareOpen, setIsShareOpen] = useState(false);
