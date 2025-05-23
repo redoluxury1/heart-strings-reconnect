@@ -1,4 +1,3 @@
-
 // Daily hero quotes including holiday-specific ones
 export interface HeroQuote {
   id: number;
@@ -87,22 +86,6 @@ export const heroQuotes: HeroQuote[] = [
 
 // Helper function to get daily quote based on date
 export const getDailyQuote = (): HeroQuote => {
-  const today = new Date();
-  const dateString = `${(today.getMonth() + 1).toString().padStart(2, '0')}-${today.getDate().toString().padStart(2, '0')}`;
-  
-  // Check for date-specific quotes first
-  const holidayQuote = heroQuotes.find(quote => quote.specificDate === dateString);
-  if (holidayQuote) return holidayQuote;
-  
-  // If no holiday quote, pick from general quotes
-  const generalQuotes = heroQuotes.filter(quote => quote.category === 'general');
-  
-  // Use the day of year to deterministically select a quote
-  // This ensures the same quote appears on the same day each year (unless it's a holiday)
-  const startOfYear = new Date(today.getFullYear(), 0, 0);
-  const diff = Number(today) - Number(startOfYear);
-  const dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const quoteIndex = dayOfYear % generalQuotes.length;
-  
-  return generalQuotes[quoteIndex];
+  // Return the specific quote about feeding her and telling her she's pretty
+  return heroQuotes.find(quote => quote.id === 1) || heroQuotes[0];
 };
