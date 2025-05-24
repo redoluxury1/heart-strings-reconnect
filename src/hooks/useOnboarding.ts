@@ -81,9 +81,10 @@ export const useOnboarding = () => {
   
   const completeOnboarding = async () => {
     console.log("Completing onboarding...");
-    // Update user metadata with their partner status choice
-    if (user) {
-      try {
+    
+    try {
+      // Update user metadata with their partner status choice
+      if (user) {
         await supabase.auth.updateUser({
           data: {
             usage_mode: partnerStatus,
@@ -101,28 +102,36 @@ export const useOnboarding = () => {
           .eq('id', user.id);
         
         console.log(`Updated user metadata: usage_mode = ${partnerStatus}, onboarding_complete = true`);
-      } catch (error) {
-        console.error("Error updating user metadata:", error);
       }
-    }
 
-    // Save partner status to localStorage
-    localStorage.setItem('bridge-partner-status', partnerStatus);
-    
-    // Set default interface style
-    updateGlobalInterfaceStyle('emotionally-reflective');
-    
-    // Update global partner status
-    updateGlobalPartnerStatus(partnerStatus);
-    
-    // Notify user of success
-    toast({
-      title: "You're all set!",
-      description: "Your preferences have been saved.",
-    });
-    
-    // Navigate to home page
-    navigate('/');
+      // Save partner status to localStorage
+      localStorage.setItem('bridge-partner-status', partnerStatus);
+      
+      // Set default interface style
+      updateGlobalInterfaceStyle('emotionally-reflective');
+      
+      // Update global partner status
+      updateGlobalPartnerStatus(partnerStatus);
+      
+      // Notify user of success
+      toast({
+        title: "You're all set!",
+        description: "Your preferences have been saved.",
+      });
+      
+      console.log("Onboarding completed successfully, navigating to home...");
+      
+      // Navigate to home page
+      navigate('/', { replace: true });
+      
+    } catch (error) {
+      console.error("Error completing onboarding:", error);
+      toast({
+        title: "Something went wrong",
+        description: "Please try again.",
+        variant: "destructive"
+      });
+    }
   };
   
   const handleNextStep = () => {
