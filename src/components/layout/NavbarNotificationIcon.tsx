@@ -4,18 +4,18 @@ import { Mail } from 'lucide-react';
 
 interface NavbarNotificationIconProps {
   hasNewLoveNote: boolean;
-  onClick: () => void;
+  onLoveNoteClick: () => void;
 }
 
 const NavbarNotificationIcon: React.FC<NavbarNotificationIconProps> = ({ 
   hasNewLoveNote,
-  onClick
+  onLoveNoteClick
 }) => {
   if (!hasNewLoveNote) return null;
 
   return (
     <button 
-      onClick={onClick}
+      onClick={onLoveNoteClick}
       className="relative flex items-center justify-center"
       aria-label="View new love note"
     >
