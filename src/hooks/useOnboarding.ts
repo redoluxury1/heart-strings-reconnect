@@ -125,10 +125,17 @@ export const useOnboarding = () => {
       // Update global partner status
       updateGlobalPartnerStatus(partnerStatus);
       
-      console.log("Onboarding completed successfully, navigating to home...");
+      console.log("Onboarding completed successfully, navigating to homepage...");
       
-      // Navigate to home page immediately and replace history
-      navigate('/', { replace: true });
+      // Force navigation to homepage with window.location as fallback
+      try {
+        navigate('/', { replace: true });
+        console.log("Navigation completed using navigate");
+      } catch (navError) {
+        console.error("Navigate failed, using window.location:", navError);
+        window.location.href = '/';
+        return;
+      }
       
       // Show success toast after navigation
       setTimeout(() => {
@@ -136,7 +143,7 @@ export const useOnboarding = () => {
           title: "Welcome to Bridge!",
           description: "You're all set to start building better conversations.",
         });
-      }, 200);
+      }, 300);
       
     } catch (error) {
       console.error("Error completing onboarding:", error);
