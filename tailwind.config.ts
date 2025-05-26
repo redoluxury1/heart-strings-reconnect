@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -72,6 +71,7 @@ export default {
 				// Brand specific colors
 				'midnight-indigo': '#4A448C',
 				'soft-cream': '#E7D9C9',
+				'cream-bg': '#F4EDE5', // New cream background color
 				'soft-blush': '#F1EAE8',  // Updated from #F1EDE8 to #F1EAE8
 				'rosewood-tint': '#E69999',
 				'mauve-rose': '#C7747F',

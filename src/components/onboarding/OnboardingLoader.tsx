@@ -1,16 +1,17 @@
 
 import React from 'react';
 import ContentContainer from '../common/ContentContainer';
+import ConversationLoader from '../common/ConversationLoader';
 
 const OnboardingLoader: React.FC = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#F8F2F0]">
+    <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#F4EDE5' }}>
       <ContentContainer className="max-w-xl">
-        <div className="rounded-xl p-8 bg-white shadow-lg text-center">
-          <div className="animate-pulse space-y-4">
-            <div className="h-12 bg-lavender-blue/20 rounded"></div>
-            <div className="h-32 bg-lavender-blue/10 rounded"></div>
-          </div>
+        <div className="rounded-xl p-8 bg-white/80 backdrop-blur-sm shadow-lg text-center">
+          <ConversationLoader className="mb-6" />
+          <p className="text-midnight-indigo/70 text-sm font-medium">
+            Preparing your Bridge experience…
+          </p>
         </div>
       </ContentContainer>
     </div>
