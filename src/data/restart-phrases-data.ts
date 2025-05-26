@@ -8,22 +8,22 @@ export interface RestartPhrase {
 export const restartPhrases: RestartPhrase[] = [
   {
     id: 'phrase-1',
-    text: "I've had a little space. Can we try again calmly?",
+    text: "I've had a little space. Can we try again?",
     category: 'calm'
   },
   {
     id: 'phrase-2',
-    text: "Still want to work through this—ready if you are.",
+    text: "Still want to work through this, ready if you are.",
     category: 'connection'
   },
   {
     id: 'phrase-3',
-    text: "Let's take a fresh approach. I don't want this to spiral again.",
+    text: "Let's start over. I don't want this to spiral again.",
     category: 'calm'
   },
   {
     id: 'phrase-4',
-    text: "Can we go back to the hard part—but do it softer this time?",
+    text: "Can we go back and try again without yelling?",
     category: 'honest'
   },
   {
@@ -33,7 +33,7 @@ export const restartPhrases: RestartPhrase[] = [
   },
   {
     id: 'phrase-6',
-    text: "I'm nervous to restart—but I don't want to avoid this.",
+    text: "I'm nervous to restart, but I don't want to avoid this—can we chat?",
     category: 'nervous'
   },
   {
