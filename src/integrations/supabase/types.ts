@@ -9,6 +9,47 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      conversation_messages: {
+        Row: {
+          created_at: string
+          id: string
+          message_text: string
+          message_type: string
+          metadata: Json | null
+          read_at: string | null
+          sender_id: string
+          session_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          message_text: string
+          message_type?: string
+          metadata?: Json | null
+          read_at?: string | null
+          sender_id: string
+          session_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          message_text?: string
+          message_type?: string
+          metadata?: Json | null
+          read_at?: string | null
+          sender_id?: string
+          session_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "conversation_messages_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "conversation_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       conversation_sessions: {
         Row: {
           created_at: string | null
@@ -78,6 +119,39 @@ export type Database = {
           shared_progress?: Json | null
           user1_id?: string
           user2_id?: string
+        }
+        Relationships: []
+      }
+      device_tokens: {
+        Row: {
+          created_at: string
+          device_name: string | null
+          device_type: string
+          id: string
+          is_active: boolean | null
+          token: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          device_name?: string | null
+          device_type: string
+          id?: string
+          is_active?: boolean | null
+          token: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          device_name?: string | null
+          device_type?: string
+          id?: string
+          is_active?: boolean | null
+          token?: string
+          updated_at?: string
+          user_id?: string
         }
         Relationships: []
       }
@@ -187,6 +261,93 @@ export type Database = {
           id?: string
           status?: string | null
           type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      notification_history: {
+        Row: {
+          created_at: string
+          delivered_at: string | null
+          delivery_status: string
+          id: string
+          message: string
+          metadata: Json | null
+          notification_type: string
+          read_at: string | null
+          recipient_id: string
+          sender_id: string | null
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          delivered_at?: string | null
+          delivery_status?: string
+          id?: string
+          message: string
+          metadata?: Json | null
+          notification_type: string
+          read_at?: string | null
+          recipient_id: string
+          sender_id?: string | null
+          title: string
+        }
+        Update: {
+          created_at?: string
+          delivered_at?: string | null
+          delivery_status?: string
+          id?: string
+          message?: string
+          metadata?: Json | null
+          notification_type?: string
+          read_at?: string | null
+          recipient_id?: string
+          sender_id?: string | null
+          title?: string
+        }
+        Relationships: []
+      }
+      notification_settings: {
+        Row: {
+          code_word_notifications: boolean | null
+          conversation_notifications: boolean | null
+          created_at: string
+          email_notifications: boolean | null
+          id: string
+          love_note_notifications: boolean | null
+          notification_sound: boolean | null
+          push_notifications: boolean | null
+          quiet_hours_end: string | null
+          quiet_hours_start: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          code_word_notifications?: boolean | null
+          conversation_notifications?: boolean | null
+          created_at?: string
+          email_notifications?: boolean | null
+          id?: string
+          love_note_notifications?: boolean | null
+          notification_sound?: boolean | null
+          push_notifications?: boolean | null
+          quiet_hours_end?: string | null
+          quiet_hours_start?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          code_word_notifications?: boolean | null
+          conversation_notifications?: boolean | null
+          created_at?: string
+          email_notifications?: boolean | null
+          id?: string
+          love_note_notifications?: boolean | null
+          notification_sound?: boolean | null
+          push_notifications?: boolean | null
+          quiet_hours_end?: string | null
+          quiet_hours_start?: string | null
+          updated_at?: string
           user_id?: string
         }
         Relationships: []

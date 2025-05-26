@@ -1,6 +1,8 @@
 
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
+import { sendConversationMessage } from './conversationMessages';
+import { sendInAppNotification } from './notifications';
 
 interface ConversationSession {
   id: string;
@@ -34,6 +36,16 @@ export const createConversationSession = async (
   if (error) {
     console.error('Error creating conversation session:', error);
     return null;
+  }
+  
+  // Send system message to start the conversation
+  if (data) {
+    await sendConversationMessage({
+      session_id: data.id,
+      sender_id: initiatorId,
+      message_text: `${type === 'mid-fight' ? 'Mid-fight' : 'Post-conflict'} conversation started`,
+      message_type: 'system'
+    });
   }
   
   return data as ConversationSession;
@@ -139,15 +151,21 @@ export const subscribeToActiveConversations = (
     .subscribe();
 };
 
-// Handle notifications for conversation events
-export const sendConversationNotification = (title: string, message: string) => {
-  // Play notification sound
-  const audio = new Audio('/notification-sound.mp3');
-  audio.play().catch(err => console.error('Error playing notification sound:', err));
-  
-  // Show toast notification
-  toast({
+// Enhanced notification function that integrates with new notification system
+export const sendConversationNotification = async (
+  recipientId: string,
+  senderId: string,
+  title: string, 
+  message: string,
+  sessionId?: string
+) => {
+  // Send in-app notification
+  await sendInAppNotification(
+    recipientId,
+    senderId,
+    'conversation',
     title,
-    description: message,
-  });
+    message,
+    { session_id: sessionId }
+  );
 };
