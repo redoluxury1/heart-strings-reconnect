@@ -136,14 +136,25 @@ export const useOnboarding = () => {
   
   const handleNextStep = () => {
     console.log(`Current step: ${step}, moving to next step`);
-    if (step < 3) {
-      setStep(step + 1);
-    } else if (step === 4) {
-      // If we're on the final step (features intro), complete the onboarding
-      completeOnboarding();
-    } else {
-      // For step 3 (partner invite), we handle progression in handlePartnerInviteComplete
+    
+    if (step === 1) {
+      // Always go to step 2 (partner status selection)
+      setStep(2);
+    } else if (step === 2) {
+      // From partner status step, check what the user selected
+      if (partnerStatus === 'solo') {
+        // Skip partner invite step and go directly to features intro
+        setStep(4);
+      } else {
+        // Go to partner invite step for couple mode
+        setStep(3);
+      }
+    } else if (step === 3) {
+      // From partner invite step, go to features intro
       setStep(4);
+    } else if (step === 4) {
+      // From features intro, complete onboarding
+      completeOnboarding();
     }
   };
   
