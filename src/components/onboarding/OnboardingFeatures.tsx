@@ -9,7 +9,7 @@ interface OnboardingFeaturesProps {
 
 const OnboardingFeatures: React.FC<OnboardingFeaturesProps> = ({ onContinue }) => {
   const handleClick = () => {
-    console.log("Start Exploring button clicked");
+    console.log("Start Exploring button clicked - completing onboarding");
     onContinue();
   };
 

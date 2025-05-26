@@ -127,7 +127,7 @@ export const useOnboarding = () => {
       
       console.log("Onboarding completed successfully, navigating to home...");
       
-      // Navigate to home page immediately
+      // Navigate to home page immediately and replace history
       navigate('/', { replace: true });
       
       // Show success toast after navigation
@@ -136,7 +136,7 @@ export const useOnboarding = () => {
           title: "Welcome to Bridge!",
           description: "You're all set to start building better conversations.",
         });
-      }, 100);
+      }, 200);
       
     } catch (error) {
       console.error("Error completing onboarding:", error);
@@ -167,7 +167,8 @@ export const useOnboarding = () => {
       // From partner invite step, go to features intro
       setStep(4);
     } else if (step === 4) {
-      // From features intro, complete onboarding
+      // From features intro, complete onboarding and navigate to homepage
+      console.log("Step 4 complete - calling completeOnboarding");
       completeOnboarding();
     }
   };
