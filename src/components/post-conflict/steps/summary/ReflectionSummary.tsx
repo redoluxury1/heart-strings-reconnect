@@ -2,26 +2,27 @@
 import React, { useState, useEffect } from 'react';
 import { HeartHandshake } from 'lucide-react';
 import { useSession } from '@/components/post-conflict/context/SessionContext';
-import { useReflectionAnalysis } from '@/hooks/useReflectionAnalysis';
+import { useConflictPatternAnalysis } from '@/hooks/useConflictPatternAnalysis';
 import TabView from './components/TabView';
 import SharedInsight from './components/SharedInsight';
 import ReflectionCards from './components/ReflectionCards';
 import NextStepsButtons from './components/NextStepsButtons';
+import PatternInsightCard from './components/PatternInsightCard';
 import { Skeleton } from '@/components/ui/skeleton';
 
 const ReflectionSummary: React.FC = () => {
   const { sessionData } = useSession();
   const [activeTab, setActiveTab] = useState<string>("side-by-side");
-  const { matchedReflections, isLoading } = useReflectionAnalysis(sessionData);
+  const { primaryPattern, matchedInsights, isAnalyzing, getPatternDisplayName } = useConflictPatternAnalysis(sessionData);
   
   // Force a small delay to ensure analysis has time to complete
-  const [showReflections, setShowReflections] = useState(false);
+  const [showInsights, setShowInsights] = useState(false);
   
   useEffect(() => {
     // Short delay to ensure analysis has completed
     const timer = setTimeout(() => {
-      setShowReflections(true);
-    }, 1000);
+      setShowInsights(true);
+    }, 1500);
     
     return () => clearTimeout(timer);
   }, []);
@@ -56,18 +57,28 @@ const ReflectionSummary: React.FC = () => {
         {/* Shared Insight Section */}
         <SharedInsight sessionData={sessionData} />
         
+        {/* Pattern-Based Insight (if detected) */}
+        {primaryPattern && showInsights && (
+          <PatternInsightCard 
+            pattern={primaryPattern}
+            patternName={getPatternDisplayName(primaryPattern)}
+          />
+        )}
+        
         {/* Therapist Reflection Cards */}
         <div className="w-full mb-8">
-          <h3 className="font-medium text-[#2C2C2C] mb-4">Therapist Insights</h3>
+          <h3 className="font-medium text-[#2C2C2C] mb-4">
+            {primaryPattern ? 'Personalized Insights' : 'Therapist Insights'}
+          </h3>
           
-          {isLoading || !showReflections ? (
+          {isAnalyzing || !showInsights ? (
             // Skeleton loading state
             <>
               <Skeleton className="h-48 w-full mb-4 rounded-md bg-[#F8F5F3] opacity-70" />
               <Skeleton className="h-48 w-full rounded-md bg-[#F8F5F3] opacity-70" />
             </>
-          ) : matchedReflections.length > 0 ? (
-            <ReflectionCards reflections={matchedReflections} />
+          ) : matchedInsights.length > 0 ? (
+            <ReflectionCards reflections={matchedInsights} />
           ) : (
             <p className="text-center text-[#3A3A3A] py-4">
               Analyzing your conversation to provide personalized insights...

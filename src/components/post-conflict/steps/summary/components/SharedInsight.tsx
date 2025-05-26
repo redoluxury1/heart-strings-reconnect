@@ -2,7 +2,6 @@
 import React, { useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { SessionData } from '@/components/post-conflict/context/SessionContext';
-import { PartnerData } from '../types/partner-data';
 
 interface SharedInsightProps {
   sessionData: SessionData;
@@ -13,18 +12,22 @@ const SharedInsight: React.FC<SharedInsightProps> = ({ sessionData }) => {
   const partner1 = useMemo(() => ({
     emotions: sessionData.partner1.responses.emotions || [],
     tone: sessionData.partner1.responses.complete?.intent || "Unknown",
-    need: sessionData.partner1.responses.complete?.needs || ""
+    need: sessionData.partner1.responses.complete?.needs || "",
+    perspective: sessionData.partner1.responses.complete?.perspective || ""
   }), [sessionData.partner1]);
   
   const partner2 = useMemo(() => ({ 
     emotions: sessionData.partner2.responses.emotions || [],
     tone: sessionData.partner2.responses.complete?.intent || "Unknown",
-    need: sessionData.partner2.responses.complete?.needs || ""
+    need: sessionData.partner2.responses.complete?.needs || "",
+    perspective: sessionData.partner2.responses.complete?.perspective || ""
   }), [sessionData.partner2]);
   
-  // Generate the shared insight based on the data
+  // Generate more intelligent shared insights
   const generateSharedInsight = () => {
-    // Check for shared emotions
+    const allText = `${partner1.perspective} ${partner1.need} ${partner1.tone} ${partner2.perspective} ${partner2.need} ${partner2.tone}`.toLowerCase();
+    
+    // Check for shared emotions first
     const partner1Emotions = partner1.emotions || [];
     const partner2Emotions = partner2.emotions || [];
     const sharedEmotions = partner1Emotions.filter(emotion => 
@@ -32,41 +35,36 @@ const SharedInsight: React.FC<SharedInsightProps> = ({ sessionData }) => {
     );
     
     if (sharedEmotions.length > 0) {
-      return `You both felt ${sharedEmotions.join(' and ')} during this conversation. Naming these shared emotions creates a foundation for understanding.`;
+      return `You both felt ${sharedEmotions.join(' and ')} during this conversation. Recognizing these shared emotions creates a foundation for understanding and moving forward together.`;
     }
     
-    // Check for similar intentions in tone
-    const tone1 = partner1.tone.toLowerCase();
-    const tone2 = partner2.tone.toLowerCase();
-    
-    if (tone1.includes('listen') && tone2.includes('listen')) {
-      return "You both expressed a desire to listen to each other. This shared intention is a powerful starting point for connection.";
+    // Check for trust-related themes
+    if (allText.includes('trust') || allText.includes('believe') || allText.includes('promise')) {
+      return "Trust seems to be at the heart of this conversation. Both of your perspectives matter when rebuilding that foundation together.";
     }
     
-    if ((tone1.includes('understand') || tone1.includes('perspective')) && 
-        (tone2.includes('understand') || tone2.includes('perspective'))) {
-      return "You both want to understand each other's perspectives. That openness to see things differently is key to moving forward together.";
+    // Check for listening/hearing themes
+    if (allText.includes('listen') || allText.includes('hear') || allText.includes('understand')) {
+      return "You both expressed wanting to be heard and understood. That shared need for connection is something you can build on.";
     }
     
-    // Check for similarities in needs
-    const need1 = partner1.need.toLowerCase();
-    const need2 = partner2.need.toLowerCase();
-    
-    if ((need1.includes('listen') || need1.includes('hear')) && 
-        (need2.includes('listen') || need2.includes('hear'))) {
-      return "You both expressed a need to be heard. Creating space for each other to speak and truly listen is essential for connection.";
+    // Check for effort/help themes
+    if (allText.includes('help') || allText.includes('effort') || allText.includes('support')) {
+      return "Both of you seem to care about supporting each other, even if you're not aligned on how that looks. That care is worth celebrating.";
     }
     
-    if (need1.includes('respect') && need2.includes('respect')) {
-      return "You both highlighted respect as important. Building on this shared value will strengthen your relationship.";
+    // Check for space/overwhelm themes
+    if (allText.includes('space') || allText.includes('overwhelm') || allText.includes('too much')) {
+      return "You both seem to need different things right now—and that's okay. Creating space for those different needs is part of loving each other well.";
     }
     
-    if (need1.includes('time') && need2.includes('time')) {
-      return "You both mentioned needing time. Recognizing this shared need can help you create a healthy pace for working through challenges.";
+    // Check for respect themes
+    if (allText.includes('respect') || allText.includes('value') || allText.includes('important')) {
+      return "Feeling respected and valued matters to both of you. That shared priority can guide how you move forward from here.";
     }
     
-    // Default insight based on showing up
-    return "You each came to this conversation with your own emotional needs—that's completely normal. What matters now is that you both showed up to work through it together.";
+    // Default insight that acknowledges showing up
+    return "You each came to this conversation with your own emotional experience—that's completely normal. What matters most is that you both showed up to work through it together.";
   };
   
   const sharedInsight = generateSharedInsight();
@@ -74,7 +72,7 @@ const SharedInsight: React.FC<SharedInsightProps> = ({ sessionData }) => {
   return (
     <Card className="w-full mb-6 bg-[#F8F5F3] border-[#D9B9AF]">
       <CardHeader className="pb-2">
-        <CardTitle className="text-lg text-[#2C2C2C]">Shared Insight</CardTitle>
+        <CardTitle className="text-lg text-[#2C2C2C]">What You Share</CardTitle>
       </CardHeader>
       <CardContent>
         <p className="text-[#3A3A3A]">{sharedInsight}</p>
