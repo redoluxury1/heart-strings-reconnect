@@ -23,25 +23,25 @@ const NavbarMobileMenu = ({ isOpen, user, onSignOut, isDevelopment }: NavbarMobi
               to="/during-conflict"
               className="block px-3 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md text-base font-medium"
             >
-              During Conflict
+              Mid-Fight
             </Link>
             <Link
               to="/post-conflict"
               className="block px-3 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md text-base font-medium"
             >
-              Post Conflict
+              Post-Fight
             </Link>
             <Link
               to="/reconnect"
               className="block px-3 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md text-base font-medium"
             >
-              Reconnect
+              Reconnecting
             </Link>
             <Link
               to="/archive"
               className="block px-3 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md text-base font-medium"
             >
-              Archive
+              Reflection
             </Link>
             
             {isDevelopment && (
