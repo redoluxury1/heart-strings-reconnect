@@ -18,7 +18,8 @@ const PerspectiveForm: React.FC<PerspectiveFormProps> = ({ onBack, onSubmit }) =
     setPerspective,
     textareaRef,
     handleStarterClick,
-    validatePerspective
+    validatePerspective,
+    selectedStarter
   } = usePerspectiveInput();
 
   const handleNext = () => {
@@ -47,7 +48,8 @@ const PerspectiveForm: React.FC<PerspectiveFormProps> = ({ onBack, onSubmit }) =
       {/* Sentence starter chips */}
       <SentenceStarterChips 
         starters={sentenceStarters} 
-        onStarterClick={handleStarterClick} 
+        onStarterClick={handleStarterClick}
+        selectedStarter={selectedStarter}
       />
 
       {/* Text input area with speech-to-text */}

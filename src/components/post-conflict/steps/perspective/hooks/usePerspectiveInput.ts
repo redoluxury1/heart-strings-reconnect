@@ -8,16 +8,19 @@ interface UsePerspectiveInputResult {
   textareaRef: RefObject<HTMLTextAreaElement>;
   handleStarterClick: (starter: string) => void;
   validatePerspective: () => boolean;
+  selectedStarter: string | undefined;
 }
 
 export const usePerspectiveInput = (): UsePerspectiveInputResult => {
   const { toast } = useToast();
   const [perspective, setPerspective] = useState<string>('');
+  const [selectedStarter, setSelectedStarter] = useState<string | undefined>();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   // Handle clicking on a sentence starter chip
   const handleStarterClick = (starter: string) => {
     setPerspective(starter);
+    setSelectedStarter(starter);
     
     // Focus the textarea after selecting a starter
     if (textareaRef.current) {
@@ -51,5 +54,6 @@ export const usePerspectiveInput = (): UsePerspectiveInputResult => {
     textareaRef,
     handleStarterClick,
     validatePerspective,
+    selectedStarter,
   };
 };
