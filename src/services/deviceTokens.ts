@@ -37,7 +37,7 @@ export const getUserDeviceTokens = async (userId: string): Promise<DeviceToken[]
     return [];
   }
   
-  return data || [];
+  return (data || []) as DeviceToken[];
 };
 
 // Deactivate a device token

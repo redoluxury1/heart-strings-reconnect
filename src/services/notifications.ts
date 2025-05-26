@@ -41,7 +41,7 @@ export const getNotificationSettings = async (userId: string): Promise<Notificat
     return null;
   }
   
-  return data;
+  return data as NotificationSettings;
 };
 
 // Create or update notification settings
@@ -86,7 +86,7 @@ export const getNotificationHistory = async (userId: string, limit = 50): Promis
     return [];
   }
   
-  return data || [];
+  return (data || []) as NotificationHistory[];
 };
 
 // Mark notification as read

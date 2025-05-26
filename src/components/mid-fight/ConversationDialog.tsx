@@ -35,8 +35,8 @@ const ConversationDialog: React.FC<ConversationDialogProps> = ({
   const { user, relationship } = useAuth();
 
   const handleSendInvite = async () => {
-    if (!user || !relationship?.id) {
-      console.error("User or relationship not found");
+    if (!user || !relationship?.id || !relationship?.partner_id) {
+      console.error("User, relationship, or partner not found");
       return;
     }
     
@@ -52,10 +52,13 @@ const ConversationDialog: React.FC<ConversationDialogProps> = ({
       );
       
       if (session) {
-        // Send notification
-        sendConversationNotification(
-          "Conversation Request Sent",
-          `Your request to talk about ${topicId} has been sent to your partner.`
+        // Send notification to partner
+        await sendConversationNotification(
+          relationship.partner_id,
+          user.id,
+          "Conversation Request",
+          `Your partner wants to talk about ${topicId}`,
+          session.id
         );
         
         setShowSuccess(true);

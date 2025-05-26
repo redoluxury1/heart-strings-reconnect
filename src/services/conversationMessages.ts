@@ -25,7 +25,7 @@ export const sendConversationMessage = async (message: ConversationMessage): Pro
     return null;
   }
   
-  return data;
+  return data as ConversationMessage;
 };
 
 // Get messages for a conversation session
@@ -41,7 +41,7 @@ export const getConversationMessages = async (sessionId: string): Promise<Conver
     return [];
   }
   
-  return data || [];
+  return (data || []) as ConversationMessage[];
 };
 
 // Mark message as read
@@ -81,25 +81,37 @@ export const subscribeToConversationMessages = (
     .subscribe();
 };
 
-// Get unread message count for a user
+// Get unread message count for a user - simplified approach
 export const getUnreadMessageCount = async (userId: string): Promise<number> => {
+  // First get all relationships where user is involved
+  const { data: relationships, error: relationshipsError } = await supabase
+    .from('relationships')
+    .select('id')
+    .or(`user_id.eq.${userId},partner_id.eq.${userId}`);
+  
+  if (relationshipsError || !relationships) {
+    console.error('Error getting relationships:', relationshipsError);
+    return 0;
+  }
+  
+  // Get all session IDs for these relationships
+  const { data: sessions, error: sessionsError } = await supabase
+    .from('conversation_sessions')
+    .select('id')
+    .in('relationship_id', relationships.map(r => r.id));
+  
+  if (sessionsError || !sessions) {
+    console.error('Error getting sessions:', sessionsError);
+    return 0;
+  }
+  
+  // Count unread messages in these sessions
   const { count, error } = await supabase
     .from('conversation_messages')
     .select('*', { count: 'exact', head: true })
     .neq('sender_id', userId)
     .is('read_at', null)
-    .in('session_id', 
-      // Subquery to get session IDs where user is involved
-      supabase
-        .from('conversation_sessions')
-        .select('id')
-        .in('relationship_id',
-          supabase
-            .from('relationships')
-            .select('id')
-            .or(`user_id.eq.${userId},partner_id.eq.${userId}`)
-        )
-    );
+    .in('session_id', sessions.map(s => s.id));
   
   if (error) {
     console.error('Error getting unread message count:', error);
