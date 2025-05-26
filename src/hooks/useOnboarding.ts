@@ -85,21 +85,33 @@ export const useOnboarding = () => {
     try {
       // Update user metadata with their partner status choice
       if (user) {
-        await supabase.auth.updateUser({
+        console.log(`Updating user with partner status: ${partnerStatus}`);
+        
+        const { error: authError } = await supabase.auth.updateUser({
           data: {
             usage_mode: partnerStatus,
             onboarding_complete: true
           }
         });
         
+        if (authError) {
+          console.error("Error updating auth user:", authError);
+          throw authError;
+        }
+        
         // Also update the profile table
-        await supabase.from('profiles')
+        const { error: profileError } = await supabase.from('profiles')
           .update({ 
             usage_mode: partnerStatus, 
             role: partnerStatus === 'couple' ? 'partner' : 'individual',
             onboarding_complete: true
           })
           .eq('id', user.id);
+        
+        if (profileError) {
+          console.error("Error updating profile:", profileError);
+          // Don't throw here as this is not critical
+        }
         
         console.log(`Updated user metadata: usage_mode = ${partnerStatus}, onboarding_complete = true`);
       }
@@ -113,16 +125,18 @@ export const useOnboarding = () => {
       // Update global partner status
       updateGlobalPartnerStatus(partnerStatus);
       
-      // Notify user of success
-      toast({
-        title: "You're all set!",
-        description: "Your preferences have been saved.",
-      });
-      
       console.log("Onboarding completed successfully, navigating to home...");
       
-      // Navigate to home page
+      // Navigate to home page immediately
       navigate('/', { replace: true });
+      
+      // Show success toast after navigation
+      setTimeout(() => {
+        toast({
+          title: "Welcome to Bridge!",
+          description: "You're all set to start building better conversations.",
+        });
+      }, 100);
       
     } catch (error) {
       console.error("Error completing onboarding:", error);
