@@ -65,7 +65,7 @@ export const useOnboardingCompletion = (partnerStatus: PartnerStatus) => {
       
       // Show success toast
       toast({
-        title: "Welcome to Bridge!",
+        title: "Welcome to Bridge For Couples!",
         description: "You're all set to start building better conversations.",
       });
       
@@ -81,7 +81,7 @@ export const useOnboardingCompletion = (partnerStatus: PartnerStatus) => {
       navigate('/', { replace: true });
       
       toast({
-        title: "Welcome to Bridge!",
+        title: "Welcome to Bridge For Couples!",
         description: "You're all set to start exploring.",
       });
     }
