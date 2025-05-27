@@ -1,7 +1,7 @@
 
 /* Logo Drawing Animations */
 
-@keyframes draw-bubble {
+@keyframes draw-logo {
   0% {
     stroke-dasharray: 0 1;
     stroke-dashoffset: 0;
@@ -12,39 +12,7 @@
   }
 }
 
-@keyframes draw-heart1 {
-  0% {
-    stroke-dasharray: 0 1;
-    stroke-dashoffset: 0;
-  }
-  100% {
-    stroke-dasharray: 1 0;
-    stroke-dashoffset: 0;
-  }
-}
-
-@keyframes draw-heart2 {
-  0% {
-    stroke-dasharray: 0 1;
-    stroke-dashoffset: 0;
-  }
-  100% {
-    stroke-dasharray: 1 0;
-    stroke-dashoffset: 0;
-  }
-}
-
-.animate-draw-bubble {
-  animation: draw-bubble 1s ease-in-out forwards;
-  stroke-dasharray: 0 1;
-}
-
-.animate-draw-heart1 {
-  animation: draw-heart1 0.8s ease-in-out 1s forwards;
-  stroke-dasharray: 0 1;
-}
-
-.animate-draw-heart2 {
-  animation: draw-heart2 0.8s ease-in-out 1.4s forwards;
+.animate-draw-logo {
+  animation: draw-logo 2s ease-in-out forwards;
   stroke-dasharray: 0 1;
 }
