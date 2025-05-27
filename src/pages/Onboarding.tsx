@@ -31,17 +31,19 @@ const Onboarding = () => {
   // If user is already authenticated and has completed onboarding, redirect to home
   useEffect(() => {
     if (!authLoading && user && user.user_metadata?.onboarding_complete) {
+      console.log("User has completed onboarding, redirecting to home");
       navigate('/');
     }
   }, [user, authLoading, navigate]);
 
-  // Don't render the component until we've checked auth status
+  // Show loading while we're checking auth status or onboarding is loading
   if (loading || authLoading) {
     return <OnboardingLoader />;
   }
 
   // If user is not authenticated, show signup form
   if (!user) {
+    console.log("User not authenticated, showing signup form");
     return (
       <OnboardingContainer>
         <div className="text-center">
@@ -53,6 +55,7 @@ const Onboarding = () => {
   }
 
   // If user is authenticated but hasn't completed onboarding, show onboarding steps
+  console.log("User authenticated, showing onboarding step:", step);
   return (
     <OnboardingContainer>
       {step === 2 && (

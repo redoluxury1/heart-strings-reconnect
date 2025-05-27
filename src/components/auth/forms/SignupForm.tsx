@@ -53,18 +53,22 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken }) => {
       toast({
         title: "Account created successfully!",
         description: devMode 
-          ? "Your account has been created. Please log in with your credentials." 
+          ? "Your account has been created. Taking you to setup..." 
           : "Your account has been created. Please check your email for confirmation."
       });
       
       if (devMode) {
-        // In dev mode, we can automatically log the user in and redirect to onboarding
+        // In dev mode, automatically log the user in
         setTimeout(async () => {
           try {
+            console.log("Attempting auto-login for:", email);
             const { error: loginError } = await signIn(email, password);
             if (!loginError) {
-              // Redirect to onboarding instead of auto-completing it
-              navigate('/onboarding');
+              console.log("Auto-login successful, redirecting to onboarding");
+              // Small delay to ensure auth state is updated
+              setTimeout(() => {
+                navigate('/onboarding');
+              }, 500);
               return;
             } else {
               console.log("Auto login failed, redirecting to login page");
