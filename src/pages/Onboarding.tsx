@@ -1,6 +1,6 @@
 
 import React from 'react';
-import OnboardingWelcome from '../components/onboarding/OnboardingWelcome';
+import OnboardingScreen from '../components/onboarding/OnboardingScreen';
 import OnboardingPartnerStatus from '../components/onboarding/OnboardingPartnerStatus';
 import PartnerInvite from '../components/onboarding/PartnerInvite';
 import OnboardingLoader from '../components/onboarding/OnboardingLoader';
@@ -28,9 +28,7 @@ const Onboarding = () => {
   return (
     <OnboardingContainer>
       {step === 1 && (
-        <OnboardingWelcome 
-          onContinue={handleNextStep}
-        />
+        <OnboardingScreen />
       )}
       
       {step === 2 && (
