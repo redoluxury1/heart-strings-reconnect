@@ -11,7 +11,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 const ReflectionSummary: React.FC = () => {
   const { sessionData } = useSession();
   const [activeTab, setActiveTab] = useState<string>("side-by-side");
-  const { primaryPattern, isAnalyzing, analysisMethod, getPatternDisplayName } = useConflictPatternAnalysis(sessionData);
+  const { primaryPattern, isAnalyzing, getPatternDisplayName } = useConflictPatternAnalysis(sessionData);
   
   // Force a small delay to ensure analysis has time to complete
   const [showInsights, setShowInsights] = useState(false);
@@ -64,18 +64,10 @@ const ReflectionSummary: React.FC = () => {
               <Skeleton className="h-48 w-full bg-[#F8F5F3] opacity-70" />
             </div>
           ) : primaryPattern ? (
-            <div>
-              <ConflictInsightDisplay 
-                pattern={primaryPattern}
-                patternName={getPatternDisplayName(primaryPattern)}
-              />
-              {/* Analysis method indicator for development */}
-              {process.env.NODE_ENV === 'development' && (
-                <div className="text-xs text-gray-400 text-center mt-4">
-                  Analysis method: {analysisMethod}
-                </div>
-              )}
-            </div>
+            <ConflictInsightDisplay 
+              pattern={primaryPattern}
+              patternName={getPatternDisplayName(primaryPattern)}
+            />
           ) : (
             <div className="text-center text-[#3A3A3A] py-8">
               <p className="mb-4">

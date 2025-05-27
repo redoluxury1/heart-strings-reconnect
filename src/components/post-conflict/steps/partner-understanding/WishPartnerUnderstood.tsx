@@ -18,6 +18,7 @@ const WishPartnerUnderstood: React.FC<WishPartnerUnderstoodProps> = ({
   onComplete 
 }) => {
   const { setCurrentStep } = useSession();
+  const [selectedStarter, setSelectedStarter] = React.useState<string | undefined>();
 
   // Use the custom hook for handling input
   const {
@@ -27,6 +28,12 @@ const WishPartnerUnderstood: React.FC<WishPartnerUnderstoodProps> = ({
     handleStarterClick,
     validateUnderstanding
   } = useUnderstandingInput();
+
+  // Handle starter click from chips
+  const handleStarterSelection = (text: string) => {
+    setSelectedStarter(text);
+    handleStarterClick(text);
+  };
 
   // Handle form submission
   const handleNext = () => {
@@ -69,7 +76,8 @@ const WishPartnerUnderstood: React.FC<WishPartnerUnderstoodProps> = ({
         {/* Sentence starter chips */}
         <SentenceStarterChips 
           starters={sentenceStarters} 
-          onStarterClick={handleStarterClick} 
+          onStarterClick={handleStarterSelection}
+          selectedStarter={selectedStarter}
         />
 
         {/* Text input area with speech-to-text */}
