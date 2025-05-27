@@ -24,6 +24,7 @@ const CompactPausePhrase: React.FC<CompactPausePhraseProps> = ({
       {/* Clarity Section */}
       <CategorySection 
         title="Clarity" 
+        microtext="Say what you mean without defensiveness or chaos."
         icon={<Lightbulb className="text-[#E2725B]" />}
         options={[
           { id: 'explain-meant', text: 'Explain what I meant' },
@@ -37,6 +38,7 @@ const CompactPausePhrase: React.FC<CompactPausePhraseProps> = ({
       {/* Vulnerability Section */}
       <CategorySection 
         title="Vulnerability" 
+        microtext="Open up without sounding dramatic or blaming."
         icon={<Heart className="text-[#E2725B]" />}
         options={[
           { id: 'say-what-hurt', text: 'Say what hurt me' },
@@ -49,6 +51,7 @@ const CompactPausePhrase: React.FC<CompactPausePhraseProps> = ({
       {/* Repair Section */}
       <CategorySection 
         title="Repair" 
+        microtext="Move forward with care, accountability, or boundaries."
         icon={<Shield className="text-[#E2725B]" />}
         options={[
           { id: 'suggest-solution', text: 'Suggest a compromise' },
@@ -67,6 +70,7 @@ const CompactPausePhrase: React.FC<CompactPausePhraseProps> = ({
 
 interface CategorySectionProps {
   title: string;
+  microtext: string;
   icon: React.ReactNode;
   options: Array<{ id: string; text: string }>;
   onOptionSelect: (id: string) => void;
@@ -74,18 +78,23 @@ interface CategorySectionProps {
 
 const CategorySection: React.FC<CategorySectionProps> = ({ 
   title, 
+  microtext,
   icon, 
   options,
   onOptionSelect
 }) => {
   return (
     <div className="bg-soft-cream/70 rounded-xl p-5 shadow-sm">
-      <div className="flex items-center gap-2 mb-4">
+      <div className="flex items-center gap-2 mb-2">
         <div className="text-2xl">
           {icon}
         </div>
         <h3 className="text-[#07183D] font-cormorant text-3xl">{title}</h3>
       </div>
+      
+      <p className="text-[#65595D] italic text-sm mb-4 ml-10">
+        {microtext}
+      </p>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         {options.map((option) => (
