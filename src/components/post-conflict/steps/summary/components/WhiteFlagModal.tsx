@@ -113,7 +113,7 @@ const WhiteFlagModal: React.FC<WhiteFlagModalProps> = ({ isOpen, onClose }) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="sm:max-w-lg bg-[#F9F6F2] border-[#E8DAD3]">
+      <DialogContent className="sm:max-w-lg bg-[#F9F6F2] border-[#E8DAD3] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <div className="flex items-center gap-3 mb-2">
             <div className="bg-[#D3876A]/10 rounded-full h-10 w-10 flex items-center justify-center">
@@ -128,30 +128,30 @@ const WhiteFlagModal: React.FC<WhiteFlagModalProps> = ({ isOpen, onClose }) => {
           </DialogDescription>
         </DialogHeader>
         
-        <div className="space-y-3 py-4">
-          <p className="text-sm text-[#65595D] mb-4">Choose a message to send:</p>
+        <div className="space-y-2 py-4">
+          <p className="text-sm text-[#65595D] mb-3">Choose a message to send:</p>
           
           {whiteFlagMessages.map((message, index) => (
             <button
               key={index}
               onClick={() => handleMessageSelect(message)}
-              className={`w-full p-4 text-left rounded-lg border-2 transition-all ${
+              className={`w-full p-3 text-left rounded-lg border-2 transition-all text-sm ${
                 selectedMessage === message
                   ? 'border-[#D3876A] bg-[#D3876A]/5 text-[#2C2C2C]'
                   : 'border-[#E8DAD3] bg-white hover:border-[#D3876A]/50 text-[#3A3A3A]'
               }`}
             >
-              <span className="text-sm font-medium">{message}</span>
+              <span className="font-medium">{message}</span>
             </button>
           ))}
           
-          <div className="mt-6">
+          <div className="mt-4">
             <p className="text-sm text-[#65595D] mb-2">Make it your own:</p>
             <Textarea
               value={customMessage}
               onChange={(e) => setCustomMessage(e.target.value)}
               placeholder="Write your own message or edit a selected one..."
-              className="w-full min-h-[80px] border-[#E8DAD3] focus:border-[#D3876A] focus:ring-[#D3876A]"
+              className="w-full min-h-[60px] border-[#E8DAD3] focus:border-[#D3876A] focus:ring-[#D3876A] text-sm"
             />
           </div>
         </div>
