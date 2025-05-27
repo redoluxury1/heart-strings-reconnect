@@ -20,10 +20,7 @@ export const useOnboardingActions = ({
   const handleNextStep = () => {
     console.log(`📍 Current step: ${step}, moving to next step`);
     
-    if (step === 1) {
-      // From auth step, go to partner status selection
-      setStep(2);
-    } else if (step === 2) {
+    if (step === 2) {
       // From partner status step, check what the user selected
       if (partnerStatus === 'solo') {
         // Skip partner invite step and go directly to features intro
