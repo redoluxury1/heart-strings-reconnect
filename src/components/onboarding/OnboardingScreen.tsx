@@ -29,39 +29,39 @@ const OnboardingScreen = () => {
           <svg 
             width="200" 
             height="200" 
-            viewBox="0 0 200 200" 
+            viewBox="0 0 300 300" 
             className="overflow-visible"
           >
             {/* Speech Bubble Outline */}
             <path
-              d="M50 40 Q40 40 40 50 L40 100 Q40 110 50 110 L80 110 L90 125 L100 110 L150 110 Q160 110 160 100 L160 50 Q160 40 150 40 Z"
+              d="M90 80 Q75 80 75 95 L75 160 Q75 175 90 175 L130 175 L145 200 L160 175 L230 175 Q245 175 245 160 L245 95 Q245 80 230 80 Z"
               fill="none"
               stroke="#2e4059"
-              strokeWidth="4"
+              strokeWidth="6"
               strokeLinecap="round"
               strokeLinejoin="round"
               className="animate-draw-bubble"
               pathLength="1"
             />
             
-            {/* First Heart */}
+            {/* First Heart (larger, back) */}
             <path
-              d="M85 65 C85 60, 90 55, 95 55 C100 55, 105 60, 105 65 C105 60, 110 55, 115 55 C120 55, 125 60, 125 65 C125 75, 105 90, 105 90 C105 90, 85 75, 85 65 Z"
+              d="M140 110 Q140 100, 150 100 Q160 100, 160 110 Q160 100, 170 100 Q180 100, 180 110 Q180 125, 160 145 Q140 125, 140 110 Z"
               fill="none"
-              stroke="#c97c5d"
-              strokeWidth="3"
+              stroke="#F2645A"
+              strokeWidth="4"
               strokeLinecap="round"
               strokeLinejoin="round"
               className="animate-draw-heart1"
               pathLength="1"
             />
             
-            {/* Second Heart (smaller, overlapping) */}
+            {/* Second Heart (smaller, front) */}
             <path
-              d="M95 75 C95 72, 98 69, 101 69 C104 69, 107 72, 107 75 C107 72, 110 69, 113 69 C116 69, 119 72, 119 75 C119 82, 107 92, 107 92 C107 92, 95 82, 95 75 Z"
+              d="M150 125 Q150 118, 157 118 Q164 118, 164 125 Q164 118, 171 118 Q178 118, 178 125 Q178 135, 164 148 Q150 135, 150 125 Z"
               fill="none"
-              stroke="#c97c5d"
-              strokeWidth="3"
+              stroke="#F2645A"
+              strokeWidth="4"
               strokeLinecap="round"
               strokeLinejoin="round"
               className="animate-draw-heart2"
