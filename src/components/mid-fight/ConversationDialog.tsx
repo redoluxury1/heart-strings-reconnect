@@ -33,8 +33,16 @@ const ConversationDialog: React.FC<ConversationDialogProps> = ({
   const { user, relationship } = useAuth();
 
   const handleSendInvite = async () => {
-    if (!user || !relationship?.id || !relationship?.partner_id) {
-      console.error("User, relationship, or partner not found");
+    if (!user || !relationship?.id) {
+      console.error("User or relationship not found");
+      return;
+    }
+    
+    // Determine partner ID based on current user
+    const partnerId = user.id === relationship.partner1_id ? relationship.partner2_id : relationship.partner1_id;
+    
+    if (!partnerId) {
+      console.error("Partner ID not found");
       return;
     }
     
@@ -52,7 +60,7 @@ const ConversationDialog: React.FC<ConversationDialogProps> = ({
       if (session) {
         // Send notification to partner
         await sendConversationNotification(
-          relationship.partner_id,
+          partnerId,
           user.id,
           "Conversation Request",
           `Your partner wants to talk about ${topicId}`,

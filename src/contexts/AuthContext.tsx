@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useContext, createContext } from 'react';
 import { User } from '@supabase/supabase-js';
 import { supabase } from '../integrations/supabase/client';
@@ -6,8 +7,8 @@ interface AuthContextProps {
   user: User | null;
   relationship: Relationship | null;
   loading: boolean;
-  signIn: (email: string) => Promise<void>;
-  signUp: (email: string, password?: string) => Promise<void>;
+  signIn: (email: string, password?: string) => Promise<{ error: any; data?: any }>;
+  signUp: (email: string, password?: string, name?: string) => Promise<{ error: any; data?: any }>;
   signOut: () => Promise<void>;
 }
 
@@ -23,8 +24,8 @@ const AuthContext = createContext<AuthContextProps>({
   user: null,
   relationship: null,
   loading: true,
-  signIn: async () => {},
-  signUp: async () => {},
+  signIn: async () => ({ error: null }),
+  signUp: async () => ({ error: null }),
   signOut: async () => {},
 });
 
@@ -91,8 +92,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       if (error) {
         console.error("Error loading relationship:", error);
-      } else {
-        setRelationship(data);
+      } else if (data) {
+        // Map the database relationship to our interface
+        const mappedRelationship: Relationship = {
+          id: data.id,
+          partner1_id: data.user_id || data.partner1_id,
+          partner2_id: data.partner_id || data.partner2_id,
+          status: data.status,
+          created_at: data.created_at
+        };
+        setRelationship(mappedRelationship);
       }
     } catch (error) {
       console.error("Error in loadUserRelationship:", error);
@@ -101,23 +110,34 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  const signIn = async (email: string) => {
+  const signIn = async (email: string, password?: string) => {
     try {
-      const { error } = await supabase.auth.signInWithOtp({ email });
-      if (error) throw error;
-      alert('Check your email for the magic link to sign in.');
+      if (password) {
+        // Email/password login
+        const { error, data } = await supabase.auth.signInWithPassword({ email, password });
+        return { error, data };
+      } else {
+        // Magic link login
+        const { error } = await supabase.auth.signInWithOtp({ email });
+        if (error) return { error };
+        alert('Check your email for the magic link to sign in.');
+        return { error: null };
+      }
     } catch (error: any) {
-      alert(error.error_description || error.message);
+      return { error };
     }
   };
 
-  const signUp = async (email: string, password?: string) => {
+  const signUp = async (email: string, password?: string, name?: string) => {
     try {
-      const { error } = await supabase.auth.signUp({ email, password });
-      if (error) throw error;
-      alert('Check your email to verify your account.');
+      const signUpData: any = { email };
+      if (password) signUpData.password = password;
+      if (name) signUpData.options = { data: { name } };
+      
+      const { error, data } = await supabase.auth.signUp(signUpData);
+      return { error, data };
     } catch (error: any) {
-      alert(error.error_description || error.message);
+      return { error };
     }
   };
 
