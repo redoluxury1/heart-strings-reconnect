@@ -40,7 +40,7 @@ const SignupChoice = () => {
                   <User className="w-4 h-4" />
                   <span className="text-base font-medium">I'm starting this on my own</span>
                 </div>
-                <p className="text-xs text-[#2e4059]/70 font-normal">
+                <p className="text-xs text-[#2e4059]/60 font-normal leading-relaxed">
                   Sometimes the best changes start with just one person.
                 </p>
               </div>
@@ -57,7 +57,7 @@ const SignupChoice = () => {
                   <Heart className="w-4 h-4" />
                   <span className="text-base font-medium">I'm doing this with my partner</span>
                 </div>
-                <p className="text-xs text-[#2e4059]/70 font-normal">
+                <p className="text-xs text-[#2e4059]/60 font-normal leading-relaxed">
                   We're in this together.
                 </p>
               </div>
