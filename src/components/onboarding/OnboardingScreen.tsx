@@ -23,8 +23,8 @@ const OnboardingScreen = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#dbd0e0] via-[#f5f1e8] to-[#e6c7bc] flex flex-col items-center justify-center px-4">
       {/* Logo Container with Fade-in Animation */}
-      <div className="mb-12 flex flex-col items-center">
-        <div className={`mb-8 transition-opacity duration-1000 ${animationComplete ? 'opacity-100' : 'opacity-0'}`}>
+      <div className="mb-6 flex flex-col items-center">
+        <div className={`mb-4 transition-opacity duration-1000 ${animationComplete ? 'opacity-100' : 'opacity-0'}`}>
           <img 
             src="/lovable-uploads/a76cbc57-66f5-47a4-9713-382f8a512e91.png"
             alt="Bridge For Couples"
