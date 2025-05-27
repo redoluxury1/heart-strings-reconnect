@@ -2,21 +2,15 @@
 import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
-import ConversationLoader from "@/components/common/ConversationLoader";
+import OnboardingLoader from "@/components/onboarding/OnboardingLoader";
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { user, loading } = useAuth();
   const location = useLocation();
   
   if (loading) {
-    // Only show loading while actually checking authentication
-    return (
-      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#F4EDE5' }}>
-        <div className="text-center space-y-8">
-          <ConversationLoader message="Authenticating…" />
-        </div>
-      </div>
-    );
+    // Use the same custom loading component instead of generic authenticating message
+    return <OnboardingLoader />;
   }
   
   if (!user) {
