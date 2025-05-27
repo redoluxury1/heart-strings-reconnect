@@ -43,16 +43,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         
         if (session?.user) {
           setUser(session.user);
-          // Load relationship data in background without blocking loading state
-          loadUserRelationship(session.user.id).catch(error => {
-            console.error("Error loading relationship in auth state change:", error);
-          });
+          // Load relationship data in background - don't wait for it
+          loadUserRelationship(session.user.id);
         } else {
           setUser(null);
           setRelationship(null);
         }
         
-        // Always set loading to false after auth state is determined
+        // CRITICAL: Always set loading to false after we know the auth state
+        console.log("AuthContext - setting loading to false after auth state change");
         setLoading(false);
       }
     );
@@ -67,17 +66,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           console.error("Error getting session:", error);
         } else if (session?.user) {
           setUser(session.user);
-          // Load relationship data in background without blocking loading state
-          loadUserRelationship(session.user.id).catch(error => {
-            console.error("Error loading relationship in initialization:", error);
-          });
+          // Load relationship data in background - don't wait for it
+          loadUserRelationship(session.user.id);
         }
       } catch (error) {
         console.error("Error in auth initialization:", error);
       } finally {
-        // Always set loading to false after initial check
+        // CRITICAL: Always set loading to false after initial check
+        console.log("AuthContext - setting loading to false after initial auth check");
         setLoading(false);
-        console.log("AuthContext - initial auth load complete, loading set to false");
       }
     };
 

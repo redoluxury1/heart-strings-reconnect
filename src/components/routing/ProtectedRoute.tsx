@@ -9,10 +9,15 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { user, loading } = useAuth();
   const location = useLocation();
   
-  console.log("ProtectedRoute - loading:", loading, "user:", !!user, "location:", location.pathname);
+  console.log("ProtectedRoute - Current state:", { 
+    loading, 
+    hasUser: !!user, 
+    location: location.pathname,
+    timestamp: new Date().toISOString()
+  });
   
   if (loading) {
-    console.log("ProtectedRoute - showing loading screen");
+    console.log("ProtectedRoute - Showing loading screen because loading=true");
     return (
       <div className="min-h-screen bg-slate-50 relative">
         <FloatingTextBubbles />
@@ -31,11 +36,11 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   }
   
   if (!user) {
-    console.log("User not authenticated, redirecting to auth page");
+    console.log("ProtectedRoute - No user found, redirecting to auth");
     return <Navigate to="/auth" replace state={{ from: location }} />;
   }
   
-  console.log("User authenticated, rendering protected content");
+  console.log("ProtectedRoute - User authenticated, rendering content");
   return <>{children}</>;
 };
 
