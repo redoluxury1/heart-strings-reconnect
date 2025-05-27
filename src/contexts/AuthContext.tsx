@@ -35,49 +35,65 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   useEffect(() => {
     console.log("AuthContext - initializing auth state check");
-    const startTime = Date.now();
     
-    // Get initial session
-    supabase.auth.getSession().then(({ data: { session }, error }) => {
-      const loadTime = Date.now() - startTime;
-      console.log(`AuthContext - getSession completed in ${loadTime}ms`, { session: !!session, error });
-      
-      if (error) {
-        console.error("Error getting session:", error);
-        setLoading(false);
-        return;
-      }
-      
-      if (session?.user) {
-        setUser(session.user);
-        loadUserRelationship(session.user.id);
-      } else {
-        setLoading(false);
-      }
-    });
-
-    // Listen for auth changes
+    // Set up auth state listener first
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
         console.log("AuthContext - auth state change:", event, { session: !!session });
         
         if (session?.user) {
           setUser(session.user);
-          await loadUserRelationship(session.user.id);
+          // Load relationship data but don't let it block the loading state indefinitely
+          try {
+            await loadUserRelationship(session.user.id);
+          } catch (error) {
+            console.error("Error loading relationship in auth state change:", error);
+          }
         } else {
           setUser(null);
           setRelationship(null);
         }
+        
+        // Always set loading to false after processing auth state change
         setLoading(false);
       }
     );
+
+    // Get initial session
+    const initializeAuth = async () => {
+      try {
+        const { data: { session }, error } = await supabase.auth.getSession();
+        console.log("AuthContext - getSession completed", { session: !!session, error });
+        
+        if (error) {
+          console.error("Error getting session:", error);
+          setLoading(false);
+          return;
+        }
+        
+        if (session?.user) {
+          setUser(session.user);
+          try {
+            await loadUserRelationship(session.user.id);
+          } catch (error) {
+            console.error("Error loading relationship in initialization:", error);
+          }
+        }
+      } catch (error) {
+        console.error("Error in auth initialization:", error);
+      } finally {
+        // Ensure loading is always set to false
+        setLoading(false);
+      }
+    };
+
+    initializeAuth();
 
     return () => subscription.unsubscribe();
   }, []);
 
   const loadUserRelationship = async (userId: string) => {
     console.log("AuthContext - loading user relationship for:", userId);
-    const relationshipStartTime = Date.now();
     
     try {
       const { data, error } = await supabase
@@ -86,12 +102,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         .or(`user_id.eq.${userId},partner_id.eq.${userId}`)
         .maybeSingle();
 
-      const relationshipLoadTime = Date.now() - relationshipStartTime;
-      console.log(`AuthContext - relationship loaded in ${relationshipLoadTime}ms`, { data: !!data, error });
+      console.log("AuthContext - relationship query result", { data: !!data, error });
 
       if (error) {
         console.error("Error loading relationship:", error);
-      } else if (data) {
+        return;
+      }
+      
+      if (data) {
         // Map the database relationship to our interface
         const mappedRelationship: Relationship = {
           id: data.id,
@@ -101,11 +119,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           created_at: data.created_at
         };
         setRelationship(mappedRelationship);
+      } else {
+        setRelationship(null);
       }
     } catch (error) {
       console.error("Error in loadUserRelationship:", error);
-    } finally {
-      setLoading(false);
     }
   };
 
