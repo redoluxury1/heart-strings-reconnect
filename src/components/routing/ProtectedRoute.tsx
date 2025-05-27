@@ -13,10 +13,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#F4EDE5' }}>
         <div className="text-center space-y-8">
-          <ConversationLoader 
-            isLoading={true}
-            loadingText="Authenticating…"
-          />
+          <ConversationLoader message="Authenticating…" />
         </div>
       </div>
     );
