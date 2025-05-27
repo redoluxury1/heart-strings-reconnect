@@ -4,7 +4,7 @@ export interface SayItBetterPhrase {
   id: string;
   original: string;
   emotionalSubtext: string;
-  howItMightLand: string;
+  howItMayComeOff: string;
   trySayingInstead: string;
   categories: string[];
 }

@@ -47,9 +47,9 @@ const PhraseCard: React.FC<PhraseCardProps> = ({
         {isExpanded && (
           <div className="mt-4 space-y-4 border-t pt-4">
             <div>
-              <h5 className="text-sm font-medium text-mauve-rose mb-1">How It Might Land:</h5>
+              <h5 className="text-sm font-medium text-mauve-rose mb-1">How It May Come Off:</h5>
               <p className="text-sm bg-gray-50 p-3 rounded border border-gray-100 text-[#22254a]/80">
-                {phrase.howItMightLand}
+                {phrase.howItMayComeOff}
               </p>
             </div>
             
