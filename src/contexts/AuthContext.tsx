@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useContext, createContext } from 'react';
 import { User } from '@supabase/supabase-js';
 import { supabase } from '../integrations/supabase/client';
@@ -9,6 +10,7 @@ interface AuthContextProps {
   signIn: (email: string, password?: string) => Promise<{ error: any; data?: any }>;
   signUp: (email: string, password?: string, name?: string) => Promise<{ error: any; data?: any }>;
   signOut: () => Promise<void>;
+  updateUserMetadata: (metadata: any) => Promise<void>;
 }
 
 interface Relationship {
@@ -26,6 +28,7 @@ const AuthContext = createContext<AuthContextProps>({
   signIn: async () => ({ error: null }),
   signUp: async () => ({ error: null }),
   signOut: async () => {},
+  updateUserMetadata: async () => {},
 });
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -158,6 +161,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  const updateUserMetadata = async (metadata: any) => {
+    try {
+      const { error } = await supabase.auth.updateUser({
+        data: metadata
+      });
+      
+      if (error) {
+        console.error("Error updating user metadata:", error);
+        throw error;
+      }
+    } catch (error: any) {
+      console.error('Error updating user metadata:', error.message);
+      throw error;
+    }
+  };
+
   const value: AuthContextProps = {
     user,
     relationship,
@@ -165,6 +184,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     signIn,
     signUp,
     signOut,
+    updateUserMetadata,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
