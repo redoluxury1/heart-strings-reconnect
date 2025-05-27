@@ -58,11 +58,12 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken }) => {
       });
       
       if (devMode) {
-        // In dev mode, we can automatically log the user in
+        // In dev mode, we can automatically log the user in and redirect to onboarding
         setTimeout(async () => {
           try {
             const { error: loginError } = await signIn(email, password);
             if (!loginError) {
+              // Redirect to onboarding instead of auto-completing it
               navigate('/onboarding');
               return;
             } else {
@@ -146,7 +147,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken }) => {
       
       {accountCreated && (
         <p className="text-center text-sm text-[#1E2A38]/70 mt-4">
-          Account created successfully!{devMode ? " Logging you in..." : " Please log in with your credentials."}
+          Account created successfully!{devMode ? " Taking you to setup..." : " Please log in with your credentials."}
         </p>
       )}
     </form>
