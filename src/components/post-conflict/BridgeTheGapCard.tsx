@@ -9,6 +9,10 @@ const BridgeTheGapCard: React.FC = () => {
 
   const handleNavigate = () => {
     navigate('/bridge-the-gap');
+    // Scroll to top after navigation
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 100);
   };
 
   return (
