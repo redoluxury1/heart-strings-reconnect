@@ -15,13 +15,12 @@ const initialSessionData: SessionData = {
 };
 
 export const useSessionManagement = () => {
-  // Start with step 0 for the LetsTalkThis component, but will skip to step 1 when session starts
   const [currentStep, setCurrentStep] = useState(0); 
   const [sessionData, setSessionData] = useState<SessionData>(initialSessionData);
   const [partnerNotificationShown, setPartnerNotificationShown] = useState(false);
   const bothPartnersReady = sessionData.partner1.ready && sessionData.partner2.ready;
 
-  // Initialize from session storage if available
+  // Initialize from session storage if available - no artificial delay
   useEffect(() => {
     const savedSession = sessionStorage.getItem('letsTalkSession');
     if (savedSession) {
@@ -29,7 +28,6 @@ export const useSessionManagement = () => {
         const parsed = JSON.parse(savedSession);
         setSessionData(parsed);
         
-        // If we have data, let's set the step to where they left off
         if (parsed.currentStep !== undefined) {
           setCurrentStep(parsed.currentStep);
         }
@@ -79,10 +77,7 @@ export const useSessionManagement = () => {
   };
   
   const handleRestart = () => {
-    // Clear session storage
     sessionStorage.removeItem('letsTalkSession');
-    
-    // Reset to initial state
     setCurrentStep(0);
     setSessionData(initialSessionData);
     setPartnerNotificationShown(false);
