@@ -8,7 +8,7 @@ const BridgeTheGapCard: React.FC = () => {
   const navigate = useNavigate();
 
   const handleNavigate = () => {
-    navigate('/bridge-the-gap/categories');
+    navigate('/bridge-the-gap');
   };
 
   return (
