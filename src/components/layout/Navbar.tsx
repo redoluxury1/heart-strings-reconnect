@@ -36,9 +36,6 @@ const Navbar = ({ hasNewLoveNote = false, onViewLoveNote }: NavbarProps) => {
     navigate('/love-notes');
   };
 
-  // Check if we're in development mode (you can adjust this condition)
-  const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname.includes('lovable');
-
   return (
     <nav className="bg-white shadow-sm sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -48,16 +45,6 @@ const Navbar = ({ hasNewLoveNote = false, onViewLoveNote }: NavbarProps) => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             <NavbarDesktopLinks user={user} />
-            
-            {/* Development Link */}
-            {isDevelopment && (
-              <Link 
-                to="/dev-testing" 
-                className="text-orange-600 hover:text-orange-700 px-3 py-2 text-sm font-medium border border-orange-200 rounded-md"
-              >
-                Dev Testing
-              </Link>
-            )}
             
             <NavbarNotificationIcon 
               hasNewLoveNote={hasNewLoveNote}
@@ -106,7 +93,7 @@ const Navbar = ({ hasNewLoveNote = false, onViewLoveNote }: NavbarProps) => {
         isOpen={isMenuOpen}
         user={user}
         onSignOut={handleSignOut}
-        isDevelopment={isDevelopment}
+        isDevelopment={false}
       />
     </nav>
   );

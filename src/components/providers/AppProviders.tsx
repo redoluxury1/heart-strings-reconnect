@@ -1,32 +1,31 @@
 
-import { ReactNode } from "react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter } from "react-router-dom";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { InterfaceProvider } from "@/components/common/InterfaceProvider";
-import { AuthProvider } from "@/contexts/AuthContext";
+import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { AuthProvider } from '@/contexts/AuthContext';
+import { InterfaceProvider } from '@/contexts/InterfaceContext';
+import { Toaster } from '@/components/ui/toaster';
+import { Toaster as SonnerToaster } from '@/components/ui/sonner';
+import BetaFeedbackWidget from '@/components/feedback/BetaFeedbackWidget';
 
 interface AppProvidersProps {
-  children: ReactNode;
+  children: React.ReactNode;
   queryClient: QueryClient;
 }
 
-const AppProviders = ({ children, queryClient }: AppProvidersProps) => {
+const AppProviders: React.FC<AppProvidersProps> = ({ children, queryClient }) => {
   return (
     <QueryClientProvider client={queryClient}>
-      <InterfaceProvider>
+      <BrowserRouter>
         <AuthProvider>
-          <TooltipProvider>
+          <InterfaceProvider>
+            {children}
             <Toaster />
-            <Sonner position="top-right" closeButton={true} />
-            <BrowserRouter>
-              {children}
-            </BrowserRouter>
-          </TooltipProvider>
+            <SonnerToaster />
+            <BetaFeedbackWidget />
+          </InterfaceProvider>
         </AuthProvider>
-      </InterfaceProvider>
+      </BrowserRouter>
     </QueryClientProvider>
   );
 };

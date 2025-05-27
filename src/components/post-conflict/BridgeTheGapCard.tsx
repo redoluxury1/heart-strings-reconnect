@@ -3,11 +3,13 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, ArrowRightLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { trackAction } from '@/services/analytics';
 
 const BridgeTheGapCard: React.FC = () => {
   const navigate = useNavigate();
 
   const handleNavigate = () => {
+    trackAction.toolUsed('bridge_the_gap', { source: 'post_conflict_card' });
     navigate('/bridge-the-gap');
     // Scroll to top after navigation
     setTimeout(() => {

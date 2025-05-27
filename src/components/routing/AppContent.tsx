@@ -1,26 +1,20 @@
 
-import React from 'react';
 import { Routes } from 'react-router-dom';
-import AuthRoutes from '@/routes/AuthRoutes';
+import ScrollToTop from './ScrollToTop';
 import MainAppRoutes from '@/routes/MainAppRoutes';
+import AuthRoutes from '@/routes/AuthRoutes';
 import BridgeTheGapRoutes from '@/routes/BridgeTheGapRoutes';
-import DevRoutes from '@/routes/DevRoutes';
 
 const AppContent = () => {
   return (
-    <Routes>
-      {/* Auth Routes */}
-      {AuthRoutes()}
-      
-      {/* Main App Routes */}
-      {MainAppRoutes()}
-      
-      {/* Bridge The Gap Routes */}
-      {BridgeTheGapRoutes()}
-      
-      {/* Development Routes */}
-      {DevRoutes()}
-    </Routes>
+    <>
+      <ScrollToTop />
+      <Routes>
+        {MainAppRoutes()}
+        {AuthRoutes()}
+        {BridgeTheGapRoutes()}
+      </Routes>
+    </>
   );
 };
 

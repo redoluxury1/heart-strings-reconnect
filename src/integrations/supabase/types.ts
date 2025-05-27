@@ -9,6 +9,42 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      beta_feedback: {
+        Row: {
+          content: string
+          created_at: string
+          feedback_type: string
+          id: string
+          page_url: string | null
+          rating: number | null
+          title: string | null
+          user_agent: string | null
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          feedback_type: string
+          id?: string
+          page_url?: string | null
+          rating?: number | null
+          title?: string | null
+          user_agent?: string | null
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          feedback_type?: string
+          id?: string
+          page_url?: string | null
+          rating?: number | null
+          title?: string | null
+          user_agent?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       conversation_messages: {
         Row: {
           created_at: string
@@ -152,6 +188,36 @@ export type Database = {
           token?: string
           updated_at?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      feature_usage: {
+        Row: {
+          action: string
+          created_at: string
+          feature_name: string
+          id: string
+          metadata: Json | null
+          session_id: string | null
+          user_id: string | null
+        }
+        Insert: {
+          action: string
+          created_at?: string
+          feature_name: string
+          id?: string
+          metadata?: Json | null
+          session_id?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          action?: string
+          created_at?: string
+          feature_name?: string
+          id?: string
+          metadata?: Json | null
+          session_id?: string | null
+          user_id?: string | null
         }
         Relationships: []
       }
@@ -359,6 +425,7 @@ export type Database = {
           email: string | null
           id: string
           name: string | null
+          onboarding_complete: boolean | null
           role: string | null
           updated_at: string | null
           usage_mode: string | null
@@ -369,6 +436,7 @@ export type Database = {
           email?: string | null
           id: string
           name?: string | null
+          onboarding_complete?: boolean | null
           role?: string | null
           updated_at?: string | null
           usage_mode?: string | null
@@ -379,6 +447,7 @@ export type Database = {
           email?: string | null
           id?: string
           name?: string | null
+          onboarding_complete?: boolean | null
           role?: string | null
           updated_at?: string | null
           usage_mode?: string | null
