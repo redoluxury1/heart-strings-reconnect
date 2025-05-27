@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
@@ -17,7 +16,7 @@ const OnboardingScreen = () => {
   }, []);
 
   const handleGetStarted = () => {
-    navigate('/auth');
+    navigate('/auth?tab=signup');
   };
 
   return (
