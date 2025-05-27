@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { SessionData } from '@/components/post-conflict/context/SessionContext';
 import { ReflectionInsight } from '@/types/reflection-insights';
@@ -69,7 +68,6 @@ const conflictPatternIndicators: ConflictPatternIndicators = {
 
 export const useConflictPatternAnalysis = (sessionData: SessionData) => {
   const [primaryPattern, setPrimaryPattern] = useState<ConflictPattern | null>(null);
-  const [matchedInsights, setMatchedInsights] = useState<ReflectionInsight[]>([]);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
 
   useEffect(() => {
@@ -152,49 +150,11 @@ export const useConflictPatternAnalysis = (sessionData: SessionData) => {
     if (topPattern) {
       const detectedPattern = topPattern[0] as ConflictPattern;
       setPrimaryPattern(detectedPattern);
-      
-      // Find matching insights from existing reflection packs
-      const relevantInsights = findRelevantInsights(detectedPattern, combinedText);
-      setMatchedInsights(relevantInsights);
     } else {
-      // Fallback to original analysis if no specific pattern detected
       setPrimaryPattern(null);
-      setMatchedInsights([]);
     }
     
     setIsAnalyzing(false);
-  };
-
-  const findRelevantInsights = (pattern: ConflictPattern, text: string): ReflectionInsight[] => {
-    const allInsights: ReflectionInsight[] = [];
-    
-    // Collect all insights from reflection packs
-    Object.values(reflectionPacks).forEach(pack => {
-      allInsights.push(...pack);
-    });
-
-    // Filter insights based on the detected pattern and text content
-    const relevantInsights = allInsights.filter(insight => {
-      // Check if insight category matches the pattern
-      const categoryMatch = insight.category.includes(pattern.replace('_', '-')) || 
-                           insight.category.includes(pattern.split('_')[0]);
-      
-      // Check if triggers match the conversation content
-      const triggerMatch = insight.triggers.some(trigger => 
-        text.includes(trigger.toLowerCase())
-      );
-      
-      return categoryMatch || triggerMatch;
-    });
-
-    // Sort by relevance and return top 2
-    return relevantInsights
-      .sort((a, b) => {
-        const aMatches = a.triggers.filter(trigger => text.includes(trigger.toLowerCase())).length;
-        const bMatches = b.triggers.filter(trigger => text.includes(trigger.toLowerCase())).length;
-        return bMatches - aMatches;
-      })
-      .slice(0, 2);
   };
 
   const getPatternDisplayName = (pattern: ConflictPattern): string => {
@@ -212,7 +172,6 @@ export const useConflictPatternAnalysis = (sessionData: SessionData) => {
 
   return {
     primaryPattern,
-    matchedInsights,
     isAnalyzing,
     getPatternDisplayName
   };
