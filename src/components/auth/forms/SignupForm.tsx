@@ -10,9 +10,10 @@ import { EmailField, PasswordField, NameField } from './FormFields';
 
 interface SignupFormProps {
   inviteToken?: string | null;
+  signupMode?: 'solo' | 'partner' | null;
 }
 
-export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken }) => {
+export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
@@ -65,6 +66,10 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken }) => {
             const { error: loginError } = await signIn(email, password);
             if (!loginError) {
               console.log("Auto-login successful, redirecting to onboarding");
+              // Store the signup mode in localStorage for onboarding
+              if (signupMode) {
+                localStorage.setItem('signupMode', signupMode);
+              }
               // Small delay to ensure auth state is updated
               setTimeout(() => {
                 navigate('/onboarding');

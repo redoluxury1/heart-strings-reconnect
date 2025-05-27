@@ -7,9 +7,10 @@ import { SignupForm } from './forms/SignupForm';
 
 interface AuthFormProps {
   inviteToken?: string | null;
+  signupMode?: 'solo' | 'partner' | null;
 }
 
-const AuthForm = ({ inviteToken }: AuthFormProps) => {
+const AuthForm = ({ inviteToken, signupMode }: AuthFormProps) => {
   const location = useLocation();
   const [activeTab, setActiveTab] = useState<"login" | "signup">("login");
   
@@ -18,12 +19,12 @@ const AuthForm = ({ inviteToken }: AuthFormProps) => {
     const params = new URLSearchParams(location.search);
     const tabParam = params.get('tab');
     
-    if (tabParam === 'signup') {
+    if (tabParam === 'signup' || signupMode) {
       setActiveTab('signup');
     } else if (inviteToken) {
       setActiveTab('signup');
     }
-  }, [location, inviteToken]);
+  }, [location, inviteToken, signupMode]);
   
   return (
     <>
@@ -39,13 +40,13 @@ const AuthForm = ({ inviteToken }: AuthFormProps) => {
           </TabsContent>
           
           <TabsContent value="signup">
-            <SignupForm inviteToken={null} />
+            <SignupForm inviteToken={null} signupMode={signupMode} />
           </TabsContent>
         </Tabs>
       )}
       
       {inviteToken && (
-        <SignupForm inviteToken={inviteToken} />
+        <SignupForm inviteToken={inviteToken} signupMode={signupMode} />
       )}
     </>
   );

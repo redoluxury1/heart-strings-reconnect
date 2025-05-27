@@ -1,7 +1,9 @@
+
 import { Route } from "react-router-dom";
 import ProtectedRoute from "@/components/routing/ProtectedRoute";
 import Index from "@/pages/Index";
 import OnboardingIntro from "@/pages/OnboardingIntro";
+import SignupChoice from "@/pages/SignupChoice";
 import Onboarding from "@/pages/Onboarding";
 import MidFight from "@/pages/MidFight";
 import PostConflict from "@/pages/PostConflict";
@@ -19,6 +21,7 @@ const MainAppRoutes = () => {
     <>
       <Route key="index" path="/" element={<Index />} />
       <Route key="intro" path="/intro" element={<OnboardingIntro />} />
+      <Route key="signup-choice" path="/signup-choice" element={<SignupChoice />} />
       <Route key="onboarding" path="/onboarding" element={
         <ProtectedRoute>
           <Onboarding />

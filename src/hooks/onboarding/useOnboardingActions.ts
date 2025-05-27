@@ -1,6 +1,5 @@
 
 import { useAuth } from '../../contexts/AuthContext';
-import { createRelationship } from '../../services/supabase';
 
 interface UseOnboardingActionsProps {
   step: number;
@@ -20,49 +19,23 @@ export const useOnboardingActions = ({
   const handleNextStep = () => {
     console.log(`📍 Current step: ${step}, moving to next step`);
     
-    if (step === 2) {
-      // From partner status step, check what the user selected
-      if (partnerStatus === 'solo') {
-        // Skip partner invite step and go directly to features intro
-        setStep(4);
-      } else {
-        // Go to partner invite step for couple mode
-        setStep(3);
-      }
-    } else if (step === 3) {
-      // From partner invite step, go to features intro
-      setStep(4);
-    } else if (step === 4) {
-      // From features intro, go to notifications permission
-      setStep(5);
-    } else if (step === 5) {
-      // From notifications permission, complete onboarding and navigate to homepage
-      console.log("🎯 Step 5 complete - calling completeOnboarding");
+    if (step === 1) {
+      // From notification permission, complete onboarding and go to home
+      console.log("🎯 Notification step complete - calling completeOnboarding");
       completeOnboarding();
     }
   };
   
   const handleAddPartner = () => {
-    setStep(3); // Go to partner invite step
+    // Not used in new flow
   };
   
   const handleBackFromPartnerInvite = () => {
-    setStep(2); // Back to partner status step
+    // Not used in new flow
   };
   
   const handlePartnerInviteComplete = async () => {
-    // If the relationship doesn't exist yet, create it
-    if (!relationship && user) {
-      try {
-        // Create a new relationship for this user
-        await createRelationship(user.id);
-      } catch (error) {
-        console.error("Error creating relationship:", error);
-      }
-    }
-    
-    // Proceed to features intro step after inviting partner
-    setStep(4);
+    // Not used in new flow
   };
   
   const handleSkipNotifications = () => {

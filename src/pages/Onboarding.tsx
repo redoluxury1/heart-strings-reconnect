@@ -1,13 +1,8 @@
 
 import React from 'react';
-import OnboardingScreen from '../components/onboarding/OnboardingScreen';
-import OnboardingPartnerStatus from '../components/onboarding/OnboardingPartnerStatus';
-import PartnerInvite from '../components/onboarding/PartnerInvite';
-import OnboardingLoader from '../components/onboarding/OnboardingLoader';
 import OnboardingContainer from '../components/onboarding/OnboardingContainer';
-import OnboardingFeatures from '../components/onboarding/OnboardingFeatures';
+import OnboardingLoader from '../components/onboarding/OnboardingLoader';
 import NotificationPermissionScreen from '../components/onboarding/NotificationPermissionScreen';
-import AuthForm from '../components/auth/AuthForm';
 import { useOnboarding } from '../hooks/onboarding/useOnboarding';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -20,11 +15,7 @@ const Onboarding = () => {
     loading,
     step,
     partnerStatus,
-    setPartnerStatus,
     handleNextStep,
-    handleAddPartner,
-    handleBackFromPartnerInvite,
-    handlePartnerInviteComplete,
     handleSkipNotifications
   } = useOnboarding();
 
@@ -36,51 +27,29 @@ const Onboarding = () => {
     }
   }, [user, authLoading, navigate]);
 
+  // Redirect to auth if not authenticated
+  useEffect(() => {
+    if (!authLoading && !user) {
+      console.log("User not authenticated, redirecting to intro");
+      navigate('/intro');
+    }
+  }, [user, authLoading, navigate]);
+
   // Show loading while we're checking auth status or onboarding is loading
   if (loading || authLoading) {
     return <OnboardingLoader />;
   }
 
-  // If user is not authenticated, show signup form
+  // Only show onboarding if user is authenticated
   if (!user) {
-    console.log("User not authenticated, showing signup form");
-    return (
-      <OnboardingContainer>
-        <div className="text-center">
-          <h2 className="text-2xl font-semibold mb-6">Create your account</h2>
-          <AuthForm inviteToken={null} />
-        </div>
-      </OnboardingContainer>
-    );
+    return <OnboardingLoader />;
   }
 
-  // If user is authenticated but hasn't completed onboarding, show onboarding steps
+  // Show notification permission screen (step 1)
   console.log("User authenticated, showing onboarding step:", step);
   return (
     <OnboardingContainer>
-      {step === 2 && (
-        <OnboardingPartnerStatus
-          partnerStatus={partnerStatus}
-          setPartnerStatus={setPartnerStatus}
-          onContinue={handleNextStep}
-          onAddPartner={handleAddPartner}
-        />
-      )}
-      
-      {step === 3 && (
-        <PartnerInvite
-          onBack={handleBackFromPartnerInvite}
-          onComplete={handlePartnerInviteComplete}
-        />
-      )}
-
-      {step === 4 && (
-        <OnboardingFeatures
-          onContinue={handleNextStep}
-        />
-      )}
-
-      {step === 5 && (
+      {step === 1 && (
         <NotificationPermissionScreen
           onContinue={handleNextStep}
           onSkip={handleSkipNotifications}

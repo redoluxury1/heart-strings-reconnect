@@ -17,7 +17,7 @@ const OnboardingScreen = () => {
   }, []);
 
   const handleGetStarted = () => {
-    navigate('/auth');
+    navigate('/signup-choice');
   };
 
   return (
