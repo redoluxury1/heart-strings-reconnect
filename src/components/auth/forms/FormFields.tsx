@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Input } from "@/components/ui/input";
+import { User, Mail } from 'lucide-react';
 
 interface EmailFieldProps {
   value: string;
@@ -11,7 +12,8 @@ interface EmailFieldProps {
 export const EmailField: React.FC<EmailFieldProps> = ({ value, onChange, id = "email" }) => {
   return (
     <div className="space-y-2">
-      <label htmlFor={id} className="block text-sm font-medium text-[#1E2A38]">
+      <label htmlFor={id} className="flex items-center gap-2 text-sm font-medium text-[#1E2A38]">
+        <Mail className="w-4 h-4 text-[#1E2A38]/60" />
         Email
       </label>
       <Input
@@ -59,7 +61,8 @@ interface NameFieldProps {
 export const NameField: React.FC<NameFieldProps> = ({ value, onChange }) => {
   return (
     <div className="space-y-2">
-      <label htmlFor="name" className="block text-sm font-medium text-[#1E2A38]">
+      <label htmlFor="name" className="flex items-center gap-2 text-sm font-medium text-[#1E2A38]">
+        <User className="w-4 h-4 text-[#1E2A38]/60" />
         Full Name
       </label>
       <Input

@@ -102,7 +102,7 @@ export const LoginForm: React.FC = () => {
       <Button 
         type="submit" 
         disabled={isLoading}
-        className="w-full rounded-full bg-[#1E2A38] hover:bg-[#1E2A38]/90 text-white"
+        className="w-full rounded-full bg-[#2e4059] hover:bg-[#2e4059]/90 text-white"
       >
         {isLoading ? "Logging in..." : "Log In"}
       </Button>

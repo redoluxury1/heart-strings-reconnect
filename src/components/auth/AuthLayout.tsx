@@ -21,17 +21,17 @@ const AuthLayout = ({ children, title, description }: AuthLayoutProps) => {
         <ContentContainer>
           <div className="max-w-md mx-auto">
             <Card className="border-2 border-[#D36B4B]/20 shadow-lg">
-              <CardHeader className="text-center space-y-4">
-                <CardTitle className="font-cormorant text-3xl text-[#1E2A38]">
+              <CardHeader className="text-center space-y-6">
+                <CardTitle className="font-cormorant text-3xl text-[#1E2A38] leading-tight">
                   {title}
                 </CardTitle>
                 
-                <CardDescription className="text-[#1E2A38]/80 text-base">
+                <CardDescription className="text-[#1E2A38]/80 text-base leading-snug">
                   {description}
                 </CardDescription>
               </CardHeader>
               
-              <CardContent>
+              <CardContent className="pt-2">
                 {/* Form content will be injected here */}
                 {children}
               </CardContent>

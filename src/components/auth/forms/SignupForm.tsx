@@ -146,13 +146,17 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
       <Button 
         type="submit" 
         disabled={isLoading || accountCreated}
-        className="w-full rounded-full bg-[#C7747F] hover:bg-[#B56470] text-white"
+        className="w-full rounded-full bg-[#2e4059] hover:bg-[#2e4059]/90 text-white"
       >
         {isLoading 
           ? "Creating Account..." 
           : (accountCreated ? "Account Created!" : "Sign Up")
         }
       </Button>
+      
+      <p className="text-center text-xs text-[#1E2A38]/60 mt-4">
+        We'll never share your email. Your story stays between you two.
+      </p>
       
       {accountCreated && (
         <p className="text-center text-sm text-[#1E2A38]/70 mt-4">

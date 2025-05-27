@@ -37,7 +37,7 @@ const AuthPage = () => {
   return (
     <AuthLayout 
       title="Let's build better conversations—together."
-      description="Create an account or sign in to get started."
+      description="Start fresh with a shared space for clarity, care, and repair."
     >
       <AuthForm inviteToken={inviteToken} signupMode={signupMode} />
     </AuthLayout>
