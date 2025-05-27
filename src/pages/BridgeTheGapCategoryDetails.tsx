@@ -15,23 +15,23 @@ const BridgeTheGapCategoryDetails: React.FC = () => {
   // Check if this is a category that has its own subcategories page
   React.useEffect(() => {
     if (categoryId === 'parenting') {
-      navigate('/bridge-the-gap/categories/parenting');
+      navigate('/parenting-subcategories');
     } else if (categoryId === 'intimacy') {
-      navigate('/bridge-the-gap/categories/intimacy');
+      navigate('/intimacy-subcategories');
     } else if (categoryId === 'household-duties') {
-      navigate('/bridge-the-gap/categories/household-duties');
+      navigate('/household-subcategories');
     } else if (categoryId === 'money') {
-      navigate('/bridge-the-gap/categories/money');
+      navigate('/money-subcategories');
     } else if (categoryId === 'feeling-dismissed') {
-      navigate('/bridge-the-gap/categories/feeling-dismissed');
+      navigate('/feeling-dismissed-subcategories');
     } else if (categoryId === 'in-laws') {
-      navigate('/bridge-the-gap/categories/in-laws');
+      navigate('/in-laws-subcategories');
     } else if (categoryId === 'feeling-unseen') {
-      navigate('/bridge-the-gap/categories/feeling-unseen');
+      navigate('/feeling-unseen-subcategories');
     } else if (categoryId === 'communication') {
-      navigate('/bridge-the-gap/categories/communication');
+      navigate('/communication-subcategories');
     } else if (categoryId === 'boundaries') {
-      navigate('/bridge-the-gap/categories/boundaries');
+      navigate('/boundaries-subcategories');
     }
   }, [categoryId, navigate]);
 
