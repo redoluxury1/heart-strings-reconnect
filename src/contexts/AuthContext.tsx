@@ -36,6 +36,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     console.log("AuthContext - initializing auth state check");
     
+    let initialLoadComplete = false;
+    
     // Set up auth state listener first
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
@@ -43,7 +45,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         
         if (session?.user) {
           setUser(session.user);
-          // Load relationship data but don't let it block the loading state indefinitely
+          // Load relationship data but don't let it block the loading state
           try {
             await loadUserRelationship(session.user.id);
           } catch (error) {
@@ -54,8 +56,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           setRelationship(null);
         }
         
-        // Always set loading to false after processing auth state change
-        setLoading(false);
+        // Only set loading to false if this isn't the initial load
+        if (initialLoadComplete) {
+          setLoading(false);
+        }
       }
     );
 
@@ -67,11 +71,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         
         if (error) {
           console.error("Error getting session:", error);
-          setLoading(false);
-          return;
-        }
-        
-        if (session?.user) {
+        } else if (session?.user) {
           setUser(session.user);
           try {
             await loadUserRelationship(session.user.id);
@@ -82,8 +82,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       } catch (error) {
         console.error("Error in auth initialization:", error);
       } finally {
-        // Ensure loading is always set to false
+        // Mark initial load as complete and set loading to false
+        initialLoadComplete = true;
         setLoading(false);
+        console.log("AuthContext - initial auth load complete, loading set to false");
       }
     };
 
