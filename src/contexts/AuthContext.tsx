@@ -1,173 +1,147 @@
-import React, { createContext, useState, useEffect, useContext } from 'react';
-import { Session, User } from '@supabase/supabase-js';
+import React, { useState, useEffect, useContext, createContext } from 'react';
+import { User } from '@supabase/supabase-js';
 import { supabase } from '../integrations/supabase/client';
-import { getProfile, getRelationship } from '../services/supabase';
-import type { UserProfile, Relationship } from '@/types/relationship';
-import { getCoupleByUserId } from '../services/couples';
-import { getUserMeta } from '../services/userMeta';
-import type { Couple, UserMeta } from '@/types/couple';
 
-interface AuthContextType {
+interface AuthContextProps {
   user: User | null;
-  session: Session | null;
-  profile: UserProfile | null;
   relationship: Relationship | null;
-  couple: Couple | null;
-  userMeta: UserMeta | null;
   loading: boolean;
-  signUp: (email: string, password: string, name?: string) => Promise<{ error: Error | null, data: any }>;
-  signIn: (email: string, password: string) => Promise<{ error: Error | null, data: any }>;
+  signIn: (email: string) => Promise<void>;
+  signUp: (email: string, password?: string) => Promise<void>;
   signOut: () => Promise<void>;
-  resetPassword: (email: string) => Promise<{ error: Error | null, data: any }>;
-  updateProfile: (updates: Partial<UserProfile>) => Promise<void>;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+interface Relationship {
+  id: string;
+  partner1_id: string;
+  partner2_id: string;
+  status: string;
+  created_at: string;
+}
+
+const AuthContext = createContext<AuthContextProps>({
+  user: null,
+  relationship: null,
+  loading: true,
+  signIn: async () => {},
+  signUp: async () => {},
+  signOut: async () => {},
+});
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [session, setSession] = useState<Session | null>(null);
-  const [profile, setProfile] = useState<UserProfile | null>(null);
   const [relationship, setRelationship] = useState<Relationship | null>(null);
-  const [couple, setCouple] = useState<Couple | null>(null);
-  const [userMeta, setUserMeta] = useState<UserMeta | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Set up the auth state listener
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (event, currentSession) => {
-      setSession(currentSession);
-      setUser(currentSession?.user ?? null);
+    console.log("AuthContext - initializing auth state check");
+    const startTime = Date.now();
+    
+    // Get initial session
+    supabase.auth.getSession().then(({ data: { session }, error }) => {
+      const loadTime = Date.now() - startTime;
+      console.log(`AuthContext - getSession completed in ${loadTime}ms`, { session: !!session, error });
       
-      if (currentSession?.user) {
-        await loadUserData(currentSession.user.id);
+      if (error) {
+        console.error("Error getting session:", error);
+        setLoading(false);
+        return;
+      }
+      
+      if (session?.user) {
+        setUser(session.user);
+        loadUserRelationship(session.user.id);
       } else {
-        // Clear all user-related state when signing out
-        setProfile(null);
-        setRelationship(null);
-        setCouple(null);
-        setUserMeta(null);
+        setLoading(false);
       }
     });
 
-    // Check if user is already signed in
-    supabase.auth.getSession().then(async ({ data: { session: currentSession } }) => {
-      setSession(currentSession);
-      setUser(currentSession?.user ?? null);
-      
-      if (currentSession?.user) {
-        await loadUserData(currentSession.user.id);
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        console.log("AuthContext - auth state change:", event, { session: !!session });
+        
+        if (session?.user) {
+          setUser(session.user);
+          await loadUserRelationship(session.user.id);
+        } else {
+          setUser(null);
+          setRelationship(null);
+        }
+        setLoading(false);
       }
-      
-      setLoading(false);
-    });
+    );
 
-    return () => {
-      subscription.unsubscribe();
-    };
+    return () => subscription.unsubscribe();
   }, []);
 
-  const loadUserData = async (userId: string) => {
-    // Load user profile
-    const userProfile = await getProfile(userId);
-    setProfile(userProfile);
-
-    // Load relationship data
-    const userRelationship = await getRelationship(userId);
-    setRelationship(userRelationship);
-
-    // Load couple data if user is part of a couple
-    if (userProfile?.couple_id) {
-      const coupleData = await getCoupleByUserId(userId);
-      setCouple(coupleData);
-    }
-
-    // Load user meta
-    const meta = await getUserMeta(userId);
-    setUserMeta(meta);
-  };
-
-  // Sign up function
-  const signUp = async (email: string, password: string, name?: string) => {
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          name,
-          usage_mode: 'solo',  // Default to solo mode
-          role: 'individual'    // Default to individual role
-        }
-      }
-    });
-    
-    return { data, error };
-  };
-
-  // Sign in function
-  const signIn = async (email: string, password: string) => {
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-    
-    return { data, error };
-  };
-
-  // Sign out function
-  const signOut = async () => {
-    await supabase.auth.signOut();
-  };
-
-  // Reset password function
-  const resetPassword = async (email: string) => {
-    const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: window.location.origin + '/reset-password',
-    });
-    
-    return { data, error };
-  };
-
-  // Update profile function
-  const updateProfile = async (updates: Partial<UserProfile>) => {
-    if (!user) return;
+  const loadUserRelationship = async (userId: string) => {
+    console.log("AuthContext - loading user relationship for:", userId);
+    const relationshipStartTime = Date.now();
     
     try {
-      const updatedProfile = await getProfile(user.id);
-      if (updatedProfile) {
-        setProfile(updatedProfile);
+      const { data, error } = await supabase
+        .from('relationships')
+        .select('*')
+        .or(`partner1_id.eq.${userId},partner2_id.eq.${userId}`)
+        .maybeSingle();
+
+      const relationshipLoadTime = Date.now() - relationshipStartTime;
+      console.log(`AuthContext - relationship loaded in ${relationshipLoadTime}ms`, { data: !!data, error });
+
+      if (error) {
+        console.error("Error loading relationship:", error);
+      } else {
+        setRelationship(data);
       }
     } catch (error) {
-      console.error('Error updating profile:', error);
+      console.error("Error in loadUserRelationship:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const value = {
+  const signIn = async (email: string) => {
+    try {
+      const { error } = await supabase.auth.signInWithOtp({ email });
+      if (error) throw error;
+      alert('Check your email for the magic link to sign in.');
+    } catch (error: any) {
+      alert(error.error_description || error.message);
+    }
+  };
+
+  const signUp = async (email: string, password?: string) => {
+    try {
+      const { error } = await supabase.auth.signUp({ email, password });
+      if (error) throw error;
+      alert('Check your email to verify your account.');
+    } catch (error: any) {
+      alert(error.error_description || error.message);
+    }
+  };
+
+  const signOut = async () => {
+    try {
+      await supabase.auth.signOut();
+      setUser(null);
+    } catch (error: any) {
+      console.error('Error signing out:', error.message);
+    }
+  };
+
+  const value: AuthContextProps = {
     user,
-    session,
-    profile,
     relationship,
-    couple,
-    userMeta,
     loading,
-    signUp,
     signIn,
+    signUp,
     signOut,
-    resetPassword,
-    updateProfile,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
-export const useAuth = (): AuthContextType => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
+export const useAuth = () => {
+  return useContext(AuthContext);
 };
-
-export default AuthContext;
