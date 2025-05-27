@@ -5,6 +5,7 @@ import { Flag } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
 import { sendWhiteFlagMessage } from '@/services/whiteFlagService';
+import { Textarea } from '@/components/ui/textarea';
 import {
   Dialog,
   DialogContent,
@@ -21,18 +22,28 @@ interface WhiteFlagModalProps {
 const whiteFlagMessages = [
   "I'm waving the white flag. I want peace, not distance.",
   "This doesn't feel good. Can we start fresh when we're both ready?",
-  "I don't want to keep fighting. I still care, even when it's hard."
+  "I don't want to keep fighting. I still care, even when it's hard.",
+  "I know we're both hurting. I just want us to feel close again.",
+  "I miss you. Can we come together to move forward?"
 ];
 
 const WhiteFlagModal: React.FC<WhiteFlagModalProps> = ({ isOpen, onClose }) => {
   const [selectedMessage, setSelectedMessage] = useState<string>('');
+  const [customMessage, setCustomMessage] = useState<string>('');
   const [isSending, setIsSending] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const { toast } = useToast();
   const { user, relationship } = useAuth();
 
+  const handleMessageSelect = (message: string) => {
+    setSelectedMessage(message);
+    setCustomMessage(message); // Pre-load the selected message in the custom box
+  };
+
   const handleSendFlag = async () => {
-    if (!selectedMessage || !user || !relationship) {
+    const messageToSend = customMessage || selectedMessage;
+    
+    if (!messageToSend || !user || !relationship) {
       toast({
         title: "Error",
         description: "Please select a message and ensure you're logged in.",
@@ -47,7 +58,7 @@ const WhiteFlagModal: React.FC<WhiteFlagModalProps> = ({ isOpen, onClose }) => {
       const success = await sendWhiteFlagMessage(
         user.id,
         relationship.id,
-        selectedMessage
+        messageToSend
       );
 
       if (success) {
@@ -69,6 +80,7 @@ const WhiteFlagModal: React.FC<WhiteFlagModalProps> = ({ isOpen, onClose }) => {
 
   const handleClose = () => {
     setSelectedMessage('');
+    setCustomMessage('');
     setShowConfirmation(false);
     onClose();
   };
@@ -122,7 +134,7 @@ const WhiteFlagModal: React.FC<WhiteFlagModalProps> = ({ isOpen, onClose }) => {
           {whiteFlagMessages.map((message, index) => (
             <button
               key={index}
-              onClick={() => setSelectedMessage(message)}
+              onClick={() => handleMessageSelect(message)}
               className={`w-full p-4 text-left rounded-lg border-2 transition-all ${
                 selectedMessage === message
                   ? 'border-[#D3876A] bg-[#D3876A]/5 text-[#2C2C2C]'
@@ -132,6 +144,16 @@ const WhiteFlagModal: React.FC<WhiteFlagModalProps> = ({ isOpen, onClose }) => {
               <span className="text-sm font-medium">{message}</span>
             </button>
           ))}
+          
+          <div className="mt-6">
+            <p className="text-sm text-[#65595D] mb-2">Make it your own:</p>
+            <Textarea
+              value={customMessage}
+              onChange={(e) => setCustomMessage(e.target.value)}
+              placeholder="Write your own message or edit a selected one..."
+              className="w-full min-h-[80px] border-[#E8DAD3] focus:border-[#D3876A] focus:ring-[#D3876A]"
+            />
+          </div>
         </div>
         
         <div className="flex gap-3 pt-4">
@@ -144,7 +166,7 @@ const WhiteFlagModal: React.FC<WhiteFlagModalProps> = ({ isOpen, onClose }) => {
           </Button>
           <Button
             onClick={handleSendFlag}
-            disabled={!selectedMessage || isSending}
+            disabled={(!selectedMessage && !customMessage) || isSending}
             className="flex-1 bg-[#D3876A] hover:bg-[#D3876A]/90 text-white"
           >
             {isSending ? "Sending..." : "Send White Flag"}
