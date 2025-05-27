@@ -16,19 +16,7 @@ interface NavbarDesktopLinksProps {
 
 const NavbarDesktopLinks: React.FC<NavbarDesktopLinksProps> = ({ user }) => {
   if (!user) {
-    return (
-      <div className="hidden md:flex items-center">
-        <NavigationMenu>
-          <NavigationMenuList>
-            <NavigationMenuItem>
-              <Link to="/games" className="text-sm font-medium hover:text-mauve-rose transition-colors px-3 py-2">
-                Games
-              </Link>
-            </NavigationMenuItem>
-          </NavigationMenuList>
-        </NavigationMenu>
-      </div>
-    );
+    return null;
   }
 
   return (

@@ -65,13 +65,6 @@ const NavbarMobileMenu = ({ isOpen, user, onSignOut, isDevelopment }: NavbarMobi
           </>
         ) : (
           <>
-            <Link
-              to="/games"
-              className="block px-3 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md text-base font-medium"
-            >
-              Games
-            </Link>
-            
             {isDevelopment && (
               <Link
                 to="/dev-testing"
