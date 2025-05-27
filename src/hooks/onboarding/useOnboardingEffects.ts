@@ -24,13 +24,6 @@ export const useOnboardingEffects = ({
   const { toast } = useToast();
   const { user, relationship, loading } = useAuth();
   
-  // Redirect if not logged in
-  useEffect(() => {
-    if (!loading && !user) {
-      navigate('/auth');
-    }
-  }, [user, loading, navigate]);
-  
   // Check if this is a partner flow (coming from invite)
   useEffect(() => {
     const params = new URLSearchParams(location.search);

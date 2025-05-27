@@ -6,6 +6,7 @@ import PartnerInvite from '../components/onboarding/PartnerInvite';
 import OnboardingLoader from '../components/onboarding/OnboardingLoader';
 import OnboardingContainer from '../components/onboarding/OnboardingContainer';
 import OnboardingFeatures from '../components/onboarding/OnboardingFeatures';
+import AuthForm from '../components/auth/AuthForm';
 import { useOnboarding } from '../hooks/onboarding/useOnboarding';
 
 const Onboarding = () => {
@@ -28,7 +29,10 @@ const Onboarding = () => {
   return (
     <OnboardingContainer>
       {step === 1 && (
-        <OnboardingScreen />
+        <div className="text-center">
+          <h2 className="text-2xl font-semibold mb-6">Create your account</h2>
+          <AuthForm inviteToken={null} />
+        </div>
       )}
       
       {step === 2 && (

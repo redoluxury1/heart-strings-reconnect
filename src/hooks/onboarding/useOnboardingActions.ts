@@ -21,7 +21,7 @@ export const useOnboardingActions = ({
     console.log(`📍 Current step: ${step}, moving to next step`);
     
     if (step === 1) {
-      // Always go to step 2 (partner status selection)
+      // From auth step, go to partner status selection
       setStep(2);
     } else if (step === 2) {
       // From partner status step, check what the user selected
