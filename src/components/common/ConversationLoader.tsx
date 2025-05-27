@@ -3,82 +3,72 @@ import React, { useState, useEffect } from 'react';
 
 interface ConversationLoaderProps {
   className?: string;
+  isLoading?: boolean; // Allow parent to control loading state
+  loadingText?: string; // Allow custom loading text
 }
 
-const ConversationLoader: React.FC<ConversationLoaderProps> = ({ className = "" }) => {
-  const [currentCycle, setCurrentCycle] = useState(0);
+const ConversationLoader: React.FC<ConversationLoaderProps> = ({ 
+  className = "",
+  isLoading = true,
+  loadingText = "Getting your conversation ready…"
+}) => {
+  const [currentMessage, setCurrentMessage] = useState(0);
   const [visibleBubbles, setVisibleBubbles] = useState<number[]>([]);
 
-  const textCycles = [
-    [
-      "Softening tension…",
-      "Opening emotional bandwidth…", 
-      "Building a bridge…"
-    ],
-    [
-      "Taking a deep breath…",
-      "Creating emotional space…",
-      "Preparing something gentle…"
-    ],
-    [
-      "Making your words feel safer…",
-      "Resetting the tone…",
-      "Bringing you back together…"
-    ]
+  const messages = [
+    loadingText,
+    "Creating emotional space…",
+    "Preparing something gentle…"
   ];
 
   useEffect(() => {
-    const animateBubbles = () => {
-      // Reset bubbles
-      setVisibleBubbles([]);
-      
-      // Animate each bubble in sequence
-      const timeouts = [
-        setTimeout(() => setVisibleBubbles([0]), 100),
-        setTimeout(() => setVisibleBubbles([0, 1]), 600),
-        setTimeout(() => setVisibleBubbles([0, 1, 2]), 1100),
-        setTimeout(() => {
-          // Hold for a moment, then cycle to next set
-          setTimeout(() => {
-            setCurrentCycle((prev) => (prev + 1) % textCycles.length);
-          }, 1500);
-        }, 1600)
-      ];
+    if (!isLoading) return;
 
-      return timeouts;
-    };
-
-    const timeouts = animateBubbles();
+    // Show first message immediately
+    setVisibleBubbles([0]);
     
-    // Set up the cycling interval
-    const cycleInterval = setInterval(() => {
-      animateBubbles();
-    }, 4000);
+    // Only cycle through additional messages if loading takes longer than 2 seconds
+    const longLoadingTimer = setTimeout(() => {
+      if (isLoading) {
+        setVisibleBubbles([0, 1]);
+        
+        // Add third message if still loading after 4 seconds
+        const veryLongLoadingTimer = setTimeout(() => {
+          if (isLoading) {
+            setVisibleBubbles([0, 1, 2]);
+          }
+        }, 2000);
+        
+        return () => clearTimeout(veryLongLoadingTimer);
+      }
+    }, 2000);
 
-    return () => {
-      timeouts.forEach(timeout => clearTimeout(timeout));
-      clearInterval(cycleInterval);
-    };
-  }, [currentCycle]);
+    return () => clearTimeout(longLoadingTimer);
+  }, [isLoading, loadingText]);
 
-  const currentTexts = textCycles[currentCycle];
+  // Reset when loading stops
+  useEffect(() => {
+    if (!isLoading) {
+      setVisibleBubbles([]);
+      setCurrentMessage(0);
+    }
+  }, [isLoading]);
+
+  if (!isLoading) return null;
 
   return (
     <div className={`flex flex-col items-center justify-center space-y-3 ${className}`}>
-      {currentTexts.map((text, index) => (
+      {messages.slice(0, Math.max(1, visibleBubbles.length)).map((text, index) => (
         <div
-          key={`${currentCycle}-${index}`}
+          key={index}
           className={`
             px-4 py-3 max-w-xs rounded-2xl bg-soft-blush shadow-sm
-            transition-all duration-500 ease-out
+            transition-all duration-300 ease-out
             ${visibleBubbles.includes(index) 
               ? 'opacity-100 translate-y-0' 
               : 'opacity-0 translate-y-4'
             }
           `}
-          style={{
-            transitionDelay: `${index * 100}ms`
-          }}
         >
           <p className="text-sm text-midnight-indigo text-center font-medium">
             {text}
