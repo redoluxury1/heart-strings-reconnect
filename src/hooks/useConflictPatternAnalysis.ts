@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { SessionData } from '@/components/post-conflict/context/SessionContext';
 import { ReflectionInsight } from '@/types/reflection-insights';
@@ -40,29 +41,29 @@ const conflictPatternIndicators: ConflictPatternIndicators = {
     emotionalTones: ['unheard', 'dismissed', 'frustrated'],
     weight: 8
   },
+  emotional_shutdown: {
+    keywords: ['shut down', 'silent', 'withdraw', 'space', 'overwhelmed', 'quiet'],
+    phrases: ['you always shut down', 'you go silent', 'i need space', 'too much', 'you wont talk'],
+    emotionalTones: ['overwhelmed', 'numb', 'exhausted', 'abandoned'],
+    weight: 8
+  },
+  effort_imbalance: {
+    keywords: ['always me', 'never help', 'carry everything', 'effort', 'try', 'exhausted'],
+    phrases: ['i do everything', 'you never help', 'always on me', 'i carry the load', 'one sided'],
+    emotionalTones: ['exhausted', 'resentful', 'alone', 'burned out'],
+    weight: 7
+  },
+  miscommunication_loops: {
+    keywords: ['misunderstood', 'not what i meant', 'twisted', 'confused', 'escalated'],
+    phrases: ['thats not what i meant', 'you twisted my words', 'we keep missing each other', 'this got out of hand'],
+    emotionalTones: ['confused', 'frustrated', 'misunderstood', 'reactive'],
+    weight: 6
+  },
   power_struggles: {
     keywords: ['control', 'boss', 'tell me what to do', 'decisions', 'respect'],
     phrases: ['you always have to control', 'stop telling me what to do', 'you dont respect me'],
     emotionalTones: ['controlled', 'powerless', 'defiant'],
     weight: 7
-  },
-  emotional_shutdown: {
-    keywords: ['shut down', 'silent', 'withdraw', 'space', 'overwhelmed'],
-    phrases: ['you always shut down', 'you go silent', 'i need space', 'too much'],
-    emotionalTones: ['overwhelmed', 'numb', 'exhausted'],
-    weight: 8
-  },
-  effort_imbalance: {
-    keywords: ['always me', 'never help', 'carry everything', 'effort', 'try'],
-    phrases: ['i do everything', 'you never help', 'always on me', 'i carry the load'],
-    emotionalTones: ['exhausted', 'resentful', 'alone'],
-    weight: 7
-  },
-  miscommunication_loops: {
-    keywords: ['misunderstood', 'not what i meant', 'twisted', 'confused'],
-    phrases: ['thats not what i meant', 'you twisted my words', 'we keep missing each other'],
-    emotionalTones: ['confused', 'frustrated', 'misunderstood'],
-    weight: 6
   }
 };
 
