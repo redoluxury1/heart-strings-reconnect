@@ -1,5 +1,6 @@
 
 import { type ToastActionElement } from "@/components/ui/toast";
+import { notifyCodeWordActivated, notifyTimerEnded } from "@/services/notificationTriggers";
 
 /**
  * Show notification prompt to reconnect
@@ -14,9 +15,21 @@ export const showReconnectNotification = (toast: any): void => {
 /**
  * Notify partner about pause activation
  */
-export const notifyPartner = (): void => {
+export const notifyPartner = async (
+  initiatorId?: string, 
+  partnerId?: string, 
+  relationshipId?: string,
+  timerDuration: number = 30
+): Promise<void> => {
   console.log("Notifying partner about pause activation");
-  // In a real app, this would send a push notification to the partner
+  
+  if (initiatorId && partnerId && relationshipId) {
+    try {
+      await notifyCodeWordActivated(initiatorId, partnerId, relationshipId, timerDuration);
+    } catch (error) {
+      console.error("Error notifying partner about code word activation:", error);
+    }
+  }
 };
 
 /**
@@ -35,4 +48,19 @@ export const sendRestartMessage = (message: string, toast: any): void => {
   toast({
     title: "Your partner has been notified."
   });
+};
+
+/**
+ * Notify both partners when timer ends
+ */
+export const notifyTimerComplete = async (
+  partner1Id: string,
+  partner2Id: string,
+  relationshipId: string
+): Promise<void> => {
+  try {
+    await notifyTimerEnded(partner1Id, partner2Id, relationshipId);
+  } catch (error) {
+    console.error("Error notifying partners about timer completion:", error);
+  }
 };

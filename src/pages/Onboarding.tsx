@@ -6,6 +6,7 @@ import PartnerInvite from '../components/onboarding/PartnerInvite';
 import OnboardingLoader from '../components/onboarding/OnboardingLoader';
 import OnboardingContainer from '../components/onboarding/OnboardingContainer';
 import OnboardingFeatures from '../components/onboarding/OnboardingFeatures';
+import NotificationPermissionScreen from '../components/onboarding/NotificationPermissionScreen';
 import AuthForm from '../components/auth/AuthForm';
 import { useOnboarding } from '../hooks/onboarding/useOnboarding';
 import { useAuth } from '../contexts/AuthContext';
@@ -23,7 +24,8 @@ const Onboarding = () => {
     handleNextStep,
     handleAddPartner,
     handleBackFromPartnerInvite,
-    handlePartnerInviteComplete
+    handlePartnerInviteComplete,
+    handleSkipNotifications
   } = useOnboarding();
 
   // If user is already authenticated and has completed onboarding, redirect to home
@@ -72,6 +74,13 @@ const Onboarding = () => {
       {step === 4 && (
         <OnboardingFeatures
           onContinue={handleNextStep}
+        />
+      )}
+
+      {step === 5 && (
+        <NotificationPermissionScreen
+          onContinue={handleNextStep}
+          onSkip={handleSkipNotifications}
         />
       )}
     </OnboardingContainer>

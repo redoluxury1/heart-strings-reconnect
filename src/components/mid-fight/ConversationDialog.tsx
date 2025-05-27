@@ -11,7 +11,8 @@ import {
   DialogTitle
 } from "@/components/ui/dialog";
 import { useAuth } from '@/contexts/AuthContext';
-import { createConversationSession, sendConversationNotification } from '@/services/conversation';
+import { createConversationSession } from '@/services/conversation';
+import { notifyConversationStarted } from '@/services/notificationTriggers';
 
 interface ConversationDialogProps {
   isOpen: boolean;
@@ -58,13 +59,12 @@ const ConversationDialog: React.FC<ConversationDialogProps> = ({
       );
       
       if (session) {
-        // Send notification to partner
-        await sendConversationNotification(
-          partnerId,
+        // Send notification to partner using the new notification system
+        await notifyConversationStarted(
           user.id,
-          "Conversation Request",
-          `Your partner wants to talk about ${topicId}`,
-          session.id
+          partnerId,
+          relationship.id,
+          topicId
         );
         
         setShowSuccess(true);
@@ -157,7 +157,10 @@ const ConversationDialog: React.FC<ConversationDialogProps> = ({
             <Button 
               variant="default"
               className="bg-blue-600 hover:bg-blue-700 text-white"
-              onClick={handleReturnToToolkit}
+              onClick={() => {
+                setShowSuccess(false);
+                onOpenChange(false);
+              }}
             >
               Return to tools
             </Button>

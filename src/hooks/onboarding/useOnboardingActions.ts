@@ -33,8 +33,11 @@ export const useOnboardingActions = ({
       // From partner invite step, go to features intro
       setStep(4);
     } else if (step === 4) {
-      // From features intro, complete onboarding and navigate to homepage
-      console.log("🎯 Step 4 complete - calling completeOnboarding");
+      // From features intro, go to notifications permission
+      setStep(5);
+    } else if (step === 5) {
+      // From notifications permission, complete onboarding and navigate to homepage
+      console.log("🎯 Step 5 complete - calling completeOnboarding");
       completeOnboarding();
     }
   };
@@ -62,10 +65,16 @@ export const useOnboardingActions = ({
     setStep(4);
   };
   
+  const handleSkipNotifications = () => {
+    // Skip notifications and complete onboarding
+    completeOnboarding();
+  };
+  
   return {
     handleNextStep,
     handleAddPartner,
     handleBackFromPartnerInvite,
-    handlePartnerInviteComplete
+    handlePartnerInviteComplete,
+    handleSkipNotifications
   };
 };
