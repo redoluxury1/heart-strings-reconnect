@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useContext, createContext } from 'react';
 import { User } from '@supabase/supabase-js';
 import { supabase } from '../integrations/supabase/client';
@@ -84,7 +83,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const { data, error } = await supabase
         .from('relationships')
         .select('*')
-        .or(`partner1_id.eq.${userId},partner2_id.eq.${userId}`)
+        .or(`user_id.eq.${userId},partner_id.eq.${userId}`)
         .maybeSingle();
 
       const relationshipLoadTime = Date.now() - relationshipStartTime;
@@ -96,8 +95,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         // Map the database relationship to our interface
         const mappedRelationship: Relationship = {
           id: data.id,
-          partner1_id: data.user_id || data.partner1_id,
-          partner2_id: data.partner_id || data.partner2_id,
+          partner1_id: data.user_id,
+          partner2_id: data.partner_id,
           status: data.status,
           created_at: data.created_at
         };

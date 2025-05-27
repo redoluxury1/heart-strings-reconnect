@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { HeartHandshake, MessageCircle, Heart, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useSession } from '@/components/post-conflict/context/SessionContext';
+import WhiteFlagButton from './WhiteFlagButton';
 
 const NextStepsButtons: React.FC = () => {
   const navigate = useNavigate();
@@ -31,6 +32,11 @@ const NextStepsButtons: React.FC = () => {
   return (
     <div className="w-full">
       <h3 className="font-medium text-[#2C2C2C] text-center mb-4">Next Steps</h3>
+      
+      {/* White Flag Button - Featured prominently at the top */}
+      <div className="flex justify-center mb-6">
+        <WhiteFlagButton />
+      </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Button
