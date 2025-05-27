@@ -70,7 +70,7 @@ export const getWhiteFlagHistory = async (userId: string): Promise<WhiteFlagLog[
   try {
     const { data, error } = await supabase
       .from('white_flag_logs')
-      .select('*')
+      .select('user_id, relationship_id, message, timestamp')
       .eq('user_id', userId)
       .order('timestamp', { ascending: false });
 
