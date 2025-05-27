@@ -9,7 +9,8 @@ interface OnboardingFeaturesProps {
 
 const OnboardingFeatures: React.FC<OnboardingFeaturesProps> = ({ onContinue }) => {
   const handleClick = () => {
-    console.log("Start Exploring button clicked - completing onboarding");
+    console.log("🎯 Start Exploring button clicked - completing onboarding");
+    console.log("🔄 Calling onContinue function...");
     onContinue();
   };
 
@@ -64,6 +65,7 @@ const OnboardingFeatures: React.FC<OnboardingFeaturesProps> = ({ onContinue }) =
         <Button 
           onClick={handleClick} 
           className="w-full rounded-full bg-[#1E2A38] hover:bg-[#1E2A38]/90 text-white"
+          type="button"
         >
           Start Exploring
           <ArrowRight className="ml-2 h-4 w-4" />

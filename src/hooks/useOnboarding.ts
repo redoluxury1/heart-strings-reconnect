@@ -80,12 +80,12 @@ export const useOnboarding = () => {
   }, [user, inviteToken, loading, toast]);
   
   const completeOnboarding = async () => {
-    console.log("Completing onboarding...");
+    console.log("🚀 Starting onboarding completion process...");
     
     try {
       // Update user metadata with their partner status choice
       if (user) {
-        console.log(`Updating user with partner status: ${partnerStatus}`);
+        console.log(`📝 Updating user with partner status: ${partnerStatus}`);
         
         const { error: authError } = await supabase.auth.updateUser({
           data: {
@@ -95,7 +95,7 @@ export const useOnboarding = () => {
         });
         
         if (authError) {
-          console.error("Error updating auth user:", authError);
+          console.error("❌ Error updating auth user:", authError);
           throw authError;
         }
         
@@ -109,44 +109,39 @@ export const useOnboarding = () => {
           .eq('id', user.id);
         
         if (profileError) {
-          console.error("Error updating profile:", profileError);
+          console.error("⚠️ Error updating profile:", profileError);
           // Don't throw here as this is not critical
         }
         
-        console.log(`Updated user metadata: usage_mode = ${partnerStatus}, onboarding_complete = true`);
+        console.log(`✅ Updated user metadata: usage_mode = ${partnerStatus}, onboarding_complete = true`);
       }
 
       // Save partner status to localStorage
       localStorage.setItem('bridge-partner-status', partnerStatus);
+      console.log("💾 Saved partner status to localStorage");
       
       // Set default interface style
       updateGlobalInterfaceStyle('emotionally-reflective');
+      console.log("🎨 Set interface style to emotionally-reflective");
       
       // Update global partner status
       updateGlobalPartnerStatus(partnerStatus);
+      console.log("🤝 Updated global partner status");
       
-      console.log("Onboarding completed successfully, navigating to homepage...");
+      console.log("🏠 Navigating to homepage...");
       
-      // Force navigation to homepage with window.location as fallback
-      try {
-        navigate('/', { replace: true });
-        console.log("Navigation completed using navigate");
-      } catch (navError) {
-        console.error("Navigate failed, using window.location:", navError);
-        window.location.href = '/';
-        return;
-      }
+      // Show success toast before navigation
+      toast({
+        title: "Welcome to Bridge!",
+        description: "You're all set to start building better conversations.",
+      });
       
-      // Show success toast after navigation
-      setTimeout(() => {
-        toast({
-          title: "Welcome to Bridge!",
-          description: "You're all set to start building better conversations.",
-        });
-      }, 300);
+      // Navigate to homepage
+      navigate('/', { replace: true });
+      console.log("✅ Navigation completed successfully");
       
     } catch (error) {
-      console.error("Error completing onboarding:", error);
+      console.error("💥 Error completing onboarding:", error);
       toast({
         title: "Something went wrong",
         description: "Please try again.",
@@ -156,7 +151,7 @@ export const useOnboarding = () => {
   };
   
   const handleNextStep = () => {
-    console.log(`Current step: ${step}, moving to next step`);
+    console.log(`📍 Current step: ${step}, moving to next step`);
     
     if (step === 1) {
       // Always go to step 2 (partner status selection)
@@ -175,7 +170,7 @@ export const useOnboarding = () => {
       setStep(4);
     } else if (step === 4) {
       // From features intro, complete onboarding and navigate to homepage
-      console.log("Step 4 complete - calling completeOnboarding");
+      console.log("🎯 Step 4 complete - calling completeOnboarding");
       completeOnboarding();
     }
   };
