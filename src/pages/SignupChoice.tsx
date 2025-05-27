@@ -2,7 +2,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { User, Users } from 'lucide-react';
+import { User, Heart } from 'lucide-react';
 import OnboardingContainer from '@/components/onboarding/OnboardingContainer';
 
 const SignupChoice = () => {
@@ -21,11 +21,11 @@ const SignupChoice = () => {
       <OnboardingContainer>
         <div className="text-center">
           <h2 className="font-cormorant text-3xl font-medium text-[#2e4059] mb-4">
-            How would you like to use Bridge for Couples?
+            Let's personalize your experience.
           </h2>
           
           <p className="text-lg text-[#2e4059]/80 mb-8">
-            Choose how you'd like to get started with the app.
+            Are you here to work on things solo, or do you want to invite your partner to join you?
           </p>
           
           <div className="space-y-4 max-w-sm mx-auto">
@@ -33,11 +33,16 @@ const SignupChoice = () => {
               onClick={handleSoloChoice}
               variant="outline"
               size="lg"
-              className="w-full h-16 bg-white border-2 border-[#2e4059]/20 hover:border-[#2e4059]/40 hover:bg-[#2e4059]/5 text-[#2e4059] transition-all duration-200"
+              className="w-full h-auto p-4 bg-[#f1eae8] border-2 border-[#e5c7c1] hover:border-[#2e4059]/40 hover:bg-[#e5c7c1] hover:scale-105 text-[#2e4059] transition-all duration-200 shadow-sm hover:shadow-md"
             >
-              <div className="flex items-center gap-3">
-                <User className="w-6 h-6" />
-                <span className="text-lg font-medium">I'm using this on my own</span>
+              <div className="flex flex-col items-center gap-3 text-center">
+                <div className="flex items-center gap-2">
+                  <User className="w-5 h-5" />
+                  <span className="text-lg font-medium">I'm starting this on my own</span>
+                </div>
+                <p className="text-sm text-[#2e4059]/70 font-normal">
+                  Sometimes the best changes start with just one person.
+                </p>
               </div>
             </Button>
             
@@ -45,14 +50,23 @@ const SignupChoice = () => {
               onClick={handlePartnerChoice}
               variant="outline"
               size="lg"
-              className="w-full h-16 bg-white border-2 border-[#2e4059]/20 hover:border-[#2e4059]/40 hover:bg-[#2e4059]/5 text-[#2e4059] transition-all duration-200"
+              className="w-full h-auto p-4 bg-[#f1eae8] border-2 border-[#e5c7c1] hover:border-[#2e4059]/40 hover:bg-[#e5c7c1] hover:scale-105 text-[#2e4059] transition-all duration-200 shadow-sm hover:shadow-md"
             >
-              <div className="flex items-center gap-3">
-                <Users className="w-6 h-6" />
-                <span className="text-lg font-medium">I'm using this with my partner</span>
+              <div className="flex flex-col items-center gap-3 text-center">
+                <div className="flex items-center gap-2">
+                  <Heart className="w-5 h-5" />
+                  <span className="text-lg font-medium">I'm doing this with my partner</span>
+                </div>
+                <p className="text-sm text-[#2e4059]/70 font-normal">
+                  We're in this together.
+                </p>
               </div>
             </Button>
           </div>
+          
+          <p className="text-sm text-[#2e4059]/60 mt-8 font-normal">
+            You can always invite your partner later if you're not ready yet.
+          </p>
         </div>
       </OnboardingContainer>
     </div>
