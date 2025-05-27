@@ -37,5 +37,17 @@ export const conflictInsights: ConflictInsights = {
     therapist: "Escalation loops are like emotional ping-pong—one person reacts, the other defends, and the real issue disappears beneath the noise. These patterns are exhausting, not because the love is gone, but because clarity got lost in the cycle. What started as a small disagreement often grows bigger due to tone misfires, assumptions, or rushed responses. The goal in repair isn't just resolution—it's clarity. Saying, \"Wait—what are we actually fighting about?\" can stop the spiral mid-spin.",
     unbiased: "You're not bad at communicating—you're just stuck in a rhythm that turns misunderstandings into arguments. One of you might need more context. The other might need more softness. When you slow the cycle, you both start to feel heard again.",
     tryThis: "Use a \"reset\" question when things get heated: \"What did you hear me say just now?\" \"Can I try saying that again in a better way?\" Often, the fight isn't about disagreement—it's about delivery. Resetting the tone can bring the clarity back into reach."
+  },
+  power_struggles: {
+    shared: "This conflict may reflect different approaches to decision-making and autonomy. Power dynamics in relationships need ongoing navigation and respect from both sides.",
+    therapist: "Power struggles often emerge when partners have different needs for control, autonomy, or decision-making authority. One person may feel micromanaged or controlled, while the other feels like they're carrying the mental load. These dynamics can be subtle but create significant resentment over time. Healthy relationships require ongoing negotiation about who leads what, when, and how decisions get made together.",
+    unbiased: "One of you may be feeling controlled or dismissed in decision-making. The other may feel like they have to manage everything or that their input isn't valued. Both experiences are valid and point to a need for better collaboration and shared authority.",
+    tryThis: "Try explicitly sharing decision-making: \"What feels most important to you about this choice?\" \"Where would you like to take the lead, and where would you like my input?\" Small acts of shared authority can shift the whole dynamic."
+  },
+  general_repair: {
+    shared: "Not every conflict fits neatly in a box—but here's some support that may help you reconnect. What matters most is that you both showed up to work through this together.",
+    therapist: "Every couple has unique patterns and triggers that don't always align with common categories. What's important is developing the skills to repair, reconnect, and learn from conflict rather than avoiding it. The fact that you're both here, working through this, shows a commitment to growth that many relationships lack.",
+    unbiased: "Conflict is normal and necessary in relationships. It's not the absence of disagreement that makes relationships strong—it's the ability to work through differences with care, respect, and genuine curiosity about each other's experience.",
+    tryThis: "Focus on one thing you appreciated about how your partner showed up in this conversation, even if it was hard. Then share one thing you'd like to try differently next time. Small acknowledgments and commitments can rebuild connection quickly."
   }
 };
