@@ -11,13 +11,13 @@ const OnboardingScreen = () => {
     // Start the animation after component mounts
     const timer = setTimeout(() => {
       setAnimationComplete(true);
-    }, 1500); // Reduced to 1.5 seconds for logo fade-in
+    }, 1000); // Reduced to 1 second for logo fade-in
 
     return () => clearTimeout(timer);
   }, []);
 
   const handleGetStarted = () => {
-    navigate('/onboarding');
+    navigate('/auth');
   };
 
   return (
