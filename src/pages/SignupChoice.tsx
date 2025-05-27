@@ -24,23 +24,23 @@ const SignupChoice = () => {
             Let's personalize your experience.
           </h2>
           
-          <p className="text-lg text-[#2e4059]/80 mb-8">
+          <p className="text-base text-[#2e4059]/80 mb-8">
             Are you here to work on things solo, or do you want to invite your partner to join you?
           </p>
           
-          <div className="space-y-4 max-w-sm mx-auto">
+          <div className="space-y-3 max-w-xs mx-auto">
             <Button
               onClick={handleSoloChoice}
               variant="outline"
               size="lg"
-              className="w-full h-auto p-4 bg-[#f1eae8] border-2 border-[#e5c7c1] hover:border-[#2e4059]/40 hover:bg-[#e5c7c1] hover:scale-105 text-[#2e4059] transition-all duration-200 shadow-sm hover:shadow-md"
+              className="w-full h-auto p-3 bg-[#f1eae8] border-2 border-[#e5c7c1] hover:border-[#2e4059]/40 hover:bg-[#e5c7c1] hover:scale-105 text-[#2e4059] transition-all duration-200 shadow-sm hover:shadow-md"
             >
-              <div className="flex flex-col items-center gap-3 text-center">
+              <div className="flex flex-col items-center gap-2 text-center">
                 <div className="flex items-center gap-2">
-                  <User className="w-5 h-5" />
-                  <span className="text-lg font-medium">I'm starting this on my own</span>
+                  <User className="w-4 h-4" />
+                  <span className="text-base font-medium">I'm starting this on my own</span>
                 </div>
-                <p className="text-sm text-[#2e4059]/70 font-normal">
+                <p className="text-xs text-[#2e4059]/70 font-normal">
                   Sometimes the best changes start with just one person.
                 </p>
               </div>
@@ -50,14 +50,14 @@ const SignupChoice = () => {
               onClick={handlePartnerChoice}
               variant="outline"
               size="lg"
-              className="w-full h-auto p-4 bg-[#f1eae8] border-2 border-[#e5c7c1] hover:border-[#2e4059]/40 hover:bg-[#e5c7c1] hover:scale-105 text-[#2e4059] transition-all duration-200 shadow-sm hover:shadow-md"
+              className="w-full h-auto p-3 bg-[#f1eae8] border-2 border-[#e5c7c1] hover:border-[#2e4059]/40 hover:bg-[#e5c7c1] hover:scale-105 text-[#2e4059] transition-all duration-200 shadow-sm hover:shadow-md"
             >
-              <div className="flex flex-col items-center gap-3 text-center">
+              <div className="flex flex-col items-center gap-2 text-center">
                 <div className="flex items-center gap-2">
-                  <Heart className="w-5 h-5" />
-                  <span className="text-lg font-medium">I'm doing this with my partner</span>
+                  <Heart className="w-4 h-4" />
+                  <span className="text-base font-medium">I'm doing this with my partner</span>
                 </div>
-                <p className="text-sm text-[#2e4059]/70 font-normal">
+                <p className="text-xs text-[#2e4059]/70 font-normal">
                   We're in this together.
                 </p>
               </div>
