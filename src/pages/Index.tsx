@@ -21,13 +21,14 @@ const Index = () => {
     <div className="min-h-screen flex flex-col bg-soft-cream">
       <Navbar />
       <main className="flex-1">
+        <Hero />
+        
         <BrandSection className="py-8 md:py-12" showLogo={false}>
           <ContentContainer>
             <HomeLanding />
           </ContentContainer>
         </BrandSection>
         
-        <Hero />
         <StillUsSection />
         <ConflictStages />
         <WhyItMattersSection />
