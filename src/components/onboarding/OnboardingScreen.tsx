@@ -1,11 +1,11 @@
 
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { useOnboarding } from '@/hooks/onboarding/useOnboarding';
+import { useNavigate } from 'react-router-dom';
 
 const OnboardingScreen = () => {
   const [animationComplete, setAnimationComplete] = useState(false);
-  const { handleNextStep } = useOnboarding();
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Start the animation after component mounts
@@ -15,6 +15,10 @@ const OnboardingScreen = () => {
 
     return () => clearTimeout(timer);
   }, []);
+
+  const handleGetStarted = () => {
+    navigate('/auth');
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#dbd0e0] via-[#f5f1e8] to-[#e6c7bc] flex flex-col items-center justify-center px-4">
@@ -85,7 +89,7 @@ const OnboardingScreen = () => {
         </p>
         
         <Button 
-          onClick={handleNextStep}
+          onClick={handleGetStarted}
           size="lg"
           className="bg-[#2e4059] hover:bg-[#2e4059]/90 text-white font-medium px-8 py-4 text-lg rounded-lg shadow-sm transition-all duration-200 hover:shadow-md"
         >
