@@ -1,14 +1,13 @@
 
-import React from 'react';
-import { Button } from '@/components/ui/button';
+import React, { useState } from 'react';
 import { RotateCw, Flag } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import WhiteFlagModal from './steps/summary/components/WhiteFlagModal';
 
 const OkayButNowWhat: React.FC = () => {
-  const navigate = useNavigate();
+  const [isWhiteFlagModalOpen, setIsWhiteFlagModalOpen] = useState(false);
 
-  const handleNavigateToWhiteFlag = () => {
-    navigate('/white-flag');
+  const handleWhiteFlagClick = () => {
+    setIsWhiteFlagModalOpen(true);
   };
 
   return (
@@ -52,7 +51,7 @@ const OkayButNowWhat: React.FC = () => {
           {/* White Flag Tool */}
           <div 
             className="bg-white rounded-lg border shadow-sm relative overflow-hidden cursor-pointer hover:shadow-md transition-shadow"
-            onClick={handleNavigateToWhiteFlag}
+            onClick={handleWhiteFlagClick}
           >
             <div className="flex flex-col items-center text-center p-4">
               <div className="bg-[#FDF0E9] p-3 rounded-full mb-4">
@@ -66,6 +65,12 @@ const OkayButNowWhat: React.FC = () => {
           </div>
         </div>
       </div>
+      
+      {/* White Flag Modal */}
+      <WhiteFlagModal 
+        isOpen={isWhiteFlagModalOpen} 
+        onClose={() => setIsWhiteFlagModalOpen(false)} 
+      />
     </section>
   );
 };
