@@ -14,6 +14,12 @@ import CommunicationSubcategories from "@/pages/CommunicationSubcategories";
 import HouseholdSubcategoryDetails from "@/pages/HouseholdSubcategoryDetails";
 import MoneySubcategoryDetails from "@/pages/MoneySubcategoryDetails";
 import FeelingDismissedSubcategoryDetails from "@/pages/FeelingDismissedSubcategoryDetails";
+import InLawsSubcategoryDetails from "@/pages/InLawsSubcategoryDetails";
+import ParentingSubcategoryDetails from "@/pages/ParentingSubcategoryDetails";
+import IntimacySubcategoryDetails from "@/pages/IntimacySubcategoryDetails";
+import FeelingUnseenSubcategoryDetails from "@/pages/FeelingUnseenSubcategoryDetails";
+import BoundariesSubcategoryDetails from "@/pages/BoundariesSubcategoryDetails";
+import CommunicationSubcategoryDetails from "@/pages/CommunicationSubcategoryDetails";
 
 // This function returns an array of Route elements
 const BridgeTheGapRoutes = () => [
@@ -32,10 +38,16 @@ const BridgeTheGapRoutes = () => [
   <Route key="boundaries-subcategories" path="/boundaries-subcategories" element={<BoundariesSubcategories />} />,
   <Route key="communication-subcategories" path="/communication-subcategories" element={<CommunicationSubcategories />} />,
   
-  // Detail pages that are working
+  // All subcategory detail pages
   <Route key="household-subcategory-details" path="/bridge-the-gap/categories/household-duties/:subcategoryId" element={<HouseholdSubcategoryDetails />} />,
   <Route key="money-subcategory-details" path="/bridge-the-gap/categories/money/:subcategoryId" element={<MoneySubcategoryDetails />} />,
-  <Route key="feeling-dismissed-subcategory-details" path="/bridge-the-gap/categories/feeling-dismissed/:subcategoryId" element={<FeelingDismissedSubcategoryDetails />} />
+  <Route key="feeling-dismissed-subcategory-details" path="/bridge-the-gap/categories/feeling-dismissed/:subcategoryId" element={<FeelingDismissedSubcategoryDetails />} />,
+  <Route key="in-laws-subcategory-details" path="/bridge-the-gap/categories/in-laws/:subcategoryId" element={<InLawsSubcategoryDetails />} />,
+  <Route key="parenting-subcategory-details" path="/bridge-the-gap/categories/parenting/:subcategoryId" element={<ParentingSubcategoryDetails />} />,
+  <Route key="intimacy-subcategory-details" path="/bridge-the-gap/categories/intimacy/:subcategoryId" element={<IntimacySubcategoryDetails />} />,
+  <Route key="feeling-unseen-subcategory-details" path="/bridge-the-gap/categories/feeling-unseen/:subcategoryId" element={<FeelingUnseenSubcategoryDetails />} />,
+  <Route key="boundaries-subcategory-details" path="/bridge-the-gap/categories/boundaries/:subcategoryId" element={<BoundariesSubcategoryDetails />} />,
+  <Route key="communication-subcategory-details" path="/bridge-the-gap/categories/communication/:subcategoryId" element={<CommunicationSubcategoryDetails />} />
 ];
 
 export default BridgeTheGapRoutes;

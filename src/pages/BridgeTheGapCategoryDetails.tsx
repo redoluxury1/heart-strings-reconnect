@@ -66,7 +66,7 @@ const BridgeTheGapCategoryDetails: React.FC = () => {
             <Button 
               variant="ghost" 
               className="mb-6 flex items-center text-midnight-indigo"
-              onClick={() => navigate('/bridge-the-gap/categories')}
+              onClick={() => navigate('/bridge-the-gap')}
             >
               <ArrowLeft className="mr-2 h-4 w-4" /> Back to categories
             </Button>
@@ -91,7 +91,7 @@ const BridgeTheGapCategoryDetails: React.FC = () => {
                 <Button 
                   variant="outline" 
                   className="border-midnight-indigo text-midnight-indigo hover:bg-midnight-indigo/5"
-                  onClick={() => navigate('/bridge-the-gap/categories')}
+                  onClick={() => navigate('/bridge-the-gap')}
                 >
                   Try another category
                 </Button>
