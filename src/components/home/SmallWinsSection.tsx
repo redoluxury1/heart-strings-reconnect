@@ -1,9 +1,9 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import { MessageCircle, Lightbulb, Handshake, Flag, Heart, Calendar, Plus } from 'lucide-react';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import BrandSection from '@/components/common/BrandSection';
 import ContentContainer from '@/components/common/ContentContainer';
+import SubmitSmallWinDialog from './SubmitSmallWinDialog';
 
 const smallWinsData = [
   {
@@ -51,6 +51,12 @@ const smallWinsData = [
 ];
 
 const SmallWinsSection = () => {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const handleAddYoursClick = () => {
+    setIsDialogOpen(true);
+  };
+
   return (
     <BrandSection className="py-12 md:py-16" showLogo={false}>
       <ContentContainer>
@@ -83,7 +89,10 @@ const SmallWinsSection = () => {
               
               {/* Add Yours Button */}
               <CarouselItem className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
-                <div className="bg-white rounded-xl p-6 h-full border-2 border-dashed border-[#e5c7c1] hover:border-[#2e4059]/40 hover:shadow-md transition-all duration-200 cursor-pointer group">
+                <button
+                  onClick={handleAddYoursClick}
+                  className="bg-white rounded-xl p-6 h-full border-2 border-dashed border-[#e5c7c1] hover:border-[#2e4059]/40 hover:shadow-md transition-all duration-200 group w-full"
+                >
                   <div className="flex flex-col items-center text-center space-y-4">
                     <div className="w-12 h-12 rounded-full bg-[#e5c7c1] group-hover:bg-[#2e4059] flex items-center justify-center transition-colors duration-200">
                       <Plus className="w-6 h-6 text-[#2e4059] group-hover:text-white transition-colors duration-200" />
@@ -92,7 +101,7 @@ const SmallWinsSection = () => {
                       + Add Yours
                     </p>
                   </div>
-                </div>
+                </button>
               </CarouselItem>
             </CarouselContent>
             
@@ -113,6 +122,11 @@ const SmallWinsSection = () => {
           </p>
         </div>
       </ContentContainer>
+      
+      <SubmitSmallWinDialog 
+        open={isDialogOpen} 
+        onOpenChange={setIsDialogOpen} 
+      />
     </BrandSection>
   );
 };
