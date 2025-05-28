@@ -6,6 +6,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface SubmitSmallWinDialogProps {
   open: boolean;
@@ -16,6 +18,7 @@ const SubmitSmallWinDialog = ({ open, onOpenChange }: SubmitSmallWinDialogProps)
   const [smallWin, setSmallWin] = useState('');
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { user } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,13 +35,19 @@ const SubmitSmallWinDialog = ({ open, onOpenChange }: SubmitSmallWinDialogProps)
     setIsSubmitting(true);
 
     try {
-      // Since we don't have email sending set up yet, we'll simulate the submission
-      // and store it for now (this would normally go to your backend)
-      console.log('Small win submission:', {
-        smallWin: smallWin.trim(),
-        email: email.trim(),
-        timestamp: new Date().toISOString()
-      });
+      const { error } = await supabase
+        .from('small_wins_submissions')
+        .insert({
+          small_win: smallWin.trim(),
+          email: email.trim() || null,
+          user_id: user?.id || null,
+          status: 'pending'
+        });
+
+      if (error) {
+        console.error('Error submitting small win:', error);
+        throw error;
+      }
 
       toast({
         title: "Small win submitted!",

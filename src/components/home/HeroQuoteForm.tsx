@@ -3,7 +3,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { toast } from '@/components/ui/use-toast';
+import { toast } from '@/hooks/use-toast';
 import {
   Form,
   FormControl,
@@ -14,6 +14,8 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface HeroQuoteFormProps {
   onSubmitSuccess: () => void;
@@ -26,6 +28,7 @@ interface FormValues {
 }
 
 const HeroQuoteForm = ({ onSubmitSuccess }: HeroQuoteFormProps) => {
+  const { user } = useAuth();
   const form = useForm<FormValues>({
     defaultValues: {
       quote: 'Finally, an app ',
@@ -34,18 +37,37 @@ const HeroQuoteForm = ({ onSubmitSuccess }: HeroQuoteFormProps) => {
     }
   });
 
-  const onSubmit = (data: FormValues) => {
-    // Here you would typically send this data to your backend
-    console.log('Submitted quote:', data);
-    
-    // Show success message
-    toast({
-      title: "Quote submitted successfully!",
-      description: "We'll review your quote and it may be featured on our homepage.",
-      variant: "success"
-    });
-    
-    onSubmitSuccess();
+  const onSubmit = async (data: FormValues) => {
+    try {
+      const { error } = await supabase
+        .from('hero_quote_submissions')
+        .insert({
+          quote: data.quote,
+          author_name: data.name || null,
+          email: data.email || null,
+          user_id: user?.id || null,
+          status: 'pending'
+        });
+
+      if (error) {
+        console.error('Error submitting hero quote:', error);
+        throw error;
+      }
+
+      toast({
+        title: "Quote submitted successfully!",
+        description: "We'll review your quote and it may be featured on our homepage.",
+      });
+      
+      onSubmitSuccess();
+    } catch (error) {
+      console.error('Failed to submit quote:', error);
+      toast({
+        title: "Submission failed",
+        description: "Please try again later.",
+        variant: "destructive"
+      });
+    }
   };
 
   return (

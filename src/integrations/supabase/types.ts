@@ -221,6 +221,42 @@ export type Database = {
         }
         Relationships: []
       }
+      hero_quote_submissions: {
+        Row: {
+          author_name: string | null
+          created_at: string
+          email: string | null
+          id: string
+          published_at: string | null
+          quote: string
+          reviewed_at: string | null
+          status: string
+          user_id: string | null
+        }
+        Insert: {
+          author_name?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          published_at?: string | null
+          quote: string
+          reviewed_at?: string | null
+          status?: string
+          user_id?: string | null
+        }
+        Update: {
+          author_name?: string | null
+          created_at?: string
+          email?: string | null
+          id?: string
+          published_at?: string | null
+          quote?: string
+          reviewed_at?: string | null
+          status?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       journal_entries: {
         Row: {
           content: string
@@ -580,6 +616,39 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      small_wins_submissions: {
+        Row: {
+          created_at: string
+          email: string | null
+          id: string
+          published_at: string | null
+          reviewed_at: string | null
+          small_win: string
+          status: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          published_at?: string | null
+          reviewed_at?: string | null
+          small_win: string
+          status?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          published_at?: string | null
+          reviewed_at?: string | null
+          small_win?: string
+          status?: string
+          user_id?: string | null
+        }
+        Relationships: []
       }
       user_meta: {
         Row: {
