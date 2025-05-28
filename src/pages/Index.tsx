@@ -6,11 +6,7 @@ import Footer from '@/components/layout/Footer';
 import HomeLanding from '@/components/home/HomeLanding';
 import Hero from '@/components/home/Hero';
 import StillUsSection from '@/components/home/StillUsSection';
-import ConflictStages from '@/components/home/ConflictStages';
-import WhyItMattersSection from '@/components/home/WhyItMattersSection';
 import RelationshipStatsSection from '@/components/home/RelationshipStatsSection';
-import LoveCodeQuizSection from '@/components/home/LoveCodeQuizSection';
-import CallToAction from '@/components/home/CallToAction';
 import BrandSection from '@/components/common/BrandSection';
 import ContentContainer from '@/components/common/ContentContainer';
 
@@ -30,11 +26,7 @@ const Index = () => {
         </BrandSection>
         
         <StillUsSection />
-        <ConflictStages />
-        <WhyItMattersSection />
         <RelationshipStatsSection />
-        <LoveCodeQuizSection />
-        <CallToAction />
       </main>
       <Footer />
     </div>
