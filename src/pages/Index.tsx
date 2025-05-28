@@ -6,6 +6,7 @@ import Footer from '@/components/layout/Footer';
 import HomeLanding from '@/components/home/HomeLanding';
 import Hero from '@/components/home/Hero';
 import StillUsSection from '@/components/home/StillUsSection';
+import SmallWinsSection from '@/components/home/SmallWinsSection';
 import RelationshipStatsSection from '@/components/home/RelationshipStatsSection';
 import BrandSection from '@/components/common/BrandSection';
 import ContentContainer from '@/components/common/ContentContainer';
@@ -26,6 +27,7 @@ const Index = () => {
         </BrandSection>
         
         <StillUsSection />
+        <SmallWinsSection />
         <RelationshipStatsSection />
       </main>
       <Footer />
