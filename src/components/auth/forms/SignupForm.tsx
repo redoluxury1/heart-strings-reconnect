@@ -19,7 +19,6 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
   const [name, setName] = useState('');
   const [devMode, setDevMode] = useState(true); // Default to true for easier testing
   const [isLoading, setIsLoading] = useState(false);
-  const [accountCreated, setAccountCreated] = useState(false);
   
   const navigate = useNavigate();
   const { signUp, signIn } = useAuth();
@@ -49,8 +48,6 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
       
       console.log("Signup successful, data:", data);
       
-      setAccountCreated(true);
-      
       toast({
         title: "Account created successfully!",
         description: devMode 
@@ -60,31 +57,24 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
       
       if (devMode) {
         // In dev mode, automatically log the user in
-        setTimeout(async () => {
-          try {
-            console.log("Attempting auto-login for:", email);
-            const { error: loginError } = await signIn(email, password);
-            if (!loginError) {
-              console.log("Auto-login successful, redirecting to onboarding");
-              // Store the signup mode in localStorage for onboarding
-              if (signupMode) {
-                localStorage.setItem('signupMode', signupMode);
-              }
-              // Small delay to ensure auth state is updated
-              setTimeout(() => {
-                navigate('/onboarding');
-              }, 500);
-              return;
-            } else {
-              console.log("Auto login failed, redirecting to login page");
-            }
-          } catch (err) {
-            console.error("Error during auto-login:", err);
+        console.log("Attempting auto-login for:", email);
+        const { error: loginError } = await signIn(email, password);
+        if (!loginError) {
+          console.log("Auto-login successful, redirecting to onboarding");
+          // Store the signup mode in localStorage for onboarding
+          if (signupMode) {
+            localStorage.setItem('signupMode', signupMode);
           }
-          
-          // Fall back to redirecting to login page
-          navigate('/auth'); 
-        }, 1500);
+          // Navigate to onboarding
+          navigate('/onboarding');
+        } else {
+          console.log("Auto login failed, but account was created");
+          toast({
+            title: "Account created",
+            description: "Please log in with your new credentials.",
+          });
+          setIsLoading(false);
+        }
       } else {
         // Redirect to login page after successful signup
         setTimeout(() => {
@@ -145,24 +135,15 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
       
       <Button 
         type="submit" 
-        disabled={isLoading || accountCreated}
+        disabled={isLoading}
         className="w-full rounded-full bg-[#2e4059] hover:bg-[#2e4059]/90 text-white"
       >
-        {isLoading 
-          ? "Creating Account..." 
-          : (accountCreated ? "Account Created!" : "Sign Up")
-        }
+        {isLoading ? "Creating Account..." : "Sign Up"}
       </Button>
       
       <p className="text-center text-xs text-[#1E2A38]/60 mt-4">
         We'll never share your email. Your story stays between you two.
       </p>
-      
-      {accountCreated && (
-        <p className="text-center text-sm text-[#1E2A38]/70 mt-4">
-          Account created successfully!{devMode ? " Taking you to setup..." : " Please log in with your credentials."}
-        </p>
-      )}
     </form>
   );
 };
