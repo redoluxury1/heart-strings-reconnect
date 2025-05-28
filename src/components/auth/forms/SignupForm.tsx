@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -56,25 +55,16 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
       });
       
       if (devMode) {
-        // In dev mode, automatically log the user in
-        console.log("Attempting auto-login for:", email);
-        const { error: loginError } = await signIn(email, password);
-        if (!loginError) {
-          console.log("Auto-login successful, redirecting to onboarding");
-          // Store the signup mode in localStorage for onboarding
-          if (signupMode) {
-            localStorage.setItem('signupMode', signupMode);
-          }
-          // Navigate to onboarding
-          navigate('/onboarding');
-        } else {
-          console.log("Auto login failed, but account was created");
-          toast({
-            title: "Account created",
-            description: "Please log in with your new credentials.",
-          });
-          setIsLoading(false);
+        // Store the signup mode in localStorage for onboarding
+        if (signupMode) {
+          localStorage.setItem('signupMode', signupMode);
         }
+        
+        // For testing purposes, proceed directly to onboarding
+        // This allows you to test the partner invite flow
+        console.log("Proceeding to onboarding for testing");
+        navigate('/onboarding');
+        return;
       } else {
         // Redirect to login page after successful signup
         setTimeout(() => {
