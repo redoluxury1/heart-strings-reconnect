@@ -9,32 +9,44 @@ const smallWinsData = [
   {
     id: 1,
     icon: MessageCircle,
-    text: "Talked it out instead of walking out"
+    text: "Talked it out instead of walking out",
+    iconBgColor: "bg-[#2e4059]", // Navy
+    iconColor: "text-white"
   },
   {
     id: 2,
     icon: Lightbulb,
-    text: "Learned something new about my partner"
+    text: "Learned something new about my partner",
+    iconBgColor: "bg-[#D36B4B]", // Terracotta
+    iconColor: "text-white"
   },
   {
     id: 3,
     icon: Handshake,
-    text: "Apologized and meant it"
+    text: "Apologized and meant it",
+    iconBgColor: "bg-[#8B9DC3]", // Lavender Blue
+    iconColor: "text-white"
   },
   {
     id: 4,
     icon: Flag,
-    text: "Paused mid-fight using the White Flag"
+    text: "Paused mid-fight using the White Flag",
+    iconBgColor: "bg-[#C7747F]", // Rosewood
+    iconColor: "text-white"
   },
   {
     id: 5,
     icon: Heart,
-    text: "Said \"I love you\" after a tough conversation"
+    text: "Said \"I love you\" after a tough conversation",
+    iconBgColor: "bg-[#2e4059]", // Navy
+    iconColor: "text-white"
   },
   {
     id: 6,
     icon: Calendar,
-    text: "Scheduled a check-in, not just a date night"
+    text: "Scheduled a check-in, not just a date night",
+    iconBgColor: "bg-[#D36B4B]", // Terracotta
+    iconColor: "text-white"
   }
 ];
 
@@ -44,7 +56,7 @@ const SmallWinsSection = () => {
       <ContentContainer>
         <div className="text-center mb-8">
           <h2 className="font-cormorant text-3xl md:text-4xl font-medium text-[#2e4059] mb-4">
-            Small Wins. Big Difference.
+            Small Wins.
           </h2>
         </div>
         
@@ -57,8 +69,8 @@ const SmallWinsSection = () => {
                   <CarouselItem key={item.id} className="pl-2 md:pl-4 basis-full sm:basis-1/2 lg:basis-1/3">
                     <div className="bg-[#f1eae8] rounded-xl p-6 h-full border border-[#e5c7c1] hover:shadow-md transition-shadow duration-200">
                       <div className="flex flex-col items-center text-center space-y-4">
-                        <div className="w-12 h-12 rounded-full bg-[#2e4059] flex items-center justify-center">
-                          <IconComponent className="w-6 h-6 text-white" />
+                        <div className={`w-12 h-12 rounded-full ${item.iconBgColor} flex items-center justify-center`}>
+                          <IconComponent className={`w-6 h-6 ${item.iconColor}`} />
                         </div>
                         <p className="text-[#2e4059] text-sm leading-relaxed font-medium">
                           {item.text}
@@ -87,6 +99,18 @@ const SmallWinsSection = () => {
             <CarouselPrevious className="hidden md:flex -left-12 border-[#e5c7c1] hover:bg-[#f1eae8] hover:border-[#2e4059]/40" />
             <CarouselNext className="hidden md:flex -right-12 border-[#e5c7c1] hover:bg-[#f1eae8] hover:border-[#2e4059]/40" />
           </Carousel>
+          
+          {/* Scroll indicator dots */}
+          <div className="flex justify-center mt-6 space-x-2 md:hidden">
+            <div className="w-2 h-2 rounded-full bg-[#2e4059]/30"></div>
+            <div className="w-2 h-2 rounded-full bg-[#2e4059]/60"></div>
+            <div className="w-2 h-2 rounded-full bg-[#2e4059]/30"></div>
+          </div>
+          
+          {/* Swipe hint for mobile */}
+          <p className="text-center text-xs text-[#2e4059]/50 mt-3 md:hidden">
+            Swipe to see more
+          </p>
         </div>
       </ContentContainer>
     </BrandSection>
