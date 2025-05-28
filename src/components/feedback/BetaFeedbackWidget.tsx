@@ -187,7 +187,7 @@ const BetaFeedbackWidget: React.FC = () => {
         </form>
 
         <p className="text-xs text-gray-500 mt-3">
-          Help us improve Bridge by sharing your feedback!
+          Help us improve Bridge for Couples by sharing your feedback!
         </p>
       </div>
     </div>
