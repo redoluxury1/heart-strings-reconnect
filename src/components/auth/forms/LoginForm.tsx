@@ -7,6 +7,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { EmailField, PasswordField } from './FormFields';
 import { useDevModeLogin } from '../hooks/useDevModeLogin';
 import { Link } from 'react-router-dom';
+import { resendVerificationEmail } from '@/services/emailVerification';
 
 export const LoginForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -17,6 +18,39 @@ export const LoginForm: React.FC = () => {
   const navigate = useNavigate();
   const { signIn } = useAuth();
   const { attemptDevModeLogin } = useDevModeLogin();
+
+  const handleResendVerification = async () => {
+    if (!email) {
+      toast({
+        title: "Email required",
+        description: "Please enter your email address first.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    try {
+      const sent = await resendVerificationEmail(email);
+      if (sent) {
+        toast({
+          title: "Verification email sent",
+          description: "Please check your email for a new verification link."
+        });
+      } else {
+        toast({
+          title: "Failed to resend email",
+          description: "Please try again or contact support.",
+          variant: "destructive"
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to send verification email. Please try again.",
+        variant: "destructive"
+      });
+    }
+  };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,10 +68,9 @@ export const LoginForm: React.FC = () => {
     setLoginAttempts(prev => prev + 1);
     
     try {
-      console.log("Attempting to sign in with:", email);
-      
-      // For debugging purposes - log the attempt number
-      console.log(`Login attempt #${loginAttempts + 1} for user ${email}`);
+      console.log("=== ATTEMPTING LOGIN ===");
+      console.log("Email:", email);
+      console.log(`Login attempt #${loginAttempts + 1}`);
       
       const { error } = await signIn(email, password);
       
@@ -49,7 +82,33 @@ export const LoginForm: React.FC = () => {
           toast({
             title: "Login failed",
             description: "That email or password doesn't match our records. Please double-check and try again.",
-            variant: "destructive"
+            variant: "destructive",
+            action: (
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={handleResendVerification}
+                className="mt-2"
+              >
+                Resend Verification
+              </Button>
+            )
+          });
+        } else if (error.message.includes("email not confirmed")) {
+          toast({
+            title: "Email not verified",
+            description: "Please check your email and click the verification link before logging in.",
+            variant: "destructive",
+            action: (
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={handleResendVerification}
+                className="mt-2"
+              >
+                Resend Verification
+              </Button>
+            )
           });
         } else {
           toast({
@@ -63,6 +122,7 @@ export const LoginForm: React.FC = () => {
         return;
       }
       
+      console.log("Login successful");
       toast({
         title: "Welcome back!",
         description: "You've been successfully logged in."
@@ -93,8 +153,15 @@ export const LoginForm: React.FC = () => {
         onChange={(e) => setPassword(e.target.value)}
       />
       
-      <div className="flex justify-end">
-        <Link to="/auth?tab=reset" className="text-sm text-[#C7747F] hover:text-[#B56470]">
+      <div className="flex justify-between items-center text-sm">
+        <button
+          type="button"
+          onClick={handleResendVerification}
+          className="text-[#C7747F] hover:text-[#B56470] underline"
+        >
+          Resend verification email
+        </button>
+        <Link to="/auth?tab=reset" className="text-[#C7747F] hover:text-[#B56470]">
           Forgot password?
         </Link>
       </div>

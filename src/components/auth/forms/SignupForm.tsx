@@ -39,7 +39,10 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
     setIsLoading(true);
     
     try {
-      console.log("Starting signup process - Dev Mode:", devMode);
+      console.log("=== STARTING SIGNUP PROCESS ===");
+      console.log("Dev Mode:", devMode);
+      console.log("Email:", email);
+      console.log("Name:", name);
       
       // Create the account first
       const { error: signupError, data: signupData } = await signUp(email, password, name);
@@ -65,6 +68,14 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
               
               navigate('/onboarding');
               return;
+            } else {
+              console.error("Dev mode login failed:", signinError);
+              toast({
+                title: "Account exists but login failed",
+                description: "This email is already registered, but we couldn't log you in. Please try the login form instead.",
+                variant: "destructive"
+              });
+              return;
             }
           }
           
@@ -76,10 +87,20 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
           return;
         }
         
-        throw signupError;
+        // Handle other signup errors
+        toast({
+          title: "Signup failed",
+          description: signupError.message || "There was a problem creating your account. Please try again.",
+          variant: "destructive"
+        });
+        return;
       }
 
-      console.log("Account created successfully:", signupData?.user?.id);
+      console.log("Account created successfully:", {
+        userId: signupData?.user?.id,
+        email: signupData?.user?.email,
+        needsConfirmation: !signupData?.session && signupData?.user && !signupData?.user?.email_confirmed_at
+      });
 
       if (devMode) {
         // In dev mode, try immediate login
@@ -99,7 +120,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
           navigate('/onboarding');
           return;
         } else {
-          console.log("Immediate login failed, proceeding with email verification");
+          console.log("Immediate login failed, proceeding with email verification:", loginError);
         }
       }
 
@@ -115,16 +136,20 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
           });
           navigate('/auth?message=check-email');
         } else {
+          console.error("Failed to send verification email");
           toast({
-            title: "Account created",
-            description: "Your account was created but we couldn't send the verification email. Please try logging in or contact support.",
+            title: "Account created but email failed",
+            description: "Your account was created but we couldn't send the verification email. Please contact support or try the 'Resend Email' option.",
             variant: "destructive"
           });
+          // Still navigate to the auth page so they can try to resend
+          navigate('/auth?message=email-failed');
         }
       } else {
+        console.error("No user ID returned from signup");
         toast({
-          title: "Account created",
-          description: "Please check your email for a verification link.",
+          title: "Account creation unclear",
+          description: "Please check your email for a verification link or try logging in.",
         });
         navigate('/auth?message=check-email');
       }

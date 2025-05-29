@@ -11,12 +11,15 @@ const handler = async (req: Request): Promise<Response> => {
 
   try {
     console.log("=== VERIFY EMAIL FUNCTION STARTED ===");
+    console.log("Request method:", req.method);
+    console.log("Request headers:", Object.fromEntries(req.headers.entries()));
     
     const requestBody = await req.json();
     const { token } = requestBody;
     console.log("Received verification request:", { 
       hasToken: !!token,
-      tokenPreview: token?.substring(0, 10) + "..."
+      tokenLength: token?.length,
+      tokenPreview: token?.substring(0, 8) + "..."
     });
 
     if (!token) {
@@ -38,7 +41,11 @@ const handler = async (req: Request): Promise<Response> => {
       return createErrorResponse("Invalid or expired verification token. Please sign up again.", 400, "signup_again");
     }
 
-    console.log("Token found for user:", tokenData.user_id);
+    console.log("Token found for user:", {
+      userId: tokenData.user_id,
+      expiresAt: tokenData.expires_at,
+      used: tokenData.used
+    });
     
     // Validate the token (check expiry and usage)
     const validationResult = validateToken(tokenData);
@@ -65,6 +72,8 @@ const handler = async (req: Request): Promise<Response> => {
     const markUsedError = await markTokenAsUsed(token);
     if (markUsedError) {
       console.error("Failed to mark token as used:", markUsedError);
+    } else {
+      console.log("Token marked as used successfully");
     }
 
     if (confirmationResult.success) {
@@ -72,12 +81,14 @@ const handler = async (req: Request): Promise<Response> => {
       return createResponse(confirmationResult, 200);
     } else {
       console.error("=== EMAIL VERIFICATION FAILED ===");
+      console.error("Failure reason:", confirmationResult.error);
       return createResponse(confirmationResult, 400);
     }
 
   } catch (error: any) {
     console.error("=== VERIFY EMAIL FUNCTION ERROR ===");
-    console.error("Error details:", error);
+    console.error("Error type:", error.constructor.name);
+    console.error("Error message:", error.message);
     console.error("Error stack:", error.stack);
     return createErrorResponse("An unexpected error occurred during verification. Please try again.", 500);
   }
