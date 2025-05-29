@@ -12,12 +12,24 @@ export const sendVerificationEmail = async (email: string, name?: string, userId
     // Use provided userId or try to get current user
     let targetUserId = userId;
     if (!targetUserId) {
+      // Try to get user by email if no userId provided
       const { data: { user } } = await supabase.auth.getUser();
+      console.log("Current user from getUser:", user?.id);
+      
       if (!user) {
-        console.error("No user found and no userId provided");
-        return false; // Don't throw error, just return false
+        // If still no user, try to get from session
+        const { data: { session } } = await supabase.auth.getSession();
+        console.log("Current session user:", session?.user?.id);
+        
+        if (session?.user) {
+          targetUserId = session.user.id;
+        } else {
+          console.error("No user found and no userId provided");
+          return false;
+        }
+      } else {
+        targetUserId = user.id;
       }
-      targetUserId = user.id;
     }
 
     console.log("Using user ID:", targetUserId);
@@ -37,7 +49,7 @@ export const sendVerificationEmail = async (email: string, name?: string, userId
 
     if (error) {
       console.error("Edge function error:", error);
-      return false; // Don't throw, just return false
+      return false;
     }
 
     if (data && data.success) {
@@ -49,7 +61,7 @@ export const sendVerificationEmail = async (email: string, name?: string, userId
     }
   } catch (error) {
     console.error('Error sending verification email:', error);
-    return false; // Never throw, always return boolean
+    return false;
   }
 };
 

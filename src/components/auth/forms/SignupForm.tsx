@@ -45,7 +45,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
         console.log("Development mode - attempting direct signup and login");
         
         // In dev mode, try to create account and immediately sign in
-        const { error: signupError } = await signUp(email, password, name);
+        const { error: signupError, data: signupData } = await signUp(email, password, name);
         
         if (signupError) {
           if (signupError.message.includes("User already registered")) {
@@ -90,7 +90,27 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
           navigate('/onboarding');
           return;
         } else {
-          console.log("Immediate login failed, will send verification email");
+          console.log("Immediate login failed, will send verification email with user ID:", signupData?.user?.id);
+          
+          // Send verification email with the user ID from signup
+          if (signupData?.user?.id) {
+            const emailSent = await sendVerificationEmail(email, name, signupData.user.id);
+            
+            if (emailSent) {
+              toast({
+                title: "Account created!",
+                description: "Please check your email for a verification link to complete your registration."
+              });
+              navigate('/auth?message=check-email');
+            } else {
+              toast({
+                title: "Account created but email failed",
+                description: "Your account was created but we couldn't send the verification email. Please try logging in.",
+                variant: "destructive"
+              });
+            }
+            return;
+          }
         }
       } else {
         // Production mode - create account without auto-confirmation
@@ -110,10 +130,30 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
         }
         
         console.log("Account created successfully:", signupData?.user?.id);
+        
+        // Send verification email with the user ID from signup
+        if (signupData?.user?.id) {
+          const emailSent = await sendVerificationEmail(email, name, signupData.user.id);
+          
+          if (emailSent) {
+            toast({
+              title: "Account created successfully!",
+              description: "Please check your email for a verification link to complete your registration."
+            });
+            navigate('/auth?message=check-email');
+          } else {
+            toast({
+              title: "Account created but email failed",
+              description: "Your account was created but we couldn't send the verification email. Please try logging in.",
+              variant: "destructive"
+            });
+          }
+          return;
+        }
       }
       
-      // Send verification email (for both dev mode fallback and production mode)
-      console.log("Sending verification email...");
+      // Fallback - try to send verification email without user ID
+      console.log("Sending verification email as fallback...");
       const emailSent = await sendVerificationEmail(email, name);
       
       if (emailSent) {
@@ -121,8 +161,6 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
           title: "Account created successfully!",
           description: "Please check your email for a verification link to complete your registration."
         });
-        
-        // Redirect to a waiting page or show message
         navigate('/auth?message=check-email');
       } else {
         toast({
