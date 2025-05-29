@@ -1,5 +1,5 @@
 
-import { Routes } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import ScrollToTop from './ScrollToTop';
 import MainAppRoutes from '@/routes/MainAppRoutes';
 import AuthRoutes from '@/routes/AuthRoutes';
@@ -11,7 +11,7 @@ const AppContent = () => {
       <ScrollToTop />
       <Routes>
         {MainAppRoutes()}
-        {AuthRoutes()}
+        <Route path="/auth/*" element={<AuthRoutes />} />
         {BridgeTheGapRoutes()}
       </Routes>
     </>
