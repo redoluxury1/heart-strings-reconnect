@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { toast } from "@/hooks/use-toast";
 import { useAuth } from '@/contexts/AuthContext';
 import { EmailField, PasswordField, NameField } from './FormFields';
+import { sendVerificationEmail } from '@/services/emailVerification';
 
 interface SignupFormProps {
   inviteToken?: string | null;
@@ -17,7 +18,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
-  const [devMode, setDevMode] = useState(true); // Default to true for easier testing
+  const [devMode, setDevMode] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   
   const navigate = useNavigate();
@@ -40,7 +41,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
     try {
       console.log("Starting signup process for email:", email, "with devMode:", devMode);
       
-      // Create the account first
+      // Create the account (without auto-confirmation)
       const { error: signupError, data: signupData } = await signUp(email, password, name);
       
       if (signupError) {
@@ -54,7 +55,6 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
         console.log("Development mode enabled - attempting auto-confirmation and login");
         
         // In development mode, try to sign in immediately
-        // This simulates the email confirmation process
         const { error: signinError } = await signIn(email, password);
         
         if (!signinError) {
@@ -65,36 +65,33 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
             description: "Development mode: Auto-logged in. Taking you to setup..."
           });
           
-          // Store the signup mode in localStorage for onboarding
           if (signupMode) {
             localStorage.setItem('signupMode', signupMode);
           }
           
-          // Proceed directly to onboarding
           navigate('/onboarding');
           return;
         } else {
-          console.log("Auto-login failed, but account was created:", signinError);
-          
-          toast({
-            title: "Account created!",
-            description: "Development mode: Account created but auto-login failed. Please try logging in manually.",
-          });
-          
-          setIsLoading(false);
-          return;
+          console.log("Auto-login failed, falling back to email verification:", signinError);
         }
-      } else {
-        // Production mode - require email verification
+      }
+      
+      // Production mode or dev mode fallback - send custom verification email
+      console.log("Sending custom verification email...");
+      const emailSent = await sendVerificationEmail(email, name);
+      
+      if (emailSent) {
         toast({
           title: "Account created successfully!",
-          description: "Please check your email for a confirmation link before logging in."
+          description: "Please check your email for a verification link to complete your registration."
         });
         
-        // Redirect to login page after successful signup
+        // Show a message about checking email
         setTimeout(() => {
-          navigate('/auth'); // Redirect back to auth page to login
+          navigate('/auth?message=check-email');
         }, 2000);
+      } else {
+        throw new Error("Failed to send verification email");
       }
       
     } catch (error: any) {
@@ -102,13 +99,8 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
       console.error("Signup process failed:", error);
       let errorMessage = error.message || "There was a problem creating your account.";
       
-      // Provide more helpful message for common errors
       if (errorMessage.includes("User already registered")) {
         errorMessage = "This email is already registered. Please try logging in instead.";
-      } else if (errorMessage.includes("email not confirmed")) {
-        errorMessage = devMode 
-          ? "Account created but auto-confirmation failed. Please check your email or try logging in."
-          : "Please check your email and click the confirmation link before logging in.";
       }
       
       toast({
@@ -148,7 +140,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
           htmlFor={inviteToken ? "dev-mode-partner" : "dev-mode"} 
           className="text-sm text-[#1E2A38]/70"
         >
-          Development Mode (Auto-confirm account and login)
+          Development Mode (Skip email verification)
         </Label>
       </div>
       

@@ -1,16 +1,16 @@
 
-import { Route } from "react-router-dom";
-import Auth from "@/pages/Auth";
-import Terms from "@/pages/Terms";
-import Privacy from "@/pages/Privacy";
-import PartnerInvite from "@/pages/PartnerInvite";
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Auth from '@/pages/Auth';
+import EmailVerification from '@/pages/EmailVerification';
 
-// This function returns an array of Route elements
-const AuthRoutes = () => [
-  <Route key="auth" path="/auth" element={<Auth />} />,
-  <Route key="partner-invite" path="/partner-invite" element={<PartnerInvite />} />,
-  <Route key="terms" path="/terms" element={<Terms />} />,
-  <Route key="privacy" path="/privacy" element={<Privacy />} />
-];
+const AuthRoutes: React.FC = () => {
+  return (
+    <Routes>
+      <Route path="/auth" element={<Auth />} />
+      <Route path="/auth/verify" element={<EmailVerification />} />
+    </Routes>
+  );
+};
 
 export default AuthRoutes;
