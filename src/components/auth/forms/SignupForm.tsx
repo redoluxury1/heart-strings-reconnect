@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -40,28 +41,46 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
     try {
       console.log("Starting signup process for email:", email, "with devMode:", devMode);
       
-      // Create the account (without auto-confirmation)
-      const { error: signupError, data: signupData } = await signUp(email, password, name);
-      
-      if (signupError) {
-        console.error("Signup error:", signupError);
-        throw signupError;
-      }
-      
-      console.log("Signup successful, data:", signupData);
-      
       if (devMode) {
-        console.log("Development mode enabled - attempting auto-confirmation and login");
+        console.log("Development mode - attempting direct signup and login");
         
-        // In development mode, try to sign in immediately
-        const { error: signinError } = await signIn(email, password);
+        // In dev mode, try to create account and immediately sign in
+        const { error: signupError } = await signUp(email, password, name);
         
-        if (!signinError) {
-          console.log("Auto-login successful in dev mode");
-          
+        if (signupError) {
+          if (signupError.message.includes("User already registered")) {
+            // User exists, try to sign them in directly
+            console.log("User already exists, attempting login...");
+            const { error: signinError } = await signIn(email, password);
+            
+            if (!signinError) {
+              toast({
+                title: "Welcome back!",
+                description: "You were already registered. Logged you in successfully."
+              });
+              
+              if (signupMode) {
+                localStorage.setItem('signupMode', signupMode);
+              }
+              
+              navigate('/onboarding');
+              return;
+            } else {
+              throw new Error("Account exists but login failed. Please try logging in instead.");
+            }
+          } else {
+            throw signupError;
+          }
+        }
+        
+        // Try immediate login after signup
+        console.log("Account created, attempting immediate login...");
+        const { error: loginError } = await signIn(email, password);
+        
+        if (!loginError) {
           toast({
             title: "Account created successfully!",
-            description: "Development mode: Auto-logged in. Taking you to setup..."
+            description: "Development mode: You're now logged in!"
           });
           
           if (signupMode) {
@@ -71,13 +90,31 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
           navigate('/onboarding');
           return;
         } else {
-          console.log("Auto-login failed, falling back to email verification:", signinError);
+          console.log("Immediate login failed, will send verification email");
         }
+      } else {
+        // Production mode - create account without auto-confirmation
+        console.log("Production mode - creating account and sending verification email");
+        const { error: signupError, data: signupData } = await signUp(email, password, name);
+        
+        if (signupError) {
+          if (signupError.message.includes("User already registered")) {
+            toast({
+              title: "Account already exists",
+              description: "This email is already registered. Please try logging in instead.",
+              variant: "destructive"
+            });
+            return;
+          }
+          throw signupError;
+        }
+        
+        console.log("Account created successfully:", signupData?.user?.id);
       }
       
-      // Production mode or dev mode fallback - send custom verification email
-      console.log("Sending custom verification email...");
-      const emailSent = await sendVerificationEmail(email, name, signupData?.user?.id);
+      // Send verification email (for both dev mode fallback and production mode)
+      console.log("Sending verification email...");
+      const emailSent = await sendVerificationEmail(email, name);
       
       if (emailSent) {
         toast({
@@ -85,14 +122,12 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
           description: "Please check your email for a verification link to complete your registration."
         });
         
-        // Show a message about checking email
-        setTimeout(() => {
-          navigate('/auth?message=check-email');
-        }, 2000);
+        // Redirect to a waiting page or show message
+        navigate('/auth?message=check-email');
       } else {
         toast({
           title: "Account created but email failed",
-          description: "Your account was created but we couldn't send the verification email. Please try logging in or contact support.",
+          description: "Your account was created but we couldn't send the verification email. Please try logging in.",
           variant: "destructive"
         });
       }
@@ -100,10 +135,6 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
     } catch (error: any) {
       console.error("Signup process failed:", error);
       let errorMessage = error.message || "There was a problem creating your account.";
-      
-      if (errorMessage.includes("User already registered")) {
-        errorMessage = "This email is already registered. Please try logging in instead.";
-      }
       
       toast({
         title: "Signup failed",

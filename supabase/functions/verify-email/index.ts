@@ -25,7 +25,10 @@ const handler = async (req: Request): Promise<Response> => {
     if (!token) {
       console.error("No token provided");
       return new Response(
-        JSON.stringify({ error: "Verification token is required" }),
+        JSON.stringify({ 
+          success: false,
+          error: "Verification token is required" 
+        }),
         {
           status: 400,
           headers: { "Content-Type": "application/json", ...corsHeaders },
@@ -36,19 +39,52 @@ const handler = async (req: Request): Promise<Response> => {
     // Get the user from the verification token
     const { data: tokenData, error: tokenError } = await supabaseClient
       .from('email_verification_tokens')
-      .select('user_id, expires_at')
+      .select('user_id, expires_at, used')
       .eq('token', token)
-      .eq('used', false)
-      .single();
+      .maybeSingle(); // Use maybeSingle to avoid errors when no data found
 
     console.log("Token lookup result:", { tokenData, tokenError });
 
-    if (tokenError || !tokenData) {
-      console.error("Invalid token or token lookup failed:", tokenError);
+    if (tokenError) {
+      console.error("Error looking up token:", tokenError);
       return new Response(
-        JSON.stringify({ error: "Invalid or expired verification token" }),
+        JSON.stringify({ 
+          success: false,
+          error: "Database error occurred" 
+        }),
+        {
+          status: 500,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
+    }
+
+    if (!tokenData) {
+      console.error("Token not found in database");
+      return new Response(
+        JSON.stringify({ 
+          success: false,
+          error: "Invalid verification token",
+          action: "signup_again"
+        }),
         {
           status: 400,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
+    }
+
+    // Check if token is already used
+    if (tokenData.used) {
+      console.log("Token already used");
+      return new Response(
+        JSON.stringify({ 
+          success: true,
+          message: "Email already verified. You can now log in.",
+          action: "already_verified"
+        }),
+        {
+          status: 200,
           headers: { "Content-Type": "application/json", ...corsHeaders },
         }
       );
@@ -57,8 +93,19 @@ const handler = async (req: Request): Promise<Response> => {
     // Check if token is expired
     if (new Date(tokenData.expires_at) < new Date()) {
       console.error("Token expired:", tokenData.expires_at);
+      
+      // Mark token as used since it's expired
+      await supabaseClient
+        .from('email_verification_tokens')
+        .update({ used: true })
+        .eq('token', token);
+      
       return new Response(
-        JSON.stringify({ error: "Verification token has expired" }),
+        JSON.stringify({ 
+          success: false,
+          error: "Verification token has expired. Please request a new one.",
+          action: "signup_again"
+        }),
         {
           status: 400,
           headers: { "Content-Type": "application/json", ...corsHeaders },
@@ -84,7 +131,8 @@ const handler = async (req: Request): Promise<Response> => {
       
       return new Response(
         JSON.stringify({ 
-          error: "Your account verification link is valid, but we couldn't find your account in our system. This can happen if there was an issue during signup. Please try signing up again.",
+          success: false,
+          error: "Your verification link is valid, but we couldn't find your account. Please try signing up again.",
           action: "signup_again"
         }),
         {
@@ -94,7 +142,7 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    // If user exists but is already confirmed, that's okay - just mark token as used
+    // If user exists but is already confirmed, that's okay
     if (userData.user.email_confirmed_at) {
       console.log("User email already confirmed");
       
@@ -126,7 +174,10 @@ const handler = async (req: Request): Promise<Response> => {
     if (updateError) {
       console.error("Error confirming user email:", updateError);
       return new Response(
-        JSON.stringify({ error: "Failed to verify email. Please try again or contact support." }),
+        JSON.stringify({ 
+          success: false,
+          error: "Failed to verify email. Please try again or contact support." 
+        }),
         {
           status: 500,
           headers: { "Content-Type": "application/json", ...corsHeaders },
@@ -150,7 +201,7 @@ const handler = async (req: Request): Promise<Response> => {
     return new Response(
       JSON.stringify({ 
         success: true, 
-        message: "Email verified successfully! You can now log in with your email and password.",
+        message: "Email verified successfully! You can now log in.",
         action: "verified"
       }),
       {
@@ -162,8 +213,8 @@ const handler = async (req: Request): Promise<Response> => {
     console.error("Error in verify-email function:", error);
     return new Response(
       JSON.stringify({ 
-        error: "An unexpected error occurred during verification. Please try again or contact support.",
-        details: error.message 
+        success: false,
+        error: "An unexpected error occurred. Please try again or contact support."
       }),
       {
         status: 500,
