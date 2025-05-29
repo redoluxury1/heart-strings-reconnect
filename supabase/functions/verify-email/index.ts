@@ -68,30 +68,6 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log("Attempting to confirm user email for user:", tokenData.user_id);
 
-    // Get the user first to check if they exist
-    const { data: userData, error: userFetchError } = await supabaseClient.auth.admin.getUserById(tokenData.user_id);
-    
-    if (userFetchError || !userData.user) {
-      console.error("User not found:", userFetchError);
-      // If user doesn't exist in auth, let's still mark the token as used and return success
-      // This handles cases where the user was created but auth state is inconsistent
-      await supabaseClient
-        .from('email_verification_tokens')
-        .update({ used: true })
-        .eq('token', token);
-        
-      return new Response(
-        JSON.stringify({ success: true, message: "Email verification completed" }),
-        {
-          status: 200,
-          headers: {
-            "Content-Type": "application/json",
-            ...corsHeaders,
-          },
-        }
-      );
-    }
-
     // Mark user as email confirmed
     const { error: updateError } = await supabaseClient.auth.admin.updateUserById(
       tokenData.user_id,
