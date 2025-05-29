@@ -72,7 +72,9 @@ const handler = async (req: Request): Promise<Response> => {
       console.log("Verification token stored successfully with service role");
     }
 
-    const verificationUrl = `${req.headers.get("origin")}/auth/verify?token=${token}`;
+    // Get the correct origin from the request or use a fallback
+    const origin = req.headers.get("origin") || req.headers.get("referer")?.split('/').slice(0, 3).join('/') || "https://your-app.com";
+    const verificationUrl = `${origin}/auth/verify?token=${token}`;
     console.log("Verification URL:", verificationUrl);
 
     const emailResponse = await resend.emails.send({

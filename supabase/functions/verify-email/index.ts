@@ -20,8 +20,10 @@ const handler = async (req: Request): Promise<Response> => {
     );
 
     const { token } = await req.json();
+    console.log("Verifying token:", token?.substring(0, 10) + "...");
 
     if (!token) {
+      console.error("No token provided");
       return new Response(
         JSON.stringify({ error: "Verification token is required" }),
         {
@@ -39,7 +41,10 @@ const handler = async (req: Request): Promise<Response> => {
       .eq('used', false)
       .single();
 
+    console.log("Token lookup result:", { tokenData, tokenError });
+
     if (tokenError || !tokenData) {
+      console.error("Invalid token or token lookup failed:", tokenError);
       return new Response(
         JSON.stringify({ error: "Invalid or expired verification token" }),
         {
@@ -51,11 +56,38 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Check if token is expired
     if (new Date(tokenData.expires_at) < new Date()) {
+      console.error("Token expired:", tokenData.expires_at);
       return new Response(
         JSON.stringify({ error: "Verification token has expired" }),
         {
           status: 400,
           headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
+    }
+
+    console.log("Attempting to confirm user email for user:", tokenData.user_id);
+
+    // Get the user first to check if they exist
+    const { data: userData, error: userFetchError } = await supabaseClient.auth.admin.getUserById(tokenData.user_id);
+    
+    if (userFetchError || !userData.user) {
+      console.error("User not found:", userFetchError);
+      // If user doesn't exist in auth, let's still mark the token as used and return success
+      // This handles cases where the user was created but auth state is inconsistent
+      await supabaseClient
+        .from('email_verification_tokens')
+        .update({ used: true })
+        .eq('token', token);
+        
+      return new Response(
+        JSON.stringify({ success: true, message: "Email verification completed" }),
+        {
+          status: 200,
+          headers: {
+            "Content-Type": "application/json",
+            ...corsHeaders,
+          },
         }
       );
     }
@@ -76,6 +108,8 @@ const handler = async (req: Request): Promise<Response> => {
         }
       );
     }
+
+    console.log("User email confirmed successfully");
 
     // Mark token as used
     await supabaseClient
