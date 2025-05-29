@@ -15,6 +15,8 @@ interface VerificationEmailRequest {
   email: string;
   token: string;
   name?: string;
+  userId?: string;
+  storeToken?: boolean;
 }
 
 const handler = async (req: Request): Promise<Response> => {
@@ -25,8 +27,8 @@ const handler = async (req: Request): Promise<Response> => {
   try {
     console.log("Starting send-verification-email function");
     
-    const { email, token, name }: VerificationEmailRequest = await req.json();
-    console.log("Received request for email:", email, "with token:", token?.substring(0, 10) + "...");
+    const { email, token, name, userId, storeToken }: VerificationEmailRequest = await req.json();
+    console.log("Received request for email:", email, "with token:", token?.substring(0, 10) + "...", "storeToken:", storeToken);
 
     if (!email || !token) {
       console.error("Missing email or token");
@@ -37,6 +39,37 @@ const handler = async (req: Request): Promise<Response> => {
           headers: { "Content-Type": "application/json", ...corsHeaders },
         }
       );
+    }
+
+    // If we need to store the token (because RLS blocked client-side insertion)
+    if (storeToken && userId) {
+      console.log("Storing verification token with service role for user:", userId);
+      
+      const supabaseAdmin = createClient(
+        Deno.env.get("SUPABASE_URL") ?? "",
+        Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
+      );
+
+      const { error: tokenError } = await supabaseAdmin
+        .from('email_verification_tokens')
+        .insert({
+          user_id: userId,
+          token,
+          expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()
+        });
+
+      if (tokenError) {
+        console.error("Error storing verification token with service role:", tokenError);
+        return new Response(
+          JSON.stringify({ error: "Failed to store verification token" }),
+          {
+            status: 500,
+            headers: { "Content-Type": "application/json", ...corsHeaders },
+          }
+        );
+      }
+
+      console.log("Verification token stored successfully with service role");
     }
 
     const verificationUrl = `${req.headers.get("origin")}/auth/verify?token=${token}`;
