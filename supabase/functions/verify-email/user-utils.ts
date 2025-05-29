@@ -51,11 +51,18 @@ export const confirmUserEmail = async (userId: string): Promise<VerificationResp
     };
   }
 
-  // Confirm the user's email using the admin API - this is the key fix
+  // Use the correct method to confirm user email
   console.log("Confirming user email via admin API...");
   const { data: updateData, error: updateError } = await supabaseClient.auth.admin.updateUserById(
     userId,
-    { email_confirm: true }
+    { 
+      email_confirm: true,
+      // Also ensure the user is marked as confirmed
+      app_metadata: {
+        ...userData.user.app_metadata,
+        email_confirmed: true
+      }
+    }
   );
 
   if (updateError) {
@@ -66,10 +73,24 @@ export const confirmUserEmail = async (userId: string): Promise<VerificationResp
     };
   }
 
-  console.log("User email confirmed successfully:", updateData?.user?.email_confirmed_at);
+  console.log("Update result:", updateData);
   
-  // Double-check that the confirmation worked
-  const { userData: verifiedUserData } = await getUserById(userId);
+  // Verify the confirmation worked by fetching the user again
+  const { userData: verifiedUserData, userFetchError: verifiedFetchError } = await getUserById(userId);
+  
+  if (verifiedFetchError) {
+    console.error("Error re-fetching user after confirmation:", verifiedFetchError);
+    return {
+      success: false,
+      error: "Email verification may have failed. Please try logging in or sign up again."
+    };
+  }
+
+  console.log("Final verification check:", {
+    emailConfirmedAt: verifiedUserData?.user?.email_confirmed_at,
+    userExists: !!verifiedUserData?.user
+  });
+  
   if (verifiedUserData?.user?.email_confirmed_at) {
     return {
       success: true,
@@ -77,10 +98,10 @@ export const confirmUserEmail = async (userId: string): Promise<VerificationResp
       action: "verified"
     };
   } else {
-    console.error("Email confirmation may have failed - user still not confirmed");
+    console.error("Email confirmation failed - user still not confirmed after update");
     return {
       success: false,
-      error: "Email verification may have failed. Please try logging in or sign up again."
+      error: "Email verification failed. Please try signing up again with the same email address."
     };
   }
 };
