@@ -25,13 +25,19 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    console.log("Starting send-verification-email function");
+    console.log("=== SEND VERIFICATION EMAIL FUNCTION STARTED ===");
     
     const { email, token, name, userId, storeToken }: VerificationEmailRequest = await req.json();
-    console.log("Received request for email:", email, "with token:", token?.substring(0, 10) + "...", "storeToken:", storeToken);
+    console.log("Request details:", {
+      email,
+      tokenPreview: token?.substring(0, 10) + "...",
+      name,
+      userId,
+      storeToken
+    });
 
     if (!email || !token) {
-      console.error("Missing email or token");
+      console.error("Missing required fields: email or token");
       return new Response(
         JSON.stringify({ error: "Email and token are required" }),
         {
@@ -41,33 +47,43 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    // If we need to store the token (because RLS blocked client-side insertion)
+    // Store the token if requested and userId is provided
     if (storeToken && userId) {
-      console.log("Storing verification token with service role for user:", userId);
+      console.log("Storing verification token for user:", userId);
       
       const supabaseAdmin = createClient(
         Deno.env.get("SUPABASE_URL") ?? "",
         Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
       );
 
-      // First, clean up any existing tokens for this user
-      await supabaseAdmin
+      // Clean up any existing tokens for this user
+      console.log("Cleaning up existing tokens...");
+      const { error: deleteError } = await supabaseAdmin
         .from('email_verification_tokens')
         .delete()
         .eq('user_id', userId);
 
+      if (deleteError) {
+        console.error("Error cleaning up tokens:", deleteError);
+      } else {
+        console.log("Existing tokens cleaned up successfully");
+      }
+
+      // Insert new token
+      console.log("Inserting new verification token...");
+      const expiryTime = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
       const { error: tokenError } = await supabaseAdmin
         .from('email_verification_tokens')
         .insert({
           user_id: userId,
           token,
-          expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()
+          expires_at: expiryTime
         });
 
       if (tokenError) {
-        console.error("Error storing verification token with service role:", tokenError);
+        console.error("Error storing verification token:", tokenError);
         return new Response(
-          JSON.stringify({ error: "Failed to store verification token" }),
+          JSON.stringify({ error: "Failed to store verification token", details: tokenError }),
           {
             status: 500,
             headers: { "Content-Type": "application/json", ...corsHeaders },
@@ -75,14 +91,28 @@ const handler = async (req: Request): Promise<Response> => {
         );
       }
 
-      console.log("Verification token stored successfully with service role");
+      console.log("Verification token stored successfully");
     }
 
-    // Get the correct origin from the request or use a fallback
+    // Get the correct origin for the verification URL
     const origin = req.headers.get("origin") || req.headers.get("referer")?.split('/').slice(0, 3).join('/') || "https://your-app.com";
     const verificationUrl = `${origin}/auth/verify?token=${token}`;
-    console.log("Verification URL:", verificationUrl);
+    console.log("Generated verification URL:", verificationUrl);
 
+    // Check if Resend API key is configured
+    const resendApiKey = Deno.env.get("RESEND_API_KEY");
+    if (!resendApiKey) {
+      console.error("RESEND_API_KEY not configured");
+      return new Response(
+        JSON.stringify({ error: "Email service not configured" }),
+        {
+          status: 500,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
+    }
+
+    console.log("Sending email via Resend...");
     const emailResponse = await resend.emails.send({
       from: "Bridge for Couples <hello@bridgeforcouples.com>",
       to: [email],
@@ -115,19 +145,47 @@ const handler = async (req: Request): Promise<Response> => {
       `,
     });
 
-    console.log("Verification email sent successfully:", emailResponse);
+    console.log("Resend API response:", {
+      id: emailResponse.data?.id,
+      error: emailResponse.error
+    });
 
-    return new Response(JSON.stringify({ success: true, emailResponse }), {
+    if (emailResponse.error) {
+      console.error("Resend API error:", emailResponse.error);
+      return new Response(
+        JSON.stringify({ 
+          error: "Failed to send email", 
+          details: emailResponse.error 
+        }),
+        {
+          status: 500,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
+    }
+
+    console.log("=== EMAIL SENT SUCCESSFULLY ===");
+    console.log("Email ID:", emailResponse.data?.id);
+
+    return new Response(JSON.stringify({ 
+      success: true, 
+      emailId: emailResponse.data?.id 
+    }), {
       status: 200,
       headers: {
         "Content-Type": "application/json",
         ...corsHeaders,
       },
     });
+
   } catch (error: any) {
-    console.error("Error sending verification email:", error);
+    console.error("=== SEND EMAIL FUNCTION ERROR ===");
+    console.error("Error details:", error);
     return new Response(
-      JSON.stringify({ error: error.message || "Failed to send verification email" }),
+      JSON.stringify({ 
+        error: "Failed to send verification email", 
+        details: error.message 
+      }),
       {
         status: 500,
         headers: { "Content-Type": "application/json", ...corsHeaders },

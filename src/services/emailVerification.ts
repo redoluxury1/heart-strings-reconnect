@@ -3,82 +3,101 @@ import { supabase } from '@/integrations/supabase/client';
 
 export const sendVerificationEmail = async (email: string, name?: string, userId?: string): Promise<boolean> => {
   try {
-    console.log("Starting sendVerificationEmail for:", email);
+    console.log("=== STARTING EMAIL VERIFICATION ===");
+    console.log("Email:", email);
+    console.log("Name:", name);
+    console.log("Provided User ID:", userId);
     
     // Generate verification token
     const token = crypto.randomUUID();
     console.log("Generated token:", token.substring(0, 10) + "...");
     
-    // Use provided userId or try to get current user
     let targetUserId = userId;
+    
+    // If no userId provided, try to get current user
     if (!targetUserId) {
-      // Try to get user by email if no userId provided
-      const { data: { user } } = await supabase.auth.getUser();
-      console.log("Current user from getUser:", user?.id);
+      console.log("No userId provided, attempting to get current user...");
       
-      if (!user) {
-        // If still no user, try to get from session
-        const { data: { session } } = await supabase.auth.getSession();
-        console.log("Current session user:", session?.user?.id);
+      const { data: { user }, error: userError } = await supabase.auth.getUser();
+      console.log("getUser result:", { hasUser: !!user, error: userError });
+      
+      if (user) {
+        targetUserId = user.id;
+        console.log("Found user from getUser:", targetUserId);
+      } else {
+        // Try session as fallback
+        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+        console.log("getSession result:", { hasSession: !!session, error: sessionError });
         
         if (session?.user) {
           targetUserId = session.user.id;
-        } else {
-          console.error("No user found and no userId provided");
-          return false;
+          console.log("Found user from session:", targetUserId);
         }
-      } else {
-        targetUserId = user.id;
       }
     }
 
-    console.log("Using user ID:", targetUserId);
+    if (!targetUserId) {
+      console.error("=== NO USER ID FOUND ===");
+      console.error("Cannot send verification email without user ID");
+      return false;
+    }
 
-    // Send verification email via edge function (let it handle token storage)
+    console.log("Final target user ID:", targetUserId);
+
+    // Call the edge function to send verification email
+    console.log("Calling send-verification-email edge function...");
     const { data, error } = await supabase.functions.invoke('send-verification-email', {
       body: { 
         email, 
         token, 
         name,
         userId: targetUserId,
-        storeToken: true // Always ask edge function to store token
+        storeToken: true
       }
     });
 
     console.log("Edge function response:", { data, error });
 
     if (error) {
-      console.error("Edge function error:", error);
+      console.error("=== EDGE FUNCTION ERROR ===");
+      console.error("Error details:", error);
       return false;
     }
 
-    if (data && data.success) {
-      console.log("Verification email sent successfully");
+    if (data?.success) {
+      console.log("=== EMAIL SENT SUCCESSFULLY ===");
       return true;
     } else {
-      console.error("Edge function returned unsuccessful response:", data);
+      console.error("=== EMAIL SEND FAILED ===");
+      console.error("Response data:", data);
       return false;
     }
+    
   } catch (error) {
-    console.error('Error sending verification email:', error);
+    console.error("=== VERIFICATION EMAIL EXCEPTION ===");
+    console.error('Error details:', error);
     return false;
   }
 };
 
 export const resendVerificationEmail = async (email: string): Promise<boolean> => {
   try {
-    // Get user by email
-    const { data: { user } } = await supabase.auth.getUser();
+    console.log("=== RESENDING VERIFICATION EMAIL ===");
+    
+    // Get current user
+    const { data: { user }, error: userError } = await supabase.auth.getUser();
+    console.log("Current user for resend:", { hasUser: !!user, error: userError });
     
     if (!user) {
       console.error('No user found for resend');
       return false;
     }
 
-    // Send new verification email (edge function will clean up old tokens)
+    // Send new verification email
     return await sendVerificationEmail(email, user.user_metadata?.name, user.id);
   } catch (error) {
-    console.error('Error resending verification email:', error);
+    console.error('=== RESEND ERROR ===');
+    console.error('Error details:', error);
     return false;
   }
 };

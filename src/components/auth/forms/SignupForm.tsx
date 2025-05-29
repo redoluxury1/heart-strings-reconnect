@@ -39,18 +39,18 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
     setIsLoading(true);
     
     try {
-      console.log("Starting signup process for email:", email, "with devMode:", devMode);
+      console.log("Starting signup process - Dev Mode:", devMode);
       
-      if (devMode) {
-        console.log("Development mode - attempting direct signup and login");
+      // Create the account first
+      const { error: signupError, data: signupData } = await signUp(email, password, name);
+      
+      if (signupError) {
+        console.error("Signup error:", signupError);
         
-        // In dev mode, try to create account and immediately sign in
-        const { error: signupError, data: signupData } = await signUp(email, password, name);
-        
-        if (signupError) {
-          if (signupError.message.includes("User already registered")) {
-            // User exists, try to sign them in directly
-            console.log("User already exists, attempting login...");
+        if (signupError.message.includes("User already registered")) {
+          if (devMode) {
+            // In dev mode, try to log them in directly
+            console.log("User exists, attempting dev mode login...");
             const { error: signinError } = await signIn(email, password);
             
             if (!signinError) {
@@ -65,16 +65,25 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
               
               navigate('/onboarding');
               return;
-            } else {
-              throw new Error("Account exists but login failed. Please try logging in instead.");
             }
-          } else {
-            throw signupError;
           }
+          
+          toast({
+            title: "Account already exists",
+            description: "This email is already registered. Please try logging in instead.",
+            variant: "destructive"
+          });
+          return;
         }
         
-        // Try immediate login after signup
-        console.log("Account created, attempting immediate login...");
+        throw signupError;
+      }
+
+      console.log("Account created successfully:", signupData?.user?.id);
+
+      if (devMode) {
+        // In dev mode, try immediate login
+        console.log("Dev mode: attempting immediate login...");
         const { error: loginError } = await signIn(email, password);
         
         if (!loginError) {
@@ -90,93 +99,42 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
           navigate('/onboarding');
           return;
         } else {
-          console.log("Immediate login failed, will send verification email with user ID:", signupData?.user?.id);
-          
-          // Send verification email with the user ID from signup
-          if (signupData?.user?.id) {
-            const emailSent = await sendVerificationEmail(email, name, signupData.user.id);
-            
-            if (emailSent) {
-              toast({
-                title: "Account created!",
-                description: "Please check your email for a verification link to complete your registration."
-              });
-              navigate('/auth?message=check-email');
-            } else {
-              toast({
-                title: "Account created but email failed",
-                description: "Your account was created but we couldn't send the verification email. Please try logging in.",
-                variant: "destructive"
-              });
-            }
-            return;
-          }
-        }
-      } else {
-        // Production mode - create account without auto-confirmation
-        console.log("Production mode - creating account and sending verification email");
-        const { error: signupError, data: signupData } = await signUp(email, password, name);
-        
-        if (signupError) {
-          if (signupError.message.includes("User already registered")) {
-            toast({
-              title: "Account already exists",
-              description: "This email is already registered. Please try logging in instead.",
-              variant: "destructive"
-            });
-            return;
-          }
-          throw signupError;
-        }
-        
-        console.log("Account created successfully:", signupData?.user?.id);
-        
-        // Send verification email with the user ID from signup
-        if (signupData?.user?.id) {
-          const emailSent = await sendVerificationEmail(email, name, signupData.user.id);
-          
-          if (emailSent) {
-            toast({
-              title: "Account created successfully!",
-              description: "Please check your email for a verification link to complete your registration."
-            });
-            navigate('/auth?message=check-email');
-          } else {
-            toast({
-              title: "Account created but email failed",
-              description: "Your account was created but we couldn't send the verification email. Please try logging in.",
-              variant: "destructive"
-            });
-          }
-          return;
+          console.log("Immediate login failed, proceeding with email verification");
         }
       }
-      
-      // Fallback - try to send verification email without user ID
-      console.log("Sending verification email as fallback...");
-      const emailSent = await sendVerificationEmail(email, name);
-      
-      if (emailSent) {
-        toast({
-          title: "Account created successfully!",
-          description: "Please check your email for a verification link to complete your registration."
-        });
-        navigate('/auth?message=check-email');
+
+      // Send verification email
+      if (signupData?.user?.id) {
+        console.log("Sending verification email for user:", signupData.user.id);
+        const emailSent = await sendVerificationEmail(email, name, signupData.user.id);
+        
+        if (emailSent) {
+          toast({
+            title: "Account created successfully!",
+            description: "Please check your email for a verification link to complete your registration."
+          });
+          navigate('/auth?message=check-email');
+        } else {
+          toast({
+            title: "Account created",
+            description: "Your account was created but we couldn't send the verification email. Please try logging in or contact support.",
+            variant: "destructive"
+          });
+        }
       } else {
         toast({
-          title: "Account created but email failed",
-          description: "Your account was created but we couldn't send the verification email. Please try logging in.",
-          variant: "destructive"
+          title: "Account created",
+          description: "Please check your email for a verification link.",
         });
+        navigate('/auth?message=check-email');
       }
       
     } catch (error: any) {
       console.error("Signup process failed:", error);
-      let errorMessage = error.message || "There was a problem creating your account.";
       
       toast({
         title: "Signup failed",
-        description: errorMessage,
+        description: error.message || "There was a problem creating your account. Please try again.",
         variant: "destructive"
       });
     } finally {
