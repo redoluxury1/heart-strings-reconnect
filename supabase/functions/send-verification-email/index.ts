@@ -23,9 +23,24 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
+    console.log("Starting send-verification-email function");
+    
     const { email, token, name }: VerificationEmailRequest = await req.json();
+    console.log("Received request for email:", email, "with token:", token?.substring(0, 10) + "...");
+
+    if (!email || !token) {
+      console.error("Missing email or token");
+      return new Response(
+        JSON.stringify({ error: "Email and token are required" }),
+        {
+          status: 400,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
+    }
 
     const verificationUrl = `${req.headers.get("origin")}/auth/verify?token=${token}`;
+    console.log("Verification URL:", verificationUrl);
 
     const emailResponse = await resend.emails.send({
       from: "Bridge for Couples <hello@bridgeforcouples.com>",
@@ -71,7 +86,7 @@ const handler = async (req: Request): Promise<Response> => {
   } catch (error: any) {
     console.error("Error sending verification email:", error);
     return new Response(
-      JSON.stringify({ error: error.message }),
+      JSON.stringify({ error: error.message || "Failed to send verification email" }),
       {
         status: 500,
         headers: { "Content-Type": "application/json", ...corsHeaders },

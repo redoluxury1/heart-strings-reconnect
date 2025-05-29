@@ -3,15 +3,21 @@ import { supabase } from '@/integrations/supabase/client';
 
 export const sendVerificationEmail = async (email: string, name?: string): Promise<boolean> => {
   try {
+    console.log("Starting sendVerificationEmail for:", email);
+    
     // Generate verification token
     const token = crypto.randomUUID();
+    console.log("Generated token:", token.substring(0, 10) + "...");
     
     // Get user ID (assuming they just signed up)
     const { data: { user } } = await supabase.auth.getUser();
     
     if (!user) {
+      console.error("No user found when trying to send verification email");
       throw new Error('No user found');
     }
+
+    console.log("Found user:", user.id);
 
     // Store verification token in database
     const { error: tokenError } = await supabase
@@ -23,19 +29,31 @@ export const sendVerificationEmail = async (email: string, name?: string): Promi
       });
 
     if (tokenError) {
+      console.error("Error storing verification token:", tokenError);
       throw tokenError;
     }
+
+    console.log("Token stored successfully, calling edge function...");
 
     // Send verification email via edge function
     const { data, error } = await supabase.functions.invoke('send-verification-email', {
       body: { email, token, name }
     });
 
+    console.log("Edge function response:", { data, error });
+
     if (error) {
+      console.error("Edge function error:", error);
       throw error;
     }
 
-    return data.success;
+    if (data && data.success) {
+      console.log("Verification email sent successfully");
+      return true;
+    } else {
+      console.error("Edge function returned unsuccessful response:", data);
+      throw new Error(data?.error || "Failed to send verification email");
+    }
   } catch (error) {
     console.error('Error sending verification email:', error);
     return false;

@@ -91,11 +91,14 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
           navigate('/auth?message=check-email');
         }, 2000);
       } else {
-        throw new Error("Failed to send verification email");
+        toast({
+          title: "Account created but email failed",
+          description: "Your account was created but we couldn't send the verification email. Please try logging in or contact support.",
+          variant: "destructive"
+        });
       }
       
     } catch (error: any) {
-      setIsLoading(false);
       console.error("Signup process failed:", error);
       let errorMessage = error.message || "There was a problem creating your account.";
       
@@ -108,6 +111,8 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
         description: errorMessage,
         variant: "destructive"
       });
+    } finally {
+      setIsLoading(false);
     }
   };
 
