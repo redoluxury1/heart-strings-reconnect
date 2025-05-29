@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -78,7 +77,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
       
       // Production mode or dev mode fallback - send custom verification email
       console.log("Sending custom verification email...");
-      const emailSent = await sendVerificationEmail(email, name);
+      const emailSent = await sendVerificationEmail(email, name, signupData?.user?.id);
       
       if (emailSent) {
         toast({

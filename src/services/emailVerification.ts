@@ -1,29 +1,32 @@
 
 import { supabase } from '@/integrations/supabase/client';
 
-export const sendVerificationEmail = async (email: string, name?: string): Promise<boolean> => {
+export const sendVerificationEmail = async (email: string, name?: string, userId?: string): Promise<boolean> => {
   try {
-    console.log("Starting sendVerificationEmail for:", email);
+    console.log("Starting sendVerificationEmail for:", email, "with userId:", userId);
     
     // Generate verification token
     const token = crypto.randomUUID();
     console.log("Generated token:", token.substring(0, 10) + "...");
     
-    // Get user ID (assuming they just signed up)
-    const { data: { user } } = await supabase.auth.getUser();
-    
-    if (!user) {
-      console.error("No user found when trying to send verification email");
-      throw new Error('No user found');
+    // Use provided userId or try to get current user
+    let targetUserId = userId;
+    if (!targetUserId) {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        console.error("No user found and no userId provided");
+        throw new Error('No user found');
+      }
+      targetUserId = user.id;
     }
 
-    console.log("Found user:", user.id);
+    console.log("Using user ID:", targetUserId);
 
     // Store verification token in database
     const { error: tokenError } = await supabase
       .from('email_verification_tokens')
       .insert({
-        user_id: user.id,
+        user_id: targetUserId,
         token,
         expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString() // 24 hours
       });
@@ -76,7 +79,7 @@ export const resendVerificationEmail = async (email: string): Promise<boolean> =
       .eq('user_id', user.id);
 
     // Send new verification email
-    return await sendVerificationEmail(email, user.user_metadata?.name);
+    return await sendVerificationEmail(email, user.user_metadata?.name, user.id);
   } catch (error) {
     console.error('Error resending verification email:', error);
     return false;
