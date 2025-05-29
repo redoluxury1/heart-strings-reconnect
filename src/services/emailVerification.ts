@@ -22,51 +22,34 @@ export const sendVerificationEmail = async (email: string, name?: string, userId
 
     console.log("Using user ID:", targetUserId);
 
-    // Check current auth state for debugging
-    const { data: { user: currentUser } } = await supabase.auth.getUser();
-    console.log("Current authenticated user:", currentUser?.id, "Target user:", targetUserId);
-
-    // Store verification token in database using service role to bypass RLS temporarily
-    console.log("Attempting to insert verification token...");
+    // Try to store token directly first, but handle RLS blocking
+    console.log("Attempting to store verification token...");
     const { error: tokenError } = await supabase
       .from('email_verification_tokens')
       .insert({
         user_id: targetUserId,
         token,
-        expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString() // 24 hours
+        expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()
       });
+
+    let tokenStored = !tokenError;
 
     if (tokenError) {
-      console.error("Error storing verification token:", tokenError);
-      
-      // If RLS is still blocking, let's try a different approach
-      // Call the edge function directly to handle token storage
-      console.log("RLS blocked token storage, using edge function approach...");
-      
-      const { data, error } = await supabase.functions.invoke('send-verification-email', {
-        body: { 
-          email, 
-          token, 
-          name,
-          userId: targetUserId,
-          storeToken: true 
-        }
-      });
-
-      if (error) {
-        console.error("Edge function error:", error);
-        throw error;
-      }
-
-      console.log("Verification email sent via edge function:", data);
-      return data?.success || false;
+      console.error("Client-side token storage failed (likely RLS):", tokenError);
+      console.log("Will use edge function to store token with service role...");
+    } else {
+      console.log("Token stored successfully via client");
     }
-
-    console.log("Token stored successfully, calling edge function...");
 
     // Send verification email via edge function
     const { data, error } = await supabase.functions.invoke('send-verification-email', {
-      body: { email, token, name }
+      body: { 
+        email, 
+        token, 
+        name,
+        userId: targetUserId,
+        storeToken: !tokenStored // Only ask edge function to store if client failed
+      }
     });
 
     console.log("Edge function response:", { data, error });

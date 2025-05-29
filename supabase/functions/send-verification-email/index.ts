@@ -50,6 +50,12 @@ const handler = async (req: Request): Promise<Response> => {
         Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
       );
 
+      // First, clean up any existing tokens for this user
+      await supabaseAdmin
+        .from('email_verification_tokens')
+        .delete()
+        .eq('user_id', userId);
+
       const { error: tokenError } = await supabaseAdmin
         .from('email_verification_tokens')
         .insert({
