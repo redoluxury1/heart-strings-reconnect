@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -37,35 +38,59 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
     setIsLoading(true);
     
     try {
-      console.log("Starting signup process for email:", email);
-      const { error, data } = await signUp(email, password, name);
+      console.log("Starting signup process for email:", email, "with devMode:", devMode);
       
-      if (error) {
-        console.error("Signup error:", error);
-        throw error;
+      // Create the account first
+      const { error: signupError, data: signupData } = await signUp(email, password, name);
+      
+      if (signupError) {
+        console.error("Signup error:", signupError);
+        throw signupError;
       }
       
-      console.log("Signup successful, data:", data);
-      
-      toast({
-        title: "Account created successfully!",
-        description: devMode 
-          ? "Your account has been created. Taking you to setup..." 
-          : "Your account has been created. Please check your email for confirmation."
-      });
+      console.log("Signup successful, data:", signupData);
       
       if (devMode) {
-        // Store the signup mode in localStorage for onboarding
-        if (signupMode) {
-          localStorage.setItem('signupMode', signupMode);
-        }
+        console.log("Development mode enabled - attempting auto-confirmation and login");
         
-        // For testing purposes, proceed directly to onboarding
-        // This allows you to test the partner invite flow
-        console.log("Proceeding to onboarding for testing");
-        navigate('/onboarding');
-        return;
+        // In development mode, try to sign in immediately
+        // This simulates the email confirmation process
+        const { error: signinError } = await signIn(email, password);
+        
+        if (!signinError) {
+          console.log("Auto-login successful in dev mode");
+          
+          toast({
+            title: "Account created successfully!",
+            description: "Development mode: Auto-logged in. Taking you to setup..."
+          });
+          
+          // Store the signup mode in localStorage for onboarding
+          if (signupMode) {
+            localStorage.setItem('signupMode', signupMode);
+          }
+          
+          // Proceed directly to onboarding
+          navigate('/onboarding');
+          return;
+        } else {
+          console.log("Auto-login failed, but account was created:", signinError);
+          
+          toast({
+            title: "Account created!",
+            description: "Development mode: Account created but auto-login failed. Please try logging in manually.",
+          });
+          
+          setIsLoading(false);
+          return;
+        }
       } else {
+        // Production mode - require email verification
+        toast({
+          title: "Account created successfully!",
+          description: "Please check your email for a confirmation link before logging in."
+        });
+        
         // Redirect to login page after successful signup
         setTimeout(() => {
           navigate('/auth'); // Redirect back to auth page to login
@@ -80,6 +105,10 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
       // Provide more helpful message for common errors
       if (errorMessage.includes("User already registered")) {
         errorMessage = "This email is already registered. Please try logging in instead.";
+      } else if (errorMessage.includes("email not confirmed")) {
+        errorMessage = devMode 
+          ? "Account created but auto-confirmation failed. Please check your email or try logging in."
+          : "Please check your email and click the confirmation link before logging in.";
       }
       
       toast({
@@ -119,7 +148,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
           htmlFor={inviteToken ? "dev-mode-partner" : "dev-mode"} 
           className="text-sm text-[#1E2A38]/70"
         >
-          Development Mode (Skip Email Verification)
+          Development Mode (Auto-confirm account and login)
         </Label>
       </div>
       

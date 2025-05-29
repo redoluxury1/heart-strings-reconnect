@@ -123,31 +123,71 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signIn = async (email: string, password?: string) => {
     try {
+      console.log("AuthContext - attempting sign in for:", email, "with password:", !!password);
+      
       if (password) {
         // Email/password login
-        const { error, data } = await supabase.auth.signInWithPassword({ email, password });
+        const { error, data } = await supabase.auth.signInWithPassword({ 
+          email, 
+          password 
+        });
+        
+        if (error) {
+          console.error("Sign in error:", error);
+          
+          // Provide more specific error messaging
+          if (error.message.includes("email not confirmed")) {
+            return { 
+              error: {
+                ...error,
+                message: "Please check your email and click the confirmation link before logging in. If you don't see it, check your spam folder."
+              }
+            };
+          }
+        }
+        
+        console.log("Sign in result:", { error: !!error, data: !!data });
         return { error, data };
       } else {
         // Magic link login
+        console.log("Sending magic link to:", email);
         const { error } = await supabase.auth.signInWithOtp({ email });
-        if (error) return { error };
+        if (error) {
+          console.error("Magic link error:", error);
+          return { error };
+        }
         alert('Check your email for the magic link to sign in.');
         return { error: null };
       }
     } catch (error: any) {
+      console.error("Sign in exception:", error);
       return { error };
     }
   };
 
   const signUp = async (email: string, password?: string, name?: string) => {
     try {
+      console.log("AuthContext - attempting sign up for:", email, "with name:", name);
+      
       const signUpData: any = { email };
       if (password) signUpData.password = password;
       if (name) signUpData.options = { data: { name } };
       
       const { error, data } = await supabase.auth.signUp(signUpData);
+      
+      if (error) {
+        console.error("Sign up error:", error);
+      } else {
+        console.log("Sign up successful:", { 
+          user: !!data.user, 
+          session: !!data.session,
+          needsConfirmation: !data.session && data.user && !data.user.email_confirmed_at
+        });
+      }
+      
       return { error, data };
     } catch (error: any) {
+      console.error("Sign up exception:", error);
       return { error };
     }
   };
