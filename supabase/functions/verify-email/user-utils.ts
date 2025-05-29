@@ -8,9 +8,15 @@ export const getUserById = async (userId: string) => {
     Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
   );
 
+  console.log("Looking up user by ID:", userId);
+  
   const { data: userData, error: userFetchError } = await supabaseClient.auth.admin.getUserById(userId);
   
-  console.log("User fetch result:", { hasUser: !!userData?.user, error: userFetchError });
+  console.log("User fetch result:", { 
+    hasUser: !!userData?.user, 
+    error: userFetchError,
+    emailConfirmed: userData?.user?.email_confirmed_at 
+  });
 
   return { userData, userFetchError };
 };
@@ -21,27 +27,33 @@ export const confirmUserEmail = async (userId: string): Promise<VerificationResp
     Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
   );
 
+  console.log("Starting email confirmation for user:", userId);
+
   const { userData, userFetchError } = await getUserById(userId);
 
   if (userFetchError || !userData?.user) {
-    console.error("User not found in auth system, attempting to recreate verification link");
+    console.error("User not found in auth system:", userFetchError);
     return {
       success: false,
-      error: "Your account needs to be recreated. Please sign up again with the same email.",
+      error: "Your verification link is invalid or expired. Please sign up again with the same email.",
       action: "signup_again"
     };
   }
+
+  console.log("User found, current email_confirmed_at:", userData.user.email_confirmed_at);
 
   if (userData.user.email_confirmed_at) {
     console.log("User email already confirmed");
     return {
       success: true,
-      message: "Email already verified. You can now log in.",
+      message: "Your email is already verified. You can now log in.",
       action: "already_verified"
     };
   }
 
-  const { error: updateError } = await supabaseClient.auth.admin.updateUserById(
+  // Confirm the user's email using the admin API
+  console.log("Confirming user email via admin API...");
+  const { data: updateData, error: updateError } = await supabaseClient.auth.admin.updateUserById(
     userId,
     { email_confirm: true }
   );
@@ -50,14 +62,14 @@ export const confirmUserEmail = async (userId: string): Promise<VerificationResp
     console.error("Error confirming user email:", updateError);
     return {
       success: false,
-      error: "Failed to verify email. Please try signing up again."
+      error: "Failed to verify your email. Please try again or sign up with a new account."
     };
   }
 
-  console.log("User email confirmed successfully");
+  console.log("User email confirmed successfully:", updateData?.user?.email_confirmed_at);
   return {
     success: true,
-    message: "Email verified successfully! You can now log in.",
+    message: "Email verified successfully! You can now log in to your account.",
     action: "verified"
   };
 };

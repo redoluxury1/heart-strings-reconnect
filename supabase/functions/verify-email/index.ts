@@ -12,8 +12,12 @@ const handler = async (req: Request): Promise<Response> => {
   try {
     console.log("=== VERIFY EMAIL FUNCTION STARTED ===");
     
-    const { token } = await req.json();
-    console.log("Received token:", token?.substring(0, 10) + "...");
+    const requestBody = await req.json();
+    const { token } = requestBody;
+    console.log("Received verification request:", { 
+      hasToken: !!token,
+      tokenPreview: token?.substring(0, 10) + "..."
+    });
 
     if (!token) {
       console.error("No token provided in request");
@@ -26,7 +30,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     if (tokenError) {
       console.error("Database error during token lookup:", tokenError);
-      return createErrorResponse("Database error occurred", 500);
+      return createErrorResponse("Database error occurred while verifying token", 500);
     }
 
     if (!tokenData) {
@@ -34,30 +38,34 @@ const handler = async (req: Request): Promise<Response> => {
       return createErrorResponse("Invalid or expired verification token. Please sign up again.", 400, "signup_again");
     }
 
-    console.log("Token found, validating...");
+    console.log("Token found for user:", tokenData.user_id);
     
-    // Validate the token
+    // Validate the token (check expiry and usage)
     const validationResult = validateToken(tokenData);
     if (validationResult) {
-      console.log("Token validation result:", validationResult);
+      console.log("Token validation failed:", validationResult);
       
-      if (!validationResult.success && validationResult.action === "signup_again") {
-        console.log("Token invalid, marking as used");
+      // Mark invalid/expired tokens as used to prevent reuse
+      if (!validationResult.success) {
+        console.log("Marking invalid token as used");
         await markTokenAsUsed(token);
       }
       
       return createResponse(validationResult, validationResult.success ? 200 : 400);
     }
 
-    console.log("Token is valid, confirming user email for user:", tokenData.user_id);
+    console.log("Token is valid, proceeding with email confirmation for user:", tokenData.user_id);
 
     // Confirm the user's email
     const confirmationResult = await confirmUserEmail(tokenData.user_id);
     console.log("Email confirmation result:", confirmationResult);
 
-    // Always mark token as used after processing
+    // Always mark token as used after processing (success or failure)
     console.log("Marking token as used...");
-    await markTokenAsUsed(token);
+    const markUsedError = await markTokenAsUsed(token);
+    if (markUsedError) {
+      console.error("Failed to mark token as used:", markUsedError);
+    }
 
     if (confirmationResult.success) {
       console.log("=== EMAIL VERIFICATION SUCCESSFUL ===");
@@ -70,7 +78,8 @@ const handler = async (req: Request): Promise<Response> => {
   } catch (error: any) {
     console.error("=== VERIFY EMAIL FUNCTION ERROR ===");
     console.error("Error details:", error);
-    return createErrorResponse("Verification failed. Please try signing up again.", 500);
+    console.error("Error stack:", error.stack);
+    return createErrorResponse("An unexpected error occurred during verification. Please try again.", 500);
   }
 };
 
