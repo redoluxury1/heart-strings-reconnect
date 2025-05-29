@@ -51,7 +51,7 @@ export const confirmUserEmail = async (userId: string): Promise<VerificationResp
     };
   }
 
-  // Confirm the user's email using the admin API
+  // Confirm the user's email using the admin API - this is the key fix
   console.log("Confirming user email via admin API...");
   const { data: updateData, error: updateError } = await supabaseClient.auth.admin.updateUserById(
     userId,
@@ -67,9 +67,20 @@ export const confirmUserEmail = async (userId: string): Promise<VerificationResp
   }
 
   console.log("User email confirmed successfully:", updateData?.user?.email_confirmed_at);
-  return {
-    success: true,
-    message: "Email verified successfully! You can now log in to your account.",
-    action: "verified"
-  };
+  
+  // Double-check that the confirmation worked
+  const { userData: verifiedUserData } = await getUserById(userId);
+  if (verifiedUserData?.user?.email_confirmed_at) {
+    return {
+      success: true,
+      message: "Email verified successfully! You can now log in to your account.",
+      action: "verified"
+    };
+  } else {
+    console.error("Email confirmation may have failed - user still not confirmed");
+    return {
+      success: false,
+      error: "Email verification may have failed. Please try logging in or sign up again."
+    };
+  }
 };

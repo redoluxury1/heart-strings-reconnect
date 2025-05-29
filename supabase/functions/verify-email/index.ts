@@ -56,7 +56,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log("Token is valid, proceeding with email confirmation for user:", tokenData.user_id);
 
-    // Confirm the user's email
+    // Confirm the user's email in Supabase Auth
     const confirmationResult = await confirmUserEmail(tokenData.user_id);
     console.log("Email confirmation result:", confirmationResult);
 
