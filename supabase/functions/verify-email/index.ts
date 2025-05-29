@@ -41,7 +41,7 @@ const handler = async (req: Request): Promise<Response> => {
       .from('email_verification_tokens')
       .select('user_id, expires_at, used')
       .eq('token', token)
-      .maybeSingle(); // Use maybeSingle to avoid errors when no data found
+      .maybeSingle();
 
     console.log("Token lookup result:", { tokenData, tokenError });
 
@@ -121,9 +121,10 @@ const handler = async (req: Request): Promise<Response> => {
     console.log("User fetch result:", { hasUser: !!userData?.user, error: userFetchError });
 
     if (userFetchError || !userData?.user) {
-      console.error("User not found in auth system:", userFetchError);
+      console.error("User not found in auth system, attempting to recreate verification link");
       
-      // Mark token as used since it was valid but user is missing
+      // Instead of giving up, let's tell them to try signing up again
+      // but mark the token as used so it can't be reused
       await supabaseClient
         .from('email_verification_tokens')
         .update({ used: true })
@@ -132,7 +133,7 @@ const handler = async (req: Request): Promise<Response> => {
       return new Response(
         JSON.stringify({ 
           success: false,
-          error: "Your verification link is valid, but we couldn't find your account. Please try signing up again.",
+          error: "Your account needs to be recreated. Please sign up again with the same email.",
           action: "signup_again"
         }),
         {
@@ -176,7 +177,7 @@ const handler = async (req: Request): Promise<Response> => {
       return new Response(
         JSON.stringify({ 
           success: false,
-          error: "Failed to verify email. Please try again or contact support." 
+          error: "Failed to verify email. Please try signing up again." 
         }),
         {
           status: 500,
@@ -214,7 +215,7 @@ const handler = async (req: Request): Promise<Response> => {
     return new Response(
       JSON.stringify({ 
         success: false,
-        error: "An unexpected error occurred. Please try again or contact support."
+        error: "Verification failed. Please try signing up again."
       }),
       {
         status: 500,
