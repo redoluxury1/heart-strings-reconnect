@@ -33,9 +33,10 @@ interface PasswordFieldProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   id?: string;
+  placeholder?: string;
 }
 
-export const PasswordField: React.FC<PasswordFieldProps> = ({ value, onChange, id = "password" }) => {
+export const PasswordField: React.FC<PasswordFieldProps> = ({ value, onChange, id = "password", placeholder }) => {
   return (
     <div className="space-y-2">
       <label htmlFor={id} className="block text-sm font-medium text-[#1E2A38]">
@@ -44,6 +45,7 @@ export const PasswordField: React.FC<PasswordFieldProps> = ({ value, onChange, i
       <Input
         id={id}
         type="password"
+        placeholder={placeholder}
         value={value}
         onChange={onChange}
         className="w-full border-[#C7747F]/30 focus:border-[#C7747F] focus:ring-[#C7747F]/20 text-[#1E2A38]"
