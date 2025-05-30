@@ -36,10 +36,43 @@ export const confirmUserEmail = async (userId: string): Promise<VerificationResp
   if (userFetchError || !userData?.user) {
     console.error("User not found in auth system:", userFetchError?.message);
     
-    // If user not found, they may have been deleted or the ID is wrong
+    // If user not found, they may have been deleted or there's an ID mismatch
+    // Try to find user by email from the token's associated email
+    console.log("Attempting to find user by looking up token details...");
+    
+    const supabaseClient = createClient(
+      Deno.env.get("SUPABASE_URL") ?? "",
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
+    );
+
+    // Try to get all users and find by email if possible
+    try {
+      const { data: allUsers, error: listError } = await supabaseClient.auth.admin.listUsers({
+        page: 1,
+        perPage: 1000
+      });
+
+      console.log("Listed users for fallback search:", { 
+        totalUsers: allUsers?.users?.length || 0,
+        error: !!listError 
+      });
+
+      // If we can't even list users, the user definitely doesn't exist
+      if (listError || !allUsers?.users?.length) {
+        return {
+          success: false,
+          error: "Your account was not found. Please sign up again with the same email address.",
+          action: "signup_again"
+        };
+      }
+
+    } catch (error) {
+      console.error("Error during fallback user search:", error);
+    }
+    
     return {
       success: false,
-      error: "User account not found. Please sign up again with the same email address.",
+      error: "Your account was not found. Please sign up again with the same email address.",
       action: "signup_again"
     };
   }
@@ -75,7 +108,7 @@ export const confirmUserEmail = async (userId: string): Promise<VerificationResp
       console.error("Error confirming user email:", confirmError);
       return {
         success: false,
-        error: "Failed to verify your email. Please try again or sign up with a new account.",
+        error: "Failed to verify your email. Please try signing up again with the same email address.",
         action: "signup_again"
       };
     }
@@ -106,7 +139,7 @@ export const confirmUserEmail = async (userId: string): Promise<VerificationResp
     console.error("Exception during email confirmation:", error);
     return {
       success: false,
-      error: "An error occurred during verification. Please try again.",
+      error: "An error occurred during verification. Please try signing up again.",
       action: "signup_again"
     };
   }

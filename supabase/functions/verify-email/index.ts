@@ -46,14 +46,14 @@ const handler = async (req: Request): Promise<Response> => {
       used: tokenData.used
     });
     
-    // Validate the token (check expiry and usage, and user verification status)
+    // Validate the token (check expiry)
     const validationResult = await validateToken(tokenData);
     if (validationResult) {
-      console.log("Token validation result:", validationResult);
+      console.log("Token validation failed:", validationResult);
       
-      // If validation failed but it's not already_verified, mark token as used
-      if (!validationResult.success && validationResult.action !== "already_verified") {
-        console.log("Marking failed token as used");
+      // Mark token as used for expired tokens
+      if (validationResult.action === "signup_again") {
+        console.log("Marking expired/invalid token as used");
         await markTokenAsUsed(token);
       }
       

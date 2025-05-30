@@ -54,7 +54,7 @@ export const validateToken = async (tokenData: VerificationTokenData): Promise<V
     console.error("No token data provided for validation");
     return {
       success: false,
-      error: "Invalid verification token",
+      error: "Invalid verification token. Please sign up again to receive a new verification email.",
       action: "signup_again"
     };
   }
@@ -74,46 +74,10 @@ export const validateToken = async (tokenData: VerificationTokenData): Promise<V
     };
   }
 
-  // If token is already used, check if user's email is actually verified
+  // If token is already used, allow re-verification instead of failing
   if (tokenData.used) {
-    console.log("Token already used, checking user's actual email verification status...");
-    
-    const supabaseClient = createClient(
-      Deno.env.get("SUPABASE_URL") ?? "",
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
-    );
-
-    try {
-      const { data: userData, error: userError } = await supabaseClient.auth.admin.getUserById(tokenData.user_id);
-      
-      if (userError || !userData?.user) {
-        console.error("User lookup failed for used token:", userError);
-        return {
-          success: false,
-          error: "Verification failed. Please try signing up again.",
-          action: "signup_again"
-        };
-      }
-
-      if (userData.user.email_confirmed_at) {
-        console.log("User email already verified");
-        return {
-          success: true,
-          message: "Your email is already verified. You can now log in to your account.",
-          action: "already_verified"
-        };
-      } else {
-        console.log("Token used but email not confirmed, allowing re-verification");
-        return null; // Allow the verification to proceed
-      }
-    } catch (error) {
-      console.error("Error checking user verification status:", error);
-      return {
-        success: false,
-        error: "Unable to verify email status. Please try again.",
-        action: "signup_again"
-      };
-    }
+    console.log("Token already used, but allowing re-verification attempt...");
+    return null; // Allow the verification to proceed
   }
 
   console.log("Token validation passed");
