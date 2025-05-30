@@ -12,7 +12,6 @@ const handler = async (req: Request): Promise<Response> => {
   try {
     console.log("=== VERIFY EMAIL FUNCTION STARTED ===");
     console.log("Request method:", req.method);
-    console.log("Request headers:", Object.fromEntries(req.headers.entries()));
     
     const requestBody = await req.json();
     const { token } = requestBody;
@@ -47,14 +46,14 @@ const handler = async (req: Request): Promise<Response> => {
       used: tokenData.used
     });
     
-    // Validate the token (check expiry and usage)
-    const validationResult = validateToken(tokenData);
+    // Validate the token (check expiry and usage, and user verification status)
+    const validationResult = await validateToken(tokenData);
     if (validationResult) {
-      console.log("Token validation failed:", validationResult);
+      console.log("Token validation result:", validationResult);
       
-      // Mark invalid/expired tokens as used to prevent reuse
-      if (!validationResult.success) {
-        console.log("Marking invalid token as used");
+      // If validation failed but it's not already_verified, mark token as used
+      if (!validationResult.success && validationResult.action !== "already_verified") {
+        console.log("Marking failed token as used");
         await markTokenAsUsed(token);
       }
       
