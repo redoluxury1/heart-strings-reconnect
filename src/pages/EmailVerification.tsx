@@ -11,7 +11,6 @@ const EmailVerification: React.FC = () => {
   const navigate = useNavigate();
   const [status, setStatus] = useState<'verifying' | 'success' | 'error' | 'signup_again'>('verifying');
   const [message, setMessage] = useState('');
-  const [action, setAction] = useState<string | null>(null);
 
   useEffect(() => {
     const verifyEmail = async () => {
@@ -19,30 +18,45 @@ const EmailVerification: React.FC = () => {
       
       if (!token) {
         setStatus('error');
-        setMessage('No verification token found');
+        setMessage('No verification token found in the URL');
         return;
       }
 
       try {
-        console.log('Attempting to verify email with token:', token.substring(0, 10) + '...');
+        console.log('=== VERIFYING EMAIL WITH SUPABASE OTP ===');
+        console.log('Token:', token.substring(0, 10) + '...');
         
-        const { data, error } = await supabase.functions.invoke('verify-email', {
-          body: { token }
+        // Use Supabase's native verifyOtp method
+        const { data, error } = await supabase.auth.verifyOtp({
+          type: 'signup',
+          token: token
         });
 
-        console.log('Verification response:', { data, error });
+        console.log('Supabase verifyOtp result:', { 
+          hasUser: !!data?.user,
+          hasSession: !!data?.session,
+          error 
+        });
 
         if (error) {
-          console.error('Edge function error:', error);
-          setStatus('error');
-          setMessage('Verification service error. Please try again or contact support.');
+          console.error('Verification error:', error);
+          
+          if (error.message.includes('expired') || error.message.includes('invalid')) {
+            setStatus('signup_again');
+            setMessage('Your verification link has expired or is invalid. Please sign up again to receive a new verification email.');
+          } else {
+            setStatus('error');
+            setMessage(error.message || 'Verification failed. Please try again or contact support.');
+          }
           return;
         }
 
-        if (data.success) {
+        if (data?.user && data?.session) {
+          console.log('=== EMAIL VERIFICATION SUCCESSFUL ===');
+          console.log('User verified:', data.user.id);
+          
           setStatus('success');
-          setMessage(data.message || 'Your email has been verified successfully!');
-          setAction(data.action);
+          setMessage('Your email has been verified successfully!');
           
           toast({
             title: "Email verified!",
@@ -54,24 +68,14 @@ const EmailVerification: React.FC = () => {
             navigate('/auth');
           }, 3000);
         } else {
-          console.error('Verification failed:', data);
-          
-          if (data.action === 'signup_again') {
-            setStatus('signup_again');
-            setMessage(data.error || 'Please sign up again');
-          } else if (data.action === 'already_verified') {
-            setStatus('success');
-            setMessage(data.message || 'Email already verified');
-            setTimeout(() => {
-              navigate('/auth');
-            }, 3000);
-          } else {
-            setStatus('error');
-            setMessage(data.error || 'Verification failed');
-          }
+          console.error('Verification succeeded but no user/session returned');
+          setStatus('error');
+          setMessage('Verification completed but login failed. Please try logging in manually.');
         }
+
       } catch (error: any) {
-        console.error('Verification error:', error);
+        console.error('=== VERIFICATION EXCEPTION ===');
+        console.error('Error:', error);
         setStatus('error');
         setMessage('An error occurred during verification. Please try again or contact support.');
       }
@@ -117,7 +121,7 @@ const EmailVerification: React.FC = () => {
           <>
             <AlertTriangle className="h-16 w-16 text-orange-500 mx-auto mb-4" />
             <h1 className="text-2xl font-semibold text-gray-900 mb-2">
-              Account Issue
+              Verification Link Expired
             </h1>
             <p className="text-gray-600 mb-6">
               {message}
