@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useContext, createContext } from 'react';
 import { User } from '@supabase/supabase-js';
 import { supabase } from '../integrations/supabase/client';
@@ -8,7 +7,7 @@ interface AuthContextProps {
   relationship: Relationship | null;
   loading: boolean;
   signIn: (email: string, password?: string) => Promise<{ error: any; data?: any }>;
-  signUp: (email: string, password?: string, name?: string, disableEmailConfirmation?: boolean) => Promise<{ error: any; data?: any }>;
+  signUp: (email: string, password: string, name?: string, disableEmailConfirmation?: boolean) => Promise<{ error: any; data?: any }>;
   signOut: () => Promise<void>;
   updateUserMetadata: (metadata: any) => Promise<void>;
 }
@@ -165,25 +164,29 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  const signUp = async (email: string, password?: string, name?: string, disableEmailConfirmation: boolean = false) => {
+  const signUp = async (email: string, password: string, name?: string, disableEmailConfirmation: boolean = false) => {
     try {
       console.log("AuthContext - attempting sign up for:", email, "with name:", name, "disable email:", disableEmailConfirmation);
       
-      const signUpData: any = { 
-        email,
-        options: {}
+      const signUpOptions: any = {
+        data: {}
       };
       
-      if (password) signUpData.password = password;
-      if (name) signUpData.options.data = { name };
+      if (name) {
+        signUpOptions.data.name = name;
+      }
       
       // If we want to disable Supabase's email confirmation and use our custom system
       if (disableEmailConfirmation) {
-        // Set a custom redirect URL that won't be used, effectively disabling Supabase emails
-        signUpData.options.emailRedirectTo = `${window.location.origin}/auth/verify`;
+        // Set a custom redirect URL that will be handled by our custom verification system
+        signUpOptions.emailRedirectTo = `${window.location.origin}/auth/verify`;
       }
       
-      const { error, data } = await supabase.auth.signUp(signUpData);
+      const { error, data } = await supabase.auth.signUp({
+        email: email,
+        password: password,
+        options: signUpOptions
+      });
       
       if (error) {
         console.error("Sign up error:", error);

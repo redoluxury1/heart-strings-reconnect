@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -29,7 +30,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
     if (!email || !password || !name) {
       toast({
         title: "Missing fields",
-        description: "Please fill in all required fields.",
+        description: "Please fill in all required fields including password.",
         variant: "destructive"
       });
       return;
@@ -42,9 +43,10 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
       console.log("Dev Mode:", devMode);
       console.log("Email:", email);
       console.log("Name:", name);
+      console.log("Password provided:", !!password);
       
-      // Create the account with disabled email confirmation
-      const { error: signupError, data: signupData } = await signUp(email, password, name, !devMode);
+      // Create the account with password and custom email confirmation handling
+      const { error: signupError, data: signupData } = await signUp(email, password, name, devMode);
       
       if (signupError) {
         console.error("Signup error:", signupError);
@@ -183,6 +185,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         id="signupPassword"
+        placeholder="Enter a secure password"
       />
       
       <div className="flex items-center space-x-2 my-4">
@@ -201,7 +204,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
       
       <Button 
         type="submit" 
-        disabled={isLoading}
+        disabled={isLoading || !email || !password || !name}
         className="w-full rounded-full bg-[#2e4059] hover:bg-[#2e4059]/90 text-white"
       >
         {isLoading ? "Creating Account..." : "Sign Up"}
