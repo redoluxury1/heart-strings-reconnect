@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -15,6 +14,7 @@ const EmailVerification: React.FC = () => {
   useEffect(() => {
     const verifyEmail = async () => {
       const token = searchParams.get('token');
+      const type = searchParams.get('type');
       
       if (!token) {
         setStatus('error');
@@ -25,10 +25,12 @@ const EmailVerification: React.FC = () => {
       try {
         console.log('=== VERIFYING EMAIL WITH SUPABASE OTP ===');
         console.log('Token:', token.substring(0, 10) + '...');
+        console.log('Type:', type);
         
-        // Use Supabase's native verifyOtp method with correct type
+        // Use Supabase's native verifyOtp method for token hash verification
         const { data, error } = await supabase.auth.verifyOtp({
-          type: 'email',
+          type: 'signup',
+          token_hash: token,
           token: token
         });
 
