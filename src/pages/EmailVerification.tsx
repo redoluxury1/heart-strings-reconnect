@@ -26,9 +26,9 @@ const EmailVerification: React.FC = () => {
         console.log('=== VERIFYING EMAIL WITH SUPABASE OTP ===');
         console.log('Token:', token.substring(0, 10) + '...');
         
-        // Use Supabase's native verifyOtp method
+        // Use Supabase's native verifyOtp method with correct type
         const { data, error } = await supabase.auth.verifyOtp({
-          type: 'signup',
+          type: 'email',
           token: token
         });
 
