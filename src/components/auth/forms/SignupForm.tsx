@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -44,8 +43,8 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
       console.log("Email:", email);
       console.log("Name:", name);
       
-      // Create the account first
-      const { error: signupError, data: signupData } = await signUp(email, password, name);
+      // Create the account with disabled email confirmation
+      const { error: signupError, data: signupData } = await signUp(email, password, name, !devMode);
       
       if (signupError) {
         console.error("Signup error:", signupError);
@@ -124,7 +123,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
         }
       }
 
-      // Send verification email
+      // Send verification email using our custom system
       if (signupData?.user?.id) {
         console.log("Sending verification email for user:", signupData.user.id);
         const emailSent = await sendVerificationEmail(email, name, signupData.user.id);

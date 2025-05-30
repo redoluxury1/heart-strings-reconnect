@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -14,7 +15,6 @@ const EmailVerification: React.FC = () => {
   useEffect(() => {
     const verifyEmail = async () => {
       const token = searchParams.get('token');
-      const type = searchParams.get('type');
       
       if (!token) {
         setStatus('error');
@@ -23,39 +23,25 @@ const EmailVerification: React.FC = () => {
       }
 
       try {
-        console.log('=== VERIFYING EMAIL WITH SUPABASE OTP ===');
+        console.log('=== VERIFYING EMAIL WITH CUSTOM SYSTEM ===');
         console.log('Token:', token.substring(0, 10) + '...');
-        console.log('Type:', type);
         
-        // Use Supabase's native verifyOtp method for token hash verification
-        const { data, error } = await supabase.auth.verifyOtp({
-          type: 'signup',
-          token_hash: token,
-          token: token
+        // Call our custom verify-email edge function
+        const { data, error } = await supabase.functions.invoke('verify-email', {
+          body: { token }
         });
 
-        console.log('Supabase verifyOtp result:', { 
-          hasUser: !!data?.user,
-          hasSession: !!data?.session,
-          error 
-        });
+        console.log('Custom verification result:', { data, error });
 
         if (error) {
           console.error('Verification error:', error);
-          
-          if (error.message.includes('expired') || error.message.includes('invalid')) {
-            setStatus('signup_again');
-            setMessage('Your verification link has expired or is invalid. Please sign up again to receive a new verification email.');
-          } else {
-            setStatus('error');
-            setMessage(error.message || 'Verification failed. Please try again or contact support.');
-          }
+          setStatus('error');
+          setMessage('Verification failed. Please try again or contact support.');
           return;
         }
 
-        if (data?.user && data?.session) {
+        if (data?.success) {
           console.log('=== EMAIL VERIFICATION SUCCESSFUL ===');
-          console.log('User verified:', data.user.id);
           
           setStatus('success');
           setMessage('Your email has been verified successfully!');
@@ -69,10 +55,12 @@ const EmailVerification: React.FC = () => {
           setTimeout(() => {
             navigate('/auth');
           }, 3000);
+        } else if (data?.action === 'signup_again') {
+          setStatus('signup_again');
+          setMessage(data.error || 'Your verification link has expired. Please sign up again.');
         } else {
-          console.error('Verification succeeded but no user/session returned');
           setStatus('error');
-          setMessage('Verification completed but login failed. Please try logging in manually.');
+          setMessage(data?.error || 'Verification failed. Please try again.');
         }
 
       } catch (error: any) {

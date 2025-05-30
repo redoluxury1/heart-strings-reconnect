@@ -8,7 +8,7 @@ interface AuthContextProps {
   relationship: Relationship | null;
   loading: boolean;
   signIn: (email: string, password?: string) => Promise<{ error: any; data?: any }>;
-  signUp: (email: string, password?: string, name?: string) => Promise<{ error: any; data?: any }>;
+  signUp: (email: string, password?: string, name?: string, disableEmailConfirmation?: boolean) => Promise<{ error: any; data?: any }>;
   signOut: () => Promise<void>;
   updateUserMetadata: (metadata: any) => Promise<void>;
 }
@@ -165,13 +165,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  const signUp = async (email: string, password?: string, name?: string) => {
+  const signUp = async (email: string, password?: string, name?: string, disableEmailConfirmation: boolean = false) => {
     try {
-      console.log("AuthContext - attempting sign up for:", email, "with name:", name);
+      console.log("AuthContext - attempting sign up for:", email, "with name:", name, "disable email:", disableEmailConfirmation);
       
-      const signUpData: any = { email };
+      const signUpData: any = { 
+        email,
+        options: {}
+      };
+      
       if (password) signUpData.password = password;
-      if (name) signUpData.options = { data: { name } };
+      if (name) signUpData.options.data = { name };
+      
+      // If we want to disable Supabase's email confirmation and use our custom system
+      if (disableEmailConfirmation) {
+        // Set a custom redirect URL that won't be used, effectively disabling Supabase emails
+        signUpData.options.emailRedirectTo = `${window.location.origin}/auth/verify`;
+      }
       
       const { error, data } = await supabase.auth.signUp(signUpData);
       
