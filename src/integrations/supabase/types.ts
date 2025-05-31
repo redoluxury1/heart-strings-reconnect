@@ -194,6 +194,7 @@ export type Database = {
       email_verification_tokens: {
         Row: {
           created_at: string
+          email: string
           expires_at: string
           id: string
           token: string
@@ -202,7 +203,8 @@ export type Database = {
         }
         Insert: {
           created_at?: string
-          expires_at: string
+          email: string
+          expires_at?: string
           id?: string
           token: string
           used?: boolean
@@ -210,6 +212,7 @@ export type Database = {
         }
         Update: {
           created_at?: string
+          email?: string
           expires_at?: string
           id?: string
           token?: string

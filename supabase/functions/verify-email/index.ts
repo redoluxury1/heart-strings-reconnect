@@ -1,8 +1,12 @@
 
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { corsHeaders, createResponse, createErrorResponse } from "./response-utils.ts";
-import { getVerificationToken, markTokenAsUsed, validateToken } from "./token-utils.ts";
-import { confirmUserEmail } from "./user-utils.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type",
+};
 
 const handler = async (req: Request): Promise<Response> => {
   if (req.method === "OPTIONS") {
@@ -10,86 +14,140 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    console.log("=== VERIFY EMAIL FUNCTION STARTED ===");
-    console.log("Request method:", req.method);
+    console.log("=== VERIFY EMAIL STARTED ===");
     
-    const requestBody = await req.json();
-    const { token } = requestBody;
-    console.log("Received verification request:", { 
-      hasToken: !!token,
-      tokenLength: token?.length,
-      tokenPreview: token?.substring(0, 8) + "..."
-    });
+    const { token } = await req.json();
+    console.log("Verifying token:", token?.substring(0, 8) + "...");
 
     if (!token) {
-      console.error("No token provided in request");
-      return createErrorResponse("Verification token is required", 400);
+      console.error("No token provided");
+      return new Response(
+        JSON.stringify({ 
+          success: false, 
+          error: "Verification token is required" 
+        }),
+        {
+          status: 400,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
     }
 
-    // Get the token data from the database
-    console.log("Looking up token in database...");
-    const { tokenData, tokenError } = await getVerificationToken(token);
+    const supabaseAdmin = createClient(
+      Deno.env.get("SUPABASE_URL") ?? "",
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
+    );
 
-    if (tokenError) {
-      console.error("Database error during token lookup:", tokenError);
-      return createErrorResponse("Database error occurred while verifying token", 500);
+    // Look up the token
+    console.log("Looking up token in database");
+    const { data: tokenData, error: tokenError } = await supabaseAdmin
+      .from('email_verification_tokens')
+      .select('user_id, email, expires_at, used')
+      .eq('token', token)
+      .single();
+
+    if (tokenError || !tokenData) {
+      console.error("Token not found:", tokenError);
+      return new Response(
+        JSON.stringify({ 
+          success: false, 
+          error: "Invalid verification token" 
+        }),
+        {
+          status: 400,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
     }
 
-    if (!tokenData) {
-      console.error("Token not found in database");
-      return createErrorResponse("Invalid or expired verification token. Please sign up again.", 400, "signup_again");
+    console.log("Token found for user:", tokenData.user_id);
+
+    // Check if token is already used
+    if (tokenData.used) {
+      console.error("Token already used");
+      return new Response(
+        JSON.stringify({ 
+          success: false, 
+          error: "This verification link has already been used" 
+        }),
+        {
+          status: 400,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
     }
 
-    console.log("Token found for user:", {
-      userId: tokenData.user_id,
-      expiresAt: tokenData.expires_at,
-      used: tokenData.used
-    });
-    
-    // Validate the token (check expiry)
-    const validationResult = await validateToken(tokenData);
-    if (validationResult) {
-      console.log("Token validation failed:", validationResult);
-      
-      // Mark token as used for expired tokens
-      if (validationResult.action === "signup_again") {
-        console.log("Marking expired/invalid token as used");
-        await markTokenAsUsed(token);
+    // Check if token is expired
+    const now = new Date();
+    const expiryDate = new Date(tokenData.expires_at);
+    if (expiryDate < now) {
+      console.error("Token expired");
+      return new Response(
+        JSON.stringify({ 
+          success: false, 
+          error: "Verification link has expired. Please sign up again." 
+        }),
+        {
+          status: 400,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
+    }
+
+    // Mark token as used
+    console.log("Marking token as used");
+    await supabaseAdmin
+      .from('email_verification_tokens')
+      .update({ used: true })
+      .eq('token', token);
+
+    // Verify the user's email using Supabase Auth Admin API
+    console.log("Confirming user email via Supabase Auth");
+    const { data: updateData, error: updateError } = await supabaseAdmin.auth.admin.updateUserById(
+      tokenData.user_id,
+      { 
+        email_confirm: true 
       }
-      
-      return createResponse(validationResult, validationResult.success ? 200 : 400);
+    );
+
+    if (updateError) {
+      console.error("Error confirming email:", updateError);
+      return new Response(
+        JSON.stringify({ 
+          success: false, 
+          error: "Failed to verify email. Please try again." 
+        }),
+        {
+          status: 500,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
     }
 
-    console.log("Token is valid, proceeding with email confirmation for user:", tokenData.user_id);
-
-    // Try to confirm the user's email - this function will handle all the user lookup logic
-    const confirmationResult = await confirmUserEmail(tokenData.user_id);
-    console.log("Email confirmation result:", confirmationResult);
-
-    // Always mark token as used after processing (success or failure)
-    console.log("Marking token as used...");
-    const markUsedError = await markTokenAsUsed(token);
-    if (markUsedError) {
-      console.error("Failed to mark token as used:", markUsedError);
-    } else {
-      console.log("Token marked as used successfully");
-    }
-
-    if (confirmationResult.success) {
-      console.log("=== EMAIL VERIFICATION SUCCESSFUL ===");
-      return createResponse(confirmationResult, 200);
-    } else {
-      console.error("=== EMAIL VERIFICATION FAILED ===");
-      console.error("Failure reason:", confirmationResult.error);
-      return createResponse(confirmationResult, 400);
-    }
+    console.log("=== EMAIL VERIFICATION SUCCESSFUL ===");
+    return new Response(
+      JSON.stringify({ 
+        success: true, 
+        message: "Email verified successfully! You can now log in." 
+      }),
+      {
+        status: 200,
+        headers: { "Content-Type": "application/json", ...corsHeaders },
+      }
+    );
 
   } catch (error: any) {
-    console.error("=== VERIFY EMAIL FUNCTION ERROR ===");
-    console.error("Error type:", error.constructor.name);
-    console.error("Error message:", error.message);
-    console.error("Error stack:", error.stack);
-    return createErrorResponse("An unexpected error occurred during verification. Please try again.", 500);
+    console.error("=== VERIFY EMAIL ERROR ===", error);
+    return new Response(
+      JSON.stringify({ 
+        success: false, 
+        error: "An error occurred during verification" 
+      }),
+      {
+        status: 500,
+        headers: { "Content-Type": "application/json", ...corsHeaders },
+      }
+    );
   }
 };
 

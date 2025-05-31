@@ -3,64 +3,51 @@ import { supabase } from '@/integrations/supabase/client';
 
 export const sendVerificationEmail = async (email: string, name?: string, userId?: string): Promise<boolean> => {
   try {
-    console.log("=== STARTING EMAIL VERIFICATION ===");
-    console.log("Email:", email);
-    console.log("Name:", name);
-    console.log("Provided User ID:", userId);
-    
-    // Generate verification token
-    const token = crypto.randomUUID();
-    console.log("Generated token:", token.substring(0, 10) + "...");
+    console.log("=== SENDING VERIFICATION EMAIL ===");
+    console.log("Email:", email, "Name:", name, "UserID:", userId);
     
     let targetUserId = userId;
     
     // If no userId provided, try to get current user
     if (!targetUserId) {
-      console.log("No userId provided, attempting to get current user...");
+      console.log("No userId provided, getting current user");
       
       const { data: { user }, error: userError } = await supabase.auth.getUser();
-      console.log("getUser result:", { hasUser: !!user, error: userError });
+      console.log("Current user result:", { hasUser: !!user, error: userError });
       
       if (user) {
         targetUserId = user.id;
-        console.log("Found user from getUser:", targetUserId);
       } else {
         // Try session as fallback
         const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-        console.log("getSession result:", { hasSession: !!session, error: sessionError });
+        console.log("Session result:", { hasSession: !!session, error: sessionError });
         
         if (session?.user) {
           targetUserId = session.user.id;
-          console.log("Found user from session:", targetUserId);
         }
       }
     }
 
     if (!targetUserId) {
-      console.error("=== NO USER ID FOUND ===");
-      console.error("Cannot send verification email without user ID");
+      console.error("No user ID found");
       return false;
     }
 
-    console.log("Final target user ID:", targetUserId);
+    console.log("Using user ID:", targetUserId);
 
-    // Call the edge function to send verification email
-    console.log("Calling send-verification-email edge function...");
+    // Call the simplified edge function
     const { data, error } = await supabase.functions.invoke('send-verification-email', {
       body: { 
         email, 
-        token, 
         name,
-        userId: targetUserId,
-        storeToken: true
+        userId: targetUserId
       }
     });
 
     console.log("Edge function response:", { data, error });
 
     if (error) {
-      console.error("=== EDGE FUNCTION ERROR ===");
-      console.error("Error details:", error);
+      console.error("Edge function error:", error);
       return false;
     }
 
@@ -68,14 +55,12 @@ export const sendVerificationEmail = async (email: string, name?: string, userId
       console.log("=== EMAIL SENT SUCCESSFULLY ===");
       return true;
     } else {
-      console.error("=== EMAIL SEND FAILED ===");
-      console.error("Response data:", data);
+      console.error("Email send failed:", data);
       return false;
     }
     
   } catch (error) {
-    console.error("=== VERIFICATION EMAIL EXCEPTION ===");
-    console.error('Error details:', error);
+    console.error("=== VERIFICATION EMAIL EXCEPTION ===", error);
     return false;
   }
 };
@@ -84,7 +69,6 @@ export const resendVerificationEmail = async (email: string): Promise<boolean> =
   try {
     console.log("=== RESENDING VERIFICATION EMAIL ===");
     
-    // Get current user
     const { data: { user }, error: userError } = await supabase.auth.getUser();
     console.log("Current user for resend:", { hasUser: !!user, error: userError });
     
@@ -93,11 +77,9 @@ export const resendVerificationEmail = async (email: string): Promise<boolean> =
       return false;
     }
 
-    // Send new verification email
     return await sendVerificationEmail(email, user.user_metadata?.name, user.id);
   } catch (error) {
-    console.error('=== RESEND ERROR ===');
-    console.error('Error details:', error);
+    console.error('=== RESEND ERROR ===', error);
     return false;
   }
 };

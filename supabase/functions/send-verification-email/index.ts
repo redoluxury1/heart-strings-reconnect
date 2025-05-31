@@ -13,10 +13,8 @@ const corsHeaders = {
 
 interface VerificationEmailRequest {
   email: string;
-  token: string;
   name?: string;
-  userId?: string;
-  storeToken?: boolean;
+  userId: string;
 }
 
 const handler = async (req: Request): Promise<Response> => {
@@ -25,21 +23,15 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    console.log("=== SEND VERIFICATION EMAIL FUNCTION STARTED ===");
+    console.log("=== SEND VERIFICATION EMAIL STARTED ===");
     
-    const { email, token, name, userId, storeToken }: VerificationEmailRequest = await req.json();
-    console.log("Request details:", {
-      email,
-      tokenPreview: token?.substring(0, 10) + "...",
-      name,
-      userId,
-      storeToken
-    });
+    const { email, name, userId }: VerificationEmailRequest = await req.json();
+    console.log("Request:", { email, name, userId });
 
-    if (!email || !token) {
-      console.error("Missing required fields: email or token");
+    if (!email || !userId) {
+      console.error("Missing required fields");
       return new Response(
-        JSON.stringify({ error: "Email and token are required" }),
+        JSON.stringify({ error: "Email and userId are required" }),
         {
           status: 400,
           headers: { "Content-Type": "application/json", ...corsHeaders },
@@ -47,64 +39,37 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    // Store the token if requested and userId is provided
-    if (storeToken && userId) {
-      console.log("Storing verification token for user:", userId);
-      
-      const supabaseAdmin = createClient(
-        Deno.env.get("SUPABASE_URL") ?? "",
-        Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
-      );
+    const supabaseAdmin = createClient(
+      Deno.env.get("SUPABASE_URL") ?? "",
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
+    );
 
-      // Clean up any existing tokens for this user
-      console.log("Cleaning up existing tokens...");
-      const { error: deleteError } = await supabaseAdmin
-        .from('email_verification_tokens')
-        .delete()
-        .eq('user_id', userId);
+    // Generate a secure token
+    const token = crypto.randomUUID();
+    console.log("Generated token:", token.substring(0, 8) + "...");
 
-      if (deleteError) {
-        console.error("Error cleaning up tokens:", deleteError);
-      } else {
-        console.log("Existing tokens cleaned up successfully");
-      }
+    // Clean up any existing tokens for this user
+    console.log("Cleaning up existing tokens for user:", userId);
+    await supabaseAdmin
+      .from('email_verification_tokens')
+      .delete()
+      .eq('user_id', userId);
 
-      // Insert new token
-      console.log("Inserting new verification token...");
-      const expiryTime = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
-      const { error: tokenError } = await supabaseAdmin
-        .from('email_verification_tokens')
-        .insert({
-          user_id: userId,
-          token,
-          expires_at: expiryTime
-        });
+    // Insert new token
+    console.log("Storing new verification token");
+    const { error: tokenError } = await supabaseAdmin
+      .from('email_verification_tokens')
+      .insert({
+        user_id: userId,
+        token,
+        email,
+        expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()
+      });
 
-      if (tokenError) {
-        console.error("Error storing verification token:", tokenError);
-        return new Response(
-          JSON.stringify({ error: "Failed to store verification token", details: tokenError }),
-          {
-            status: 500,
-            headers: { "Content-Type": "application/json", ...corsHeaders },
-          }
-        );
-      }
-
-      console.log("Verification token stored successfully");
-    }
-
-    // Get the correct origin for the verification URL
-    const origin = req.headers.get("origin") || req.headers.get("referer")?.split('/').slice(0, 3).join('/') || "https://your-app.com";
-    const verificationUrl = `${origin}/auth/verify?token=${token}`;
-    console.log("Generated verification URL:", verificationUrl);
-
-    // Check if Resend API key is configured
-    const resendApiKey = Deno.env.get("RESEND_API_KEY");
-    if (!resendApiKey) {
-      console.error("RESEND_API_KEY not configured");
+    if (tokenError) {
+      console.error("Error storing token:", tokenError);
       return new Response(
-        JSON.stringify({ error: "Email service not configured" }),
+        JSON.stringify({ error: "Failed to store verification token" }),
         {
           status: 500,
           headers: { "Content-Type": "application/json", ...corsHeaders },
@@ -112,7 +77,13 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    console.log("Sending email via Resend...");
+    // Generate verification URL
+    const origin = req.headers.get("origin") || req.headers.get("referer")?.split('/').slice(0, 3).join('/') || "https://your-app.com";
+    const verificationUrl = `${origin}/auth/verify?token=${token}`;
+    console.log("Verification URL:", verificationUrl);
+
+    // Send email
+    console.log("Sending verification email via Resend");
     const emailResponse = await resend.emails.send({
       from: "Bridge for Couples <hello@bridgeforcouples.com>",
       to: [email],
@@ -145,18 +116,10 @@ const handler = async (req: Request): Promise<Response> => {
       `,
     });
 
-    console.log("Resend API response:", {
-      id: emailResponse.data?.id,
-      error: emailResponse.error
-    });
-
     if (emailResponse.error) {
-      console.error("Resend API error:", emailResponse.error);
+      console.error("Resend error:", emailResponse.error);
       return new Response(
-        JSON.stringify({ 
-          error: "Failed to send email", 
-          details: emailResponse.error 
-        }),
+        JSON.stringify({ error: "Failed to send email" }),
         {
           status: 500,
           headers: { "Content-Type": "application/json", ...corsHeaders },
@@ -165,27 +128,18 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     console.log("=== EMAIL SENT SUCCESSFULLY ===");
-    console.log("Email ID:", emailResponse.data?.id);
-
     return new Response(JSON.stringify({ 
       success: true, 
       emailId: emailResponse.data?.id 
     }), {
       status: 200,
-      headers: {
-        "Content-Type": "application/json",
-        ...corsHeaders,
-      },
+      headers: { "Content-Type": "application/json", ...corsHeaders },
     });
 
   } catch (error: any) {
-    console.error("=== SEND EMAIL FUNCTION ERROR ===");
-    console.error("Error details:", error);
+    console.error("=== SEND EMAIL ERROR ===", error);
     return new Response(
-      JSON.stringify({ 
-        error: "Failed to send verification email", 
-        details: error.message 
-      }),
+      JSON.stringify({ error: "Failed to send verification email" }),
       {
         status: 500,
         headers: { "Content-Type": "application/json", ...corsHeaders },
