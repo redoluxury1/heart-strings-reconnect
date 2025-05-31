@@ -41,13 +41,6 @@ const HomeLanding = () => {
         </div>
       </div>
 
-      {/* Feature Row */}
-      <div className="flex justify-center items-center gap-9 max-w-[600px] mx-auto mt-6 mb-16 text-base font-inter text-[#4a4a4a] border-t border-[#e4e4e4] pt-6">
-        <span>Better conversations. Proven methods.</span>
-        <span>Repair conflict. Build trust.</span>
-        <span>Stronger relationships. Real results.</span>
-      </div>
-
       {/* Share Menu Dialog */}
       <Dialog open={isShareOpen} onOpenChange={setIsShareOpen}>
         <DialogContent className="sm:max-w-md">
