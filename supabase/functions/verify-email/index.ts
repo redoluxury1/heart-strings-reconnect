@@ -38,8 +38,8 @@ const handler = async (req: Request): Promise<Response> => {
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
     );
 
-    // Look up the token
-    console.log("Looking up token in database");
+    // Look up the token in our custom table
+    console.log("Looking up token in custom email_verification_tokens table");
     const { data: tokenData, error: tokenError } = await supabaseAdmin
       .from('email_verification_tokens')
       .select('user_id, email, expires_at, used')
@@ -51,7 +51,7 @@ const handler = async (req: Request): Promise<Response> => {
       return new Response(
         JSON.stringify({ 
           success: false, 
-          error: "Invalid verification token" 
+          error: "Invalid or expired verification token. Please sign up again to receive a new verification email." 
         }),
         {
           status: 400,
@@ -68,7 +68,7 @@ const handler = async (req: Request): Promise<Response> => {
       return new Response(
         JSON.stringify({ 
           success: false, 
-          error: "This verification link has already been used" 
+          error: "This verification link has already been used. Please try logging in instead." 
         }),
         {
           status: 400,
@@ -85,7 +85,7 @@ const handler = async (req: Request): Promise<Response> => {
       return new Response(
         JSON.stringify({ 
           success: false, 
-          error: "Verification link has expired. Please sign up again." 
+          error: "Verification link has expired. Please sign up again to receive a new verification email." 
         }),
         {
           status: 400,
@@ -94,28 +94,32 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    // Mark token as used
+    // Mark token as used FIRST
     console.log("Marking token as used");
-    await supabaseAdmin
+    const { error: updateTokenError } = await supabaseAdmin
       .from('email_verification_tokens')
       .update({ used: true })
       .eq('token', token);
 
-    // Verify the user's email using Supabase Auth Admin API
-    console.log("Confirming user email via Supabase Auth");
-    const { data: updateData, error: updateError } = await supabaseAdmin.auth.admin.updateUserById(
+    if (updateTokenError) {
+      console.error("Error marking token as used:", updateTokenError);
+    }
+
+    // MANUALLY confirm the user's email using Supabase Auth Admin API
+    console.log("Confirming user email via Supabase Admin API");
+    const { data: confirmData, error: confirmError } = await supabaseAdmin.auth.admin.updateUserById(
       tokenData.user_id,
       { 
         email_confirm: true 
       }
     );
 
-    if (updateError) {
-      console.error("Error confirming email:", updateError);
+    if (confirmError) {
+      console.error("Error confirming email:", confirmError);
       return new Response(
         JSON.stringify({ 
           success: false, 
-          error: "Failed to verify email. Please try again." 
+          error: "Failed to verify email. Please contact support or try signing up again." 
         }),
         {
           status: 500,
@@ -124,11 +128,16 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
+    console.log("Email confirmation successful:", {
+      userId: confirmData?.user?.id,
+      emailConfirmed: !!confirmData?.user?.email_confirmed_at
+    });
+
     console.log("=== EMAIL VERIFICATION SUCCESSFUL ===");
     return new Response(
       JSON.stringify({ 
         success: true, 
-        message: "Email verified successfully! You can now log in." 
+        message: "Email verified successfully! You can now log in to your account." 
       }),
       {
         status: 200,
@@ -141,7 +150,7 @@ const handler = async (req: Request): Promise<Response> => {
     return new Response(
       JSON.stringify({ 
         success: false, 
-        error: "An error occurred during verification" 
+        error: "An error occurred during verification. Please try again or contact support." 
       }),
       {
         status: 500,

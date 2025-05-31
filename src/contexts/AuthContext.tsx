@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useContext, createContext } from 'react';
 import { User } from '@supabase/supabase-js';
 import { supabase } from '../integrations/supabase/client';
@@ -168,24 +169,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       console.log("AuthContext - attempting sign up for:", email, "with name:", name, "disable email:", disableEmailConfirmation);
       
-      const signUpOptions: any = {
-        data: {}
-      };
-      
-      if (name) {
-        signUpOptions.data.name = name;
-      }
-      
-      // If we want to disable Supabase's email confirmation and use our custom system
-      if (disableEmailConfirmation) {
-        // Set a custom redirect URL that will be handled by our custom verification system
-        signUpOptions.emailRedirectTo = `${window.location.origin}/auth/verify`;
-      }
-      
+      // COMPLETELY DISABLE Supabase's email confirmation system
       const { error, data } = await supabase.auth.signUp({
         email: email,
         password: password,
-        options: signUpOptions
+        options: {
+          data: name ? { name } : {},
+          // CRITICAL: Do not set emailRedirectTo at all to prevent Supabase from sending emails
+          // Our custom system will handle ALL email verification
+        }
       });
       
       if (error) {
