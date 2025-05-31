@@ -18,7 +18,8 @@ export const getUserById = async (userId: string) => {
       error: !!userFetchError,
       errorMessage: userFetchError?.message,
       emailConfirmed: userData?.user?.email_confirmed_at,
-      userId: userData?.user?.id
+      userId: userData?.user?.id,
+      userEmail: userData?.user?.email
     });
 
     return { userData, userFetchError };
@@ -36,50 +37,35 @@ export const confirmUserEmail = async (userId: string): Promise<VerificationResp
   if (userFetchError || !userData?.user) {
     console.error("User not found in auth system:", userFetchError?.message);
     
-    // If user not found, they may have been deleted or there's an ID mismatch
-    // Try to find user by email from the token's associated email
-    console.log("Attempting to find user by looking up token details...");
+    // Let's try to wait a bit and retry once - sometimes there's a delay in user creation
+    console.log("Waiting 2 seconds and retrying user lookup...");
+    await new Promise(resolve => setTimeout(resolve, 2000));
     
-    const supabaseClient = createClient(
-      Deno.env.get("SUPABASE_URL") ?? "",
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
-    );
-
-    // Try to get all users and find by email if possible
-    try {
-      const { data: allUsers, error: listError } = await supabaseClient.auth.admin.listUsers({
-        page: 1,
-        perPage: 1000
-      });
-
-      console.log("Listed users for fallback search:", { 
-        totalUsers: allUsers?.users?.length || 0,
-        error: !!listError 
-      });
-
-      // If we can't even list users, the user definitely doesn't exist
-      if (listError || !allUsers?.users?.length) {
-        return {
-          success: false,
-          error: "Your account was not found. Please sign up again with the same email address.",
-          action: "signup_again"
-        };
-      }
-
-    } catch (error) {
-      console.error("Error during fallback user search:", error);
+    const { userData: retryUserData, userFetchError: retryError } = await getUserById(userId);
+    
+    if (retryError || !retryUserData?.user) {
+      console.error("User still not found after retry:", retryError?.message);
+      
+      return {
+        success: false,
+        error: "Your account verification failed. This may be due to a timing issue during account creation. Please try signing up again.",
+        action: "signup_again"
+      };
     }
     
-    return {
-      success: false,
-      error: "Your account was not found. Please sign up again with the same email address.",
-      action: "signup_again"
-    };
+    // Use the retry data for the rest of the function
+    console.log("User found on retry, proceeding with confirmation");
+    return await processEmailConfirmation(retryUserData.user.id, retryUserData.user);
   }
 
-  console.log("User found, current email_confirmed_at:", userData.user.email_confirmed_at);
+  return await processEmailConfirmation(userData.user.id, userData.user);
+};
 
-  if (userData.user.email_confirmed_at) {
+const processEmailConfirmation = async (userId: string, user: any): Promise<VerificationResponse> => {
+  console.log("Processing email confirmation for user:", userId);
+  console.log("User current email_confirmed_at:", user.email_confirmed_at);
+
+  if (user.email_confirmed_at) {
     console.log("User email already confirmed");
     return {
       success: true,
@@ -108,7 +94,7 @@ export const confirmUserEmail = async (userId: string): Promise<VerificationResp
       console.error("Error confirming user email:", confirmError);
       return {
         success: false,
-        error: "Failed to verify your email. Please try signing up again with the same email address.",
+        error: "Failed to verify your email. Please try the verification link again or sign up again.",
         action: "signup_again"
       };
     }
@@ -131,7 +117,7 @@ export const confirmUserEmail = async (userId: string): Promise<VerificationResp
       console.error("Email confirmation failed - no confirmation timestamp");
       return {
         success: false,
-        error: "Email verification failed. Please try signing up again with the same email address.",
+        error: "Email verification failed. Please try the verification link again.",
         action: "signup_again"
       };
     }
@@ -139,7 +125,7 @@ export const confirmUserEmail = async (userId: string): Promise<VerificationResp
     console.error("Exception during email confirmation:", error);
     return {
       success: false,
-      error: "An error occurred during verification. Please try signing up again.",
+      error: "An error occurred during verification. Please try again or sign up again.",
       action: "signup_again"
     };
   }

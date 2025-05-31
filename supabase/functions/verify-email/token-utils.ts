@@ -74,12 +74,6 @@ export const validateToken = async (tokenData: VerificationTokenData): Promise<V
     };
   }
 
-  // If token is already used, allow re-verification instead of failing
-  if (tokenData.used) {
-    console.log("Token already used, but allowing re-verification attempt...");
-    return null; // Allow the verification to proceed
-  }
-
-  console.log("Token validation passed");
-  return null; // Token is valid and not used
+  console.log("Token validation passed - token is valid and not expired");
+  return null; // Token is valid
 };
