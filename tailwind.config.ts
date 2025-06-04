@@ -22,6 +22,7 @@ const config: Config = {
       fontFamily: {
         'cormorant': ['Cormorant Garamond', 'serif'],
         'open-sans': ['Open Sans', 'sans-serif'],
+        'inter': ['Inter', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
