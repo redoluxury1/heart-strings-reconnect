@@ -20,19 +20,19 @@ const HomeLanding = () => {
   const [isShareOpen, setIsShareOpen] = useState(false);
   
   return (
-    <div className="text-center pt-16 pb-4 md:py-14">
+    <div className="text-center px-4 sm:px-6 lg:px-8 pt-12 sm:pt-16 lg:pt-20 pb-8 sm:pb-12 lg:pb-16">
       <div 
         className="relative transition-all duration-200"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <h1 className="font-cormorant text-4xl md:text-5xl lg:text-6xl font-medium mb-8 text-navy-800">
+        <h1 className="font-cormorant text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium mb-6 sm:mb-8 lg:mb-10 text-navy-800 leading-tight">
           {dailyQuote.headline}
         </h1>
         
         {/* Micro text that appears on hover - updated text */}
         <div 
-          className={`absolute left-0 right-0 bottom-[-24px] text-xs text-navy-800/60 italic transition-opacity duration-300 cursor-pointer ${
+          className={`absolute left-0 right-0 bottom-[-20px] sm:bottom-[-24px] text-xs sm:text-sm text-navy-800/60 italic transition-opacity duration-300 cursor-pointer px-4 ${
             isHovered ? 'opacity-100' : 'opacity-0'
           }`}
           onClick={() => setIsShareOpen(true)}
@@ -43,7 +43,7 @@ const HomeLanding = () => {
 
       {/* Share Menu Dialog */}
       <Dialog open={isShareOpen} onOpenChange={setIsShareOpen}>
-        <DialogContent className="sm:max-w-md">
+        <DialogContent className="sm:max-w-md mx-4">
           <DialogHeader>
             <DialogTitle>Share this quote</DialogTitle>
           </DialogHeader>
@@ -59,7 +59,7 @@ const HomeLanding = () => {
 
       {/* Submit Own Quote Dialog */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent>
+        <DialogContent className="mx-4">
           <DialogHeader>
             <DialogTitle>Submit your own hero quote</DialogTitle>
           </DialogHeader>

@@ -110,19 +110,19 @@ const RelationshipStatsSection = () => {
   const { isEmotional } = useInterface();
   
   return (
-    <section className={`py-16 ${
+    <section className={`py-12 sm:py-16 lg:py-20 ${
       isEmotional
         ? "bg-[#f8f4f0]" // Soft cream background from mockup
         : "bg-[#f8f4f0]"
     }`}>
       <ContentContainer>
-        <div className="text-center mb-12">
-          <h2 className="font-cormorant text-4xl md:text-5xl lg:text-6xl font-medium text-[#5d4357] tracking-wide">
+        <div className="text-center mb-8 sm:mb-12 lg:mb-16 px-4">
+          <h2 className="font-cormorant text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium text-[#5d4357] tracking-wide">
             WHY IT MATTERS
           </h2>
         </div>
         
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-4xl mx-auto px-4">
           <Carousel 
             opts={{
               align: "center",
@@ -132,35 +132,35 @@ const RelationshipStatsSection = () => {
           >
             <CarouselContent>
               {communicationStats.map((item) => (
-                <CarouselItem key={item.id} className="md:basis-3/4">
-                  <div className="mx-auto text-center p-8 md:p-12 rounded-3xl bg-white shadow-sm">
+                <CarouselItem key={item.id} className="basis-full">
+                  <div className="mx-auto text-center p-6 sm:p-8 lg:p-12 rounded-3xl bg-white shadow-sm">
                     {/* Quote marks - updated with transparent styling */}
-                    <div className="flex justify-center mb-4">
+                    <div className="flex justify-center mb-3 sm:mb-4">
                       <Quote 
-                        className="h-16 w-16 text-[#5d4357]/30" 
+                        className="h-12 w-12 sm:h-14 sm:w-14 lg:h-16 lg:w-16 text-[#5d4357]/30" 
                         strokeWidth={1.5}
                       />
                     </div>
                     
                     {/* Statistic percentage - updated to use font-cormorant */}
-                    <div className="mb-4">
-                      <span className="text-7xl md:text-8xl font-bold text-[#5d4357] font-cormorant">
+                    <div className="mb-3 sm:mb-4">
+                      <span className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-[#5d4357] font-cormorant">
                         {item.stat}
                       </span>
                     </div>
                     
                     {/* Statistic description */}
-                    <p className="text-2xl md:text-3xl mb-6 max-w-2xl mx-auto font-cormorant text-[#5d4357]">
+                    <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl mb-4 sm:mb-6 max-w-2xl mx-auto font-cormorant text-[#5d4357] leading-relaxed">
                       {item.description}
                     </p>
                     
                     {/* Source citation */}
-                    <p className="text-lg italic text-[#5d4357]/70 font-cormorant">
+                    <p className="text-sm sm:text-base lg:text-lg italic text-[#5d4357]/70 font-cormorant">
                       {item.source}
                     </p>
                     
                     {/* Pagination dots */}
-                    <div className="flex justify-center gap-2 mt-8">
+                    <div className="flex justify-center gap-2 mt-6 sm:mt-8">
                       {[1, 2, 3].map((dot) => (
                         <div 
                           key={dot}
@@ -175,7 +175,7 @@ const RelationshipStatsSection = () => {
               ))}
             </CarouselContent>
             
-            <div className="hidden md:block">
+            <div className="hidden lg:block">
               <CarouselPrevious className="left-0 border-[#5d4357] text-[#5d4357]" />
               <CarouselNext className="right-0 border-[#5d4357] text-[#5d4357]" />
             </div>

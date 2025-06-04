@@ -39,11 +39,11 @@ const Navbar = ({ hasNewLoveNote = false, onViewLoveNote }: NavbarProps) => {
   return (
     <nav className="bg-white shadow-sm sticky top-0 z-50 pt-safe-top">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16 pt-2 md:pt-0">
+        <div className="flex justify-between items-center h-16 sm:h-20 pt-4 sm:pt-6 md:pt-2">
           <NavbarLogo />
           
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-6 lg:space-x-8">
             <NavbarDesktopLinks user={user} />
             
             <NavbarNotificationIcon 
@@ -56,7 +56,7 @@ const Navbar = ({ hasNewLoveNote = false, onViewLoveNote }: NavbarProps) => {
                 onClick={handleSignOut}
                 variant="outline"
                 size="sm"
-                className="text-[#1E2A38] border-[#1E2A38] hover:bg-[#1E2A38]/10"
+                className="text-[#1E2A38] border-[#1E2A38] hover:bg-[#1E2A38]/10 px-4 py-2"
               >
                 Sign Out
               </Button>
@@ -64,7 +64,7 @@ const Navbar = ({ hasNewLoveNote = false, onViewLoveNote }: NavbarProps) => {
               <Link to="/auth">
                 <Button 
                   size="sm"
-                  className="bg-[#1E2A38] hover:bg-[#1E2A38]/90 text-white"
+                  className="bg-[#1E2A38] hover:bg-[#1E2A38]/90 text-white px-4 py-2"
                 >
                   Sign In
                 </Button>
@@ -73,14 +73,14 @@ const Navbar = ({ hasNewLoveNote = false, onViewLoveNote }: NavbarProps) => {
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden flex items-center space-x-2">
+          <div className="md:hidden flex items-center space-x-3">
             <NavbarNotificationIcon 
               hasNewLoveNote={hasNewLoveNote}
               onLoveNoteClick={handleLoveNoteClick}
             />
             <button
               onClick={toggleMenu}
-              className="text-gray-600 hover:text-gray-900 focus:outline-none focus:text-gray-900 p-2"
+              className="text-gray-600 hover:text-gray-900 focus:outline-none focus:text-gray-900 p-3 touch-manipulation"
             >
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>

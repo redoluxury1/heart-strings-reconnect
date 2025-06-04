@@ -20,7 +20,7 @@ const Index = () => {
       <main className="flex-1">
         <Hero />
         
-        <BrandSection className="py-8 md:py-12" showLogo={false}>
+        <BrandSection className="py-6 sm:py-8 lg:py-12" showLogo={false}>
           <ContentContainer>
             <HomeLanding />
           </ContentContainer>
