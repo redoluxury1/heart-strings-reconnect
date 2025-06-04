@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useContext, createContext } from 'react';
 import { User } from '@supabase/supabase-js';
 import { supabase } from '../integrations/supabase/client';
@@ -38,12 +37,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   useEffect(() => {
     console.log("AuthContext - initializing auth state check");
-    
+
     // Set up auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
         console.log("AuthContext - auth state change:", event, { session: !!session });
-        
+
         if (session?.user) {
           setUser(session.user);
           // Load relationship data in background - don't wait for it
@@ -52,7 +51,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           setUser(null);
           setRelationship(null);
         }
-        
+
         // CRITICAL: Always set loading to false after we know the auth state
         console.log("AuthContext - setting loading to false after auth state change");
         setLoading(false);
@@ -64,7 +63,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       try {
         const { data: { session }, error } = await supabase.auth.getSession();
         console.log("AuthContext - getSession completed", { session: !!session, error });
-        
+
         if (error) {
           console.error("Error getting session:", error);
         } else if (session?.user) {
@@ -88,7 +87,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const loadUserRelationship = async (userId: string) => {
     console.log("AuthContext - loading user relationship for:", userId);
-    
+
     try {
       const { data, error } = await supabase
         .from('relationships')
@@ -102,7 +101,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         console.error("Error loading relationship:", error);
         return;
       }
-      
+
       if (data) {
         // Map the database relationship to our interface
         const mappedRelationship: Relationship = {
@@ -124,20 +123,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const signIn = async (email: string, password?: string) => {
     try {
       console.log("AuthContext - attempting sign in for:", email, "with password:", !!password);
-      
+
       if (password) {
         // Email/password login
-        const { error, data } = await supabase.auth.signInWithPassword({ 
-          email, 
-          password 
+        const { error, data } = await supabase.auth.signInWithPassword({
+          email,
+          password
         });
-        
+
         if (error) {
           console.error("Sign in error:", error);
-          
+
           // Provide more specific error messaging
           if (error.message.includes("email not confirmed")) {
-            return { 
+            return {
               error: {
                 ...error,
                 message: "Please check your email and click the confirmation link before logging in. If you don't see it, check your spam folder."
@@ -145,7 +144,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             };
           }
         }
-        
+
         console.log("Sign in result:", { error: !!error, data: !!data });
         return { error, data };
       } else {
@@ -167,8 +166,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signUp = async (email: string, password: string, name?: string, disableEmailConfirmation: boolean = false) => {
     try {
+      const { data: checkUserData } = await supabase.functions.invoke('check-user-exists', {
+        body: { email }
+      });
+
+      if (checkUserData.exists) {
+        return { error: { message: "A user with this email already exists. Please log in or use a different email." } };
+      }
+
       console.log("AuthContext - attempting sign up for:", email, "with name:", name, "disable email:", disableEmailConfirmation);
-      
       // COMPLETELY DISABLE Supabase's email confirmation system
       const { error, data } = await supabase.auth.signUp({
         email: email,
@@ -179,17 +185,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           // Our custom system will handle ALL email verification
         }
       });
-      
+
       if (error) {
         console.error("Sign up error:", error);
       } else {
-        console.log("Sign up successful:", { 
-          user: !!data.user, 
+        console.log("Sign up successful:", {
+          user: !!data.user,
           session: !!data.session,
           needsConfirmation: !data.session && data.user && !data.user.email_confirmed_at
         });
       }
-      
+
       return { error, data };
     } catch (error: any) {
       console.error("Sign up exception:", error);
@@ -211,7 +217,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const { error } = await supabase.auth.updateUser({
         data: metadata
       });
-      
+
       if (error) {
         console.error("Error updating user metadata:", error);
         throw error;
