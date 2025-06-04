@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -17,13 +16,13 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  
+
   const navigate = useNavigate();
   const { signUp } = useAuth();
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!email || !password || !name) {
       toast({
         title: "Missing fields",
@@ -32,22 +31,24 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
       });
       return;
     }
-    
+
     setIsLoading(true);
-    
+
     try {
       console.log("=== STARTING SIGNUP PROCESS ===");
       console.log("Email:", email);
       console.log("Name:", name);
       console.log("Password provided:", !!password);
-      
+
       // Create the account with Supabase email confirmation DISABLED
       const { error: signupError, data: signupData } = await signUp(email, password, name, true);
-      
+
       if (signupError) {
         console.error("Signup error:", signupError);
-        
-        if (signupError.message.includes("User already registered")) {
+        if (
+          signupError.message.includes("User already registered") ||
+          signupError.message.includes("A user with this email already exists")
+        ) {
           toast({
             title: "Account already exists",
             description: "This email is already registered. Please try logging in instead.",
@@ -55,7 +56,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
           });
           return;
         }
-        
+
         // Handle other signup errors
         toast({
           title: "Signup failed",
@@ -75,7 +76,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
       if (signupData?.user?.id) {
         console.log("Sending custom verification email for user:", signupData.user.id);
         const emailSent = await sendVerificationEmail(email, name, signupData.user.id);
-        
+
         if (emailSent) {
           toast({
             title: "Account created successfully!",
@@ -99,10 +100,10 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
         });
         navigate('/auth?message=check-email');
       }
-      
+
     } catch (error: any) {
       console.error("Signup process failed:", error);
-      
+
       toast({
         title: "Signup failed",
         description: error.message || "There was a problem creating your account. Please try again.",
@@ -115,32 +116,32 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
 
   return (
     <form onSubmit={handleSignup} className="space-y-4 mt-4">
-      <NameField 
+      <NameField
         value={name}
         onChange={(e) => setName(e.target.value)}
       />
-      
-      <EmailField 
+
+      <EmailField
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         id="signupEmail"
       />
-      
-      <PasswordField 
+
+      <PasswordField
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         id="signupPassword"
         placeholder="Enter a secure password"
       />
-      
-      <Button 
-        type="submit" 
+
+      <Button
+        type="submit"
         disabled={isLoading || !email || !password || !name}
         className="w-full rounded-full bg-[#2e4059] hover:bg-[#2e4059]/90 text-white"
       >
         {isLoading ? "Creating Account..." : "Sign Up"}
       </Button>
-      
+
       <p className="text-center text-xs text-[#1E2A38]/60 mt-4">
         We'll send you a verification email to complete your registration.
       </p>
