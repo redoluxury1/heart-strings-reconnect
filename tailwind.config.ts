@@ -77,6 +77,10 @@ const config: Config = {
         'pale-blue': '#D4E2EA',
         'warm-white': '#FDFAF7',
         'deep-navy': '#1A252F',
+        'midnight-indigo': 'hsl(248 34% 41%)',
+        'soft-blush': 'hsl(30 25% 93%)',
+        'rosewood-tint': 'hsl(1 60% 75%)',
+        'lavender-blue': 'hsl(245 34% 66%)',
       },
       borderRadius: {
         lg: "var(--radius)",
