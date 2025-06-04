@@ -20,7 +20,7 @@ const HomeLanding = () => {
   const [isShareOpen, setIsShareOpen] = useState(false);
   
   return (
-    <div className="text-center px-4 sm:px-6 lg:px-8 pt-12 sm:pt-16 lg:pt-20 pb-8 sm:pb-12 lg:pb-16">
+    <div className="text-center px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 lg:pt-8 pb-8 sm:pb-12 lg:pb-16">
       <div 
         className="relative transition-all duration-200"
         onMouseEnter={() => setIsHovered(true)}
