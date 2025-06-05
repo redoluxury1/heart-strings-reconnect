@@ -37,7 +37,7 @@ const Navbar = ({ hasNewLoveNote = false, onViewLoveNote }: NavbarProps) => {
   };
 
   return (
-    <nav className="bg-soft-cream sticky top-0 z-50 safe-area-navbar">
+    <nav className="bg-soft-cream safe-area-navbar">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16 sm:h-20 navbar-content">
           <NavbarLogo />

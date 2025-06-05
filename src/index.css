@@ -72,27 +72,15 @@
     @apply border-border;
   }
   
-  html {
-    /* Ensure proper viewport coverage with safe areas */
-    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
-    padding: constant(safe-area-inset-top) constant(safe-area-inset-right) constant(safe-area-inset-bottom) constant(safe-area-inset-left);
-  }
-  
   body {
     @apply bg-background text-foreground;
-    /* Reset body padding to prevent double safe area on iOS */
-    padding: 0;
     margin: 0;
+    padding: 0;
   }
 }
 
-/* Enhanced iOS viewport fix for mobile web apps */
+/* iOS viewport fix for mobile web apps */
 @supports (-webkit-touch-callout: none) {
-  html {
-    /* Reset html padding on iOS to prevent double safe area */
-    padding: 0;
-  }
-  
   body {
     /* Disable iOS bounce effect */
     position: fixed;
@@ -108,8 +96,5 @@
     height: 100vh;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    /* Apply safe area to the root container on iOS */
-    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
-    padding: constant(safe-area-inset-top) constant(safe-area-inset-right) constant(safe-area-inset-bottom) constant(safe-area-inset-left);
   }
 }

@@ -1,57 +1,30 @@
 
 /* iOS Safe Area Support */
 .safe-area-navbar {
-  /* Add safe area top padding for iOS devices */
-  padding-top: env(safe-area-inset-top);
-  /* Fallback for browsers that don't support env() */
-  padding-top: constant(safe-area-inset-top);
-  /* Minimum padding to ensure content never touches the top */
-  padding-top: max(1rem, env(safe-area-inset-top));
-  padding-top: max(1rem, constant(safe-area-inset-top));
+  /* Use calc to properly combine safe area with minimum padding */
+  padding-top: calc(env(safe-area-inset-top, 0px) + 1rem);
+  /* Fallback for older iOS versions */
+  padding-top: calc(constant(safe-area-inset-top, 0px) + 1rem);
 }
 
 .navbar-content {
-  /* Ensure minimum top padding on all devices */
-  padding-top: max(1rem, env(safe-area-inset-top));
-  padding-top: max(1rem, constant(safe-area-inset-top));
-  /* Add extra padding for better visual separation */
-  padding-top: max(1.5rem, env(safe-area-inset-top));
-  padding-top: max(1.5rem, constant(safe-area-inset-top));
+  /* Additional content padding for better visual separation */
+  padding-top: 0.5rem;
 }
 
-/* Additional safe area support for mobile devices */
+/* Mobile specific adjustments */
 @media screen and (max-width: 768px) {
   .safe-area-navbar {
-    /* Enhanced padding for mobile devices */
-    padding-top: max(1rem, env(safe-area-inset-top));
-    padding-top: max(1rem, constant(safe-area-inset-top));
-  }
-  
-  .navbar-content {
-    /* Ensure substantial top padding on mobile */
-    padding-top: max(1.5rem, env(safe-area-inset-top));
-    padding-top: max(1.5rem, constant(safe-area-inset-top));
+    /* Increased minimum padding for mobile */
+    padding-top: calc(env(safe-area-inset-top, 0px) + 1.5rem);
+    padding-top: calc(constant(safe-area-inset-top, 0px) + 1.5rem);
   }
 }
 
-/* Specific support for iPhone notch devices */
-@supports (padding-top: env(safe-area-inset-top)) {
-  .safe-area-navbar {
-    padding-top: max(1rem, env(safe-area-inset-top));
-  }
-  
-  .navbar-content {
-    padding-top: max(1.5rem, env(safe-area-inset-top));
-  }
-}
-
-/* Legacy support for older iOS versions */
-@supports (padding-top: constant(safe-area-inset-top)) {
-  .safe-area-navbar {
-    padding-top: max(1rem, constant(safe-area-inset-top));
-  }
-  
-  .navbar-content {
-    padding-top: max(1.5rem, constant(safe-area-inset-top));
-  }
+/* Ensure the navbar is positioned correctly */
+.safe-area-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background-color: var(--soft-cream);
 }
