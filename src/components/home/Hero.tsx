@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { cn } from "@/lib/utils";
 
@@ -64,18 +65,12 @@ const bubbleVariants = [
 const Hero = () => {
   const [visibleBubbles, setVisibleBubbles] = useState([]);
   const [usedPositions, setUsedPositions] = useState([]);
-  const [isVisible, setIsVisible] = useState(false);
   
   const bubbleStyles = getBubbleStyles();
 
-  useEffect(() => {
-    // Set visible after component mounts to trigger transitions properly
-    setIsVisible(true);
-  }, []);
-
   // Function to create a new bubble
   const createBubble = () => {
-    // Only allow up to 2 bubbles at once to reduce DOM operations
+    // Only allow up to 2 bubbles at once
     if (visibleBubbles.length >= 2) return;
     
     const messageIndex = Math.floor(Math.random() * messages.length);
@@ -86,8 +81,11 @@ const Hero = () => {
       (_, index) => !usedPositions.includes(index)
     );
     
-    // If all positions are used, don't add a new bubble
-    if (availablePositions.length === 0) return;
+    // If all positions are used, clear some positions
+    if (availablePositions.length === 0) {
+      setUsedPositions([]);
+      return;
+    }
     
     // Select a random position from available ones
     const positionIndex = Math.floor(Math.random() * availablePositions.length);
@@ -99,7 +97,7 @@ const Hero = () => {
     setUsedPositions(prev => [...prev, selectedVariantIndex]);
     
     const newBubble = {
-      id: Date.now(),
+      id: Date.now() + Math.random(),
       message: messages[messageIndex],
       style: bubbleStyles[styleIndex],
       positionStyle: bubbleVariants[selectedVariantIndex].position,
@@ -113,37 +111,33 @@ const Hero = () => {
     setTimeout(() => {
       const bubbleElement = document.getElementById(`bubble-${newBubble.id}`);
       if (bubbleElement) {
-        bubbleElement.style.animation = 'fadeOut 1.5s forwards'; // Slower fade out
+        bubbleElement.style.animation = 'fadeOut 1.5s forwards';
         bubbleElement.addEventListener('animationend', () => {
           setVisibleBubbles(prev => prev.filter(bubble => bubble.id !== newBubble.id));
           // Free up this position
           setUsedPositions(prev => prev.filter(pos => pos !== selectedVariantIndex));
         });
       }
-    }, 4500); // More consistent display time
+    }, 4500);
   };
 
-  // Effect to periodically add new bubbles
+  // Effect to periodically add new bubbles - simplified dependencies
   useEffect(() => {
-    if (!isVisible) return; // Don't start animations until visible
-    
     // Initial bubble on load with delay
     const initialTimer = setTimeout(() => {
       createBubble();
-    }, 1200); // Slightly longer initial delay for page load
+    }, 1200);
     
-    // Set interval to add new bubbles at staggered times
+    // Set interval to add new bubbles at regular intervals
     const interval = setInterval(() => {
-      if (Math.random() > 0.3) { // 70% chance to create a new bubble each interval
-        createBubble();
-      }
-    }, 1500); // Increased interval for better performance
+      createBubble();
+    }, 2000); // Create a bubble every 2 seconds
     
     return () => {
       clearTimeout(initialTimer);
       clearInterval(interval);
     };
-  }, [isVisible, visibleBubbles.length, usedPositions]);
+  }, []); // Empty dependency array to prevent restarts
 
   return (
     <div className="relative z-10 bg-gradient-to-b from-rose-50 via-white to-transparent py-20 pb-28 overflow-visible">
