@@ -1,82 +1,69 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
-@import './styles/animations/index.css';
-@import './styles/utilities.css';
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Import safe area styles */
+@import './styles/safe-area.css';
+@import './styles/utilities.css';
+@import './styles/animations/index.css';
+
 @layer base {
   :root {
-    --background: 36 28% 85%;  /* Soft Cream */
-    --foreground: 248 34% 41%;  /* Midnight Indigo */
-
-    --card: 30 25% 93%;  /* Soft Blush - Updated to match exact value */
-    --card-foreground: 248 34% 41%;  /* Midnight Indigo */
-
-    --popover: 30 25% 93%;  /* Soft Blush - Updated to match exact value */
-    --popover-foreground: 248 34% 41%;  /* Midnight Indigo */
-
-    --primary: 248 34% 41%;  /* Midnight Indigo */
-    --primary-foreground: 30 25% 93%;  /* Soft Blush */
-
-    --secondary: 1 60% 75%;  /* Rosewood Tint */
-    --secondary-foreground: 30 25% 93%;  /* Soft Blush */
-
-    --muted: 240 5% 96%;
-    --muted-foreground: 240 3.8% 46.1%;
-
-    --accent: 245 34% 66%;  /* Lavender Blue */
-    --accent-foreground: 30 25% 93%;  /* Soft Blush */
-
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222.2 84% 4.9%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222.2 84% 4.9%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-
-    --border: 248 34% 41%;  /* Midnight Indigo */
-    --input: 248 34% 41%;  /* Midnight Indigo */
-    --ring: 248 34% 41%;  /* Midnight Indigo */
-
-    --radius: 1rem;
-
-    --sidebar-background: 30 25% 93%;  /* Soft Blush */
-    --sidebar-foreground: 248 34% 41%;  /* Midnight Indigo */
-    --sidebar-primary: 248 34% 41%;  /* Midnight Indigo */
-    --sidebar-primary-foreground: 30 25% 93%;  /* Soft Blush */
-    --sidebar-accent: 36 28% 85%;  /* Soft Cream */
-    --sidebar-accent-foreground: 248 34% 41%;  /* Midnight Indigo */
-    --sidebar-border: 248 34% 41%;  /* Midnight Indigo */
-    --sidebar-ring: 1 60% 75%;  /* Rosewood Tint */
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --radius: 0.5rem;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
   }
 
   .dark {
-    --background: 248 34% 41%;  /* Midnight Indigo */
-    --foreground: 30 25% 93%;  /* Soft Blush */
-
-    --card: 248 34% 31%;  /* Darker Midnight Indigo */
-    --card-foreground: 30 25% 93%;  /* Soft Blush */
-
-    --popover: 248 34% 31%;  /* Darker Midnight Indigo */
-    --popover-foreground: 30 25% 93%;  /* Soft Blush */
-
-    --primary: 30 25% 93%;  /* Soft Blush */
-    --primary-foreground: 248 34% 41%;  /* Midnight Indigo */
-
-    --secondary: 1 60% 75%;  /* Rosewood Tint */
-    --secondary-foreground: 30 25% 93%;  /* Soft Blush */
-
-    --muted: 248 34% 31%;  /* Darker Midnight Indigo */
-    --muted-foreground: 245 34% 76%;  /* Lighter Lavender Blue */
-
-    --accent: 245 34% 66%;  /* Lavender Blue */
-    --accent-foreground: 30 25% 93%;  /* Soft Blush */
-
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-
-    --border: 245 34% 66%;  /* Lavender Blue */
-    --input: 245 34% 66%;  /* Lavender Blue */
-    --ring: 30 25% 93%;  /* Soft Blush */
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
   }
 }
 
@@ -84,12 +71,30 @@
   * {
     @apply border-border;
   }
-
   body {
-    @apply bg-soft-cream text-midnight-indigo font-inter;
+    @apply bg-background text-foreground;
+    /* Ensure full viewport coverage with safe areas */
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    padding: constant(safe-area-inset-top) constant(safe-area-inset-right) constant(safe-area-inset-bottom) constant(safe-area-inset-left);
+  }
+}
+
+/* iOS viewport fix for mobile web apps */
+@supports (-webkit-touch-callout: none) {
+  body {
+    /* Disable iOS bounce effect */
+    position: fixed;
+    overflow: hidden;
+    width: 100%;
+    height: 100vh;
+    /* Reset body padding on iOS to prevent double safe area */
+    padding: 0;
   }
   
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-cormorant;
+  #root {
+    width: 100%;
+    height: 100vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 }

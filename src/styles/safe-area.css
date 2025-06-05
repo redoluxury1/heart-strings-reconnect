@@ -1,0 +1,51 @@
+
+/* iOS Safe Area Support */
+.safe-area-navbar {
+  /* Add safe area top padding for iOS devices */
+  padding-top: env(safe-area-inset-top);
+  /* Fallback for browsers that don't support env() */
+  padding-top: constant(safe-area-inset-top);
+}
+
+.navbar-content {
+  /* Ensure minimum top padding on all devices */
+  padding-top: max(1rem, env(safe-area-inset-top));
+  padding-top: max(1rem, constant(safe-area-inset-top));
+}
+
+/* Additional safe area support for mobile devices */
+@media screen and (max-width: 768px) {
+  .safe-area-navbar {
+    /* Enhanced padding for mobile devices */
+    padding-top: max(0.5rem, env(safe-area-inset-top));
+    padding-top: max(0.5rem, constant(safe-area-inset-top));
+  }
+  
+  .navbar-content {
+    /* Adjust content padding for mobile */
+    padding-top: max(0.75rem, env(safe-area-inset-top, 0.75rem));
+    padding-top: max(0.75rem, constant(safe-area-inset-top, 0.75rem));
+  }
+}
+
+/* Specific support for iPhone notch devices */
+@supports (padding-top: env(safe-area-inset-top)) {
+  .safe-area-navbar {
+    padding-top: env(safe-area-inset-top);
+  }
+  
+  .navbar-content {
+    padding-top: max(1rem, env(safe-area-inset-top));
+  }
+}
+
+/* Legacy support for older iOS versions */
+@supports (padding-top: constant(safe-area-inset-top)) {
+  .safe-area-navbar {
+    padding-top: constant(safe-area-inset-top);
+  }
+  
+  .navbar-content {
+    padding-top: max(1rem, constant(safe-area-inset-top));
+  }
+}
