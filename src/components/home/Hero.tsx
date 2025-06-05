@@ -65,15 +65,29 @@ const bubbleVariants = [
 const Hero = () => {
   const [visibleBubbles, setVisibleBubbles] = useState([]);
   const [usedPositions, setUsedPositions] = useState([]);
+  const [usedMessages, setUsedMessages] = useState([]);
   
   const bubbleStyles = getBubbleStyles();
 
   // Function to create a new bubble
   const createBubble = () => {
-    // Only allow up to 2 bubbles at once
-    if (visibleBubbles.length >= 2) return;
+    // Limit to maximum 3 bubbles on screen
+    if (visibleBubbles.length >= 3) return;
     
-    const messageIndex = Math.floor(Math.random() * messages.length);
+    // Get available messages (not recently used)
+    const availableMessages = messages.filter(
+      (_, index) => !usedMessages.includes(index)
+    );
+    
+    // If all messages used, reset the used messages array
+    if (availableMessages.length === 0) {
+      setUsedMessages([]);
+      return;
+    }
+    
+    const messageIndex = Math.floor(Math.random() * availableMessages.length);
+    const actualMessageIndex = messages.findIndex(msg => msg === availableMessages[messageIndex]);
+    
     const styleIndex = Math.floor(Math.random() * bubbleStyles.length);
     
     // Find an available position that's not currently used
@@ -93,12 +107,13 @@ const Hero = () => {
       variant => variant === availablePositions[positionIndex]
     );
     
-    // Add this position to used positions
+    // Add this position and message to used arrays
     setUsedPositions(prev => [...prev, selectedVariantIndex]);
+    setUsedMessages(prev => [...prev, actualMessageIndex]);
     
     const newBubble = {
       id: Date.now() + Math.random(),
-      message: messages[messageIndex],
+      message: messages[actualMessageIndex],
       style: bubbleStyles[styleIndex],
       positionStyle: bubbleVariants[selectedVariantIndex].position,
       tailPosition: bubbleVariants[selectedVariantIndex].tail,
@@ -107,40 +122,58 @@ const Hero = () => {
     
     setVisibleBubbles(prev => [...prev, newBubble]);
     
-    // Set timeout to start fading out the bubble after display time
+    // Set timeout to start fading out the bubble after longer display time
     setTimeout(() => {
       const bubbleElement = document.getElementById(`bubble-${newBubble.id}`);
       if (bubbleElement) {
-        bubbleElement.style.animation = 'fadeOut 1.5s forwards';
-        bubbleElement.addEventListener('animationend', () => {
+        bubbleElement.style.opacity = '0';
+        bubbleElement.style.transform = 'translateY(-10px) scale(0.95)';
+        bubbleElement.style.transition = 'opacity 1.5s ease-out, transform 1.5s ease-out';
+        
+        // Remove from DOM after fade out completes
+        setTimeout(() => {
           setVisibleBubbles(prev => prev.filter(bubble => bubble.id !== newBubble.id));
           // Free up this position
           setUsedPositions(prev => prev.filter(pos => pos !== selectedVariantIndex));
-        });
+        }, 1500);
       }
-    }, 4500);
+    }, 6000); // Display for 6 seconds before starting fade out
   };
 
-  // Effect to periodically add new bubbles - simplified dependencies
+  // Effect to periodically add new bubbles
   useEffect(() => {
-    // Initial bubble on load with delay
+    // Initial bubble after a delay
     const initialTimer = setTimeout(() => {
       createBubble();
-    }, 1200);
+    }, 2000);
     
-    // Set interval to add new bubbles at regular intervals
+    // Set interval to add new bubbles at slower intervals
     const interval = setInterval(() => {
       createBubble();
-    }, 2000); // Create a bubble every 2 seconds
+    }, 4000); // Create a bubble every 4 seconds (slower)
     
     return () => {
       clearTimeout(initialTimer);
       clearInterval(interval);
     };
-  }, []); // Empty dependency array to prevent restarts
+  }, []);
 
   return (
     <div className="relative z-10 bg-gradient-to-b from-rose-50 via-white to-transparent py-20 pb-28 overflow-visible">
+      {/* CSS for bubble animations */}
+      <style jsx>{`
+        @keyframes fadeInSlow {
+          0% { 
+            opacity: 0; 
+            transform: translateY(20px) scale(0.9);
+          }
+          100% { 
+            opacity: 1; 
+            transform: translateY(0) scale(1);
+          }
+        }
+      `}</style>
+      
       {/* Message Bubbles Container - extending beyond its boundaries */}
       <div className="absolute inset-0 h-[220px] w-full overflow-visible">
         {visibleBubbles.map(bubble => (
@@ -157,7 +190,7 @@ const Hero = () => {
               bubble.style.position
             )}
             style={{ 
-              animation: 'fadeIn 1.2s forwards',
+              animation: 'fadeInSlow 2s ease-out forwards',
               willChange: 'opacity, transform',
             }}
           >
