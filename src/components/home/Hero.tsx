@@ -200,6 +200,11 @@ const Hero = () => {
           </div>
         ))}
       </div>
+      
+      {/* Hero quote content - moved down with extra top margin */}
+      <div className="relative z-10 mt-32 sm:mt-36 lg:mt-40">
+        {/* This pushes the hero quote down so bubbles have space above */}
+      </div>
     </div>
   );
 };
