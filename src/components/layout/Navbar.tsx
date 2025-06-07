@@ -37,7 +37,7 @@ const Navbar = ({ hasNewLoveNote = false, onViewLoveNote }: NavbarProps) => {
   };
 
   return (
-    <nav className="bg-soft-cream safe-area-navbar">
+    <nav className="bg-navy-800 safe-area-navbar">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16 sm:h-20 navbar-content">
           <NavbarLogo />
@@ -56,7 +56,7 @@ const Navbar = ({ hasNewLoveNote = false, onViewLoveNote }: NavbarProps) => {
                 onClick={handleSignOut}
                 variant="outline"
                 size="sm"
-                className="text-[#1E2A38] border-[#1E2A38] hover:bg-[#1E2A38]/10 px-4 py-2"
+                className="text-soft-cream border-soft-cream hover:bg-soft-cream/10 px-4 py-2"
               >
                 Sign Out
               </Button>
@@ -64,7 +64,7 @@ const Navbar = ({ hasNewLoveNote = false, onViewLoveNote }: NavbarProps) => {
               <Link to="/auth">
                 <Button 
                   size="sm"
-                  className="bg-[#1E2A38] hover:bg-[#1E2A38]/90 text-white px-4 py-2"
+                  className="bg-soft-cream hover:bg-soft-cream/90 text-navy-800 px-4 py-2"
                 >
                   Sign In
                 </Button>
@@ -80,7 +80,7 @@ const Navbar = ({ hasNewLoveNote = false, onViewLoveNote }: NavbarProps) => {
             />
             <button
               onClick={toggleMenu}
-              className="text-gray-600 hover:text-gray-900 focus:outline-none focus:text-gray-900 p-3 touch-manipulation"
+              className="text-soft-cream hover:text-soft-cream/80 focus:outline-none focus:text-soft-cream p-3 touch-manipulation"
             >
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
