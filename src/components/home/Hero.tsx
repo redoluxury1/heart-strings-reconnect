@@ -158,7 +158,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <div className="relative z-10 bg-gradient-to-b from-rose-50 via-white to-transparent py-20 pb-28 overflow-visible">
+    <div className="relative z-10 overflow-visible pt-4 pb-16">
       {/* CSS for bubble animations */}
       <style dangerouslySetInnerHTML={{
         __html: `

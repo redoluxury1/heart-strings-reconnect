@@ -16,10 +16,12 @@ const Index = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-soft-cream">
-      <Navbar />
-      <main className="flex-1 pt-8 sm:pt-12 md:pt-16 lg:pt-20">
+      <div className="bg-navy-800">
+        <Navbar />
         <Hero />
-        
+      </div>
+      
+      <main className="flex-1">
         <BrandSection className="py-6 sm:py-8 lg:py-12" showLogo={false}>
           <ContentContainer>
             <HomeLanding />

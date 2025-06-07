@@ -8,7 +8,7 @@ const NavbarLogo = () => {
     <div className="flex items-center">
       <Link to="/" className="flex items-center">
         <OptimizedImage 
-          src="/lovable-uploads/3a1869fe-bcbd-4a78-afa7-e6b39e5c9a74.png" 
+          src="/lovable-uploads/ae88d713-8b7c-4ecb-8e9b-24a41360f211.png" 
           alt="Bridge For Couples" 
           className="h-12 w-auto"
           priority={true}
