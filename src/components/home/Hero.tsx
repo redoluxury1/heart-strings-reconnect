@@ -159,7 +159,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <div className="relative overflow-visible pt-4 pb-16 bg-gradient-to-b from-navy-800 via-navy-800/95 to-[#f5f1eb]">
+    <div className="relative overflow-visible pt-4 pb-8 bg-gradient-to-b from-navy-800 via-navy-800/90 to-[#f8f5ef]">
       {/* CSS for bubble animations */}
       <style dangerouslySetInnerHTML={{
         __html: `
