@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { cn } from "@/lib/utils";
 
@@ -159,10 +158,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <div className="relative overflow-visible bg-gradient-to-b from-navy-800 via-navy-800/90 to-[#f8f5ef]">
-      {/* Empty navy space above everything */}
-      <div className="h-16 sm:h-20 lg:h-24 bg-navy-800"></div>
-      
+    <div className="relative overflow-visible bg-navy-800">
       {/* CSS for bubble animations */}
       <style dangerouslySetInnerHTML={{
         __html: `
@@ -180,7 +176,7 @@ const Hero = () => {
       }} />
       
       {/* Message Bubbles Container - positioned behind main content */}
-      <div className="absolute inset-0 h-[220px] w-full overflow-visible z-0 mt-16 sm:mt-20 lg:mt-24">
+      <div className="absolute inset-0 h-[300px] w-full overflow-visible z-0 pt-8">
         {visibleBubbles.map(bubble => (
           <div 
             id={`bubble-${bubble.id}`}
@@ -204,9 +200,9 @@ const Hero = () => {
         ))}
       </div>
       
-      {/* Hero quote content - moved down with extra top margin */}
-      <div className="relative z-10 mt-32 sm:mt-36 lg:mt-40 pt-4 pb-8">
-        {/* This pushes the hero quote down so bubbles have space above */}
+      {/* Hero content with seamless gradient transition */}
+      <div className="relative z-10 pt-24 pb-16 bg-gradient-to-b from-navy-800 via-navy-800/95 to-[#f8f5ef]">
+        {/* Content goes here but is currently empty for bubbles display */}
       </div>
     </div>
   );
