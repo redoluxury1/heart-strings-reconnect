@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { cn } from "@/lib/utils";
 
@@ -160,9 +159,6 @@ const Hero = () => {
 
   return (
     <div className="relative overflow-visible">
-      {/* Extra space above navbar for iOS safe area - visible navy space */}
-      <div className="h-20 sm:h-24 lg:h-28 bg-navy-800"></div>
-      
       {/* CSS for bubble animations */}
       <style dangerouslySetInnerHTML={{
         __html: `
