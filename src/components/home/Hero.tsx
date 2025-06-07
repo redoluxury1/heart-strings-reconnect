@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { cn } from "@/lib/utils";
 
@@ -161,18 +160,20 @@ const Hero = () => {
   return (
     <div className="relative z-10 bg-gradient-to-b from-rose-50 via-white to-transparent py-20 pb-28 overflow-visible">
       {/* CSS for bubble animations */}
-      <style jsx>{`
-        @keyframes fadeInSlow {
-          0% { 
-            opacity: 0; 
-            transform: translateY(20px) scale(0.9);
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          @keyframes fadeInSlow {
+            0% { 
+              opacity: 0; 
+              transform: translateY(20px) scale(0.9);
+            }
+            100% { 
+              opacity: 1; 
+              transform: translateY(0) scale(1);
+            }
           }
-          100% { 
-            opacity: 1; 
-            transform: translateY(0) scale(1);
-          }
-        }
-      `}</style>
+        `
+      }} />
       
       {/* Message Bubbles Container - extending beyond its boundaries */}
       <div className="absolute inset-0 h-[220px] w-full overflow-visible">
