@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { cn } from "@/lib/utils";
 
@@ -175,10 +176,10 @@ const Hero = () => {
         `
       }} />
       
-      {/* Hero content area with gradient background */}
+      {/* Hero content area with gradient background - bubbles start right after navbar */}
       <div className="relative bg-gradient-to-b from-navy-800 via-navy-800/95 to-[#f8f5ef] min-h-[400px] pb-16">
-        {/* Message Bubbles Container - positioned on top of content */}
-        <div className="absolute inset-0 w-full overflow-visible z-20 pt-8">
+        {/* Message Bubbles Container - positioned to start right after navbar */}
+        <div className="absolute inset-0 w-full overflow-visible z-20 pt-4">
           {visibleBubbles.map(bubble => (
             <div 
               id={`bubble-${bubble.id}`}
@@ -202,8 +203,8 @@ const Hero = () => {
           ))}
         </div>
         
-        {/* Hero content with proper spacing for bubbles */}
-        <div className="relative z-10 pt-24 px-4">
+        {/* Hero content with minimal spacing for bubbles */}
+        <div className="relative z-10 pt-8 px-4">
           {/* Content goes here - currently empty to showcase bubbles */}
         </div>
       </div>
