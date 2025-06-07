@@ -10,7 +10,7 @@ const StillUsSection: React.FC = () => {
   const { ref, isVisible } = useScrollReveal();
   
   return (
-    <section className="py-12 sm:py-16 lg:py-20 bg-white">
+    <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-b from-[#f5f1eb] to-white">
       <ContentContainer>
         <div className="text-center mb-8 sm:mb-12 lg:mb-16">
           <div 
