@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { cn } from "@/lib/utils";
 
@@ -158,7 +159,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <div className="relative z-10 overflow-visible pt-4 pb-16">
+    <div className="relative overflow-visible pt-4 pb-16">
       {/* CSS for bubble animations */}
       <style dangerouslySetInnerHTML={{
         __html: `
@@ -175,8 +176,8 @@ const Hero = () => {
         `
       }} />
       
-      {/* Message Bubbles Container - extending beyond its boundaries */}
-      <div className="absolute inset-0 h-[220px] w-full overflow-visible">
+      {/* Message Bubbles Container - positioned behind main content */}
+      <div className="absolute inset-0 h-[220px] w-full overflow-visible z-0">
         {visibleBubbles.map(bubble => (
           <div 
             id={`bubble-${bubble.id}`}
@@ -187,7 +188,7 @@ const Hero = () => {
               bubble.style.textColor,
               bubble.positionStyle,
               bubble.tailPosition,
-              "z-20 after:content-[''] after:absolute after:bottom-[-8px] after:border-l-[8px] after:border-l-transparent after:border-r-[8px] after:border-r-transparent after:border-t-[8px]",
+              "after:content-[''] after:absolute after:bottom-[-8px] after:border-l-[8px] after:border-l-transparent after:border-r-[8px] after:border-r-transparent after:border-t-[8px]",
               bubble.style.position
             )}
             style={{ 
