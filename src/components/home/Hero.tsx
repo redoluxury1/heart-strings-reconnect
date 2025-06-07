@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { cn } from "@/lib/utils";
 
@@ -158,7 +159,10 @@ const Hero = () => {
   }, []);
 
   return (
-    <div className="relative overflow-visible bg-navy-800">
+    <div className="relative overflow-visible">
+      {/* Extra space above navbar for iOS safe area - visible navy space */}
+      <div className="h-20 sm:h-24 lg:h-28 bg-navy-800"></div>
+      
       {/* CSS for bubble animations */}
       <style dangerouslySetInnerHTML={{
         __html: `
@@ -175,34 +179,37 @@ const Hero = () => {
         `
       }} />
       
-      {/* Message Bubbles Container - positioned behind main content */}
-      <div className="absolute inset-0 h-[300px] w-full overflow-visible z-0 pt-8">
-        {visibleBubbles.map(bubble => (
-          <div 
-            id={`bubble-${bubble.id}`}
-            key={bubble.id}
-            className={cn(
-              `absolute px-4 py-2 rounded-xl shadow-sm font-inter font-semibold text-center text-sm`, 
-              bubble.style.bgColor,
-              bubble.style.textColor,
-              bubble.positionStyle,
-              bubble.tailPosition,
-              "after:content-[''] after:absolute after:bottom-[-8px] after:border-l-[8px] after:border-l-transparent after:border-r-[8px] after:border-r-transparent after:border-t-[8px]",
-              bubble.style.position
-            )}
-            style={{ 
-              animation: 'fadeInSlow 2s ease-out forwards',
-              willChange: 'opacity, transform',
-            }}
-          >
-            {bubble.message}
-          </div>
-        ))}
-      </div>
-      
-      {/* Hero content with seamless gradient transition */}
-      <div className="relative z-10 pt-24 pb-16 bg-gradient-to-b from-navy-800 via-navy-800/95 to-[#f8f5ef]">
-        {/* Content goes here but is currently empty for bubbles display */}
+      {/* Hero content area with gradient background */}
+      <div className="relative bg-gradient-to-b from-navy-800 via-navy-800/95 to-[#f8f5ef] min-h-[400px] pb-16">
+        {/* Message Bubbles Container - positioned on top of content */}
+        <div className="absolute inset-0 w-full overflow-visible z-20 pt-8">
+          {visibleBubbles.map(bubble => (
+            <div 
+              id={`bubble-${bubble.id}`}
+              key={bubble.id}
+              className={cn(
+                `absolute px-4 py-2 rounded-xl shadow-sm font-inter font-semibold text-center text-sm`, 
+                bubble.style.bgColor,
+                bubble.style.textColor,
+                bubble.positionStyle,
+                bubble.tailPosition,
+                "after:content-[''] after:absolute after:bottom-[-8px] after:border-l-[8px] after:border-l-transparent after:border-r-[8px] after:border-r-transparent after:border-t-[8px]",
+                bubble.style.position
+              )}
+              style={{ 
+                animation: 'fadeInSlow 2s ease-out forwards',
+                willChange: 'opacity, transform',
+              }}
+            >
+              {bubble.message}
+            </div>
+          ))}
+        </div>
+        
+        {/* Hero content with proper spacing for bubbles */}
+        <div className="relative z-10 pt-24 px-4">
+          {/* Content goes here - currently empty to showcase bubbles */}
+        </div>
       </div>
     </div>
   );
