@@ -159,7 +159,10 @@ const Hero = () => {
   }, []);
 
   return (
-    <div className="relative overflow-visible pt-4 pb-8 bg-gradient-to-b from-navy-800 via-navy-800/90 to-[#f8f5ef]">
+    <div className="relative overflow-visible bg-gradient-to-b from-navy-800 via-navy-800/90 to-[#f8f5ef]">
+      {/* Empty navy space above everything */}
+      <div className="h-16 sm:h-20 lg:h-24 bg-navy-800"></div>
+      
       {/* CSS for bubble animations */}
       <style dangerouslySetInnerHTML={{
         __html: `
@@ -177,7 +180,7 @@ const Hero = () => {
       }} />
       
       {/* Message Bubbles Container - positioned behind main content */}
-      <div className="absolute inset-0 h-[220px] w-full overflow-visible z-0">
+      <div className="absolute inset-0 h-[220px] w-full overflow-visible z-0 mt-16 sm:mt-20 lg:mt-24">
         {visibleBubbles.map(bubble => (
           <div 
             id={`bubble-${bubble.id}`}
@@ -202,7 +205,7 @@ const Hero = () => {
       </div>
       
       {/* Hero quote content - moved down with extra top margin */}
-      <div className="relative z-10 mt-32 sm:mt-36 lg:mt-40">
+      <div className="relative z-10 mt-32 sm:mt-36 lg:mt-40 pt-4 pb-8">
         {/* This pushes the hero quote down so bubbles have space above */}
       </div>
     </div>
