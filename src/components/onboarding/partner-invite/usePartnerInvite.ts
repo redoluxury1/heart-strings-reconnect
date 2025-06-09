@@ -57,18 +57,19 @@ export const usePartnerInvite = (onComplete: () => void) => {
       console.log("Starting invite process...");
       
       // Check if relationship exists, create one if it doesn't
-      let currentRelationship = relationship;
-      if (!currentRelationship) {
+      let currentRelationshipId = relationship?.id;
+      if (!currentRelationshipId) {
         console.log("No relationship found, creating one...");
-        currentRelationship = await createRelationship(user.id);
+        const newRelationship = await createRelationship(user.id);
         
-        if (!currentRelationship) {
+        if (!newRelationship) {
           throw new Error("Failed to create relationship");
         }
-        console.log("Relationship created:", currentRelationship.id);
+        console.log("Relationship created:", newRelationship.id);
+        currentRelationshipId = newRelationship.id;
       }
       
-      const success = await invitePartner(currentRelationship.id, {
+      const success = await invitePartner(currentRelationshipId, {
         partnerEmail,
         partnerName: partnerName || undefined
       });
@@ -128,15 +129,16 @@ export const usePartnerInvite = (onComplete: () => void) => {
     
     try {
       // Check if relationship exists, create one if it doesn't
-      let currentRelationship = relationship;
-      if (!currentRelationship) {
+      let currentRelationshipId = relationship?.id;
+      if (!currentRelationshipId) {
         console.log("No relationship found, creating one...");
-        currentRelationship = await createRelationship(user.id);
+        const newRelationship = await createRelationship(user.id);
         
-        if (!currentRelationship) {
+        if (!newRelationship) {
           throw new Error("Failed to create relationship");
         }
-        console.log("Relationship created:", currentRelationship.id);
+        console.log("Relationship created:", newRelationship.id);
+        currentRelationshipId = newRelationship.id;
       }
       
       // Here we would integrate with an SMS service
