@@ -27,24 +27,161 @@ const ChipSelector: React.FC<ChipSelectorProps> = ({
   };
 
   const getChipIcon = (chipText: string) => {
-    if (chipText.includes("talk") && chipText.includes("shuts down")) return "🗣️";
-    if (chipText.includes("ignored") || chipText.includes("dismissed")) return "🕳️";
-    if (chipText.includes("small") && chipText.includes("blows up")) return "🔥";
-    if (chipText.includes("reconnect") && chipText.includes("missed")) return "💔";
-    if (chipText.includes("exhausted") && chipText.includes("nobody steps")) return "😩";
-    if (chipText.includes("press for answers")) return "🔍";
-    if (chipText.includes("shut down") && chipText.includes("silent")) return "🤐";
-    if (chipText.includes("bring up other things")) return "📚";
-    if (chipText.includes("smooth things over")) return "🩹";
-    if (chipText.includes("keep doing everything")) return "😤";
-    if (chipText.includes("double down") && chipText.includes("right")) return "⚔️";
-    if (chipText.includes("dig in") || chipText.includes("control")) return "🎯";
-    if (chipText.includes("defensive")) return "🛡️";
-    if (chipText.includes("walk away") || chipText.includes("quiet")) return "🚪";
-    if (chipText.includes("overreacting")) return "🙄";
-    if (chipText.includes("past mistakes")) return "⏪";
-    if (chipText.includes("sorry") && chipText.includes("don't change")) return "🔄";
-    return "💭";
+    if (chipText.includes("talk") && chipText.includes("shuts down")) {
+      return (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-current">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <line x1="9" y1="9" x2="15" y2="15" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+          <line x1="15" y1="9" x2="9" y2="15" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+        </svg>
+      );
+    }
+    if (chipText.includes("ignored") || chipText.includes("dismissed")) {
+      return (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-current">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
+          <path d="M8 12h8" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+        </svg>
+      );
+    }
+    if (chipText.includes("small") && chipText.includes("blows up")) {
+      return (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-current">
+          <path d="M12 2L15.09 8.26L22 9L17 14L18.18 21L12 17.77L5.82 21L7 14L2 9L8.91 8.26L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <circle cx="12" cy="12" r="3" fill="currentColor"/>
+        </svg>
+      );
+    }
+    if (chipText.includes("reconnect") && chipText.includes("missed")) {
+      return (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-current">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <line x1="8" y1="8" x2="16" y2="16" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+        </svg>
+      );
+    }
+    if (chipText.includes("exhausted") && chipText.includes("nobody steps")) {
+      return (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-current">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
+          <circle cx="9" cy="9" r="1" fill="currentColor"/>
+          <circle cx="15" cy="9" r="1" fill="currentColor"/>
+          <path d="M8 15h8" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+        </svg>
+      );
+    }
+    if (chipText.includes("press for answers")) {
+      return (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-current">
+          <circle cx="11" cy="11" r="8" stroke="currentColor" strokeWidth="2"/>
+          <path d="m21 21-4.35-4.35" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      );
+    }
+    if (chipText.includes("shut down") && chipText.includes("silent")) {
+      return (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-current">
+          <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <line x1="23" y1="9" x2="17" y2="15" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+          <line x1="17" y1="9" x2="23" y2="15" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+        </svg>
+      );
+    }
+    if (chipText.includes("bring up other things")) {
+      return (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-current">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      );
+    }
+    if (chipText.includes("smooth things over")) {
+      return (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-current">
+          <path d="M20 6L9 17l-5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1" strokeDasharray="2,2"/>
+        </svg>
+      );
+    }
+    if (chipText.includes("keep doing everything")) {
+      return (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-current">
+          <rect x="3" y="3" width="18" height="18" rx="2" ry="2" stroke="currentColor" strokeWidth="2"/>
+          <circle cx="9" cy="9" r="2" stroke="currentColor" strokeWidth="2"/>
+          <path d="M21 15l-3.086-3.086a2 2 0 0 0-2.828 0L6 21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <circle cx="17" cy="7" r="1" fill="currentColor"/>
+        </svg>
+      );
+    }
+    if (chipText.includes("double down") && chipText.includes("right")) {
+      return (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-current">
+          <rect x="3" y="11" width="18" height="10" rx="2" ry="2" stroke="currentColor" strokeWidth="2"/>
+          <circle cx="12" cy="16" r="1" fill="currentColor"/>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      );
+    }
+    if (chipText.includes("dig in") || chipText.includes("control")) {
+      return (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-current">
+          <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="2"/>
+          <path d="M12 1v6m0 6v6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+          <path d="M1 12h6m6 0h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+        </svg>
+      );
+    }
+    if (chipText.includes("defensive")) {
+      return (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-current">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      );
+    }
+    if (chipText.includes("walk away") || chipText.includes("quiet")) {
+      return (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-current">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <polyline points="16,17 21,12 16,7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <line x1="21" y1="12" x2="9" y2="12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+        </svg>
+      );
+    }
+    if (chipText.includes("overreacting")) {
+      return (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-current">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
+          <line x1="15" y1="9" x2="9" y2="15" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+          <line x1="9" y1="9" x2="15" y2="15" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+        </svg>
+      );
+    }
+    if (chipText.includes("past mistakes")) {
+      return (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-current">
+          <polyline points="1,4 1,10 7,10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+      );
+    }
+    if (chipText.includes("sorry") && chipText.includes("don't change")) {
+      return (
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-current">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
+          <path d="M16 16s-1.5-2-4-2-4 2-4 2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <line x1="9" y1="9" x2="9.01" y2="9" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+          <line x1="15" y1="9" x2="15.01" y2="9" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+        </svg>
+      );
+    }
+    
+    // Default icon for any unmapped chips
+    return (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-current">
+        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
+        <circle cx="12" cy="12" r="2" fill="currentColor"/>
+      </svg>
+    );
   };
 
   const getChipColor = (index: number, isSelected: boolean) => {
@@ -82,7 +219,7 @@ const ChipSelector: React.FC<ChipSelectorProps> = ({
             }`}
           >
             <div className="flex items-start gap-3">
-              <span className="text-2xl flex-shrink-0 mt-1">
+              <span className="flex-shrink-0 mt-1">
                 {getChipIcon(chip.text)}
               </span>
               <span className="text-lg leading-relaxed font-medium">
