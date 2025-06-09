@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useContext, createContext } from 'react';
 import { User } from '@supabase/supabase-js';
 import { supabase } from '../integrations/supabase/client';
@@ -166,17 +167,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signUp = async (email: string, password: string, name?: string, disableEmailConfirmation: boolean = false) => {
     try {
-      const { data: checkUserData } = await supabase.functions.invoke('check-user-exists', {
-        body: { email }
-      });
-
-      if (checkUserData.exists) {
-        return { error: { message: "A user with this email already exists. Please log in or use a different email." } };
-      }
-
       console.log("AuthContext - attempting sign up for:", email, "with name:", name, "disable email:", disableEmailConfirmation);
       
-      // Sign up with email confirmation completely disabled
+      // Sign up directly without checking if user exists - let Supabase handle it
       const { error, data } = await supabase.auth.signUp({
         email: email,
         password: password,
