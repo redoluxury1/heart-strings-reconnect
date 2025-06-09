@@ -19,6 +19,7 @@ export interface Pattern {
   name: string;
   explanation: string;
   insight: string;
+  repairAdvice: string;
 }
 
 export interface PatternSession {
