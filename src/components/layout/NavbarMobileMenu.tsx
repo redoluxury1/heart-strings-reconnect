@@ -8,38 +8,47 @@ interface NavbarMobileMenuProps {
   isOpen: boolean;
   user: User | null;
   onSignOut: () => void;
+  onClose: () => void;
   isDevelopment?: boolean;
 }
 
-const NavbarMobileMenu = ({ isOpen, user, onSignOut, isDevelopment }: NavbarMobileMenuProps) => {
+const NavbarMobileMenu = ({ isOpen, user, onSignOut, onClose, isDevelopment }: NavbarMobileMenuProps) => {
   if (!isOpen) return null;
+
+  const handleLinkClick = () => {
+    onClose();
+  };
 
   return (
     <div className="md:hidden">
-      <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t">
+      <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-navy-800 border-t border-soft-cream/20">
         {user ? (
           <>
             <Link
               to="/during-conflict"
-              className="block px-3 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md text-base font-medium"
+              className="block px-3 py-2 text-soft-cream hover:text-soft-cream/80 hover:bg-soft-cream/10 rounded-md text-base font-medium"
+              onClick={handleLinkClick}
             >
               Mid-Fight
             </Link>
             <Link
               to="/post-conflict"
-              className="block px-3 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md text-base font-medium"
+              className="block px-3 py-2 text-soft-cream hover:text-soft-cream/80 hover:bg-soft-cream/10 rounded-md text-base font-medium"
+              onClick={handleLinkClick}
             >
               Post-Fight
             </Link>
             <Link
               to="/reconnect"
-              className="block px-3 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md text-base font-medium"
+              className="block px-3 py-2 text-soft-cream hover:text-soft-cream/80 hover:bg-soft-cream/10 rounded-md text-base font-medium"
+              onClick={handleLinkClick}
             >
               Reconnecting
             </Link>
             <Link
               to="/archive"
-              className="block px-3 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-md text-base font-medium"
+              className="block px-3 py-2 text-soft-cream hover:text-soft-cream/80 hover:bg-soft-cream/10 rounded-md text-base font-medium"
+              onClick={handleLinkClick}
             >
               Reflection
             </Link>
@@ -47,7 +56,8 @@ const NavbarMobileMenu = ({ isOpen, user, onSignOut, isDevelopment }: NavbarMobi
             {isDevelopment && (
               <Link
                 to="/dev-testing"
-                className="block px-3 py-2 text-orange-600 hover:text-orange-700 hover:bg-orange-50 rounded-md text-base font-medium border border-orange-200"
+                className="block px-3 py-2 text-orange-300 hover:text-orange-200 hover:bg-orange-500/10 rounded-md text-base font-medium border border-orange-300/30"
+                onClick={handleLinkClick}
               >
                 Dev Testing
               </Link>
@@ -55,9 +65,12 @@ const NavbarMobileMenu = ({ isOpen, user, onSignOut, isDevelopment }: NavbarMobi
             
             <div className="pt-2">
               <Button 
-                onClick={onSignOut}
+                onClick={() => {
+                  onSignOut();
+                  onClose();
+                }}
                 variant="outline"
-                className="w-full text-[#1E2A38] border-[#1E2A38] hover:bg-[#1E2A38]/10"
+                className="w-full text-soft-cream border-soft-cream hover:bg-soft-cream/10"
               >
                 Sign Out
               </Button>
@@ -68,16 +81,17 @@ const NavbarMobileMenu = ({ isOpen, user, onSignOut, isDevelopment }: NavbarMobi
             {isDevelopment && (
               <Link
                 to="/dev-testing"
-                className="block px-3 py-2 text-orange-600 hover:text-orange-700 hover:bg-orange-50 rounded-md text-base font-medium border border-orange-200"
+                className="block px-3 py-2 text-orange-300 hover:text-orange-200 hover:bg-orange-500/10 rounded-md text-base font-medium border border-orange-300/30"
+                onClick={handleLinkClick}
               >
                 Dev Testing
               </Link>
             )}
             
             <div className="pt-2">
-              <Link to="/auth">
+              <Link to="/auth" onClick={handleLinkClick}>
                 <Button 
-                  className="w-full bg-[#1E2A38] hover:bg-[#1E2A38]/90 text-white"
+                  className="w-full bg-soft-cream hover:bg-soft-cream/90 text-navy-800"
                 >
                   Sign In
                 </Button>

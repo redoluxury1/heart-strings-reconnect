@@ -6,7 +6,7 @@ import OptimizedImage from '../common/OptimizedImage';
 const NavbarLogo = () => {
   return (
     <div className="flex items-center">
-      <Link to="/" className="flex items-center">
+      <Link to="/" className="flex items-center hover:opacity-90 transition-opacity">
         <OptimizedImage 
           src="/lovable-uploads/ae88d713-8b7c-4ecb-8e9b-24a41360f211.png" 
           alt="Bridge For Couples" 

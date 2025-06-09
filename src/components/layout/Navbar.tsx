@@ -29,6 +29,10 @@ const Navbar = ({ hasNewLoveNote = false, onViewLoveNote }: NavbarProps) => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
   const handleLoveNoteClick = () => {
     if (onViewLoveNote) {
       onViewLoveNote();
@@ -81,6 +85,7 @@ const Navbar = ({ hasNewLoveNote = false, onViewLoveNote }: NavbarProps) => {
             <button
               onClick={toggleMenu}
               className="text-soft-cream hover:text-soft-cream/80 focus:outline-none focus:text-soft-cream p-3 touch-manipulation"
+              aria-label="Toggle menu"
             >
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -93,6 +98,7 @@ const Navbar = ({ hasNewLoveNote = false, onViewLoveNote }: NavbarProps) => {
         isOpen={isMenuOpen}
         user={user}
         onSignOut={handleSignOut}
+        onClose={closeMenu}
         isDevelopment={false}
       />
     </nav>
