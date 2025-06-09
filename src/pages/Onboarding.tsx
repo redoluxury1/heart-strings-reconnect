@@ -3,6 +3,8 @@ import React from 'react';
 import OnboardingContainer from '../components/onboarding/OnboardingContainer';
 import OnboardingLoader from '../components/onboarding/OnboardingLoader';
 import NotificationPermissionScreen from '../components/onboarding/NotificationPermissionScreen';
+import OnboardingPartnerStatus from '../components/onboarding/OnboardingPartnerStatus';
+import PartnerInvite from '../components/onboarding/PartnerInvite';
 import { useOnboarding } from '../hooks/onboarding/useOnboarding';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -15,7 +17,11 @@ const Onboarding = () => {
     loading,
     step,
     partnerStatus,
+    setPartnerStatus,
     handleNextStep,
+    handleAddPartner,
+    handleBackFromPartnerInvite,
+    handlePartnerInviteComplete,
     handleSkipNotifications
   } = useOnboarding();
 
@@ -45,7 +51,6 @@ const Onboarding = () => {
     return <OnboardingLoader />;
   }
 
-  // Show notification permission screen (step 1)
   console.log("User authenticated, showing onboarding step:", step);
   return (
     <OnboardingContainer>
@@ -53,6 +58,22 @@ const Onboarding = () => {
         <NotificationPermissionScreen
           onContinue={handleNextStep}
           onSkip={handleSkipNotifications}
+        />
+      )}
+      
+      {step === 2 && (
+        <OnboardingPartnerStatus
+          partnerStatus={partnerStatus}
+          setPartnerStatus={setPartnerStatus}
+          onContinue={handleNextStep}
+          onAddPartner={handleAddPartner}
+        />
+      )}
+      
+      {step === 3 && (
+        <PartnerInvite
+          onBack={handleBackFromPartnerInvite}
+          onComplete={handlePartnerInviteComplete}
         />
       )}
     </OnboardingContainer>

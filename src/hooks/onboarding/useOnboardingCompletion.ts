@@ -1,41 +1,48 @@
 
 import { useNavigate } from 'react-router-dom';
-import { useToast } from '../use-toast';
 import { useAuth } from '../../contexts/AuthContext';
-import { PartnerStatus } from '../../contexts/InterfaceContext';
+import { useToast } from '../use-toast';
+import { createRelationship } from '../../services/supabase';
 
-export const useOnboardingCompletion = (partnerStatus: PartnerStatus) => {
+export const useOnboardingCompletion = (partnerStatus: string) => {
   const navigate = useNavigate();
+  const { user, updateUserMetadata } = useAuth();
   const { toast } = useToast();
-  const { updateUserMetadata } = useAuth();
-
+  
   const completeOnboarding = async () => {
+    if (!user) return;
+    
     try {
-      console.log("Completing onboarding with partner status:", partnerStatus);
+      console.log("🎯 Completing onboarding for user:", user.id, "with partner status:", partnerStatus);
+      
+      // Create relationship record if user chose couple mode
+      if (partnerStatus === 'couple') {
+        console.log("Creating relationship for couple mode");
+        await createRelationship(user.id);
+      }
       
       // Update user metadata to mark onboarding as complete
       await updateUserMetadata({
         onboarding_complete: true,
-        usage_mode: partnerStatus === 'couple' ? 'couple' : 'solo'
+        partner_status: partnerStatus
       });
-
+      
       toast({
         title: "Welcome to Bridge for Couples!",
-        description: "You're all set up. Let's start building better conversations.",
+        description: "Your account has been set up successfully."
       });
-
-      // Navigate to homepage after completion
+      
+      // Navigate to home
       navigate('/');
     } catch (error) {
       console.error("Error completing onboarding:", error);
       toast({
-        title: "Setup complete",
-        description: "Welcome to Bridge for Couples!",
+        title: "Setup Error",
+        description: "There was a problem setting up your account. Please try again.",
+        variant: "destructive"
       });
-      // Still navigate even if metadata update fails
-      navigate('/');
     }
   };
-
+  
   return { completeOnboarding };
 };
