@@ -72,22 +72,43 @@ const PatternRecognitionFlow: React.FC<PatternRecognitionFlowProps> = ({ onClose
     }
   };
 
+  const getStepInfo = () => {
+    switch (currentStep) {
+      case 'triggers':
+        return { current: 1, total: 3 };
+      case 'reactions':
+        return { current: 2, total: 3 };
+      case 'partner-reactions':
+        return { current: 3, total: 3 };
+      default:
+        return null;
+    }
+  };
+
+  const stepInfo = getStepInfo();
+
   return (
-    <div className="bg-white rounded-lg p-6 max-w-4xl mx-auto">
+    <div className="bg-white rounded-lg p-8 max-w-4xl mx-auto min-h-[600px]">
       {currentStep !== 'intro' && currentStep !== 'result' && (
-        <div className="flex justify-between items-center mb-6">
+        <div className="flex justify-between items-center mb-8">
           <Button 
             variant="ghost" 
             onClick={handleBack}
-            className="flex items-center text-[#2e2a63]"
+            className="flex items-center text-[#2e2a63] hover:bg-[#F5E6E8] px-4 py-2"
           >
             <ArrowLeft className="mr-2 h-4 w-4" /> Back
           </Button>
           
+          {stepInfo && (
+            <div className="text-sm text-[#2e2a63]/60 font-medium">
+              Step {stepInfo.current} of {stepInfo.total}
+            </div>
+          )}
+          
           {onClose && (
             <button 
               onClick={onClose}
-              className="text-[#2e2a63]/60 hover:text-[#2e2a63]"
+              className="text-[#2e2a63]/60 hover:text-[#2e2a63] text-xl p-2 hover:bg-[#F5E6E8] rounded-full transition-colors"
             >
               ✕
             </button>
@@ -96,71 +117,75 @@ const PatternRecognitionFlow: React.FC<PatternRecognitionFlowProps> = ({ onClose
       )}
 
       {currentStep === 'intro' && (
-        <PatternIntroStep onNext={handleNext} />
+        <div className="flex flex-col items-center justify-center min-h-[500px]">
+          <PatternIntroStep onNext={handleNext} />
+        </div>
       )}
 
       {currentStep === 'triggers' && (
-        <>
+        <div className="space-y-8">
           <ChipSelector
             chips={triggerChips}
             selectedChips={session.triggerChips}
             onChipSelect={addTriggerChip}
             prompt="What usually triggers the spiral?"
           />
-          <div className="flex justify-center mt-8">
+          <div className="flex justify-center pt-6">
             <Button 
               onClick={handleNext}
               disabled={!canProceed()}
-              className="bg-[#2e2a63] hover:bg-[#2e2a63]/90 text-white px-6 py-3 rounded-lg"
+              className="bg-[#D3876A] hover:bg-[#D3876A]/90 text-white px-8 py-3 rounded-xl text-lg font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-all"
             >
-              Next
+              Continue
             </Button>
           </div>
-        </>
+        </div>
       )}
 
       {currentStep === 'reactions' && (
-        <>
+        <div className="space-y-8">
           <ChipSelector
             chips={reactionChips}
             selectedChips={session.reactionChips}
             onChipSelect={addReactionChip}
             prompt="When it starts, what's your go-to move?"
           />
-          <div className="flex justify-center mt-8">
+          <div className="flex justify-center pt-6">
             <Button 
               onClick={handleNext}
               disabled={!canProceed()}
-              className="bg-[#2e2a63] hover:bg-[#2e2a63]/90 text-white px-6 py-3 rounded-lg"
+              className="bg-[#D3876A] hover:bg-[#D3876A]/90 text-white px-8 py-3 rounded-xl text-lg font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-all"
             >
-              Next
+              Continue
             </Button>
           </div>
-        </>
+        </div>
       )}
 
       {currentStep === 'partner-reactions' && (
-        <>
+        <div className="space-y-8">
           <ChipSelector
             chips={partnerReactionChips}
             selectedChips={session.partnerReactionChips}
             onChipSelect={addPartnerReactionChip}
             prompt="What does your partner usually do?"
           />
-          <div className="flex justify-center mt-8">
+          <div className="flex justify-center pt-6">
             <Button 
               onClick={handleNext}
               disabled={!canProceed()}
-              className="bg-[#2e2a63] hover:bg-[#2e2a63]/90 text-white px-6 py-3 rounded-lg"
+              className="bg-[#2e2a63] hover:bg-[#2e2a63]/90 text-white px-8 py-3 rounded-xl text-lg font-medium disabled:opacity-50 disabled:cursor-not-allowed transition-all"
             >
-              Show My Pattern
+              Show My Pattern ✨
             </Button>
           </div>
-        </>
+        </div>
       )}
 
       {currentStep === 'result' && session.detectedPattern && (
-        <PatternResultStep pattern={patterns[session.detectedPattern]} />
+        <div className="flex flex-col items-center justify-center min-h-[500px]">
+          <PatternResultStep pattern={patterns[session.detectedPattern]} />
+        </div>
       )}
     </div>
   );
