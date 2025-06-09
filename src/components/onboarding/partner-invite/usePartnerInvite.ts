@@ -2,14 +2,14 @@
 import { useState } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from '@/contexts/AuthContext';
-import { invitePartner } from '@/services/supabase';
+import { invitePartner, createRelationship } from '@/services/supabase';
 
 export const usePartnerInvite = (onComplete: () => void) => {
   const [partnerEmail, setPartnerEmail] = useState('');
   const [partnerName, setPartnerName] = useState('');
   const [isSending, setIsSending] = useState(false);
   const { toast } = useToast();
-  const { relationship } = useAuth();
+  const { user, relationship } = useAuth();
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -42,10 +42,10 @@ export const usePartnerInvite = (onComplete: () => void) => {
       return;
     }
     
-    if (!relationship) {
+    if (!user) {
       toast({
         title: "Error",
-        description: "Something went wrong. Please try again later.",
+        description: "You must be logged in to send invitations.",
         variant: "destructive"
       });
       return;
@@ -54,7 +54,21 @@ export const usePartnerInvite = (onComplete: () => void) => {
     setIsSending(true);
     
     try {
-      const success = await invitePartner(relationship.id, {
+      console.log("Starting invite process...");
+      
+      // Check if relationship exists, create one if it doesn't
+      let currentRelationship = relationship;
+      if (!currentRelationship) {
+        console.log("No relationship found, creating one...");
+        currentRelationship = await createRelationship(user.id);
+        
+        if (!currentRelationship) {
+          throw new Error("Failed to create relationship");
+        }
+        console.log("Relationship created:", currentRelationship.id);
+      }
+      
+      const success = await invitePartner(currentRelationship.id, {
         partnerEmail,
         partnerName: partnerName || undefined
       });
@@ -101,10 +115,10 @@ export const usePartnerInvite = (onComplete: () => void) => {
       return;
     }
     
-    if (!relationship) {
+    if (!user) {
       toast({
         title: "Error",
-        description: "Something went wrong. Please try again later.",
+        description: "You must be logged in to send invitations.",
         variant: "destructive"
       });
       return;
@@ -113,6 +127,18 @@ export const usePartnerInvite = (onComplete: () => void) => {
     setIsSending(true);
     
     try {
+      // Check if relationship exists, create one if it doesn't
+      let currentRelationship = relationship;
+      if (!currentRelationship) {
+        console.log("No relationship found, creating one...");
+        currentRelationship = await createRelationship(user.id);
+        
+        if (!currentRelationship) {
+          throw new Error("Failed to create relationship");
+        }
+        console.log("Relationship created:", currentRelationship.id);
+      }
+      
       // Here we would integrate with an SMS service
       // For now, we'll mock success since actual SMS integration would require backend services
       setTimeout(() => {
