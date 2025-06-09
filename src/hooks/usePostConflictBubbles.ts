@@ -32,18 +32,28 @@ export const usePostConflictBubbles = () => {
   
   const bubbleStyles = getBubbleStyles();
 
+  console.log('usePostConflictBubbles hook initialized');
+
   // Function to create a new bubble
   const createBubble = () => {
+    console.log('createBubble called, current visible bubbles:', visibleBubbles.length);
+    
     // Limit to maximum 3 bubbles on screen
-    if (visibleBubbles.length >= 3) return;
+    if (visibleBubbles.length >= 3) {
+      console.log('Maximum bubbles reached, skipping creation');
+      return;
+    }
     
     // Get available messages (not recently used)
     const availableMessages = messages.filter(
       (_, index) => !usedMessages.includes(index)
     );
     
+    console.log('Available messages:', availableMessages.length);
+    
     // If all messages used, reset the used messages array
     if (availableMessages.length === 0) {
+      console.log('Resetting used messages');
       setUsedMessages([]);
       return;
     }
@@ -58,8 +68,11 @@ export const usePostConflictBubbles = () => {
       (_, index) => !usedPositions.includes(index)
     );
     
+    console.log('Available positions:', availablePositions.length);
+    
     // If all positions are used, clear some positions
     if (availablePositions.length === 0) {
+      console.log('Resetting used positions');
       setUsedPositions([]);
       return;
     }
@@ -83,43 +96,59 @@ export const usePostConflictBubbles = () => {
       variantIndex: selectedVariantIndex
     };
     
-    setVisibleBubbles(prev => [...prev, newBubble]);
+    console.log('Creating new bubble:', newBubble.message);
+    
+    setVisibleBubbles(prev => {
+      const updated = [...prev, newBubble];
+      console.log('Updated visible bubbles count:', updated.length);
+      return updated;
+    });
     
     // Set timeout to start fading out the bubble after longer display time
     setTimeout(() => {
       const bubbleElement = document.getElementById(`bubble-${newBubble.id}`);
       if (bubbleElement) {
+        console.log('Fading out bubble:', newBubble.message);
         bubbleElement.style.opacity = '0';
         bubbleElement.style.transform = 'translateY(-10px) scale(0.95)';
         bubbleElement.style.transition = 'opacity 1.5s ease-out, transform 1.5s ease-out';
         
         // Remove from DOM after fade out completes
         setTimeout(() => {
+          console.log('Removing bubble from state:', newBubble.message);
           setVisibleBubbles(prev => prev.filter(bubble => bubble.id !== newBubble.id));
           // Free up this position
           setUsedPositions(prev => prev.filter(pos => pos !== selectedVariantIndex));
         }, 1500);
+      } else {
+        console.log('Bubble element not found for removal:', newBubble.id);
       }
     }, 6000); // Display for 6 seconds before starting fade out
   };
 
   // Effect to periodically add new bubbles
   useEffect(() => {
+    console.log('Setting up bubble creation intervals');
+    
     // Initial bubble after a delay
     const initialTimer = setTimeout(() => {
+      console.log('Creating initial bubble');
       createBubble();
-    }, 2000);
+    }, 1000); // Reduced from 2000 to 1000 for faster initial display
     
     // Set interval to add new bubbles at slower intervals
     const interval = setInterval(() => {
+      console.log('Creating interval bubble');
       createBubble();
     }, 4000); // Create a bubble every 4 seconds
     
     return () => {
+      console.log('Cleaning up bubble timers');
       clearTimeout(initialTimer);
       clearInterval(interval);
     };
-  }, []);
+  }, [visibleBubbles.length]); // Add dependency to re-trigger when bubbles change
 
+  console.log('usePostConflictBubbles returning bubbles:', visibleBubbles.length);
   return { visibleBubbles };
 };

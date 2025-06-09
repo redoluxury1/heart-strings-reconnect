@@ -6,6 +6,8 @@ import FloatingBubble from './FloatingBubble';
 const FloatingBubblesContainer: React.FC = () => {
   const { visibleBubbles } = usePostConflictBubbles();
 
+  console.log('FloatingBubblesContainer rendering with bubbles:', visibleBubbles.length);
+
   return (
     <>
       {/* CSS for bubble animations */}
@@ -21,14 +23,26 @@ const FloatingBubblesContainer: React.FC = () => {
               transform: translateY(0) scale(1);
             }
           }
+          
+          .bubble-container {
+            position: relative;
+            z-index: 10;
+          }
         `
       }} />
       
       {/* Message Bubbles Container - extending beyond its boundaries */}
-      <div className="absolute inset-0 h-[220px] w-full overflow-visible">
-        {visibleBubbles.map(bubble => (
-          <FloatingBubble key={bubble.id} bubble={bubble} />
-        ))}
+      <div className="bubble-container absolute inset-0 h-[300px] w-full overflow-visible pointer-events-none">
+        {visibleBubbles.length > 0 ? (
+          visibleBubbles.map(bubble => {
+            console.log('Rendering bubble:', bubble.message);
+            return <FloatingBubble key={bubble.id} bubble={bubble} />;
+          })
+        ) : (
+          <div className="absolute top-4 left-4 text-xs text-gray-500 opacity-50">
+            Loading bubbles...
+          </div>
+        )}
       </div>
     </>
   );
