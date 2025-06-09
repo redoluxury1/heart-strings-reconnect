@@ -1,172 +1,167 @@
+
 import React, { useState } from 'react';
-import PatternIntroScreen from './components/PatternIntroScreen';
-import PatternList from './components/PatternList';
-import PatternDetailScreen from './components/PatternDetailScreen';
-import PursueDistanceDetailScreen from './components/PursueDistanceDetailScreen';
-import PursueDistanceRepairScreen from './components/PursueDistanceRepairScreen';
-import PatternRepairScreen from './components/PatternRepairScreen';
-import CyclePatternScreen from './components/CyclePatternScreen';
+import { Button } from '@/components/ui/button';
+import { ArrowLeft } from 'lucide-react';
+import PatternIntroStep from './components/PatternIntroStep';
+import ChipSelector from './components/ChipSelector';
+import PatternResultStep from './components/PatternResultStep';
 import { usePatternRecognition } from './hooks/usePatternRecognition';
-import { CommonPattern } from './types';
-import { commonPatterns } from './data/pattern-data';
-import { Card } from '@/components/ui/card';
-import { X } from 'lucide-react';
-import '@/styles/animations/pattern-recognition.css';
+import { triggerChips, reactionChips, partnerReactionChips, patterns } from './data/PatternData';
+
+type Step = 'intro' | 'triggers' | 'reactions' | 'partner-reactions' | 'result';
 
 interface PatternRecognitionFlowProps {
-  fullScreen?: boolean;
   onClose?: () => void;
 }
 
-const PatternRecognitionFlow: React.FC<PatternRecognitionFlowProps> = ({ fullScreen, onClose }) => {
-  const [currentView, setCurrentView] = useState<'intro' | 'list' | 'detail' | 'cycle' | 'repair' | 'pdDetail' | 'pdRepair'>('intro');
-  const [selectedPattern, setSelectedPattern] = useState<CommonPattern | null>(null);
-  
-  // Sample cycle data (could be expanded later)
-  const cycleData = {};
-  const selectedPatterns: number[] = [];
-  
-  const togglePatternSelection = (id: number | string) => {
-    console.log("Toggle pattern:", id);
-    // Implementation would be here in a real app
-  };
-  
-  const handleContinueFromIntro = () => {
-    setCurrentView('list');
-  };
-  
-  const handleSelectPattern = (pattern: CommonPattern) => {
-    setSelectedPattern(pattern);
-    if (pattern.patternType === 'pursue-distance') {
-      setCurrentView('pdDetail');
-    } else {
-      setCurrentView('detail');
+const PatternRecognitionFlow: React.FC<PatternRecognitionFlowProps> = ({ onClose }) => {
+  const [currentStep, setCurrentStep] = useState<Step>('intro');
+  const {
+    session,
+    addTriggerChip,
+    addReactionChip,
+    addPartnerReactionChip,
+    detectPattern
+  } = usePatternRecognition();
+
+  const handleNext = () => {
+    switch (currentStep) {
+      case 'intro':
+        setCurrentStep('triggers');
+        break;
+      case 'triggers':
+        setCurrentStep('reactions');
+        break;
+      case 'reactions':
+        setCurrentStep('partner-reactions');
+        break;
+      case 'partner-reactions':
+        const detectedPattern = detectPattern();
+        setCurrentStep('result');
+        break;
     }
   };
-  
-  const handleViewCycle = () => {
-    setCurrentView('cycle');
-  };
-  
-  const handleViewRepair = () => {
-    if (selectedPattern?.patternType === 'pursue-distance') {
-      setCurrentView('pdRepair');
-    } else {
-      setCurrentView('repair');
-    }
-  };
-  
+
   const handleBack = () => {
-    switch (currentView) {
-      case 'detail':
-      case 'pdDetail':
-        setCurrentView('list');
+    switch (currentStep) {
+      case 'triggers':
+        setCurrentStep('intro');
         break;
-      case 'cycle':
-        if (selectedPattern?.patternType === 'pursue-distance') {
-          setCurrentView('pdDetail');
-        } else {
-          setCurrentView('detail');
-        }
+      case 'reactions':
+        setCurrentStep('triggers');
         break;
-      case 'repair':
-      case 'pdRepair':
-        if (selectedPattern?.patternType === 'pursue-distance') {
-          setCurrentView('pdDetail');
-        } else {
-          setCurrentView('detail');
-        }
+      case 'partner-reactions':
+        setCurrentStep('reactions');
         break;
+      case 'result':
+        setCurrentStep('partner-reactions');
+        break;
+    }
+  };
+
+  const canProceed = () => {
+    switch (currentStep) {
+      case 'triggers':
+        return session.triggerChips.length > 0;
+      case 'reactions':
+        return session.reactionChips.length > 0;
+      case 'partner-reactions':
+        return session.partnerReactionChips.length > 0;
       default:
-        setCurrentView('intro');
+        return true;
     }
   };
 
-  const handleContinueFromCycle = () => {
-    // After viewing cycle, go to repair options
-    handleViewRepair();
-  };
-
-  const handleContinueFromRepair = () => {
-    // Reset to intro if fullscreen mode, otherwise just go back to list
-    if (fullScreen && onClose) {
-      onClose();
-    } else {
-      setCurrentView('list');
-    }
-  };
-  
-  // We're using the common patterns from the data file
-  const patterns = commonPatterns;
-  
   return (
-    <div className={`${fullScreen ? 'fixed inset-0 z-50 bg-white p-4 overflow-auto' : ''}`}>
-      {fullScreen && (
-        <button 
-          onClick={onClose} 
-          className="absolute top-4 right-4 p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
-          aria-label="Close"
-        >
-          <X className="h-5 w-5" />
-        </button>
+    <div className="bg-white rounded-lg p-6 max-w-4xl mx-auto">
+      {currentStep !== 'intro' && currentStep !== 'result' && (
+        <div className="flex justify-between items-center mb-6">
+          <Button 
+            variant="ghost" 
+            onClick={handleBack}
+            className="flex items-center text-[#2e2a63]"
+          >
+            <ArrowLeft className="mr-2 h-4 w-4" /> Back
+          </Button>
+          
+          {onClose && (
+            <button 
+              onClick={onClose}
+              className="text-[#2e2a63]/60 hover:text-[#2e2a63]"
+            >
+              ✕
+            </button>
+          )}
+        </div>
       )}
 
-      <Card className={`border-none shadow-sm bg-white overflow-hidden transition-all duration-300 ${currentView !== 'intro' ? 'p-4 md:p-6' : 'p-0'}`}>
-        {currentView === 'intro' && (
-          <PatternIntroScreen onContinue={handleContinueFromIntro} />
-        )}
-        
-        {currentView === 'list' && (
-          <PatternList 
-            patterns={patterns}
-            onPatternSelect={handleSelectPattern}
-            togglePatternSelection={togglePatternSelection}
-            selectedPatterns={selectedPatterns}
+      {currentStep === 'intro' && (
+        <PatternIntroStep onNext={handleNext} />
+      )}
+
+      {currentStep === 'triggers' && (
+        <>
+          <ChipSelector
+            chips={triggerChips}
+            selectedChips={session.triggerChips}
+            onChipSelect={addTriggerChip}
+            prompt="What usually triggers the spiral?"
           />
-        )}
-        
-        {currentView === 'detail' && selectedPattern && (
-          <PatternDetailScreen 
-            pattern={selectedPattern}
-            onBack={handleBack}
-            onViewCycle={handleViewCycle}
-            onViewRepair={handleViewRepair}
+          <div className="flex justify-center mt-8">
+            <Button 
+              onClick={handleNext}
+              disabled={!canProceed()}
+              className="bg-[#2e2a63] hover:bg-[#2e2a63]/90 text-white px-6 py-3 rounded-lg"
+            >
+              Next
+            </Button>
+          </div>
+        </>
+      )}
+
+      {currentStep === 'reactions' && (
+        <>
+          <ChipSelector
+            chips={reactionChips}
+            selectedChips={session.reactionChips}
+            onChipSelect={addReactionChip}
+            prompt="When it starts, what's your go-to move?"
           />
-        )}
-        
-        {currentView === 'pdDetail' && (
-          <PursueDistanceDetailScreen
-            onBack={handleBack}
-            onViewCycle={handleViewCycle}
-            onViewRepair={handleViewRepair}
+          <div className="flex justify-center mt-8">
+            <Button 
+              onClick={handleNext}
+              disabled={!canProceed()}
+              className="bg-[#2e2a63] hover:bg-[#2e2a63]/90 text-white px-6 py-3 rounded-lg"
+            >
+              Next
+            </Button>
+          </div>
+        </>
+      )}
+
+      {currentStep === 'partner-reactions' && (
+        <>
+          <ChipSelector
+            chips={partnerReactionChips}
+            selectedChips={session.partnerReactionChips}
+            onChipSelect={addPartnerReactionChip}
+            prompt="What does your partner usually do?"
           />
-        )}
-        
-        {currentView === 'cycle' && (
-          <CyclePatternScreen
-            pattern={selectedPattern}
-            cycleData={cycleData}
-            onBack={handleBack}
-            onViewRepair={handleViewRepair}
-            onContinue={handleContinueFromCycle}
-          />
-        )}
-        
-        {currentView === 'repair' && selectedPattern && (
-          <PatternRepairScreen
-            pattern={selectedPattern}
-            onBack={handleBack}
-            onContinue={handleContinueFromRepair}
-          />
-        )}
-        
-        {currentView === 'pdRepair' && (
-          <PursueDistanceRepairScreen
-            onBack={handleBack}
-            onContinue={handleContinueFromRepair}
-          />
-        )}
-      </Card>
+          <div className="flex justify-center mt-8">
+            <Button 
+              onClick={handleNext}
+              disabled={!canProceed()}
+              className="bg-[#2e2a63] hover:bg-[#2e2a63]/90 text-white px-6 py-3 rounded-lg"
+            >
+              Show My Pattern
+            </Button>
+          </div>
+        </>
+      )}
+
+      {currentStep === 'result' && session.detectedPattern && (
+        <PatternResultStep pattern={patterns[session.detectedPattern]} />
+      )}
     </div>
   );
 };

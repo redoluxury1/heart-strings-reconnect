@@ -2,13 +2,27 @@
 import React, { useState } from 'react';
 import { RotateCw, Flag } from 'lucide-react';
 import WhiteFlagModal from './steps/summary/components/WhiteFlagModal';
+import PatternRecognitionFlow from './pattern-recognition/PatternRecognitionFlow';
 
 const OkayButNowWhat: React.FC = () => {
   const [isWhiteFlagModalOpen, setIsWhiteFlagModalOpen] = useState(false);
+  const [isPatternRecognitionOpen, setIsPatternRecognitionOpen] = useState(false);
 
   const handleWhiteFlagClick = () => {
     setIsWhiteFlagModalOpen(true);
   };
+
+  const handlePatternRecognitionClick = () => {
+    setIsPatternRecognitionOpen(true);
+  };
+
+  if (isPatternRecognitionOpen) {
+    return (
+      <section className="bg-white py-10 px-4 rounded-lg shadow-sm">
+        <PatternRecognitionFlow onClose={() => setIsPatternRecognitionOpen(false)} />
+      </section>
+    );
+  }
 
   return (
     <section className="bg-white py-10 px-4 rounded-lg shadow-sm">
@@ -24,21 +38,14 @@ const OkayButNowWhat: React.FC = () => {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          {/* Pattern Recognition Button - Now with Coming Soon flag and overlay */}
+          {/* Pattern Recognition Button - Now fully functional */}
           <div 
-            className="bg-white rounded-lg border shadow-sm relative overflow-hidden cursor-default"
+            className="bg-white rounded-lg border shadow-sm relative overflow-hidden cursor-pointer hover:shadow-md transition-shadow"
+            onClick={handlePatternRecognitionClick}
           >
-            {/* Semi-transparent overlay to make it clear this isn't clickable */}
-            <div className="absolute inset-0 bg-white/30 backdrop-blur-[1px] z-10"></div>
-            
             <div className="flex flex-col items-center text-center p-4">
-              <div className="bg-[#e1d8ed] p-3 rounded-full mb-2">
+              <div className="bg-[#e1d8ed] p-3 rounded-full mb-4">
                 <RotateCw className="h-8 w-8 text-[#2e2a63]" />
-              </div>
-              
-              {/* Mauve color bubble for Coming Soon label */}
-              <div className="bg-[#c06b6b]/20 text-[#c06b6b] text-xs font-medium px-3 py-1 rounded-full mb-2">
-                Coming Soon
               </div>
               
               <h3 className="text-xl font-medium text-[#2e2a63] mb-2">Recognize a Pattern</h3>

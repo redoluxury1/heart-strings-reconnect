@@ -1,128 +1,87 @@
+
 import { useState } from 'react';
-import { PatternType } from '../types';
-import { ReconnectionTip, reconnectionTips } from '@/data/reconnection-tips';
-
-export type PatternId = string;
-
-export interface PatternRecognitionState {
-  selectedPattern: PatternId | null;
-  isShowingTips: boolean;
-  showIntro: boolean;
-  showCyclePattern: boolean;
-  showPatternDetail: boolean;
-  showPatternRepair: boolean;
-}
+import { PatternId, PatternSession } from '../types/PatternTypes';
+import { triggerChips, reactionChips, partnerReactionChips } from '../data/PatternData';
 
 export const usePatternRecognition = () => {
-  const [state, setState] = useState<PatternRecognitionState>({
-    selectedPattern: null,
-    isShowingTips: false,
-    showIntro: true,
-    showCyclePattern: false,
-    showPatternDetail: false,
-    showPatternRepair: false
+  const [session, setSession] = useState<PatternSession>({
+    triggerChips: [],
+    reactionChips: [],
+    partnerReactionChips: []
   });
 
-  const handleIntroComplete = () => {
-    setState(prev => ({
+  const addTriggerChip = (chipId: string) => {
+    setSession(prev => ({
       ...prev,
-      showIntro: false,
-      showCyclePattern: true
+      triggerChips: prev.triggerChips.includes(chipId) 
+        ? prev.triggerChips.filter(id => id !== chipId)
+        : [...prev.triggerChips, chipId]
     }));
   };
 
-  const handleCyclePatternComplete = () => {
-    setState(prev => ({
+  const addReactionChip = (chipId: string) => {
+    setSession(prev => ({
       ...prev,
-      showCyclePattern: false
+      reactionChips: prev.reactionChips.includes(chipId)
+        ? prev.reactionChips.filter(id => id !== chipId)
+        : [...prev.reactionChips, chipId]
     }));
   };
 
-  const handlePatternSelect = (patternId: PatternId) => {
-    setState(prev => ({
+  const addPartnerReactionChip = (chipId: string) => {
+    setSession(prev => ({
       ...prev,
-      selectedPattern: patternId,
-      showPatternDetail: true
-    }));
-  };
-  
-  const handlePatternDetailComplete = () => {
-    setState(prev => ({
-      ...prev,
-      showPatternDetail: false,
-      showPatternRepair: true
+      partnerReactionChips: prev.partnerReactionChips.includes(chipId)
+        ? prev.partnerReactionChips.filter(id => id !== chipId)
+        : [...prev.partnerReactionChips, chipId]
     }));
   };
 
-  const handleGoBack = () => {
-    setState(prev => {
-      // If showing tips, go back to pattern selection
-      if (prev.isShowingTips) {
-        return {
-          ...prev,
-          isShowingTips: false,
-          selectedPattern: null
-        };
+  const detectPattern = (): PatternId => {
+    const patternCounts: Record<PatternId, number> = {
+      pursue_withdraw: 0,
+      criticize_defend: 0,
+      escalation_loop: 0,
+      emotional_shutdown: 0,
+      effort_imbalance: 0,
+      power_struggle: 0,
+      unmet_repair: 0
+    };
+
+    // Count pattern tags from selected chips
+    const allSelectedChips = [
+      ...session.triggerChips.map(id => triggerChips.find(chip => chip.id === id)),
+      ...session.reactionChips.map(id => reactionChips.find(chip => chip.id === id)),
+      ...session.partnerReactionChips.map(id => partnerReactionChips.find(chip => chip.id === id))
+    ].filter(Boolean);
+
+    allSelectedChips.forEach(chip => {
+      if (chip) {
+        chip.patternTags.forEach(patternId => {
+          patternCounts[patternId]++;
+        });
       }
-      
-      // If showing pattern repair, go back to pattern detail
-      if (prev.showPatternRepair) {
-        return {
-          ...prev,
-          showPatternRepair: false,
-          showPatternDetail: true
-        };
-      }
-      
-      // If showing pattern detail, go back to pattern selection
-      if (prev.showPatternDetail) {
-        return {
-          ...prev,
-          selectedPattern: null,
-          showPatternDetail: false
-        };
-      }
-
-      // Default: reset to the initial pattern selection
-      return {
-        ...prev,
-        selectedPattern: null,
-        isShowingTips: false
-      };
     });
-  };
 
-  const getPatternSpecificTips = (patternType: PatternType): ReconnectionTip[] => {
-    // Filter tips that are specific to this pattern type
-    const specificTips = reconnectionTips.filter(tip => 
-      tip.patterns && tip.patterns.includes(patternType)
-    );
+    // Find pattern with highest count
+    const sortedPatterns = Object.entries(patternCounts)
+      .sort(([,a], [,b]) => b - a);
+
+    const detectedPattern = sortedPatterns[0][0] as PatternId;
     
-    // If we have at least 3 specific tips, return those
-    if (specificTips.length >= 3) {
-      return specificTips.slice(0, 3);
-    }
-    
-    // Otherwise, add some generic tips to reach 3
-    const genericTips = reconnectionTips
-      .filter(tip => !tip.patterns || !tip.patterns.includes(patternType))
-      .sort(() => 0.5 - Math.random())
-      .slice(0, 3 - specificTips.length);
-    
-    return [...specificTips, ...genericTips];
+    setSession(prev => ({
+      ...prev,
+      detectedPattern
+    }));
+
+    return detectedPattern;
   };
 
   return {
-    state,
-    actions: {
-      handlePatternSelect,
-      handleGoBack,
-      handleIntroComplete,
-      handleCyclePatternComplete,
-      handlePatternDetailComplete
-    },
-    helpers: {
-      getPatternSpecificTips
-    }
+    session,
+    addTriggerChip,
+    addReactionChip,
+    addPartnerReactionChip,
+    detectPattern
   };
 };
