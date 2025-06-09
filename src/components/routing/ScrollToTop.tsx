@@ -6,11 +6,13 @@ function ScrollToTop() {
   const { pathname } = useLocation();
   
   useEffect(() => {
-    // Scroll to top immediately when pathname changes
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: 'instant'
+    // Use requestAnimationFrame to ensure DOM is updated before scrolling
+    requestAnimationFrame(() => {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'auto' // Changed from 'instant' to 'auto' for better browser compatibility
+      });
     });
   }, [pathname]);
   
