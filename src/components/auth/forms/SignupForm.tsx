@@ -40,8 +40,8 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
       console.log("Name:", name);
       console.log("Password provided:", !!password);
 
-      // Create the account with email verification disabled
-      const { error: signupError, data: signupData } = await signUp(email, password, name, true);
+      // Create the account without email verification
+      const { error: signupError, data: signupData } = await signUp(email, password, name);
 
       if (signupError) {
         console.error("Signup error:", signupError);

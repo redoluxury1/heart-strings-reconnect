@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -6,7 +7,6 @@ import { useAuth } from '@/contexts/AuthContext';
 import { EmailField, PasswordField } from './FormFields';
 import { useDevModeLogin } from '../hooks/useDevModeLogin';
 import { Link } from 'react-router-dom';
-import { supabase } from '@/integrations/supabase/client';
 
 export const LoginForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -17,44 +17,6 @@ export const LoginForm: React.FC = () => {
   const navigate = useNavigate();
   const { signIn } = useAuth();
   const { attemptDevModeLogin } = useDevModeLogin();
-
-  const handleResendVerification = async () => {
-    if (!email) {
-      toast({
-        title: "Email required",
-        description: "Please enter your email address first.",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    try {
-      // Use Supabase's built-in resend functionality
-      const { error } = await supabase.auth.resend({
-        type: 'signup',
-        email: email
-      });
-
-      if (error) {
-        toast({
-          title: "Failed to resend email",
-          description: error.message,
-          variant: "destructive"
-        });
-      } else {
-        toast({
-          title: "Verification email sent",
-          description: "Please check your email for a new verification link."
-        });
-      }
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to send verification email. Please try again.",
-        variant: "destructive"
-      });
-    }
-  };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -87,22 +49,6 @@ export const LoginForm: React.FC = () => {
             title: "Login failed",
             description: "That email or password doesn't match our records. Please double-check and try again.",
             variant: "destructive"
-          });
-        } else if (error.message.includes("email not confirmed") || error.message.includes("Email not confirmed")) {
-          toast({
-            title: "Email not verified",
-            description: "Please check your email and click the verification link before logging in.",
-            variant: "destructive",
-            action: (
-              <Button 
-                variant="outline" 
-                size="sm" 
-                onClick={handleResendVerification}
-                className="mt-2"
-              >
-                Resend Verification
-              </Button>
-            )
           });
         } else {
           toast({
@@ -147,14 +93,7 @@ export const LoginForm: React.FC = () => {
         onChange={(e) => setPassword(e.target.value)}
       />
       
-      <div className="flex justify-between items-center text-sm">
-        <button
-          type="button"
-          onClick={handleResendVerification}
-          className="text-[#C7747F] hover:text-[#B56470] underline"
-        >
-          Resend verification email
-        </button>
+      <div className="flex justify-end items-center text-sm">
         <Link to="/auth?tab=reset" className="text-[#C7747F] hover:text-[#B56470]">
           Forgot password?
         </Link>

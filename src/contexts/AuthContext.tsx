@@ -134,16 +134,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
         if (error) {
           console.error("Sign in error:", error);
-
-          // Provide more specific error messaging
-          if (error.message.includes("email not confirmed")) {
-            return {
-              error: {
-                ...error,
-                message: "Please check your email and click the confirmation link before logging in. If you don't see it, check your spam folder."
-              }
-            };
-          }
         }
 
         console.log("Sign in result:", { error: !!error, data: !!data });
@@ -165,17 +155,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  const signUp = async (email: string, password: string, name?: string, disableEmailConfirmation: boolean = false) => {
+  const signUp = async (email: string, password: string, name?: string, disableEmailConfirmation: boolean = true) => {
     try {
       console.log("AuthContext - attempting sign up for:", email, "with name:", name, "disable email:", disableEmailConfirmation);
       
-      // Sign up directly without checking if user exists - let Supabase handle it
+      // Sign up with email confirmation disabled by default
       const { error, data } = await supabase.auth.signUp({
         email: email,
         password: password,
         options: {
           data: name ? { name } : {},
-          // Don't set emailRedirectTo to prevent any email confirmation flow
+          emailRedirectTo: undefined, // Remove email redirect to disable confirmation flow
         }
       });
 
