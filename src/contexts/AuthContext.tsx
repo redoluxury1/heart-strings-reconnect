@@ -175,14 +175,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
 
       console.log("AuthContext - attempting sign up for:", email, "with name:", name, "disable email:", disableEmailConfirmation);
-      // COMPLETELY DISABLE Supabase's email confirmation system
+      
+      // Sign up with email confirmation completely disabled
       const { error, data } = await supabase.auth.signUp({
         email: email,
         password: password,
         options: {
           data: name ? { name } : {},
-          // CRITICAL: Do not set emailRedirectTo at all to prevent Supabase from sending emails
-          // Our custom system will handle ALL email verification
+          // Don't set emailRedirectTo to prevent any email confirmation flow
         }
       });
 

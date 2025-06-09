@@ -1,10 +1,10 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
 import { useAuth } from '@/contexts/AuthContext';
 import { EmailField, PasswordField, NameField } from './FormFields';
-import { sendVerificationEmail } from '@/services/emailVerification';
 
 interface SignupFormProps {
   inviteToken?: string | null;
@@ -40,7 +40,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
       console.log("Name:", name);
       console.log("Password provided:", !!password);
 
-      // Create the account with Supabase email confirmation DISABLED
+      // Create the account with email verification disabled
       const { error: signupError, data: signupData } = await signUp(email, password, name, true);
 
       if (signupError) {
@@ -69,36 +69,30 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
       console.log("Account created successfully:", {
         userId: signupData?.user?.id,
         email: signupData?.user?.email,
-        needsCustomVerification: !signupData?.session
+        hasSession: !!signupData?.session
       });
 
-      // ALWAYS send our custom verification email (no dev mode bypass)
-      if (signupData?.user?.id) {
-        console.log("Sending custom verification email for user:", signupData.user.id);
-        const emailSent = await sendVerificationEmail(email, name, signupData.user.id);
-
-        if (emailSent) {
-          toast({
-            title: "Account created successfully!",
-            description: "Please check your email for a verification link to complete your registration."
-          });
-          navigate('/auth?message=check-email');
-        } else {
-          console.error("Failed to send verification email");
-          toast({
-            title: "Account created but email failed",
-            description: "Your account was created but we couldn't send the verification email. Please contact support.",
-            variant: "destructive"
-          });
-          navigate('/auth?message=email-failed');
-        }
-      } else {
-        console.error("No user ID returned from signup");
+      // Success - user should be automatically signed in
+      if (signupData?.session) {
         toast({
-          title: "Account creation unclear",
-          description: "Please check your email for a verification link or contact support.",
+          title: "Account created successfully!",
+          description: "Welcome! You're now signed in and ready to get started."
         });
-        navigate('/auth?message=check-email');
+        
+        // Store signup mode for onboarding if provided
+        if (signupMode) {
+          localStorage.setItem('signupMode', signupMode);
+        }
+        
+        // Navigate to onboarding
+        navigate('/onboarding');
+      } else {
+        // Fallback if no session (shouldn't happen with email confirmation disabled)
+        toast({
+          title: "Account created",
+          description: "Your account was created. Please try logging in.",
+        });
+        navigate('/auth');
       }
 
     } catch (error: any) {
@@ -141,10 +135,6 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
       >
         {isLoading ? "Creating Account..." : "Sign Up"}
       </Button>
-
-      <p className="text-center text-xs text-[#1E2A38]/60 mt-4">
-        We'll send you a verification email to complete your registration.
-      </p>
     </form>
   );
 };
