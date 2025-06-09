@@ -21,6 +21,15 @@
     
     <!-- Google Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap">
+    
+    <!-- iOS Safe Area Support -->
+    <style>
+      /* Ensure safe area support is available immediately */
+      html, body {
+        padding-top: constant(safe-area-inset-top);
+        padding-top: env(safe-area-inset-top);
+      }
+    </style>
   </head>
 
   <body>

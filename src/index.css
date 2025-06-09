@@ -72,10 +72,16 @@
     @apply border-border;
   }
   
+  /* iOS Safe Area Support - Applied at layout level */
+  html,
   body {
     @apply bg-background text-foreground;
     margin: 0;
     padding: 0;
+    
+    /* iOS safe area padding at the top */
+    padding-top: constant(safe-area-inset-top); /* Legacy iOS support */
+    padding-top: env(safe-area-inset-top); /* Modern iOS devices */
   }
 }
 
@@ -89,6 +95,10 @@
     height: 100vh;
     margin: 0;
     padding: 0;
+    
+    /* iOS safe area padding at the top */
+    padding-top: constant(safe-area-inset-top); /* Legacy iOS support */
+    padding-top: env(safe-area-inset-top); /* Modern iOS devices */
   }
   
   #root {

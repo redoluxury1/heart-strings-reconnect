@@ -1,44 +1,30 @@
 
-
 /* iOS Safe Area Support */
 .safe-area-navbar {
-  /* Additional space above navbar - about 1/2 inch (48px for better visibility) */
-  margin-top: 48px;
+  /* Remove previous margin approach - safe area is now handled at body level */
+  margin-top: 0;
   
-  /* Minimal padding for navbar content with iOS safe area support */
+  /* Standard navbar padding */
   padding-top: 1rem;
   padding-bottom: 1rem;
   
-  /* iOS devices will add safe area on top of the base padding */
-  padding-top: calc(env(safe-area-inset-top, 0px) + 1rem);
-  /* Fallback for older iOS versions */
-  padding-top: calc(constant(safe-area-inset-top, 0px) + 1rem);
-  
   /* Ensure the navbar is positioned correctly */
   position: sticky;
-  top: 48px; /* Adjusted to account for the margin */
+  top: 0;
   z-index: 50;
   background-color: #1E2A38; /* Navy blue background */
 }
 
 .navbar-content {
-  /* Additional content padding for better visual separation */
+  /* Standard content padding */
   padding-top: 0.5rem;
 }
 
 /* Mobile specific adjustments */
 @media screen and (max-width: 768px) {
   .safe-area-navbar {
-    /* Keep the additional space on mobile too */
-    margin-top: 48px;
-    
-    /* Slightly more padding for mobile with iOS safe area */
+    /* Slightly more padding for mobile */
     padding-top: 1.5rem;
     padding-bottom: 1rem;
-    
-    /* iOS devices will add safe area on top of the base padding */
-    padding-top: calc(env(safe-area-inset-top, 0px) + 1.5rem);
-    padding-top: calc(constant(safe-area-inset-top, 0px) + 1.5rem);
   }
 }
-
