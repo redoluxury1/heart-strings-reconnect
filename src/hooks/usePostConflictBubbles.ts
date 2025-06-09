@@ -134,7 +134,7 @@ export const usePostConflictBubbles = () => {
     const initialTimer = setTimeout(() => {
       console.log('Creating initial bubble');
       createBubble();
-    }, 1000); // Reduced from 2000 to 1000 for faster initial display
+    }, 1000);
     
     // Set interval to add new bubbles at slower intervals
     const interval = setInterval(() => {
@@ -147,7 +147,7 @@ export const usePostConflictBubbles = () => {
       clearTimeout(initialTimer);
       clearInterval(interval);
     };
-  }, [visibleBubbles.length]); // Add dependency to re-trigger when bubbles change
+  }, []); // Remove the dependency on visibleBubbles.length
 
   console.log('usePostConflictBubbles returning bubbles:', visibleBubbles.length);
   return { visibleBubbles };
