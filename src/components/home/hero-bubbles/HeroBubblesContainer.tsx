@@ -24,8 +24,8 @@ const HeroBubblesContainer: React.FC = () => {
         `
       }} />
       
-      {/* Message Bubbles Container - positioned to start right after navbar */}
-      <div className="absolute inset-0 w-full overflow-visible z-20 pt-4">
+      {/* Message Bubbles Container - positioned to start right after navbar with minimal spacing */}
+      <div className="absolute inset-0 w-full overflow-visible z-20">
         {visibleBubbles.map(bubble => (
           <HeroBubble key={bubble.id} bubble={bubble} />
         ))}
