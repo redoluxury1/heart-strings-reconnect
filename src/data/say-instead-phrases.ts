@@ -276,5 +276,93 @@ export const sayInsteadPhrases: SayInsteadPhrase[] = [
       "I'd love to find more balance where we both feel heard in what we need."
     ],
     whyItWorks: "Calls out imbalance while inviting teamwork."
+  },
+  {
+    id: "phrase-26",
+    original: "Let me try again because I don't think I expressed myself well the first time.",
+    categories: ["Communication", "Clarification", "Self-Awareness"],
+    alternatives: [
+      "I'd like to try again because I think I didn't explain myself the first time.",
+      "I want to be clearer about what I meant—can I try saying it differently?",
+      "I don't think I communicated that well. Let me rephrase."
+    ],
+    whyItWorks: "Takes responsibility for communication while requesting another chance."
+  },
+  {
+    id: "phrase-27",
+    original: "I'm realizing my words didn't match what I was feeling. Can I try again?",
+    categories: ["Self-Awareness", "Emotional Clarity", "Communication"],
+    alternatives: [
+      "I realized that I didn't say what I was actually feeling, can we try again?",
+      "My words came out wrong—what I was feeling was different than what I said.",
+      "I need to be more honest about what's really going on for me emotionally."
+    ],
+    whyItWorks: "Shows emotional awareness and commitment to authentic communication."
+  },
+  {
+    id: "phrase-28",
+    original: "I'd like to understand your perspective better. Can you help me see what this looks like from your side?",
+    categories: ["Understanding", "Perspective", "Curiosity"],
+    alternatives: [
+      "I want to understand your perspective. I was too frustrated before, can we start over?",
+      "Help me see this from where you're sitting—I know I was reactive earlier.",
+      "I want to really hear you this time instead of just defending myself."
+    ],
+    whyItWorks: "Acknowledges previous reactivity while expressing genuine desire to understand."
+  },
+  {
+    id: "phrase-29",
+    original: "I'm curious about how you're experiencing this conversation. Would you share that with me?",
+    categories: ["Emotional Check-in", "Understanding", "Connection"],
+    alternatives: [
+      "I want to know what this feels like for you so we can get on the same page.",
+      "How is this conversation landing for you right now?",
+      "What's this experience like from your side?"
+    ],
+    whyItWorks: "Shifts focus to their emotional experience to create mutual understanding."
+  },
+  {
+    id: "phrase-30",
+    original: "I notice we keep having the same argument. Can we try something different this time?",
+    categories: ["Pattern Recognition", "Problem-Solving", "Growth"],
+    alternatives: [
+      "We keep having the same argument, can we try to discuss what the root of it is?",
+      "This feels like the same fight again—what if we looked at what's really underneath it?",
+      "Instead of rehashing this, can we figure out why this keeps coming up?"
+    ],
+    whyItWorks: "Identifies the pattern while inviting deeper exploration of root causes."
+  },
+  {
+    id: "phrase-31",
+    original: "I think we're stuck in a pattern here. I want us to find a new way through this together.",
+    categories: ["Pattern Recognition", "Partnership", "Growth"],
+    alternatives: [
+      "I don't like this pattern of constantly getting into the same argument, what can we do better this time?",
+      "We're in our usual cycle—how can we break out of it together?",
+      "This pattern isn't working for us. What would a different approach look like?"
+    ],
+    whyItWorks: "Names the pattern while emphasizing collaborative problem-solving."
+  },
+  {
+    id: "phrase-32",
+    original: "This feels familiar—like we've been here before. What can we do differently right now?",
+    categories: ["Pattern Recognition", "Prevention", "Action"],
+    alternatives: [
+      "What can we do differently right now to keep this from escalating?",
+      "I can feel this heading toward our usual fight—how do we stop it?",
+      "Let's catch this before it becomes the same argument we always have."
+    ],
+    whyItWorks: "Focuses on immediate prevention rather than analyzing the pattern."
+  },
+  {
+    id: "phrase-33",
+    original: "We seem to keep circling back to this issue. What if we tried a new approach?",
+    categories: ["Pattern Recognition", "Problem-Solving", "Innovation"],
+    alternatives: [
+      "What if we really listened to each other clearly this time?",
+      "Instead of our usual back-and-forth, what if we each just really heard the other person?",
+      "Can we try something different—like actually understanding each other instead of defending?"
+    ],
+    whyItWorks: "Suggests a specific alternative approach focused on genuine listening and understanding."
   }
 ];
