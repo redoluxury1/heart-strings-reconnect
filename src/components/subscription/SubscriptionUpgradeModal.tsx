@@ -3,7 +3,7 @@ import React from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { useSubscription } from '@/hooks/useSubscription';
-import { Check, X } from 'lucide-react';
+import { Check } from 'lucide-react';
 
 interface SubscriptionUpgradeModalProps {
   isOpen: boolean;
@@ -132,6 +132,5 @@ export const SubscriptionUpgradeModal: React.FC<SubscriptionUpgradeModalProps> =
     </Dialog>
   );
 };
-</SubscriptionUpgradeModal>
 
 export default SubscriptionUpgradeModal;

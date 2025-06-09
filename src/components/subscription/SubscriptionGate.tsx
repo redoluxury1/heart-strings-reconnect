@@ -75,6 +75,5 @@ export const SubscriptionGate: React.FC<SubscriptionGateProps> = ({
 
   return null;
 };
-</SubscriptionGate>
 
 export default SubscriptionGate;
