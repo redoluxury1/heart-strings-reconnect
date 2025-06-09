@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   Baby, Heart, MessageSquare, Trash2, DollarSign, 
@@ -22,6 +21,13 @@ interface Category {
 
 const BridgeTheGapCategories: React.FC = () => {
   const navigate = useNavigate();
+
+  // Force scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, []);
 
   // Define categories with their icons and colors using brand colors
   // Navy: #162137 (midnight-indigo)

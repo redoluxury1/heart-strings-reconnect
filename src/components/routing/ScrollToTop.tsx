@@ -6,14 +6,26 @@ function ScrollToTop() {
   const { pathname } = useLocation();
   
   useEffect(() => {
-    // Use requestAnimationFrame to ensure DOM is updated before scrolling
+    // Multiple approaches to ensure scroll to top works
+    
+    // Immediate scroll
+    window.scrollTo(0, 0);
+    
+    // Also try with a small delay to ensure DOM is ready
+    const timeoutId = setTimeout(() => {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }, 0);
+    
+    // And another one with requestAnimationFrame
     requestAnimationFrame(() => {
-      window.scrollTo({
-        top: 0,
-        left: 0,
-        behavior: 'auto' // Changed from 'instant' to 'auto' for better browser compatibility
-      });
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
     });
+    
+    return () => clearTimeout(timeoutId);
   }, [pathname]);
   
   return null;
