@@ -10,7 +10,7 @@ export const triggerChips: PatternChip[] = [
   {
     id: 'ignored_dismissed',
     text: 'Someone feels ignored or dismissed',
-    patternTags: ['emotional_shutdown', 'emotional_invalidation']
+    patternTags: ['emotional_shutdown', 'power_struggle']
   },
   {
     id: 'small_blows_up',
@@ -81,7 +81,7 @@ export const partnerReactionChips: PatternChip[] = [
   {
     id: 'overreacting',
     text: 'They say I\'m overreacting',
-    patternTags: ['power_struggle', 'emotional_invalidation']
+    patternTags: ['power_struggle', 'criticize_defend']
   },
   {
     id: 'past_mistakes',
