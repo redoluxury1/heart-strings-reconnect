@@ -1,0 +1,63 @@
+
+import { useState, useEffect } from 'react';
+import { useAuth } from '@/contexts/AuthContext';
+import { SubscriptionService } from '@/services/subscriptionService';
+import { Subscription, SubscriptionProduct } from '@/types/subscription';
+
+export const useSubscription = () => {
+  const { user } = useAuth();
+  const [subscription, setSubscription] = useState<Subscription | null>(null);
+  const [products, setProducts] = useState<SubscriptionProduct[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [hasActiveSubscription, setHasActiveSubscription] = useState(false);
+
+  useEffect(() => {
+    if (!user) {
+      setSubscription(null);
+      setHasActiveSubscription(false);
+      setLoading(false);
+      return;
+    }
+
+    loadSubscriptionData();
+  }, [user]);
+
+  const loadSubscriptionData = async () => {
+    if (!user) return;
+
+    setLoading(true);
+    try {
+      const [currentSub, availableProducts, hasActive] = await Promise.all([
+        SubscriptionService.getCurrentSubscription(user.id),
+        SubscriptionService.getSubscriptionProducts(),
+        SubscriptionService.hasActiveSubscription(user.id)
+      ]);
+
+      setSubscription(currentSub);
+      setProducts(availableProducts);
+      setHasActiveSubscription(hasActive);
+    } catch (error) {
+      console.error('Error loading subscription data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const hasFeatureAccess = async (featureKey: string): Promise<boolean> => {
+    if (!user) return false;
+    return SubscriptionService.hasFeatureAccess(user.id, featureKey);
+  };
+
+  const refreshSubscription = () => {
+    loadSubscriptionData();
+  };
+
+  return {
+    subscription,
+    products,
+    loading,
+    hasActiveSubscription,
+    hasFeatureAccess,
+    refreshSubscription
+  };
+};
