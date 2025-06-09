@@ -79,9 +79,11 @@ const SayThisInsteadTool: React.FC = () => {
     return phrases;
   }, [typedPhrases, selectedCategory, searchQuery]);
 
-  // Handle quick phrase selection
+  // Handle quick phrase selection without scrolling
   const handleQuickPhraseSelect = (phrase: string) => {
     setSearchQuery(phrase);
+    // Prevent any default scrolling behavior
+    event?.preventDefault();
   };
 
   return (
@@ -102,7 +104,10 @@ const SayThisInsteadTool: React.FC = () => {
           <button
             key={index}
             className="text-xs px-3 py-1 rounded-full bg-[#8A8AC9]/10 text-[#22254a] border border-[#8A8AC9]/20 hover:bg-[#8A8AC9]/20"
-            onClick={() => handleQuickPhraseSelect(phrase)}
+            onClick={(e) => {
+              e.preventDefault();
+              handleQuickPhraseSelect(phrase);
+            }}
           >
             "{phrase}"
           </button>
