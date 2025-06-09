@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -7,7 +6,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { EmailField, PasswordField } from './FormFields';
 import { useDevModeLogin } from '../hooks/useDevModeLogin';
 import { Link } from 'react-router-dom';
-import { resendVerificationEmail } from '@/services/emailVerification';
+import { supabase } from '@/integrations/supabase/client';
 
 export const LoginForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -30,17 +29,22 @@ export const LoginForm: React.FC = () => {
     }
 
     try {
-      const sent = await resendVerificationEmail(email);
-      if (sent) {
+      // Use Supabase's built-in resend functionality
+      const { error } = await supabase.auth.resend({
+        type: 'signup',
+        email: email
+      });
+
+      if (error) {
         toast({
-          title: "Verification email sent",
-          description: "Please check your email for a new verification link."
+          title: "Failed to resend email",
+          description: error.message,
+          variant: "destructive"
         });
       } else {
         toast({
-          title: "Failed to resend email",
-          description: "Please try again or contact support.",
-          variant: "destructive"
+          title: "Verification email sent",
+          description: "Please check your email for a new verification link."
         });
       }
     } catch (error) {
@@ -82,19 +86,9 @@ export const LoginForm: React.FC = () => {
           toast({
             title: "Login failed",
             description: "That email or password doesn't match our records. Please double-check and try again.",
-            variant: "destructive",
-            action: (
-              <Button 
-                variant="outline" 
-                size="sm" 
-                onClick={handleResendVerification}
-                className="mt-2"
-              >
-                Resend Verification
-              </Button>
-            )
+            variant: "destructive"
           });
-        } else if (error.message.includes("email not confirmed")) {
+        } else if (error.message.includes("email not confirmed") || error.message.includes("Email not confirmed")) {
           toast({
             title: "Email not verified",
             description: "Please check your email and click the verification link before logging in.",
