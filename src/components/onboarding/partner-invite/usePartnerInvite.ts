@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from '@/contexts/AuthContext';
 import { invitePartner, createRelationship } from '@/services/supabase';
+import { supabase } from '@/integrations/supabase/client';
 
 export const usePartnerInvite = (onComplete: () => void) => {
   const [partnerEmail, setPartnerEmail] = useState('');
@@ -140,22 +141,48 @@ export const usePartnerInvite = (onComplete: () => void) => {
         console.log("Relationship created:", newRelationship.id);
         currentRelationshipId = newRelationship.id;
       }
+
+      // Get the relationship to access the invite token
+      const { data: relationshipData, error: relationshipError } = await supabase
+        .from('relationships')
+        .select('invite_token')
+        .eq('id', currentRelationshipId)
+        .single();
+
+      if (relationshipError || !relationshipData?.invite_token) {
+        throw new Error("Failed to get invite token");
+      }
+
+      // Send SMS via the edge function
+      const { data, error } = await supabase.functions.invoke('send-sms-invite', {
+        body: {
+          phoneNumber: phoneNumber,
+          partnerName: partnerName || undefined,
+          inviteToken: relationshipData.invite_token
+        }
+      });
+
+      if (error) {
+        throw new Error(error.message || "Failed to send SMS");
+      }
+
+      if (!data?.success) {
+        throw new Error(data?.error || "Failed to send SMS");
+      }
+
+      console.log("SMS sent successfully:", data.messageId);
+
+      toast({
+        title: "Invitation sent via text!",
+        description: "Your partner will receive a text message with a link to join.",
+      });
       
-      // Here we would integrate with an SMS service
-      // For now, we'll mock success since actual SMS integration would require backend services
-      setTimeout(() => {
-        toast({
-          title: "Invitation sent via text!",
-          description: "Your partner will receive a text message with a link to join.",
-        });
-        
-        onComplete();
-      }, 1500);
-    } catch (error) {
+      onComplete();
+    } catch (error: any) {
       console.error("Error sending text invitation:", error);
       toast({
         title: "Failed to send text invitation",
-        description: "Please try again later.",
+        description: error.message || "Please try again later.",
         variant: "destructive"
       });
     } finally {
