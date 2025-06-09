@@ -1,29 +1,20 @@
 
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
   
-  useEffect(() => {
-    // Multiple approaches to ensure scroll to top works
-    
+  useLayoutEffect(() => {
     // Immediate scroll
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: 'instant' });
     
-    // Also try with a small delay to ensure DOM is ready
+    // Fallback with timeout to override layout shifts and other scrolling
     const timeoutId = setTimeout(() => {
-      window.scrollTo(0, 0);
+      window.scrollTo({ top: 0, behavior: 'instant' });
       document.documentElement.scrollTop = 0;
       document.body.scrollTop = 0;
-    }, 0);
-    
-    // And another one with requestAnimationFrame
-    requestAnimationFrame(() => {
-      window.scrollTo(0, 0);
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
-    });
+    }, 50);
     
     return () => clearTimeout(timeoutId);
   }, [pathname]);

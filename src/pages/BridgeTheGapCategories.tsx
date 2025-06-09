@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+
+import React, { useLayoutEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   Baby, Heart, MessageSquare, Trash2, DollarSign, 
@@ -22,11 +23,19 @@ interface Category {
 const BridgeTheGapCategories: React.FC = () => {
   const navigate = useNavigate();
 
-  // Force scroll to top when component mounts
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
+  // Use useLayoutEffect with timeout to guarantee scroll reset
+  useLayoutEffect(() => {
+    // Immediate scroll
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    
+    // Fallback with timeout to override any other scrolling
+    const timeoutId = setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }, 50);
+    
+    return () => clearTimeout(timeoutId);
   }, []);
 
   // Define categories with their icons and colors using brand colors

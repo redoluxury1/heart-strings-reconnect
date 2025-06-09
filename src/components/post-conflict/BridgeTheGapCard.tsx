@@ -11,7 +11,6 @@ const BridgeTheGapCard: React.FC = () => {
   const handleNavigate = () => {
     trackAction.toolUsed('bridge_the_gap', { source: 'post_conflict_card' });
     navigate('/bridge-the-gap');
-    // Remove the custom setTimeout scroll - let ScrollToTop component handle this
   };
 
   return (
