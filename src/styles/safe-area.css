@@ -1,6 +1,9 @@
 
 /* iOS Safe Area Support */
 .safe-area-navbar {
+  /* Additional space above navbar - about 1/2 inch */
+  margin-top: 36px;
+  
   /* Minimal padding for navbar content with iOS safe area support */
   padding-top: 1rem;
   padding-bottom: 1rem;
@@ -25,6 +28,9 @@
 /* Mobile specific adjustments */
 @media screen and (max-width: 768px) {
   .safe-area-navbar {
+    /* Keep the additional space on mobile too */
+    margin-top: 36px;
+    
     /* Slightly more padding for mobile with iOS safe area */
     padding-top: 1.5rem;
     padding-bottom: 1rem;
