@@ -30,43 +30,57 @@ const ChipSelector: React.FC<ChipSelectorProps> = ({
     if (chipText.includes("talk") && chipText.includes("shuts down")) {
       return (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-current">
-          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          <line x1="9" y1="9" x2="15" y2="15" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-          <line x1="15" y1="9" x2="9" y2="15" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+          <path d="M8 4h8a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3h-8l-4 4V7a3 3 0 0 1 3-3z" 
+                stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="currentColor" fillOpacity="0.1"/>
+          <path d="M20 16h-4a3 3 0 0 1-3-3V9a3 3 0 0 1 3-3h4" 
+                stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <line x1="15" y1="8" x2="19" y2="12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+          <line x1="19" y1="8" x2="15" y2="12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
         </svg>
       );
     }
     if (chipText.includes("ignored") || chipText.includes("dismissed")) {
       return (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-current">
-          <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
-          <path d="M8 12h8" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+          <circle cx="12" cy="8" r="3" stroke="currentColor" strokeWidth="2"/>
+          <path d="M12 14c-4 0-7 2-7 4v2h14v-2c0-2-3-4-7-4z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <circle cx="18" cy="6" r="3" stroke="currentColor" strokeWidth="2"/>
+          <line x1="16" y1="4" x2="20" y2="8" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
         </svg>
       );
     }
     if (chipText.includes("small") && chipText.includes("blows up")) {
       return (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-current">
-          <path d="M12 2L15.09 8.26L22 9L17 14L18.18 21L12 17.77L5.82 21L7 14L2 9L8.91 8.26L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          <circle cx="12" cy="12" r="3" fill="currentColor"/>
+          <path d="M2 20l10-8 2-2 8-8" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+          <circle cx="20" cy="4" r="2" fill="currentColor"/>
+          <path d="M16 8c1 1 2 2 4 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+          <path d="M18 6c0.5 1 1 1.5 2 2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+          <path d="M14 10c1.5 1.5 3 3 6 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+          <path d="M10 14c2 2 4 4 8 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
         </svg>
       );
     }
     if (chipText.includes("reconnect") && chipText.includes("missed")) {
       return (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-current">
-          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          <line x1="8" y1="8" x2="16" y2="16" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+          <path d="M8 12c2-2 4-3 6-2" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+          <path d="M16 12c-2-2-4-3-6-2" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+          <circle cx="6" cy="12" r="2" stroke="currentColor" strokeWidth="2"/>
+          <circle cx="18" cy="12" r="2" stroke="currentColor" strokeWidth="2"/>
+          <path d="M10 8l2 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+          <path d="M14 8l-2 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
         </svg>
       );
     }
     if (chipText.includes("exhausted") && chipText.includes("nobody steps")) {
       return (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-current">
-          <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
-          <circle cx="9" cy="9" r="1" fill="currentColor"/>
-          <circle cx="15" cy="9" r="1" fill="currentColor"/>
-          <path d="M8 15h8" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+          <rect x="4" y="6" width="16" height="10" rx="2" stroke="currentColor" strokeWidth="2"/>
+          <rect x="6" y="8" width="3" height="6" rx="1" fill="currentColor"/>
+          <path d="M22 12h-2" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+          <path d="M2 12h2" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+          <circle cx="12" cy="4" r="1" fill="currentColor"/>
         </svg>
       );
     }
