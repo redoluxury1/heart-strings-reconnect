@@ -6,6 +6,8 @@ import ContentContainer from '@/components/common/ContentContainer';
 import FeatureCardSection from '@/components/mid-fight/FeatureCardSection';
 import BackgroundPhrases from '@/components/mid-fight/BackgroundPhrases';
 import PauseTool from '@/components/mid-fight/pause-tool/PauseTool';
+import BuildBridgeCard from '@/components/mid-fight/build-bridge/BuildBridgeCard';
+import MidFightColorHealing from '@/components/mid-fight/color-healing/MidFightColorHealing';
 
 const MidFight = () => {
   const [selectedFeature, setSelectedFeature] = useState<string | null>(null);
@@ -44,6 +46,20 @@ const MidFight = () => {
         <section className="py-8 bg-soft-blush/30">
           <ContentContainer maxWidth="lg">
             <PauseTool />
+          </ContentContainer>
+        </section>
+        
+        {/* Color Healing Method Section */}
+        <section className="py-6 md:py-8 bg-soft-blush/30">
+          <ContentContainer maxWidth="lg">
+            <MidFightColorHealing />
+          </ContentContainer>
+        </section>
+        
+        {/* Build a Bridge Section */}
+        <section className="py-6 md:py-8 bg-soft-blush/30">
+          <ContentContainer maxWidth="lg">
+            <BuildBridgeCard />
           </ContentContainer>
         </section>
       </main>
