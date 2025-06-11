@@ -5,15 +5,12 @@ export const getChipIcon = (chipText: string) => {
   if (chipText.includes("talk") && chipText.includes("shuts down")) {
     return (
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-current">
-        {/* Left speech bubble - filled */}
-        <path d="M3 6c0-1.1.9-2 2-2h6c1.1 0 2 .9 2 2v4c0 1.1-.9 2-2 2H8l-3 3V6z" 
-              fill="currentColor"/>
-        {/* Right speech bubble - crossed out */}
-        <path d="M15 6c0-1.1.9-2 2-2h4c1.1 0 2 .9 2 2v4c0 1.1-.9 2-2 2h-3l-3 3V6z" 
+        {/* Speech bubble */}
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" 
               stroke="currentColor" strokeWidth="2" fill="none"/>
-        {/* Cross over right bubble */}
-        <line x1="15" y1="4" x2="23" y2="12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-        <line x1="23" y1="4" x2="15" y2="12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+        {/* X inside the bubble */}
+        <line x1="9" y1="9" x2="15" y2="15" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+        <line x1="15" y1="9" x2="9" y2="15" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
       </svg>
     );
   }
