@@ -57,7 +57,8 @@ const PatternDetailScreen: React.FC<PatternDetailScreenProps> = ({ pattern, onBa
   // Check if this pattern involves feeling ignored or dismissed
   const isIgnoredDismissedPattern = pattern.description?.toLowerCase().includes('ignored') || 
                                   pattern.description?.toLowerCase().includes('dismissed') ||
-                                  pattern.patternType === 'ignored-dismissed';
+                                  pattern.name?.toLowerCase().includes('ignored') ||
+                                  pattern.name?.toLowerCase().includes('dismissed');
   
   // Override configuration based on pattern type
   switch(pattern.patternType) {
