@@ -31,18 +31,18 @@ const QuestionFlow: React.FC<QuestionFlowProps> = ({ category, onBack }) => {
     }
   };
   
-  const handleTalkNow = () => {
+  const handleSendToPartner = (answer: string) => {
     toast({
-      title: "Great choice!",
-      description: "Time to have that conversation together. Enjoy discovering something new about each other!",
+      title: "Sent to your partner!",
+      description: "Your question and answer have been shared. They'll receive it when they're ready to connect.",
     });
-  };
-  
-  const handleSendToPartner = () => {
-    toast({
-      title: "Question sent!",
-      description: "Your partner will receive this question and can respond when they're ready.",
-    });
+    
+    // Auto-advance to next question after sending
+    if (!isLastQuestion) {
+      setTimeout(() => {
+        setCurrentQuestionIndex(prev => prev + 1);
+      }, 1500);
+    }
   };
   
   return (
@@ -59,14 +59,14 @@ const QuestionFlow: React.FC<QuestionFlowProps> = ({ category, onBack }) => {
         </Button>
         
         <div className="flex items-center justify-center space-x-2">
-          <category.icon className="h-5 w-5 text-midnight-indigo" />
+          <category.icon className="h-5 w-5 text-terracotta" />
           <h1 className="font-cormorant text-2xl font-medium text-midnight-indigo">
             {category.title}
           </h1>
         </div>
         
         <p className="text-gray-600 text-sm italic max-w-md mx-auto">
-          You knew their favorite coffee order. Now find out their favorite childhood toy.
+          Share your thoughts and connect with your partner through meaningful conversation.
         </p>
       </div>
       
@@ -75,7 +75,6 @@ const QuestionFlow: React.FC<QuestionFlowProps> = ({ category, onBack }) => {
         question={currentQuestion}
         questionNumber={currentQuestionIndex + 1}
         totalQuestions={category.questions.length}
-        onTalkNow={handleTalkNow}
         onSendToPartner={handleSendToPartner}
       />
       
@@ -85,7 +84,7 @@ const QuestionFlow: React.FC<QuestionFlowProps> = ({ category, onBack }) => {
           variant="outline"
           onClick={handlePrevious}
           disabled={isFirstQuestion}
-          className="border-midnight-indigo text-midnight-indigo hover:bg-midnight-indigo/5"
+          className="border-terracotta text-terracotta hover:bg-terracotta/5"
         >
           <ArrowLeft className="h-4 w-4 mr-2" />
           Previous
@@ -97,7 +96,7 @@ const QuestionFlow: React.FC<QuestionFlowProps> = ({ category, onBack }) => {
               key={index}
               className={`w-2 h-2 rounded-full transition-colors ${
                 index === currentQuestionIndex 
-                  ? 'bg-midnight-indigo' 
+                  ? 'bg-terracotta' 
                   : 'bg-gray-300'
               }`}
             />
@@ -108,7 +107,7 @@ const QuestionFlow: React.FC<QuestionFlowProps> = ({ category, onBack }) => {
           variant="outline"
           onClick={handleNext}
           disabled={isLastQuestion}
-          className="border-midnight-indigo text-midnight-indigo hover:bg-midnight-indigo/5"
+          className="border-terracotta text-terracotta hover:bg-terracotta/5"
         >
           Next
           <ArrowRight className="h-4 w-4 ml-2" />

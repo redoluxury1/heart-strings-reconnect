@@ -15,8 +15,8 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category, onSelect }) => {
   return (
     <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer border-soft-cream/20 bg-gradient-to-br from-white to-soft-cream/30">
       <div className="flex flex-col items-center text-center space-y-4">
-        <div className="p-4 bg-midnight-indigo/10 rounded-full">
-          <IconComponent className="h-8 w-8 text-midnight-indigo" />
+        <div className="p-4 bg-terracotta/10 rounded-full">
+          <IconComponent className="h-8 w-8 text-terracotta" />
         </div>
         
         <h3 className="font-cormorant text-xl font-medium text-midnight-indigo">
@@ -29,9 +29,9 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category, onSelect }) => {
         
         <Button 
           onClick={() => onSelect(category.id)}
-          className="w-full bg-midnight-indigo hover:bg-midnight-indigo/90 text-soft-cream"
+          className="w-full bg-terracotta hover:bg-terracotta/90 text-white"
         >
-          Explore Questions
+          Start Connecting
         </Button>
       </div>
     </Card>
