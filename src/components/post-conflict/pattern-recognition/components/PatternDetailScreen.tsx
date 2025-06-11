@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { CommonPattern } from '../types';
@@ -103,8 +102,8 @@ const PatternDetailScreen: React.FC<PatternDetailScreenProps> = ({ pattern, onBa
         }
       ];
       CycleIconComponent = SilentTensionIcon;
-      useCustomImage = false;
-      customImageSrc = "";
+      useCustomImage = true;
+      customImageSrc = "/lovable-uploads/be731839-be7a-4e99-802d-49e82226b2e5.png";
       break;
     case "criticize-control":
       title = "Criticize–Control";
