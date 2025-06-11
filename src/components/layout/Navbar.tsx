@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
@@ -20,6 +21,11 @@ const Navbar = () => {
     navigate('/intro');
   };
 
+  const handleLoveNoteClick = () => {
+    // Handle love note click - navigate to notifications or show modal
+    console.log('Love note clicked');
+  };
+
   return (
     <>
       <nav className="relative z-50 bg-soft-cream border-b border-soft-blush/20">
@@ -29,13 +35,16 @@ const Navbar = () => {
             
             {/* Desktop Navigation */}
             <div className="hidden md:block">
-              <NavbarDesktopLinks />
+              <NavbarDesktopLinks user={user} />
             </div>
             
             {/* Right side items */}
             <div className="flex items-center space-x-4">
               {/* Notification Icon */}
-              <NavbarNotificationIcon />
+              <NavbarNotificationIcon 
+                hasNewLoveNote={false} 
+                onLoveNoteClick={handleLoveNoteClick}
+              />
               
               {/* Partner Presence Indicator - only show if connected */}
               {user && relationship?.status === 'connected' && (
@@ -104,6 +113,8 @@ const Navbar = () => {
         {/* Mobile menu */}
         <NavbarMobileMenu 
           isOpen={isOpen} 
+          user={user}
+          onSignOut={handleSignOut}
           onClose={() => setIsOpen(false)} 
         />
       </nav>

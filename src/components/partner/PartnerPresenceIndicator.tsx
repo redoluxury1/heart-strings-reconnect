@@ -15,9 +15,14 @@ const PartnerPresenceIndicator: React.FC<PartnerPresenceIndicatorProps> = ({
 }) => {
   const [isOnline, setIsOnline] = useState(false);
   const [lastSeen, setLastSeen] = useState<Date | null>(null);
-  const { relationship } = useAuth();
+  const { relationship, user } = useAuth();
   
-  const targetPartnerId = partnerId || relationship?.partner_id;
+  // Determine partner ID: use provided partnerId, or get from relationship
+  const targetPartnerId = partnerId || (
+    relationship?.partner_id === user?.id 
+      ? relationship?.user_id 
+      : relationship?.partner_id
+  );
   
   useEffect(() => {
     if (!targetPartnerId) return;

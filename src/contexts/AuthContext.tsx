@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useContext, createContext } from 'react';
 import { User } from '@supabase/supabase-js';
 import { supabase } from '../integrations/supabase/client';
@@ -15,9 +14,12 @@ interface AuthContextProps {
 
 interface Relationship {
   id: string;
-  partner1_id: string;
-  partner2_id: string;
+  user_id: string;
+  partner_id: string | null;
   status: string;
+  invite_token: string;
+  invite_email: string | null;
+  invite_name: string | null;
   created_at: string;
 }
 
@@ -104,15 +106,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
 
       if (data) {
-        // Map the database relationship to our interface
-        const mappedRelationship: Relationship = {
-          id: data.id,
-          partner1_id: data.user_id,
-          partner2_id: data.partner_id,
-          status: data.status,
-          created_at: data.created_at
-        };
-        setRelationship(mappedRelationship);
+        setRelationship(data);
       } else {
         setRelationship(null);
       }
