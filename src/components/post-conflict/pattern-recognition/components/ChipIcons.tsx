@@ -5,22 +5,27 @@ export const getChipIcon = (chipText: string) => {
   if (chipText.includes("talk") && chipText.includes("shuts down")) {
     return (
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-current">
-        <path d="M8 4h8a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3h-8l-4 4V7a3 3 0 0 1 3-3z" 
-              stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="currentColor" fillOpacity="0.1"/>
-        <path d="M20 16h-4a3 3 0 0 1-3-3V9a3 3 0 0 1 3-3h4" 
-              stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        <line x1="15" y1="8" x2="19" y2="12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-        <line x1="19" y1="8" x2="15" y2="12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+        {/* Left speech bubble - filled */}
+        <path d="M3 6c0-1.1.9-2 2-2h6c1.1 0 2 .9 2 2v4c0 1.1-.9 2-2 2H8l-3 3V6z" 
+              fill="currentColor"/>
+        {/* Right speech bubble - crossed out */}
+        <path d="M15 6c0-1.1.9-2 2-2h4c1.1 0 2 .9 2 2v4c0 1.1-.9 2-2 2h-3l-3 3V6z" 
+              stroke="currentColor" strokeWidth="2" fill="none"/>
+        {/* Cross over right bubble */}
+        <line x1="15" y1="4" x2="23" y2="12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+        <line x1="23" y1="4" x2="15" y2="12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
       </svg>
     );
   }
   if (chipText.includes("ignored") || chipText.includes("dismissed")) {
     return (
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-current">
-        <circle cx="12" cy="8" r="3" stroke="currentColor" strokeWidth="2"/>
-        <path d="M12 14c-4 0-7 2-7 4v2h14v-2c0-2-3-4-7-4z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        <circle cx="18" cy="6" r="3" stroke="currentColor" strokeWidth="2"/>
-        <line x1="16" y1="4" x2="20" y2="8" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+        {/* Person outline */}
+        <circle cx="12" cy="7" r="3" stroke="currentColor" strokeWidth="2" fill="none"/>
+        <path d="M7 18c0-2.5 2.2-4.5 5-4.5s5 2 5 4.5" stroke="currentColor" strokeWidth="2" fill="none"/>
+        {/* Minus/removal symbol */}
+        <circle cx="20" cy="6" r="3" stroke="currentColor" strokeWidth="2" fill="none"/>
+        <line x1="18" y1="6" x2="22" y2="6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
       </svg>
     );
   }
