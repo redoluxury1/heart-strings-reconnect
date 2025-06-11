@@ -70,7 +70,7 @@ const NavbarMobileMenu = ({ isOpen, user, onSignOut, onClose, isDevelopment }: N
                   onClose();
                 }}
                 variant="outline"
-                className="w-full text-soft-cream border-soft-cream hover:bg-soft-cream/10"
+                className="w-full text-navy-800 border-soft-cream bg-soft-cream hover:bg-soft-cream/90 hover:text-navy-800"
               >
                 Sign Out
               </Button>
