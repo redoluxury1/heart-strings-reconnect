@@ -33,9 +33,9 @@ const PostConflictContent = () => {
         {showIntro && <FloatingTextBubbles />}
         
         <ContentContainer maxWidth="lg">
-          <div className="max-w-3xl mx-auto mt-12">
+          <div className="max-w-3xl mx-auto mt-6">
             {showIntro && (
-              <p className="text-center text-gray-600 mb-10 mt-12 pt-12">
+              <p className="text-center text-gray-600 mb-10 mt-4 pt-4">
                 Okay, take a breath. Let's work through what happened- no judgment, just space to be honest and figure it out side by side.
               </p>
             )}
