@@ -108,6 +108,8 @@ const PatternDetailScreen: React.FC<PatternDetailScreenProps> = ({ pattern, onBa
       title = "Criticize–Control";
       headline = "Everything feels like a correction.";
       subheadline = "One partner constantly critiques. The other feels micromanaged and inadequate.";
+      useCustomImage = true;
+      customImageSrc = "/lovable-uploads/bb777e8d-3c83-44c7-b4cf-42089f1d5e8b.png";
       insights = [
         "Good intentions (wanting things to be better) come across as constant criticism.",
         "The criticized partner starts to feel nothing they do is ever good enough.",
