@@ -1,5 +1,4 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TalkAboutUsQuestion } from '@/data/lets-talk-about-us';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -11,20 +10,27 @@ interface QuestionCardProps {
   questionNumber: number;
   totalQuestions: number;
   onSendToPartner: (answer: string) => void;
+  savedResponse?: string;
 }
 
 const QuestionCard: React.FC<QuestionCardProps> = ({ 
   question, 
   questionNumber, 
   totalQuestions,
-  onSendToPartner 
+  onSendToPartner,
+  savedResponse = ''
 }) => {
-  const [answer, setAnswer] = useState('');
+  const [answer, setAnswer] = useState(savedResponse);
+  
+  // Update answer when savedResponse changes (e.g., navigating between questions)
+  useEffect(() => {
+    setAnswer(savedResponse);
+  }, [savedResponse]);
   
   const handleSend = () => {
     if (answer.trim()) {
       onSendToPartner(answer);
-      setAnswer(''); // Clear the answer after sending
+      // Don't clear the answer since we want to keep it for this question
     }
   };
   
@@ -60,7 +66,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
             className="w-full bg-terracotta hover:bg-terracotta/90 text-white disabled:opacity-50"
           >
             <Send className="h-4 w-4 mr-2" />
-            Send to My Partner
+            {savedResponse ? 'Update Response' : 'Send to My Partner'}
           </Button>
         </div>
       </div>

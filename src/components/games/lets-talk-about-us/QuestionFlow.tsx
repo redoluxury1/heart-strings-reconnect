@@ -2,9 +2,12 @@
 import React, { useState } from 'react';
 import { TalkAboutUsCategory } from '@/data/lets-talk-about-us';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Share2 } from 'lucide-react';
 import QuestionCard from './QuestionCard';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/contexts/AuthContext';
+import { sendConversationMessage } from '@/services/conversationMessages';
+import { createConversationSession } from '@/services/conversation';
 
 interface QuestionFlowProps {
   category: TalkAboutUsCategory;
@@ -13,7 +16,9 @@ interface QuestionFlowProps {
 
 const QuestionFlow: React.FC<QuestionFlowProps> = ({ category, onBack }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [responses, setResponses] = useState<Record<number, string>>({});
   const { toast } = useToast();
+  const { user, relationship } = useAuth();
   
   const currentQuestion = category.questions[currentQuestionIndex];
   const isLastQuestion = currentQuestionIndex === category.questions.length - 1;
@@ -31,10 +36,60 @@ const QuestionFlow: React.FC<QuestionFlowProps> = ({ category, onBack }) => {
     }
   };
   
-  const handleSendToPartner = (answer: string) => {
+  const handleSendToPartner = async (answer: string) => {
+    // Store the response locally
+    setResponses(prev => ({
+      ...prev,
+      [currentQuestionIndex]: answer
+    }));
+    
+    // If partner is connected, send the message
+    if (relationship?.status === 'connected' && user) {
+      try {
+        // Create or get existing conversation session
+        let sessionId = localStorage.getItem(`talk-session-${category.id}`);
+        
+        if (!sessionId) {
+          const session = await createConversationSession(
+            relationship.id,
+            user.id,
+            'post-fight', // Using post-fight type for now
+            { 
+              tool: 'lets-talk-about-us',
+              category: category.id,
+              categoryTitle: category.title
+            }
+          );
+          
+          if (session) {
+            sessionId = session.id;
+            localStorage.setItem(`talk-session-${category.id}`, sessionId);
+          }
+        }
+        
+        if (sessionId) {
+          await sendConversationMessage({
+            session_id: sessionId,
+            sender_id: user.id,
+            message_text: `${currentQuestion.text}\n\nMy response: ${answer}`,
+            message_type: 'text',
+            metadata: {
+              questionIndex: currentQuestionIndex,
+              categoryId: category.id,
+              questionText: currentQuestion.text
+            }
+          });
+        }
+      } catch (error) {
+        console.error('Error sending to partner:', error);
+      }
+    }
+    
     toast({
-      title: "Sent to your partner!",
-      description: "Your question and answer have been shared. They'll receive it when they're ready to connect.",
+      title: relationship?.status === 'connected' ? "Sent to your partner!" : "Response saved!",
+      description: relationship?.status === 'connected' 
+        ? "Your partner will see your response when they view this activity."
+        : "Connect with your partner to share responses in real-time.",
     });
     
     // Auto-advance to next question after sending
@@ -66,7 +121,10 @@ const QuestionFlow: React.FC<QuestionFlowProps> = ({ category, onBack }) => {
         </div>
         
         <p className="text-gray-600 text-sm italic max-w-md mx-auto">
-          Share your thoughts and connect with your partner through meaningful conversation.
+          {relationship?.status === 'connected' 
+            ? "Share your thoughts and connect with your partner through meaningful conversation."
+            : "Reflect on these questions. Connect with your partner to share responses together."
+          }
         </p>
       </div>
       
@@ -76,6 +134,7 @@ const QuestionFlow: React.FC<QuestionFlowProps> = ({ category, onBack }) => {
         questionNumber={currentQuestionIndex + 1}
         totalQuestions={category.questions.length}
         onSendToPartner={handleSendToPartner}
+        savedResponse={responses[currentQuestionIndex]}
       />
       
       {/* Navigation */}
@@ -94,11 +153,14 @@ const QuestionFlow: React.FC<QuestionFlowProps> = ({ category, onBack }) => {
           {category.questions.map((_, index) => (
             <div
               key={index}
-              className={`w-2 h-2 rounded-full transition-colors ${
+              className={`w-2 h-2 rounded-full transition-colors cursor-pointer ${
                 index === currentQuestionIndex 
                   ? 'bg-terracotta' 
+                  : responses[index]
+                  ? 'bg-terracotta/50'
                   : 'bg-gray-300'
               }`}
+              onClick={() => setCurrentQuestionIndex(index)}
             />
           ))}
         </div>
@@ -113,6 +175,24 @@ const QuestionFlow: React.FC<QuestionFlowProps> = ({ category, onBack }) => {
           <ArrowRight className="h-4 w-4 ml-2" />
         </Button>
       </div>
+      
+      {/* Share All Responses Button (appears when all questions are answered) */}
+      {Object.keys(responses).length === category.questions.length && (
+        <div className="text-center pt-4">
+          <Button
+            className="bg-terracotta hover:bg-terracotta/90 text-white"
+            onClick={() => {
+              toast({
+                title: "All responses shared!",
+                description: "Your complete conversation is ready for your partner to review.",
+              });
+            }}
+          >
+            <Share2 className="h-4 w-4 mr-2" />
+            Share Complete Conversation
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

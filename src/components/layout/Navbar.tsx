@@ -1,107 +1,116 @@
-
 import React, { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, Heart } from 'lucide-react';
+import { useNavigate, Link } from 'react-router-dom';
+import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useAuth } from '@/contexts/AuthContext';
 import NavbarLogo from './NavbarLogo';
 import NavbarDesktopLinks from './NavbarDesktopLinks';
 import NavbarMobileMenu from './NavbarMobileMenu';
 import NavbarNotificationIcon from './NavbarNotificationIcon';
-import { useAuth } from '@/contexts/AuthContext';
+import PartnerPresenceIndicator from '@/components/partner/PartnerPresenceIndicator';
+import RealTimeNotifications from '@/components/partner/RealTimeNotifications';
 
-interface NavbarProps {
-  hasNewLoveNote?: boolean;
-  onViewLoveNote?: () => void;
-}
-
-const Navbar = ({ hasNewLoveNote = false, onViewLoveNote }: NavbarProps) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const location = useLocation();
+const Navbar = () => {
   const navigate = useNavigate();
-  const { user, signOut } = useAuth();
+  const { user, signOut, relationship } = useAuth();
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleSignOut = async () => {
     await signOut();
-    navigate('/');
-  };
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
-  const closeMenu = () => {
-    setIsMenuOpen(false);
-  };
-
-  const handleLoveNoteClick = () => {
-    if (onViewLoveNote) {
-      onViewLoveNote();
-    }
-    navigate('/love-notes');
+    navigate('/intro');
   };
 
   return (
-    <nav className="bg-navy-800 safe-area-navbar">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16 sm:h-20 navbar-content">
-          <NavbarLogo />
-          
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-6 lg:space-x-8">
-            <NavbarDesktopLinks user={user} />
+    <>
+      <nav className="relative z-50 bg-soft-cream border-b border-soft-blush/20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex h-16 items-center justify-between">
+            <NavbarLogo />
             
-            <NavbarNotificationIcon 
-              hasNewLoveNote={hasNewLoveNote}
-              onLoveNoteClick={handleLoveNoteClick}
-            />
+            {/* Desktop Navigation */}
+            <div className="hidden md:block">
+              <NavbarDesktopLinks />
+            </div>
             
-            {user ? (
-              <Button 
-                onClick={handleSignOut}
-                variant="outline"
-                size="sm"
-                className="text-navy-800 border-soft-cream bg-soft-cream hover:bg-soft-cream/90 hover:text-navy-800 px-4 py-2"
-              >
-                Sign Out
-              </Button>
-            ) : (
-              <Link to="/auth">
-                <Button 
-                  size="sm"
-                  className="bg-soft-cream hover:bg-soft-cream/90 text-navy-800 px-4 py-2"
+            {/* Right side items */}
+            <div className="flex items-center space-x-4">
+              {/* Notification Icon */}
+              <NavbarNotificationIcon />
+              
+              {/* Partner Presence Indicator - only show if connected */}
+              {user && relationship?.status === 'connected' && (
+                <div className="hidden md:flex items-center gap-2 px-3 py-1 bg-white rounded-full border border-gray-200">
+                  <span className="text-sm text-gray-600">Partner:</span>
+                  <PartnerPresenceIndicator showText />
+                </div>
+              )}
+              
+              {/* Mobile menu button */}
+              <div className="md:hidden">
+                <button
+                  onClick={() => setIsOpen(!isOpen)}
+                  className="inline-flex items-center justify-center p-2 text-midnight-indigo hover:bg-soft-blush/50 hover:text-midnight-indigo focus:outline-none focus:ring-2 focus:ring-inset focus:ring-midnight-indigo rounded-md"
+                  aria-expanded="false"
                 >
-                  Sign In
-                </Button>
-              </Link>
-            )}
-          </div>
-
-          {/* Mobile menu button */}
-          <div className="md:hidden flex items-center space-x-3">
-            <NavbarNotificationIcon 
-              hasNewLoveNote={hasNewLoveNote}
-              onLoveNoteClick={handleLoveNoteClick}
-            />
-            <button
-              onClick={toggleMenu}
-              className="text-soft-cream hover:text-soft-cream/80 focus:outline-none focus:text-soft-cream p-3 touch-manipulation"
-              aria-label="Toggle menu"
-            >
-              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
+                  <span className="sr-only">Open main menu</span>
+                  {isOpen ? (
+                    <X className="block h-6 w-6" aria-hidden="true" />
+                  ) : (
+                    <Menu className="block h-6 w-6" aria-hidden="true" />
+                  )}
+                </button>
+              </div>
+              
+              {/* Desktop Auth Buttons */}
+              <div className="hidden md:flex items-center space-x-2">
+                {user ? (
+                  <div className="flex items-center space-x-3">
+                    <span className="text-midnight-indigo font-medium">
+                      {user.user_metadata?.name || user.email}
+                    </span>
+                    <Button
+                      onClick={handleSignOut}
+                      variant="outline"
+                      size="sm"
+                      className="border-midnight-indigo text-midnight-indigo hover:bg-midnight-indigo hover:text-white"
+                    >
+                      Sign Out
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="flex items-center space-x-2">
+                    <Button
+                      onClick={() => navigate('/intro')}
+                      variant="ghost"
+                      size="sm"
+                      className="text-midnight-indigo hover:bg-midnight-indigo/10"
+                    >
+                      Sign In
+                    </Button>
+                    <Button
+                      onClick={() => navigate('/intro')}
+                      size="sm"
+                      className="bg-midnight-indigo hover:bg-midnight-indigo/90 text-white"
+                    >
+                      Get Started
+                    </Button>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-
-      {/* Mobile Navigation Menu */}
-      <NavbarMobileMenu 
-        isOpen={isMenuOpen}
-        user={user}
-        onSignOut={handleSignOut}
-        onClose={closeMenu}
-        isDevelopment={false}
-      />
-    </nav>
+        
+        {/* Mobile menu */}
+        <NavbarMobileMenu 
+          isOpen={isOpen} 
+          onClose={() => setIsOpen(false)} 
+        />
+      </nav>
+      
+      {/* Real-time notifications component */}
+      <RealTimeNotifications />
+    </>
   );
 };
 

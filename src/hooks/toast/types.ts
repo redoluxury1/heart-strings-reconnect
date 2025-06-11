@@ -17,4 +17,4 @@ export interface State {
 }
 
 export const TOAST_LIMIT = 1
-export const TOAST_REMOVE_DELAY = 3000
+export const TOAST_REMOVE_DELAY = 2000 // Changed from 3000 to 2000ms for faster auto-dismiss
