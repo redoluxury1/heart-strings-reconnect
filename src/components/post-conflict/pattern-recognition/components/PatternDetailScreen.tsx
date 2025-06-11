@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { CommonPattern } from '../types';
@@ -53,6 +54,11 @@ const PatternDetailScreen: React.FC<PatternDetailScreenProps> = ({ pattern, onBa
   let CycleIconComponent = CycleIcon;
   let useCustomImage = false;
   let customImageSrc = "";
+  
+  // Check if this pattern involves feeling ignored or dismissed
+  const isIgnoredDismissedPattern = pattern.description?.toLowerCase().includes('ignored') || 
+                                  pattern.description?.toLowerCase().includes('dismissed') ||
+                                  pattern.patternType === 'ignored-dismissed';
   
   // Override configuration based on pattern type
   switch(pattern.patternType) {
@@ -200,6 +206,12 @@ const PatternDetailScreen: React.FC<PatternDetailScreenProps> = ({ pattern, onBa
       break;
     default:
       // Keep default configuration for Blame/Defend/Withdraw
+  }
+
+  // If this is an ignored/dismissed pattern, use the custom image
+  if (isIgnoredDismissedPattern) {
+    useCustomImage = true;
+    customImageSrc = "/lovable-uploads/43d77678-108c-4565-978c-3afdead85010.png";
   }
 
   return (
