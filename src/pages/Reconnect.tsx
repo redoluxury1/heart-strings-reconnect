@@ -5,6 +5,7 @@ import Footer from '@/components/layout/Footer';
 import ContentContainer from '@/components/common/ContentContainer';
 import WouldYouRatherGame from '@/components/games/would-you-rather/WouldYouRatherGame';
 import DateWheel from '@/components/games/date-wheel/DateWheel';
+import LetsTalkAboutUs from '@/components/games/lets-talk-about-us/LetsTalkAboutUs';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Reconnect = () => {
@@ -15,7 +16,7 @@ const Reconnect = () => {
       <Navbar />
       
       <main className="py-12">
-        <ContentContainer maxWidth="lg">
+        <ContentContainer maxWidth="full">
           <h1 className="text-4xl md:text-5xl font-cormorant font-medium text-midnight-indigo text-center mb-3">
             Reconnect & Have Fun
           </h1>
@@ -28,11 +29,12 @@ const Reconnect = () => {
             defaultValue="would-you-rather"
             value={currentTab}
             onValueChange={setCurrentTab}
-            className="w-full max-w-3xl mx-auto"
+            className="w-full max-w-4xl mx-auto"
           >
-            <TabsList className="grid grid-cols-2 mb-8">
+            <TabsList className="grid grid-cols-3 mb-8">
               <TabsTrigger value="would-you-rather">Would You Rather Game</TabsTrigger>
               <TabsTrigger value="date-wheel">Date Night Wheel</TabsTrigger>
+              <TabsTrigger value="lets-talk-about-us">Let's Talk About Us</TabsTrigger>
             </TabsList>
             
             <TabsContent value="would-you-rather" className="focus-visible:outline-none">
@@ -51,6 +53,10 @@ const Reconnect = () => {
             
             <TabsContent value="date-wheel" className="focus-visible:outline-none">
               <DateWheel />
+            </TabsContent>
+            
+            <TabsContent value="lets-talk-about-us" className="focus-visible:outline-none">
+              <LetsTalkAboutUs />
             </TabsContent>
           </Tabs>
         </ContentContainer>
