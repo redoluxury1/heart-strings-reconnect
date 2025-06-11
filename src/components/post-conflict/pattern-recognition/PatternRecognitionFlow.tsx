@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
@@ -24,6 +23,10 @@ const PatternRecognitionFlow: React.FC<PatternRecognitionFlowProps> = ({ onClose
     detectPattern
   } = usePatternRecognition();
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const handleNext = () => {
     switch (currentStep) {
       case 'intro':
@@ -40,6 +43,8 @@ const PatternRecognitionFlow: React.FC<PatternRecognitionFlowProps> = ({ onClose
         setCurrentStep('result');
         break;
     }
+    // Scroll to top after state update
+    setTimeout(scrollToTop, 100);
   };
 
   const handleBack = () => {
@@ -57,6 +62,8 @@ const PatternRecognitionFlow: React.FC<PatternRecognitionFlowProps> = ({ onClose
         setCurrentStep('partner-reactions');
         break;
     }
+    // Scroll to top after state update
+    setTimeout(scrollToTop, 100);
   };
 
   const canProceed = () => {
