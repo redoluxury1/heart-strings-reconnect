@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Fire, Megaphone, Broom, Compass } from 'lucide-react';
 
 export const getChipIcon = (chipText: string) => {
   if (chipText.includes("talk") && chipText.includes("shuts down")) {
@@ -30,28 +31,10 @@ export const getChipIcon = (chipText: string) => {
     );
   }
   if (chipText.includes("small") && chipText.includes("blows up")) {
-    return (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-current">
-        <path d="M2 20l10-8 2-2 8-8" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-        <circle cx="20" cy="4" r="2" fill="currentColor"/>
-        <path d="M16 8c1 1 2 2 4 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-        <path d="M18 6c0.5 1 1 1.5 2 2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-        <path d="M14 10c1.5 1.5 3 3 6 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-        <path d="M10 14c2 2 4 4 8 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-      </svg>
-    );
+    return <Fire size={24} className="text-current" />;
   }
   if (chipText.includes("reconnect") && chipText.includes("missed")) {
-    return (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-current">
-        <path d="M8 12c2-2 4-3 6-2" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-        <path d="M16 12c-2-2-4-3-6-2" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-        <circle cx="6" cy="12" r="2" stroke="currentColor" strokeWidth="2"/>
-        <circle cx="18" cy="12" r="2" stroke="currentColor" strokeWidth="2"/>
-        <path d="M10 8l2 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-        <path d="M14 8l-2 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-      </svg>
-    );
+    return <Megaphone size={24} className="text-current" />;
   }
   if (chipText.includes("exhausted") && chipText.includes("nobody steps")) {
     return (
@@ -98,14 +81,7 @@ export const getChipIcon = (chipText: string) => {
     );
   }
   if (chipText.includes("keep doing everything")) {
-    return (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-current">
-        <rect x="3" y="3" width="18" height="18" rx="2" ry="2" stroke="currentColor" strokeWidth="2"/>
-        <circle cx="9" cy="9" r="2" stroke="currentColor" strokeWidth="2"/>
-        <path d="M21 15l-3.086-3.086a2 2 0 0 0-2.828 0L6 21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        <circle cx="17" cy="7" r="1" fill="currentColor"/>
-      </svg>
-    );
+    return <Broom size={24} className="text-current" />;
   }
   if (chipText.includes("double down") && chipText.includes("right")) {
     return (
@@ -117,13 +93,7 @@ export const getChipIcon = (chipText: string) => {
     );
   }
   if (chipText.includes("dig in") || chipText.includes("control")) {
-    return (
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-current">
-        <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="2"/>
-        <path d="M12 1v6m0 6v6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-        <path d="M1 12h6m6 0h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-      </svg>
-    );
+    return <Compass size={24} className="text-current" />;
   }
   if (chipText.includes("defensive")) {
     return (
