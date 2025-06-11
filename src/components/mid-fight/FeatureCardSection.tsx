@@ -7,7 +7,6 @@ import TryAgainTool from './TryAgainTool';
 import WhatsReallyGoingOn from './WhatsReallyGoingOn';
 import BuildBridgeCard from './build-bridge/BuildBridgeCard';
 import MidFightColorHealing from './color-healing/MidFightColorHealing';
-import CodeWordTool from './code-word/CodeWordTool';
 
 // Feature data for other features (not including "say-instead" which will be displayed directly)
 const features: Feature[] = [
@@ -49,13 +48,6 @@ const FeatureCardSection: React.FC<FeatureCardSectionProps> = ({
           <div className="bg-white rounded-lg shadow-md p-5 md:p-6 border border-lavender-blue/20">
             <WhatsReallyGoingOn />
           </div>
-        </ContentContainer>
-      </section>
-      
-      {/* Code Word Tool Section - Moved here from MidFight.tsx */}
-      <section className="py-6 md:py-8 bg-soft-blush/30">
-        <ContentContainer maxWidth="lg">
-          <CodeWordTool />
         </ContentContainer>
       </section>
       
