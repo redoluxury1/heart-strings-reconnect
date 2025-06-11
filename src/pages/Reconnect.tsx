@@ -75,7 +75,7 @@ const Reconnect = () => {
                     className={`flex items-start gap-3 py-4 px-3 cursor-pointer transition-colors rounded-md ${
                       currentTab === key 
                         ? 'bg-midnight-indigo text-soft-cream' 
-                        : 'text-midnight-indigo hover:bg-midnight-indigo/10'
+                        : 'text-midnight-indigo hover:bg-terracotta/10 hover:text-midnight-indigo focus:bg-terracotta/10 focus:text-midnight-indigo'
                     }`}
                     onClick={() => setCurrentTab(key)}
                   >
