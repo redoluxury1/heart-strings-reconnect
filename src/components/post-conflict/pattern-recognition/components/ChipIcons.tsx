@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { Fire, Megaphone, Broom, Compass } from 'lucide-react';
+import { Flame, Megaphone, Brush, Compass } from 'lucide-react';
 
 export const getChipIcon = (chipText: string) => {
   if (chipText.includes("talk") && chipText.includes("shuts down")) {
@@ -31,7 +30,7 @@ export const getChipIcon = (chipText: string) => {
     );
   }
   if (chipText.includes("small") && chipText.includes("blows up")) {
-    return <Fire size={24} className="text-current" />;
+    return <Flame size={24} className="text-current" />;
   }
   if (chipText.includes("reconnect") && chipText.includes("missed")) {
     return <Megaphone size={24} className="text-current" />;
@@ -81,7 +80,7 @@ export const getChipIcon = (chipText: string) => {
     );
   }
   if (chipText.includes("keep doing everything")) {
-    return <Broom size={24} className="text-current" />;
+    return <Brush size={24} className="text-current" />;
   }
   if (chipText.includes("double down") && chipText.includes("right")) {
     return (

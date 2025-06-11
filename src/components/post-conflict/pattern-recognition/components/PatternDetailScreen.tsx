@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { CommonPattern } from '../types';
@@ -59,6 +60,12 @@ const PatternDetailScreen: React.FC<PatternDetailScreenProps> = ({ pattern, onBa
                                   pattern.description?.toLowerCase().includes('dismissed') ||
                                   pattern.name?.toLowerCase().includes('ignored') ||
                                   pattern.name?.toLowerCase().includes('dismissed');
+  
+  // Check if this is an effort imbalance pattern
+  const isEffortImbalancePattern = pattern.description?.toLowerCase().includes('effort') || 
+                                 pattern.description?.toLowerCase().includes('imbalance') ||
+                                 pattern.name?.toLowerCase().includes('effort') ||
+                                 pattern.name?.toLowerCase().includes('imbalance');
   
   // Override configuration based on pattern type
   switch(pattern.patternType) {
@@ -212,6 +219,12 @@ const PatternDetailScreen: React.FC<PatternDetailScreenProps> = ({ pattern, onBa
   if (isIgnoredDismissedPattern) {
     useCustomImage = true;
     customImageSrc = "/lovable-uploads/43d77678-108c-4565-978c-3afdead85010.png";
+  }
+
+  // If this is an effort imbalance pattern, use the new uploaded image
+  if (isEffortImbalancePattern) {
+    useCustomImage = true;
+    customImageSrc = "/lovable-uploads/5c296369-ace3-41ef-a2f0-7f788e5cd3c5.png";
   }
 
   return (
