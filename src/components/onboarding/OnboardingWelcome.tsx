@@ -10,7 +10,7 @@ const OnboardingWelcome: React.FC<OnboardingWelcomeProps> = ({ onContinue }) => 
   return (
     <div className="text-center flex flex-col items-center">
       <h1 className="font-cormorant text-3xl md:text-4xl font-medium mb-6 text-midnight-indigo">
-        We're here to help you communicate better — even when it's hard.
+        We know it's hard to know what to say or even what to ask for help with. That's why we've done the thinking for you.
       </h1>
       
       <Button

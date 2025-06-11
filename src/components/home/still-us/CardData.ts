@@ -7,7 +7,7 @@ export const getCardData = (): CardContent[] => {
   return [
     {
       title: "Mid-Fight",
-      description: "Emotions are high? That's okay. Here's where you can pause, breathe, and calm things down before saying more.",
+      description: "The right words at the worst moments. Here's where you can pause, breathe, and calm things down before saying more.",
       icon: React.createElement(FlameIcon),
       tools: ["Code Word/Time Out Timer", "Let's Try That Again", "What's Really Going On?", "Color Healing"],
       comingSoonTools: ["Build a Bridge"],
@@ -22,7 +22,7 @@ export const getCardData = (): CardContent[] => {
     },
     {
       title: "Post-Fight",
-      description: "That was a lot. This space helps you process what just happened, understand what you need, and find clarity before reconnecting.",
+      description: "See patterns you never knew existed. This space helps you process what just happened, understand what you need, and find clarity before reconnecting.",
       icon: React.createElement(HeartBreakIcon),
       tools: ["Okay, but now what?", "Let's Work This Out", "Bridge the Gap"],
       comingSoonTools: ["Build a Bridge"],
@@ -37,7 +37,7 @@ export const getCardData = (): CardContent[] => {
     },
     {
       title: "Reconnecting",
-      description: "Not fighting? Beautiful. Come here for small ways to feel closer, learn more about each other, and have fun.",
+      description: "Never wonder what to talk about again. Come here for small ways to feel closer, learn more about each other, and have fun.",
       icon: React.createElement(PuzzleIcon),
       tools: ["Would You Rather: Couples Game", "Spin the Date Night Wheel"],
       link: "/reconnect",
