@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { cn } from "@/lib/utils";
 
@@ -72,7 +73,7 @@ const JournalBubblesHero = () => {
 
   // Function to create a new bubble
   const createBubble = () => {
-    // Only allow up to 3 random bubbles at once
+    // Only allow up to 3 random bubbles at once (consistent limit)
     if (visibleBubbles.length >= 5) return;
     
     const messageIndex = Math.floor(Math.random() * messages.length);
@@ -96,7 +97,7 @@ const JournalBubblesHero = () => {
     setUsedPositions(prev => [...prev, selectedVariantIndex]);
     
     const newBubble = {
-      id: Date.now(),
+      id: Date.now() + Math.random(),
       message: messages[messageIndex],
       style: bubbleStyles[styleIndex],
       positionStyle: bubbleVariants[selectedVariantIndex].position,
@@ -107,18 +108,12 @@ const JournalBubblesHero = () => {
     
     setVisibleBubbles(prev => [...prev, newBubble]);
     
-    // Set timeout to start fading out the bubble after display time
+    // Set timeout to remove bubble after display time
     setTimeout(() => {
-      const bubbleElement = document.getElementById(`bubble-${newBubble.id}`);
-      if (bubbleElement) {
-        bubbleElement.style.animation = 'fadeOut 1.5s forwards'; // Slower fade out
-        bubbleElement.addEventListener('animationend', () => {
-          setVisibleBubbles(prev => prev.filter(bubble => bubble.id !== newBubble.id));
-          // Free up this position
-          setUsedPositions(prev => prev.filter(pos => pos !== selectedVariantIndex));
-        });
-      }
-    }, 4500); // Increased display time from 3s to 4.5s
+      setVisibleBubbles(prev => prev.filter(bubble => bubble.id !== newBubble.id));
+      // Free up this position
+      setUsedPositions(prev => prev.filter(pos => pos !== selectedVariantIndex));
+    }, 4500); // Display for 4.5 seconds
   };
 
   // Create special bubbles for "Love Notes" and "Thoughts"
@@ -140,25 +135,23 @@ const JournalBubblesHero = () => {
     setVisibleBubbles(prev => [...prev, ...specialBubblesWithIds]);
   }, []);
 
-  // Effect to periodically add new bubbles
+  // Effect to periodically add new bubbles - removed dependency on visibleBubbles.length
   useEffect(() => {
     // Initial bubble on load with delay
     const initialTimer = setTimeout(() => {
       createBubble();
-    }, 800); // Longer initial delay
+    }, 1000);
     
-    // Set interval to add new bubbles at staggered times
+    // Set interval to add new bubbles consistently
     const interval = setInterval(() => {
-      if (Math.random() > 0.3) { // 70% chance to create a new bubble each interval
-        createBubble();
-      }
-    }, 2000); // Slower interval between bubble creation attempts (from 1.5s to 2s)
+      createBubble();
+    }, 2500); // Create a bubble every 2.5 seconds
     
     return () => {
       clearTimeout(initialTimer);
       clearInterval(interval);
     };
-  }, [visibleBubbles.length, usedPositions]);
+  }, []); // No dependencies to prevent timer resets
 
   return (
     <div className="relative z-10 py-20 overflow-visible">
@@ -172,8 +165,8 @@ const JournalBubblesHero = () => {
             
           // Don't fade out special bubbles
           const animationStyle = bubble.isSpecial 
-            ? { animation: 'fadeIn 1.2s forwards, pulse 3s infinite' } // Slower fade in for special bubbles
-            : { animation: 'fadeIn 1.2s forwards' }; // Slower fade in for regular bubbles
+            ? { animation: 'fadeIn 1.2s forwards, pulse 3s infinite' }
+            : { animation: 'fadeIn 1.2s forwards' };
             
           return (
             <div 

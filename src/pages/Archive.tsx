@@ -49,11 +49,11 @@ const Archive = () => {
   // Helper to get active section class
   const getSectionClass = (sectionName) => {
     if (sectionName === 'saved-rephrases') {
-      return activeTab === sectionName ? 'bg-midnight-indigo text-white' : 'text-midnight-indigo';
+      return activeTab === sectionName ? 'bg-midnight-indigo text-white' : 'text-midnight-indigo hover:bg-midnight-indigo/10';
     } else if (sectionName === 'love-notes') {
-      return activeTab === sectionName ? 'bg-mauve-rose text-white' : 'text-midnight-indigo';
+      return activeTab === sectionName ? 'bg-mauve-rose text-white' : 'text-midnight-indigo hover:bg-mauve-rose/10';
     } else {
-      return activeTab === sectionName ? 'bg-soft-blush text-midnight-indigo' : 'text-midnight-indigo';
+      return activeTab === sectionName ? 'bg-soft-blush text-midnight-indigo' : 'text-midnight-indigo hover:bg-soft-blush/30';
     }
   };
 
@@ -72,16 +72,16 @@ const Archive = () => {
                 <DropdownMenuTrigger asChild>
                   <Button 
                     variant="outline"
-                    className="flex items-center gap-2 border border-midnight-indigo/30 bg-white"
+                    className="flex items-center gap-2 border border-midnight-indigo/30 bg-soft-cream hover:bg-soft-cream/80 text-midnight-indigo shadow-sm"
                   >
                     {sectionIcons[activeTab]}
                     <span>{sectionNames[activeTab]}</span>
                     <ChevronDown className="h-4 w-4 ml-2" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-56 bg-white">
+                <DropdownMenuContent className="w-56 bg-soft-cream border border-midnight-indigo/20 shadow-lg z-50">
                   <DropdownMenuItem 
-                    className={`flex items-center gap-2 py-3 cursor-pointer ${getSectionClass('saved-rephrases')}`}
+                    className={`flex items-center gap-2 py-3 cursor-pointer transition-colors ${getSectionClass('saved-rephrases')}`}
                     onClick={() => setActiveTab('saved-rephrases')}
                   >
                     <Book className="h-4 w-4" />
@@ -93,7 +93,7 @@ const Archive = () => {
                     )}
                   </DropdownMenuItem>
                   <DropdownMenuItem
-                    className={`flex items-center gap-2 py-3 cursor-pointer ${getSectionClass('love-notes')}`}
+                    className={`flex items-center gap-2 py-3 cursor-pointer transition-colors ${getSectionClass('love-notes')}`}
                     onClick={() => setActiveTab('love-notes')}
                   >
                     <Heart className="h-4 w-4" />
@@ -105,14 +105,14 @@ const Archive = () => {
                     )}
                   </DropdownMenuItem>
                   <DropdownMenuItem 
-                    className={`flex items-center gap-2 py-3 cursor-pointer ${getSectionClass('repair-plans')}`}
+                    className={`flex items-center gap-2 py-3 cursor-pointer transition-colors ${getSectionClass('repair-plans')}`}
                     onClick={() => setActiveTab('repair-plans')}
                   >
                     <Check className="h-4 w-4" />
                     <span>Repair Plans</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem 
-                    className={`flex items-center gap-2 py-3 cursor-pointer ${getSectionClass('thoughts')}`}
+                    className={`flex items-center gap-2 py-3 cursor-pointer transition-colors ${getSectionClass('thoughts')}`}
                     onClick={() => setActiveTab('thoughts')}
                   >
                     <BookOpen className="h-4 w-4" />
