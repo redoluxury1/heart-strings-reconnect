@@ -33,8 +33,8 @@ export const getBubbleStyles = (): BubbleStyle[] => [
 export const bubbleVariants: BubbleVariant[] = [
   { position: "left-[5%] top-[5%] -rotate-2 max-w-[200px]", tail: "after:left-4" }, // Top left
   { position: "right-[5%] top-[5%] rotate-2 max-w-[210px]", tail: "after:right-4" }, // Top right
-  { position: "left-[10%] bottom-[15%] -rotate-1 max-w-[190px]", tail: "after:left-6" }, // Bottom left but higher
-  { position: "right-[10%] bottom-[15%] rotate-1 max-w-[220px]", tail: "after:right-6" }, // Bottom right but higher
-  { position: "left-[25%] top-[40%] rotate-3 max-w-[180px]", tail: "after:left-10" }, // Middle left
-  { position: "right-[25%] top-[40%] -rotate-3 max-w-[230px]", tail: "after:right-10" }, // Middle right
+  { position: "left-[10%] top-[50%] -rotate-1 max-w-[190px]", tail: "after:left-6" }, // Middle left
+  { position: "right-[10%] top-[50%] rotate-1 max-w-[220px]", tail: "after:right-6" }, // Middle right
+  { position: "left-[25%] top-[20%] rotate-3 max-w-[180px]", tail: "after:left-10" }, // Upper middle left
+  { position: "right-[25%] top-[20%] -rotate-3 max-w-[230px]", tail: "after:right-10" }, // Upper middle right
 ];

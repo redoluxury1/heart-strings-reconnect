@@ -31,8 +31,8 @@ const FloatingBubblesContainer: React.FC = () => {
         `
       }} />
       
-      {/* Message Bubbles Container - extending beyond its boundaries */}
-      <div className="bubble-container absolute inset-0 h-[300px] w-full overflow-visible pointer-events-none">
+      {/* Message Bubbles Container - constrained to prevent overlap */}
+      <div className="bubble-container absolute inset-0 h-[120px] w-full overflow-hidden pointer-events-none">
         {visibleBubbles.length > 0 ? (
           visibleBubbles.map(bubble => {
             console.log('Rendering bubble:', bubble.message);
