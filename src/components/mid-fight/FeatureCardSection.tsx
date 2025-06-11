@@ -7,6 +7,7 @@ import TryAgainTool from './TryAgainTool';
 import WhatsReallyGoingOn from './WhatsReallyGoingOn';
 import BuildBridgeCard from './build-bridge/BuildBridgeCard';
 import MidFightColorHealing from './color-healing/MidFightColorHealing';
+import CodeWordTool from './code-word/CodeWordTool';
 
 // Feature data for other features (not including "say-instead" which will be displayed directly)
 const features: Feature[] = [
@@ -33,9 +34,6 @@ const FeatureCardSection: React.FC<FeatureCardSectionProps> = ({
 }) => {
   return (
     <>
-      {/* Original TimeoutTimer and CodeWordTool section is in MidFight.tsx and does not need to be here */}
-      {/* Removed duplicate section */}
-      
       {/* Let's Try That Again Tool - Always visible with compact design */}
       <section className="py-6 md:py-8 bg-soft-blush/30">
         <ContentContainer maxWidth="lg">
@@ -54,7 +52,14 @@ const FeatureCardSection: React.FC<FeatureCardSectionProps> = ({
         </ContentContainer>
       </section>
       
-      {/* Color Healing Method Section - Added above Build a Bridge */}
+      {/* Code Word Tool Section - Moved here from MidFight.tsx */}
+      <section className="py-6 md:py-8 bg-soft-blush/30">
+        <ContentContainer maxWidth="lg">
+          <CodeWordTool />
+        </ContentContainer>
+      </section>
+      
+      {/* Color Healing Method Section */}
       <section className="py-6 md:py-8 bg-soft-blush/30">
         <ContentContainer maxWidth="lg">
           <MidFightColorHealing />

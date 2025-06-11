@@ -1,5 +1,5 @@
 
-import { PhotoAlbum, Gamepad, ShootingStar, Heart, Compass } from 'lucide-react';
+import { Camera, Gamepad, Star, Heart, Compass } from 'lucide-react';
 
 export interface TalkAboutUsQuestion {
   id: string;
@@ -17,7 +17,7 @@ export const talkAboutUsCategories: TalkAboutUsCategory[] = [
   {
     id: 'past-memories',
     title: 'Past & Memories',
-    icon: PhotoAlbum,
+    icon: Camera,
     questions: [
       { id: 'pm1', text: "What's a childhood memory that still makes you smile?" },
       { id: 'pm2', text: "What song instantly takes you back to your teenage years?" },
@@ -41,7 +41,7 @@ export const talkAboutUsCategories: TalkAboutUsCategory[] = [
   {
     id: 'dreams-growth',
     title: 'Dreams & Growth',
-    icon: ShootingStar,
+    icon: Star,
     questions: [
       { id: 'dg1', text: "What's something you've always wanted to learn but haven't yet?" },
       { id: 'dg2', text: "If money didn't matter, what would you spend your time doing?" },

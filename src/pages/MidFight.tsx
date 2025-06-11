@@ -34,15 +34,14 @@ const MidFight = () => {
       <Navbar />
       
       <main className="pb-16 relative z-10">
-        {/* Let's Try That Again Section */}
+        {/* Pause Tool Section */}
         <section className="py-8 bg-soft-blush/30">
           <ContentContainer maxWidth="lg">
-            {/* Unified Pause Tool */}
             <PauseTool />
           </ContentContainer>
         </section>
 
-        {/* Feature cards including the always-visible Pause & Phrase tool */}
+        {/* Feature cards including the always-visible tools */}
         <FeatureCardSection 
           selectedFeature={selectedFeature}
           toggleFeature={toggleFeature}
