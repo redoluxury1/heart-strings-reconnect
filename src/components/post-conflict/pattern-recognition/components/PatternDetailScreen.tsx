@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { CommonPattern } from '../types';
@@ -6,6 +5,7 @@ import { MessageSquare, Shield, X, ArrowLeft, Eye } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { CycleIcon, SilentTensionIcon, CriticizeControlIcon, FixRejectIcon, PursueDistanceIcon } from './PatternRecognitionIcons';
 import { Card } from '@/components/ui/card';
+import OptimizedImage from '@/components/common/OptimizedImage';
 
 interface PatternDetailScreenProps {
   pattern: CommonPattern | null;
@@ -51,6 +51,8 @@ const PatternDetailScreen: React.FC<PatternDetailScreenProps> = ({ pattern, onBa
     }
   ];
   let CycleIconComponent = CycleIcon;
+  let useCustomImage = false;
+  let customImageSrc = "";
   
   // Override configuration based on pattern type
   switch(pattern.patternType) {
@@ -163,6 +165,8 @@ const PatternDetailScreen: React.FC<PatternDetailScreenProps> = ({ pattern, onBa
       title = "Pursue–Distance";
       headline = "One of you chases connection. The other pulls away.";
       subheadline = "The more one pursues, the more the other distances. Round and round it goes.";
+      useCustomImage = true;
+      customImageSrc = "/lovable-uploads/ff773bf1-651a-49f4-8ba0-476bb21ffeec.png";
       insights = [
         "The pursuer feels abandoned and craves reassurance through more connection.",
         "The distancer feels overwhelmed and needs space to feel safe and autonomous.",
@@ -214,7 +218,18 @@ const PatternDetailScreen: React.FC<PatternDetailScreenProps> = ({ pattern, onBa
       
       {/* Pattern visualization - larger and more prominent */}
       <div className="w-full flex justify-center mb-4 bg-[#f8f5f0] rounded-lg p-6">
-        <CycleIconComponent className="w-44 h-44 md:w-56 md:h-56 text-[#2e2a63] animate-gentle-rotate" />
+        {useCustomImage ? (
+          <OptimizedImage
+            src={customImageSrc}
+            alt={`${title} pattern illustration`}
+            className="w-44 h-44 md:w-56 md:h-56 object-contain"
+            width={224}
+            height={224}
+            priority={true}
+          />
+        ) : (
+          <CycleIconComponent className="w-44 h-44 md:w-56 md:h-56 text-[#2e2a63] animate-gentle-rotate" />
+        )}
       </div>
       
       {/* Pattern title and headline in a card */}
