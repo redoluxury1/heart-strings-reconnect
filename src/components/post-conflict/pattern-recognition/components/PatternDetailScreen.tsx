@@ -52,8 +52,8 @@ const PatternDetailScreen: React.FC<PatternDetailScreenProps> = ({ pattern, onBa
     }
   ];
   let CycleIconComponent = CycleIcon;
-  let useCustomImage = false;
-  let customImageSrc = "";
+  let useCustomImage = true;
+  let customImageSrc = "/lovable-uploads/3baf0f1b-43ed-4c77-906f-53910b91b5fc.png";
   
   // Check if this pattern involves feeling ignored or dismissed
   const isIgnoredDismissedPattern = pattern.description?.toLowerCase().includes('ignored') || 
@@ -103,6 +103,8 @@ const PatternDetailScreen: React.FC<PatternDetailScreenProps> = ({ pattern, onBa
         }
       ];
       CycleIconComponent = SilentTensionIcon;
+      useCustomImage = false;
+      customImageSrc = "";
       break;
     case "criticize-control":
       title = "Criticize–Control";
@@ -175,6 +177,8 @@ const PatternDetailScreen: React.FC<PatternDetailScreenProps> = ({ pattern, onBa
         }
       ];
       CycleIconComponent = FixRejectIcon;
+      useCustomImage = false;
+      customImageSrc = "";
       break;
     case "pursue-distance":
       title = "Pursue–Distance";
