@@ -179,7 +179,7 @@ const PatternDetailScreen: React.FC<PatternDetailScreenProps> = ({ pattern, onBa
       headline = "One of you chases connection. The other pulls away.";
       subheadline = "The more one pursues, the more the other distances. Round and round it goes.";
       useCustomImage = true;
-      customImageSrc = "/lovable-uploads/ff773bf1-651a-49f4-8ba0-476bb21ffeec.png";
+      customImageSrc = "/lovable-uploads/c249001f-7813-4798-ac22-ea1fa988bce3.png";
       insights = [
         "The pursuer feels abandoned and craves reassurance through more connection.",
         "The distancer feels overwhelmed and needs space to feel safe and autonomous.",
