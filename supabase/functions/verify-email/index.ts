@@ -134,14 +134,19 @@ const handler = async (req: Request): Promise<Response> => {
     });
 
     console.log("=== EMAIL VERIFICATION SUCCESSFUL ===");
+    
+    // Instead of redirecting to a verify page, redirect to auth page with success message
+    const origin = req.headers.get("origin") || "https://your-app.com";
+    const redirectUrl = `${origin}/auth?verified=true`;
+    
     return new Response(
-      JSON.stringify({ 
-        success: true, 
-        message: "Email verified successfully! You can now log in to your account." 
-      }),
+      null,
       {
-        status: 200,
-        headers: { "Content-Type": "application/json", ...corsHeaders },
+        status: 302,
+        headers: { 
+          "Location": redirectUrl,
+          ...corsHeaders 
+        },
       }
     );
 

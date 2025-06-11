@@ -77,9 +77,9 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    // Generate verification URL
+    // Generate verification URL - now points to the edge function directly
     const origin = req.headers.get("origin") || req.headers.get("referer")?.split('/').slice(0, 3).join('/') || "https://your-app.com";
-    const verificationUrl = `${origin}/auth/verify?token=${token}`;
+    const verificationUrl = `${origin}/functions/v1/verify-email?token=${token}`;
     console.log("Verification URL:", verificationUrl);
 
     // Send email
