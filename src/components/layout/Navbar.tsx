@@ -60,7 +60,7 @@ const Navbar = ({ hasNewLoveNote = false, onViewLoveNote }: NavbarProps) => {
                 onClick={handleSignOut}
                 variant="outline"
                 size="sm"
-                className="text-navy-800 border-soft-cream bg-soft-cream hover:bg-soft-cream/90 px-4 py-2"
+                className="text-navy-800 border-soft-cream bg-soft-cream hover:bg-soft-cream/90 hover:text-navy-800 px-4 py-2"
               >
                 Sign Out
               </Button>
