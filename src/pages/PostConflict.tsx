@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -33,9 +32,9 @@ const PostConflictContent = () => {
         {showIntro && <FloatingTextBubbles />}
         
         <ContentContainer maxWidth="lg">
-          <div className="max-w-3xl mx-auto mt-6">
+          <div className="max-w-3xl mx-auto mt-2">
             {showIntro && (
-              <p className="text-center text-gray-600 mb-10 mt-4 pt-4">
+              <p className="text-center text-gray-600 mb-10 mt-2 pt-2">
                 Okay, take a breath. Let's work through what happened- no judgment, just space to be honest and figure it out side by side.
               </p>
             )}
