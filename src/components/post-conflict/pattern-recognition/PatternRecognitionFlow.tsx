@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import PatternIntroStep from './components/PatternIntroStep';
@@ -15,6 +15,7 @@ interface PatternRecognitionFlowProps {
 
 const PatternRecognitionFlow: React.FC<PatternRecognitionFlowProps> = ({ onClose }) => {
   const [currentStep, setCurrentStep] = useState<Step>('intro');
+  const quizContainerRef = useRef<HTMLDivElement>(null);
   const {
     session,
     addTriggerChip,
@@ -24,7 +25,12 @@ const PatternRecognitionFlow: React.FC<PatternRecognitionFlowProps> = ({ onClose
   } = usePatternRecognition();
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (quizContainerRef.current) {
+      quizContainerRef.current.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
   };
 
   const handleNext = () => {
@@ -95,7 +101,7 @@ const PatternRecognitionFlow: React.FC<PatternRecognitionFlowProps> = ({ onClose
   const stepInfo = getStepInfo();
 
   return (
-    <div className="bg-white rounded-lg p-8 max-w-4xl mx-auto min-h-[600px]">
+    <div ref={quizContainerRef} className="bg-white rounded-lg p-8 max-w-4xl mx-auto min-h-[600px]">
       {currentStep !== 'intro' && currentStep !== 'result' && (
         <div className="flex justify-between items-center mb-8">
           <Button 
