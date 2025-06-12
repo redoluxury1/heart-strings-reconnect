@@ -46,7 +46,8 @@ export class StoreKitService {
       if (isCapacitorEnvironment()) {
         // Only try to load the real plugin in Capacitor environment
         try {
-          const { InAppPurchase } = await import('@capacitor-community/in-app-purchase');
+          // Use eval to bypass TypeScript checking of the import path
+          const InAppPurchase = await eval('import("@capacitor-community/in-app-purchase")').then((m: any) => m.InAppPurchase);
           await InAppPurchase.initialize();
           console.log('Real StoreKit initialized successfully');
         } catch (importError) {
@@ -73,10 +74,10 @@ export class StoreKitService {
     try {
       if (isCapacitorEnvironment()) {
         try {
-          const { InAppPurchase } = await import('@capacitor-community/in-app-purchase');
+          const InAppPurchase = await eval('import("@capacitor-community/in-app-purchase")').then((m: any) => m.InAppPurchase);
           const result = await InAppPurchase.getProducts({ productIds });
           
-          return result.products.map(product => ({
+          return result.products.map((product: any) => ({
             productId: product.productId,
             price: product.price,
             currency: product.currency,
@@ -104,7 +105,7 @@ export class StoreKitService {
     try {
       if (isCapacitorEnvironment()) {
         try {
-          const { InAppPurchase } = await import('@capacitor-community/in-app-purchase');
+          const InAppPurchase = await eval('import("@capacitor-community/in-app-purchase")').then((m: any) => m.InAppPurchase);
           const result = await InAppPurchase.purchaseProduct({ productId });
           
           if (result.purchases && result.purchases.length > 0) {
@@ -142,11 +143,11 @@ export class StoreKitService {
     try {
       if (isCapacitorEnvironment()) {
         try {
-          const { InAppPurchase } = await import('@capacitor-community/in-app-purchase');
+          const InAppPurchase = await eval('import("@capacitor-community/in-app-purchase")').then((m: any) => m.InAppPurchase);
           const result = await InAppPurchase.restorePurchases();
           
           if (result.purchases) {
-            return result.purchases.map(purchase => ({
+            return result.purchases.map((purchase: any) => ({
               transactionId: purchase.transactionId,
               originalTransactionId: purchase.originalTransactionId || purchase.transactionId,
               productId: purchase.productId,
@@ -176,7 +177,7 @@ export class StoreKitService {
     try {
       if (isCapacitorEnvironment()) {
         try {
-          const { InAppPurchase } = await import('@capacitor-community/in-app-purchase');
+          const InAppPurchase = await eval('import("@capacitor-community/in-app-purchase")').then((m: any) => m.InAppPurchase);
           await InAppPurchase.finishTransaction({ transactionId });
         } catch (importError) {
           console.warn('Failed to import real StoreKit plugin, using mock:', importError);
