@@ -1,9 +1,12 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { useSubscription } from '@/hooks/useSubscription';
+import { useAuth } from '@/contexts/AuthContext';
+import { SubscriptionService } from '@/services/subscriptionService';
 import { Check, Star } from 'lucide-react';
+import { toast } from '@/hooks/use-toast';
 
 interface SubscriptionUpgradeModalProps {
   isOpen: boolean;
@@ -14,26 +17,94 @@ export const SubscriptionUpgradeModal: React.FC<SubscriptionUpgradeModalProps> =
   isOpen,
   onClose
 }) => {
-  const { loading } = useSubscription();
+  const { user } = useAuth();
+  const { loading, refreshSubscription } = useSubscription();
+  const [purchasing, setPurchasing] = useState<string | null>(null);
+  const [restoring, setRestoring] = useState(false);
 
   const handlePurchase = async (productId: string) => {
-    // This will integrate with native iOS StoreKit
-    console.log('Initiating purchase for product:', productId);
+    if (!user) {
+      toast({
+        title: "Authentication Required",
+        description: "Please sign in to purchase a subscription.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setPurchasing(productId);
     
-    // TODO: Call native iOS purchasing method
-    // The native layer will handle the App Store transaction
-    // and then call back to update the subscription status
-    
-    onClose();
+    try {
+      console.log('Initiating purchase for product:', productId);
+      
+      const subscription = await SubscriptionService.handlePurchase(user.id, productId);
+      
+      if (subscription) {
+        toast({
+          title: "Purchase Successful!",
+          description: "Welcome to Premium! You now have access to all features.",
+        });
+        
+        // Refresh subscription data
+        refreshSubscription();
+        onClose();
+      } else {
+        throw new Error('Failed to create subscription');
+      }
+    } catch (error: any) {
+      console.error('Purchase failed:', error);
+      toast({
+        title: "Purchase Failed",
+        description: error.message || "There was a problem processing your purchase. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setPurchasing(null);
+    }
   };
 
   const handleRestorePurchases = async () => {
-    // This will integrate with native iOS StoreKit
-    console.log('Restoring purchases...');
+    if (!user) {
+      toast({
+        title: "Authentication Required",
+        description: "Please sign in to restore purchases.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setRestoring(true);
     
-    // TODO: Call native iOS restore purchases method
-    
-    onClose();
+    try {
+      console.log('Restoring purchases...');
+      
+      const subscriptions = await SubscriptionService.restorePurchases(user.id);
+      
+      if (subscriptions.length > 0) {
+        toast({
+          title: "Purchases Restored!",
+          description: `Successfully restored ${subscriptions.length} subscription(s).`,
+        });
+        
+        // Refresh subscription data
+        refreshSubscription();
+        onClose();
+      } else {
+        toast({
+          title: "No Purchases Found",
+          description: "We couldn't find any previous purchases to restore.",
+        });
+      }
+    } catch (error: any) {
+      console.error('Restore purchases failed:', error);
+      toast({
+        title: "Restore Failed",
+        description: error.message || "There was a problem restoring your purchases. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setRestoring(false);
+    }
   };
 
   const features = [
@@ -103,10 +174,18 @@ export const SubscriptionUpgradeModal: React.FC<SubscriptionUpgradeModalProps> =
                 3-day free trial
               </p>
               <Button
-                onClick={() => handlePurchase('premium_monthly')}
+                onClick={() => handlePurchase('com.bridgeforcouples.premium.monthly')}
+                disabled={purchasing !== null || restoring}
                 className="w-full bg-[#2e4059] hover:bg-[#2e4059]/90"
               >
-                Start Free Trial
+                {purchasing === 'com.bridgeforcouples.premium.monthly' ? (
+                  <div className="flex items-center">
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                    Processing...
+                  </div>
+                ) : (
+                  'Start Free Trial'
+                )}
               </Button>
             </div>
 
@@ -121,7 +200,7 @@ export const SubscriptionUpgradeModal: React.FC<SubscriptionUpgradeModalProps> =
               <div className="flex justify-between items-center mb-2 mt-2">
                 <h4 className="font-medium text-gray-900">Premium Yearly</h4>
                 <span className="text-lg font-semibold text-[#2e4059]">
-                  $129.00/year
+                  $129/year
                 </span>
               </div>
               <p className="text-sm text-gray-600 mb-3">Full access to all premium features – Best Value</p>
@@ -129,10 +208,18 @@ export const SubscriptionUpgradeModal: React.FC<SubscriptionUpgradeModalProps> =
                 7-day free trial
               </p>
               <Button
-                onClick={() => handlePurchase('premium_yearly')}
+                onClick={() => handlePurchase('com.bridgeforcouples.premium.yearly')}
+                disabled={purchasing !== null || restoring}
                 className="w-full bg-[#2e4059] hover:bg-[#2e4059]/90"
               >
-                Start Free Trial
+                {purchasing === 'com.bridgeforcouples.premium.yearly' ? (
+                  <div className="flex items-center">
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                    Processing...
+                  </div>
+                ) : (
+                  'Start Free Trial'
+                )}
               </Button>
             </div>
           </div>
@@ -142,13 +229,22 @@ export const SubscriptionUpgradeModal: React.FC<SubscriptionUpgradeModalProps> =
             <Button
               variant="outline"
               onClick={handleRestorePurchases}
+              disabled={purchasing !== null || restoring}
               className="w-full"
             >
-              Restore Purchases
+              {restoring ? (
+                <div className="flex items-center">
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-600 mr-2"></div>
+                  Restoring...
+                </div>
+              ) : (
+                'Restore Purchases'
+              )}
             </Button>
             <Button
               variant="ghost"
               onClick={onClose}
+              disabled={purchasing !== null || restoring}
               className="w-full text-gray-500"
             >
               Maybe Later
@@ -156,7 +252,8 @@ export const SubscriptionUpgradeModal: React.FC<SubscriptionUpgradeModalProps> =
           </div>
 
           <p className="text-xs text-gray-500 text-center">
-            Subscription automatically renews unless canceled at least 24 hours before the end of the current period.
+            Subscription automatically renews unless canceled at least 24 hours before the end of the current period. 
+            Manage your subscription in your Apple ID settings.
           </p>
         </div>
       </DialogContent>

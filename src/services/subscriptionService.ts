@@ -1,5 +1,7 @@
 
 import { Subscription, SubscriptionProduct } from '@/types/subscription';
+import { supabase } from '@/integrations/supabase/client';
+import { StoreKitService, PurchaseTransaction } from './storeKitService';
 
 // Define feature keys for different sections
 export const FEATURE_KEYS = {
@@ -11,30 +13,58 @@ export const FEATURE_KEYS = {
   QUIZ_ACCESS: 'quiz_access'
 } as const;
 
-// Temporary mock implementation until database tables are created
 export class SubscriptionService {
+  private static storeKit = StoreKitService.getInstance();
+
   // Check if user has active subscription
   static async hasActiveSubscription(userId: string): Promise<boolean> {
     console.log('SubscriptionService.hasActiveSubscription called for user:', userId);
-    // Mock: return false until database is set up
-    // In production, this would check the subscriptions table
-    return false;
+    
+    try {
+      const { data: subscription, error } = await supabase
+        .from('subscriptions')
+        .select('*')
+        .eq('user_id', userId)
+        .in('status', ['active', 'in_trial'])
+        .single();
+
+      if (error && error.code !== 'PGRST116') {
+        console.error('Error checking subscription:', error);
+        return false;
+      }
+
+      if (!subscription) {
+        return false;
+      }
+
+      // Check if subscription is still valid
+      const now = new Date();
+      const expiresAt = new Date(subscription.current_period_end);
+      
+      if (expiresAt < now) {
+        // Subscription expired, update status
+        await this.updateSubscriptionStatus(subscription.id, 'expired');
+        return false;
+      }
+
+      return true;
+    } catch (error) {
+      console.error('Error in hasActiveSubscription:', error);
+      return false;
+    }
   }
 
   // Check if user has specific feature access
   static async hasFeatureAccess(userId: string, featureKey: string): Promise<boolean> {
     console.log('SubscriptionService.hasFeatureAccess called for user:', userId, 'feature:', featureKey);
     
-    // First check if user has active subscription
     const hasActiveSubscription = await this.hasActiveSubscription(userId);
     
     if (!hasActiveSubscription) {
-      // No subscription = no premium feature access
       return false;
     }
     
-    // If they have a subscription, check if the feature is included
-    // For now, all features are included in any subscription
+    // All premium features are included in any active subscription
     const premiumFeatures = [
       FEATURE_KEYS.MID_FIGHT_ACCESS,
       FEATURE_KEYS.POST_CONFLICT_ACCESS,
@@ -50,70 +80,238 @@ export class SubscriptionService {
   // Get user's current subscription
   static async getCurrentSubscription(userId: string): Promise<Subscription | null> {
     console.log('SubscriptionService.getCurrentSubscription called for user:', userId);
-    // Mock: return null until database is set up
-    return null;
+    
+    try {
+      const { data: subscription, error } = await supabase
+        .from('subscriptions')
+        .select('*')
+        .eq('user_id', userId)
+        .in('status', ['active', 'in_trial'])
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .single();
+
+      if (error && error.code !== 'PGRST116') {
+        console.error('Error getting subscription:', error);
+        return null;
+      }
+
+      return subscription;
+    } catch (error) {
+      console.error('Error in getCurrentSubscription:', error);
+      return null;
+    }
   }
 
   // Get available subscription products
   static async getSubscriptionProducts(): Promise<SubscriptionProduct[]> {
     console.log('SubscriptionService.getSubscriptionProducts called');
-    // Mock: return sample products for UI testing
-    return [
-      {
-        id: 'mock-monthly',
-        product_id: 'premium_monthly',
-        name: 'Premium Monthly',
-        description: 'Full access to all premium features',
-        price_tier: '$9.99/month',
-        billing_period: 'monthly',
-        trial_period_days: 30,
-        features: [
-          'Unlimited access to all relationship tools',
-          'Advanced communication patterns analysis',
-          'Personalized insights and recommendations'
-        ],
-        active: true
-      },
-      {
-        id: 'mock-yearly',
-        product_id: 'premium_yearly',
-        name: 'Premium Yearly',
-        description: 'Full access to all premium features - Best Value!',
-        price_tier: '$99.99/year',
-        billing_period: 'yearly',
-        trial_period_days: 30,
-        features: [
-          'Unlimited access to all relationship tools',
-          'Advanced communication patterns analysis',
-          'Personalized insights and recommendations',
-          'Priority customer support'
-        ],
-        active: true
+    
+    try {
+      const { data: products, error } = await supabase
+        .from('subscription_products')
+        .select('*')
+        .eq('active', true)
+        .order('billing_period', { ascending: true });
+
+      if (error) {
+        console.error('Error getting subscription products:', error);
+        return [];
       }
-    ];
-  }
 
-  // Create or update subscription after successful App Store purchase
-  static async createOrUpdateSubscription(
-    userId: string,
-    transactionData: {
-      productId: string;
-      transactionId: string;
-      originalTransactionId: string;
-      purchaseDate: Date;
-      expiresDate: Date;
-      isTrialPeriod: boolean;
+      return products || [];
+    } catch (error) {
+      console.error('Error in getSubscriptionProducts:', error);
+      return [];
     }
-  ): Promise<Subscription | null> {
-    console.log('SubscriptionService.createOrUpdateSubscription called for user:', userId, transactionData);
-    // Mock: return null until database is set up
-    return null;
   }
 
-  // Handle subscription cancellation
+  // Handle purchase from StoreKit
+  static async handlePurchase(userId: string, productId: string): Promise<Subscription | null> {
+    console.log('SubscriptionService.handlePurchase called for user:', userId, 'product:', productId);
+    
+    try {
+      // Initiate StoreKit purchase
+      const transaction = await this.storeKit.purchaseProduct(productId);
+      
+      // Store receipt in database
+      await this.storeReceipt(userId, transaction);
+      
+      // Create or update subscription
+      const subscription = await this.createOrUpdateSubscription(userId, transaction);
+      
+      // Finish the transaction
+      await this.storeKit.finishTransaction(transaction.transactionId);
+      
+      return subscription;
+    } catch (error) {
+      console.error('Purchase failed:', error);
+      throw error;
+    }
+  }
+
+  // Restore purchases
+  static async restorePurchases(userId: string): Promise<Subscription[]> {
+    console.log('SubscriptionService.restorePurchases called for user:', userId);
+    
+    try {
+      const transactions = await this.storeKit.restorePurchases();
+      const subscriptions: Subscription[] = [];
+      
+      for (const transaction of transactions) {
+        // Store receipt
+        await this.storeReceipt(userId, transaction);
+        
+        // Create or update subscription
+        const subscription = await this.createOrUpdateSubscription(userId, transaction);
+        if (subscription) {
+          subscriptions.push(subscription);
+        }
+        
+        // Finish transaction
+        await this.storeKit.finishTransaction(transaction.transactionId);
+      }
+      
+      return subscriptions;
+    } catch (error) {
+      console.error('Restore purchases failed:', error);
+      throw error;
+    }
+  }
+
+  // Store receipt in database
+  private static async storeReceipt(userId: string, transaction: PurchaseTransaction): Promise<void> {
+    try {
+      const { error } = await supabase
+        .from('app_store_receipts')
+        .upsert({
+          user_id: userId,
+          receipt_data: transaction.receiptData,
+          transaction_id: transaction.transactionId,
+          original_transaction_id: transaction.originalTransactionId,
+          product_id: transaction.productId,
+          purchase_date: transaction.purchaseDate.toISOString(),
+          expires_date: transaction.expiresDate?.toISOString(),
+          is_trial_period: transaction.isTrialPeriod,
+          is_in_intro_offer_period: false,
+          validation_status: 'valid'
+        }, {
+          onConflict: 'transaction_id'
+        });
+
+      if (error) {
+        console.error('Error storing receipt:', error);
+        throw error;
+      }
+    } catch (error) {
+      console.error('Failed to store receipt:', error);
+      throw error;
+    }
+  }
+
+  // Create or update subscription after successful purchase
+  private static async createOrUpdateSubscription(
+    userId: string,
+    transaction: PurchaseTransaction
+  ): Promise<Subscription | null> {
+    try {
+      // Get product info to determine trial period
+      const { data: product } = await supabase
+        .from('subscription_products')
+        .select('trial_period_days, billing_period')
+        .eq('product_id', transaction.productId)
+        .single();
+
+      if (!product) {
+        throw new Error(`Product not found: ${transaction.productId}`);
+      }
+
+      const now = new Date();
+      const trialEndDate = transaction.isTrialPeriod && product.trial_period_days > 0
+        ? new Date(now.getTime() + (product.trial_period_days * 24 * 60 * 60 * 1000))
+        : null;
+
+      // Calculate subscription end date
+      const subscriptionEndDate = transaction.expiresDate || 
+        (product.billing_period === 'yearly' 
+          ? new Date(now.getTime() + (365 * 24 * 60 * 60 * 1000))
+          : new Date(now.getTime() + (30 * 24 * 60 * 60 * 1000)));
+
+      const subscriptionData = {
+        user_id: userId,
+        product_id: transaction.productId,
+        status: transaction.isTrialPeriod ? 'in_trial' : 'active',
+        trial_end_date: trialEndDate?.toISOString(),
+        current_period_start: now.toISOString(),
+        current_period_end: subscriptionEndDate.toISOString(),
+        auto_renew: true,
+        app_store_transaction_id: transaction.transactionId,
+        app_store_original_transaction_id: transaction.originalTransactionId,
+        updated_at: now.toISOString()
+      };
+
+      const { data: subscription, error } = await supabase
+        .from('subscriptions')
+        .upsert(subscriptionData, {
+          onConflict: 'app_store_original_transaction_id'
+        })
+        .select('*')
+        .single();
+
+      if (error) {
+        console.error('Error creating/updating subscription:', error);
+        throw error;
+      }
+
+      return subscription;
+    } catch (error) {
+      console.error('Failed to create/update subscription:', error);
+      throw error;
+    }
+  }
+
+  // Update subscription status
+  private static async updateSubscriptionStatus(subscriptionId: string, status: string): Promise<void> {
+    try {
+      const { error } = await supabase
+        .from('subscriptions')
+        .update({ 
+          status,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', subscriptionId);
+
+      if (error) {
+        console.error('Error updating subscription status:', error);
+      }
+    } catch (error) {
+      console.error('Failed to update subscription status:', error);
+    }
+  }
+
+  // Cancel subscription
   static async cancelSubscription(userId: string): Promise<boolean> {
     console.log('SubscriptionService.cancelSubscription called for user:', userId);
-    // Mock: return false until database is set up
-    return false;
+    
+    try {
+      const { error } = await supabase
+        .from('subscriptions')
+        .update({ 
+          auto_renew: false,
+          updated_at: new Date().toISOString()
+        })
+        .eq('user_id', userId)
+        .in('status', ['active', 'in_trial']);
+
+      if (error) {
+        console.error('Error canceling subscription:', error);
+        return false;
+      }
+
+      return true;
+    } catch (error) {
+      console.error('Failed to cancel subscription:', error);
+      return false;
+    }
   }
 }
