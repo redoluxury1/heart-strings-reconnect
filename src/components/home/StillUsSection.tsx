@@ -28,7 +28,7 @@ const StillUsSection: React.FC = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mb-8 sm:mb-12 px-4">
+        <div className="grid grid-cols-1 gap-4 sm:gap-6 lg:gap-8 mb-8 sm:mb-12 px-4 max-w-lg mx-auto">
           {cardData.map((card, index) => (
             <FeatureCard 
               key={index}

@@ -5,7 +5,6 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import HomeLanding from '@/components/home/HomeLanding';
 import Hero from '@/components/home/Hero';
-import ConflictStages from '@/components/home/ConflictStages';
 import WhyBridgeSection from '@/components/home/WhyBridgeSection';
 import StillUsSection from '@/components/home/StillUsSection';
 import SmallWinsSection from '@/components/home/SmallWinsSection';
@@ -28,7 +27,6 @@ const Index = () => {
           </ContentContainer>
         </BrandSection>
         
-        <ConflictStages />
         <WhyBridgeSection />
         <StillUsSection />
         <SmallWinsSection />
