@@ -1,4 +1,3 @@
-
 import { createClient } from '@supabase/supabase-js';
 import type { UserProfile, Relationship, InviteRequest, CodeWordInfo } from '@/types/relationship';
 import { supabase } from '@/integrations/supabase/client';
@@ -140,8 +139,62 @@ export const invitePartner = async (relationshipId: string, invite: InviteReques
     console.error('Error inviting partner:', error);
     return false;
   }
-  
-  return true;
+
+  // Get the current user and relationship data to send the email
+  try {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      console.error('No authenticated user found');
+      return false;
+    }
+
+    // Get the relationship with invite token
+    const { data: relationshipData, error: relationshipError } = await supabase
+      .from('relationships')
+      .select('invite_token')
+      .eq('id', relationshipId)
+      .single();
+
+    if (relationshipError || !relationshipData?.invite_token) {
+      console.error('Error getting relationship data:', relationshipError);
+      return false;
+    }
+
+    // Get the user's profile for the inviter name
+    const { data: profileData } = await supabase
+      .from('profiles')
+      .select('name')
+      .eq('id', user.id)
+      .single();
+
+    const inviterName = profileData?.name || user.email || 'Your partner';
+
+    // Send the invitation email
+    const { data: emailResponse, error: emailError } = await supabase.functions.invoke('send-partner-invite-email', {
+      body: {
+        partnerEmail: invite.partnerEmail,
+        partnerName: invite.partnerName,
+        inviterName: inviterName,
+        inviteToken: relationshipData.invite_token
+      }
+    });
+
+    if (emailError) {
+      console.error('Error sending partner invite email:', emailError);
+      // Don't return false here - the database update succeeded, email is secondary
+      console.log('Partner invite was saved but email failed to send');
+    } else if (!emailResponse?.success) {
+      console.error('Email service returned error:', emailResponse?.error);
+    } else {
+      console.log('Partner invite email sent successfully');
+    }
+
+    return true;
+  } catch (error) {
+    console.error('Error in partner invite process:', error);
+    // Database update succeeded, so return true even if email failed
+    return true;
+  }
 };
 
 // Helper function to establish a couple relationship after a partner accepts an invitation
