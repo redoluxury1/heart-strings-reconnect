@@ -3,7 +3,7 @@ import React from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { useSubscription } from '@/hooks/useSubscription';
-import { Check } from 'lucide-react';
+import { Check, Star } from 'lucide-react';
 
 interface SubscriptionUpgradeModalProps {
   isOpen: boolean;
@@ -14,7 +14,7 @@ export const SubscriptionUpgradeModal: React.FC<SubscriptionUpgradeModalProps> =
   isOpen,
   onClose
 }) => {
-  const { products, loading } = useSubscription();
+  const { loading } = useSubscription();
 
   const handlePurchase = async (productId: string) => {
     // This will integrate with native iOS StoreKit
@@ -38,11 +38,12 @@ export const SubscriptionUpgradeModal: React.FC<SubscriptionUpgradeModalProps> =
 
   const features = [
     'Unlimited access to all relationship tools',
-    'Advanced communication patterns analysis',
+    'Advanced communication pattern analysis',
     'Personalized insights and recommendations',
     'Priority customer support',
     'Exclusive partner sync features',
-    'Advanced conflict resolution guides'
+    'Advanced conflict resolution guides',
+    'First access to our upcoming real-time AI relationship coach'
   ];
 
   if (loading) {
@@ -59,7 +60,7 @@ export const SubscriptionUpgradeModal: React.FC<SubscriptionUpgradeModalProps> =
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-md">
+      <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-center text-xl font-semibold text-[#2e4059]">
             Upgrade to Premium
@@ -74,7 +75,14 @@ export const SubscriptionUpgradeModal: React.FC<SubscriptionUpgradeModalProps> =
               {features.map((feature, index) => (
                 <li key={index} className="flex items-start">
                   <Check className="h-5 w-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-                  <span className="text-sm text-gray-700">{feature}</span>
+                  <div className="flex-1">
+                    <span className="text-sm text-gray-700">{feature}</span>
+                    {index === features.length - 1 && (
+                      <div className="text-xs text-gray-500 mt-1 italic">
+                        Coming soon: Be the first to try our emotionally intelligent AI coach — it's like having a therapist in your pocket.
+                      </div>
+                    )}
+                  </div>
                 </li>
               ))}
             </ul>
@@ -82,28 +90,51 @@ export const SubscriptionUpgradeModal: React.FC<SubscriptionUpgradeModalProps> =
 
           {/* Subscription Plans */}
           <div className="space-y-3">
-            {products.map((product) => (
-              <div key={product.id} className="border rounded-lg p-4">
-                <div className="flex justify-between items-center mb-2">
-                  <h4 className="font-medium text-gray-900">{product.name}</h4>
-                  <span className="text-lg font-semibold text-[#2e4059]">
-                    {product.price_tier}
-                  </span>
-                </div>
-                <p className="text-sm text-gray-600 mb-3">{product.description}</p>
-                {product.trial_period_days && (
-                  <p className="text-xs text-green-600 mb-3">
-                    {product.trial_period_days} days free trial
-                  </p>
-                )}
-                <Button
-                  onClick={() => handlePurchase(product.product_id)}
-                  className="w-full bg-[#2e4059] hover:bg-[#2e4059]/90"
-                >
-                  Start {product.trial_period_days ? 'Free Trial' : 'Subscription'}
-                </Button>
+            {/* Monthly Plan */}
+            <div className="border rounded-lg p-4">
+              <div className="flex justify-between items-center mb-2">
+                <h4 className="font-medium text-gray-900">Premium Monthly</h4>
+                <span className="text-lg font-semibold text-[#2e4059]">
+                  $12.99/month
+                </span>
               </div>
-            ))}
+              <p className="text-sm text-gray-600 mb-3">Full access to all premium features</p>
+              <p className="text-xs text-green-600 mb-3">
+                3-day free trial
+              </p>
+              <Button
+                onClick={() => handlePurchase('premium_monthly')}
+                className="w-full bg-[#2e4059] hover:bg-[#2e4059]/90"
+              >
+                Start Free Trial
+              </Button>
+            </div>
+
+            {/* Yearly Plan */}
+            <div className="border-2 border-[#2e4059] rounded-lg p-4 relative">
+              <div className="absolute -top-3 left-4">
+                <div className="bg-[#2e4059] text-white px-3 py-1 rounded-full text-xs font-medium flex items-center gap-1">
+                  <Star className="h-3 w-3" />
+                  Best Value
+                </div>
+              </div>
+              <div className="flex justify-between items-center mb-2 mt-2">
+                <h4 className="font-medium text-gray-900">Premium Yearly</h4>
+                <span className="text-lg font-semibold text-[#2e4059]">
+                  $129.00/year
+                </span>
+              </div>
+              <p className="text-sm text-gray-600 mb-3">Full access to all premium features – Best Value</p>
+              <p className="text-xs text-green-600 mb-3">
+                7-day free trial
+              </p>
+              <Button
+                onClick={() => handlePurchase('premium_yearly')}
+                className="w-full bg-[#2e4059] hover:bg-[#2e4059]/90"
+              >
+                Start Free Trial
+              </Button>
+            </div>
           </div>
 
           {/* Footer Actions */}
@@ -118,7 +149,7 @@ export const SubscriptionUpgradeModal: React.FC<SubscriptionUpgradeModalProps> =
             <Button
               variant="ghost"
               onClick={onClose}
-              className="w-full"
+              className="w-full text-gray-500"
             >
               Maybe Later
             </Button>
