@@ -1,4 +1,3 @@
-
 interface RealIssue {
   id: string;
   label: string;
@@ -31,7 +30,7 @@ export const getRealIssues = (): RealIssue[] => {
       id: "unloved",
       label: "I don't feel loved",
       explanation: "This deep-seated feeling often surfaces during conflicts when emotional connection is strained, and actions or words seem to contradict the care you expect in the relationship.",
-      suggestion: "Right now, I'm feeling disconnected from you. Can we pause the argument and find a way to reconnect before continuing?"
+      suggestion: "Can we pause for a second? I know we're upset, but right now I just need to feel like we're still on the same team."
     },
     {
       id: "confused",
