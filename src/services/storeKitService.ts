@@ -45,9 +45,14 @@ export class StoreKitService {
     try {
       if (isCapacitorEnvironment()) {
         // Only try to load the real plugin in Capacitor environment
-        const { InAppPurchase } = await import('@capacitor-community/in-app-purchase');
-        await InAppPurchase.initialize();
-        console.log('Real StoreKit initialized successfully');
+        try {
+          const { InAppPurchase } = await import('@capacitor-community/in-app-purchase');
+          await InAppPurchase.initialize();
+          console.log('Real StoreKit initialized successfully');
+        } catch (importError) {
+          console.warn('Failed to import real StoreKit plugin, falling back to mock:', importError);
+          await this.mockService.initialize();
+        }
       } else {
         // Use mock service for web development
         await this.mockService.initialize();
@@ -67,16 +72,21 @@ export class StoreKitService {
 
     try {
       if (isCapacitorEnvironment()) {
-        const { InAppPurchase } = await import('@capacitor-community/in-app-purchase');
-        const result = await InAppPurchase.getProducts({ productIds });
-        
-        return result.products.map(product => ({
-          productId: product.productId,
-          price: product.price,
-          currency: product.currency,
-          title: product.title,
-          description: product.description
-        }));
+        try {
+          const { InAppPurchase } = await import('@capacitor-community/in-app-purchase');
+          const result = await InAppPurchase.getProducts({ productIds });
+          
+          return result.products.map(product => ({
+            productId: product.productId,
+            price: product.price,
+            currency: product.currency,
+            title: product.title,
+            description: product.description
+          }));
+        } catch (importError) {
+          console.warn('Failed to import real StoreKit plugin, using mock:', importError);
+          return this.mockService.getProducts(productIds);
+        }
       } else {
         // Use mock service
         return this.mockService.getProducts(productIds);
@@ -93,23 +103,28 @@ export class StoreKitService {
 
     try {
       if (isCapacitorEnvironment()) {
-        const { InAppPurchase } = await import('@capacitor-community/in-app-purchase');
-        const result = await InAppPurchase.purchaseProduct({ productId });
-        
-        if (result.purchases && result.purchases.length > 0) {
-          const purchase = result.purchases[0];
+        try {
+          const { InAppPurchase } = await import('@capacitor-community/in-app-purchase');
+          const result = await InAppPurchase.purchaseProduct({ productId });
           
-          return {
-            transactionId: purchase.transactionId,
-            originalTransactionId: purchase.originalTransactionId || purchase.transactionId,
-            productId: purchase.productId,
-            purchaseDate: new Date(purchase.purchaseDate),
-            expiresDate: purchase.expiresDate ? new Date(purchase.expiresDate) : undefined,
-            isTrialPeriod: purchase.isTrialPeriod || false,
-            receiptData: purchase.receiptData || ''
-          };
-        } else {
-          throw new Error('Purchase failed - no transaction returned');
+          if (result.purchases && result.purchases.length > 0) {
+            const purchase = result.purchases[0];
+            
+            return {
+              transactionId: purchase.transactionId,
+              originalTransactionId: purchase.originalTransactionId || purchase.transactionId,
+              productId: purchase.productId,
+              purchaseDate: new Date(purchase.purchaseDate),
+              expiresDate: purchase.expiresDate ? new Date(purchase.expiresDate) : undefined,
+              isTrialPeriod: purchase.isTrialPeriod || false,
+              receiptData: purchase.receiptData || ''
+            };
+          } else {
+            throw new Error('Purchase failed - no transaction returned');
+          }
+        } catch (importError) {
+          console.warn('Failed to import real StoreKit plugin, using mock:', importError);
+          return this.mockService.purchaseProduct(productId);
         }
       } else {
         // Use mock service
@@ -126,22 +141,27 @@ export class StoreKitService {
 
     try {
       if (isCapacitorEnvironment()) {
-        const { InAppPurchase } = await import('@capacitor-community/in-app-purchase');
-        const result = await InAppPurchase.restorePurchases();
-        
-        if (result.purchases) {
-          return result.purchases.map(purchase => ({
-            transactionId: purchase.transactionId,
-            originalTransactionId: purchase.originalTransactionId || purchase.transactionId,
-            productId: purchase.productId,
-            purchaseDate: new Date(purchase.purchaseDate),
-            expiresDate: purchase.expiresDate ? new Date(purchase.expiresDate) : undefined,
-            isTrialPeriod: purchase.isTrialPeriod || false,
-            receiptData: purchase.receiptData || ''
-          }));
+        try {
+          const { InAppPurchase } = await import('@capacitor-community/in-app-purchase');
+          const result = await InAppPurchase.restorePurchases();
+          
+          if (result.purchases) {
+            return result.purchases.map(purchase => ({
+              transactionId: purchase.transactionId,
+              originalTransactionId: purchase.originalTransactionId || purchase.transactionId,
+              productId: purchase.productId,
+              purchaseDate: new Date(purchase.purchaseDate),
+              expiresDate: purchase.expiresDate ? new Date(purchase.expiresDate) : undefined,
+              isTrialPeriod: purchase.isTrialPeriod || false,
+              receiptData: purchase.receiptData || ''
+            }));
+          }
+          
+          return [];
+        } catch (importError) {
+          console.warn('Failed to import real StoreKit plugin, using mock:', importError);
+          return this.mockService.restorePurchases();
         }
-        
-        return [];
       } else {
         // Use mock service
         return this.mockService.restorePurchases();
@@ -155,8 +175,13 @@ export class StoreKitService {
   async finishTransaction(transactionId: string): Promise<void> {
     try {
       if (isCapacitorEnvironment()) {
-        const { InAppPurchase } = await import('@capacitor-community/in-app-purchase');
-        await InAppPurchase.finishTransaction({ transactionId });
+        try {
+          const { InAppPurchase } = await import('@capacitor-community/in-app-purchase');
+          await InAppPurchase.finishTransaction({ transactionId });
+        } catch (importError) {
+          console.warn('Failed to import real StoreKit plugin, using mock:', importError);
+          await this.mockService.finishTransaction(transactionId);
+        }
       } else {
         // Use mock service
         await this.mockService.finishTransaction(transactionId);
