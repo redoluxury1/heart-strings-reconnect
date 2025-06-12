@@ -39,8 +39,8 @@ const ConversationDialog: React.FC<ConversationDialogProps> = ({
       return;
     }
     
-    // Determine partner ID based on current user
-    const partnerId = user.id === relationship.partner1_id ? relationship.partner2_id : relationship.partner1_id;
+    // Determine partner ID based on current user - use the correct property names
+    const partnerId = user.id === relationship.user_id ? relationship.partner_id : relationship.user_id;
     
     if (!partnerId) {
       console.error("Partner ID not found");
