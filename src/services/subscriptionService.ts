@@ -22,7 +22,7 @@ export class SubscriptionService {
     
     try {
       const { data: subscription, error } = await supabase
-        .from('subscriptions')
+        .from('subscriptions' as any)
         .select('*')
         .eq('user_id', userId)
         .in('status', ['active', 'in_trial'])
@@ -83,7 +83,7 @@ export class SubscriptionService {
     
     try {
       const { data: subscription, error } = await supabase
-        .from('subscriptions')
+        .from('subscriptions' as any)
         .select('*')
         .eq('user_id', userId)
         .in('status', ['active', 'in_trial'])
@@ -96,7 +96,7 @@ export class SubscriptionService {
         return null;
       }
 
-      return subscription;
+      return subscription as Subscription;
     } catch (error) {
       console.error('Error in getCurrentSubscription:', error);
       return null;
@@ -109,7 +109,7 @@ export class SubscriptionService {
     
     try {
       const { data: products, error } = await supabase
-        .from('subscription_products')
+        .from('subscription_products' as any)
         .select('*')
         .eq('active', true)
         .order('billing_period', { ascending: true });
@@ -119,7 +119,7 @@ export class SubscriptionService {
         return [];
       }
 
-      return products || [];
+      return (products || []) as SubscriptionProduct[];
     } catch (error) {
       console.error('Error in getSubscriptionProducts:', error);
       return [];
@@ -183,7 +183,7 @@ export class SubscriptionService {
   private static async storeReceipt(userId: string, transaction: PurchaseTransaction): Promise<void> {
     try {
       const { error } = await supabase
-        .from('app_store_receipts')
+        .from('app_store_receipts' as any)
         .upsert({
           user_id: userId,
           receipt_data: transaction.receiptData,
@@ -217,7 +217,7 @@ export class SubscriptionService {
     try {
       // Get product info to determine trial period
       const { data: product } = await supabase
-        .from('subscription_products')
+        .from('subscription_products' as any)
         .select('trial_period_days, billing_period')
         .eq('product_id', transaction.productId)
         .single();
@@ -251,7 +251,7 @@ export class SubscriptionService {
       };
 
       const { data: subscription, error } = await supabase
-        .from('subscriptions')
+        .from('subscriptions' as any)
         .upsert(subscriptionData, {
           onConflict: 'app_store_original_transaction_id'
         })
@@ -263,7 +263,7 @@ export class SubscriptionService {
         throw error;
       }
 
-      return subscription;
+      return subscription as Subscription;
     } catch (error) {
       console.error('Failed to create/update subscription:', error);
       throw error;
@@ -274,7 +274,7 @@ export class SubscriptionService {
   private static async updateSubscriptionStatus(subscriptionId: string, status: string): Promise<void> {
     try {
       const { error } = await supabase
-        .from('subscriptions')
+        .from('subscriptions' as any)
         .update({ 
           status,
           updated_at: new Date().toISOString()
@@ -295,7 +295,7 @@ export class SubscriptionService {
     
     try {
       const { error } = await supabase
-        .from('subscriptions')
+        .from('subscriptions' as any)
         .update({ 
           auto_renew: false,
           updated_at: new Date().toISOString()

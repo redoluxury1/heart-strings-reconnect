@@ -9,6 +9,51 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      app_store_receipts: {
+        Row: {
+          created_at: string
+          expires_date: string | null
+          id: string
+          is_in_intro_offer_period: boolean
+          is_trial_period: boolean
+          original_transaction_id: string
+          product_id: string
+          purchase_date: string
+          receipt_data: string
+          transaction_id: string
+          user_id: string
+          validation_status: string
+        }
+        Insert: {
+          created_at?: string
+          expires_date?: string | null
+          id?: string
+          is_in_intro_offer_period?: boolean
+          is_trial_period?: boolean
+          original_transaction_id: string
+          product_id: string
+          purchase_date: string
+          receipt_data: string
+          transaction_id: string
+          user_id: string
+          validation_status?: string
+        }
+        Update: {
+          created_at?: string
+          expires_date?: string | null
+          id?: string
+          is_in_intro_offer_period?: boolean
+          is_trial_period?: boolean
+          original_transaction_id?: string
+          product_id?: string
+          purchase_date?: string
+          receipt_data?: string
+          transaction_id?: string
+          user_id?: string
+          validation_status?: string
+        }
+        Relationships: []
+      }
       beta_feedback: {
         Row: {
           content: string
@@ -677,6 +722,93 @@ export type Database = {
           small_win?: string
           status?: string
           user_id?: string | null
+        }
+        Relationships: []
+      }
+      subscription_products: {
+        Row: {
+          active: boolean
+          billing_period: string
+          created_at: string
+          description: string | null
+          features: string[] | null
+          id: string
+          name: string
+          price_tier: string | null
+          product_id: string
+          trial_period_days: number | null
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          billing_period: string
+          created_at?: string
+          description?: string | null
+          features?: string[] | null
+          id?: string
+          name: string
+          price_tier?: string | null
+          product_id: string
+          trial_period_days?: number | null
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          billing_period?: string
+          created_at?: string
+          description?: string | null
+          features?: string[] | null
+          id?: string
+          name?: string
+          price_tier?: string | null
+          product_id?: string
+          trial_period_days?: number | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      subscriptions: {
+        Row: {
+          app_store_original_transaction_id: string | null
+          app_store_transaction_id: string | null
+          auto_renew: boolean
+          created_at: string
+          current_period_end: string
+          current_period_start: string
+          id: string
+          product_id: string
+          status: string
+          trial_end_date: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          app_store_original_transaction_id?: string | null
+          app_store_transaction_id?: string | null
+          auto_renew?: boolean
+          created_at?: string
+          current_period_end: string
+          current_period_start: string
+          id?: string
+          product_id: string
+          status: string
+          trial_end_date?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          app_store_original_transaction_id?: string | null
+          app_store_transaction_id?: string | null
+          auto_renew?: boolean
+          created_at?: string
+          current_period_end?: string
+          current_period_start?: string
+          id?: string
+          product_id?: string
+          status?: string
+          trial_end_date?: string | null
+          updated_at?: string
+          user_id?: string
         }
         Relationships: []
       }
