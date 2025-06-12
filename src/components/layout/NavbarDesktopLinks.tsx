@@ -24,27 +24,27 @@ const NavbarDesktopLinks: React.FC<NavbarDesktopLinksProps> = ({ user }) => {
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
-            <Link to="/" className="text-sm font-medium text-soft-cream hover:text-mauve-rose transition-colors px-3 py-2">
+            <Link to="/" className="text-sm font-medium text-white hover:text-soft-cream transition-colors px-3 py-2">
               Home
             </Link>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <Link to="/during-conflict" className="text-sm font-medium text-soft-cream hover:text-mauve-rose transition-colors px-3 py-2">
+            <Link to="/during-conflict" className="text-sm font-medium text-white hover:text-soft-cream transition-colors px-3 py-2">
               Mid-Fight
             </Link>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <Link to="/post-conflict" className="text-sm font-medium text-soft-cream hover:text-mauve-rose transition-colors px-3 py-2">
+            <Link to="/post-conflict" className="text-sm font-medium text-white hover:text-soft-cream transition-colors px-3 py-2">
               Post-Fight
             </Link>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <Link to="/reconnect" className="text-sm font-medium text-soft-cream hover:text-mauve-rose transition-colors px-3 py-2">
+            <Link to="/reconnect" className="text-sm font-medium text-white hover:text-soft-cream transition-colors px-3 py-2">
               Reconnecting
             </Link>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <Link to="/archive" className="text-sm font-medium text-soft-cream hover:text-mauve-rose transition-colors px-3 py-2">
+            <Link to="/archive" className="text-sm font-medium text-white hover:text-soft-cream transition-colors px-3 py-2">
               <Book className="h-4 w-4 mr-1 inline" />
               Reflection
             </Link>

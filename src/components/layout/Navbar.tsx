@@ -28,7 +28,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="relative z-50 bg-soft-cream border-b border-soft-blush/20">
+      <nav className="relative z-50 bg-navy-800 border-b border-navy-800/20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
             <NavbarLogo />
@@ -48,8 +48,8 @@ const Navbar = () => {
               
               {/* Partner Presence Indicator - only show if connected */}
               {user && relationship?.status === 'connected' && (
-                <div className="hidden md:flex items-center gap-2 px-3 py-1 bg-white rounded-full border border-gray-200">
-                  <span className="text-sm text-gray-600">Partner:</span>
+                <div className="hidden md:flex items-center gap-2 px-3 py-1 bg-white/10 rounded-full border border-white/20">
+                  <span className="text-sm text-white/80">Partner:</span>
                   <PartnerPresenceIndicator showText />
                 </div>
               )}
@@ -58,7 +58,7 @@ const Navbar = () => {
               <div className="md:hidden">
                 <button
                   onClick={() => setIsOpen(!isOpen)}
-                  className="inline-flex items-center justify-center p-2 text-midnight-indigo hover:bg-soft-blush/50 hover:text-midnight-indigo focus:outline-none focus:ring-2 focus:ring-inset focus:ring-midnight-indigo rounded-md"
+                  className="inline-flex items-center justify-center p-2 text-white hover:bg-white/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white rounded-md"
                   aria-expanded="false"
                 >
                   <span className="sr-only">Open main menu</span>
@@ -74,14 +74,14 @@ const Navbar = () => {
               <div className="hidden md:flex items-center space-x-2">
                 {user ? (
                   <div className="flex items-center space-x-3">
-                    <span className="text-midnight-indigo font-medium">
+                    <span className="text-white font-medium">
                       {user.user_metadata?.name || user.email}
                     </span>
                     <Button
                       onClick={handleSignOut}
                       variant="outline"
                       size="sm"
-                      className="border-midnight-indigo text-midnight-indigo hover:bg-midnight-indigo hover:text-white"
+                      className="border-white/30 text-white hover:bg-white/10 hover:text-white hover:border-white/50"
                     >
                       Sign Out
                     </Button>
@@ -92,14 +92,14 @@ const Navbar = () => {
                       onClick={() => navigate('/intro')}
                       variant="ghost"
                       size="sm"
-                      className="text-midnight-indigo hover:bg-midnight-indigo/10"
+                      className="text-white hover:bg-white/10 hover:text-white"
                     >
                       Sign In
                     </Button>
                     <Button
                       onClick={() => navigate('/intro')}
                       size="sm"
-                      className="bg-midnight-indigo hover:bg-midnight-indigo/90 text-white"
+                      className="bg-white hover:bg-white/90 text-navy-800 hover:text-navy-800"
                     >
                       Get Started
                     </Button>
