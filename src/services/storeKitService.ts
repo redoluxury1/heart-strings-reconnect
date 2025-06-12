@@ -1,6 +1,6 @@
 
-import { InAppPurchases, PurchaseResult, ProductResult } from '@capacitor-community/in-app-purchases';
 import { supabase } from '@/integrations/supabase/client';
+import { InAppPurchase, PurchaseResult, ProductResult } from '@capacitor-community/in-app-purchase';
 
 export interface StoreKitProduct {
   productId: string;
@@ -35,7 +35,7 @@ export class StoreKitService {
     if (this.isInitialized) return;
 
     try {
-      await InAppPurchases.initialize();
+      await InAppPurchase.initialize();
       this.isInitialized = true;
       console.log('StoreKit initialized successfully');
     } catch (error) {
@@ -48,7 +48,7 @@ export class StoreKitService {
     await this.initialize();
 
     try {
-      const result: ProductResult = await InAppPurchases.getProducts({ productIds });
+      const result: ProductResult = await InAppPurchase.getProducts({ productIds });
       
       return result.products.map(product => ({
         productId: product.productId,
@@ -67,7 +67,7 @@ export class StoreKitService {
     await this.initialize();
 
     try {
-      const result: PurchaseResult = await InAppPurchases.purchaseProduct({ productId });
+      const result: PurchaseResult = await InAppPurchase.purchaseProduct({ productId });
       
       if (result.purchases && result.purchases.length > 0) {
         const purchase = result.purchases[0];
@@ -94,7 +94,7 @@ export class StoreKitService {
     await this.initialize();
 
     try {
-      const result: PurchaseResult = await InAppPurchases.restorePurchases();
+      const result: PurchaseResult = await InAppPurchase.restorePurchases();
       
       if (result.purchases) {
         return result.purchases.map(purchase => ({
@@ -117,7 +117,7 @@ export class StoreKitService {
 
   async finishTransaction(transactionId: string): Promise<void> {
     try {
-      await InAppPurchases.finishTransaction({ transactionId });
+      await InAppPurchase.finishTransaction({ transactionId });
     } catch (error) {
       console.error('Failed to finish transaction:', error);
     }
