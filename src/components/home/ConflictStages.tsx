@@ -50,7 +50,7 @@ const ConflictStages = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-1 gap-8 max-w-lg mx-auto">
           {stages.map((stage, index) => (
             <div key={index} className="flex flex-col h-full">
               <Card className={`flex-1 flex flex-col bg-gradient-to-br ${stage.color}`}>

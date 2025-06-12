@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { MessageSquare, Star, X, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -104,7 +105,7 @@ const BetaFeedbackWidget: React.FC = () => {
     <div className="fixed bottom-6 right-6 bg-white rounded-lg shadow-xl border border-gray-200 w-80 z-50">
       <div className="p-4">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="font-semibold text-gray-900">Feedback</h3>
+          <h3 className="font-semibold text-gray-900">User Feedback</h3>
           <button
             onClick={() => setIsOpen(false)}
             className="text-gray-500 hover:text-gray-700"
