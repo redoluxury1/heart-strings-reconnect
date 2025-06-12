@@ -1,4 +1,3 @@
-
 import { Route } from "react-router-dom";
 import ProtectedRoute from "@/components/routing/ProtectedRoute";
 import Index from "@/pages/Index";
@@ -27,6 +26,8 @@ const MainAppRoutes = () => {
           <Onboarding />
         </ProtectedRoute>
       } />
+      
+      {/* Feature pages - accessible to authenticated users but content is gated */}
       <Route key="during-conflict" path="/during-conflict" element={
         <ProtectedRoute>
           <MidFight />
@@ -42,6 +43,8 @@ const MainAppRoutes = () => {
           <Reconnect />
         </ProtectedRoute>
       } />
+      
+      {/* Other protected routes */}
       <Route key="love-notes" path="/love-notes" element={
         <ProtectedRoute>
           <LoveNotesReceived />

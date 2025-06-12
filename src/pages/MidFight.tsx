@@ -8,6 +8,8 @@ import BackgroundPhrases from '@/components/mid-fight/BackgroundPhrases';
 import PauseTool from '@/components/mid-fight/pause-tool/PauseTool';
 import BuildBridgeCard from '@/components/mid-fight/build-bridge/BuildBridgeCard';
 import MidFightColorHealing from '@/components/mid-fight/color-healing/MidFightColorHealing';
+import SubscriptionGate from '@/components/subscription/SubscriptionGate';
+import { FEATURE_KEYS } from '@/services/subscriptionService';
 
 const MidFight = () => {
   const [selectedFeature, setSelectedFeature] = useState<string | null>(null);
@@ -36,32 +38,37 @@ const MidFight = () => {
       <Navbar />
       
       <main className="pb-16 relative z-10">
-        {/* Feature cards including the always-visible tools */}
-        <FeatureCardSection 
-          selectedFeature={selectedFeature}
-          toggleFeature={toggleFeature}
-        />
-        
-        {/* Pause Tool Section - Moved to after What's Really Going On */}
-        <section className="py-8 bg-soft-blush/30">
-          <ContentContainer maxWidth="lg">
-            <PauseTool />
-          </ContentContainer>
-        </section>
-        
-        {/* Color Healing Method Section */}
-        <section className="py-6 md:py-8 bg-soft-blush/30">
-          <ContentContainer maxWidth="lg">
-            <MidFightColorHealing />
-          </ContentContainer>
-        </section>
-        
-        {/* Build a Bridge Section */}
-        <section className="py-6 md:py-8 bg-soft-blush/30">
-          <ContentContainer maxWidth="lg">
-            <BuildBridgeCard />
-          </ContentContainer>
-        </section>
+        <SubscriptionGate 
+          featureKey={FEATURE_KEYS.MID_FIGHT_ACCESS}
+          showUpgradePrompt={true}
+        >
+          {/* Feature cards including the always-visible tools */}
+          <FeatureCardSection 
+            selectedFeature={selectedFeature}
+            toggleFeature={toggleFeature}
+          />
+          
+          {/* Pause Tool Section - Moved to after What's Really Going On */}
+          <section className="py-8 bg-soft-blush/30">
+            <ContentContainer maxWidth="lg">
+              <PauseTool />
+            </ContentContainer>
+          </section>
+          
+          {/* Color Healing Method Section */}
+          <section className="py-6 md:py-8 bg-soft-blush/30">
+            <ContentContainer maxWidth="lg">
+              <MidFightColorHealing />
+            </ContentContainer>
+          </section>
+          
+          {/* Build a Bridge Section */}
+          <section className="py-6 md:py-8 bg-soft-blush/30">
+            <ContentContainer maxWidth="lg">
+              <BuildBridgeCard />
+            </ContentContainer>
+          </section>
+        </SubscriptionGate>
       </main>
       
       <Footer showCTA={false} />
