@@ -22,7 +22,7 @@ export class SubscriptionService {
     
     try {
       const { data: subscription, error } = await supabase
-        .from('subscriptions' as any)
+        .from('subscriptions')
         .select('*')
         .eq('user_id', userId)
         .in('status', ['active', 'in_trial'])
@@ -83,7 +83,7 @@ export class SubscriptionService {
     
     try {
       const { data: subscription, error } = await supabase
-        .from('subscriptions' as any)
+        .from('subscriptions')
         .select('*')
         .eq('user_id', userId)
         .in('status', ['active', 'in_trial'])
@@ -96,7 +96,7 @@ export class SubscriptionService {
         return null;
       }
 
-      return subscription as Subscription;
+      return subscription as unknown as Subscription;
     } catch (error) {
       console.error('Error in getCurrentSubscription:', error);
       return null;
@@ -109,7 +109,7 @@ export class SubscriptionService {
     
     try {
       const { data: products, error } = await supabase
-        .from('subscription_products' as any)
+        .from('subscription_products')
         .select('*')
         .eq('active', true)
         .order('billing_period', { ascending: true });
@@ -119,7 +119,7 @@ export class SubscriptionService {
         return [];
       }
 
-      return (products || []) as SubscriptionProduct[];
+      return (products || []) as unknown as SubscriptionProduct[];
     } catch (error) {
       console.error('Error in getSubscriptionProducts:', error);
       return [];
@@ -183,7 +183,7 @@ export class SubscriptionService {
   private static async storeReceipt(userId: string, transaction: PurchaseTransaction): Promise<void> {
     try {
       const { error } = await supabase
-        .from('app_store_receipts' as any)
+        .from('app_store_receipts')
         .upsert({
           user_id: userId,
           receipt_data: transaction.receiptData,
@@ -217,7 +217,7 @@ export class SubscriptionService {
     try {
       // Get product info to determine trial period
       const { data: product } = await supabase
-        .from('subscription_products' as any)
+        .from('subscription_products')
         .select('trial_period_days, billing_period')
         .eq('product_id', transaction.productId)
         .single();
@@ -226,14 +226,15 @@ export class SubscriptionService {
         throw new Error(`Product not found: ${transaction.productId}`);
       }
 
+      const productData = product as unknown as { trial_period_days: number; billing_period: string };
       const now = new Date();
-      const trialEndDate = transaction.isTrialPeriod && product.trial_period_days > 0
-        ? new Date(now.getTime() + (product.trial_period_days * 24 * 60 * 60 * 1000))
+      const trialEndDate = transaction.isTrialPeriod && productData.trial_period_days > 0
+        ? new Date(now.getTime() + (productData.trial_period_days * 24 * 60 * 60 * 1000))
         : null;
 
       // Calculate subscription end date
       const subscriptionEndDate = transaction.expiresDate || 
-        (product.billing_period === 'yearly' 
+        (productData.billing_period === 'yearly' 
           ? new Date(now.getTime() + (365 * 24 * 60 * 60 * 1000))
           : new Date(now.getTime() + (30 * 24 * 60 * 60 * 1000)));
 
@@ -251,7 +252,7 @@ export class SubscriptionService {
       };
 
       const { data: subscription, error } = await supabase
-        .from('subscriptions' as any)
+        .from('subscriptions')
         .upsert(subscriptionData, {
           onConflict: 'app_store_original_transaction_id'
         })
@@ -263,7 +264,7 @@ export class SubscriptionService {
         throw error;
       }
 
-      return subscription as Subscription;
+      return subscription as unknown as Subscription;
     } catch (error) {
       console.error('Failed to create/update subscription:', error);
       throw error;
@@ -274,7 +275,7 @@ export class SubscriptionService {
   private static async updateSubscriptionStatus(subscriptionId: string, status: string): Promise<void> {
     try {
       const { error } = await supabase
-        .from('subscriptions' as any)
+        .from('subscriptions')
         .update({ 
           status,
           updated_at: new Date().toISOString()
@@ -295,7 +296,7 @@ export class SubscriptionService {
     
     try {
       const { error } = await supabase
-        .from('subscriptions' as any)
+        .from('subscriptions')
         .update({ 
           auto_renew: false,
           updated_at: new Date().toISOString()
