@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
@@ -81,7 +80,7 @@ const Navbar = () => {
                       onClick={handleSignOut}
                       variant="outline"
                       size="sm"
-                      className="border-white/30 text-white hover:bg-white/10 hover:text-white hover:border-white/50"
+                      className="border-white/30 bg-white text-navy-800 hover:bg-white/90 hover:text-navy-800 hover:border-white/50"
                     >
                       Sign Out
                     </Button>
