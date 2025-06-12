@@ -1,11 +1,14 @@
 
 /* iOS Safe Area Support */
 .safe-area-navbar {
-  /* Remove previous margin approach - safe area is now handled at body level */
-  margin-top: 0;
+  /* iOS safe area padding at the top for navbar */
+  padding-top: constant(safe-area-inset-top); /* Legacy iOS support */
+  padding-top: env(safe-area-inset-top); /* Modern iOS devices */
   
-  /* Standard navbar padding */
-  padding-top: 1rem;
+  /* Add standard padding on top of safe area */
+  padding-top: calc(constant(safe-area-inset-top) + 1rem);
+  padding-top: calc(env(safe-area-inset-top) + 1rem);
+  
   padding-bottom: 1rem;
   
   /* Ensure the navbar is positioned correctly */
@@ -23,8 +26,9 @@
 /* Mobile specific adjustments */
 @media screen and (max-width: 768px) {
   .safe-area-navbar {
-    /* Slightly more padding for mobile */
-    padding-top: 1.5rem;
+    /* Slightly more padding for mobile on top of safe area */
+    padding-top: calc(constant(safe-area-inset-top) + 1.5rem);
+    padding-top: calc(env(safe-area-inset-top) + 1.5rem);
     padding-bottom: 1rem;
   }
 }

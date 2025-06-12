@@ -28,7 +28,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="relative z-50 bg-navy-800 border-b border-navy-800/20">
+      <nav className="safe-area-navbar relative z-50 bg-navy-800 border-b border-navy-800/20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
             <NavbarLogo />
