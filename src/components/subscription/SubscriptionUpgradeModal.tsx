@@ -1,4 +1,5 @@
 
+
 import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -85,9 +86,9 @@ export const SubscriptionUpgradeModal: React.FC<SubscriptionUpgradeModalProps> =
   // Helper function to format price display
   const getPriceDisplay = (product: any) => {
     if (product.billing_period === 'yearly') {
-      return '$7.99/month (billed annually at $95.88)';
+      return '$10.75/month (billed annually at $129)';
     } else if (product.billing_period === 'monthly') {
-      return '$9.99/month';
+      return '$12.99/month';
     }
     return 'Contact us for pricing';
   };
@@ -144,7 +145,7 @@ export const SubscriptionUpgradeModal: React.FC<SubscriptionUpgradeModalProps> =
                       </div>
                       {product.billing_period === 'yearly' && (
                         <div className="text-sm text-green-600 font-medium">
-                          Save 33%
+                          Save 17%
                         </div>
                       )}
                     </div>
@@ -191,3 +192,4 @@ export const SubscriptionUpgradeModal: React.FC<SubscriptionUpgradeModalProps> =
     </Dialog>
   );
 };
+
