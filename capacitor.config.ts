@@ -10,9 +10,6 @@ const config: CapacitorConfig = {
       launchShowDuration: 2000,
       backgroundColor: "#2e4059",
       showSpinner: false
-    },
-    InAppPurchases: {
-      autoFinishTransactions: false
     }
   },
   ios: {
