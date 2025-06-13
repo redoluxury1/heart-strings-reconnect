@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import ContentContainer from '../common/ContentContainer';
-import { useInterface } from '../common/InterfaceProvider';
+import { useInterface } from '@/hooks/useInterfaceContext';
 import { Quote } from "lucide-react";
 import { 
   Carousel,

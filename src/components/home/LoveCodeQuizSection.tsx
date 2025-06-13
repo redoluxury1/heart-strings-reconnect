@@ -3,7 +3,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import ContentContainer from '../common/ContentContainer';
-import { useInterface } from '../common/InterfaceProvider';
+import { useInterface } from '@/hooks/useInterfaceContext';
 import { Heart } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 

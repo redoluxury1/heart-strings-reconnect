@@ -1,9 +1,8 @@
-
 import React, { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { toast } from "sonner";
 import { LoveNote } from '../components/home/LoveNoteTimeline';
-import { useInterface } from '../components/common/InterfaceProvider';
+import { useInterface } from '@/hooks/useInterfaceContext';
 
 const LoveNotesReceived = () => {
   const location = useLocation();
