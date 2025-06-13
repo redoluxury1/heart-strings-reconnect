@@ -1,9 +1,9 @@
 
 import React from 'react';
-import OnboardingScreen from '@/components/onboarding/OnboardingScreen';
+import EnhancedOnboardingScreen from '@/components/onboarding/EnhancedOnboardingScreen';
 
 const OnboardingIntro = () => {
-  return <OnboardingScreen />;
+  return <EnhancedOnboardingScreen />;
 };
 
 export default OnboardingIntro;
