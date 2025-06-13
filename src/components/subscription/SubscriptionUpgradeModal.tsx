@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -118,14 +117,26 @@ export const SubscriptionUpgradeModal: React.FC<SubscriptionUpgradeModalProps> =
     }
   };
 
-  // Helper function to format price display
+  // Updated price display function for better mobile layout
   const getPriceDisplay = (product: any) => {
     if (product.billing_period === 'yearly') {
-      return '$10.75/month (billed annually at $129)';
+      return {
+        mainPrice: '$10.75/month',
+        billingInfo: '(billed annually at $129)',
+        showSavings: true
+      };
     } else if (product.billing_period === 'monthly') {
-      return '$12.99/month';
+      return {
+        mainPrice: '$12.99/month',
+        billingInfo: null,
+        showSavings: false
+      };
     }
-    return 'Contact us for pricing';
+    return {
+      mainPrice: 'Contact us for pricing',
+      billingInfo: null,
+      showSavings: false
+    };
   };
 
   const features = [
@@ -166,41 +177,61 @@ export const SubscriptionUpgradeModal: React.FC<SubscriptionUpgradeModalProps> =
           </div>
 
           <div className="space-y-4">
-            {displayProducts.map((product) => (
-              <div
-                key={product.id}
-                className="border rounded-lg p-4 flex items-center justify-between"
-              >
-                <div className="flex-1">
-                  <div className="flex items-center justify-between mb-2">
-                    <h3 className="font-medium">{product.name}</h3>
-                    <div className="text-right">
-                      <div className="text-lg font-bold text-[#2e4059]">
-                        {getPriceDisplay(product)}
+            {displayProducts.map((product) => {
+              const priceInfo = getPriceDisplay(product);
+              
+              return (
+                <div
+                  key={product.id}
+                  className="border rounded-lg p-4"
+                >
+                  {/* Mobile-first layout: stack vertically on small screens, horizontal on larger */}
+                  <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                    {/* Product info section */}
+                    <div className="flex-1">
+                      <h3 className="font-medium mb-2">{product.name}</h3>
+                      <p className="text-sm text-gray-600">{product.description}</p>
+                      {product.trial_period_days && (
+                        <p className="text-sm text-green-600 mt-1">
+                          {product.trial_period_days} day free trial
+                        </p>
+                      )}
+                    </div>
+                    
+                    {/* Pricing and button section - stacked on mobile, side by side on desktop */}
+                    <div className="flex flex-col items-center gap-2 md:ml-4">
+                      {/* Pricing above button */}
+                      <div className="text-center">
+                        <div className="text-lg font-bold text-[#2e4059]">
+                          {priceInfo.mainPrice}
+                        </div>
+                        {priceInfo.billingInfo && (
+                          <div className="text-xs text-gray-500">
+                            {priceInfo.billingInfo}
+                          </div>
+                        )}
                       </div>
-                      {product.billing_period === 'yearly' && (
+                      
+                      {/* Subscribe button */}
+                      <Button
+                        onClick={() => handlePurchase(product.product_id)}
+                        disabled={loading}
+                        className="bg-[#2e4059] hover:bg-[#2e4059]/90 w-full md:w-auto"
+                      >
+                        {loading ? 'Processing...' : 'Subscribe'}
+                      </Button>
+                      
+                      {/* Save 17% below button for yearly */}
+                      {priceInfo.showSavings && (
                         <div className="text-sm text-green-600 font-medium">
                           Save 17%
                         </div>
                       )}
                     </div>
                   </div>
-                  <p className="text-sm text-gray-600">{product.description}</p>
-                  {product.trial_period_days && (
-                    <p className="text-sm text-green-600 mt-1">
-                      {product.trial_period_days} day free trial
-                    </p>
-                  )}
                 </div>
-                <Button
-                  onClick={() => handlePurchase(product.product_id)}
-                  disabled={loading}
-                  className="ml-4 bg-[#2e4059] hover:bg-[#2e4059]/90"
-                >
-                  {loading ? 'Processing...' : 'Subscribe'}
-                </Button>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           <div className="flex justify-between items-center pt-4 border-t">
