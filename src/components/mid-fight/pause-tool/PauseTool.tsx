@@ -1,5 +1,5 @@
-
 import React from 'react';
+import { PauseToolGate } from './PauseToolGate';
 import CodeWordActivationView from './CodeWordActivationView';
 import PauseActivatedView from './PauseActivatedView';
 import MidPauseView from './MidPauseView';
@@ -15,7 +15,7 @@ import { notifyPartner } from './hooks/utils/notificationUtils';
 
 export type PauseStatus = 'setup' | 'activation' | 'activated' | 'custom-timer' | 'in-pause' | 'ended' | 'confirm-restart' | 'not-ready';
 
-const PauseTool = () => {
+const PauseToolContent = () => {
   const {
     pauseStatus,
     setPauseStatus,
@@ -125,6 +125,14 @@ const PauseTool = () => {
         />
       )}
     </div>
+  );
+};
+
+const PauseTool = () => {
+  return (
+    <PauseToolGate>
+      <PauseToolContent />
+    </PauseToolGate>
   );
 };
 

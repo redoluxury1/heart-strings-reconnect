@@ -1,9 +1,11 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { UserPlus } from 'lucide-react';
+import { UserPlus, Crown } from 'lucide-react';
 import { QuizResult } from '@/types/personality-quiz';
 import DownloadResultsMenu from './DownloadResultsMenu';
+import { useFeatureAccess } from '@/hooks/useFeatureAccess';
+import { SubscriptionUpgradeModal } from '@/components/subscription/SubscriptionUpgradeModal';
 
 interface ActionButtonsProps {
   results: QuizResult;
@@ -11,7 +13,14 @@ interface ActionButtonsProps {
 }
 
 const ActionButtons: React.FC<ActionButtonsProps> = ({ results, onDownloadPdf }) => {
+  const { hasActiveSubscription } = useFeatureAccess();
+  const [showUpgradeModal, setShowUpgradeModal] = React.useState(false);
+
   const handlePartnerInvite = () => {
+    if (!hasActiveSubscription) {
+      setShowUpgradeModal(true);
+      return;
+    }
     // For now, just log
     console.log('Invite partner flow would start here');
   };
@@ -33,13 +42,25 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({ results, onDownloadPdf })
         <div className="flex flex-wrap gap-4 justify-center">
           <Button 
             onClick={handlePartnerInvite}
-            className="bg-lavender-blue hover:bg-lavender-blue/90 text-white"
+            className="bg-lavender-blue hover:bg-lavender-blue/90 text-white flex items-center gap-2"
           >
-            <UserPlus className="mr-2 h-4 w-4" />
-            Invite Your Partner
+            {!hasActiveSubscription && <Crown className="h-4 w-4" />}
+            <UserPlus className="h-4 w-4" />
+            {hasActiveSubscription ? 'Invite Your Partner' : 'Upgrade to Invite Partner'}
           </Button>
         </div>
+        
+        {!hasActiveSubscription && (
+          <p className="text-xs text-gray-500 mt-2">
+            Premium feature - Partner sync and advanced insights
+          </p>
+        )}
       </div>
+      
+      <SubscriptionUpgradeModal
+        isOpen={showUpgradeModal}
+        onClose={() => setShowUpgradeModal(false)}
+      />
     </>
   );
 };

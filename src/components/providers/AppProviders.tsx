@@ -2,11 +2,9 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { AuthProvider } from '@/contexts/AuthContext';
-import InterfaceProvider from '@/providers/InterfaceProvider';
 import { Toaster } from '@/components/ui/toaster';
-import { Toaster as SonnerToaster } from '@/components/ui/sonner';
-import BetaFeedbackWidget from '@/components/feedback/BetaFeedbackWidget';
+import { AuthProvider } from '@/contexts/AuthContext';
+import { SubscriptionProvider } from './SubscriptionProvider';
 
 interface AppProvidersProps {
   children: React.ReactNode;
@@ -18,12 +16,10 @@ const AppProviders: React.FC<AppProvidersProps> = ({ children, queryClient }) =>
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <AuthProvider>
-          <InterfaceProvider>
+          <SubscriptionProvider>
             {children}
             <Toaster />
-            <SonnerToaster />
-            <BetaFeedbackWidget />
-          </InterfaceProvider>
+          </SubscriptionProvider>
         </AuthProvider>
       </BrowserRouter>
     </QueryClientProvider>
