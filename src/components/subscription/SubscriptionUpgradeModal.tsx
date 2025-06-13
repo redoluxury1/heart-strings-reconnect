@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -87,9 +86,8 @@ export const SubscriptionUpgradeModal: React.FC<SubscriptionUpgradeModalProps> =
     "Post-conflict repair and healing tools",
     "Archive and save your progress",
     "Advanced reconnection strategies",
-    "Priority support",
+    "Priority access to new features",
     "Full access to all conversation tools and prompts",
-    "Priority access to new features as they launch",
     "Be the first to access our next-gen AI relationship coach - launching soon for premium members only",
     "Exclusive modules for intimacy, parenting, finances, and more"
   ];
