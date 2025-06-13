@@ -27,24 +27,12 @@ const MainAppRoutes = () => {
         </ProtectedRoute>
       } />
       
-      {/* Feature pages - accessible to authenticated users but content is gated */}
-      <Route key="during-conflict" path="/during-conflict" element={
-        <ProtectedRoute>
-          <MidFight />
-        </ProtectedRoute>
-      } />
-      <Route key="post-conflict" path="/post-conflict" element={
-        <ProtectedRoute>
-          <PostConflict />
-        </ProtectedRoute>
-      } />
-      <Route key="reconnect" path="/reconnect" element={
-        <ProtectedRoute>
-          <Reconnect />
-        </ProtectedRoute>
-      } />
+      {/* Feature pages - accessible to all users, content is gated by subscription */}
+      <Route key="during-conflict" path="/during-conflict" element={<MidFight />} />
+      <Route key="post-conflict" path="/post-conflict" element={<PostConflict />} />
+      <Route key="reconnect" path="/reconnect" element={<Reconnect />} />
       
-      {/* Other protected routes */}
+      {/* Other protected routes that require authentication */}
       <Route key="love-notes" path="/love-notes" element={
         <ProtectedRoute>
           <LoveNotesReceived />
