@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -81,6 +82,16 @@ export const SubscriptionUpgradeModal: React.FC<SubscriptionUpgradeModalProps> =
     }
   };
 
+  // Helper function to format price display
+  const getPriceDisplay = (product: any) => {
+    if (product.billing_period === 'yearly') {
+      return '$7.99/month (billed annually at $95.88)';
+    } else if (product.billing_period === 'monthly') {
+      return '$9.99/month';
+    }
+    return 'Contact us for pricing';
+  };
+
   const features = [
     "Access to Pause Tool during conflicts",
     "Post-conflict repair and healing tools",
@@ -124,11 +135,23 @@ export const SubscriptionUpgradeModal: React.FC<SubscriptionUpgradeModalProps> =
                 key={product.id}
                 className="border rounded-lg p-4 flex items-center justify-between"
               >
-                <div>
-                  <h3 className="font-medium">{product.name}</h3>
+                <div className="flex-1">
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="font-medium">{product.name}</h3>
+                    <div className="text-right">
+                      <div className="text-lg font-bold text-[#2e4059]">
+                        {getPriceDisplay(product)}
+                      </div>
+                      {product.billing_period === 'yearly' && (
+                        <div className="text-sm text-green-600 font-medium">
+                          Save 33%
+                        </div>
+                      )}
+                    </div>
+                  </div>
                   <p className="text-sm text-gray-600">{product.description}</p>
                   {product.trial_period_days && (
-                    <p className="text-sm text-green-600">
+                    <p className="text-sm text-green-600 mt-1">
                       {product.trial_period_days} day free trial
                     </p>
                   )}
@@ -136,7 +159,7 @@ export const SubscriptionUpgradeModal: React.FC<SubscriptionUpgradeModalProps> =
                 <Button
                   onClick={() => handlePurchase(product.product_id)}
                   disabled={loading}
-                  className="bg-[#2e4059] hover:bg-[#2e4059]/90"
+                  className="ml-4 bg-[#2e4059] hover:bg-[#2e4059]/90"
                 >
                   {loading ? 'Processing...' : 'Subscribe'}
                 </Button>
