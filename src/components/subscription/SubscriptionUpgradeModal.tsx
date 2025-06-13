@@ -1,5 +1,4 @@
 
-
 import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -23,8 +22,37 @@ export const SubscriptionUpgradeModal: React.FC<SubscriptionUpgradeModalProps> =
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
 
+  // Fallback products if none are loaded from the database
+  const fallbackProducts = [
+    {
+      id: 'monthly-premium',
+      product_id: 'monthly_premium',
+      name: 'Monthly Premium',
+      description: 'Full access to all premium features',
+      billing_period: 'monthly' as const,
+      trial_period_days: 7
+    },
+    {
+      id: 'yearly-premium', 
+      product_id: 'yearly_premium',
+      name: 'Yearly Premium',
+      description: 'Full access to all premium features with 17% savings',
+      billing_period: 'yearly' as const,
+      trial_period_days: 7
+    }
+  ];
+
+  const displayProducts = products.length > 0 ? products : fallbackProducts;
+
   const handlePurchase = async (productId: string) => {
-    if (!user) return;
+    if (!user) {
+      toast({
+        title: "Authentication required",
+        description: "Please sign in to subscribe to premium features.",
+        variant: "destructive"
+      });
+      return;
+    }
 
     setLoading(true);
     try {
@@ -51,7 +79,14 @@ export const SubscriptionUpgradeModal: React.FC<SubscriptionUpgradeModalProps> =
   };
 
   const handleRestore = async () => {
-    if (!user) return;
+    if (!user) {
+      toast({
+        title: "Authentication required",
+        description: "Please sign in to restore purchases.",
+        variant: "destructive"
+      });
+      return;
+    }
 
     setLoading(true);
     try {
@@ -131,7 +166,7 @@ export const SubscriptionUpgradeModal: React.FC<SubscriptionUpgradeModalProps> =
           </div>
 
           <div className="space-y-4">
-            {products.map((product) => (
+            {displayProducts.map((product) => (
               <div
                 key={product.id}
                 className="border rounded-lg p-4 flex items-center justify-between"
@@ -192,4 +227,3 @@ export const SubscriptionUpgradeModal: React.FC<SubscriptionUpgradeModalProps> =
     </Dialog>
   );
 };
-
