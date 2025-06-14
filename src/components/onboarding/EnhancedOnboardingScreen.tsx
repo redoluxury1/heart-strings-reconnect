@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import OptimizedImage from "@/components/common/OptimizedImage";
 
 // Simplified orb config: 2 orbs, less intense effects
@@ -15,7 +15,6 @@ const EnhancedOnboardingScreen = () => {
   const [showButton, setShowButton] = useState(false);
   const navigate = useNavigate();
 
-  // Optimized timing: Content 0.3s, Button 0.6s
   useEffect(() => {
     const t1 = setTimeout(() => setShowContent(true), 300);
     const t2 = setTimeout(() => setShowButton(true), 600);
@@ -31,13 +30,11 @@ const EnhancedOnboardingScreen = () => {
 
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#e1d4f5] via-[#f6ebe3] to-[#fce8ef]">
-      {/* Animated dynamic gradient background */}
       <div
         className="absolute inset-0 z-0 enhanced-splash-bg will-change-transform"
-        style={{ animationDuration: "6s" }} // Faster, snappier
+        style={{ animationDuration: "6s" }}
       />
 
-      {/* 2 Floating orbs, simple animation */}
       {ORB_CONFIG.map((orb, i) => (
         <div
           key={i}
@@ -59,11 +56,14 @@ const EnhancedOnboardingScreen = () => {
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen p-4 w-full text-center">
         {/* Top text */}
         <div
-          className={`mb-2 font-inter text-base md:text-lg tracking-wide text-[#2e4059]/60 transition-all duration-300 ${showContent ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
+          className={`mb-2 font-inter text-base md:text-lg tracking-wide text-[#2e4059]/60 transition-all duration-300 ${
+            showContent ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+          }`}
+        >
           Welcome to
         </div>
 
-        {/* LOGO: pop-in + glow animation */}
+        {/* LOGO */}
         <div className="mb-8 flex flex-col items-center">
           <div
             className={`transition-all duration-500 ease-cubic
@@ -85,7 +85,6 @@ const EnhancedOnboardingScreen = () => {
 
         {/* HEADLINE & SUBTITLE */}
         <div className="max-w-2xl space-y-4">
-          {/* Short, quick headline */}
           <div
             className={`font-cormorant 
               text-2xl md:text-3xl lg:text-4xl font-semibold 
@@ -98,7 +97,6 @@ const EnhancedOnboardingScreen = () => {
             Tools. Clarity. Hope.
           </div>
 
-          {/* Subtitle - quicker, more direct */}
           <div
             className={`transition-all duration-350
               text-base md:text-lg text-[#2e4059]/85 font-inter leading-relaxed mx-auto
@@ -140,6 +138,15 @@ const EnhancedOnboardingScreen = () => {
               aria-hidden="true"
             ></span>
           </Button>
+        </div>
+
+        {/* Legal links: Privacy & Terms */}
+        <div className="mt-10 text-center text-xs text-[#2e4059]/60 font-inter">
+          By continuing, you agree to our{" "}
+          <Link to="/terms" className="underline hover:text-[#D36B4B] transition-colors duration-150">Terms of Service</Link>
+          {" "}and{" "}
+          <Link to="/privacy" className="underline hover:text-[#D36B4B] transition-colors duration-150">Privacy Policy</Link>
+          .
         </div>
       </div>
     </div>
