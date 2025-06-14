@@ -53,12 +53,24 @@ const AccountSettings: React.FC = () => {
       const service = StoreKitService.getInstance();
       const restored = await service.restorePurchases(user.id);
       if (restored && restored.length > 0) {
-        toast({ title: "Restored", description: "Your purchases were successfully restored.", status: "success" });
+        toast({
+          title: "Restored",
+          description: "Your purchases were successfully restored.",
+          variant: "success",
+        });
       } else {
-        toast({ title: "Nothing to Restore", description: "No previous purchases were found for your account.", status: "info" });
+        toast({
+          title: "Nothing to Restore",
+          description: "No previous purchases were found for your account.",
+          variant: "default",
+        });
       }
     } catch (e: any) {
-      toast({ title: "Restore Failed", description: e.message || "Restoring purchases failed.", status: "error" });
+      toast({
+        title: "Restore Failed",
+        description: e.message || "Restoring purchases failed.",
+        variant: "destructive",
+      });
     } finally {
       setRestorePending(false);
     }
@@ -80,7 +92,6 @@ const AccountSettings: React.FC = () => {
         <Button
           onClick={handleRestorePurchases}
           className="w-full"
-          loading={restorePending}
           variant="secondary"
           disabled={restorePending}
         >
@@ -109,4 +120,3 @@ const AccountSettings: React.FC = () => {
 };
 
 export default AccountSettings;
-
