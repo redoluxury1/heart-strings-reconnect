@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { useAuth } from "@/contexts/AuthContext";
 import { StoreKitService } from "@/services/storeKitService";
-import { toast } from "@/hooks/use-toast";
+import { toast } from "@/hooks/use-toast"; // 🟢 Import directly
 
 const APPLE_SUBSCRIPTION_URL = "itms-apps://apps.apple.com/account/subscriptions";
 
@@ -119,3 +119,4 @@ const AccountSettings: React.FC = () => {
 };
 
 export default AccountSettings;
+
