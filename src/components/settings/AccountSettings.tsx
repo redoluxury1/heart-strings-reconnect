@@ -4,8 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { useAuth } from "@/contexts/AuthContext";
 import { StoreKitService } from "@/services/storeKitService";
-// --- FIX: Import useToast and toast from the hooks directory (not from ui) ---
-import { useToast, toast } from "@/hooks/use-toast";
+import { useToast } from "@/hooks/use-toast";
 
 const APPLE_SUBSCRIPTION_URL = "itms-apps://apps.apple.com/account/subscriptions";
 
@@ -14,8 +13,7 @@ const AccountSettings: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  // --- FIX: No longer need to destructure toast from useToast, just call toast() directly ---
-  const { } = useToast();
+  const { toast } = useToast();
   const [restorePending, setRestorePending] = useState(false);
 
   const handleDeleteAccount = async () => {
