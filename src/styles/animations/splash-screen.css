@@ -1,58 +1,120 @@
 
-/* Simplified Splash Screen Animations */
+/* --- Professional Splash Screen Animations --- */
 
-/* Remove all complex keyframe animations and use simple transitions */
-.splash-logo-enter {
-  animation: none;
+/* Moving dynamic gradient background */
+.enhanced-splash-bg {
+  background: linear-gradient(120deg,
+    #E1D4F5 0%,
+    #f6ebe3 37%,
+    #fde9e9 65%,
+    #fce8ef 100%);
+  animation: splash-gradient-move 9s linear infinite alternate;
+}
+@keyframes splash-gradient-move {
+  0% {
+    background-position: 0% 50%;
+    filter: brightness(1);
+  }
+  70% {
+    background-position: 80% 60%;
+    filter: brightness(1.03);
+  }
+  100% {
+    background-position: 100% 85%;
+    filter: brightness(1.01);
+  }
 }
 
-.splash-content-enter {
-  animation: none;
+/* Floating orbs with gentle floating animation */
+.splash-orb {
+  animation: orb-float 4.5s ease-in-out infinite alternate;
+}
+@keyframes orb-float {
+  0% { transform: scale(1) translateY(0px);}
+  50% { transform: scale(1.06) translateY(-10px);}
+  100% { transform: scale(1) translateY(0px);}
 }
 
-.splash-button-enter {
-  animation: none;
+/* Logo glow/bounce entrance animation */
+.splash-logo-glow {
+  animation: logo-pop-glow 1.1s cubic-bezier(.35,.66,.42,1.01) 0s 1 both;
+}
+@keyframes logo-pop-glow {
+  0% {
+    opacity: 0;
+    transform: scale(0.90);
+    box-shadow: 0 0 0 0 rgba(198,180,255,0.13);
+    filter: blur(1.5px);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.03);
+    box-shadow: 0 0 36px 0px rgba(198,180,255,0.22);
+    filter: blur(0.3px);
+  }
+  75% {
+    transform: scale(0.98);
+    box-shadow: 0 0 30px 0px rgba(196,185,255,0.15);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    box-shadow: 0 0 56px 0px rgba(198,180,255,0.18);
+    filter: blur(0);
+  }
 }
 
-/* Keep only the button hover effects */
-.enhanced-button {
+/* Glassmorphism button glassy backdrop + shimmer */
+.glassmorphic-button {
+  backdrop-filter: blur(12px) saturate(1.5);
+  background: rgba(255,255,255,0.32);
+  border: 1.3px solid rgba(240,230,255,0.44);
+  box-shadow: 0 2px 72px 0 rgba(235,206,250,0.15), 0 1.5px 10px 0 rgba(222,205,255,0.16);
   position: relative;
   overflow: hidden;
 }
 
-.enhanced-button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
+.glass-shimmer {
+  background: linear-gradient(100deg, transparent 60%, rgba(255,255,255,0.25) 80%, transparent 95%);
   height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.2),
-    transparent
-  );
-  transition: left 0.5s;
+  display: block;
+  pointer-events: none;
+  transition: transform 0.6s;
+  filter: blur(1.5px);
+}
+.glassmorphic-button:hover .glass-shimmer,
+.glassmorphic-button:focus-visible .glass-shimmer {
+  transform: translateX(120px) skewX(-12deg) scaleY(1.1);
+  transition: transform 0.38s cubic-bezier(.23,.79,.64,1.09);
+}
+.glass-shimmer {
+  left: -180px;
+  animation: shimmer-flow 2.7s cubic-bezier(.12,.8,.64,.99) infinite;
+}
+@keyframes shimmer-flow {
+  0% { left: -180px; opacity:0.25;}
+  45% { left: -120px; opacity:0.19;}
+  60% { left: 65px; opacity:0.32;}
+  70% { left: 100px; opacity:.25;}
+  100% { left: 180px; opacity:0; }
 }
 
-.enhanced-button:hover::before {
-  left: 100%;
+.shadow-glow {
+  box-shadow: 0 6px 44px 0 rgba(156,134,255,0.28), 0 0px 12px 0 rgba(246,208,222,0.13);
 }
 
-/* Clean, minimal animations using CSS transitions only */
-.splash-transition {
-  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.splash-transition-fast {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Remove all conflicting animations */
+/* --- Remove conflicting/old styles --- */
+.splash-logo-enter,
+.splash-content-enter,
+.splash-button-enter,
 .animate-logo-glow,
 .animate-text-reveal,
 .animate-gradient-shift,
 .animate-button-pulse {
-  animation: none;
+  animation: none !important;
+}
+
+/* For smoother cubic animation */
+.ease-cubic {
+  transition-timing-function: cubic-bezier(.4,0,.2,1)!important;
 }
