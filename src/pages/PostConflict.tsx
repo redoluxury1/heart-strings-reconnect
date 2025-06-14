@@ -8,7 +8,7 @@ import FloatingTextBubbles from '@/components/post-conflict/FloatingTextBubbles'
 import OkayButNowWhat from '@/components/post-conflict/OkayButNowWhat';
 import LetsWorkThisOut from '@/components/post-conflict/lets-work-this-out/LetsWorkThisOut';
 import BridgeTheGapCard from '@/components/post-conflict/BridgeTheGapCard';
-import BuildBridgeCard from '@/components/mid-fight/build-bridge/BuildBridgeCard';
+// Removed: import BuildBridgeCard from '@/components/mid-fight/build-bridge/BuildBridgeCard';
 import SubscriptionGate from '@/components/subscription/SubscriptionGate';
 import { FEATURE_KEYS } from '@/services/subscriptionService';
 import { SessionProvider, useSession } from '@/components/post-conflict/context/SessionContext';
@@ -74,12 +74,7 @@ const PostConflictContent = () => {
             </ContentContainer>
           )}
           
-          {/* Add Build a Bridge card to the bottom of the page with reduced bottom margin */}
-          <ContentContainer maxWidth="lg">
-            <div className="max-w-3xl mx-auto mt-32 mb-8">
-              <BuildBridgeCard />
-            </div>
-          </ContentContainer>
+          {/* Removed Build a Bridge card from bottom of PostConflict page */}
         </SubscriptionGate>
       </main>
       

@@ -6,7 +6,7 @@ import ContentContainer from '@/components/common/ContentContainer';
 import FeatureCardSection from '@/components/mid-fight/FeatureCardSection';
 import BackgroundPhrases from '@/components/mid-fight/BackgroundPhrases';
 import PauseTool from '@/components/mid-fight/pause-tool/PauseTool';
-import BuildBridgeCard from '@/components/mid-fight/build-bridge/BuildBridgeCard';
+// Removed: import BuildBridgeCard from '@/components/mid-fight/build-bridge/BuildBridgeCard';
 import MidFightColorHealing from '@/components/mid-fight/color-healing/MidFightColorHealing';
 import SubscriptionGate from '@/components/subscription/SubscriptionGate';
 import { FEATURE_KEYS } from '@/services/subscriptionService';
@@ -62,12 +62,7 @@ const MidFight = () => {
             </ContentContainer>
           </section>
           
-          {/* Build a Bridge Section */}
-          <section className="py-6 md:py-8 bg-soft-blush/30">
-            <ContentContainer maxWidth="lg">
-              <BuildBridgeCard />
-            </ContentContainer>
-          </section>
+          {/* Removed Build a Bridge Section (no more BuildBridgeCard at bottom) */}
         </SubscriptionGate>
       </main>
       

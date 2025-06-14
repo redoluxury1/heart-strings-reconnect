@@ -9,8 +9,13 @@ export const getCardData = (): CardContent[] => {
       title: "Mid-Fight",
       description: "The right words at the worst moments. Here's where you can pause, breathe, and calm things down before saying more.",
       icon: React.createElement(FlameIcon),
-      tools: ["Code Word/Time Out Timer", "Let's Try That Again", "What's Really Going On?", "Color Healing"],
-      comingSoonTools: ["Build a Bridge"],
+      tools: [
+        "Code Word/Time Out Timer", 
+        "Let's Try That Again", 
+        "What's Really Going On?", 
+        "Color Healing"
+      ],
+      // Removed: comingSoonTools: ["Build a Bridge"],
       link: "/during-conflict",
       gradientClass: "bg-[#FDFBF9]",
       iconBgClass: "",
@@ -24,8 +29,12 @@ export const getCardData = (): CardContent[] => {
       title: "Post-Fight",
       description: "See patterns you never knew existed. This space helps you process what just happened, understand what you need, and find clarity before reconnecting.",
       icon: React.createElement(HeartBreakIcon),
-      tools: ["Okay, but now what?", "Let's Work This Out", "Bridge the Gap"],
-      comingSoonTools: ["Build a Bridge"],
+      tools: [
+        "Okay, but now what?", 
+        "Let's Work This Out", 
+        "Bridge the Gap"
+      ],
+      // Removed: comingSoonTools: ["Build a Bridge"],
       link: "/post-conflict",
       gradientClass: "bg-[#FDFBF9]",
       iconBgClass: "",
@@ -39,7 +48,12 @@ export const getCardData = (): CardContent[] => {
       title: "Reconnecting",
       description: "Never wonder what to talk about again. Come here for small ways to feel closer, learn more about each other, and have fun.",
       icon: React.createElement(PuzzleIcon),
-      tools: ["Would You Rather: Couples Game", "Spin the Date Night Wheel"],
+      tools: [
+        "Would You Rather: Couples Game", 
+        "Spin the Date Night Wheel",
+        "Let's Talk About Us"
+      ],
+      // Ensure bullet list aligns with tool order, no comingSoonTools
       link: "/reconnect",
       gradientClass: "bg-[#FDFBF9]",
       iconBgClass: "",
