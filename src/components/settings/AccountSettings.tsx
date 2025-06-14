@@ -3,12 +3,18 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { useAuth } from "@/contexts/AuthContext";
+import { StoreKitService } from "@/services/storeKitService";
+import { useToast } from "@/components/ui/use-toast";
+
+const APPLE_SUBSCRIPTION_URL = "itms-apps://apps.apple.com/account/subscriptions";
 
 const AccountSettings: React.FC = () => {
   const { user, signOut } = useAuth();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { toast } = useToast();
+  const [restorePending, setRestorePending] = useState(false);
 
   const handleDeleteAccount = async () => {
     setLoading(true);
@@ -34,11 +40,53 @@ const AccountSettings: React.FC = () => {
     }
   };
 
+  // Open Apple subscriptions page in a new tab/window
+  const handleManageSubscription = () => {
+    window.open(APPLE_SUBSCRIPTION_URL, "_blank", "noopener,noreferrer");
+  };
+
+  // Restore purchases using StoreKitService
+  const handleRestorePurchases = async () => {
+    setRestorePending(true);
+    try {
+      if (!user?.id) throw new Error("User not found");
+      const service = StoreKitService.getInstance();
+      const restored = await service.restorePurchases(user.id);
+      if (restored && restored.length > 0) {
+        toast({ title: "Restored", description: "Your purchases were successfully restored.", status: "success" });
+      } else {
+        toast({ title: "Nothing to Restore", description: "No previous purchases were found for your account.", status: "info" });
+      }
+    } catch (e: any) {
+      toast({ title: "Restore Failed", description: e.message || "Restoring purchases failed.", status: "error" });
+    } finally {
+      setRestorePending(false);
+    }
+  };
+
   return (
-    <>
+    <div>
       <Button variant="destructive" className="mt-8" onClick={() => setOpen(true)}>
         Delete My Account
       </Button>
+      <div className="mt-10 space-y-4">
+        <Button
+          onClick={handleManageSubscription}
+          className="w-full text-[#2e4059] border border-[#ded4ee] bg-white hover:bg-[#f6f5fc] font-semibold transition-all"
+          variant="outline"
+        >
+          Manage Subscription
+        </Button>
+        <Button
+          onClick={handleRestorePurchases}
+          className="w-full"
+          loading={restorePending}
+          variant="secondary"
+          disabled={restorePending}
+        >
+          {restorePending ? "Restoring..." : "Restore Purchases"}
+        </Button>
+      </div>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent>
           <DialogHeader>
@@ -56,8 +104,9 @@ const AccountSettings: React.FC = () => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-    </>
+    </div>
   );
 };
 
 export default AccountSettings;
+
