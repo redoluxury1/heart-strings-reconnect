@@ -1,10 +1,9 @@
-
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { useAuth } from "@/contexts/AuthContext";
 import { StoreKitService } from "@/services/storeKitService";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "@/hooks/use-toast";
 
 const APPLE_SUBSCRIPTION_URL = "itms-apps://apps.apple.com/account/subscriptions";
 
@@ -13,7 +12,6 @@ const AccountSettings: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { toast } = useToast();
   const [restorePending, setRestorePending] = useState(false);
 
   const handleDeleteAccount = async () => {
