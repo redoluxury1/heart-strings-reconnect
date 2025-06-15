@@ -21,11 +21,20 @@ export const SubscriptionGate: React.FC<SubscriptionGateProps> = ({
   const [hasAccess, setHasAccess] = useState(false);
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
 
+  // Check for debug mode bypass
+  const isDebugMode = typeof window !== 'undefined' && localStorage.getItem('bypassSubscription') === 'true';
+
   useEffect(() => {
     checkAccess();
   }, [featureKey, hasActiveSubscription]);
 
   const checkAccess = async () => {
+    // Debug mode bypass
+    if (isDebugMode) {
+      setHasAccess(true);
+      return;
+    }
+
     if (hasActiveSubscription) {
       const access = await hasFeatureAccess(featureKey);
       setHasAccess(access);
@@ -40,6 +49,11 @@ export const SubscriptionGate: React.FC<SubscriptionGateProps> = ({
         <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-[#2e4059]"></div>
       </div>
     );
+  }
+
+  // Show debug indicator if debug mode is active
+  if (isDebugMode && process.env.NODE_ENV === 'development') {
+    console.log(`🔓 Debug mode: Bypassing subscription gate for feature: ${featureKey}`);
   }
 
   if (hasAccess) {

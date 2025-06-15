@@ -1,9 +1,10 @@
+
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { useAuth } from "@/contexts/AuthContext";
 import { StoreKitService } from "@/services/storeKitService";
-import { toast } from "@/hooks/use-toast"; // 🟢 Import directly
+import { toast } from "@/hooks/use-toast";
 
 const APPLE_SUBSCRIPTION_URL = "itms-apps://apps.apple.com/account/subscriptions";
 
@@ -54,13 +55,11 @@ const AccountSettings: React.FC = () => {
         toast({
           title: "Restored",
           description: "Your purchases were successfully restored.",
-          variant: "success",
         });
       } else {
         toast({
           title: "Nothing to Restore",
           description: "No previous purchases were found for your account.",
-          variant: "default",
         });
       }
     } catch (e: any) {

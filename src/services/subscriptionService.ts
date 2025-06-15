@@ -13,12 +13,27 @@ export const FEATURE_KEYS = {
   QUIZ_ACCESS: 'quiz_access'
 } as const;
 
+// Debug mode helper function
+const isDebugModeEnabled = (): boolean => {
+  // Check localStorage for debug bypass
+  if (typeof window !== 'undefined') {
+    return localStorage.getItem('bypassSubscription') === 'true';
+  }
+  return false;
+};
+
 export class SubscriptionService {
   private static storeKit = StoreKitService.getInstance();
 
   // Check if user has active subscription
   static async hasActiveSubscription(userId: string): Promise<boolean> {
     console.log('SubscriptionService.hasActiveSubscription called for user:', userId);
+    
+    // Debug mode bypass
+    if (isDebugModeEnabled()) {
+      console.log('Debug mode: bypassing subscription check - returning true');
+      return true;
+    }
     
     try {
       const { data: subscription, error } = await supabase
@@ -57,6 +72,12 @@ export class SubscriptionService {
   // Check if user has specific feature access
   static async hasFeatureAccess(userId: string, featureKey: string): Promise<boolean> {
     console.log('SubscriptionService.hasFeatureAccess called for user:', userId, 'feature:', featureKey);
+    
+    // Debug mode bypass
+    if (isDebugModeEnabled()) {
+      console.log('Debug mode: bypassing feature access check - returning true');
+      return true;
+    }
     
     const hasActiveSubscription = await this.hasActiveSubscription(userId);
     
@@ -103,7 +124,6 @@ export class SubscriptionService {
     }
   }
 
-  // Get available subscription products
   static async getSubscriptionProducts(): Promise<SubscriptionProduct[]> {
     console.log('SubscriptionService.getSubscriptionProducts called');
     
@@ -126,23 +146,14 @@ export class SubscriptionService {
     }
   }
 
-  // Handle purchase from StoreKit
   static async handlePurchase(userId: string, productId: string): Promise<Subscription | null> {
     console.log('SubscriptionService.handlePurchase called for user:', userId, 'product:', productId);
     
     try {
-      // Initiate StoreKit purchase
       const transaction = await this.storeKit.purchaseProduct(productId);
-      
-      // Store receipt in database
       await this.storeReceipt(userId, transaction);
-      
-      // Create or update subscription
       const subscription = await this.createOrUpdateSubscription(userId, transaction);
-      
-      // Finish the transaction
       await this.storeKit.finishTransaction(transaction.transactionId);
-      
       return subscription;
     } catch (error) {
       console.error('Purchase failed:', error);
@@ -150,7 +161,6 @@ export class SubscriptionService {
     }
   }
 
-  // Restore purchases
   static async restorePurchases(userId: string): Promise<Subscription[]> {
     console.log('SubscriptionService.restorePurchases called for user:', userId);
     
@@ -159,16 +169,11 @@ export class SubscriptionService {
       const subscriptions: Subscription[] = [];
       
       for (const transaction of transactions) {
-        // Store receipt
         await this.storeReceipt(userId, transaction);
-        
-        // Create or update subscription
         const subscription = await this.createOrUpdateSubscription(userId, transaction);
         if (subscription) {
           subscriptions.push(subscription);
         }
-        
-        // Finish transaction
         await this.storeKit.finishTransaction(transaction.transactionId);
       }
       
@@ -179,7 +184,6 @@ export class SubscriptionService {
     }
   }
 
-  // Store receipt in database
   private static async storeReceipt(userId: string, transaction: PurchaseTransaction): Promise<void> {
     try {
       const { error } = await supabase
@@ -209,13 +213,11 @@ export class SubscriptionService {
     }
   }
 
-  // Create or update subscription after successful purchase
   private static async createOrUpdateSubscription(
     userId: string,
     transaction: PurchaseTransaction
   ): Promise<Subscription | null> {
     try {
-      // Get product info to determine trial period
       const { data: product } = await supabase
         .from('subscription_products')
         .select('trial_period_days, billing_period')
@@ -232,7 +234,6 @@ export class SubscriptionService {
         ? new Date(now.getTime() + (productData.trial_period_days * 24 * 60 * 60 * 1000))
         : null;
 
-      // Calculate subscription end date
       const subscriptionEndDate = transaction.expiresDate || 
         (productData.billing_period === 'yearly' 
           ? new Date(now.getTime() + (365 * 24 * 60 * 60 * 1000))
@@ -271,7 +272,6 @@ export class SubscriptionService {
     }
   }
 
-  // Update subscription status
   private static async updateSubscriptionStatus(subscriptionId: string, status: string): Promise<void> {
     try {
       const { error } = await supabase
@@ -290,7 +290,6 @@ export class SubscriptionService {
     }
   }
 
-  // Cancel subscription
   static async cancelSubscription(userId: string): Promise<boolean> {
     console.log('SubscriptionService.cancelSubscription called for user:', userId);
     
@@ -314,5 +313,24 @@ export class SubscriptionService {
       console.error('Failed to cancel subscription:', error);
       return false;
     }
+  }
+
+  // Debug helper methods
+  static enableDebugMode(): void {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('bypassSubscription', 'true');
+      console.log('Debug mode enabled: All subscription gates bypassed');
+    }
+  }
+
+  static disableDebugMode(): void {
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('bypassSubscription');
+      console.log('Debug mode disabled: Subscription gates restored');
+    }
+  }
+
+  static isDebugModeActive(): boolean {
+    return isDebugModeEnabled();
   }
 }
