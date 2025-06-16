@@ -42,6 +42,11 @@ const NavbarDesktopLinks: React.FC<NavbarDesktopLinksProps> = ({ user }) => {
               Reflection
             </Link>
           </NavigationMenuItem>
+          <NavigationMenuItem>
+            <Link to="/settings" className="text-sm font-medium text-white hover:text-soft-cream transition-colors px-3 py-2">
+              Settings
+            </Link>
+          </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
     </div>

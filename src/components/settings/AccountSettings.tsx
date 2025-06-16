@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
@@ -72,7 +73,7 @@ const AccountSettings: React.FC = () => {
     }
   };
 
-  // Debug mode toggle for testing
+  // Debug mode toggle for testing - now always visible for easier access
   const toggleDebugMode = () => {
     const isCurrentlyEnabled = localStorage.getItem('bypassSubscription') === 'true';
     if (isCurrentlyEnabled) {
@@ -96,27 +97,25 @@ const AccountSettings: React.FC = () => {
 
   return (
     <div>
-      {/* Debug Mode Toggle - only show in development */}
-      {process.env.NODE_ENV === 'development' && (
-        <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-          <h3 className="text-sm font-medium text-yellow-800 mb-2">Debug Mode</h3>
-          <p className="text-xs text-yellow-700 mb-3">
-            Toggle subscription bypass for testing purposes
+      {/* Debug Mode Toggle - now always visible */}
+      <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+        <h3 className="text-sm font-medium text-yellow-800 mb-2">Debug Mode</h3>
+        <p className="text-xs text-yellow-700 mb-3">
+          Toggle subscription bypass for testing purposes
+        </p>
+        <Button
+          onClick={toggleDebugMode}
+          variant={isDebugMode ? "destructive" : "outline"}
+          size="sm"
+        >
+          {isDebugMode ? "Disable Debug Mode" : "Enable Debug Mode"}
+        </Button>
+        {isDebugMode && (
+          <p className="text-xs text-yellow-600 mt-2">
+            🔓 Subscription gates are currently bypassed
           </p>
-          <Button
-            onClick={toggleDebugMode}
-            variant={isDebugMode ? "destructive" : "outline"}
-            size="sm"
-          >
-            {isDebugMode ? "Disable Debug Mode" : "Enable Debug Mode"}
-          </Button>
-          {isDebugMode && (
-            <p className="text-xs text-yellow-600 mt-2">
-              🔓 Subscription gates are currently bypassed
-            </p>
-          )}
-        </div>
-      )}
+        )}
+      </div>
 
       <Button variant="destructive" className="mt-8" onClick={() => setOpen(true)}>
         Delete My Account
