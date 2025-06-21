@@ -1,4 +1,5 @@
 
+
 import { Purchases, CustomerInfo, PurchasesOffering, PurchasesPackage, PurchasesEntitlementInfo } from '@revenuecat/purchases-capacitor';
 import { supabase } from '@/integrations/supabase/client';
 
@@ -116,8 +117,8 @@ export class NativeStoreKitService {
         originalTransactionId: latestEntitlement.originalPurchaseDate || latestEntitlement.latestPurchaseDate || `${Date.now()}`,
         productId: productId,
         purchaseDate: new Date(latestEntitlement.latestPurchaseDate || Date.now()),
-        expiresDate: latestEntitlement.expiresDate ? new Date(latestEntitlement.expiresDate) : undefined,
-        isTrialPeriod: latestEntitlement.isTrialPeriod || false,
+        expiresDate: latestEntitlement.expirationDate ? new Date(latestEntitlement.expirationDate) : undefined,
+        isTrialPeriod: latestEntitlement.willRenew || false,
         receiptData: customerInfo.originalAppUserId || ''
       };
 
@@ -149,8 +150,8 @@ export class NativeStoreKitService {
           originalTransactionId: entitlementInfo.originalPurchaseDate || entitlementInfo.latestPurchaseDate || `${Date.now()}`,
           productId: entitlementInfo.productIdentifier,
           purchaseDate: new Date(entitlementInfo.latestPurchaseDate || Date.now()),
-          expiresDate: entitlementInfo.expiresDate ? new Date(entitlementInfo.expiresDate) : undefined,
-          isTrialPeriod: entitlementInfo.isTrialPeriod || false,
+          expiresDate: entitlementInfo.expirationDate ? new Date(entitlementInfo.expirationDate) : undefined,
+          isTrialPeriod: entitlementInfo.willRenew || false,
           receiptData: customerInfo.originalAppUserId || ''
         };
 
@@ -212,3 +213,4 @@ export class NativeStoreKitService {
     }
   }
 }
+
