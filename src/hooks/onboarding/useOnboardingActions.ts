@@ -24,8 +24,12 @@ export const useOnboardingActions = ({
       console.log("🎯 Partner invite complete - moving to notifications");
       setStep(2);
     } else if (step === 2) {
-      // From notifications, complete onboarding
-      console.log("🎯 Notification step complete - completing onboarding");
+      // From notifications, go to paywall
+      console.log("🎯 Notification step complete - moving to paywall");
+      setStep(3);
+    } else if (step === 3) {
+      // From paywall, complete onboarding
+      console.log("🎯 Paywall step complete - completing onboarding");
       completeOnboarding();
     }
   };
@@ -48,8 +52,14 @@ export const useOnboardingActions = ({
   };
   
   const handleSkipNotifications = () => {
-    // Complete onboarding after skipping notifications
-    console.log("🎯 Notifications skipped - completing onboarding");
+    // Move to paywall after skipping notifications
+    console.log("🎯 Notifications skipped - moving to paywall");
+    setStep(3);
+  };
+
+  const handleSkipPaywall = () => {
+    // Complete onboarding after skipping paywall
+    console.log("🎯 Paywall skipped - completing onboarding");
     completeOnboarding();
   };
   
@@ -58,6 +68,7 @@ export const useOnboardingActions = ({
     handleAddPartner,
     handleBackFromPartnerInvite,
     handlePartnerInviteComplete,
-    handleSkipNotifications
+    handleSkipNotifications,
+    handleSkipPaywall
   };
 };

@@ -30,7 +30,8 @@ export const useOnboarding = () => {
     handleAddPartner,
     handleBackFromPartnerInvite,
     handlePartnerInviteComplete,
-    handleSkipNotifications
+    handleSkipNotifications,
+    handleSkipPaywall
   } = useOnboardingActions({
     step,
     partnerStatus,
@@ -48,6 +49,7 @@ export const useOnboarding = () => {
     handleAddPartner,
     handleBackFromPartnerInvite,
     handlePartnerInviteComplete,
-    handleSkipNotifications
+    handleSkipNotifications,
+    handleSkipPaywall
   };
 };

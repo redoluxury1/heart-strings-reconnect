@@ -4,6 +4,7 @@ import OnboardingContainer from '../components/onboarding/OnboardingContainer';
 import OnboardingLoader from '../components/onboarding/OnboardingLoader';
 import NotificationPermissionScreen from '../components/onboarding/NotificationPermissionScreen';
 import PartnerInvite from '../components/onboarding/PartnerInvite';
+import OnboardingPaywall from '../components/onboarding/OnboardingPaywall';
 import { useOnboarding } from '../hooks/onboarding/useOnboarding';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -18,7 +19,8 @@ const Onboarding = () => {
     partnerStatus,
     handleNextStep,
     handlePartnerInviteComplete,
-    handleSkipNotifications
+    handleSkipNotifications,
+    handleSkipPaywall
   } = useOnboarding();
 
   // If user is already authenticated and has completed onboarding, redirect to home
@@ -62,6 +64,13 @@ const Onboarding = () => {
         <NotificationPermissionScreen
           onContinue={handleNextStep}
           onSkip={handleSkipNotifications}
+        />
+      )}
+
+      {step === 3 && (
+        <OnboardingPaywall
+          onContinue={handleNextStep}
+          onSkip={handleSkipPaywall}
         />
       )}
     </OnboardingContainer>

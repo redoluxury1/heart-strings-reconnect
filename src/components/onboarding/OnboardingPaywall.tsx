@@ -1,0 +1,183 @@
+
+import React, { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { useAuth } from '@/contexts/AuthContext';
+import { SubscriptionService } from '@/services/subscriptionService';
+import { useToast } from '@/hooks/use-toast';
+import { Pause, Heart, Bot } from 'lucide-react';
+
+interface OnboardingPaywallProps {
+  onContinue: () => void;
+  onSkip: () => void;
+}
+
+const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
+  onContinue,
+  onSkip
+}) => {
+  const { user } = useAuth();
+  const { toast } = useToast();
+  const [loading, setLoading] = useState(false);
+
+  const handleSubscribe = async (productId: string) => {
+    if (!user) {
+      toast({
+        title: "Authentication required",
+        description: "Please sign in to subscribe to premium features.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setLoading(true);
+    try {
+      await SubscriptionService.handlePurchase(user.id, productId);
+      
+      toast({
+        title: "Welcome to Premium!",
+        description: "Your subscription is now active. Enjoy all the exclusive features.",
+        variant: "success"
+      });
+      
+      onContinue();
+    } catch (error) {
+      console.error('Purchase failed:', error);
+      toast({
+        title: "Purchase failed",
+        description: "There was an error processing your purchase. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const features = [
+    {
+      icon: <Pause className="h-6 w-6 text-white" />,
+      iconBg: "bg-[#D4A574]",
+      text: "Pause during conflict to take a breath"
+    },
+    {
+      icon: <Heart className="h-6 w-6 text-white" />,
+      iconBg: "bg-[#E8A5A5]",
+      text: "Tools to heal and repair after tough moments"
+    },
+    {
+      icon: <div className="h-6 w-6 rounded-full bg-white text-[#D4A574] flex items-center justify-center text-xs font-bold">$</div>,
+      iconBg: "bg-[#D4A574]",
+      text: "Save your progress and come back when you're ready"
+    },
+    {
+      icon: <div className="h-6 w-6 rounded-full bg-white text-[#D4A574] flex items-center justify-center text-xs">↶</div>,
+      iconBg: "bg-[#D4A574]",
+      text: "Strategies to reconnect when you're feeling stuck"
+    },
+    {
+      icon: <div className="h-6 w-6 rounded-full bg-white text-[#D4A574] flex items-center justify-center text-xs">💬</div>,
+      iconBg: "bg-[#E8A5A5]",
+      text: "Full access to every prompt and conversation tool"
+    },
+    {
+      icon: <Bot className="h-6 w-6 text-white" />,
+      iconBg: "bg-[#A5A5E8]",
+      text: "Early access to our next-gen AI relationship coach"
+    },
+    {
+      icon: <div className="h-6 w-6 rounded-full bg-white text-[#A5A5E8] flex items-center justify-center text-xs">💜</div>,
+      iconBg: "bg-[#A5A5E8]",
+      text: "Premium-only modules for intimacy, parenting, finances, and more"
+    }
+  ];
+
+  return (
+    <div className="min-h-screen bg-[#F8F2F0] py-8 px-4">
+      <div className="max-w-md mx-auto">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <h1 className="text-2xl md:text-3xl font-cormorant font-bold text-[#2e4059] mb-4">
+            Build a Stronger Bridge Together
+          </h1>
+          <p className="text-[#2e4059]/80 text-base leading-relaxed">
+            Unlock powerful tools to help you reconnect, repair, and grow when things feel hard.
+          </p>
+        </div>
+
+        {/* Features List */}
+        <div className="space-y-4 mb-8">
+          {features.map((feature, index) => (
+            <div key={index} className="flex items-center gap-4">
+              <div className={`${feature.iconBg} rounded-full p-3 flex-shrink-0`}>
+                {feature.icon}
+              </div>
+              <p className="text-[#2e4059] text-sm md:text-base leading-relaxed">
+                {feature.text}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        {/* Subscription Options */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          {/* Monthly Plan */}
+          <div className="bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
+            <div className="text-center">
+              <h3 className="text-lg font-medium text-[#2e4059] mb-2">Premium Monthly</h3>
+              <p className="text-sm text-green-600 mb-2">3-day free trial</p>
+              <p className="text-2xl font-bold text-[#2e4059] mb-4">$12.99/month</p>
+              <Button
+                onClick={() => handleSubscribe('monthly_premium')}
+                disabled={loading}
+                className="w-full bg-[#2e4059] hover:bg-[#2e4059]/90 text-white"
+              >
+                {loading ? 'Processing...' : 'Start Monthly Trial'}
+              </Button>
+            </div>
+          </div>
+
+          {/* Yearly Plan */}
+          <div className="bg-white rounded-lg p-6 border border-gray-200 shadow-sm relative">
+            <div className="text-center">
+              <h3 className="text-lg font-medium text-[#2e4059] mb-2">Premium Yearly</h3>
+              <p className="text-sm text-green-600 mb-2">7-day free trial</p>
+              <p className="text-2xl font-bold text-[#2e4059]">$10.75/month</p>
+              <p className="text-xs text-gray-500 mb-4">(billed annually at $129)</p>
+              <Button
+                onClick={() => handleSubscribe('yearly_premium')}
+                disabled={loading}
+                className="w-full bg-[#2e4059] hover:bg-[#2e4059]/90 text-white"
+              >
+                {loading ? 'Processing...' : 'Start Yearly Trial'}
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        {/* Additional Info */}
+        <div className="text-center space-y-3">
+          <p className="text-sm text-[#2e4059]/80">
+            Cancel anytime.<br />
+            100% of your support goes toward building better tools to make stronger relationships.
+          </p>
+          
+          <div className="flex justify-center gap-6 text-xs text-[#2e4059]/60">
+            <button className="hover:underline">Terms of Use</button>
+            <button className="hover:underline">Privacy Policy</button>
+          </div>
+
+          {/* Skip option */}
+          <div className="pt-4">
+            <button
+              onClick={onSkip}
+              className="text-sm text-[#2e4059]/60 hover:text-[#2e4059] underline"
+            >
+              Continue without subscription
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default OnboardingPaywall;
