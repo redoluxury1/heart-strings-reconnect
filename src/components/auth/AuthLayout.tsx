@@ -32,11 +32,10 @@ const AuthLayout = ({ children, title, description }: AuthLayoutProps) => {
               </CardHeader>
               
               <CardContent className="pt-2">
-                {/* Form content will be injected here */}
                 {children}
               </CardContent>
               
-              <CardFooter className="flex justify-center text-xs text-center text-[#1E2A38]/60 px-6">
+              <CardFooter className="flex justify-center text-[10px] text-center text-[#1E2A38]/60 px-6">
                 By continuing, you agree to our <Link to="/terms" className="underline hover:text-[#D36B4B]">Terms of Service</Link> and <Link to="/privacy" className="underline hover:text-[#D36B4B]">Privacy Policy</Link>
               </CardFooter>
             </Card>

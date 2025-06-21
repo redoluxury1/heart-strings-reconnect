@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigate, Link } from "react-router-dom";
@@ -140,8 +139,8 @@ const EnhancedOnboardingScreen = () => {
           </Button>
         </div>
 
-        {/* Legal links: Privacy & Terms */}
-        <div className="mt-10 text-center text-xs text-[#2e4059]/60 font-inter">
+        {/* Legal links with smaller text */}
+        <div className="mt-10 text-center text-[10px] text-[#2e4059]/60 font-inter">
           By continuing, you agree to our{" "}
           <Link to="/terms" className="underline hover:text-[#D36B4B] transition-colors duration-150">Terms of Service</Link>
           {" "}and{" "}
