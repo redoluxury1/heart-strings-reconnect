@@ -132,9 +132,6 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
 
       {/* Partner Status Selection */}
       <div className="space-y-3">
-        <label className="text-sm font-medium text-[#1E2A38]">
-          Who's using Bridge for Couples?
-        </label>
         <div className="flex gap-3">
           <Button
             type="button"

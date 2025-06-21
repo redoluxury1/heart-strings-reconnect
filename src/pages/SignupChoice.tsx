@@ -40,7 +40,7 @@ const SignupChoice = () => {
                   <User className="w-4 h-4" />
                   <span className="text-base font-medium">I'm starting this on my own</span>
                 </div>
-                <p className="text-xs text-[#2e4059]/60 font-normal leading-relaxed">
+                <p className="text-[10px] text-[#2e4059]/60 font-normal leading-relaxed px-2">
                   Sometimes the best changes start with just one person.
                 </p>
               </div>

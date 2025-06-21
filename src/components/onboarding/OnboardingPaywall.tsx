@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 import { SubscriptionService } from '@/services/subscriptionService';
 import { useToast } from '@/hooks/use-toast';
-import { Pause, Heart, Bot } from 'lucide-react';
+import { Pause, Heart, Bot, Book, ArrowRightLeft, MessageSquare, Sparkles } from 'lucide-react';
 
 interface OnboardingPaywallProps {
   onContinue: () => void;
@@ -64,17 +64,17 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
       text: "Tools to heal and repair after tough moments"
     },
     {
-      icon: <div className="h-6 w-6 rounded-full bg-white text-[#D4A574] flex items-center justify-center text-xs font-bold">$</div>,
+      icon: <Book className="h-6 w-6 text-white" />,
       iconBg: "bg-[#D4A574]",
       text: "Save your progress and come back when you're ready"
     },
     {
-      icon: <div className="h-6 w-6 rounded-full bg-white text-[#D4A574] flex items-center justify-center text-xs">↶</div>,
+      icon: <ArrowRightLeft className="h-6 w-6 text-white" />,
       iconBg: "bg-[#D4A574]",
       text: "Strategies to reconnect when you're feeling stuck"
     },
     {
-      icon: <div className="h-6 w-6 rounded-full bg-white text-[#D4A574] flex items-center justify-center text-xs">💬</div>,
+      icon: <MessageSquare className="h-6 w-6 text-white" />,
       iconBg: "bg-[#E8A5A5]",
       text: "Full access to every prompt and conversation tool"
     },
@@ -84,7 +84,7 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
       text: "Early access to our next-gen AI relationship coach"
     },
     {
-      icon: <div className="h-6 w-6 rounded-full bg-white text-[#A5A5E8] flex items-center justify-center text-xs">💜</div>,
+      icon: <Sparkles className="h-6 w-6 text-white" />,
       iconBg: "bg-[#A5A5E8]",
       text: "Premium-only modules for intimacy, parenting, finances, and more"
     }
@@ -124,7 +124,7 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
             <div className="text-center">
               <h3 className="text-lg font-medium text-[#2e4059] mb-2">Premium Monthly</h3>
               <p className="text-sm text-green-600 mb-2">3-day free trial</p>
-              <p className="text-2xl font-bold text-[#2e4059] mb-4">$12.99/month</p>
+              <p className="text-2xl font-bold text-[#2e4059] mb-6">$12.99/month</p>
               <Button
                 onClick={() => handleSubscribe('monthly_premium')}
                 disabled={loading}
@@ -141,7 +141,7 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
               <h3 className="text-lg font-medium text-[#2e4059] mb-2">Premium Yearly</h3>
               <p className="text-sm text-green-600 mb-2">7-day free trial</p>
               <p className="text-2xl font-bold text-[#2e4059]">$10.75/month</p>
-              <p className="text-xs text-gray-500 mb-4">(billed annually at $129)</p>
+              <p className="text-xs text-gray-500 mb-6">(billed annually at $129)</p>
               <Button
                 onClick={() => handleSubscribe('yearly_premium')}
                 disabled={loading}
@@ -157,7 +157,7 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
         <div className="text-center space-y-3">
           <p className="text-sm text-[#2e4059]/80">
             Cancel anytime.<br />
-            100% of your support goes toward building better tools to make stronger relationships.
+            <span className="italic text-[#2e4059]/70">100% of your support goes toward building better tools to make stronger relationships.</span>
           </p>
           
           <div className="flex justify-center gap-6 text-xs text-[#2e4059]/60">
