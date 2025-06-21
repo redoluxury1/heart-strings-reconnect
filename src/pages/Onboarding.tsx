@@ -74,6 +74,15 @@ const Onboarding = () => {
           onSkip={handleSkipPaywall}
         />
       )}
+
+      {/* Fallback for unexpected states */}
+      {step === 1 && partnerStatus === 'solo' && (
+        <NotificationPermissionScreen
+          onContinue={handleNextStep}
+          onSkip={handleSkipNotifications}
+          partnerStatus={partnerStatus}
+        />
+      )}
     </OnboardingContainer>
   );
 };
