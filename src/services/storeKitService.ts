@@ -1,7 +1,6 @@
-
 import { supabase } from '@/integrations/supabase/client';
 import { MockStoreKitService } from './mockStoreKitService';
-import { NativeStoreKitService } from './nativeStoreKitService';
+import { NativeStoreKitService } from './nativeStoreKit';
 
 export interface StoreKitProduct {
   productId: string;
