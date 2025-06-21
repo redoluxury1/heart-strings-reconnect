@@ -1,5 +1,5 @@
 
-import { Purchases, CustomerInfo, PurchasesOffering, PurchasesPackage } from '@capacitor/purchases';
+import { Purchases, CustomerInfo, PurchasesOffering, PurchasesPackage, PurchasesEntitlementInfo } from '@revenuecat/purchases-capacitor';
 import { supabase } from '@/integrations/supabase/client';
 
 export interface NativeStoreKitProduct {
@@ -35,8 +35,6 @@ export class NativeStoreKitService {
     if (this.isInitialized) return;
 
     try {
-      // Configure Purchases with your RevenueCat API key
-      // Note: You'll need to set up RevenueCat and add your API key here
       const apiKey = process.env.VITE_REVENUECAT_API_KEY;
       if (!apiKey) {
         throw new Error('RevenueCat API key not configured');
@@ -111,7 +109,7 @@ export class NativeStoreKitService {
         throw new Error('No active entitlements found after purchase');
       }
       
-      const latestEntitlement = entitlements[entitlementKeys[0]];
+      const latestEntitlement = entitlements[entitlementKeys[0]] as PurchasesEntitlementInfo;
       
       const transaction: NativePurchaseTransaction = {
         transactionId: latestEntitlement.latestPurchaseDate || `${Date.now()}`,
@@ -144,13 +142,15 @@ export class NativeStoreKitService {
       const entitlements = customerInfo.entitlements.active;
       
       for (const [, entitlement] of Object.entries(entitlements)) {
+        const entitlementInfo = entitlement as PurchasesEntitlementInfo;
+        
         const transaction: NativePurchaseTransaction = {
-          transactionId: entitlement.latestPurchaseDate || `${Date.now()}`,
-          originalTransactionId: entitlement.originalPurchaseDate || entitlement.latestPurchaseDate || `${Date.now()}`,
-          productId: entitlement.productIdentifier,
-          purchaseDate: new Date(entitlement.latestPurchaseDate || Date.now()),
-          expiresDate: entitlement.expiresDate ? new Date(entitlement.expiresDate) : undefined,
-          isTrialPeriod: entitlement.isTrialPeriod || false,
+          transactionId: entitlementInfo.latestPurchaseDate || `${Date.now()}`,
+          originalTransactionId: entitlementInfo.originalPurchaseDate || entitlementInfo.latestPurchaseDate || `${Date.now()}`,
+          productId: entitlementInfo.productIdentifier,
+          purchaseDate: new Date(entitlementInfo.latestPurchaseDate || Date.now()),
+          expiresDate: entitlementInfo.expiresDate ? new Date(entitlementInfo.expiresDate) : undefined,
+          isTrialPeriod: entitlementInfo.isTrialPeriod || false,
           receiptData: customerInfo.originalAppUserId || ''
         };
 
