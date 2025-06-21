@@ -54,38 +54,31 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
 
   const features = [
     {
-      icon: <Pause className="h-6 w-6 text-white" />,
-      iconBg: "bg-[#D4A574]",
+      icon: <Pause className="h-6 w-6 text-[#2e4059]" />,
       text: "Pause during conflict to take a breath"
     },
     {
-      icon: <Heart className="h-6 w-6 text-white" />,
-      iconBg: "bg-[#E8A5A5]",
+      icon: <Heart className="h-6 w-6 text-[#D4704B]" />,
       text: "Tools to heal and repair after tough moments"
     },
     {
-      icon: <Book className="h-6 w-6 text-white" />,
-      iconBg: "bg-[#D4A574]",
+      icon: <Book className="h-6 w-6 text-[#B8A5C7]" />,
       text: "Save your progress and come back when you're ready"
     },
     {
-      icon: <ArrowRightLeft className="h-6 w-6 text-white" />,
-      iconBg: "bg-[#D4A574]",
+      icon: <ArrowRightLeft className="h-6 w-6 text-[#2e4059]" />,
       text: "Strategies to reconnect when you're feeling stuck"
     },
     {
-      icon: <MessageSquare className="h-6 w-6 text-white" />,
-      iconBg: "bg-[#E8A5A5]",
+      icon: <MessageSquare className="h-6 w-6 text-[#D4704B]" />,
       text: "Full access to every prompt and conversation tool"
     },
     {
-      icon: <Bot className="h-6 w-6 text-white" />,
-      iconBg: "bg-[#A5A5E8]",
+      icon: <Bot className="h-6 w-6 text-[#B8A5C7]" />,
       text: "Early access to our next-gen AI relationship coach"
     },
     {
-      icon: <Sparkles className="h-6 w-6 text-white" />,
-      iconBg: "bg-[#A5A5E8]",
+      icon: <Sparkles className="h-6 w-6 text-[#2e4059]" />,
       text: "Premium-only modules for intimacy, parenting, finances, and more"
     }
   ];
@@ -107,7 +100,7 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
         <div className="space-y-4 mb-8">
           {features.map((feature, index) => (
             <div key={index} className="flex items-center gap-4">
-              <div className={`${feature.iconBg} rounded-full p-3 flex-shrink-0`}>
+              <div className="flex-shrink-0">
                 {feature.icon}
               </div>
               <p className="text-[#2e4059] text-sm md:text-base leading-relaxed">
