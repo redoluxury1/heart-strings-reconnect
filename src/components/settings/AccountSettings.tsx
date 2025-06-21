@@ -44,13 +44,13 @@ const AccountSettings: React.FC = () => {
     window.open(APPLE_SUBSCRIPTION_URL, "_blank", "noopener,noreferrer");
   };
 
-  // Restore purchases using StoreKitService
+  // Restore purchases using StoreKitService - FIXED: removed user.id parameter
   const handleRestorePurchases = async () => {
     setRestorePending(true);
     try {
       if (!user?.id) throw new Error("User not found");
       const service = StoreKitService.getInstance();
-      const restored = await service.restorePurchases(user.id);
+      const restored = await service.restorePurchases();
       if (restored && restored.length > 0) {
         toast({
           title: "Restored",

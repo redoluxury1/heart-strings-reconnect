@@ -148,10 +148,10 @@ export class SubscriptionService {
 
   static async handlePurchase(userId: string, productId: string): Promise<Subscription | null> {
     console.log('SubscriptionService.handlePurchase called for user:', userId, 'product:', productId);
+    console.log('Current StoreKit environment:', this.storeKit.getServiceInfo());
     
     try {
       const transaction = await this.storeKit.purchaseProduct(productId);
-      await this.storeReceipt(userId, transaction);
       const subscription = await this.createOrUpdateSubscription(userId, transaction);
       await this.storeKit.finishTransaction(transaction.transactionId);
       return subscription;
@@ -163,13 +163,13 @@ export class SubscriptionService {
 
   static async restorePurchases(userId: string): Promise<Subscription[]> {
     console.log('SubscriptionService.restorePurchases called for user:', userId);
+    console.log('Current StoreKit environment:', this.storeKit.getServiceInfo());
     
     try {
       const transactions = await this.storeKit.restorePurchases();
       const subscriptions: Subscription[] = [];
       
       for (const transaction of transactions) {
-        await this.storeReceipt(userId, transaction);
         const subscription = await this.createOrUpdateSubscription(userId, transaction);
         if (subscription) {
           subscriptions.push(subscription);
@@ -180,35 +180,6 @@ export class SubscriptionService {
       return subscriptions;
     } catch (error) {
       console.error('Restore purchases failed:', error);
-      throw error;
-    }
-  }
-
-  private static async storeReceipt(userId: string, transaction: PurchaseTransaction): Promise<void> {
-    try {
-      const { error } = await supabase
-        .from('app_store_receipts')
-        .upsert({
-          user_id: userId,
-          receipt_data: transaction.receiptData,
-          transaction_id: transaction.transactionId,
-          original_transaction_id: transaction.originalTransactionId,
-          product_id: transaction.productId,
-          purchase_date: transaction.purchaseDate.toISOString(),
-          expires_date: transaction.expiresDate?.toISOString(),
-          is_trial_period: transaction.isTrialPeriod,
-          is_in_intro_offer_period: false,
-          validation_status: 'valid'
-        }, {
-          onConflict: 'transaction_id'
-        });
-
-      if (error) {
-        console.error('Error storing receipt:', error);
-        throw error;
-      }
-    } catch (error) {
-      console.error('Failed to store receipt:', error);
       throw error;
     }
   }
@@ -332,5 +303,10 @@ export class SubscriptionService {
 
   static isDebugModeActive(): boolean {
     return isDebugModeEnabled();
+  }
+
+  // Environment helper methods
+  static getStoreKitEnvironment(): string {
+    return this.storeKit.getServiceInfo();
   }
 }
