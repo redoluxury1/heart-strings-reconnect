@@ -20,7 +20,7 @@ export class PurchaseService {
       const customerInfo = purchaseResult.customerInfo;
       
       // Get the latest transaction info
-      const entitlements = customerInfo.entitlements?.active || {};
+      const entitlements = customerInfo.entitlements.active || {};
       const entitlementKeys = Object.keys(entitlements);
       
       if (entitlementKeys.length === 0) {
@@ -29,7 +29,7 @@ export class PurchaseService {
       
       const latestEntitlement = entitlements[entitlementKeys[0]] as PurchasesEntitlementInfo;
       
-      const transaction = this.createTransactionFromEntitlement(latestEntitlement, productId, customerInfo.originalAppUserId || customerInfo.originalApplicationVersion || '');
+      const transaction = this.createTransactionFromEntitlement(latestEntitlement, productId, customerInfo.originalAppUserId || '');
 
       // Validate receipt with our backend
       await ReceiptValidator.validateReceipt(transaction);
@@ -49,7 +49,7 @@ export class PurchaseService {
       const transactions: NativePurchaseTransaction[] = [];
       
       // Process active entitlements
-      const entitlements = customerInfo.entitlements?.active || {};
+      const entitlements = customerInfo.entitlements.active || {};
       
       for (const [, entitlement] of Object.entries(entitlements)) {
         const entitlementInfo = entitlement as PurchasesEntitlementInfo;
@@ -57,7 +57,7 @@ export class PurchaseService {
         const transaction = this.createTransactionFromEntitlement(
           entitlementInfo, 
           entitlementInfo.productIdentifier, 
-          customerInfo.originalAppUserId || customerInfo.originalApplicationVersion || ''
+          customerInfo.originalAppUserId || ''
         );
 
         // Validate each restored receipt
