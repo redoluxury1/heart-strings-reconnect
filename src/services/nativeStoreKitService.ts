@@ -1,5 +1,5 @@
 
-import { InAppPurchases } from '@capacitor-community/in-app-purchases';
+import { Purchases, CustomerInfo, PurchasesOffering, PurchasesPackage } from '@capacitor/purchases';
 import { supabase } from '@/integrations/supabase/client';
 
 export interface NativeStoreKitProduct {
@@ -35,9 +35,15 @@ export class NativeStoreKitService {
     if (this.isInitialized) return;
 
     try {
-      // Initialize the in-app purchases plugin
-      await InAppPurchases.initialize();
-      console.log('Native StoreKit service initialized');
+      // Configure Purchases with your RevenueCat API key
+      // Note: You'll need to set up RevenueCat and add your API key here
+      const apiKey = process.env.VITE_REVENUECAT_API_KEY;
+      if (!apiKey) {
+        throw new Error('RevenueCat API key not configured');
+      }
+      
+      await Purchases.configure({ apiKey });
+      console.log('Native StoreKit service initialized with RevenueCat');
       this.isInitialized = true;
     } catch (error) {
       console.error('Failed to initialize native StoreKit:', error);
@@ -49,15 +55,25 @@ export class NativeStoreKitService {
     await this.initialize();
     
     try {
-      const { products } = await InAppPurchases.getProducts({ productIds });
+      const offerings = await Purchases.getOfferings();
+      const products: NativeStoreKitProduct[] = [];
       
-      return products.map(product => ({
-        productId: product.productId,
-        price: product.price,
-        currency: product.currency,
-        title: product.title,
-        description: product.description || ''
-      }));
+      // Extract products from all offerings
+      Object.values(offerings.all).forEach((offering: PurchasesOffering) => {
+        offering.availablePackages.forEach((pkg: PurchasesPackage) => {
+          if (productIds.includes(pkg.product.identifier)) {
+            products.push({
+              productId: pkg.product.identifier,
+              price: pkg.product.priceString,
+              currency: pkg.product.currencyCode,
+              title: pkg.product.title,
+              description: pkg.product.description || ''
+            });
+          }
+        });
+      });
+      
+      return products;
     } catch (error) {
       console.error('Failed to get products:', error);
       throw error;
@@ -68,20 +84,43 @@ export class NativeStoreKitService {
     await this.initialize();
     
     try {
-      const result = await InAppPurchases.purchaseProduct({ productId });
+      const offerings = await Purchases.getOfferings();
+      let packageToPurchase: PurchasesPackage | null = null;
       
-      if (!result.receipt) {
-        throw new Error('No receipt data received from purchase');
+      // Find the package with the matching product ID
+      Object.values(offerings.all).forEach((offering: PurchasesOffering) => {
+        offering.availablePackages.forEach((pkg: PurchasesPackage) => {
+          if (pkg.product.identifier === productId) {
+            packageToPurchase = pkg;
+          }
+        });
+      });
+      
+      if (!packageToPurchase) {
+        throw new Error(`Product ${productId} not found in offerings`);
       }
-
+      
+      const purchaseResult = await Purchases.purchasePackage({ aPackage: packageToPurchase });
+      const customerInfo = purchaseResult.customerInfo;
+      
+      // Get the latest transaction info
+      const entitlements = customerInfo.entitlements.active;
+      const entitlementKeys = Object.keys(entitlements);
+      
+      if (entitlementKeys.length === 0) {
+        throw new Error('No active entitlements found after purchase');
+      }
+      
+      const latestEntitlement = entitlements[entitlementKeys[0]];
+      
       const transaction: NativePurchaseTransaction = {
-        transactionId: result.transactionId || `${Date.now()}`,
-        originalTransactionId: result.originalTransactionId || result.transactionId || `${Date.now()}`,
-        productId: result.productId,
-        purchaseDate: new Date(result.purchaseDate || Date.now()),
-        expiresDate: result.expiresDate ? new Date(result.expiresDate) : undefined,
-        isTrialPeriod: result.isTrialPeriod || false,
-        receiptData: result.receipt
+        transactionId: latestEntitlement.latestPurchaseDate || `${Date.now()}`,
+        originalTransactionId: latestEntitlement.originalPurchaseDate || latestEntitlement.latestPurchaseDate || `${Date.now()}`,
+        productId: productId,
+        purchaseDate: new Date(latestEntitlement.latestPurchaseDate || Date.now()),
+        expiresDate: latestEntitlement.expiresDate ? new Date(latestEntitlement.expiresDate) : undefined,
+        isTrialPeriod: latestEntitlement.isTrialPeriod || false,
+        receiptData: customerInfo.originalAppUserId || ''
       };
 
       // Validate receipt with our backend
@@ -98,21 +137,21 @@ export class NativeStoreKitService {
     await this.initialize();
     
     try {
-      const { purchases } = await InAppPurchases.restorePurchases();
-      
+      const customerInfo = await Purchases.restorePurchases();
       const transactions: NativePurchaseTransaction[] = [];
       
-      for (const purchase of purchases) {
-        if (!purchase.receipt) continue;
-        
+      // Process active entitlements
+      const entitlements = customerInfo.entitlements.active;
+      
+      for (const [, entitlement] of Object.entries(entitlements)) {
         const transaction: NativePurchaseTransaction = {
-          transactionId: purchase.transactionId || `${Date.now()}`,
-          originalTransactionId: purchase.originalTransactionId || purchase.transactionId || `${Date.now()}`,
-          productId: purchase.productId,
-          purchaseDate: new Date(purchase.purchaseDate || Date.now()),
-          expiresDate: purchase.expiresDate ? new Date(purchase.expiresDate) : undefined,
-          isTrialPeriod: purchase.isTrialPeriod || false,
-          receiptData: purchase.receipt
+          transactionId: entitlement.latestPurchaseDate || `${Date.now()}`,
+          originalTransactionId: entitlement.originalPurchaseDate || entitlement.latestPurchaseDate || `${Date.now()}`,
+          productId: entitlement.productIdentifier,
+          purchaseDate: new Date(entitlement.latestPurchaseDate || Date.now()),
+          expiresDate: entitlement.expiresDate ? new Date(entitlement.expiresDate) : undefined,
+          isTrialPeriod: entitlement.isTrialPeriod || false,
+          receiptData: customerInfo.originalAppUserId || ''
         };
 
         // Validate each restored receipt
@@ -133,13 +172,8 @@ export class NativeStoreKitService {
   }
 
   async finishTransaction(transactionId: string): Promise<void> {
-    try {
-      await InAppPurchases.finishTransaction({ transactionId });
-      console.log(`Transaction finished: ${transactionId}`);
-    } catch (error) {
-      console.error('Failed to finish transaction:', error);
-      // Don't throw here as the purchase may still be valid
-    }
+    // RevenueCat handles transaction finishing automatically
+    console.log(`Transaction acknowledged: ${transactionId}`);
   }
 
   private async validateReceipt(transaction: NativePurchaseTransaction): Promise<void> {
