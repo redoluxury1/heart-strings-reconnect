@@ -20,45 +20,37 @@ export const useOnboardingActions = ({
     console.log(`📍 Current step: ${step}, moving to next step`);
     
     if (step === 1) {
-      // From notification permission, go to partner status selection
-      console.log("🎯 Notification step complete - moving to partner status");
+      // From partner invite, go to notifications
+      console.log("🎯 Partner invite complete - moving to notifications");
       setStep(2);
     } else if (step === 2) {
-      // From partner status selection
-      if (partnerStatus === 'solo') {
-        // Complete onboarding for solo users
-        console.log("🎯 Solo user - completing onboarding");
-        completeOnboarding();
-      } else {
-        // For couples, complete onboarding (they can invite partner later from home)
-        console.log("🎯 Couple user - completing onboarding");
-        completeOnboarding();
-      }
-    } else if (step === 3) {
-      // From partner invite, complete onboarding
-      console.log("🎯 Partner invite complete - completing onboarding");
+      // From notifications, complete onboarding
+      console.log("🎯 Notification step complete - completing onboarding");
       completeOnboarding();
     }
   };
   
   const handleAddPartner = () => {
-    // Move to partner invite step
-    setStep(3);
+    // This function is no longer needed in the new flow
+    // Partner invite is now step 1 for couples
+    console.log("🎯 Partner invite already shown");
   };
   
   const handleBackFromPartnerInvite = () => {
-    // Go back to partner status selection
-    setStep(2);
+    // Can't go back from partner invite in new flow
+    console.log("🎯 Cannot go back from partner invite");
   };
   
   const handlePartnerInviteComplete = async () => {
-    // Complete onboarding after sending invite
-    completeOnboarding();
+    // Move to notifications after partner invite
+    console.log("🎯 Partner invite complete - moving to notifications");
+    setStep(2);
   };
   
   const handleSkipNotifications = () => {
-    // Skip notifications and go to partner status
-    setStep(2);
+    // Complete onboarding after skipping notifications
+    console.log("🎯 Notifications skipped - completing onboarding");
+    completeOnboarding();
   };
   
   return {

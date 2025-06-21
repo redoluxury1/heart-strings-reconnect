@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
 import { useAuth } from '@/contexts/AuthContext';
 import { EmailField, PasswordField, NameField } from './FormFields';
+import { User, Users, Check } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface SignupFormProps {
   inviteToken?: string | null;
@@ -15,6 +17,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
+  const [partnerStatus, setPartnerStatus] = useState<'solo' | 'couple'>(signupMode === 'partner' ? 'couple' : 'solo');
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -38,6 +41,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
       console.log("=== STARTING SIGNUP PROCESS ===");
       console.log("Email:", email);
       console.log("Name:", name);
+      console.log("Partner Status:", partnerStatus);
       console.log("Password provided:", !!password);
 
       // Create the account without email verification
@@ -79,10 +83,8 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
           description: "Welcome! You're now signed in and ready to get started."
         });
         
-        // Store signup mode for onboarding if provided
-        if (signupMode) {
-          localStorage.setItem('signupMode', signupMode);
-        }
+        // Store partner status for onboarding
+        localStorage.setItem('signupMode', partnerStatus);
         
         // Navigate to onboarding
         navigate('/onboarding');
@@ -127,6 +129,50 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
         id="signupPassword"
         placeholder="Enter a secure password"
       />
+
+      {/* Partner Status Selection */}
+      <div className="space-y-3">
+        <label className="text-sm font-medium text-[#1E2A38]">
+          Who's using Bridge for Couples?
+        </label>
+        <div className="flex gap-3">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => setPartnerStatus('solo')}
+            className={cn(
+              "flex-1 h-16 transition-all hover:scale-[1.02] hover:shadow-md", 
+              partnerStatus === 'solo' 
+                ? "bg-[#D36B4B] text-white border-[#D36B4B]" 
+                : "bg-[#E9DED9] text-[#1E2A38] border-[#E9DED9]"
+            )}
+          >
+            <div className="flex flex-col items-center">
+              <User className="h-4 w-4 mb-1" />
+              <span className="text-sm">Individual</span>
+            </div>
+            {partnerStatus === 'solo' && <Check className="ml-2 h-3 w-3" />}
+          </Button>
+          
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => setPartnerStatus('couple')}
+            className={cn(
+              "flex-1 h-16 transition-all hover:scale-[1.02] hover:shadow-md",
+              partnerStatus === 'couple' 
+                ? "bg-[#1E2A38] text-white border-[#1E2A38]" 
+                : "bg-[#E9DED9] text-[#1E2A38] border-[#E9DED9]"
+            )}
+          >
+            <div className="flex flex-col items-center">
+              <Users className="h-4 w-4 mb-1" />
+              <span className="text-sm">Couple</span>
+            </div>
+            {partnerStatus === 'couple' && <Check className="ml-2 h-3 w-3" />}
+          </Button>
+        </div>
+      </div>
 
       <Button
         type="submit"

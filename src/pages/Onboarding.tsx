@@ -3,7 +3,6 @@ import React from 'react';
 import OnboardingContainer from '../components/onboarding/OnboardingContainer';
 import OnboardingLoader from '../components/onboarding/OnboardingLoader';
 import NotificationPermissionScreen from '../components/onboarding/NotificationPermissionScreen';
-import OnboardingPartnerStatus from '../components/onboarding/OnboardingPartnerStatus';
 import PartnerInvite from '../components/onboarding/PartnerInvite';
 import { useOnboarding } from '../hooks/onboarding/useOnboarding';
 import { useAuth } from '../contexts/AuthContext';
@@ -17,10 +16,7 @@ const Onboarding = () => {
     loading,
     step,
     partnerStatus,
-    setPartnerStatus,
     handleNextStep,
-    handleAddPartner,
-    handleBackFromPartnerInvite,
     handlePartnerInviteComplete,
     handleSkipNotifications
   } = useOnboarding();
@@ -51,29 +47,21 @@ const Onboarding = () => {
     return <OnboardingLoader />;
   }
 
-  console.log("User authenticated, showing onboarding step:", step);
+  console.log("User authenticated, showing onboarding step:", step, "Partner status:", partnerStatus);
+  
   return (
     <OnboardingContainer>
-      {step === 1 && (
-        <NotificationPermissionScreen
-          onContinue={handleNextStep}
-          onSkip={handleSkipNotifications}
+      {step === 1 && partnerStatus === 'couple' && (
+        <PartnerInvite
+          onBack={() => {}} // No back option in new flow
+          onComplete={handlePartnerInviteComplete}
         />
       )}
       
       {step === 2 && (
-        <OnboardingPartnerStatus
-          partnerStatus={partnerStatus}
-          setPartnerStatus={setPartnerStatus}
+        <NotificationPermissionScreen
           onContinue={handleNextStep}
-          onAddPartner={handleAddPartner}
-        />
-      )}
-      
-      {step === 3 && (
-        <PartnerInvite
-          onBack={handleBackFromPartnerInvite}
-          onComplete={handlePartnerInviteComplete}
+          onSkip={handleSkipNotifications}
         />
       )}
     </OnboardingContainer>
