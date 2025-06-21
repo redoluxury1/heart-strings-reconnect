@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Bell, MessageCircle, Pause, Heart } from 'lucide-react';
+import { Bell, MessageCircle, Pause, Heart, Brain, Sparkles } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { registerDeviceToken } from '@/services/deviceTokens';
 import { useAuth } from '@/contexts/AuthContext';
@@ -9,15 +9,19 @@ import { useAuth } from '@/contexts/AuthContext';
 interface NotificationPermissionScreenProps {
   onContinue: () => void;
   onSkip: () => void;
+  partnerStatus?: 'solo' | 'couple';
 }
 
 const NotificationPermissionScreen: React.FC<NotificationPermissionScreenProps> = ({
   onContinue,
-  onSkip
+  onSkip,
+  partnerStatus = 'couple'
 }) => {
   const [isRequesting, setIsRequesting] = useState(false);
   const { toast } = useToast();
   const { user } = useAuth();
+
+  const isSolo = partnerStatus === 'solo';
 
   const handleEnableNotifications = async () => {
     setIsRequesting(true);
@@ -53,7 +57,9 @@ const NotificationPermissionScreen: React.FC<NotificationPermissionScreenProps> 
         
         toast({
           title: "Notifications enabled!",
-          description: "You'll be notified when your partner reaches out."
+          description: isSolo 
+            ? "You'll receive gentle reminders to help you stay on track."
+            : "You'll be notified when your partner reaches out."
         });
         
         onContinue();
@@ -81,6 +87,46 @@ const NotificationPermissionScreen: React.FC<NotificationPermissionScreenProps> 
     }
   };
 
+  const coupleContent = {
+    header: "Want us to nudge you when it matters?",
+    body: "Bridge for Couples works best when both partners stay connected. We'll send thoughtful notifications when your partner starts a conversation or needs a moment to pause.",
+    notifications: [
+      {
+        icon: <MessageCircle className="w-5 h-5 text-[#2e4059] flex-shrink-0" />,
+        text: "When your partner starts a conversation tool"
+      },
+      {
+        icon: <Pause className="w-5 h-5 text-[#2e4059] flex-shrink-0" />,
+        text: "When a pause timer ends and you're ready to reconnect"
+      },
+      {
+        icon: <Heart className="w-5 h-5 text-[#2e4059] flex-shrink-0" />,
+        text: "Gentle daily encouragement (optional)"
+      }
+    ]
+  };
+
+  const soloContent = {
+    header: "Want gentle nudges to help you stay on track?",
+    body: "Bridge can send kind reminders to help you reflect, reconnect, and make progress—even if you're using it solo.",
+    notifications: [
+      {
+        icon: <Brain className="w-5 h-5 text-[#2e4059] flex-shrink-0" />,
+        text: "Nudges to pause and check in with yourself"
+      },
+      {
+        icon: <Sparkles className="w-5 h-5 text-[#2e4059] flex-shrink-0" />,
+        text: "Reminders to revisit your progress or journal entries"
+      },
+      {
+        icon: <Heart className="w-5 h-5 text-[#2e4059] flex-shrink-0" />,
+        text: "Gentle daily encouragement (optional)"
+      }
+    ]
+  };
+
+  const content = isSolo ? soloContent : coupleContent;
+
   return (
     <div className="text-center max-w-md mx-auto">
       <div className="mb-8">
@@ -89,36 +135,24 @@ const NotificationPermissionScreen: React.FC<NotificationPermissionScreenProps> 
         </div>
         
         <h2 className="font-cormorant text-3xl font-medium text-[#2e4059] mb-4">
-          Want us to nudge you when it matters?
+          {content.header}
         </h2>
         
         <p className="text-lg text-[#2e4059]/80 mb-8 leading-relaxed">
-          Bridge for Couples works best when both partners stay connected. We'll send thoughtful notifications when your partner starts a conversation or needs a moment to pause.
+          {content.body}
         </p>
       </div>
 
       {/* Notification Examples */}
       <div className="space-y-4 mb-8">
-        <div className="bg-[#f5f1e8] p-4 rounded-lg flex items-center gap-3">
-          <MessageCircle className="w-5 h-5 text-[#2e4059] flex-shrink-0" />
-          <p className="text-sm text-[#2e4059] text-left">
-            When your partner starts a conversation tool
-          </p>
-        </div>
-        
-        <div className="bg-[#f5f1e8] p-4 rounded-lg flex items-center gap-3">
-          <Pause className="w-5 h-5 text-[#2e4059] flex-shrink-0" />
-          <p className="text-sm text-[#2e4059] text-left">
-            When a pause timer ends and you're ready to reconnect
-          </p>
-        </div>
-        
-        <div className="bg-[#f5f1e8] p-4 rounded-lg flex items-center gap-3">
-          <Heart className="w-5 h-5 text-[#2e4059] flex-shrink-0" />
-          <p className="text-sm text-[#2e4059] text-left">
-            Gentle daily encouragement (optional)
-          </p>
-        </div>
+        {content.notifications.map((notification, index) => (
+          <div key={index} className="bg-[#f5f1e8] p-4 rounded-lg flex items-center gap-3">
+            {notification.icon}
+            <p className="text-sm text-[#2e4059] text-left">
+              {notification.text}
+            </p>
+          </div>
+        ))}
       </div>
 
       <div className="space-y-4">

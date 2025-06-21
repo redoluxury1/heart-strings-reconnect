@@ -64,6 +64,7 @@ const Onboarding = () => {
         <NotificationPermissionScreen
           onContinue={handleNextStep}
           onSkip={handleSkipNotifications}
+          partnerStatus={partnerStatus}
         />
       )}
 
