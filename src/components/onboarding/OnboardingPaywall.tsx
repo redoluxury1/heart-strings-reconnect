@@ -96,7 +96,7 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-2xl md:text-3xl font-cormorant font-bold text-[#2e4059] mb-4">
-            Build a Stronger Bridge Together
+            Silence builds walls. Words build bridges.
           </h1>
           <p className="text-[#2e4059]/80 text-base leading-relaxed">
             Unlock powerful tools to help you reconnect, repair, and grow when things feel hard.
@@ -155,24 +155,14 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
 
         {/* Additional Info */}
         <div className="text-center space-y-3">
-          <p className="text-sm text-[#2e4059]/80">
+          <p className="text-xs text-[#1a2332]">
             Cancel anytime.<br />
-            <span className="italic text-[#2e4059]/70">100% of your support goes toward building better tools to make stronger relationships.</span>
+            <span className="italic">100% of your support goes toward building better tools to make stronger relationships.</span>
           </p>
           
           <div className="flex justify-center gap-6 text-xs text-[#2e4059]/60">
             <button className="hover:underline">Terms of Use</button>
             <button className="hover:underline">Privacy Policy</button>
-          </div>
-
-          {/* Skip option */}
-          <div className="pt-4">
-            <button
-              onClick={onSkip}
-              className="text-sm text-[#2e4059]/60 hover:text-[#2e4059] underline"
-            >
-              Continue without subscription
-            </button>
           </div>
         </div>
       </div>
