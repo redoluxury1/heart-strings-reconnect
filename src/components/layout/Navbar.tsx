@@ -89,7 +89,10 @@ const Navbar = () => {
                 ) : (
                   <div className="flex items-center space-x-2">
                     <Button
-                      onClick={() => navigate('/intro')}
+                      onClick={() => {
+                        console.log('Sign In clicked');
+                        navigate('/intro');
+                      }}
                       variant="ghost"
                       size="sm"
                       className="text-white hover:bg-white/10 hover:text-white"
@@ -97,7 +100,10 @@ const Navbar = () => {
                       Sign In
                     </Button>
                     <Button
-                      onClick={() => navigate('/intro')}
+                      onClick={() => {
+                        console.log('Get Started clicked');
+                        navigate('/intro');
+                      }}
                       size="sm"
                       className="bg-white hover:bg-white/90 text-navy-800 hover:text-navy-800"
                     >
