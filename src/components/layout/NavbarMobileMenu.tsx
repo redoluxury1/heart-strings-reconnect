@@ -27,8 +27,6 @@ const NavbarMobileMenu: React.FC<NavbarMobileMenuProps> = ({
   return (
     <div className="lg:hidden">
       <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-navy-800">
-        {user ? (
-          <>
             {/* Navigation Links */}
             <Link
               to="/during-conflict"
@@ -80,7 +78,7 @@ const NavbarMobileMenu: React.FC<NavbarMobileMenuProps> = ({
             <div className="pt-4 pb-3 border-t border-white/20">
               <div className="px-3 mb-3">
                 <div className="text-base font-medium text-white">
-                  {user.user_metadata?.name || user.email}
+                  {user?.user_metadata?.name || user?.email}
                 </div>
               </div>
               <div className="px-3">
@@ -97,26 +95,6 @@ const NavbarMobileMenu: React.FC<NavbarMobileMenuProps> = ({
                 </Button>
               </div>
             </div>
-          </>
-        ) : (
-          <div className="space-y-2 p-3">
-            <Button
-              onClick={onClose}
-              variant="ghost"
-              size="sm"
-              className="w-full justify-start text-white hover:bg-white/10 hover:text-white"
-            >
-              Sign In
-            </Button>
-            <Button
-              onClick={onClose}
-              size="sm"
-              className="w-full bg-white hover:bg-white/90 text-navy-800 hover:text-navy-800"
-            >
-              Get Started
-            </Button>
-          </div>
-        )}
       </div>
     </div>
   );

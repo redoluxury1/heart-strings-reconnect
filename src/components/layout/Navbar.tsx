@@ -72,45 +72,19 @@ const Navbar = () => {
               
               {/* Desktop Auth Buttons - only show on large screens */}
               <div className="hidden lg:flex items-center space-x-2">
-                {user ? (
-                  <div className="flex items-center space-x-3">
-                    <span className="text-white font-medium">
-                      {user.user_metadata?.name || user.email}
-                    </span>
-                    <Button
-                      onClick={handleSignOut}
-                      variant="outline"
-                      size="sm"
-                      className="border-white/30 bg-white text-navy-800 hover:bg-white/90 hover:text-navy-800 hover:border-white/50"
-                    >
-                      Sign Out
-                    </Button>
-                  </div>
-                ) : (
-                  <div className="flex items-center space-x-2">
-                    <Button
-                      onClick={() => {
-                        console.log('Sign In clicked');
-                        navigate('/intro');
-                      }}
-                      variant="ghost"
-                      size="sm"
-                      className="text-white hover:bg-white/10 hover:text-white"
-                    >
-                      Sign In
-                    </Button>
-                    <Button
-                      onClick={() => {
-                        console.log('Get Started clicked');
-                        navigate('/intro');
-                      }}
-                      size="sm"
-                      className="bg-white hover:bg-white/90 text-navy-800 hover:text-navy-800"
-                    >
-                      Get Started
-                    </Button>
-                  </div>
-                )}
+                <div className="flex items-center space-x-3">
+                  <span className="text-white font-medium">
+                    {user?.user_metadata?.name || user?.email}
+                  </span>
+                  <Button
+                    onClick={handleSignOut}
+                    variant="outline"
+                    size="sm"
+                    className="border-white/30 bg-white text-navy-800 hover:bg-white/90 hover:text-navy-800 hover:border-white/50"
+                  >
+                    Sign Out
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
