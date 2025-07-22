@@ -114,14 +114,14 @@ export const FourHorsemenDetector: React.FC = () => {
             <Button
               key={horseman.id}
               variant="outline"
-              className="h-auto p-4 justify-start text-left"
+              className="h-auto p-4 justify-start text-left min-h-[100px]"
               onClick={() => setSelectedHorseman(horseman)}
             >
-              <div className="flex items-start space-x-3">
+              <div className="flex items-start space-x-3 w-full">
                 {horsemanIcons[horseman.id]}
-                <div>
-                  <div className="font-medium">{horseman.name}</div>
-                  <div className="text-sm text-muted-foreground mt-1">
+                <div className="flex-1 min-w-0">
+                  <div className="font-medium text-sm mb-1">{horseman.name}</div>
+                  <div className="text-xs text-muted-foreground leading-relaxed break-words">
                     {horseman.description}
                   </div>
                 </div>
