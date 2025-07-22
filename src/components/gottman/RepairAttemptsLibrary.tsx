@@ -64,9 +64,9 @@ export const RepairAttemptsLibrary: React.FC = () => {
       </div>
 
       <Tabs value={activeCategory} onValueChange={setActiveCategory}>
-        <TabsList className="grid w-full grid-cols-3 lg:grid-cols-6">
+        <TabsList className="grid w-full grid-cols-3 lg:grid-cols-6 gap-2 p-2 mb-6">
           {Object.keys(categoryIcons).map((category) => (
-            <TabsTrigger key={category} value={category} className="flex items-center space-x-1">
+            <TabsTrigger key={category} value={category} className="flex items-center space-x-1 py-2">
               {categoryIcons[category as keyof typeof categoryIcons]}
               <span className="hidden sm:inline capitalize">{category.replace('-', ' ')}</span>
             </TabsTrigger>
