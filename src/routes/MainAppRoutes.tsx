@@ -13,6 +13,7 @@ import Games from "@/pages/Games";
 import PartnerInvite from "@/pages/PartnerInvite";
 import LoveCodeQuiz from "@/pages/LoveCodeQuiz";
 import PersonalityQuiz from "@/pages/PersonalityQuiz";
+import GottmanMethod from "@/pages/GottmanMethod";
 import NotFound from "@/pages/NotFound";
 import SettingsPage from "@/pages/Settings";
 
@@ -55,6 +56,7 @@ const MainAppRoutes = () => {
         </ProtectedRoute>
       } />
       <Route key="games" path="/games" element={<Games />} />
+      <Route key="gottman-method" path="/gottman-method" element={<GottmanMethod />} />
       <Route key="invite" path="/invite" element={<PartnerInvite />} />
       <Route key="settings" path="/settings" element={<SettingsPage />} />
       <Route key="not-found" path="*" element={<NotFound />} />
