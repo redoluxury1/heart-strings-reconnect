@@ -23,17 +23,17 @@ export const GottmanMethodHub: React.FC = () => {
 
       <Tabs value={activeTab} onValueChange={setActiveTab}>
         <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="overview" className="flex items-center space-x-2">
+          <TabsTrigger value="overview" className="flex items-center space-x-1 px-2">
             <Info className="h-4 w-4" />
-            <span>Overview</span>
+            <span className="text-xs sm:text-sm">Overview</span>
           </TabsTrigger>
-          <TabsTrigger value="detector" className="flex items-center space-x-2">
+          <TabsTrigger value="detector" className="flex items-center space-x-1 px-2">
             <Shield className="h-4 w-4" />
-            <span>Four Horsemen</span>
+            <span className="text-xs sm:text-sm">Detector</span>
           </TabsTrigger>
-          <TabsTrigger value="repair" className="flex items-center space-x-2">
+          <TabsTrigger value="repair" className="flex items-center space-x-1 px-2">
             <Heart className="h-4 w-4" />
-            <span>Repair Library</span>
+            <span className="text-xs sm:text-sm">Repair Library</span>
           </TabsTrigger>
         </TabsList>
 
