@@ -2,7 +2,7 @@
 import React from "react";
 import AccountSettings from "@/components/settings/AccountSettings";
 import AppStoreChecklist from "@/components/settings/AppStoreChecklist";
-
+import AssetGuide from "@/components/settings/AssetGuide";
 const SettingsPage = () => {
   return (
     <div className="max-w-4xl mx-auto pt-12 px-4 space-y-8">
@@ -18,6 +18,11 @@ const SettingsPage = () => {
           <h3 className="text-lg font-cormorant mb-4">App Store Submission</h3>
           <AppStoreChecklist />
         </div>
+      </div>
+
+      <div>
+        <h3 className="text-lg font-cormorant mb-4">Assets & Templates</h3>
+        <AssetGuide />
       </div>
     </div>
   );

@@ -108,6 +108,105 @@ const AssetGuide: React.FC = () => {
       alert('Icon generation failed. Please try again.');
     }
   }, []);
+
+  const handleDownloadAppIconSet = useCallback(async () => {
+    try {
+      const bgColor = '#2e4059';
+      // Load logo
+      const loadImage = (src: string) =>
+        new Promise<HTMLImageElement>((resolve, reject) => {
+          const img = new Image();
+          img.crossOrigin = 'anonymous';
+          img.onload = () => resolve(img);
+          img.onerror = reject;
+          img.src = src;
+        });
+      const logo = await loadImage(logoDark);
+
+      // Base 1024 canvas
+      const baseCanvas = document.createElement('canvas');
+      baseCanvas.width = 1024;
+      baseCanvas.height = 1024;
+      const baseCtx = baseCanvas.getContext('2d');
+      if (!baseCtx) throw new Error('Canvas not supported');
+      baseCtx.fillStyle = bgColor;
+      baseCtx.fillRect(0, 0, 1024, 1024);
+      const targetWidth = Math.round(1024 * 0.7);
+      const scale = targetWidth / logo.naturalWidth;
+      const targetHeight = Math.round(logo.naturalHeight * scale);
+      const x = Math.round((1024 - targetWidth) / 2);
+      const y = Math.round((1024 - targetHeight) / 2);
+      baseCtx.imageSmoothingEnabled = true;
+      baseCtx.imageSmoothingQuality = 'high';
+      baseCtx.drawImage(logo, x, y, targetWidth, targetHeight);
+
+      const entries = [
+        // iPhone
+        { idiom: 'iphone', sizePt: '20x20', scale: '2x', px: 40, name: 'Icon-20@2x.png' },
+        { idiom: 'iphone', sizePt: '20x20', scale: '3x', px: 60, name: 'Icon-20@3x.png' },
+        { idiom: 'iphone', sizePt: '29x29', scale: '2x', px: 58, name: 'Icon-29@2x.png' },
+        { idiom: 'iphone', sizePt: '29x29', scale: '3x', px: 87, name: 'Icon-29@3x.png' },
+        { idiom: 'iphone', sizePt: '40x40', scale: '2x', px: 80, name: 'Icon-40@2x.png' },
+        { idiom: 'iphone', sizePt: '40x40', scale: '3x', px: 120, name: 'Icon-40@3x.png' },
+        { idiom: 'iphone', sizePt: '60x60', scale: '2x', px: 120, name: 'Icon-60@2x.png' },
+        { idiom: 'iphone', sizePt: '60x60', scale: '3x', px: 180, name: 'Icon-60@3x.png' },
+        // iPad
+        { idiom: 'ipad', sizePt: '20x20', scale: '1x', px: 20, name: 'Icon-20.png' },
+        { idiom: 'ipad', sizePt: '20x20', scale: '2x', px: 40, name: 'Icon-20@2x.png' },
+        { idiom: 'ipad', sizePt: '29x29', scale: '1x', px: 29, name: 'Icon-29.png' },
+        { idiom: 'ipad', sizePt: '29x29', scale: '2x', px: 58, name: 'Icon-29@2x.png' },
+        { idiom: 'ipad', sizePt: '40x40', scale: '1x', px: 40, name: 'Icon-40.png' },
+        { idiom: 'ipad', sizePt: '40x40', scale: '2x', px: 80, name: 'Icon-40@2x.png' },
+        { idiom: 'ipad', sizePt: '76x76', scale: '1x', px: 76, name: 'Icon-76.png' },
+        { idiom: 'ipad', sizePt: '76x76', scale: '2x', px: 152, name: 'Icon-76@2x.png' },
+        { idiom: 'ipad', sizePt: '83.5x83.5', scale: '2x', px: 167, name: 'Icon-83.5@2x.png' },
+        // App Store
+        { idiom: 'ios-marketing', sizePt: '1024x1024', scale: '1x', px: 1024, name: 'ItunesArtwork@2x.png' },
+      ];
+
+      const zip = new JSZip();
+      const folder = zip.folder('AppIcon.appiconset');
+      if (!folder) throw new Error('ZIP folder error');
+
+      const dataURLToBlob = async (dataUrl: string) => {
+        const res = await fetch(dataUrl);
+        return await res.blob();
+      };
+
+      for (const e of entries) {
+        const canvas = document.createElement('canvas');
+        canvas.width = e.px;
+        canvas.height = e.px;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) continue;
+        ctx.fillStyle = bgColor;
+        ctx.fillRect(0, 0, e.px, e.px);
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
+        ctx.drawImage(baseCanvas, 0, 0, e.px, e.px);
+        const dataUrl = canvas.toDataURL('image/png', 1.0);
+        const blob = await dataURLToBlob(dataUrl);
+        folder.file(e.name, blob);
+      }
+
+      const contents = {
+        images: entries.map((e) => ({
+          idiom: e.idiom,
+          size: e.sizePt,
+          scale: e.scale,
+          filename: e.name,
+        })),
+        info: { version: 1, author: 'xcode' },
+      };
+      folder.file('Contents.json', JSON.stringify(contents, null, 2));
+
+      const out = await zip.generateAsync({ type: 'blob' });
+      saveAs(out, 'AppIcon.appiconset.zip');
+    } catch (e) {
+      console.error('AppIcon.appiconset generation failed', e);
+      alert('AppIcon.appiconset generation failed.');
+    }
+  }, []);
  
   return (
     <div className="space-y-6">
@@ -168,7 +267,16 @@ const AssetGuide: React.FC = () => {
                 title="Uses current header logo on flat #2e4059 background"
               >
                 <Download className="h-4 w-4 mr-1" />
-                Generate iOS Icons (ZIP)
+                Generate iOS Icons (PNG ZIP)
+              </Button>
+              <Button 
+                size="sm"
+                variant="secondary"
+                onClick={handleDownloadAppIconSet}
+                title="Xcode-ready AppIcon.appiconset (with Contents.json)"
+              >
+                <Download className="h-4 w-4 mr-1" />
+                Download .appiconset
               </Button>
             </div>
           </div>
