@@ -58,12 +58,12 @@ const NavbarMobileMenu: React.FC<NavbarMobileMenuProps> = ({
               Reflection
             </Link>
             <Link
-              to="/gottman-method"
+              to="/communication-analysis"
               className="text-white hover:bg-white/10 hover:text-white flex items-center px-3 py-2 rounded-md text-base font-medium"
               onClick={onClose}
             >
               <Brain className="h-4 w-4 mr-2" />
-              Gottman Method
+              Communication Tools
             </Link>
             <Link
               to="/settings"

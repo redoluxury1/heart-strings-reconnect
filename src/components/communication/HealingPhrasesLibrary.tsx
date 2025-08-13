@@ -3,7 +3,7 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { repairAttempts, repairAttemptsByCategory, positiveInteractions } from '@/data/gottman/repair-attempts';
+import { healingPhrases, healingPhrasesByCategory, positiveInteractions } from '@/data/communication/healing-phrases';
 import { Heart, Shield, HandHeart, Smile, Pause, User, Copy, Check } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
@@ -25,7 +25,7 @@ const categoryDescriptions = {
   'break': 'Pause when overwhelmed'
 };
 
-export const RepairAttemptsLibrary: React.FC = () => {
+export const HealingPhrasesLibrary: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState<string>('de-escalation');
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const { toast } = useToast();
@@ -57,7 +57,7 @@ export const RepairAttemptsLibrary: React.FC = () => {
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <h2 className="text-2xl font-bold text-foreground mb-2">Repair Attempts Library</h2>
+        <h2 className="text-2xl font-bold text-foreground mb-2">Healing Phrases Library</h2>
         <p className="text-muted-foreground">
           Research-backed phrases to repair and strengthen your relationship (5:1 positive ratio)
         </p>
@@ -73,7 +73,7 @@ export const RepairAttemptsLibrary: React.FC = () => {
           ))}
         </TabsList>
 
-        {Object.entries(repairAttemptsByCategory).map(([category, attempts]) => (
+        {Object.entries(healingPhrasesByCategory).map(([category, phrases]) => (
           <TabsContent key={category} value={category}>
             <Card className="p-6">
               <div className="mb-4">
@@ -88,45 +88,45 @@ export const RepairAttemptsLibrary: React.FC = () => {
                 </p>
               </div>
 
-              <div className="grid gap-4">
-                {attempts.map((attempt) => (
-                  <Card key={attempt.id} className="p-4 hover:bg-accent transition-colors">
-                    <div className="space-y-3">
-                      <div className="flex items-start justify-between">
-                        <div className="flex-1">
-                          <p className="text-foreground font-medium mb-2">
-                            "{attempt.phrase}"
-                          </p>
-                          <p className="text-sm text-muted-foreground">
-                            Best for: {attempt.situation}
-                          </p>
+                <div className="grid gap-4">
+                  {phrases.map((phrase) => (
+                    <Card key={phrase.id} className="p-4 hover:bg-accent transition-colors">
+                      <div className="space-y-3">
+                        <div className="flex items-start justify-between">
+                          <div className="flex-1">
+                            <p className="text-foreground font-medium mb-2">
+                              "{phrase.phrase}"
+                            </p>
+                            <p className="text-sm text-muted-foreground">
+                              Best for: {phrase.situation}
+                            </p>
+                          </div>
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => copyToClipboard(phrase.phrase, phrase.id)}
+                            className="ml-2"
+                          >
+                            {copiedId === phrase.id ? (
+                              <Check className="h-4 w-4 text-green-600" />
+                            ) : (
+                              <Copy className="h-4 w-4" />
+                            )}
+                          </Button>
                         </div>
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          onClick={() => copyToClipboard(attempt.phrase, attempt.id)}
-                          className="ml-2"
-                        >
-                          {copiedId === attempt.id ? (
-                            <Check className="h-4 w-4 text-green-600" />
-                          ) : (
-                            <Copy className="h-4 w-4" />
-                          )}
-                        </Button>
-                      </div>
-                      
-                      <div className="flex items-center space-x-2">
-                        <Badge variant={toneColors[attempt.tone] as any}>
-                          {attempt.tone} tone
-                        </Badge>
-                        {attempt.researchBacked && (
-                          <Badge variant="outline">
-                            Research-backed
+                        
+                        <div className="flex items-center space-x-2">
+                          <Badge variant={toneColors[phrase.tone] as any}>
+                            {phrase.tone} tone
                           </Badge>
-                        )}
+                          {phrase.researchBacked && (
+                            <Badge variant="outline">
+                              Research-backed
+                            </Badge>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  </Card>
+                    </Card>
                 ))}
               </div>
             </Card>

@@ -1,4 +1,4 @@
-export interface FourHorseman {
+export interface CommunicationPitfall {
   id: 'criticism' | 'contempt' | 'defensiveness' | 'stonewalling';
   name: string;
   description: string;
@@ -8,7 +8,7 @@ export interface FourHorseman {
   warningSigns: string[];
 }
 
-export const fourHorsemen: FourHorseman[] = [
+export const communicationPitfalls: CommunicationPitfall[] = [
   {
     id: 'criticism',
     name: 'Criticism',
@@ -112,7 +112,7 @@ export const fourHorsemen: FourHorseman[] = [
 ];
 
 // Detection patterns for text analysis
-export const horsemanPatterns = {
+export const pitfallPatterns = {
   criticism: [
     /you always/gi,
     /you never/gi,

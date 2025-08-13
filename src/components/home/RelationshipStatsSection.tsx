@@ -23,7 +23,7 @@ const communicationStats = [
     id: 2,
     stat: "69%",
     description: "of relationship problems are perpetual and can be improved with better communication",
-    source: "Gottman Institute Research"
+    source: "Relationship Research Studies"
   },
   {
     id: 3,

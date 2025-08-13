@@ -4,36 +4,40 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Textarea } from '@/components/ui/textarea';
-import { fourHorsemen, horsemanPatterns, type FourHorseman } from '@/data/gottman/four-horsemen';
+import { communicationPitfalls, pitfallPatterns, type CommunicationPitfall } from '@/data/communication/pitfalls';
 import { AlertTriangle, Shield, Lightbulb, Heart } from 'lucide-react';
 
-export const FourHorsemenDetector: React.FC = () => {
+export const PitfallsDetector: React.FC = () => {
   const [inputText, setInputText] = useState('');
-  const [detectedHorsemen, setDetectedHorsemen] = useState<FourHorseman[]>([]);
-  const [selectedHorseman, setSelectedHorseman] = useState<FourHorseman | null>(null);
+  const [detectedPitfalls, setDetectedPitfalls] = useState<CommunicationPitfall[]>([]);
+  const [selectedPitfall, setSelectedPitfall] = useState<CommunicationPitfall | null>(null);
 
-  const detectHorsemen = () => {
-    const detected: FourHorseman[] = [];
-    const lowerText = inputText.toLowerCase();
+  const detectPitfalls = () => {
+    const detected: CommunicationPitfall[] = [];
+    const text = inputText.toLowerCase();
 
-    fourHorsemen.forEach(horseman => {
-      const patterns = horsemanPatterns[horseman.id];
-      if (patterns.some(pattern => pattern.test(lowerText))) {
-        detected.push(horseman);
+    communicationPitfalls.forEach(pitfall => {
+      const patterns = pitfallPatterns[pitfall.id];
+      const isDetected = patterns.some(pattern => pattern.test(text));
+      if (isDetected) {
+        detected.push(pitfall);
       }
     });
 
-    setDetectedHorsemen(detected);
+    setDetectedPitfalls(detected);
+    if (detected.length > 0) {
+      setSelectedPitfall(detected[0]);
+    }
   };
 
-  const horsemanIcons = {
+  const pitfallIcons = {
     criticism: <AlertTriangle className="h-5 w-5" />,
     contempt: <AlertTriangle className="h-5 w-5" />,
     defensiveness: <Shield className="h-5 w-5" />,
     stonewalling: <Heart className="h-5 w-5" />
   };
 
-  const horsemanColors = {
+  const pitfallColors = {
     criticism: 'destructive',
     contempt: 'destructive', 
     defensiveness: 'warning',
@@ -43,9 +47,9 @@ export const FourHorsemenDetector: React.FC = () => {
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <h2 className="text-2xl font-bold text-foreground mb-2">Four Horsemen Detector</h2>
+        <h2 className="text-2xl font-bold text-foreground mb-2">Communication Pitfalls Detector</h2>
         <p className="text-muted-foreground">
-          Based on Dr. John Gottman's research on relationship communication patterns
+          Identify destructive communication patterns that can harm relationships
         </p>
       </div>
 
@@ -63,37 +67,37 @@ export const FourHorsemenDetector: React.FC = () => {
             />
           </div>
           
-          <Button onClick={detectHorsemen} disabled={!inputText.trim()}>
-            <Lightbulb className="h-4 w-4 mr-2" />
-            Analyze Communication Pattern
+          <Button onClick={detectPitfalls} disabled={!inputText.trim()}>
+            <AlertTriangle className="w-4 h-4 mr-2" />
+            Analyze Text
           </Button>
         </div>
 
-        {detectedHorsemen.length > 0 && (
+        {detectedPitfalls.length > 0 && (
           <div className="mt-6 space-y-4">
             <Alert>
               <AlertTriangle className="h-4 w-4" />
               <AlertDescription>
-                Detected {detectedHorsemen.length} communication pattern(s) that may harm your relationship.
+                Detected {detectedPitfalls.length} communication pattern(s) that may harm your relationship.
               </AlertDescription>
             </Alert>
 
             <div className="grid gap-3">
-              {detectedHorsemen.map((horseman) => (
+              {detectedPitfalls.map((pitfall) => (
                 <Card 
-                  key={horseman.id} 
+                  key={pitfall.id} 
                   className="p-4 cursor-pointer hover:bg-accent transition-colors"
-                  onClick={() => setSelectedHorseman(horseman)}
+                  onClick={() => setSelectedPitfall(pitfall)}
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
-                      {horsemanIcons[horseman.id]}
+                      {pitfallIcons[pitfall.id]}
                       <div>
-                        <h3 className="font-semibold text-foreground">{horseman.name}</h3>
-                        <p className="text-sm text-muted-foreground">{horseman.description}</p>
+                        <h3 className="font-semibold text-foreground">{pitfall.name}</h3>
+                        <p className="text-sm text-muted-foreground">{pitfall.description}</p>
                       </div>
                     </div>
-                    <Badge variant={horsemanColors[horseman.id] as any}>
+                    <Badge variant={pitfallColors[pitfall.id] as any}>
                       Detected
                     </Badge>
                   </div>
@@ -110,21 +114,21 @@ export const FourHorsemenDetector: React.FC = () => {
           Or select what you're experiencing:
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {fourHorsemen.map((horseman) => (
+          {communicationPitfalls.map((pitfall) => (
             <Button
-              key={horseman.id}
+              key={pitfall.id}
               variant="outline"
               className="h-auto p-3 justify-start text-left min-h-[140px] w-full"
-              onClick={() => setSelectedHorseman(horseman)}
+              onClick={() => setSelectedPitfall(pitfall)}
             >
               <div className="flex items-start space-x-2 w-full max-w-full">
                 <div className="flex-shrink-0 mt-0.5">
-                  {horsemanIcons[horseman.id]}
+                  {pitfallIcons[pitfall.id]}
                 </div>
                 <div className="flex-1 min-w-0 max-w-full">
-                  <div className="font-medium text-sm mb-2">{horseman.name}</div>
+                  <div className="font-medium text-sm mb-2">{pitfall.name}</div>
                   <p className="text-xs text-muted-foreground leading-4 whitespace-normal word-wrap break-words overflow-wrap-anywhere">
-                    {horseman.description}
+                    {pitfall.description}
                   </p>
                 </div>
               </div>
@@ -133,27 +137,27 @@ export const FourHorsemenDetector: React.FC = () => {
         </div>
       </Card>
 
-      {/* Horseman Details */}
-      {selectedHorseman && (
+      {/* Pitfall Details */}
+      {selectedPitfall && (
         <Card className="p-6">
           <div className="space-y-4">
             <div className="flex items-center space-x-3">
-              {horsemanIcons[selectedHorseman.id]}
+              {pitfallIcons[selectedPitfall.id]}
               <h3 className="text-xl font-semibold text-foreground">
-                {selectedHorseman.name}
+                {selectedPitfall.name}
               </h3>
             </div>
 
             <div className="space-y-4">
               <div>
                 <h4 className="font-medium text-foreground mb-2">Description:</h4>
-                <p className="text-muted-foreground">{selectedHorseman.description}</p>
+                <p className="text-muted-foreground">{selectedPitfall.description}</p>
               </div>
 
               <div>
                 <h4 className="font-medium text-foreground mb-2">Common Examples:</h4>
                 <ul className="list-disc list-inside space-y-1">
-                  {selectedHorseman.examples.map((example, index) => (
+                  {selectedPitfall.examples.map((example, index) => (
                     <li key={index} className="text-muted-foreground">{example}</li>
                   ))}
                 </ul>
@@ -162,7 +166,7 @@ export const FourHorsemenDetector: React.FC = () => {
               <div>
                 <h4 className="font-medium text-foreground mb-2">Warning Signs:</h4>
                 <ul className="list-disc list-inside space-y-1">
-                  {selectedHorseman.warningSigns.map((sign, index) => (
+                  {selectedPitfall.warningSigns.map((sign, index) => (
                     <li key={index} className="text-muted-foreground">{sign}</li>
                   ))}
                 </ul>
@@ -171,14 +175,14 @@ export const FourHorsemenDetector: React.FC = () => {
               <Alert>
                 <Lightbulb className="h-4 w-4" />
                 <AlertDescription>
-                  <strong>Antidote:</strong> {selectedHorseman.antidote}
+                  <strong>Antidote:</strong> {selectedPitfall.antidote}
                 </AlertDescription>
               </Alert>
 
               <div>
                 <h4 className="font-medium text-foreground mb-2">Try These Repair Phrases:</h4>
                 <div className="grid gap-2">
-                  {selectedHorseman.repairPhrases.map((phrase, index) => (
+                  {selectedPitfall.repairPhrases.map((phrase, index) => (
                     <Card key={index} className="p-3">
                       <p className="text-foreground">"{phrase}"</p>
                     </Card>

@@ -1,4 +1,4 @@
-export interface RepairAttempt {
+export interface HealingPhrase {
   id: string;
   category: 'de-escalation' | 'validation' | 'responsibility' | 'affection' | 'humor' | 'break';
   phrase: string;
@@ -7,7 +7,7 @@ export interface RepairAttempt {
   researchBacked: boolean;
 }
 
-export const repairAttempts: RepairAttempt[] = [
+export const healingPhrases: HealingPhrase[] = [
   // De-escalation
   {
     id: 'de1',
@@ -203,11 +203,11 @@ export const positiveInteractions = [
   "I feel lucky because..."
 ];
 
-export const repairAttemptsByCategory = {
-  'de-escalation': repairAttempts.filter(r => r.category === 'de-escalation'),
-  'validation': repairAttempts.filter(r => r.category === 'validation'),
-  'responsibility': repairAttempts.filter(r => r.category === 'responsibility'),
-  'affection': repairAttempts.filter(r => r.category === 'affection'),
-  'humor': repairAttempts.filter(r => r.category === 'humor'),
-  'break': repairAttempts.filter(r => r.category === 'break')
+export const healingPhrasesByCategory = {
+  'de-escalation': healingPhrases.filter(r => r.category === 'de-escalation'),
+  'validation': healingPhrases.filter(r => r.category === 'validation'),
+  'responsibility': healingPhrases.filter(r => r.category === 'responsibility'),
+  'affection': healingPhrases.filter(r => r.category === 'affection'),
+  'humor': healingPhrases.filter(r => r.category === 'humor'),
+  'break': healingPhrases.filter(r => r.category === 'break')
 };

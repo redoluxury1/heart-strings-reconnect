@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { FourHorsemenDetector } from './FourHorsemenDetector';
-import { RepairAttemptsLibrary } from './RepairAttemptsLibrary';
+import { PitfallsDetector } from './PitfallsDetector';
+import { HealingPhrasesLibrary } from './HealingPhrasesLibrary';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { BookOpen, Shield, Heart, Info } from 'lucide-react';
 
-export const GottmanMethodHub: React.FC = () => {
+export const CommunicationHub: React.FC = () => {
   const [activeTab, setActiveTab] = useState('overview');
 
   return (
@@ -42,8 +42,8 @@ export const GottmanMethodHub: React.FC = () => {
             <Alert>
               <BookOpen className="h-4 w-4" />
               <AlertDescription>
-                These tools are based on Dr. John Gottman's 40+ years of relationship research, 
-                with over 94% accuracy in predicting relationship success.
+                These tools are based on decades of relationship research, 
+                designed to help you build stronger communication patterns.
               </AlertDescription>
             </Alert>
 
@@ -116,7 +116,7 @@ export const GottmanMethodHub: React.FC = () => {
                 <div>
                   <h4 className="font-medium text-foreground mb-2">Antidotes Work</h4>
                   <p className="text-muted-foreground">
-                    Each of the Four Horsemen has a specific antidote that can reverse 
+                    Each communication pitfall has a specific antidote that can reverse 
                     the harmful pattern when consistently applied.
                   </p>
                 </div>
@@ -126,11 +126,11 @@ export const GottmanMethodHub: React.FC = () => {
         </TabsContent>
 
         <TabsContent value="detector">
-          <FourHorsemenDetector />
+          <PitfallsDetector />
         </TabsContent>
 
         <TabsContent value="repair">
-          <RepairAttemptsLibrary />
+          <HealingPhrasesLibrary />
         </TabsContent>
       </Tabs>
     </div>

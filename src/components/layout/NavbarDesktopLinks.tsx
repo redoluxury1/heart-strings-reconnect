@@ -43,8 +43,8 @@ const NavbarDesktopLinks: React.FC<NavbarDesktopLinksProps> = ({ user }) => {
             </Link>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <Link to="/gottman-method" className="text-sm font-medium text-white hover:text-soft-cream transition-colors px-3 py-2 whitespace-nowrap">
-              Gottman Method
+            <Link to="/communication-analysis" className="text-sm font-medium text-white hover:text-soft-cream transition-colors px-3 py-2 whitespace-nowrap">
+              Communication Tools
             </Link>
           </NavigationMenuItem>
           <NavigationMenuItem>
