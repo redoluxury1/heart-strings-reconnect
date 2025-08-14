@@ -148,7 +148,7 @@ const Features = () => {
                 style={{ animationDelay: `${index * 100}ms` }}
               >
                 {/* Header with gradient background */}
-                <div className={`${section.gradient} p-8 text-gray-800 relative`}>
+                <div className={`${section.gradient} p-8 ${section.id === 'reconnecting' ? 'text-white' : 'text-gray-800'} relative`}>
                   <div className="flex items-center gap-6 mb-6">
                     <div className="p-4 bg-white/20 rounded-2xl backdrop-blur-sm">
                       {section.icon}
@@ -157,7 +157,7 @@ const Features = () => {
                       <h2 className="text-3xl font-cormorant font-bold mb-2">
                         {section.title}
                       </h2>
-                      <p className="text-gray-700 text-lg">
+                      <p className={`text-lg ${section.id === 'reconnecting' ? 'text-white/90' : 'text-gray-700'}`}>
                         {section.description}
                       </p>
                     </div>
@@ -166,16 +166,16 @@ const Features = () => {
                   {/* When, How, Why */}
                   <div className="grid md:grid-cols-3 gap-6">
                     <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm">
-                      <h4 className="font-semibold mb-2 text-gray-800">When to use</h4>
-                      <p className="text-sm text-gray-700">{section.when}</p>
+                      <h4 className={`font-semibold mb-2 ${section.id === 'reconnecting' ? 'text-white/90' : 'text-gray-800'}`}>When to use</h4>
+                      <p className={`text-sm ${section.id === 'reconnecting' ? 'text-white/80' : 'text-gray-700'}`}>{section.when}</p>
                     </div>
                     <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm">
-                      <h4 className="font-semibold mb-2 text-gray-800">How it works</h4>
-                      <p className="text-sm text-gray-700">{section.how}</p>
+                      <h4 className={`font-semibold mb-2 ${section.id === 'reconnecting' ? 'text-white/90' : 'text-gray-800'}`}>How it works</h4>
+                      <p className={`text-sm ${section.id === 'reconnecting' ? 'text-white/80' : 'text-gray-700'}`}>{section.how}</p>
                     </div>
                     <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm">
-                      <h4 className="font-semibold mb-2 text-gray-800">Why it helps</h4>
-                      <p className="text-sm text-gray-700">{section.why}</p>
+                      <h4 className={`font-semibold mb-2 ${section.id === 'reconnecting' ? 'text-white/90' : 'text-gray-800'}`}>Why it helps</h4>
+                      <p className={`text-sm ${section.id === 'reconnecting' ? 'text-white/80' : 'text-gray-700'}`}>{section.why}</p>
                     </div>
                   </div>
                 </div>
