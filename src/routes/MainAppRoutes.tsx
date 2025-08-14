@@ -1,5 +1,6 @@
 import { Route } from "react-router-dom";
 import ProtectedRoute from "@/components/routing/ProtectedRoute";
+import { PageSubscriptionGate } from "@/components/subscription/PageSubscriptionGate";
 import Index from "@/pages/Index";
 import OnboardingIntro from "@/pages/OnboardingIntro";
 import SignupChoice from "@/pages/SignupChoice";
@@ -29,10 +30,34 @@ const MainAppRoutes = () => {
         </ProtectedRoute>
       } />
       
-      {/* Feature pages - accessible to all users, content is gated by subscription */}
-      <Route key="during-conflict" path="/during-conflict" element={<MidFight />} />
-      <Route key="post-conflict" path="/post-conflict" element={<PostConflict />} />
-      <Route key="reconnect" path="/reconnect" element={<Reconnect />} />
+      {/* Feature pages - now protected at page level */}
+      <Route key="during-conflict" path="/during-conflict" element={
+        <PageSubscriptionGate 
+          featureKey="mid_fight_access"
+          pageName="Mid-Fight Tools"
+          pageDescription="Access powerful tools to pause, communicate better, and reconnect during conflicts. Includes the Code Word timer, conversation guides, and healing exercises."
+        >
+          <MidFight />
+        </PageSubscriptionGate>
+      } />
+      <Route key="post-conflict" path="/post-conflict" element={
+        <PageSubscriptionGate 
+          featureKey="post_conflict_access"
+          pageName="Post-Conflict Reflection"
+          pageDescription="Process what happened with guided reflection tools, understand underlying needs, and strengthen your relationship through intentional healing."
+        >
+          <PostConflict />
+        </PageSubscriptionGate>
+      } />
+      <Route key="reconnect" path="/reconnect" element={
+        <PageSubscriptionGate 
+          featureKey="reconnect_access"
+          pageName="Reconnection Tools"
+          pageDescription="Rebuild intimacy and connection with activities designed to bring you closer together and reignite the spark in your relationship."
+        >
+          <Reconnect />
+        </PageSubscriptionGate>
+      } />
       
       {/* Other protected routes that require authentication */}
       <Route key="love-notes" path="/love-notes" element={

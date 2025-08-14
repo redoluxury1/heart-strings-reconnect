@@ -129,11 +129,7 @@ const PauseToolContent = () => {
 };
 
 const PauseTool = () => {
-  return (
-    <PauseToolGate>
-      <PauseToolContent />
-    </PauseToolGate>
-  );
+  return <PauseToolContent />;
 };
 
 export default PauseTool;
