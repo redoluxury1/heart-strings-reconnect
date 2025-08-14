@@ -55,14 +55,14 @@ const AppStoreChecklist: React.FC = () => {
       id: 'privacy-policy',
       title: 'Privacy Policy',
       description: 'Create comprehensive privacy policy',
-      status: 'not-started',
+      status: 'complete',
       category: 'legal'
     },
     {
       id: 'terms-of-service',
       title: 'Terms of Service',
       description: 'Draft terms of service agreement',
-      status: 'not-started',
+      status: 'complete',
       category: 'legal'
     },
     {
