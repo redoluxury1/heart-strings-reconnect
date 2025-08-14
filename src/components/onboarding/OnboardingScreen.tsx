@@ -21,7 +21,7 @@ const OnboardingScreen = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#dbd0e0] via-[#f5f1e8] to-[#e6c7bc] flex flex-col items-center justify-center px-4">
+    <div className="safe-area-screen safe-area-all bg-gradient-to-br from-[#dbd0e0] via-[#f5f1e8] to-[#e6c7bc] flex flex-col items-center justify-center px-4">
       {/* Logo Container with Fade-in Animation */}
       <div className="mb-6 flex flex-col items-center">
         <div className={`mb-4 transition-opacity duration-1000 ${animationComplete ? 'opacity-100' : 'opacity-0'}`}>
