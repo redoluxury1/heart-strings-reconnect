@@ -1,3 +1,4 @@
+
 import React, { useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Download, Camera } from 'lucide-react';
@@ -21,6 +22,8 @@ const DownloadScreenshot: React.FC = () => {
     const { width, height, name } = dimensions[deviceType];
 
     try {
+      console.log(`Starting screenshot capture for ${name}`);
+      
       // Create a temporary container with exact dimensions
       const tempContainer = document.createElement('div');
       tempContainer.style.position = 'fixed';
@@ -30,6 +33,7 @@ const DownloadScreenshot: React.FC = () => {
       tempContainer.style.height = `${height}px`;
       tempContainer.style.backgroundColor = '#F8F2F0';
       tempContainer.style.overflow = 'hidden';
+      tempContainer.style.fontFamily = 'system-ui, -apple-system, sans-serif';
       
       // Clone the paywall component
       const clone = paywallRef.current.cloneNode(true) as HTMLElement;
@@ -37,29 +41,50 @@ const DownloadScreenshot: React.FC = () => {
       clone.style.height = `${height}px`;
       clone.style.transform = 'scale(1)';
       clone.style.transformOrigin = 'top left';
+      clone.style.fontFamily = 'system-ui, -apple-system, sans-serif';
       
       tempContainer.appendChild(clone);
       document.body.appendChild(tempContainer);
 
-      // Capture at exact dimensions
+      console.log('Temporary container created, capturing image...');
+
+      // Use toPng with options to handle CORS issues
       const dataUrl = await htmlToImage.toPng(tempContainer, {
         width,
         height,
         pixelRatio: 1,
         backgroundColor: '#F8F2F0',
         cacheBust: true,
+        useCORS: true,
+        allowTaint: true,
+        skipFonts: true, // Skip web fonts to avoid CORS issues
+        style: {
+          fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+        }
       });
+      
+      console.log('Image captured, cleaning up...');
       
       // Clean up
       document.body.removeChild(tempContainer);
       
+      if (!dataUrl || dataUrl === 'data:,') {
+        throw new Error('Screenshot generation failed - empty data URL');
+      }
+      
       const response = await fetch(dataUrl);
       const blob = await response.blob();
+      
+      if (blob.size === 0) {
+        throw new Error('Screenshot generation failed - empty blob');
+      }
+      
       saveAs(blob, `bridge-paywall-${deviceType}-${width}x${height}.png`);
       
-      console.log(`Screenshot captured: ${width}x${height} for ${name}`);
+      console.log(`Screenshot saved successfully: ${width}x${height} for ${name}, file size: ${blob.size} bytes`);
     } catch (error) {
       console.error('Error capturing screenshot:', error);
+      alert(`Failed to capture screenshot: ${error.message}. Please try again or check the console for more details.`);
     }
   };
 
@@ -67,9 +92,18 @@ const DownloadScreenshot: React.FC = () => {
     <div className="space-y-4">
       <h4 className="text-sm font-medium">App Store Screenshots</h4>
       <div className="border rounded-lg p-4">
-        {/* Hidden paywall for capture */}
-        <div className="hidden">
-          <div ref={paywallRef}>
+        {/* Visible preview */}
+        <div className="mb-4 p-4 bg-gray-50 rounded-lg">
+          <p className="text-sm text-muted-foreground mb-2">Preview:</p>
+          <div 
+            ref={paywallRef}
+            className="transform scale-[0.2] origin-top-left border"
+            style={{ 
+              width: '1290px', 
+              height: '2796px',
+              transformOrigin: 'top left'
+            }}
+          >
             <OnboardingPaywall 
               onContinue={() => {}} 
               onSkip={() => {}}
@@ -115,7 +149,7 @@ const DownloadScreenshot: React.FC = () => {
           </div>
           
           <p className="text-xs text-muted-foreground">
-            These match Apple's exact App Store Connect screenshot requirements.
+            These match Apple's exact App Store Connect screenshot requirements. If you get blank screenshots, try refreshing the page first.
           </p>
         </div>
       </div>
