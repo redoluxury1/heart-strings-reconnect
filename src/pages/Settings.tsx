@@ -1,6 +1,7 @@
 
 import React from "react";
 import AccountSettings from "@/components/settings/AccountSettings";
+import DownloadScreenshot from "@/components/settings/DownloadScreenshot";
 import AppStoreChecklist from "@/components/settings/AppStoreChecklist";
 import AssetGuide from "@/components/settings/AssetGuide";
 const SettingsPage = () => {
@@ -23,6 +24,11 @@ const SettingsPage = () => {
       <div>
         <h3 className="text-lg font-cormorant mb-4">Assets & Templates</h3>
         <AssetGuide />
+      </div>
+
+      <div>
+        <h3 className="text-lg font-cormorant mb-4">App Store Screenshots</h3>
+        <DownloadScreenshot />
       </div>
     </div>
   );
