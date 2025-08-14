@@ -80,7 +80,8 @@ export const SignupForm: React.FC<SignupFormProps> = ({ inviteToken, signupMode 
       if (signupData?.session) {
         toast({
           title: "Account created successfully!",
-          description: "Welcome! You're now signed in and ready to get started."
+          description: "Welcome! You're now signed in and ready to get started.",
+          variant: "default"
         });
         
         // Store partner status for onboarding
