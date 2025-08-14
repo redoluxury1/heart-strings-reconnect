@@ -1,153 +1,123 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { usePageAnalytics } from '@/hooks/useAnalytics';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import ContentContainer from '@/components/common/ContentContainer';
-import { Heart, Pause, MessageSquare, RefreshCw, Archive, Brain, Gamepad2, FileText } from 'lucide-react';
+import { Heart, Pause, MessageSquare, RefreshCw, Archive, Brain, Gamepad2, Clock, Shield, Target } from 'lucide-react';
 
 const Features = () => {
   usePageAnalytics('features_page');
+  const [activeSection, setActiveSection] = useState<string | null>(null);
 
-  const features = [
+  const sections = [
     {
-      icon: <Pause className="h-8 w-8 text-primary" />,
-      title: "Code Word / Time Out Timer",
-      category: "During Conflict",
-      description: "Take a strategic pause when emotions are running high.",
-      benefits: [
-        "Prevents escalation during heated moments",
-        "Gives both partners time to cool down and reflect",
-        "Creates a structured way to resume conversation",
-        "Builds healthy conflict resolution habits"
-      ],
-      howItWorks: "Simply activate the code word or timer when you need space. Both partners get notified, and you can set a specific time to reconnect when you're both ready."
+      id: 'during-conflict',
+      title: 'During Conflict (Mid-Fight)',
+      icon: <Pause className="h-12 w-12 text-white" />,
+      gradient: 'bg-gradient-to-br from-red-500 to-red-600',
+      description: 'Tools to help you navigate heated moments and pause destructive patterns.',
+      when: 'Use when emotions are high, voices are raised, or you feel triggered',
+      how: 'Activate tools immediately when you notice escalation beginning',
+      why: 'Prevents damage to your relationship and creates space for productive resolution',
+      features: [
+        {
+          icon: <Clock className="h-6 w-6" />,
+          title: "Code Word / Time Out Timer",
+          description: "Take a strategic pause when emotions are running high. Set a timer to reconnect when both partners are ready.",
+          benefits: ["Prevents escalation", "Gives time to cool down", "Creates structured reconnection"]
+        },
+        {
+          icon: <MessageSquare className="h-6 w-6" />,
+          title: "Let's Try That Again",
+          description: "Reframe difficult conversations with guided prompts that help you communicate needs instead of complaints.",
+          benefits: ["Reduces defensive responses", "Provides emotional structure", "Teaches effective communication"]
+        },
+        {
+          icon: <Brain className="h-6 w-6" />,
+          title: "What's Really Going On?",
+          description: "Identify the deeper emotions and needs behind the surface argument through guided self-reflection.",
+          benefits: ["Uncovers root causes", "Builds emotional awareness", "Prevents recurring conflicts"]
+        }
+      ]
     },
     {
-      icon: <MessageSquare className="h-8 w-8 text-primary" />,
-      title: "Let's Try That Again",
-      category: "During Conflict",
-      description: "Reframe difficult conversations with guided prompts.",
-      benefits: [
-        "Helps you communicate needs instead of complaints",
-        "Reduces defensive responses from your partner",
-        "Provides structure when emotions are overwhelming",
-        "Teaches effective communication patterns"
-      ],
-      howItWorks: "When a conversation isn't going well, use our prompts to restart with more clarity and compassion. Practice 'I feel' statements and focus on solutions."
+      id: 'post-conflict',
+      title: 'After Conflict (Post-Fight)',
+      icon: <Heart className="h-12 w-12 text-white" />,
+      gradient: 'bg-gradient-to-br from-green-500 to-green-600',
+      description: 'Repair tools to heal, reconnect, and grow stronger after difficult moments.',
+      when: 'Use after arguments to repair and rebuild connection',
+      how: 'Start with accountability, move to understanding, then reconnection',
+      why: 'Transforms conflicts into opportunities for deeper intimacy and trust',
+      features: [
+        {
+          icon: <Shield className="h-6 w-6" />,
+          title: "White Flag Tool",
+          description: "Facilitate genuine apologies and forgiveness with structured repair prompts that rebuild trust.",
+          benefits: ["Creates safe vulnerability", "Facilitates genuine repair", "Strengthens bond after conflict"]
+        },
+        {
+          icon: <Heart className="h-6 w-6" />,
+          title: "Color Healing",
+          description: "Process complex emotions through creative and reflective exercises designed for emotional regulation.",
+          benefits: ["Processes emotions safely", "Reduces lingering resentment", "Promotes emotional wellness"]
+        }
+      ]
     },
     {
-      icon: <Brain className="h-8 w-8 text-primary" />,
-      title: "What's Really Going On?",
-      category: "During Conflict",
-      description: "Identify the deeper emotions and needs behind the surface argument.",
-      benefits: [
-        "Uncovers root causes instead of surface symptoms",
-        "Builds emotional awareness and intelligence",
-        "Helps partners understand each other's perspectives",
-        "Prevents the same fights from recurring"
-      ],
-      howItWorks: "Answer guided questions that help you explore what's really bothering you and what you actually need from your partner."
+      id: 'reconnecting',
+      title: 'Reconnecting',
+      icon: <RefreshCw className="h-12 w-12 text-white" />,
+      gradient: 'bg-gradient-to-br from-blue-500 to-blue-600',
+      description: 'Rebuild intimacy and closeness when you feel distant or disconnected.',
+      when: 'Use when feeling emotionally or physically distant from your partner',
+      how: 'Start small with daily connection, build to deeper intimacy exercises',
+      why: 'Prevents relationship drift and maintains strong emotional and physical bonds',
+      features: [
+        {
+          icon: <Target className="h-6 w-6" />,
+          title: "Reconnection Strategies",
+          description: "Guided exercises and conversation starters to rediscover each other and rebuild your emotional bond.",
+          benefits: ["Reignites connection", "Provides practical steps", "Addresses all types of intimacy"]
+        },
+        {
+          icon: <Heart className="h-6 w-6" />,
+          title: "Love Notes",
+          description: "Send thoughtful messages throughout the day to maintain connection during busy periods.",
+          benefits: ["Maintains daily connection", "Creates positive interactions", "Builds foundation of goodwill"]
+        }
+      ]
     },
     {
-      icon: <Heart className="h-8 w-8 text-primary" />,
-      title: "White Flag Tool",
-      category: "Post-Conflict",
-      description: "Repair and reconnect after difficult moments.",
-      benefits: [
-        "Facilitates genuine apologies and forgiveness",
-        "Helps you take accountability for your part",
-        "Creates a safe space for vulnerability",
-        "Strengthens your bond after conflict"
-      ],
-      howItWorks: "Use structured prompts to craft meaningful repair messages, acknowledge hurt feelings, and rebuild trust together."
-    },
-    {
-      icon: <RefreshCw className="h-8 w-8 text-primary" />,
-      title: "Color Healing",
-      category: "Post-Conflict",
-      description: "Process emotions and restore emotional balance.",
-      benefits: [
-        "Helps you process complex emotions safely",
-        "Provides a creative outlet for healing",
-        "Reduces lingering resentment and hurt",
-        "Promotes emotional regulation and wellness"
-      ],
-      howItWorks: "Engage with colors and reflective exercises designed to help you move through difficult emotions and find peace."
-    },
-    {
-      icon: <MessageSquare className="h-8 w-8 text-primary" />,
-      title: "Reconnection Strategies",
-      category: "Reconnecting",
-      description: "Rebuild intimacy and closeness when you feel distant.",
-      benefits: [
-        "Reignites emotional and physical connection",
-        "Provides practical steps for getting closer",
-        "Addresses different types of intimacy",
-        "Helps couples recover from difficult periods"
-      ],
-      howItWorks: "Follow guided exercises and conversation starters designed to help you rediscover each other and rebuild your bond."
-    },
-    {
-      icon: <Archive className="h-8 w-8 text-primary" />,
-      title: "Reflection Archive",
-      category: "Growth & Learning",
-      description: "Track your relationship progress and patterns over time.",
-      benefits: [
-        "See how far you've come as a couple",
-        "Identify patterns in your conflicts and growth",
-        "Celebrate your wins and progress",
-        "Learn from past experiences"
-      ],
-      howItWorks: "All your conversations, exercises, and progress are saved in a private archive that only you and your partner can access."
-    },
-    {
-      icon: <Heart className="h-8 w-8 text-primary" />,
-      title: "Love Notes",
-      category: "Connection",
-      description: "Send thoughtful messages to strengthen your daily connection.",
-      benefits: [
-        "Maintains connection during busy periods",
-        "Creates positive daily interactions",
-        "Shows appreciation and gratitude",
-        "Builds a foundation of goodwill"
-      ],
-      howItWorks: "Send personalized love notes to your partner throughout the day. Choose from templates or write your own heartfelt messages."
-    },
-    {
-      icon: <Brain className="h-8 w-8 text-primary" />,
-      title: "Communication Analysis",
-      category: "Growth & Learning",
-      description: "Understand your communication patterns and improve them.",
-      benefits: [
-        "Reveals blind spots in how you communicate",
-        "Provides personalized improvement suggestions",
-        "Tracks communication growth over time",
-        "Helps prevent miscommunication"
-      ],
-      howItWorks: "Get insights into your communication style, identify areas for improvement, and receive tailored exercises to enhance your connection."
-    },
-    {
-      icon: <Gamepad2 className="h-8 w-8 text-primary" />,
-      title: "Love Code Quiz",
-      category: "Understanding",
-      description: "Discover your and your partner's unique relationship languages.",
-      benefits: [
-        "Understand how you both express and receive love",
-        "Reduces misunderstandings about intentions",
-        "Helps you show love in ways your partner values",
-        "Creates deeper emotional intimacy"
-      ],
-      howItWorks: "Take comprehensive quizzes to understand each other's love languages, attachment styles, and relationship preferences."
+      id: 'reflection',
+      title: 'Reflection & Growth',
+      icon: <Archive className="h-12 w-12 text-white" />,
+      gradient: 'bg-gradient-to-br from-purple-500 to-purple-600',
+      description: 'Track progress, understand patterns, and grow together over time.',
+      when: 'Use regularly to review progress and during calm moments for insight',
+      how: 'Set aside time weekly or monthly to review and reflect together',
+      why: 'Continuous growth prevents stagnation and celebrates your journey together',
+      features: [
+        {
+          icon: <Archive className="h-6 w-6" />,
+          title: "Reflection Archive",
+          description: "Track your relationship progress and patterns over time in a private, secure space.",
+          benefits: ["See your growth", "Identify patterns", "Celebrate progress"]
+        },
+        {
+          icon: <Brain className="h-6 w-6" />,
+          title: "Communication Analysis",
+          description: "Understand your communication patterns and get personalized suggestions for improvement.",
+          benefits: ["Reveals blind spots", "Provides improvement suggestions", "Tracks growth over time"]
+        },
+        {
+          icon: <Gamepad2 className="h-6 w-6" />,
+          title: "Love Code Quiz",
+          description: "Discover your and your partner's unique relationship languages and preferences.",
+          benefits: ["Understand love languages", "Reduces misunderstandings", "Creates deeper intimacy"]
+        }
+      ]
     }
-  ];
-
-  const categories = [
-    "During Conflict",
-    "Post-Conflict", 
-    "Reconnecting",
-    "Growth & Learning",
-    "Connection",
-    "Understanding"
   ];
 
   return (
@@ -157,79 +127,135 @@ const Features = () => {
       <main className="flex-1 py-12">
         <ContentContainer>
           {/* Header */}
-          <div className="text-center mb-16">
+          <div className="text-center mb-16 animate-fade-in">
             <h1 className="text-4xl md:text-5xl font-cormorant font-bold text-midnight-indigo mb-6">
-              Bridge Features Guide
+              Your Relationship Journey
             </h1>
             <p className="text-xl text-midnight-indigo/80 max-w-3xl mx-auto leading-relaxed">
-              Discover how each feature can help strengthen your relationship, improve communication, 
-              and navigate challenges together.
+              Discover the four essential stages of relationship growth and the tools to navigate each one successfully.
             </p>
           </div>
 
-          {/* Features by Category */}
-          {categories.map((category) => {
-            const categoryFeatures = features.filter(feature => feature.category === category);
-            if (categoryFeatures.length === 0) return null;
+          {/* Section Cards */}
+          <div className="grid gap-8 mb-16">
+            {sections.map((section, index) => (
+              <div 
+                key={section.id} 
+                className={`relative overflow-hidden rounded-3xl shadow-xl transition-all duration-500 hover:shadow-2xl hover-scale ${
+                  activeSection === section.id ? 'scale-105' : ''
+                }`}
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                {/* Header with gradient background */}
+                <div className={`${section.gradient} p-8 text-white relative`}>
+                  <div className="flex items-center gap-6 mb-6">
+                    <div className="p-4 bg-white/20 rounded-2xl backdrop-blur-sm">
+                      {section.icon}
+                    </div>
+                    <div>
+                      <h2 className="text-3xl font-cormorant font-bold mb-2">
+                        {section.title}
+                      </h2>
+                      <p className="text-white/90 text-lg">
+                        {section.description}
+                      </p>
+                    </div>
+                  </div>
 
-            return (
-              <div key={category} className="mb-16">
-                <h2 className="text-3xl font-cormorant font-semibold text-midnight-indigo mb-8 text-center">
-                  {category}
-                </h2>
-                
-                <div className="grid gap-8 md:gap-12">
-                  {categoryFeatures.map((feature, index) => (
-                    <div key={index} className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
-                      <div className="flex items-start gap-6">
-                        <div className="flex-shrink-0">
+                  {/* When, How, Why */}
+                  <div className="grid md:grid-cols-3 gap-6">
+                    <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm">
+                      <h4 className="font-semibold mb-2 text-white/90">When to use</h4>
+                      <p className="text-sm text-white/80">{section.when}</p>
+                    </div>
+                    <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm">
+                      <h4 className="font-semibold mb-2 text-white/90">How it works</h4>
+                      <p className="text-sm text-white/80">{section.how}</p>
+                    </div>
+                    <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm">
+                      <h4 className="font-semibold mb-2 text-white/90">Why it helps</h4>
+                      <p className="text-sm text-white/80">{section.why}</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Features List */}
+                <div className="bg-white p-8">
+                  <h3 className="text-2xl font-cormorant font-semibold text-midnight-indigo mb-6">
+                    Available Tools
+                  </h3>
+                  <div className="grid gap-6">
+                    {section.features.map((feature, idx) => (
+                      <div 
+                        key={idx} 
+                        className="flex gap-4 p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors"
+                      >
+                        <div className="flex-shrink-0 p-2 bg-primary/10 rounded-lg text-primary">
                           {feature.icon}
                         </div>
-                        
                         <div className="flex-1">
-                          <h3 className="text-2xl font-cormorant font-semibold text-midnight-indigo mb-3">
+                          <h4 className="font-semibold text-midnight-indigo mb-2">
                             {feature.title}
-                          </h3>
-                          
-                          <p className="text-midnight-indigo/80 text-lg mb-6 leading-relaxed">
+                          </h4>
+                          <p className="text-midnight-indigo/80 mb-3 leading-relaxed">
                             {feature.description}
                           </p>
-                          
-                          <div className="grid md:grid-cols-2 gap-6">
-                            <div>
-                              <h4 className="text-lg font-semibold text-midnight-indigo mb-3">
-                                Why it helps:
-                              </h4>
-                              <ul className="space-y-2">
-                                {feature.benefits.map((benefit, idx) => (
-                                  <li key={idx} className="flex items-start gap-2 text-midnight-indigo/80">
-                                    <Heart className="h-4 w-4 text-primary mt-1 flex-shrink-0" fill="currentColor" />
-                                    <span>{benefit}</span>
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                            
-                            <div>
-                              <h4 className="text-lg font-semibold text-midnight-indigo mb-3">
-                                How it works:
-                              </h4>
-                              <p className="text-midnight-indigo/80 leading-relaxed">
-                                {feature.howItWorks}
-                              </p>
-                            </div>
+                          <div className="flex flex-wrap gap-2">
+                            {feature.benefits.map((benefit, benefitIdx) => (
+                              <span 
+                                key={benefitIdx}
+                                className="text-xs bg-primary/10 text-primary px-3 py-1 rounded-full"
+                              >
+                                {benefit}
+                              </span>
+                            ))}
                           </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
+
+                {/* Expandable content toggle */}
+                <button
+                  onClick={() => setActiveSection(activeSection === section.id ? null : section.id)}
+                  className="absolute top-4 right-4 bg-white/20 hover:bg-white/30 text-white p-2 rounded-full backdrop-blur-sm transition-all"
+                >
+                  <RefreshCw className={`h-5 w-5 transition-transform ${activeSection === section.id ? 'rotate-180' : ''}`} />
+                </button>
               </div>
-            );
-          })}
+            ))}
+          </div>
+
+          {/* Relationship Journey Flow */}
+          <div className="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 mb-16">
+            <h2 className="text-3xl font-cormorant font-semibold text-midnight-indigo mb-8 text-center">
+              Your Relationship Growth Journey
+            </h2>
+            <div className="grid md:grid-cols-4 gap-6">
+              {sections.map((section, index) => (
+                <div key={section.id} className="text-center relative">
+                  <div className={`${section.gradient} w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg`}>
+                    <div className="scale-75">
+                      {section.icon}
+                    </div>
+                  </div>
+                  <h3 className="font-semibold text-midnight-indigo mb-2">
+                    {section.title.split('(')[0].trim()}
+                  </h3>
+                  <p className="text-sm text-midnight-indigo/70">
+                    {section.description}
+                  </p>
+                  {index < sections.length - 1 && (
+                    <div className="hidden md:block absolute top-8 -right-3 w-6 h-0.5 bg-gray-300"></div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
 
           {/* Call to Action */}
-          <div className="text-center mt-16 p-8 bg-primary/5 rounded-2xl border border-primary/10">
+          <div className="text-center p-8 bg-gradient-to-r from-primary/10 to-primary/5 rounded-3xl border border-primary/20">
             <h2 className="text-3xl font-cormorant font-semibold text-midnight-indigo mb-4">
               Ready to strengthen your relationship?
             </h2>
@@ -239,13 +265,13 @@ const Features = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a 
                 href="/intro" 
-                className="bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-lg font-medium transition-colors"
+                className="bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-xl font-medium transition-all duration-200 hover:shadow-lg hover-scale"
               >
                 Start Your Journey
               </a>
               <a 
                 href="/signup-choice" 
-                className="border border-primary text-primary hover:bg-primary/5 px-8 py-3 rounded-lg font-medium transition-colors"
+                className="border border-primary text-primary hover:bg-primary/5 px-8 py-3 rounded-xl font-medium transition-all duration-200 hover:shadow-md"
               >
                 Create Account
               </a>

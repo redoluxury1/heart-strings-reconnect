@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Book, Settings, Brain } from 'lucide-react';
+import { Book, Settings, Brain, Pause, Heart, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { User } from '@supabase/supabase-js';
 import PartnerPresenceIndicator from '@/components/partner/PartnerPresenceIndicator';
@@ -41,23 +41,26 @@ const NavbarMobileMenu: React.FC<NavbarMobileMenuProps> = ({
             {/* Navigation Links */}
             <Link
               to="/during-conflict"
-              className="text-white hover:bg-white/10 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+              className="text-white hover:bg-white/10 hover:text-white flex items-center px-3 py-2 rounded-md text-base font-medium"
               onClick={onClose}
             >
+              <Pause className="h-4 w-4 mr-2" />
               Mid-Fight
             </Link>
             <Link
               to="/post-conflict"
-              className="text-white hover:bg-white/10 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+              className="text-white hover:bg-white/10 hover:text-white flex items-center px-3 py-2 rounded-md text-base font-medium"
               onClick={onClose}
             >
+              <Heart className="h-4 w-4 mr-2" />
               Post-Fight
             </Link>
             <Link
               to="/reconnect"
-              className="text-white hover:bg-white/10 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+              className="text-white hover:bg-white/10 hover:text-white flex items-center px-3 py-2 rounded-md text-base font-medium"
               onClick={onClose}
             >
+              <RefreshCw className="h-4 w-4 mr-2" />
               Reconnecting
             </Link>
             <Link
