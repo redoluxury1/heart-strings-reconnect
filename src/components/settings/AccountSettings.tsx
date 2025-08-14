@@ -73,50 +73,9 @@ const AccountSettings: React.FC = () => {
     }
   };
 
-  // Debug mode toggle for testing - now always visible for easier access
-  const toggleDebugMode = () => {
-    const isCurrentlyEnabled = localStorage.getItem('bypassSubscription') === 'true';
-    if (isCurrentlyEnabled) {
-      localStorage.removeItem('bypassSubscription');
-      toast({
-        title: "Debug Mode Disabled",
-        description: "Subscription gates are now active.",
-      });
-    } else {
-      localStorage.setItem('bypassSubscription', 'true');
-      toast({
-        title: "Debug Mode Enabled",
-        description: "All subscription gates are now bypassed.",
-      });
-    }
-    // Force a page refresh to apply the changes
-    window.location.reload();
-  };
-
-  const isDebugMode = localStorage.getItem('bypassSubscription') === 'true';
 
   return (
     <div>
-      {/* Debug Mode Toggle - now always visible */}
-      <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-        <h3 className="text-sm font-medium text-yellow-800 mb-2">Debug Mode</h3>
-        <p className="text-xs text-yellow-700 mb-3">
-          Toggle subscription bypass for testing purposes
-        </p>
-        <Button
-          onClick={toggleDebugMode}
-          variant={isDebugMode ? "destructive" : "outline"}
-          size="sm"
-        >
-          {isDebugMode ? "Disable Debug Mode" : "Enable Debug Mode"}
-        </Button>
-        {isDebugMode && (
-          <p className="text-xs text-yellow-600 mt-2">
-            🔓 Subscription gates are currently bypassed
-          </p>
-        )}
-      </div>
-
       <Button variant="destructive" className="mt-8" onClick={() => setOpen(true)}>
         Delete My Account
       </Button>
