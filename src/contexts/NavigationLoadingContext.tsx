@@ -32,12 +32,13 @@ export const NavigationLoadingProvider: React.FC<NavigationLoadingProviderProps>
       setIsLoading(true);
       setPreviousLocation(location.pathname);
       
-      // Hide loading after a short delay to allow page to render
-      const timer = setTimeout(() => {
-        setIsLoading(false);
-      }, 600); // Show loading for 600ms minimum
-      
-      return () => clearTimeout(timer);
+      // Hide loading immediately after React has had a chance to render
+      // Only use requestAnimationFrame to ensure the new page has rendered
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setIsLoading(false);
+        });
+      });
     }
   }, [location.pathname, previousLocation]);
 
