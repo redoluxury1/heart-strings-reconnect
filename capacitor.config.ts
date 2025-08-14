@@ -2,7 +2,7 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.bridgeforcouples.app',
+  appId: 'com.bfc.bridge',
   appName: 'Bridge For Couples',
   webDir: 'dist',
   plugins: {
