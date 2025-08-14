@@ -7,18 +7,19 @@ const config: CapacitorConfig = {
   webDir: 'dist',
   plugins: {
     SplashScreen: {
-      launchShowDuration: 3000,
-      backgroundColor: "#2e4059",
+      launchShowDuration: 2000,
+      backgroundColor: "#faf8f3", // Soft cream background to match your brand
       showSpinner: false,
       androidSpinnerStyle: 'large',
       iosSpinnerStyle: 'small',
-      spinnerColor: '#ffffff',
+      spinnerColor: '#8B4B8C', // Primary brand color
       splashFullScreen: true,
-      splashImmersive: true
+      splashImmersive: true,
+      androidSplashResourceName: 'splash'
     },
     StatusBar: {
-      style: 'dark',
-      backgroundColor: '#2e4059'
+      style: 'light',
+      backgroundColor: '#faf8f3'
     },
     Keyboard: {
       resize: 'body',
@@ -27,10 +28,10 @@ const config: CapacitorConfig = {
   },
   ios: {
     contentInset: 'automatic',
-    backgroundColor: '#2e4059'
+    backgroundColor: '#faf8f3'
   },
   android: {
-    backgroundColor: '#2e4059'
+    backgroundColor: '#faf8f3'
   }
 };
 
