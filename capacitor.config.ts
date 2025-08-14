@@ -8,14 +8,16 @@ const config: CapacitorConfig = {
   plugins: {
     SplashScreen: {
       launchShowDuration: 2000,
-      backgroundColor: "#f5f0f0", // Background color matching your image
+      backgroundColor: "#f5f0f0",
       showSpinner: false,
       androidSpinnerStyle: 'large',
       iosSpinnerStyle: 'small',
       spinnerColor: '#8B4B8C',
       splashFullScreen: true,
       splashImmersive: true,
-      androidSplashResourceName: 'splash'
+      androidSplashResourceName: 'splash',
+      // Use your uploaded image directly
+      splashImageSrc: '/lovable-uploads/d1b97295-f2af-4ad6-aa8d-78361478bd23.png'
     },
     StatusBar: {
       style: 'light',
