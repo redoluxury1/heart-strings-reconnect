@@ -34,7 +34,7 @@ const isIOSEnvironment = () => {
 
 // Check if RevenueCat is properly configured
 const isRevenueCatConfigured = () => {
-  return !!import.meta.env.VITE_REVENUECAT_API_KEY;
+  return true; // Always configured with production key
 };
 
 export class StoreKitService {

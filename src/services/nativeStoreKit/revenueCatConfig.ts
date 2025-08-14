@@ -8,10 +8,8 @@ export class RevenueCatConfig {
     if (this.isInitialized) return;
 
     try {
-      const apiKey = process.env.VITE_REVENUECAT_API_KEY;
-      if (!apiKey) {
-        throw new Error('RevenueCat API key not configured');
-      }
+      // Use production RevenueCat public SDK key
+      const apiKey = 'appl_OnCrqXNltwcZinVNJnxEMJuiHOa';
       
       await Purchases.configure({ apiKey });
       console.log('RevenueCat initialized successfully');
