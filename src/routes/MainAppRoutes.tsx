@@ -17,11 +17,13 @@ import PersonalityQuiz from "@/pages/PersonalityQuiz";
 import CommunicationAnalysis from "@/pages/CommunicationAnalysis";
 import NotFound from "@/pages/NotFound";
 import SettingsPage from "@/pages/Settings";
+import Features from "@/pages/Features";
 
 const MainAppRoutes = () => {
   return (
     <>
       <Route key="index" path="/" element={<Index />} />
+      <Route key="features" path="/features" element={<Features />} />
       <Route key="intro" path="/intro" element={<OnboardingIntro />} />
       <Route key="signup-choice" path="/signup-choice" element={<SignupChoice />} />
       <Route key="onboarding" path="/onboarding" element={

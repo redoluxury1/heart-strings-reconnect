@@ -41,6 +41,19 @@ const HomeLanding = () => {
         </div>
       </div>
 
+      {/* Features Link */}
+      <div className="mt-8 pt-6 border-t border-navy-800/10">
+        <p className="text-navy-800/70 mb-4">
+          Want to learn more about how Bridge can help your relationship?
+        </p>
+        <a 
+          href="/features" 
+          className="inline-flex items-center px-6 py-3 bg-primary/10 hover:bg-primary/20 text-primary border border-primary/20 rounded-lg font-medium transition-all duration-200 hover:shadow-md"
+        >
+          Explore All Features
+        </a>
+      </div>
+      
       {/* Share Menu Dialog */}
       <Dialog open={isShareOpen} onOpenChange={setIsShareOpen}>
         <DialogContent className="sm:max-w-md mx-4">

@@ -27,6 +27,17 @@ const NavbarMobileMenu: React.FC<NavbarMobileMenuProps> = ({
   return (
     <div className="lg:hidden">
       <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-navy-800">
+        {/* Features link - available to everyone */}
+        <Link
+          to="/features"
+          className="text-white hover:bg-white/10 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+          onClick={onClose}
+        >
+          Features
+        </Link>
+        
+        {user ? (
+          <>
             {/* Navigation Links */}
             <Link
               to="/during-conflict"
@@ -103,6 +114,26 @@ const NavbarMobileMenu: React.FC<NavbarMobileMenuProps> = ({
                 </Button>
               </div>
             </div>
+          </>
+        ) : (
+          <>
+            {/* Non-authenticated user links */}
+            <Link
+              to="/intro"
+              className="text-white hover:bg-white/10 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+              onClick={onClose}
+            >
+              Get Started
+            </Link>
+            <Link
+              to="/signup-choice"
+              className="text-white hover:bg-white/10 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+              onClick={onClose}
+            >
+              Sign Up
+            </Link>
+          </>
+        )}
       </div>
     </div>
   );

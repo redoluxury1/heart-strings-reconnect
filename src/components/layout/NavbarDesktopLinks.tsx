@@ -14,19 +14,24 @@ interface NavbarDesktopLinksProps {
 }
 
 const NavbarDesktopLinks: React.FC<NavbarDesktopLinksProps> = ({ user }) => {
-  if (!user) {
-    return null;
-  }
-
   return (
     <div className="hidden lg:flex items-center">
       <NavigationMenu>
         <NavigationMenuList>
+          {/* Features link - available to everyone */}
           <NavigationMenuItem>
-            <Link to="/during-conflict" className="text-sm font-medium text-white hover:text-soft-cream transition-colors px-3 py-2 whitespace-nowrap">
-              Mid-Fight
+            <Link to="/features" className="text-sm font-medium text-white hover:text-soft-cream transition-colors px-3 py-2">
+              Features
             </Link>
           </NavigationMenuItem>
+          
+          {user ? (
+            <>
+              <NavigationMenuItem>
+                <Link to="/during-conflict" className="text-sm font-medium text-white hover:text-soft-cream transition-colors px-3 py-2 whitespace-nowrap">
+                  Mid-Fight
+                </Link>
+              </NavigationMenuItem>
           <NavigationMenuItem>
             <Link to="/post-conflict" className="text-sm font-medium text-white hover:text-soft-cream transition-colors px-3 py-2 whitespace-nowrap">
               Post-Fight
@@ -51,7 +56,22 @@ const NavbarDesktopLinks: React.FC<NavbarDesktopLinksProps> = ({ user }) => {
             <Link to="/settings" className="text-sm font-medium text-white hover:text-soft-cream transition-colors px-3 py-2">
               Settings
             </Link>
-          </NavigationMenuItem>
+              </NavigationMenuItem>
+            </>
+          ) : (
+            <>
+              <NavigationMenuItem>
+                <Link to="/intro" className="text-sm font-medium text-white hover:text-soft-cream transition-colors px-3 py-2">
+                  Get Started
+                </Link>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link to="/signup-choice" className="text-sm font-medium text-white hover:text-soft-cream transition-colors px-3 py-2">
+                  Sign Up
+                </Link>
+              </NavigationMenuItem>
+            </>
+          )}
         </NavigationMenuList>
       </NavigationMenu>
     </div>
