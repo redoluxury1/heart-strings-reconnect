@@ -8,11 +8,11 @@ const config: CapacitorConfig = {
   plugins: {
     SplashScreen: {
       launchShowDuration: 2000,
-      backgroundColor: "#faf8f3", // Soft cream background to match your brand
+      backgroundColor: "#f5f0f0", // Background color matching your image
       showSpinner: false,
       androidSpinnerStyle: 'large',
       iosSpinnerStyle: 'small',
-      spinnerColor: '#8B4B8C', // Primary brand color
+      spinnerColor: '#8B4B8C',
       splashFullScreen: true,
       splashImmersive: true,
       androidSplashResourceName: 'splash'
