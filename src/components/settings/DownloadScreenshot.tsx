@@ -55,8 +55,6 @@ const DownloadScreenshot: React.FC = () => {
         pixelRatio: 1,
         backgroundColor: '#F8F2F0',
         cacheBust: true,
-        useCORS: true,
-        allowTaint: true,
         skipFonts: true, // Skip web fonts to avoid CORS issues
         style: {
           fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
