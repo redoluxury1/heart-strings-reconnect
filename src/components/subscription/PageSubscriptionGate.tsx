@@ -74,8 +74,9 @@ export const PageSubscriptionGate: React.FC<PageSubscriptionGateProps> = ({
                   {pageDescription}
                 </p>
                 <div className="bg-primary/5 rounded-lg p-4 border border-primary/10">
-                  <p className="text-sm text-primary font-medium">
-                    ✨ This feature is part of Bridge For Couples Premium
+                  <p className="text-sm text-primary font-medium flex items-center gap-2">
+                    <Heart className="h-4 w-4" fill="currentColor" />
+                    This feature is part of Bridge For Couples Premium
                   </p>
                 </div>
               </div>
