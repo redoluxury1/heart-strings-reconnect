@@ -20,6 +20,7 @@ import SettingsPage from "@/pages/Settings";
 import Features from "@/pages/Features";
 
 const MainAppRoutes = () => {
+  console.log('MainAppRoutes is being called');
   return (
     <>
       <Route key="index" path="/" element={<Index />} />
