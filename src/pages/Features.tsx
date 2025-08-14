@@ -69,7 +69,7 @@ const Features = () => {
       id: 'reconnecting',
       title: 'Reconnecting',
       icon: <RefreshCw className="h-12 w-12 text-white" />,
-      gradient: 'bg-gradient-to-br from-purple-200 to-purple-300',
+      gradient: 'bg-gradient-to-br from-purple-400 to-purple-500',
       description: 'Rebuild intimacy and closeness when you feel distant or disconnected.',
       when: 'Use when feeling emotionally or physically distant from your partner',
       how: 'Start small with daily connection, build to deeper intimacy exercises',
