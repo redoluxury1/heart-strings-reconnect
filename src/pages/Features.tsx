@@ -191,7 +191,7 @@ const Features = () => {
                         key={idx} 
                         className="flex gap-4 p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors"
                       >
-                        <div className="flex-shrink-0 p-2 bg-primary/10 rounded-lg text-primary">
+                        <div className="flex-shrink-0 p-2 text-primary">
                           {feature.icon}
                         </div>
                         <div className="flex-1">
