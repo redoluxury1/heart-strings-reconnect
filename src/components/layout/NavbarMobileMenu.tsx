@@ -122,13 +122,6 @@ const NavbarMobileMenu: React.FC<NavbarMobileMenuProps> = ({
           <>
             {/* Non-authenticated user links */}
             <Link
-              to="/intro"
-              className="text-white hover:bg-white/10 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-              onClick={onClose}
-            >
-              Get Started
-            </Link>
-            <Link
               to="/signup-choice"
               className="text-white hover:bg-white/10 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
               onClick={onClose}
