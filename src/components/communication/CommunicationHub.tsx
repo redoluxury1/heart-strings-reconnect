@@ -51,7 +51,7 @@ export const CommunicationHub: React.FC = () => {
               <Card className="p-6">
                 <div className="flex items-center space-x-3 mb-4">
                   <Shield className="h-6 w-6 text-primary" />
-                  <h3 className="text-xl font-semibold text-foreground">Four Horsemen Detector</h3>
+                  <h3 className="text-xl font-semibold text-foreground">Communication Pitfalls Detector</h3>
                 </div>
                 <p className="text-muted-foreground mb-4">
                   Identify and address the four communication patterns that predict relationship failure:
@@ -70,7 +70,7 @@ export const CommunicationHub: React.FC = () => {
               <Card className="p-6">
                 <div className="flex items-center space-x-3 mb-4">
                   <Heart className="h-6 w-6 text-primary" />
-                  <h3 className="text-xl font-semibold text-foreground">Repair Attempts Library</h3>
+                  <h3 className="text-xl font-semibold text-foreground">Healing Phrases Library</h3>
                 </div>
                 <p className="text-muted-foreground mb-4">
                   Access research-backed phrases to repair conversations and maintain the critical 5:1 positive-to-negative ratio.
