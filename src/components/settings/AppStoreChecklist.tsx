@@ -83,7 +83,7 @@ const AppStoreChecklist: React.FC = () => {
       id: 'app-store-products',
       title: 'App Store Connect Products',
       description: 'Set up subscription products in App Store Connect',
-      status: 'not-started',
+      status: 'complete',
       category: 'subscription'
     },
     {
