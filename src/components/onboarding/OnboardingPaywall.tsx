@@ -146,6 +146,17 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
           </div>
         </div>
 
+        {/* Maybe Later Button */}
+        <div className="text-center mb-4">
+          <Button
+            onClick={onSkip}
+            variant="ghost"
+            className="text-[#2e4059]/60 hover:text-[#2e4059] text-sm underline-offset-4 hover:underline"
+          >
+            Maybe Later
+          </Button>
+        </div>
+
         {/* Additional Info */}
         <div className="text-center space-y-3">
           <p className="text-xs text-[#1a2332]">
