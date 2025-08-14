@@ -93,7 +93,7 @@ const Features = () => {
       id: 'reflection',
       title: 'Reflection & Growth',
       icon: <Archive className="h-12 w-12 text-white" />,
-      gradient: 'bg-gradient-to-br from-emerald-200 to-emerald-300',
+      gradient: 'bg-gradient-to-br from-stone-300 to-green-200',
       description: 'Track progress, understand patterns, and grow together over time.',
       when: 'Use regularly to review progress and during calm moments for insight',
       how: 'Set aside time weekly or monthly to review and reflect together',
