@@ -11,9 +11,10 @@ export class ProductService {
       const offerings = await Purchases.getOfferings();
       const products: NativeStoreKitProduct[] = [];
       
-      // Extract products from all offerings
-      Object.values(offerings.all).forEach((offering: PurchasesOffering) => {
-        offering.availablePackages.forEach((pkg: PurchasesPackage) => {
+      // Get the default offering
+      const defaultOffering = offerings.current || offerings.all['default'];
+      if (defaultOffering) {
+        defaultOffering.availablePackages.forEach((pkg: PurchasesPackage) => {
           if (productIds.includes(pkg.product.identifier)) {
             products.push({
               productId: pkg.product.identifier,
@@ -24,7 +25,7 @@ export class ProductService {
             });
           }
         });
-      });
+      }
       
       return products;
     } catch (error) {
@@ -35,17 +36,17 @@ export class ProductService {
 
   static async findPackageByProductId(productId: string): Promise<PurchasesPackage | null> {
     const offerings = await Purchases.getOfferings();
-    let packageToPurchase: PurchasesPackage | null = null;
     
-    // Find the package with the matching product ID
-    Object.values(offerings.all).forEach((offering: PurchasesOffering) => {
-      offering.availablePackages.forEach((pkg: PurchasesPackage) => {
+    // Get the default offering first
+    const defaultOffering = offerings.current || offerings.all['default'];
+    if (defaultOffering) {
+      for (const pkg of defaultOffering.availablePackages) {
         if (pkg.product.identifier === productId) {
-          packageToPurchase = pkg;
+          return pkg;
         }
-      });
-    });
+      }
+    }
     
-    return packageToPurchase;
+    return null;
   }
 }

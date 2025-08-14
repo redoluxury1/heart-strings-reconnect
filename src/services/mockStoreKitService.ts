@@ -39,14 +39,33 @@ export class MockStoreKitService {
   async getProducts(productIds: string[]): Promise<MockStoreKitProduct[]> {
     await this.initialize();
     
-    // Return mock products for development
-    return productIds.map(productId => ({
-      productId,
-      price: productId.includes('yearly') ? '$59.99' : '$9.99',
-      currency: 'USD',
-      title: productId.includes('yearly') ? 'Premium Yearly' : 'Premium Monthly',
-      description: 'Mock subscription for development'
-    }));
+    // Return mock products for development with actual product IDs
+    return productIds.map(productId => {
+      if (productId === 'com.bfc.bridge.yearly') {
+        return {
+          productId,
+          price: '$59.99',
+          currency: 'USD',
+          title: 'Premium Yearly',
+          description: 'Mock yearly subscription for development'
+        };
+      } else if (productId === 'com.bfc.bridge.monthly') {
+        return {
+          productId,
+          price: '$9.99',
+          currency: 'USD',
+          title: 'Premium Monthly',
+          description: 'Mock monthly subscription for development'
+        };
+      }
+      return {
+        productId,
+        price: '$9.99',
+        currency: 'USD',
+        title: 'Premium',
+        description: 'Mock subscription for development'
+      };
+    });
   }
 
   async purchaseProduct(productId: string): Promise<MockPurchaseTransaction> {
