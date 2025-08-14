@@ -48,7 +48,7 @@ const AppStoreChecklist: React.FC = () => {
       id: 'signing',
       title: 'Code Signing',
       description: 'Set up Apple Developer account and certificates',
-      status: 'not-started',
+      status: 'complete',
       category: 'config'
     },
     {
