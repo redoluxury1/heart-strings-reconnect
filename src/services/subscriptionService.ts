@@ -2,15 +2,16 @@
 import { Subscription, SubscriptionProduct } from '@/types/subscription';
 import { supabase } from '@/integrations/supabase/client';
 import { StoreKitService, PurchaseTransaction } from './storeKitService';
+import { EntitlementService } from './nativeStoreKit/entitlementService';
 
 // Define feature keys for different sections
 export const FEATURE_KEYS = {
-  MID_FIGHT_ACCESS: 'mid_fight_access',
-  POST_CONFLICT_ACCESS: 'post_conflict_access',
-  RECONNECT_ACCESS: 'reconnect_access',
-  LOVE_NOTES_ACCESS: 'love_notes_access',
-  ARCHIVE_ACCESS: 'archive_access',
-  QUIZ_ACCESS: 'quiz_access'
+  MID_FIGHT_ACCESS: 'entl51d1c435c2',
+  POST_CONFLICT_ACCESS: 'entl51d1c435c2', 
+  RECONNECT_ACCESS: 'entl51d1c435c2',
+  LOVE_NOTES_ACCESS: 'entl2a85cac069',
+  ARCHIVE_ACCESS: 'entl2a85cac069',
+  QUIZ_ACCESS: 'entl2a85cac069'
 } as const;
 
 // Debug mode helper function
@@ -79,23 +80,34 @@ export class SubscriptionService {
       return true;
     }
     
-    const hasActiveSubscription = await this.hasActiveSubscription(userId);
-    
-    if (!hasActiveSubscription) {
+    try {
+      // For native iOS, check RevenueCat entitlements directly
+      if (this.storeKit.getCurrentEnvironment() === 'ios') {
+        return await EntitlementService.hasEntitlement(featureKey);
+      }
+      
+      // For web/mock environment, fall back to subscription check
+      const hasActiveSubscription = await this.hasActiveSubscription(userId);
+      
+      if (!hasActiveSubscription) {
+        return false;
+      }
+      
+      // All premium features are included in any active subscription
+      const premiumFeatures = [
+        FEATURE_KEYS.MID_FIGHT_ACCESS,
+        FEATURE_KEYS.POST_CONFLICT_ACCESS,
+        FEATURE_KEYS.RECONNECT_ACCESS,
+        FEATURE_KEYS.LOVE_NOTES_ACCESS,
+        FEATURE_KEYS.ARCHIVE_ACCESS,
+        FEATURE_KEYS.QUIZ_ACCESS
+      ];
+      
+      return premiumFeatures.includes(featureKey as any);
+    } catch (error) {
+      console.error('Error checking feature access:', error);
       return false;
     }
-    
-    // All premium features are included in any active subscription
-    const premiumFeatures = [
-      FEATURE_KEYS.MID_FIGHT_ACCESS,
-      FEATURE_KEYS.POST_CONFLICT_ACCESS,
-      FEATURE_KEYS.RECONNECT_ACCESS,
-      FEATURE_KEYS.LOVE_NOTES_ACCESS,
-      FEATURE_KEYS.ARCHIVE_ACCESS,
-      FEATURE_KEYS.QUIZ_ACCESS
-    ];
-    
-    return premiumFeatures.includes(featureKey as any);
   }
 
   // Get user's current subscription
