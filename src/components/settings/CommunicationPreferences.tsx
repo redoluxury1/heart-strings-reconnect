@@ -121,25 +121,25 @@ const CommunicationPreferences: React.FC = () => {
           <div>
             <Label htmlFor="loveCode" className="flex items-center">
               <Heart className="h-4 w-4 mr-1" />
-              Love Language
+              Love Code
             </Label>
             <Select
               value={preferences.love_code}
               onValueChange={(value) => setPreferences(prev => ({ ...prev, love_code: value }))}
             >
               <SelectTrigger>
-                <SelectValue placeholder="Select your primary love language" />
+                <SelectValue placeholder="Select your primary love code" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="words_of_affirmation">Words of Affirmation</SelectItem>
-                <SelectItem value="physical_touch">Physical Touch</SelectItem>
-                <SelectItem value="quality_time">Quality Time</SelectItem>
-                <SelectItem value="acts_of_service">Acts of Service</SelectItem>
-                <SelectItem value="receiving_gifts">Receiving Gifts</SelectItem>
+                <SelectItem value="affirming_words">Affirming Words</SelectItem>
+                <SelectItem value="physical_connection">Physical Connection</SelectItem>
+                <SelectItem value="focused_attention">Focused Attention</SelectItem>
+                <SelectItem value="supportive_acts">Supportive Acts</SelectItem>
+                <SelectItem value="thoughtful_gestures">Thoughtful Gestures</SelectItem>
               </SelectContent>
             </Select>
             <p className="text-sm text-gray-600 mt-1">
-              How you prefer to give and receive love
+              How you prefer to express and receive love
             </p>
           </div>
 
