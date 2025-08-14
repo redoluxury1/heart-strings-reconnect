@@ -217,13 +217,6 @@ const Features = () => {
                   </div>
                 </div>
 
-                {/* Expandable content toggle */}
-                <button
-                  onClick={() => setActiveSection(activeSection === section.id ? null : section.id)}
-                  className="absolute top-4 right-4 bg-white/20 hover:bg-white/30 text-white p-2 rounded-full backdrop-blur-sm transition-all"
-                >
-                  <RefreshCw className={`h-5 w-5 transition-transform ${activeSection === section.id ? 'rotate-180' : ''}`} />
-                </button>
               </div>
             ))}
           </div>
