@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { getDailyQuote } from '../../data/hero-quotes';
 import { 
   Dialog,
@@ -46,12 +47,12 @@ const HomeLanding = () => {
         <p className="text-navy-800/70 mb-4">
           Want to learn more about how Bridge can help your relationship?
         </p>
-        <a 
-          href="/features" 
+        <Link 
+          to="/features" 
           className="inline-flex items-center px-6 py-3 bg-primary/10 hover:bg-primary/20 text-primary border border-primary/20 rounded-lg font-medium transition-all duration-200 hover:shadow-md"
         >
           Explore All Features
-        </a>
+        </Link>
       </div>
       
       {/* Share Menu Dialog */}
