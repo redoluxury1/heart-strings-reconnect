@@ -76,7 +76,7 @@ const AppStoreChecklist: React.FC = () => {
       id: 'storekit-integration',
       title: 'Real StoreKit Integration',
       description: 'Replace mock service with actual iOS StoreKit',
-      status: 'not-started',
+      status: 'complete',
       category: 'subscription'
     },
     {
