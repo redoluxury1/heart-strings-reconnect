@@ -20,19 +20,9 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
   const [loading, setLoading] = useState(false);
 
   const handleSubscribe = async (productId: string) => {
-    if (!user) {
-      console.error('No user found when attempting purchase');
-      toast({
-        title: "Please try again",
-        description: "Something went wrong. Please try subscribing again.",
-        variant: "destructive"
-      });
-      return;
-    }
-
     setLoading(true);
     try {
-      await SubscriptionService.handlePurchase(user.id, productId);
+      await SubscriptionService.handlePurchase(user!.id, productId);
       
       toast({
         title: "Welcome to Premium!",
