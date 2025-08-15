@@ -107,7 +107,7 @@ export const PageSubscriptionGate: React.FC<PageSubscriptionGateProps> = ({
         </div>
 
         {isUpgradeModalOpen && (
-          <div className="fixed inset-0 z-50">
+          <div className="fixed inset-0 z-50 overflow-auto">
             <OnboardingPaywall
               onContinue={() => {
                 console.log('OnboardingPaywall onContinue called');
