@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSubscription } from '@/hooks/useSubscription';
 import OnboardingPaywall from '@/components/onboarding/OnboardingPaywall';
 import { Lock, Heart } from 'lucide-react';
-import { useState } from 'react';
 import ContentContainer from '@/components/common/ContentContainer';
 
 interface PageSubscriptionGateProps {
@@ -21,6 +20,13 @@ export const PageSubscriptionGate: React.FC<PageSubscriptionGateProps> = ({
   const { hasFeatureAccess, hasActiveSubscription, loading } = useSubscription();
   const [hasAccess, setHasAccess] = useState(false);
   const [isUpgradeModalOpen, setIsUpgradeModalOpen] = useState(false);
+
+  // Debug logging for modal state
+  React.useEffect(() => {
+    if (isUpgradeModalOpen) {
+      console.log('Modal state changed to open');
+    }
+  }, [isUpgradeModalOpen]);
 
   React.useEffect(() => {
     const checkAccess = async () => {
@@ -84,7 +90,10 @@ export const PageSubscriptionGate: React.FC<PageSubscriptionGateProps> = ({
               {/* Action buttons */}
               <div className="space-y-3">
                 <button
-                  onClick={() => setIsUpgradeModalOpen(true)}
+                  onClick={() => {
+                    console.log('Upgrade button clicked, setting modal open to true');
+                    setIsUpgradeModalOpen(true);
+                  }}
                   className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-medium py-3 px-6 rounded-lg transition-all duration-200 hover:shadow-lg"
                 >
                   Upgrade to Premium
@@ -100,8 +109,14 @@ export const PageSubscriptionGate: React.FC<PageSubscriptionGateProps> = ({
         {isUpgradeModalOpen && (
           <div className="fixed inset-0 z-50">
             <OnboardingPaywall
-              onContinue={() => setIsUpgradeModalOpen(false)}
-              onSkip={() => setIsUpgradeModalOpen(false)}
+              onContinue={() => {
+                console.log('OnboardingPaywall onContinue called');
+                setIsUpgradeModalOpen(false);
+              }}
+              onSkip={() => {
+                console.log('OnboardingPaywall onSkip called');
+                setIsUpgradeModalOpen(false);
+              }}
             />
           </div>
         )}
