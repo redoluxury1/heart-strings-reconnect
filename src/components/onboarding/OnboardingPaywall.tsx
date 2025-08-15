@@ -21,9 +21,10 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
 
   const handleSubscribe = async (productId: string) => {
     if (!user) {
+      console.error('No user found when attempting purchase');
       toast({
-        title: "Authentication required",
-        description: "Please sign in to subscribe to premium features.",
+        title: "Please try again",
+        description: "Something went wrong. Please try subscribing again.",
         variant: "destructive"
       });
       return;
