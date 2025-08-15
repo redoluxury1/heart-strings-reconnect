@@ -1,10 +1,12 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 import { SubscriptionService } from '@/services/subscriptionService';
 import { useToast } from '@/hooks/use-toast';
 import { Pause, Heart, Bot, Book, ArrowRightLeft, MessageSquare, Sparkles } from 'lucide-react';
+import { Purchases, PurchasesOffering, PurchasesPackage } from '@revenuecat/purchases-capacitor';
+import { RevenueCatConfig } from '@/services/nativeStoreKit/revenueCatConfig';
 
 interface OnboardingPaywallProps {
   onContinue: () => void;
@@ -18,10 +20,42 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
   const { user } = useAuth();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
+  const [packages, setPackages] = useState<PurchasesPackage[]>([]);
+  const [packagesLoading, setPackagesLoading] = useState(true);
 
-  const handleSubscribe = async (productId: string) => {
+  useEffect(() => {
+    loadOfferings();
+  }, []);
+
+  const loadOfferings = async () => {
+    try {
+      await RevenueCatConfig.initialize();
+      const offerings = await Purchases.getOfferings();
+      const defaultOffering = offerings.current || offerings.all['default'];
+      
+      if (defaultOffering) {
+        setPackages(defaultOffering.availablePackages);
+      }
+    } catch (error) {
+      console.error('Failed to load offerings:', error);
+    } finally {
+      setPackagesLoading(false);
+    }
+  };
+
+  const handleSubscribe = async (packageOrProductId: PurchasesPackage | string) => {
     setLoading(true);
     try {
+      let productId: string;
+      
+      if (typeof packageOrProductId === 'string') {
+        // Fallback for hardcoded product IDs
+        productId = packageOrProductId;
+      } else {
+        // Use the package's product identifier
+        productId = packageOrProductId.product.identifier;
+      }
+      
       await SubscriptionService.handlePurchase(user!.id, productId);
       
       toast({
@@ -103,38 +137,82 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
 
         {/* Subscription Options */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-          {/* Monthly Plan */}
-          <div className="bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
-            <div className="text-center">
-              <h3 className="text-lg font-medium text-[#2e4059] mb-2">Premium Monthly</h3>
-              <p className="text-sm text-green-600 mb-2">3-day free trial</p>
-              <p className="text-2xl font-bold text-[#2e4059] mb-6">$12.99/month</p>
-              <Button
-                onClick={() => handleSubscribe('monthly_premium')}
-                disabled={loading}
-                className="w-full bg-[#2e4059] hover:bg-[#2e4059]/90 text-white"
-              >
-                {loading ? 'Processing...' : 'Start Monthly Trial'}
-              </Button>
+          {packagesLoading ? (
+            <div className="col-span-full text-center py-8">
+              <p className="text-[#2e4059]/60">Loading subscription options...</p>
             </div>
-          </div>
-
-          {/* Yearly Plan */}
-          <div className="bg-white rounded-lg p-6 border border-gray-200 shadow-sm relative">
-            <div className="text-center">
-              <h3 className="text-lg font-medium text-[#2e4059] mb-2">Premium Yearly</h3>
-              <p className="text-sm text-green-600 mb-2">7-day free trial</p>
-              <p className="text-2xl font-bold text-[#2e4059]">$10.75/month</p>
-              <p className="text-xs text-gray-500 mb-6">(billed annually at $129)</p>
-              <Button
-                onClick={() => handleSubscribe('yearly_premium')}
-                disabled={loading}
-                className="w-full bg-[#2e4059] hover:bg-[#2e4059]/90 text-white"
-              >
-                {loading ? 'Processing...' : 'Start Yearly Trial'}
-              </Button>
-            </div>
-          </div>
+          ) : packages.length > 0 ? (
+            packages.map((pkg) => {
+              const isYearly = pkg.product.identifier.toLowerCase().includes('annual') || 
+                             pkg.product.identifier.toLowerCase().includes('yearly') ||
+                             pkg.packageType === 'ANNUAL';
+              const isMonthly = pkg.product.identifier.toLowerCase().includes('monthly') ||
+                              pkg.packageType === 'MONTHLY';
+              
+              if (!isYearly && !isMonthly) return null;
+              
+              return (
+                <div key={pkg.identifier} className="bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
+                  <div className="text-center">
+                    <h3 className="text-lg font-medium text-[#2e4059] mb-2">
+                      {isYearly ? 'Premium Yearly' : 'Premium Monthly'}
+                    </h3>
+                    <p className="text-sm text-green-600 mb-2">
+                      {isYearly ? '7-day free trial' : '3-day free trial'}
+                    </p>
+                    <p className="text-2xl font-bold text-[#2e4059] mb-2">
+                      {pkg.product.priceString}
+                    </p>
+                    {isYearly && (
+                      <p className="text-xs text-gray-500 mb-4">
+                        (billed annually)
+                      </p>
+                    )}
+                    <Button
+                      onClick={() => handleSubscribe(pkg)}
+                      disabled={loading}
+                      className="w-full bg-[#2e4059] hover:bg-[#2e4059]/90 text-white"
+                    >
+                      {loading ? 'Processing...' : `Start ${isYearly ? 'Yearly' : 'Monthly'} Trial`}
+                    </Button>
+                  </div>
+                </div>
+              );
+            })
+          ) : (
+            // Fallback to hardcoded options if RevenueCat packages fail to load
+            <>
+              <div className="bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
+                <div className="text-center">
+                  <h3 className="text-lg font-medium text-[#2e4059] mb-2">Premium Monthly</h3>
+                  <p className="text-sm text-green-600 mb-2">3-day free trial</p>
+                  <p className="text-2xl font-bold text-[#2e4059] mb-6">$12.99/month</p>
+                  <Button
+                    onClick={() => handleSubscribe('monthly_premium')}
+                    disabled={loading}
+                    className="w-full bg-[#2e4059] hover:bg-[#2e4059]/90 text-white"
+                  >
+                    {loading ? 'Processing...' : 'Start Monthly Trial'}
+                  </Button>
+                </div>
+              </div>
+              <div className="bg-white rounded-lg p-6 border border-gray-200 shadow-sm">
+                <div className="text-center">
+                  <h3 className="text-lg font-medium text-[#2e4059] mb-2">Premium Yearly</h3>
+                  <p className="text-sm text-green-600 mb-2">7-day free trial</p>
+                  <p className="text-2xl font-bold text-[#2e4059]">$10.75/month</p>
+                  <p className="text-xs text-gray-500 mb-6">(billed annually at $129)</p>
+                  <Button
+                    onClick={() => handleSubscribe('yearly_premium')}
+                    disabled={loading}
+                    className="w-full bg-[#2e4059] hover:bg-[#2e4059]/90 text-white"
+                  >
+                    {loading ? 'Processing...' : 'Start Yearly Trial'}
+                  </Button>
+                </div>
+              </div>
+            </>
+          )}
         </div>
 
         {/* Maybe Later Button */}
