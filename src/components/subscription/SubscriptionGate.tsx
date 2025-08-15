@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useSubscription } from '@/hooks/useSubscription';
-import { SubscriptionUpgradeModal } from './SubscriptionUpgradeModal';
+import OnboardingPaywall from '@/components/onboarding/OnboardingPaywall';
 import { Lock } from 'lucide-react';
 
 interface SubscriptionGateProps {
@@ -79,10 +79,12 @@ export const SubscriptionGate: React.FC<SubscriptionGateProps> = ({
           Upgrade to Premium
         </button>
         
-        <SubscriptionUpgradeModal
-          isOpen={showUpgradeModal}
-          onClose={() => setShowUpgradeModal(false)}
-        />
+        {showUpgradeModal && (
+          <OnboardingPaywall
+            onContinue={() => setShowUpgradeModal(false)}
+            onSkip={() => setShowUpgradeModal(false)}
+          />
+        )}
       </div>
     );
   }

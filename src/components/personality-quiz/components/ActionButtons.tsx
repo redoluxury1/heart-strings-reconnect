@@ -5,7 +5,7 @@ import { UserPlus, Crown } from 'lucide-react';
 import { QuizResult } from '@/types/personality-quiz';
 import DownloadResultsMenu from './DownloadResultsMenu';
 import { useFeatureAccess } from '@/hooks/useFeatureAccess';
-import { SubscriptionUpgradeModal } from '@/components/subscription/SubscriptionUpgradeModal';
+import OnboardingPaywall from '@/components/onboarding/OnboardingPaywall';
 
 interface ActionButtonsProps {
   results: QuizResult;
@@ -57,10 +57,12 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({ results, onDownloadPdf })
         )}
       </div>
       
-      <SubscriptionUpgradeModal
-        isOpen={showUpgradeModal}
-        onClose={() => setShowUpgradeModal(false)}
-      />
+      {showUpgradeModal && (
+        <OnboardingPaywall
+          onContinue={() => setShowUpgradeModal(false)}
+          onSkip={() => setShowUpgradeModal(false)}
+        />
+      )}
     </>
   );
 };

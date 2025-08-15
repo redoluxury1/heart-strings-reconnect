@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSubscription } from '@/hooks/useSubscription';
-import { SubscriptionUpgradeModal } from '@/components/subscription/SubscriptionUpgradeModal';
+import OnboardingPaywall from '@/components/onboarding/OnboardingPaywall';
 import { Lock, Heart } from 'lucide-react';
 import { useState } from 'react';
 import ContentContainer from '@/components/common/ContentContainer';
@@ -97,10 +97,12 @@ export const PageSubscriptionGate: React.FC<PageSubscriptionGateProps> = ({
           </ContentContainer>
         </div>
 
-        <SubscriptionUpgradeModal
-          isOpen={isUpgradeModalOpen}
-          onClose={() => setIsUpgradeModalOpen(false)}
-        />
+        {isUpgradeModalOpen && (
+          <OnboardingPaywall
+            onContinue={() => setIsUpgradeModalOpen(false)}
+            onSkip={() => setIsUpgradeModalOpen(false)}
+          />
+        )}
       </>
     );
   }
