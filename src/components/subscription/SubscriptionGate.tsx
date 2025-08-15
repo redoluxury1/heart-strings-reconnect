@@ -80,10 +80,12 @@ export const SubscriptionGate: React.FC<SubscriptionGateProps> = ({
         </button>
         
         {showUpgradeModal && (
-          <OnboardingPaywall
-            onContinue={() => setShowUpgradeModal(false)}
-            onSkip={() => setShowUpgradeModal(false)}
-          />
+          <div className="fixed inset-0 z-50">
+            <OnboardingPaywall
+              onContinue={() => setShowUpgradeModal(false)}
+              onSkip={() => setShowUpgradeModal(false)}
+            />
+          </div>
         )}
       </div>
     );

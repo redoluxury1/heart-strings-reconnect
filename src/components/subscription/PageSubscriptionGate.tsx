@@ -98,10 +98,12 @@ export const PageSubscriptionGate: React.FC<PageSubscriptionGateProps> = ({
         </div>
 
         {isUpgradeModalOpen && (
-          <OnboardingPaywall
-            onContinue={() => setIsUpgradeModalOpen(false)}
-            onSkip={() => setIsUpgradeModalOpen(false)}
-          />
+          <div className="fixed inset-0 z-50">
+            <OnboardingPaywall
+              onContinue={() => setIsUpgradeModalOpen(false)}
+              onSkip={() => setIsUpgradeModalOpen(false)}
+            />
+          </div>
         )}
       </>
     );
