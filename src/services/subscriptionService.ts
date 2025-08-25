@@ -30,6 +30,9 @@ export class SubscriptionService {
   static async hasActiveSubscription(userId: string): Promise<boolean> {
     console.log('SubscriptionService.hasActiveSubscription called for user:', userId);
     
+    // TEMPORARY: Always return true to bypass paywall for testing
+    return true;
+    
     // Debug mode bypass
     if (isDebugModeEnabled()) {
       console.log('Debug mode: bypassing subscription check - returning true');
