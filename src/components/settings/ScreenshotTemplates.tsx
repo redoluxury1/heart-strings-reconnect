@@ -7,12 +7,13 @@ import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import { createRoot } from 'react-dom/client';
 
-// Import real app components
+// Import actual working app components
 import HomeLanding from '@/components/home/HomeLanding';
-import LetsTalkAboutUs from '@/components/games/lets-talk-about-us/LetsTalkAboutUs';
-import SayItBetter from '@/components/mid-fight/whats-going-on/SayItBetter';
-import OnboardingPaywall from '@/components/onboarding/OnboardingPaywall';
+import FeatureCardSection from '@/components/mid-fight/FeatureCardSection';
 import QuizIntro from '@/components/personality-quiz/QuizIntro';
+import OnboardingPaywall from '@/components/onboarding/OnboardingPaywall';
+import PartnerInvite from '@/components/onboarding/PartnerInvite';
+import SavedRephrases from '@/components/archive/SavedRephrases';
 
 interface TemplateSpec {
   id: string;
@@ -23,21 +24,21 @@ interface TemplateSpec {
 }
 
 const iphoneSize: TemplateSpec[] = [
-  { id: 'home', label: 'Home / Welcome', device: 'iphone', width: 1290, height: 2796 },
-  { id: 'talk', label: "Let's Talk This Out", device: 'iphone', width: 1290, height: 2796 },
-  { id: 'rewrite', label: 'Say It Better / Phrase Rewrite', device: 'iphone', width: 1290, height: 2796 },
-  { id: 'heshe', label: 'He Said / She Said', device: 'iphone', width: 1290, height: 2796 },
-  { id: 'pattern', label: "'OK but now what?'", device: 'iphone', width: 1290, height: 2796 },
-  { id: 'paywall', label: 'Premium paywall / features', device: 'iphone', width: 1290, height: 2796 },
+  { id: 'home', label: 'Welcome Home Screen', device: 'iphone', width: 1290, height: 2796 },
+  { id: 'mid-fight', label: 'During Conflict Tools', device: 'iphone', width: 1290, height: 2796 },
+  { id: 'quiz', label: 'Personality Quiz', device: 'iphone', width: 1290, height: 2796 },
+  { id: 'archive', label: 'Saved Progress Archive', device: 'iphone', width: 1290, height: 2796 },
+  { id: 'partner', label: 'Partner Connection', device: 'iphone', width: 1290, height: 2796 },
+  { id: 'paywall', label: 'Premium Features', device: 'iphone', width: 1290, height: 2796 },
 ];
 
 const ipadSize: TemplateSpec[] = [
-  { id: 'home', label: 'Home / Welcome', device: 'ipad', width: 2048, height: 2732 },
-  { id: 'talk', label: "Let's Talk This Out", device: 'ipad', width: 2048, height: 2732 },
-  { id: 'rewrite', label: 'Say It Better / Phrase Rewrite', device: 'ipad', width: 2048, height: 2732 },
-  { id: 'heshe', label: 'He Said / She Said', device: 'ipad', width: 2048, height: 2732 },
-  { id: 'pattern', label: "'OK but now what?'", device: 'ipad', width: 2048, height: 2732 },
-  { id: 'paywall', label: 'Premium paywall / features', device: 'ipad', width: 2048, height: 2732 },
+  { id: 'home', label: 'Welcome Home Screen', device: 'ipad', width: 2048, height: 2732 },
+  { id: 'mid-fight', label: 'During Conflict Tools', device: 'ipad', width: 2048, height: 2732 },
+  { id: 'quiz', label: 'Personality Quiz', device: 'ipad', width: 2048, height: 2732 },
+  { id: 'archive', label: 'Saved Progress Archive', device: 'ipad', width: 2048, height: 2732 },
+  { id: 'partner', label: 'Partner Connection', device: 'ipad', width: 2048, height: 2732 },
+  { id: 'paywall', label: 'Premium Features', device: 'ipad', width: 2048, height: 2732 },
 ];
 
 const frameClasses = 'relative overflow-hidden rounded-lg border';
@@ -56,14 +57,14 @@ const renderScreenComponent = (spec: TemplateSpec) => {
   switch (spec.id) {
     case 'home':
       return <div {...baseProps}><HomeLanding /></div>;
-    case 'talk':
-      return <div {...baseProps}><LetsTalkAboutUs /></div>;
-    case 'rewrite':
-      return <div {...baseProps}><SayItBetter /></div>;
-    case 'heshe':
-      return <div {...baseProps}><SayItBetter /></div>; // Reuse for now
-    case 'pattern':
+    case 'mid-fight':
+      return <div {...baseProps}><FeatureCardSection selectedFeature={null} toggleFeature={() => {}} /></div>;
+    case 'quiz':
       return <div {...baseProps}><QuizIntro onStart={() => {}} /></div>;
+    case 'archive':
+      return <div {...baseProps}><SavedRephrases /></div>;
+    case 'partner':
+      return <div {...baseProps}><PartnerInvite onComplete={() => {}} onBack={() => {}} /></div>;
     case 'paywall':
       return <div {...baseProps}><OnboardingPaywall onContinue={() => {}} onSkip={() => {}} /></div>;
     default:
