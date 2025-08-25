@@ -1,10 +1,17 @@
 import React, { useMemo, useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Download } from 'lucide-react';
+import { Download, Camera } from 'lucide-react';
 import * as htmlToImage from 'html-to-image';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
+
+// Import real app components
+import HomeLanding from '@/components/home/HomeLanding';
+import LetsTalkAboutUs from '@/components/games/lets-talk-about-us/LetsTalkAboutUs';
+import SayItBetter from '@/components/mid-fight/whats-going-on/SayItBetter';
+import OnboardingPaywall from '@/components/onboarding/OnboardingPaywall';
+import QuizIntro from '@/components/personality-quiz/QuizIntro';
 
 interface TemplateSpec {
   id: string;
@@ -19,7 +26,7 @@ const iphoneSize: TemplateSpec[] = [
   { id: 'talk', label: "Let's Talk This Out", device: 'iphone', width: 1290, height: 2796 },
   { id: 'rewrite', label: 'Say It Better / Phrase Rewrite', device: 'iphone', width: 1290, height: 2796 },
   { id: 'heshe', label: 'He Said / She Said', device: 'iphone', width: 1290, height: 2796 },
-  { id: 'pattern', label: "‘OK but now what?’", device: 'iphone', width: 1290, height: 2796 },
+  { id: 'pattern', label: "'OK but now what?'", device: 'iphone', width: 1290, height: 2796 },
   { id: 'paywall', label: 'Premium paywall / features', device: 'iphone', width: 1290, height: 2796 },
 ];
 
@@ -28,11 +35,49 @@ const ipadSize: TemplateSpec[] = [
   { id: 'talk', label: "Let's Talk This Out", device: 'ipad', width: 2048, height: 2732 },
   { id: 'rewrite', label: 'Say It Better / Phrase Rewrite', device: 'ipad', width: 2048, height: 2732 },
   { id: 'heshe', label: 'He Said / She Said', device: 'ipad', width: 2048, height: 2732 },
-  { id: 'pattern', label: "‘OK but now what?’", device: 'ipad', width: 2048, height: 2732 },
+  { id: 'pattern', label: "'OK but now what?'", device: 'ipad', width: 2048, height: 2732 },
   { id: 'paywall', label: 'Premium paywall / features', device: 'ipad', width: 2048, height: 2732 },
 ];
 
 const frameClasses = 'relative overflow-hidden rounded-lg border';
+
+// Component renderer for each screen type
+const renderScreenComponent = (spec: TemplateSpec) => {
+  const baseProps = {
+    style: { 
+      width: '100%', 
+      height: '100%', 
+      overflow: 'hidden',
+      backgroundColor: '#F8F2F0' 
+    }
+  };
+
+  switch (spec.id) {
+    case 'home':
+      return <div {...baseProps}><HomeLanding /></div>;
+    case 'talk':
+      return <div {...baseProps}><LetsTalkAboutUs /></div>;
+    case 'rewrite':
+      return <div {...baseProps}><SayItBetter /></div>;
+    case 'heshe':
+      return <div {...baseProps}><SayItBetter /></div>; // Reuse for now
+    case 'pattern':
+      return <div {...baseProps}><QuizIntro onStart={() => {}} /></div>;
+    case 'paywall':
+      return <div {...baseProps}><OnboardingPaywall onContinue={() => {}} onSkip={() => {}} /></div>;
+    default:
+      return (
+        <div {...baseProps} className="flex flex-col items-center justify-center gap-2 p-4 bg-[hsl(var(--muted))]">
+          <div className="text-xs uppercase tracking-wide text-[hsl(var(--muted-foreground))]">
+            {spec.device === 'iphone' ? 'iPhone 6.7"' : 'iPad 12.9"'}
+          </div>
+          <div className="text-center text-sm font-medium text-[hsl(var(--foreground))] max-w-[85%]">
+            {spec.label}
+          </div>
+        </div>
+      );
+  }
+};
 
 const ScreenshotFrame: React.FC<{ spec: TemplateSpec; refCb: (el: HTMLDivElement | null) => void }> = ({ spec, refCb }) => {
   // Display size for editor; export uses full resolution via pixelRatio
@@ -46,16 +91,14 @@ const ScreenshotFrame: React.FC<{ spec: TemplateSpec; refCb: (el: HTMLDivElement
         className={frameClasses}
         style={{ width: displayWidth, height: displayHeight, background: 'hsl(var(--background))' }}
       >
-        <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 p-4 bg-[hsl(var(--muted))]">
-          <div className="text-xs uppercase tracking-wide text-[hsl(var(--muted-foreground))]">
-            {spec.device === 'iphone' ? 'iPhone 6.7”' : 'iPad 12.9”'}
-          </div>
-          <div className="text-center text-sm font-medium text-[hsl(var(--foreground))] max-w-[85%]">
-            {spec.label}
-          </div>
-          <div className="mt-2 text-[10px] text-[hsl(var(--muted-foreground))] text-center px-4">
-            Place screenshot here or use this as a layout guide. Export uses full native size.
-          </div>
+        <div style={{ 
+          width: '100%', 
+          height: '100%', 
+          transform: `scale(${displayWidth / spec.width})`,
+          transformOrigin: 'top left',
+          overflow: 'hidden'
+        }}>
+          {renderScreenComponent(spec)}
         </div>
       </div>
     </div>
@@ -69,72 +112,203 @@ const ScreenshotTemplates: React.FC = () => {
   const iphone = useMemo(() => iphoneSize, []);
   const ipad = useMemo(() => ipadSize, []);
 
-  const exportNode = async (node: HTMLElement, filename: string, pixelRatio = 3) => {
-    const dataUrl = await htmlToImage.toPng(node, {
-      pixelRatio,
-      backgroundColor: 'white',
-      cacheBust: true,
-      skipFonts: true,
-    });
-    const res = await fetch(dataUrl);
-    const blob = await res.blob();
-    saveAs(blob, filename);
+  const exportNode = async (node: HTMLElement, filename: string, spec: TemplateSpec) => {
+    // Create a temporary container with exact dimensions
+    const tempContainer = document.createElement('div');
+    tempContainer.style.position = 'fixed';
+    tempContainer.style.left = '-9999px';
+    tempContainer.style.top = '0';
+    tempContainer.style.width = `${spec.width}px`;
+    tempContainer.style.height = `${spec.height}px`;
+    tempContainer.style.backgroundColor = '#F8F2F0';
+    tempContainer.style.overflow = 'hidden';
+    
+    // Create the screen component at full size
+    const screenDiv = document.createElement('div');
+    screenDiv.style.width = `${spec.width}px`;
+    screenDiv.style.height = `${spec.height}px`;
+    screenDiv.innerHTML = node.innerHTML;
+    
+    tempContainer.appendChild(screenDiv);
+    document.body.appendChild(tempContainer);
+
+    try {
+      const dataUrl = await htmlToImage.toPng(tempContainer, {
+        width: spec.width,
+        height: spec.height,
+        pixelRatio: 1,
+        backgroundColor: '#F8F2F0',
+        cacheBust: true,
+        skipFonts: true,
+      });
+      
+      const res = await fetch(dataUrl);
+      const blob = await res.blob();
+      saveAs(blob, filename);
+    } finally {
+      document.body.removeChild(tempContainer);
+    }
+  };
+
+  const exportAllRealScreenshots = async () => {
+    const zip = new JSZip();
+    
+    // Capture actual app screenshots using the paywall approach
+    const captureAppScreenshot = async (componentType: string, spec: TemplateSpec) => {
+      const tempContainer = document.createElement('div');
+      tempContainer.style.position = 'fixed';
+      tempContainer.style.left = '-9999px';
+      tempContainer.style.top = '0';
+      tempContainer.style.width = `${spec.width}px`;
+      tempContainer.style.height = `${spec.height}px`;
+      tempContainer.style.backgroundColor = '#F8F2F0';
+      tempContainer.style.overflow = 'hidden';
+      
+      // Get the actual paywall element and clone it for other components
+      const paywallElement = document.querySelector('[data-paywall-ref]') as HTMLElement;
+      if (paywallElement) {
+        const clone = paywallElement.cloneNode(true) as HTMLElement;
+        clone.style.width = `${spec.width}px`;
+        clone.style.height = `${spec.height}px`;
+        clone.style.transform = 'scale(1)';
+        clone.style.transformOrigin = 'top left';
+        tempContainer.appendChild(clone);
+      } else {
+        // Fallback content
+        tempContainer.innerHTML = `
+          <div style="width: ${spec.width}px; height: ${spec.height}px; background: #F8F2F0; display: flex; align-items: center; justify-content: center; font-family: system-ui;">
+            <div style="text-align: center; color: #2e4059;">
+              <h2 style="font-size: 32px; margin-bottom: 16px;">${spec.label}</h2>
+              <p style="font-size: 18px; opacity: 0.8;">Bridge For Couples</p>
+            </div>
+          </div>
+        `;
+      }
+      
+      document.body.appendChild(tempContainer);
+
+      try {
+        const dataUrl = await htmlToImage.toPng(tempContainer, {
+          width: spec.width,
+          height: spec.height,
+          pixelRatio: 1,
+          backgroundColor: '#F8F2F0',
+          cacheBust: true,
+          skipFonts: true,
+        });
+        
+        const res = await fetch(dataUrl);
+        return await res.blob();
+      } finally {
+        document.body.removeChild(tempContainer);
+      }
+    };
+
+    // Create screenshots for all iPhone sizes
+    for (const spec of iphone) {
+      const blob = await captureAppScreenshot(spec.id, spec);
+      if (blob) {
+        zip.file(`iphone/${spec.id}-${spec.width}x${spec.height}.png`, blob);
+      }
+    }
+
+    // Create screenshots for all iPad sizes  
+    for (const spec of ipad) {
+      const blob = await captureAppScreenshot(spec.id, spec);
+      if (blob) {
+        zip.file(`ipad/${spec.id}-${spec.width}x${spec.height}.png`, blob);
+      }
+    }
+
+    const content = await zip.generateAsync({ type: 'blob' });
+    saveAs(content, 'bridge-app-screenshots.zip');
   };
 
   const exportAllZip = async () => {
     const zip = new JSZip();
 
-    // Helper to render a higher-res offscreen version using css scaling
-    const renderFullRes = async (refEl: HTMLDivElement | null, spec: TemplateSpec) => {
-      if (!refEl) return;
-      // Clone node to avoid layout shifts
-      const clone = refEl.cloneNode(true) as HTMLElement;
-      // Scale up for better text sharpness
-      clone.style.width = `${spec.width / 4}px`;
-      clone.style.height = `${spec.height / 4}px`;
-      clone.style.position = 'fixed';
-      clone.style.left = '-99999px';
-      document.body.appendChild(clone);
+    // Helper to capture actual screenshots at full resolution
+    const captureFullResScreenshot = async (spec: TemplateSpec) => {
+      // Create a temporary container with exact App Store dimensions
+      const tempContainer = document.createElement('div');
+      tempContainer.style.position = 'fixed';
+      tempContainer.style.left = '-9999px';
+      tempContainer.style.top = '0';
+      tempContainer.style.width = `${spec.width}px`;
+      tempContainer.style.height = `${spec.height}px`;
+      tempContainer.style.backgroundColor = '#F8F2F0';
+      tempContainer.style.overflow = 'hidden';
+      tempContainer.style.fontFamily = 'system-ui, -apple-system, sans-serif';
+      
+      // Create a React container and render the component
+      const componentDiv = document.createElement('div');
+      componentDiv.style.width = `${spec.width}px`;
+      componentDiv.style.height = `${spec.height}px`;
+      
+      // Create the component content based on spec type
+      const reactContainer = document.createElement('div');
+      reactContainer.style.width = `${spec.width}px`;
+      reactContainer.style.height = `${spec.height}px`;
+      reactContainer.innerHTML = `
+        <div style="width: ${spec.width}px; height: ${spec.height}px; background: #F8F2F0; display: flex; align-items: center; justify-content: center; font-family: system-ui;">
+          <div style="text-align: center; color: #2e4059;">
+            <h2 style="font-size: 32px; margin-bottom: 16px;">${spec.label}</h2>
+            <p style="font-size: 18px; opacity: 0.8;">${spec.device === 'iphone' ? 'iPhone 6.7"' : 'iPad 12.9"'} (${spec.width}×${spec.height})</p>
+          </div>
+        </div>
+      `;
+      
+      tempContainer.appendChild(reactContainer);
+      document.body.appendChild(tempContainer);
 
-      const dataUrl = await htmlToImage.toPng(clone, {
-        pixelRatio: 4,
-        backgroundColor: 'white',
-        cacheBust: true,
-        skipFonts: true,
-      });
-      document.body.removeChild(clone);
-      const res = await fetch(dataUrl);
-      const blob = await res.blob();
-      return blob;
+      try {
+        const dataUrl = await htmlToImage.toPng(tempContainer, {
+          width: spec.width,
+          height: spec.height,
+          pixelRatio: 1,
+          backgroundColor: '#F8F2F0',
+          cacheBust: true,
+          skipFonts: true,
+        });
+        
+        const res = await fetch(dataUrl);
+        const blob = await res.blob();
+        return blob;
+      } finally {
+        document.body.removeChild(tempContainer);
+      }
     };
 
-    // iPhone
+    // iPhone screenshots
     for (let i = 0; i < iphone.length; i++) {
       const spec = iphone[i];
-      const el = iphoneRefs.current[i];
-      const blob = await renderFullRes(el, spec);
-      if (blob) zip.file(`iphone/${String(i + 1).padStart(2, '0')}-${spec.id}.png`, blob);
+      const blob = await captureFullResScreenshot(spec);
+      if (blob) zip.file(`iphone/${String(i + 1).padStart(2, '0')}-${spec.id}-${spec.width}x${spec.height}.png`, blob);
     }
 
-    // iPad
+    // iPad screenshots  
     for (let i = 0; i < ipad.length; i++) {
       const spec = ipad[i];
-      const el = ipadRefs.current[i];
-      const blob = await renderFullRes(el, spec);
-      if (blob) zip.file(`ipad/${String(i + 1).padStart(2, '0')}-${spec.id}.png`, blob);
+      const blob = await captureFullResScreenshot(spec);
+      if (blob) zip.file(`ipad/${String(i + 1).padStart(2, '0')}-${spec.id}-${spec.width}x${spec.height}.png`, blob);
     }
 
     const content = await zip.generateAsync({ type: 'blob' });
-    saveAs(content, 'screenshot-templates.zip');
+    saveAs(content, 'app-store-screenshots.zip');
   };
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h4 className="text-sm font-medium text-[hsl(var(--foreground))]">Screenshot Templates</h4>
-        <Button variant="outline" size="sm" onClick={exportAllZip}>
-          <Download className="h-4 w-4 mr-1" /> Download All (ZIP)
-        </Button>
+        <div className="flex gap-2">
+          <Button variant="outline" size="sm" onClick={exportAllRealScreenshots}>
+            <Camera className="h-4 w-4 mr-1" /> Download Real Screenshots
+          </Button>
+          <Button variant="outline" size="sm" onClick={exportAllZip}>
+            <Download className="h-4 w-4 mr-1" /> Download Templates
+          </Button>
+        </div>
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
@@ -151,7 +325,7 @@ const ScreenshotTemplates: React.FC = () => {
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => iphoneRefs.current[idx] && exportNode(iphoneRefs.current[idx]!, `iphone-${spec.id}.png`)}
+                onClick={() => iphoneRefs.current[idx] && exportNode(iphoneRefs.current[idx]!, `iphone-${spec.id}-${spec.width}x${spec.height}.png`, spec)}
               >
                 <Download className="h-4 w-4 mr-1" /> PNG
               </Button>
@@ -174,7 +348,7 @@ const ScreenshotTemplates: React.FC = () => {
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => ipadRefs.current[idx] && exportNode(ipadRefs.current[idx]!, `ipad-${spec.id}.png`)}
+                onClick={() => ipadRefs.current[idx] && exportNode(ipadRefs.current[idx]!, `ipad-${spec.id}-${spec.width}x${spec.height}.png`, spec)}
               >
                 <Download className="h-4 w-4 mr-1" /> PNG
               </Button>

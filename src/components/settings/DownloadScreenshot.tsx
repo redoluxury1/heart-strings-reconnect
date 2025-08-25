@@ -95,6 +95,7 @@ const DownloadScreenshot: React.FC = () => {
           <p className="text-sm text-muted-foreground mb-2">Preview:</p>
           <div 
             ref={paywallRef}
+            data-paywall-ref
             className="transform scale-[0.2] origin-top-left border"
             style={{ 
               width: '1290px', 
