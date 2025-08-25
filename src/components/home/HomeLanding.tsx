@@ -45,7 +45,7 @@ const HomeLanding = () => {
       {/* Features Link */}
       <div className="mt-8 pt-6 border-t border-navy-800/10">
         <p className="text-navy-800/70 mb-4">
-          Want to learn more about how Bridge can help your relationship?
+          Want to learn more about how Bridge For Couples can help your relationship?
         </p>
         <Link 
           to="/features" 
