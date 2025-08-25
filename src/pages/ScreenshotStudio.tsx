@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import DownloadScreenshot from '@/components/settings/DownloadScreenshot';
 import ScreenshotTemplates from '@/components/settings/ScreenshotTemplates';
+import { SubscriptionService } from '@/services/subscriptionService';
 import { Home, Zap, BookOpen, Archive, UserPlus, Crown, Settings } from 'lucide-react';
 
 const ScreenshotStudio: React.FC = () => {
+  useEffect(() => {
+    // Enable debug mode to bypass all subscription gates
+    SubscriptionService.enableDebugMode();
+  }, []);
+
   return (
     <div className="min-h-screen bg-background p-8">
       <div className="max-w-4xl mx-auto">
