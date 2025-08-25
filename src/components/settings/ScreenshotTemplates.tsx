@@ -5,6 +5,7 @@ import { Download, Camera } from 'lucide-react';
 import * as htmlToImage from 'html-to-image';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
+import { createRoot } from 'react-dom/client';
 
 // Import real app components
 import HomeLanding from '@/components/home/HomeLanding';
@@ -152,9 +153,9 @@ const ScreenshotTemplates: React.FC = () => {
 
   const exportAllRealScreenshots = async () => {
     const zip = new JSZip();
-    
-    // Capture actual app screenshots using the paywall approach
-    const captureAppScreenshot = async (componentType: string, spec: TemplateSpec) => {
+
+    const captureSpec = async (spec: TemplateSpec) => {
+      // Offscreen exact-size container
       const tempContainer = document.createElement('div');
       tempContainer.style.position = 'fixed';
       tempContainer.style.left = '-9999px';
@@ -163,29 +164,23 @@ const ScreenshotTemplates: React.FC = () => {
       tempContainer.style.height = `${spec.height}px`;
       tempContainer.style.backgroundColor = '#F8F2F0';
       tempContainer.style.overflow = 'hidden';
-      
-      // Get the actual paywall element and clone it for other components
-      const paywallElement = document.querySelector('[data-paywall-ref]') as HTMLElement;
-      if (paywallElement) {
-        const clone = paywallElement.cloneNode(true) as HTMLElement;
-        clone.style.width = `${spec.width}px`;
-        clone.style.height = `${spec.height}px`;
-        clone.style.transform = 'scale(1)';
-        clone.style.transformOrigin = 'top left';
-        tempContainer.appendChild(clone);
-      } else {
-        // Fallback content
-        tempContainer.innerHTML = `
-          <div style="width: ${spec.width}px; height: ${spec.height}px; background: #F8F2F0; display: flex; align-items: center; justify-content: center; font-family: system-ui;">
-            <div style="text-align: center; color: #2e4059;">
-              <h2 style="font-size: 32px; margin-bottom: 16px;">${spec.label}</h2>
-              <p style="font-size: 18px; opacity: 0.8;">Bridge For Couples</p>
-            </div>
-          </div>
-        `;
-      }
-      
+      tempContainer.style.fontFamily = 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+
+      const mount = document.createElement('div');
+      mount.style.width = `${spec.width}px`;
+      mount.style.height = `${spec.height}px`;
+      tempContainer.appendChild(mount);
       document.body.appendChild(tempContainer);
+
+      const root = createRoot(mount);
+      root.render(
+        <div style={{ width: spec.width, height: spec.height, background: '#F8F2F0' }}>
+          {renderScreenComponent(spec)}
+        </div>
+      );
+
+      // Give React a tick to render
+      await new Promise((r) => setTimeout(r, 80));
 
       try {
         const dataUrl = await htmlToImage.toPng(tempContainer, {
@@ -196,28 +191,24 @@ const ScreenshotTemplates: React.FC = () => {
           cacheBust: true,
           skipFonts: true,
         });
-        
         const res = await fetch(dataUrl);
         return await res.blob();
       } finally {
+        root.unmount();
         document.body.removeChild(tempContainer);
       }
     };
 
-    // Create screenshots for all iPhone sizes
+    // iPhone
     for (const spec of iphone) {
-      const blob = await captureAppScreenshot(spec.id, spec);
-      if (blob) {
-        zip.file(`iphone/${spec.id}-${spec.width}x${spec.height}.png`, blob);
-      }
+      const blob = await captureSpec(spec);
+      if (blob) zip.file(`iphone/${spec.id}-${spec.width}x${spec.height}.png`, blob);
     }
 
-    // Create screenshots for all iPad sizes  
+    // iPad
     for (const spec of ipad) {
-      const blob = await captureAppScreenshot(spec.id, spec);
-      if (blob) {
-        zip.file(`ipad/${spec.id}-${spec.width}x${spec.height}.png`, blob);
-      }
+      const blob = await captureSpec(spec);
+      if (blob) zip.file(`ipad/${spec.id}-${spec.width}x${spec.height}.png`, blob);
     }
 
     const content = await zip.generateAsync({ type: 'blob' });
