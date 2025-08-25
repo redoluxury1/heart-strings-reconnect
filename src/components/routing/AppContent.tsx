@@ -4,12 +4,14 @@ import ScrollToTop from './ScrollToTop';
 import MainAppRoutes from '@/routes/MainAppRoutes';
 import AuthRoutes from '@/routes/AuthRoutes';
 import BridgeTheGapRoutes from '@/routes/BridgeTheGapRoutes';
+import ScreenshotStudio from '@/pages/ScreenshotStudio';
 
 const AppContent = () => {
   return (
     <>
       <ScrollToTop />
       <Routes>
+        <Route path="/_screenshots" element={<ScreenshotStudio />} />
         {MainAppRoutes()}
         <Route path="/auth/*" element={<AuthRoutes />} />
         {BridgeTheGapRoutes()}
