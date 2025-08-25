@@ -26,6 +26,14 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
     loadOfferings();
   }, []);
 
+  // Debug log current offerings structure
+  useEffect(() => {
+    if (monthlyPackage || annualPackage) {
+      console.log('Monthly package:', monthlyPackage);
+      console.log('Annual package:', annualPackage);
+    }
+  }, [monthlyPackage, annualPackage]);
+
   const loadOfferings = async () => {
     try {
       // Configure RevenueCat with debug logging
@@ -81,6 +89,9 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
       }
     } catch (error: any) {
       console.error('Purchase failed:', error);
+      console.error('Error code:', error?.code);
+      console.error('Error message:', error?.message);
+      console.error('Error userInfo:', error?.userInfo);
       
       // Ignore user-canceled purchases
       if (error?.code === PURCHASES_ERROR_CODE.PURCHASE_CANCELLED_ERROR) {
@@ -89,7 +100,7 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
       
       toast({
         title: "Purchase failed",
-        description: "There was an error processing your purchase. Please try again.",
+        description: `Error: ${error?.message || 'Please try again'} (Code: ${error?.code})`,
         variant: "destructive"
       });
     } finally {
