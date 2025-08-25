@@ -7,13 +7,14 @@ import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import { createRoot } from 'react-dom/client';
 
-// Import actual working app components
-import HomeLanding from '@/components/home/HomeLanding';
-import FeatureCardSection from '@/components/mid-fight/FeatureCardSection';
-import QuizIntro from '@/components/personality-quiz/QuizIntro';
-import OnboardingPaywall from '@/components/onboarding/OnboardingPaywall';
-import PartnerInvite from '@/components/onboarding/PartnerInvite';
-import SavedRephrases from '@/components/archive/SavedRephrases';
+// Import actual screenshot images
+import homeWelcome from '@/assets/screenshots/home-welcome.png';
+import midFightTools from '@/assets/screenshots/mid-fight-tools.png';
+import personalityQuiz from '@/assets/screenshots/personality-quiz.png';
+import archiveSaved from '@/assets/screenshots/archive-saved.png';
+import partnerConnect from '@/assets/screenshots/partner-connect.png';
+import premiumPaywall from '@/assets/screenshots/premium-paywall.png';
+import OptimizedImage from '@/components/common/OptimizedImage';
 
 interface TemplateSpec {
   id: string;
@@ -43,42 +44,64 @@ const ipadSize: TemplateSpec[] = [
 
 const frameClasses = 'relative overflow-hidden rounded-lg border';
 
-// Component renderer for each screen type
-const renderScreenComponent = (spec: TemplateSpec) => {
-  const baseProps = {
-    style: { 
-      width: '100%', 
-      height: '100%', 
-      overflow: 'hidden',
-      backgroundColor: '#F8F2F0' 
-    }
-  };
-
+// Get the screenshot image for each spec
+const getScreenshotImage = (spec: TemplateSpec) => {
   switch (spec.id) {
     case 'home':
-      return <div {...baseProps}><HomeLanding /></div>;
+      return homeWelcome;
     case 'mid-fight':
-      return <div {...baseProps}><FeatureCardSection selectedFeature={null} toggleFeature={() => {}} /></div>;
+      return midFightTools;
     case 'quiz':
-      return <div {...baseProps}><QuizIntro onStart={() => {}} /></div>;
+      return personalityQuiz;
     case 'archive':
-      return <div {...baseProps}><SavedRephrases /></div>;
+      return archiveSaved;
     case 'partner':
-      return <div {...baseProps}><PartnerInvite onComplete={() => {}} onBack={() => {}} /></div>;
+      return partnerConnect;
     case 'paywall':
-      return <div {...baseProps}><OnboardingPaywall onContinue={() => {}} onSkip={() => {}} /></div>;
+      return premiumPaywall;
     default:
-      return (
-        <div {...baseProps} className="flex flex-col items-center justify-center gap-2 p-4 bg-[hsl(var(--muted))]">
-          <div className="text-xs uppercase tracking-wide text-[hsl(var(--muted-foreground))]">
-            {spec.device === 'iphone' ? 'iPhone 6.7"' : 'iPad 12.9"'}
-          </div>
-          <div className="text-center text-sm font-medium text-[hsl(var(--foreground))] max-w-[85%]">
-            {spec.label}
-          </div>
-        </div>
-      );
+      return null;
   }
+};
+
+// Component renderer for each screen type
+const renderScreenComponent = (spec: TemplateSpec) => {
+  const screenshotSrc = getScreenshotImage(spec);
+  
+  if (screenshotSrc) {
+    return (
+      <OptimizedImage
+        src={screenshotSrc}
+        alt={spec.label}
+        style={{ 
+          width: '100%', 
+          height: '100%', 
+          objectFit: 'cover',
+          backgroundColor: '#F8F2F0' 
+        }}
+      />
+    );
+  }
+
+  // Fallback for missing images
+  return (
+    <div 
+      style={{ 
+        width: '100%', 
+        height: '100%', 
+        overflow: 'hidden',
+        backgroundColor: '#F8F2F0' 
+      }}
+      className="flex flex-col items-center justify-center gap-2 p-4 bg-[hsl(var(--muted))]"
+    >
+      <div className="text-xs uppercase tracking-wide text-[hsl(var(--muted-foreground))]">
+        {spec.device === 'iphone' ? 'iPhone 6.7"' : 'iPad 12.9"'}
+      </div>
+      <div className="text-center text-sm font-medium text-[hsl(var(--foreground))] max-w-[85%]">
+        {spec.label}
+      </div>
+    </div>
+  );
 };
 
 const ScreenshotFrame: React.FC<{ spec: TemplateSpec; refCb: (el: HTMLDivElement | null) => void }> = ({ spec, refCb }) => {
@@ -115,101 +138,106 @@ const ScreenshotTemplates: React.FC = () => {
   const ipad = useMemo(() => ipadSize, []);
 
   const exportNode = async (node: HTMLElement, filename: string, spec: TemplateSpec) => {
-    // Create a temporary container with exact dimensions
-    const tempContainer = document.createElement('div');
-    tempContainer.style.position = 'fixed';
-    tempContainer.style.left = '-9999px';
-    tempContainer.style.top = '0';
-    tempContainer.style.width = `${spec.width}px`;
-    tempContainer.style.height = `${spec.height}px`;
-    tempContainer.style.backgroundColor = '#F8F2F0';
-    tempContainer.style.overflow = 'hidden';
+    const screenshotSrc = getScreenshotImage(spec);
     
-    // Create the screen component at full size
-    const screenDiv = document.createElement('div');
-    screenDiv.style.width = `${spec.width}px`;
-    screenDiv.style.height = `${spec.height}px`;
-    screenDiv.innerHTML = node.innerHTML;
-    
-    tempContainer.appendChild(screenDiv);
-    document.body.appendChild(tempContainer);
-
-    try {
-      const dataUrl = await htmlToImage.toPng(tempContainer, {
-        width: spec.width,
-        height: spec.height,
-        pixelRatio: 1,
-        backgroundColor: '#F8F2F0',
-        cacheBust: true,
-        skipFonts: true,
-      });
+    if (screenshotSrc) {
+      // Create image from the imported screenshot
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
       
-      const res = await fetch(dataUrl);
-      const blob = await res.blob();
-      saveAs(blob, filename);
-    } finally {
-      document.body.removeChild(tempContainer);
+      return new Promise<void>((resolve, reject) => {
+        img.onload = () => {
+          // Create canvas with exact App Store dimensions
+          const canvas = document.createElement('canvas');
+          canvas.width = spec.width;
+          canvas.height = spec.height;
+          const ctx = canvas.getContext('2d');
+          
+          if (ctx) {
+            // Fill background
+            ctx.fillStyle = '#F8F2F0';
+            ctx.fillRect(0, 0, spec.width, spec.height);
+            
+            // Draw image to fit the canvas
+            ctx.drawImage(img, 0, 0, spec.width, spec.height);
+            
+            // Convert to blob and download
+            canvas.toBlob((blob) => {
+              if (blob) {
+                saveAs(blob, filename);
+                resolve();
+              } else {
+                reject(new Error('Failed to create blob'));
+              }
+            }, 'image/png');
+          } else {
+            reject(new Error('Failed to get canvas context'));
+          }
+        };
+        
+        img.onerror = () => reject(new Error('Failed to load image'));
+        img.src = screenshotSrc;
+      });
     }
   };
 
   const exportAllRealScreenshots = async () => {
     const zip = new JSZip();
 
-    const captureSpec = async (spec: TemplateSpec) => {
-      // Offscreen exact-size container
-      const tempContainer = document.createElement('div');
-      tempContainer.style.position = 'fixed';
-      tempContainer.style.left = '-9999px';
-      tempContainer.style.top = '0';
-      tempContainer.style.width = `${spec.width}px`;
-      tempContainer.style.height = `${spec.height}px`;
-      tempContainer.style.backgroundColor = '#F8F2F0';
-      tempContainer.style.overflow = 'hidden';
-      tempContainer.style.fontFamily = 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-
-      const mount = document.createElement('div');
-      mount.style.width = `${spec.width}px`;
-      mount.style.height = `${spec.height}px`;
-      tempContainer.appendChild(mount);
-      document.body.appendChild(tempContainer);
-
-      const root = createRoot(mount);
-      root.render(
-        <div style={{ width: spec.width, height: spec.height, background: '#F8F2F0' }}>
-          {renderScreenComponent(spec)}
-        </div>
-      );
-
-      // Give React a tick to render
-      await new Promise((r) => setTimeout(r, 80));
-
-      try {
-        const dataUrl = await htmlToImage.toPng(tempContainer, {
-          width: spec.width,
-          height: spec.height,
-          pixelRatio: 1,
-          backgroundColor: '#F8F2F0',
-          cacheBust: true,
-          skipFonts: true,
-        });
-        const res = await fetch(dataUrl);
-        return await res.blob();
-      } finally {
-        root.unmount();
-        document.body.removeChild(tempContainer);
-      }
+    const resizeImageToSpec = async (src: string, spec: TemplateSpec): Promise<Blob> => {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          canvas.width = spec.width;
+          canvas.height = spec.height;
+          const ctx = canvas.getContext('2d');
+          
+          if (ctx) {
+            ctx.fillStyle = '#F8F2F0';
+            ctx.fillRect(0, 0, spec.width, spec.height);
+            ctx.drawImage(img, 0, 0, spec.width, spec.height);
+            
+            canvas.toBlob((blob) => {
+              if (blob) resolve(blob);
+              else reject(new Error('Failed to create blob'));
+            }, 'image/png');
+          } else {
+            reject(new Error('Failed to get canvas context'));
+          }
+        };
+        
+        img.onerror = () => reject(new Error('Failed to load image'));
+        img.src = src;
+      });
     };
 
-    // iPhone
+    // iPhone screenshots
     for (const spec of iphone) {
-      const blob = await captureSpec(spec);
-      if (blob) zip.file(`iphone/${spec.id}-${spec.width}x${spec.height}.png`, blob);
+      const screenshotSrc = getScreenshotImage(spec);
+      if (screenshotSrc) {
+        try {
+          const blob = await resizeImageToSpec(screenshotSrc, spec);
+          zip.file(`iphone/${spec.id}-${spec.width}x${spec.height}.png`, blob);
+        } catch (error) {
+          console.error(`Failed to process ${spec.id}:`, error);
+        }
+      }
     }
 
-    // iPad
+    // iPad screenshots  
     for (const spec of ipad) {
-      const blob = await captureSpec(spec);
-      if (blob) zip.file(`ipad/${spec.id}-${spec.width}x${spec.height}.png`, blob);
+      const screenshotSrc = getScreenshotImage(spec);
+      if (screenshotSrc) {
+        try {
+          const blob = await resizeImageToSpec(screenshotSrc, spec);
+          zip.file(`ipad/${spec.id}-${spec.width}x${spec.height}.png`, blob);
+        } catch (error) {
+          console.error(`Failed to process ${spec.id}:`, error);
+        }
+      }
     }
 
     const content = await zip.generateAsync({ type: 'blob' });
