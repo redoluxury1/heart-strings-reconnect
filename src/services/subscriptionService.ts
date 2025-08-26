@@ -77,6 +77,9 @@ export class SubscriptionService {
   static async hasFeatureAccess(userId: string, featureKey: string): Promise<boolean> {
     console.log('SubscriptionService.hasFeatureAccess called for user:', userId, 'feature:', featureKey);
     
+    // TEMPORARY: Always return true to bypass paywall for testing
+    return true;
+    
     // Debug mode bypass
     if (isDebugModeEnabled()) {
       console.log('Debug mode: bypassing feature access check - returning true');
