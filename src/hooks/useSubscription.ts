@@ -14,7 +14,7 @@ export const useSubscription = () => {
   useEffect(() => {
     if (!user) {
       setSubscription(null);
-      setHasActiveSubscription(false);
+      setHasActiveSubscription(true); // bypass paywall in preview when not logged in
       setLoading(false);
       return;
     }
@@ -44,7 +44,7 @@ export const useSubscription = () => {
   };
 
   const hasFeatureAccess = async (featureKey: string): Promise<boolean> => {
-    if (!user) return false;
+    if (!user) return true; // bypass in preview without login
     return SubscriptionService.hasFeatureAccess(user.id, featureKey);
   };
 
