@@ -52,28 +52,28 @@ const PrimaryLoveCode: React.FC<PrimaryLoveCodeProps> = ({ primaryDesc }) => {
             <div>
               <h3 className="font-medium text-midnight-indigo mb-2">1. Emotional Core – Why {primaryDesc.title.split(':')[0]} Matter to You</h3>
               <p className="whitespace-pre-line">
-                {primaryDesc.detailedDescription?.emotionalCore || "Detailed description coming soon."}
+                {primaryDesc.detailedDescription?.emotionalCore || primaryDesc.emotionalCore}
               </p>
             </div>
             
             <div>
               <h3 className="font-medium text-midnight-indigo mb-2">2. How You Feel Most Loved</h3>
               <p className="whitespace-pre-line">
-                {primaryDesc.detailedDescription?.howYouFeelLoved || "Detailed description coming soon."}
+                {primaryDesc.detailedDescription?.howYouFeelLoved || primaryDesc.howYouFeelLoved}
               </p>
             </div>
             
             <div>
               <h3 className="font-medium text-midnight-indigo mb-2">3. How This Can Be Misread</h3>
               <p className="whitespace-pre-line">
-                {primaryDesc.detailedDescription?.oftenMisread || "Detailed description coming soon."}
+                {primaryDesc.detailedDescription?.oftenMisread || primaryDesc.oftenMisread}
               </p>
             </div>
             
             <div>
               <h3 className="font-medium text-midnight-indigo mb-2">4. Relational Growth Tips</h3>
               <p className="whitespace-pre-line">
-                {primaryDesc.detailedDescription?.relationalGrowthTips || "Detailed description coming soon."}
+                {primaryDesc.detailedDescription?.relationalGrowthTips || primaryDesc.growthTips}
               </p>
             </div>
           </div>

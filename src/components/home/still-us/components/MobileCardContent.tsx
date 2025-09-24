@@ -41,7 +41,6 @@ const MobileCardContent: React.FC<MobileCardContentProps> = ({
         <p className={`font-semibold text-sm ${textColor} mb-2`}>{card.sectionHeader}</p>
         <CardToolsList 
           tools={card.tools} 
-          comingSoonTools={card.comingSoonTools} 
           bulletColor={bulletColor} 
           textColorMuted={textColorMuted}
         />

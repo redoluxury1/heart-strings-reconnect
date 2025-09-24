@@ -8,7 +8,6 @@ interface StillUsCardProps {
   description: string;
   icon: React.ReactNode;
   tools: string[];
-  comingSoonTools?: string[];
   link: string;
   gradientClass: string;
   iconBgClass: string;
@@ -25,7 +24,6 @@ const StillUsCard: React.FC<StillUsCardProps> = (props) => {
     description: props.description,
     icon: props.icon,
     tools: props.tools,
-    comingSoonTools: props.comingSoonTools,
     link: props.link,
     gradientClass: props.gradientClass,
     iconBgClass: props.iconBgClass,

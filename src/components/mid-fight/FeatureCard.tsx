@@ -57,11 +57,6 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ feature, isSelected, toggleFe
               <div>
                 <CardTitle className="text-xl font-cormorant font-medium text-midnight-indigo">
                   {feature.title}
-                  {feature.comingSoon && (
-                    <span className="text-sm font-inter ml-2 text-mauve-rose/80">
-                      (Coming Soon)
-                    </span>
-                  )}
                 </CardTitle>
               </div>
             </div>

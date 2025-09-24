@@ -7,7 +7,6 @@
 
 /* Import safe area styles */
 @import './styles/safe-area.css';
-@import './styles/utilities.css';
 @import './styles/animations/index.css';
 
 @layer base {
@@ -115,5 +114,44 @@
     height: 100vh;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+  }
+}
+
+@layer utilities {
+  .rounded-btn {
+    @apply rounded-full px-6 py-3 font-medium transition-all duration-200 shadow-sm;
+  }
+  
+  .primary-btn {
+    @apply bg-midnight-indigo text-soft-blush hover:bg-opacity-90 rounded-btn;
+  }
+  
+  .secondary-btn {
+    @apply bg-rosewood-tint text-soft-blush hover:bg-opacity-90 rounded-btn;
+  }
+  
+  .outlined-btn {
+    @apply border border-midnight-indigo text-midnight-indigo hover:bg-soft-blush rounded-btn;
+  }
+
+  /* New emotion category colors */
+  .bg-lavender-100 {
+    @apply bg-[#e1d8ed];
+  }
+  
+  .bg-peach-100 {
+    @apply bg-[#fce6d4];
+  }
+  
+  .bg-rose-200\/60 {
+    @apply bg-[#e5c7c1];
+  }
+  
+  .bg-rose-300\/70 {
+    @apply bg-[#e3a89c];
+  }
+
+  .text-navy-800 {
+    @apply text-[#22254a];
   }
 }

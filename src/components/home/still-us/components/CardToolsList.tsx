@@ -3,7 +3,6 @@ import React from 'react';
 
 interface CardToolsListProps {
   tools: string[];
-  comingSoonTools?: string[];
   bulletColor: string;
   textColorMuted: string;
   isDesktop?: boolean;
@@ -11,7 +10,6 @@ interface CardToolsListProps {
 
 const CardToolsList: React.FC<CardToolsListProps> = ({ 
   tools, 
-  comingSoonTools, 
   bulletColor, 
   textColorMuted, 
   isDesktop = false
@@ -27,14 +25,6 @@ const CardToolsList: React.FC<CardToolsListProps> = ({
         <div key={idx} className="flex items-center">
           <span className={`h-2 w-2 rounded-full ${actualBulletColor} mr-2`}></span>
           <span className={textColorMuted}>{tool}</span>
-        </div>
-      ))}
-      {comingSoonTools?.map((tool, idx) => (
-        <div key={idx} className="flex items-center">
-          <span className={`h-2 w-2 rounded-full ${actualBulletColor} mr-2`}></span>
-          <span className={textColorMuted}>
-            {tool} <span className="text-xs text-[#3A3A3A]/70">(Coming Soon)</span>
-          </span>
         </div>
       ))}
     </div>

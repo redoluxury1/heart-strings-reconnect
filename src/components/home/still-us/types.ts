@@ -7,7 +7,6 @@ export type CardContent = {
   description: string;
   icon: ReactNode;
   tools: string[];
-  comingSoonTools?: string[];
   link: string;
   gradientClass: string;
   iconBgClass: string;

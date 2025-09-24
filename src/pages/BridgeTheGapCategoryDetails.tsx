@@ -76,14 +76,14 @@ const BridgeTheGapCategoryDetails: React.FC = () => {
                 {getCategoryName(categoryId || '')}
               </h1>
               <p className="text-midnight-indigo/70 text-lg max-w-2xl mx-auto">
-                Coming soon: Targeted prompts and exercises to help bridge the gap in your {getCategoryName(categoryId || '').toLowerCase()} discussions.
+                Targeted prompts and exercises to help bridge the gap in your {getCategoryName(categoryId || '').toLowerCase()} discussions.
               </p>
             </div>
             
             <div className="bg-white rounded-lg p-8 shadow-sm border border-gray-100 max-w-3xl mx-auto">
               <div className="text-center py-12">
                 <h2 className="text-2xl font-medium text-midnight-indigo mb-4">
-                  We're working on this feature
+                  Conversation Starters for {getCategoryName(categoryId || '')}
                 </h2>
                 <p className="text-midnight-indigo/70 mb-6">
                   Our team is developing targeted exercises for this category. Check back soon for helpful prompts.
