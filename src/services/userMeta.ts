@@ -23,7 +23,6 @@ export const getUserMeta = async (userId: string): Promise<UserMeta | null> => {
   
   return {
     user_id: data.user_id,
-    love_code: data.love_code,
     communication_style: data.communication_style,
     most_common_trigger: data.most_common_trigger,
     default_tone: data.default_tone,
@@ -57,7 +56,6 @@ export const upsertUserMeta = async (
   
   return {
     user_id: data.user_id,
-    love_code: data.love_code,
     communication_style: data.communication_style,
     most_common_trigger: data.most_common_trigger,
     default_tone: data.default_tone,

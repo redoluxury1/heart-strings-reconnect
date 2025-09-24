@@ -10,7 +10,7 @@ interface PersonalityTypeChartProps {
   results: QuizResult;
 }
 
-// Brighter, richer color scheme matching the love code quiz colors
+// Brighter, richer color scheme for personality quiz results
 const COLORS = [
   "#9B87F5", // Purple for Anchor
   "#D946EF", // Magenta for Spark

@@ -40,7 +40,7 @@ export function usePartnerInvite() {
               title: "Connection successful!",
               description: "You've been connected with your partner."
             });
-            navigate('/love-code-quiz');
+            navigate('/');
           } else {
             throw new Error("Failed to connect with your partner");
           }

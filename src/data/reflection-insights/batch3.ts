@@ -14,7 +14,7 @@ export const reflectionPackBatch3: ReflectionInsight[] = [
     "category": "intimacy_mismatch",
     "insight": "It sounds like you may have mismatched needs around intimacy or physical connection.",
     "reflection": "Intimacy isn't just about sex—it's about safety, attunement, and how we express closeness. When one partner feels rejected and the other feels pressured, both can become defensive. Often, this disconnect isn't about desire—it's about deeper emotional needs not being met.",
-    "recommendation": "Have a conversation outside the bedroom about what intimacy means to each of you. You might be speaking different languages without realizing it. Try the 'Love Codes' quiz if you haven't already."
+    "recommendation": "Have a conversation outside the bedroom about what intimacy means to each of you. You might be speaking different languages without realizing it. Focus on understanding each other's emotional needs and connection preferences."
   },
   {
     "triggers": [

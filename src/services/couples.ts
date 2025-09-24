@@ -111,7 +111,5 @@ export const updateUserWithCoupleId = async (userId: string, coupleId: string): 
     couple_id: data.couple_id,
     partnerId: null, // We don't have this info in the profile record
     relationshipId: null, // This would need to be fetched separately
-    loveCode: null, // These would need to be fetched from user_meta
-    secondaryLoveCode: null
   };
 };

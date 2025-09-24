@@ -29,8 +29,8 @@ const SharedActivityProgress: React.FC = () => {
     // Mock data for now - in a real implementation, this would fetch from the database
     const mockActivities: ActivityProgress[] = [
       {
-        activityId: 'love-code-quiz',
-        activityName: 'Love Code Quiz',
+        activityId: 'personality-quiz',
+        activityName: 'Personality Quiz',
         userProgress: 100,
         partnerProgress: 75,
         isCompleted: false,

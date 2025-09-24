@@ -15,7 +15,7 @@ const BlueprintQuizSection = () => {
     }`}>
       <ContentContainer>
         <div className="max-w-4xl mx-auto text-center">
-          {/* Main Title - Styled like Love Code section */}
+          {/* Main Title - Styled consistently with other quiz sections */}
           <div className="mb-4 md:mb-6 text-center">
             <h2 className="font-cormorant text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium text-[#3c3543]">
               Discover Your

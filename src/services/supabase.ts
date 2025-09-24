@@ -23,8 +23,6 @@ export const getProfile = async (userId: string): Promise<UserProfile | null> =>
     couple_id: data.couple_id,
     partnerId: null, // These would need to be populated from relationship data
     relationshipId: null,
-    loveCode: null, // These would need to be populated from user_meta
-    secondaryLoveCode: null
   };
 };
 
@@ -56,8 +54,6 @@ export const updateProfile = async (userId: string, updates: Partial<UserProfile
     couple_id: data.couple_id,
     partnerId: null,
     relationshipId: null,
-    loveCode: null,
-    secondaryLoveCode: null
   };
 };
 

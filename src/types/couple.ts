@@ -38,7 +38,6 @@ export interface SharedNote {
 
 export interface UserMeta {
   user_id: string;
-  love_code?: string | null;
   communication_style?: string | null;
   most_common_trigger?: string | null;
   default_tone?: string | null;

@@ -6,11 +6,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import { MessageCircle, Heart, Zap } from 'lucide-react';
+import { MessageCircle, Zap } from 'lucide-react';
 
 interface CommunicationData {
   communication_style: string;
-  love_code: string;
   default_tone: string;
   most_common_trigger: string;
 }
@@ -21,7 +20,6 @@ const CommunicationPreferences: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [preferences, setPreferences] = useState<CommunicationData>({
     communication_style: '',
-    love_code: '',
     default_tone: '',
     most_common_trigger: '',
   });
@@ -47,7 +45,6 @@ const CommunicationPreferences: React.FC = () => {
       if (data) {
         setPreferences({
           communication_style: data.communication_style || '',
-          love_code: data.love_code || '',
           default_tone: data.default_tone || '',
           most_common_trigger: data.most_common_trigger || '',
         });
@@ -115,31 +112,6 @@ const CommunicationPreferences: React.FC = () => {
             </Select>
             <p className="text-sm text-gray-600 mt-1">
               How you prefer to communicate during discussions
-            </p>
-          </div>
-
-          <div>
-            <Label htmlFor="loveCode" className="flex items-center">
-              <Heart className="h-4 w-4 mr-1" />
-              Love Code
-            </Label>
-            <Select
-              value={preferences.love_code}
-              onValueChange={(value) => setPreferences(prev => ({ ...prev, love_code: value }))}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Select your primary love code" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="affirming_words">Affirming Words</SelectItem>
-                <SelectItem value="physical_connection">Physical Connection</SelectItem>
-                <SelectItem value="focused_attention">Focused Attention</SelectItem>
-                <SelectItem value="supportive_acts">Supportive Acts</SelectItem>
-                <SelectItem value="thoughtful_gestures">Thoughtful Gestures</SelectItem>
-              </SelectContent>
-            </Select>
-            <p className="text-sm text-gray-600 mt-1">
-              How you prefer to express and receive love
             </p>
           </div>
 

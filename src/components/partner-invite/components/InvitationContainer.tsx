@@ -41,7 +41,7 @@ const InvitationContainer: React.FC<InvitationContainerProps> = ({
               {inviterName} invited you to Bridge
             </h1>
             <p className="text-midnight-indigo/80 mt-2">
-              Create an account to connect and discover your Love Code™
+              Create an account to connect and build a stronger relationship together
             </p>
           </div>
           

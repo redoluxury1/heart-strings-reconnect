@@ -12,7 +12,7 @@ import LoveNotesReceived from "@/pages/LoveNotesReceived";
 import Archive from "@/pages/Archive";
 import Games from "@/pages/Games";
 import PartnerInvite from "@/pages/PartnerInvite";
-import LoveCodeQuiz from "@/pages/LoveCodeQuiz";
+
 import PersonalityQuiz from "@/pages/PersonalityQuiz";
 import CommunicationAnalysis from "@/pages/CommunicationAnalysis";
 import NotFound from "@/pages/NotFound";
@@ -66,11 +66,6 @@ const MainAppRoutes = () => {
       <Route key="love-notes" path="/love-notes" element={
         <ProtectedRoute>
           <LoveNotesReceived />
-        </ProtectedRoute>
-      } />
-      <Route key="love-code-quiz" path="/love-code-quiz" element={
-        <ProtectedRoute>
-          <LoveCodeQuiz />
         </ProtectedRoute>
       } />
       <Route key="personality-quiz" path="/personality-quiz" element={

@@ -75,9 +75,9 @@ const ScreenshotStudio: React.FC = () => {
                 </Button>
                 
                 <Button asChild variant="outline" className="h-auto p-4 flex flex-col gap-2">
-                  <Link to="/love-code-quiz">
+                  <Link to="/games">
                     <BookOpen className="h-5 w-5" />
-                    <span className="text-xs">Love Code Quiz</span>
+                    <span className="text-xs">Games</span>
                   </Link>
                 </Button>
                 

@@ -36,6 +36,4 @@ export interface UserProfile {
   couple_id: string | null;
   partnerId: string | null;
   relationshipId: string | null;
-  loveCode: string | null;
-  secondaryLoveCode: string | null;
 }

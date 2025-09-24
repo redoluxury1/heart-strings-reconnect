@@ -11,7 +11,7 @@ const PersonalizedConnection = () => {
             Your Relationship, Understood
           </h2>
           <p className="text-lg text-midnight-indigo/70 max-w-3xl mx-auto">
-            Every relationship is unique. Discover personalized insights and tools tailored to your specific Love Code and relationship dynamics.
+            Every relationship is unique. Discover personalized insights and tools tailored to your specific relationship dynamics and communication patterns.
           </p>
         </div>
         
@@ -21,13 +21,13 @@ const PersonalizedConnection = () => {
               <span className="text-2xl">💝</span>
             </div>
             <h3 className="font-cormorant text-2xl font-semibold text-midnight-indigo mb-4">
-              Love Code Insights
+              Relationship Insights
             </h3>
             <p className="text-midnight-indigo/70 mb-6">
               Understand how you and your partner express and receive love differently, with personalized guidance for deeper connection.
             </p>
             <ul className="space-y-2 text-sm text-midnight-indigo/60">
-              <li>• Detailed Love Code analysis</li>
+              <li>• Relationship pattern analysis</li>
               <li>• Partner compatibility insights</li>
               <li>• Communication style guidance</li>
             </ul>

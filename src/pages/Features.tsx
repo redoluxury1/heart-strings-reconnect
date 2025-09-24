@@ -113,8 +113,8 @@ const Features = () => {
         },
         {
           icon: <Gamepad2 className="h-6 w-6" />,
-          title: "Love Code Quiz",
-          description: "Discover your and your partner's unique relationship languages and preferences.",
+          title: "Relationship Games",
+          description: "Fun activities and conversation starters to deepen your connection and understanding.",
           benefits: ["Understand love languages", "Reduces misunderstandings", "Creates deeper intimacy"]
         }
       ]
