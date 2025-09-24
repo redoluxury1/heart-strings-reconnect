@@ -83,17 +83,17 @@ const BridgeTheGapCategoryDetails: React.FC = () => {
             <div className="bg-white rounded-lg p-8 shadow-sm border border-gray-100 max-w-3xl mx-auto">
               <div className="text-center py-12">
                 <h2 className="text-2xl font-medium text-midnight-indigo mb-4">
-                  Conversation Starters for {getCategoryName(categoryId || '')}
+                  Category Not Available
                 </h2>
                 <p className="text-midnight-indigo/70 mb-6">
-                  Our team is developing targeted exercises for this category. Check back soon for helpful prompts.
+                  This category may not exist or may have been moved. Please try selecting a different category.
                 </p>
                 <Button 
                   variant="outline" 
                   className="border-midnight-indigo text-midnight-indigo hover:bg-midnight-indigo/5"
                   onClick={() => navigate('/bridge-the-gap')}
                 >
-                  Try another category
+                  Browse all categories
                 </Button>
               </div>
             </div>

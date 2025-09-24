@@ -13,38 +13,17 @@ const WouldYouRatherGame: React.FC = () => {
     currentCardIndex: 0,
     myAnswers: [],
     partnerAnswers: [],
-    partnerName: 'Alex', // This would come from user context in a real app
+    partnerName: '', // Partner name would come from relationship context
     showResults: false
   });
 
   const cards = getCardsByCategory(gameState.currentCategory);
   const currentCard = cards[gameState.currentCardIndex];
 
-  // This would fetch partner answers from an API in a real app
+  // Fetch partner answers in real implementation
   useEffect(() => {
-    // Simulate fetching partner answers
-    const mockPartnerAnswers: GameAnswer[] = [
-      {
-        cardId: 'n1',
-        selectedOption: 'optionB',
-        answeredAt: new Date().toISOString()
-      },
-      {
-        cardId: 'n3',
-        selectedOption: 'optionA',
-        answeredAt: new Date().toISOString()
-      },
-      {
-        cardId: 's2',
-        selectedOption: 'optionA',
-        answeredAt: new Date().toISOString()
-      }
-    ];
-
-    setGameState(prev => ({
-      ...prev,
-      partnerAnswers: mockPartnerAnswers
-    }));
+    // Partner answers would be fetched from the backend here
+    // For now, no mock data is loaded
   }, []);
 
   const handleSelectCategory = (category: 'normal' | 'spicy') => {

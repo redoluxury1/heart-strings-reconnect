@@ -26,35 +26,9 @@ const SharedActivityProgress: React.FC = () => {
       return;
     }
     
-    // Mock data for now - in a real implementation, this would fetch from the database
-    const mockActivities: ActivityProgress[] = [
-      {
-        activityId: 'personality-quiz',
-        activityName: 'Personality Quiz',
-        userProgress: 100,
-        partnerProgress: 75,
-        isCompleted: false,
-        lastActivity: '2 hours ago'
-      },
-      {
-        activityId: 'lets-talk-about-us',
-        activityName: "Let's Talk About Us",
-        userProgress: 60,
-        partnerProgress: 60,
-        isCompleted: false,
-        lastActivity: '1 day ago'
-      },
-      {
-        activityId: 'would-you-rather',
-        activityName: 'Would You Rather',
-        userProgress: 100,
-        partnerProgress: 100,
-        isCompleted: true,
-        lastActivity: '3 days ago'
-      }
-    ];
-    
-    setActivities(mockActivities);
+    // Fetch actual activity progress from database
+    // For production app, this would fetch real data from Supabase
+    setActivities([]);
     setIsLoading(false);
   }, [relationship]);
   

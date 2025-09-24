@@ -108,23 +108,7 @@ export const useWorkThisOut = (onClose?: () => void, onReady?: () => void, onNee
     setCurrentStep(6); // Move to the partner waiting state
   };
 
-  // Set mock data for partner2 for demo purposes
-  useEffect(() => {
-    // This is just for demonstration - in a real app, this would be handled by the actual partner
-    if (sessionData.partner1.ready && currentStep === 6) {
-      // Simulate partner completing their responses after a delay
-      const timer = setTimeout(() => {
-        handleResponse('partner2', 'complete', {
-          perspective: "I felt like we weren't really listening to each other. I was trying to explain my feelings but it seemed like we were talking past each other.",
-          understanding: "I wish you understood that sometimes I need time to process before discussing things. When I'm pushed to respond immediately, I get defensive.",
-          needs: "I need us to set aside dedicated time for important conversations when we're both calm and can really listen.",
-          intent: "Let's work through this together"
-        });
-      }, 5000); // 5 second delay for demo purposes
-      
-      return () => clearTimeout(timer);
-    }
-  }, [sessionData.partner1.ready, currentStep, handleResponse]);
+  // Partner responses would be handled through real-time sync in production
 
   return {
     isAnimating,

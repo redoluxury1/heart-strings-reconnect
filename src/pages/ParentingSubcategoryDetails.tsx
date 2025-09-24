@@ -84,15 +84,15 @@ const ParentingSubcategoryDetails: React.FC = () => {
                 ))}
               </div>
               
-              {/* Show placeholder if no subcategory is found */}
+              {/* Show message if no subcategory is found */}
               {!subcategory && (
                 <div className="bg-white rounded-lg p-8 shadow-sm border border-gray-100">
                   <div className="text-center py-12">
                     <h2 className="text-2xl font-medium text-midnight-indigo mb-4">
-                      We're developing this content
+                      Subcategory Not Found
                     </h2>
                     <p className="text-midnight-indigo/70 mb-6">
-                      Our team is creating specialized prompts for this topic. Check back soon for helpful guidance.
+                      The subcategory you're looking for doesn't exist or may have been moved.
                     </p>
                     <Button 
                       variant="outline" 

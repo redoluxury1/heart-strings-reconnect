@@ -6,14 +6,10 @@ import { useInterface } from '@/hooks/useInterfaceContext';
 
 export type CodeWordStatus = 'setup' | 'sync' | 'usage' | 'cool-down' | 'negotiation' | 'confirmation';
 
-// Mock data for demonstration purposes (would be replaced with real data from API)
-const mockRelationship = {
-  id: 'rel-123',
-  codeWord: null
-};
+// Initialize with null code word - data would come from relationship context
 
 export const useCodeWordState = () => {
-  const [codeWord, setCodeWord] = useState<CodeWordInfo | null>(mockRelationship.codeWord);
+  const [codeWord, setCodeWord] = useState<CodeWordInfo | null>(null);
   const [currentView, setCurrentView] = useState<CodeWordStatus>(codeWord ? 'usage' : 'setup');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [partnerWord, setPartnerWord] = useState<string | null>(null);
