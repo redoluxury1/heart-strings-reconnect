@@ -7,11 +7,14 @@ import BridgeTheGapRoutes from '@/routes/BridgeTheGapRoutes';
 import ScreenshotStudio from '@/pages/ScreenshotStudio';
 
 const AppContent = () => {
+  const isDevelopment = process.env.NODE_ENV === 'development';
+  
   return (
     <>
       <ScrollToTop />
       <Routes>
-        <Route path="/_screenshots" element={<ScreenshotStudio />} />
+        {/* Screenshot studio only accessible in development */}
+        {isDevelopment && <Route path="/_screenshots" element={<ScreenshotStudio />} />}
         {MainAppRoutes()}
         <Route path="/auth/*" element={<AuthRoutes />} />
         {BridgeTheGapRoutes()}

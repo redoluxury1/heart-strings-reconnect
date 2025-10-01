@@ -9,8 +9,10 @@ import { Home, Zap, BookOpen, Archive, UserPlus, Crown, Settings } from 'lucide-
 
 const ScreenshotStudio: React.FC = () => {
   useEffect(() => {
-    // Enable debug mode to bypass all subscription gates
-    SubscriptionService.enableDebugMode();
+    // Only enable debug mode in development environment
+    if (process.env.NODE_ENV === 'development') {
+      SubscriptionService.enableDebugMode();
+    }
   }, []);
 
   return (
