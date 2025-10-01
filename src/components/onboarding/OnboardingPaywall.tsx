@@ -38,8 +38,10 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
 
   const loadOfferings = async () => {
     try {
-      // Check if we're running on native platform
-      const isNative = (window as any).Capacitor?.isNativePlatform?.() || false;
+      // Check if we're running on native platform (iOS/Android, not web)
+      const isNative = typeof window !== 'undefined' && 
+                       window.Capacitor && 
+                       window.Capacitor.platform !== 'web';
       
       if (!isNative) {
         console.log('Running in web browser - skipping RevenueCat initialization');
@@ -78,8 +80,10 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
   };
 
   const handleSubscribe = async (pkg: PurchasesPackage | null) => {
-    // Check if we're running on native platform
-    const isNative = (window as any).Capacitor?.isNativePlatform?.() || false;
+    // Check if we're running on native platform (iOS/Android, not web)
+    const isNative = typeof window !== 'undefined' && 
+                     window.Capacitor && 
+                     window.Capacitor.platform !== 'web';
     
     if (!isNative) {
       toast({
@@ -104,8 +108,13 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
       // Refresh subscription status immediately and wait for it to complete
       await refreshSubscription();
       
-      // Check if premium entitlement is now active
-      if (customerInfo.entitlements.active['premium']) {
+      // Check if ANY entitlement is now active (using our actual entitlement IDs)
+      const hasActiveEntitlement = 
+        customerInfo.entitlements.active['entl51d1c435c2'] !== undefined ||
+        customerInfo.entitlements.active['entl2a85cac069'] !== undefined ||
+        Object.keys(customerInfo.entitlements.active || {}).length > 0;
+      
+      if (hasActiveEntitlement) {
         toast({
           title: "Welcome to Premium!",
           description: "Your subscription is now active. Enjoy all the exclusive features.",
@@ -117,7 +126,9 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
           onContinue();
         }, 500);
       } else {
-        // Purchase processed but entitlement not active - still allow continuation
+        // Purchase processed but entitlement not active yet - still allow continuation
+        // RevenueCat may take a moment to sync
+        console.log('Purchase completed, entitlements syncing...');
         toast({
           title: "Subscription Activated",
           description: "Thank you for subscribing! Your premium features will be available shortly.",

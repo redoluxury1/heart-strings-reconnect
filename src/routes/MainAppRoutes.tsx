@@ -1,6 +1,7 @@
 import { Route } from "react-router-dom";
 import ProtectedRoute from "@/components/routing/ProtectedRoute";
 import { PageSubscriptionGate } from "@/components/subscription/PageSubscriptionGate";
+import { FEATURE_KEYS } from "@/services/subscriptionService";
 import Index from "@/pages/Index";
 import OnboardingIntro from "@/pages/OnboardingIntro";
 import SignupChoice from "@/pages/SignupChoice";
@@ -36,7 +37,7 @@ const MainAppRoutes = () => {
       {/* Feature pages - now protected at page level */}
       <Route key="during-conflict" path="/during-conflict" element={
         <PageSubscriptionGate 
-          featureKey="mid_fight_access"
+          featureKey={FEATURE_KEYS.MID_FIGHT_ACCESS}
           pageName="Mid-Fight Tools"
           pageDescription="Access powerful tools to pause, communicate better, and reconnect during conflicts. Includes the Code Word timer, conversation guides, and healing exercises."
         >
@@ -45,7 +46,7 @@ const MainAppRoutes = () => {
       } />
       <Route key="post-conflict" path="/post-conflict" element={
         <PageSubscriptionGate 
-          featureKey="post_conflict_access"
+          featureKey={FEATURE_KEYS.POST_CONFLICT_ACCESS}
           pageName="Post-Conflict Reflection"
           pageDescription="Process what happened with guided reflection tools, understand underlying needs, and strengthen your relationship through intentional healing."
         >
@@ -54,7 +55,7 @@ const MainAppRoutes = () => {
       } />
       <Route key="reconnect" path="/reconnect" element={
         <PageSubscriptionGate 
-          featureKey="reconnect_access"
+          featureKey={FEATURE_KEYS.RECONNECT_ACCESS}
           pageName="Reconnection Tools"
           pageDescription="Rebuild intimacy and connection with activities designed to bring you closer together and reignite the spark in your relationship."
         >
