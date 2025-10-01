@@ -301,8 +301,12 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
           </p>
           
           <div className="flex justify-center gap-6 text-xs text-[#2e4059]/60">
-            <button className="hover:underline">Terms of Use</button>
-            <button className="hover:underline">Privacy Policy</button>
+            <a href="/terms" target="_blank" rel="noopener noreferrer" className="hover:underline">
+              Terms of Use
+            </a>
+            <a href="/privacy" target="_blank" rel="noopener noreferrer" className="hover:underline">
+              Privacy Policy
+            </a>
           </div>
         </div>
       </div>

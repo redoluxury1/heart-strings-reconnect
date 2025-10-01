@@ -92,6 +92,7 @@ export const SubscriptionStatus: React.FC = () => {
           <Button
             variant="ghost"
             className="w-full text-red-600 hover:text-red-700"
+            onClick={() => window.open('https://apps.apple.com/account/subscriptions', '_blank', 'noopener,noreferrer')}
           >
             Manage Subscription
           </Button>
