@@ -30,9 +30,6 @@ export class SubscriptionService {
   static async hasActiveSubscription(userId: string): Promise<boolean> {
     console.log('SubscriptionService.hasActiveSubscription called for user:', userId);
     
-    // TEMPORARY: Always return true to bypass paywall for testing
-    return true;
-    
     // Debug mode bypass
     if (isDebugModeEnabled()) {
       console.log('Debug mode: bypassing subscription check - returning true');
@@ -40,6 +37,14 @@ export class SubscriptionService {
     }
     
     try {
+      // For native iOS, check RevenueCat entitlements first
+      if (this.storeKit.getCurrentEnvironment() === 'ios') {
+        const hasEntitlement = await EntitlementService.hasAnyActiveEntitlement();
+        console.log('RevenueCat entitlement check result:', hasEntitlement);
+        return hasEntitlement;
+      }
+      
+      // For web/mock environment, check Supabase database
       const { data: subscription, error } = await supabase
         .from('subscriptions')
         .select('*')
@@ -77,9 +82,6 @@ export class SubscriptionService {
   static async hasFeatureAccess(userId: string, featureKey: string): Promise<boolean> {
     console.log('SubscriptionService.hasFeatureAccess called for user:', userId, 'feature:', featureKey);
     
-    // TEMPORARY: Always return true to bypass paywall for testing
-    return true;
-    
     // Debug mode bypass
     if (isDebugModeEnabled()) {
       console.log('Debug mode: bypassing feature access check - returning true');
@@ -89,7 +91,9 @@ export class SubscriptionService {
     try {
       // For native iOS, check RevenueCat entitlements directly
       if (this.storeKit.getCurrentEnvironment() === 'ios') {
-        return await EntitlementService.hasEntitlement(featureKey);
+        const hasEntitlement = await EntitlementService.hasEntitlement(featureKey);
+        console.log('RevenueCat feature entitlement check result:', hasEntitlement);
+        return hasEntitlement;
       }
       
       // For web/mock environment, fall back to subscription check

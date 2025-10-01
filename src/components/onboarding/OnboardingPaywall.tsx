@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
+import { useSubscription } from '@/hooks/useSubscription';
 import { Pause, Heart, Bot, Book, ArrowRightLeft, MessageSquare, Sparkles } from 'lucide-react';
 import { Purchases, PurchasesPackage, LOG_LEVEL, PURCHASES_ERROR_CODE } from '@revenuecat/purchases-capacitor';
 
@@ -17,6 +18,7 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
 }) => {
   const { user } = useAuth();
   const { toast } = useToast();
+  const { refreshSubscription } = useSubscription();
   const [loading, setLoading] = useState(false);
   const [monthlyPackage, setMonthlyPackage] = useState<PurchasesPackage | null>(null);
   const [annualPackage, setAnnualPackage] = useState<PurchasesPackage | null>(null);
@@ -98,6 +100,9 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
     setLoading(true);
     try {
       const { customerInfo } = await Purchases.purchasePackage({ aPackage: pkg });
+      
+      // Refresh subscription status immediately
+      refreshSubscription();
       
       // Check if premium entitlement is now active
       if (customerInfo.entitlements.active['premium']) {
