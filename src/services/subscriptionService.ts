@@ -37,14 +37,14 @@ export class SubscriptionService {
     }
     
     try {
-      // For native iOS, check RevenueCat entitlements first
-      if (this.storeKit.getCurrentEnvironment() === 'ios') {
+      // For native platforms (iOS/Android), check RevenueCat entitlements first
+      if (this.storeKit.getCurrentEnvironment() === 'native') {
         const hasEntitlement = await EntitlementService.hasAnyActiveEntitlement();
         console.log('RevenueCat entitlement check result:', hasEntitlement);
         return hasEntitlement;
       }
       
-      // For web/mock environment, check Supabase database
+      // For web/simulator environment, check Supabase database
       const { data: subscription, error } = await supabase
         .from('subscriptions')
         .select('*')
@@ -89,14 +89,14 @@ export class SubscriptionService {
     }
     
     try {
-      // For native iOS, check RevenueCat entitlements directly
-      if (this.storeKit.getCurrentEnvironment() === 'ios') {
+      // For native platforms (iOS/Android), check RevenueCat entitlements directly
+      if (this.storeKit.getCurrentEnvironment() === 'native') {
         const hasEntitlement = await EntitlementService.hasEntitlement(featureKey);
         console.log('RevenueCat feature entitlement check result:', hasEntitlement);
         return hasEntitlement;
       }
       
-      // For web/mock environment, fall back to subscription check
+      // For web/simulator environment, fall back to subscription check
       const hasActiveSubscription = await this.hasActiveSubscription(userId);
       
       if (!hasActiveSubscription) {

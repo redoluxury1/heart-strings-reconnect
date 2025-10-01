@@ -32,6 +32,11 @@ const isIOSEnvironment = () => {
   return isCapacitorEnvironment() && window.Capacitor?.platform === 'ios';
 };
 
+// Check if we're running on a native platform (iOS or Android)
+const isNativePlatform = () => {
+  return isCapacitorEnvironment(); // This covers both iOS and Android
+};
+
 // Check if RevenueCat is properly configured
 const isRevenueCatConfigured = () => {
   return true; // Always configured with production key
@@ -54,14 +59,14 @@ export class StoreKitService {
     if (this.isInitialized) return;
 
     try {
-      if (isIOSEnvironment() && isRevenueCatConfigured()) {
-        // Use native iOS StoreKit with RevenueCat
+      if (isNativePlatform() && isRevenueCatConfigured()) {
+        // Use native StoreKit with RevenueCat (iOS or Android)
         await this.nativeService.initialize();
-        console.log('StoreKit service initialized with native iOS implementation');
+        console.log('StoreKit service initialized with native implementation');
       } else {
         // Use mock service for web/development or when RevenueCat is not configured
         await this.mockService.initialize();
-        const reason = !isIOSEnvironment() ? 'not iOS environment' : 'RevenueCat not configured';
+        const reason = !isNativePlatform() ? 'web environment' : 'RevenueCat not configured';
         console.log(`StoreKit service initialized with mock implementation (${reason})`);
       }
       this.isInitialized = true;
@@ -77,7 +82,7 @@ export class StoreKitService {
   async getProducts(productIds: string[]): Promise<StoreKitProduct[]> {
     await this.initialize();
     
-    if (isIOSEnvironment() && isRevenueCatConfigured()) {
+    if (isNativePlatform() && isRevenueCatConfigured()) {
       return this.nativeService.getProducts(productIds);
     } else {
       return this.mockService.getProducts(productIds);
@@ -87,7 +92,7 @@ export class StoreKitService {
   async purchaseProduct(productId: string): Promise<PurchaseTransaction> {
     await this.initialize();
     
-    if (isIOSEnvironment() && isRevenueCatConfigured()) {
+    if (isNativePlatform() && isRevenueCatConfigured()) {
       return this.nativeService.purchaseProduct(productId);
     } else {
       return this.mockService.purchaseProduct(productId);
@@ -97,7 +102,7 @@ export class StoreKitService {
   async restorePurchases(): Promise<PurchaseTransaction[]> {
     await this.initialize();
     
-    if (isIOSEnvironment() && isRevenueCatConfigured()) {
+    if (isNativePlatform() && isRevenueCatConfigured()) {
       return this.nativeService.restorePurchases();
     } else {
       return this.mockService.restorePurchases();
@@ -107,7 +112,7 @@ export class StoreKitService {
   async finishTransaction(transactionId: string): Promise<void> {
     await this.initialize();
     
-    if (isIOSEnvironment() && isRevenueCatConfigured()) {
+    if (isNativePlatform() && isRevenueCatConfigured()) {
       await this.nativeService.finishTransaction(transactionId);
     } else {
       await this.mockService.finishTransaction(transactionId);
@@ -115,14 +120,15 @@ export class StoreKitService {
   }
 
   // Helper method to check current environment
-  getCurrentEnvironment(): 'ios' | 'web' {
-    return isIOSEnvironment() && isRevenueCatConfigured() ? 'ios' : 'web';
+  getCurrentEnvironment(): 'native' | 'web' {
+    return isNativePlatform() && isRevenueCatConfigured() ? 'native' : 'web';
   }
 
   // Helper method for debugging
   getServiceInfo(): string {
     const env = this.getCurrentEnvironment();
     const configured = isRevenueCatConfigured() ? 'configured' : 'not configured';
-    return `StoreKit running in ${env} mode${env === 'web' ? ` (mock service, RevenueCat ${configured})` : ' (native service)'}`;
+    const platform = window.Capacitor?.platform || 'unknown';
+    return `StoreKit running in ${env} mode${env === 'web' ? ` (mock service, RevenueCat ${configured})` : ` (native service on ${platform})`}`;
   }
 }
