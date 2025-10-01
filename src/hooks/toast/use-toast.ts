@@ -6,7 +6,7 @@ import { actionTypes, genId } from "./toast-actions";
 import { playNotificationSound } from "./notification-sound";
 import { ToasterToast } from "./types";
 
-// Base toast function
+// Base toast function with default 2 second duration
 export function toast({ ...props }: Omit<ToasterToast, "id">) {
   const id = genId();
 
@@ -24,6 +24,7 @@ export function toast({ ...props }: Omit<ToasterToast, "id">) {
       ...props,
       id,
       open: true,
+      duration: props.duration ?? 2000, // Default to 2 seconds if not specified
       onOpenChange: (open) => {
         if (!open) dismiss();
       },
