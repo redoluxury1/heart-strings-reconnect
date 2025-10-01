@@ -36,6 +36,15 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
 
   const loadOfferings = async () => {
     try {
+      // Check if we're running on native platform
+      const isNative = (window as any).Capacitor?.isNativePlatform?.() || false;
+      
+      if (!isNative) {
+        console.log('Running in web browser - skipping RevenueCat initialization');
+        setPackagesLoading(false);
+        return;
+      }
+
       // Configure RevenueCat with debug logging
       Purchases.setLogLevel({ level: LOG_LEVEL.DEBUG });
       await Purchases.configure({ apiKey: 'appl_OnCrqXNltwcZinVNJnxEMJuiHOa' });
@@ -67,6 +76,19 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
   };
 
   const handleSubscribe = async (pkg: PurchasesPackage | null) => {
+    // Check if we're running on native platform
+    const isNative = (window as any).Capacitor?.isNativePlatform?.() || false;
+    
+    if (!isNative) {
+      toast({
+        title: "Demo Mode",
+        description: "Subscriptions only work on actual iOS/Android devices. In the app, this would open the purchase flow.",
+      });
+      // For demo purposes, just continue
+      setTimeout(() => onContinue(), 1500);
+      return;
+    }
+
     if (!pkg) return;
     
     setLoading(true);
