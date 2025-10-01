@@ -2,7 +2,7 @@
 import { Routes, Route } from 'react-router-dom';
 import ScrollToTop from './ScrollToTop';
 import MainAppRoutes from '@/routes/MainAppRoutes';
-import AuthRoutes from '@/routes/AuthRoutes';
+import Auth from '@/pages/Auth';
 import BridgeTheGapRoutes from '@/routes/BridgeTheGapRoutes';
 import ScreenshotStudio from '@/pages/ScreenshotStudio';
 
@@ -16,7 +16,7 @@ const AppContent = () => {
         {/* Screenshot studio only accessible in development */}
         {isDevelopment && <Route path="/_screenshots" element={<ScreenshotStudio />} />}
         {MainAppRoutes()}
-        <Route path="/auth/*" element={<AuthRoutes />} />
+        <Route path="/auth" element={<Auth />} />
         {BridgeTheGapRoutes()}
       </Routes>
     </>
