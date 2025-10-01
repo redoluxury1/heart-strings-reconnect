@@ -1,5 +1,7 @@
 
 import { useAuth } from '../../contexts/AuthContext';
+import { SubscriptionService } from '@/services/subscriptionService';
+import { useEffect } from 'react';
 
 interface UseOnboardingActionsProps {
   step: number;
@@ -15,6 +17,14 @@ export const useOnboardingActions = ({
   completeOnboarding
 }: UseOnboardingActionsProps) => {
   const { user, relationship } = useAuth();
+  
+  // Auto-skip paywall in debug mode
+  useEffect(() => {
+    if (step === 3 && SubscriptionService.isDebugModeActive()) {
+      console.log("🎯 Debug mode active - auto-skipping paywall");
+      completeOnboarding();
+    }
+  }, [step]);
   
   const handleNextStep = () => {
     console.log(`📍 Current step: ${step}, moving to next step`);

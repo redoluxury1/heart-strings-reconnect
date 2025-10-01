@@ -12,9 +12,19 @@ export const useSubscription = () => {
   const [hasActiveSubscription, setHasActiveSubscription] = useState(false);
 
   useEffect(() => {
+    // Check for debug mode first
+    const debugMode = SubscriptionService.isDebugModeActive();
+    
     if (!user) {
       setSubscription(null);
       setHasActiveSubscription(true); // bypass paywall in preview when not logged in
+      setLoading(false);
+      return;
+    }
+
+    if (debugMode) {
+      setSubscription(null);
+      setHasActiveSubscription(true); // bypass paywall in debug mode
       setLoading(false);
       return;
     }
