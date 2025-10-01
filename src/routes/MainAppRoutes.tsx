@@ -63,21 +63,33 @@ const MainAppRoutes = () => {
         </PageSubscriptionGate>
       } />
       
-      {/* Other protected routes that require authentication */}
+      {/* Other protected routes that require premium subscription */}
       <Route key="love-notes" path="/love-notes" element={
-        <ProtectedRoute>
+        <PageSubscriptionGate 
+          featureKey={FEATURE_KEYS.LOVE_NOTES_ACCESS}
+          pageName="Love Notes"
+          pageDescription="Exchange heartfelt messages with your partner. Express appreciation, love, and connection through thoughtful notes."
+        >
           <LoveNotesReceived />
-        </ProtectedRoute>
+        </PageSubscriptionGate>
       } />
       <Route key="personality-quiz" path="/personality-quiz" element={
-        <ProtectedRoute>
+        <PageSubscriptionGate 
+          featureKey={FEATURE_KEYS.QUIZ_ACCESS}
+          pageName="Personality Quiz"
+          pageDescription="Discover your communication style and understand your partner better. Get personalized insights for healthier conversations."
+        >
           <PersonalityQuiz />
-        </ProtectedRoute>
+        </PageSubscriptionGate>
       } />
       <Route key="archive" path="/archive" element={
-        <ProtectedRoute>
+        <PageSubscriptionGate 
+          featureKey={FEATURE_KEYS.ARCHIVE_ACCESS}
+          pageName="Saved Archive"
+          pageDescription="Access your saved conversations, reflections, repair plans, and progress. Review your relationship journey and growth over time."
+        >
           <Archive />
-        </ProtectedRoute>
+        </PageSubscriptionGate>
       } />
       <Route key="games" path="/games" element={<Games />} />
       <Route key="communication-analysis" path="/communication-analysis" element={<CommunicationAnalysis />} />
