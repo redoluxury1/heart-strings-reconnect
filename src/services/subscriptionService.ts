@@ -14,8 +14,13 @@ export const FEATURE_KEYS = {
   QUIZ_ACCESS: 'entl2a85cac069'
 } as const;
 
-// Debug mode helper function
+// Debug mode helper function - ONLY works in development
 const isDebugModeEnabled = (): boolean => {
+  // Debug mode only available in development environment
+  if (process.env.NODE_ENV !== 'development') {
+    return false;
+  }
+  
   // Check localStorage for debug bypass
   if (typeof window !== 'undefined') {
     return localStorage.getItem('bypassSubscription') === 'true';
@@ -308,8 +313,13 @@ export class SubscriptionService {
     }
   }
 
-  // Debug helper methods
+  // Debug helper methods - ONLY work in development
   static enableDebugMode(): void {
+    if (process.env.NODE_ENV !== 'development') {
+      console.warn('Debug mode only available in development environment');
+      return;
+    }
+    
     if (typeof window !== 'undefined') {
       localStorage.setItem('bypassSubscription', 'true');
       console.log('Debug mode enabled: All subscription gates bypassed');
