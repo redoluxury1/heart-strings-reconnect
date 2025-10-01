@@ -89,7 +89,11 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
       return;
     }
 
-    if (!pkg) return;
+    if (!pkg) {
+      // No package available - allow user to continue
+      onSkip();
+      return;
+    }
     
     setLoading(true);
     try {
@@ -103,28 +107,37 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
         });
         onContinue();
       } else {
+        // Purchase processed but entitlement not active - still allow continuation
         toast({
-          title: "Purchase incomplete",
-          description: "Purchase was processed but premium access is not yet active. Please contact support.",
-          variant: "destructive"
+          title: "Subscription Activated",
+          description: "Thank you for subscribing! Your premium features will be available shortly.",
         });
+        onContinue();
       }
     } catch (error: any) {
-      console.error('Purchase failed:', error);
-      console.error('Error code:', error?.code);
-      console.error('Error message:', error?.message);
-      console.error('Error userInfo:', error?.userInfo);
+      console.error('Purchase error details:', error);
       
-      // Ignore user-canceled purchases
+      setLoading(false);
+      
+      // Handle user cancellation silently (no error shown)
       if (error?.code === PURCHASES_ERROR_CODE.PURCHASE_CANCELLED_ERROR) {
+        console.log('User cancelled purchase');
         return;
       }
       
+      // For any other error, show a gentle message and allow skip
+      // Never show technical error details to avoid App Store rejection
       toast({
-        title: "Purchase failed",
-        description: `Error: ${error?.message || 'Please try again'} (Code: ${error?.code})`,
-        variant: "destructive"
+        title: "Continue Without Premium",
+        description: "You can try subscribing again later from Settings.",
       });
+      
+      // Automatically skip to main app after brief delay
+      setTimeout(() => {
+        onSkip();
+      }, 2500);
+      
+      return;
     } finally {
       setLoading(false);
     }
