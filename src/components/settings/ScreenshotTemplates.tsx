@@ -27,7 +27,6 @@ interface TemplateSpec {
 const iphoneSize: TemplateSpec[] = [
   { id: 'home', label: 'Welcome Home Screen', device: 'iphone', width: 1290, height: 2796 },
   { id: 'mid-fight', label: 'During Conflict Tools', device: 'iphone', width: 1290, height: 2796 },
-  
   { id: 'archive', label: 'Saved Progress Archive', device: 'iphone', width: 1290, height: 2796 },
   { id: 'partner', label: 'Partner Connection', device: 'iphone', width: 1290, height: 2796 },
   { id: 'paywall', label: 'Premium Features', device: 'iphone', width: 1290, height: 2796 },
@@ -36,7 +35,6 @@ const iphoneSize: TemplateSpec[] = [
 const ipadSize: TemplateSpec[] = [
   { id: 'home', label: 'Welcome Home Screen', device: 'ipad', width: 2048, height: 2732 },
   { id: 'mid-fight', label: 'During Conflict Tools', device: 'ipad', width: 2048, height: 2732 },
-  
   { id: 'archive', label: 'Saved Progress Archive', device: 'ipad', width: 2048, height: 2732 },
   { id: 'partner', label: 'Partner Connection', device: 'ipad', width: 2048, height: 2732 },
   { id: 'paywall', label: 'Premium Features', device: 'ipad', width: 2048, height: 2732 },
