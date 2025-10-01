@@ -58,8 +58,8 @@ export const useSubscription = () => {
     return SubscriptionService.hasFeatureAccess(user.id, featureKey);
   };
 
-  const refreshSubscription = () => {
-    loadSubscriptionData();
+  const refreshSubscription = async () => {
+    await loadSubscriptionData();
   };
 
   return {

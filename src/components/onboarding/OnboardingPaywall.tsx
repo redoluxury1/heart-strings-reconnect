@@ -101,8 +101,8 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
     try {
       const { customerInfo } = await Purchases.purchasePackage({ aPackage: pkg });
       
-      // Refresh subscription status immediately
-      refreshSubscription();
+      // Refresh subscription status immediately and wait for it to complete
+      await refreshSubscription();
       
       // Check if premium entitlement is now active
       if (customerInfo.entitlements.active['premium']) {
@@ -110,14 +110,23 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
           title: "Welcome to Premium!",
           description: "Your subscription is now active. Enjoy all the exclusive features.",
         });
-        onContinue();
+        
+        // Small delay to ensure state propagates to all components
+        setTimeout(() => {
+          setLoading(false);
+          onContinue();
+        }, 500);
       } else {
         // Purchase processed but entitlement not active - still allow continuation
         toast({
           title: "Subscription Activated",
           description: "Thank you for subscribing! Your premium features will be available shortly.",
         });
-        onContinue();
+        
+        setTimeout(() => {
+          setLoading(false);
+          onContinue();
+        }, 500);
       }
     } catch (error: any) {
       console.error('Purchase error details:', error);

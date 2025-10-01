@@ -17,7 +17,7 @@ export const SubscriptionGate: React.FC<SubscriptionGateProps> = ({
   fallback,
   showUpgradePrompt = true
 }) => {
-  const { hasFeatureAccess, hasActiveSubscription, loading } = useSubscription();
+  const { hasFeatureAccess, hasActiveSubscription, loading, refreshSubscription } = useSubscription();
   const [hasAccess, setHasAccess] = useState(false);
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
 
@@ -82,7 +82,12 @@ export const SubscriptionGate: React.FC<SubscriptionGateProps> = ({
         {showUpgradeModal && (
           <div className="fixed inset-0 z-50 overflow-auto">
             <OnboardingPaywall
-              onContinue={() => setShowUpgradeModal(false)}
+              onContinue={async () => {
+                setShowUpgradeModal(false);
+                // Refresh to check new subscription status
+                await refreshSubscription();
+                await checkAccess();
+              }}
               onSkip={() => setShowUpgradeModal(false)}
             />
           </div>

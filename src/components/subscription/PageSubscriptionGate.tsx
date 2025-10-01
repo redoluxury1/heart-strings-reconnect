@@ -17,7 +17,7 @@ export const PageSubscriptionGate: React.FC<PageSubscriptionGateProps> = ({
   pageName,
   pageDescription
 }) => {
-  const { hasFeatureAccess, hasActiveSubscription, loading } = useSubscription();
+  const { hasFeatureAccess, hasActiveSubscription, loading, refreshSubscription } = useSubscription();
   const [hasAccess, setHasAccess] = useState(false);
   const [isUpgradeModalOpen, setIsUpgradeModalOpen] = useState(false);
 
@@ -109,9 +109,12 @@ export const PageSubscriptionGate: React.FC<PageSubscriptionGateProps> = ({
         {isUpgradeModalOpen && (
           <div className="fixed inset-0 z-50 overflow-auto">
             <OnboardingPaywall
-              onContinue={() => {
+              onContinue={async () => {
                 console.log('OnboardingPaywall onContinue called');
                 setIsUpgradeModalOpen(false);
+                // Refresh to check new subscription status
+                await refreshSubscription();
+                // Re-check access will happen automatically via useEffect
               }}
               onSkip={() => {
                 console.log('OnboardingPaywall onSkip called');
