@@ -14,7 +14,7 @@ import Archive from "@/pages/Archive";
 import Games from "@/pages/Games";
 import PartnerInvite from "@/pages/PartnerInvite";
 
-import PersonalityQuiz from "@/pages/PersonalityQuiz";
+
 import CommunicationAnalysis from "@/pages/CommunicationAnalysis";
 import NotFound from "@/pages/NotFound";
 import SettingsPage from "@/pages/Settings";
@@ -71,15 +71,6 @@ const MainAppRoutes = () => {
           pageDescription="Exchange heartfelt messages with your partner. Express appreciation, love, and connection through thoughtful notes."
         >
           <LoveNotesReceived />
-        </PageSubscriptionGate>
-      } />
-      <Route key="personality-quiz" path="/personality-quiz" element={
-        <PageSubscriptionGate 
-          featureKey={FEATURE_KEYS.QUIZ_ACCESS}
-          pageName="Personality Quiz"
-          pageDescription="Discover your communication style and understand your partner better. Get personalized insights for healthier conversations."
-        >
-          <PersonalityQuiz />
         </PageSubscriptionGate>
       } />
       <Route key="archive" path="/archive" element={

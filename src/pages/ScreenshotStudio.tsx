@@ -48,12 +48,6 @@ const ScreenshotStudio: React.FC = () => {
                   </Link>
                 </Button>
                 
-                <Button asChild variant="outline" className="h-auto p-4 flex flex-col gap-2">
-                  <Link to="/personality-quiz">
-                    <BookOpen className="h-5 w-5" />
-                    <span className="text-xs">Personality Quiz</span>
-                  </Link>
-                </Button>
                 
                 <Button asChild variant="outline" className="h-auto p-4 flex flex-col gap-2">
                   <Link to="/archive">

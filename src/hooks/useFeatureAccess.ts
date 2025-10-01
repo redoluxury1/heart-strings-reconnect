@@ -16,7 +16,6 @@ export const useFeatureAccess = () => {
     hasReconnectAccess: () => hasFeatureAccess(FEATURE_KEYS.RECONNECT_ACCESS),
     hasLoveNotesAccess: () => hasFeatureAccess(FEATURE_KEYS.LOVE_NOTES_ACCESS),
     hasArchiveAccess: () => hasFeatureAccess(FEATURE_KEYS.ARCHIVE_ACCESS),
-    hasQuizAccess: () => hasFeatureAccess(FEATURE_KEYS.QUIZ_ACCESS),
     
     // Generic feature access check
     hasFeatureAccess
