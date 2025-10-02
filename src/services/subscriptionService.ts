@@ -13,7 +13,8 @@ export const FEATURE_KEYS = {
   ARCHIVE_ACCESS: 'entl2a85cac069'
 } as const;
 
-// Demo account for App Store reviewers
+// Demo account for App Store reviewers - bypasses all subscription checks
+// This allows App Store review team to test premium features without purchasing
 const DEMO_ACCOUNT_EMAIL = 'test06@testing.com';
 
 // Helper to check if current user is demo account

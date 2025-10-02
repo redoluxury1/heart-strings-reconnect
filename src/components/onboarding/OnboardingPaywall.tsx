@@ -7,6 +7,10 @@ import { useSubscription } from '@/hooks/useSubscription';
 import { Pause, Heart, Bot, Book, ArrowRightLeft, MessageSquare, Sparkles } from 'lucide-react';
 import { Purchases, PurchasesPackage, LOG_LEVEL, PURCHASES_ERROR_CODE } from '@revenuecat/purchases-capacitor';
 
+// Paywall component with Apple App Store compliance fixes:
+// - Silent cancellation handling (no error on user cancel)
+// - Gentle error messages with auto-skip to prevent rejection
+// - Handles entitlement sync delays gracefully
 interface OnboardingPaywallProps {
   onContinue: () => void;
   onSkip: () => void;
