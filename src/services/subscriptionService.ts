@@ -13,21 +13,7 @@ export const FEATURE_KEYS = {
   ARCHIVE_ACCESS: 'entl2a85cac069'
 } as const;
 
-// Demo account for App Store reviewers - bypasses all subscription checks
-// This allows App Store review team to test premium features without purchasing
-const DEMO_ACCOUNT_EMAIL = 'test06@testing.com';
-
-// Helper to check if current user is demo account
-const isDemoAccount = async (): Promise<boolean> => {
-  if (typeof window === 'undefined') return false;
-  
-  try {
-    const { data: { user } } = await supabase.auth.getUser();
-    return user?.email === DEMO_ACCOUNT_EMAIL;
-  } catch {
-    return false;
-  }
-};
+// Demo account bypass removed - Apple reviewers will use sandbox subscriptions to test the full purchase flow
 
 // Debug mode helper function - ONLY works in development
 const isDebugModeEnabled = (): boolean => {
@@ -49,12 +35,6 @@ export class SubscriptionService {
   // Check if user has active subscription
   static async hasActiveSubscription(userId: string): Promise<boolean> {
     console.log('SubscriptionService.hasActiveSubscription called for user:', userId);
-    
-    // Demo account bypass for App Store reviewers
-    if (await isDemoAccount()) {
-      console.log('Demo account detected: granting premium access');
-      return true;
-    }
     
     // Debug mode bypass
     if (isDebugModeEnabled()) {
@@ -107,12 +87,6 @@ export class SubscriptionService {
   // Check if user has specific feature access
   static async hasFeatureAccess(userId: string, featureKey: string): Promise<boolean> {
     console.log('SubscriptionService.hasFeatureAccess called for user:', userId, 'feature:', featureKey);
-    
-    // Demo account bypass for App Store reviewers
-    if (await isDemoAccount()) {
-      console.log('Demo account detected: granting feature access for', featureKey);
-      return true;
-    }
     
     // Debug mode bypass
     if (isDebugModeEnabled()) {
