@@ -13,7 +13,8 @@ import LoveNotesReceived from "@/pages/LoveNotesReceived";
 import Archive from "@/pages/Archive";
 import Games from "@/pages/Games";
 import PartnerInvite from "@/pages/PartnerInvite";
-
+import Privacy from "@/pages/Privacy";
+import Terms from "@/pages/Terms";
 
 import CommunicationAnalysis from "@/pages/CommunicationAnalysis";
 import NotFound from "@/pages/NotFound";
@@ -26,6 +27,8 @@ const MainAppRoutes = () => {
     <>
       <Route key="index" path="/" element={<Index />} />
       <Route key="features" path="/features" element={<Features />} />
+      <Route key="privacy" path="/privacy" element={<Privacy />} />
+      <Route key="terms" path="/terms" element={<Terms />} />
       <Route key="intro" path="/intro" element={<OnboardingIntro />} />
       <Route key="signup-choice" path="/signup-choice" element={<SignupChoice />} />
       <Route key="onboarding" path="/onboarding" element={
