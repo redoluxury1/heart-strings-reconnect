@@ -234,6 +234,37 @@ export const SubscriptionUpgradeModal: React.FC<SubscriptionUpgradeModalProps> =
             })}
           </div>
 
+          {/* Subscription Information - Required by Apple */}
+          <div className="bg-gray-50 rounded-lg p-4 text-xs text-gray-600 space-y-1">
+            <p className="font-medium text-gray-900">Subscription Details:</p>
+            <p>• Monthly: $12.99/month with 7-day free trial</p>
+            <p>• Yearly: $129/year with 7-day free trial (Save 17%)</p>
+            <p>• Payment charged to Apple ID at purchase confirmation</p>
+            <p>• Subscription auto-renews unless canceled 24 hours before period ends</p>
+            <p>• Manage or cancel in App Store Account Settings</p>
+          </div>
+
+          {/* Legal Links - Required by Apple App Store Guidelines */}
+          <div className="flex justify-center gap-4 text-sm">
+            <a 
+              href="/terms" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-[#2e4059] hover:underline font-medium"
+            >
+              Terms of Use (EULA)
+            </a>
+            <span className="text-gray-300">•</span>
+            <a 
+              href="/privacy" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-[#2e4059] hover:underline font-medium"
+            >
+              Privacy Policy
+            </a>
+          </div>
+
           <div className="flex justify-between items-center pt-4 border-t">
             <Button
               variant="ghost"

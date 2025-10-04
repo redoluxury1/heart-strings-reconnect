@@ -297,18 +297,39 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
           </Button>
         </div>
 
-        {/* Additional Info */}
+        {/* Subscription Information - Required by Apple */}
+        <div className="bg-white/50 rounded-lg p-4 mb-4 text-xs text-[#2e4059]/80 space-y-2">
+          <p className="font-medium text-[#2e4059]">Subscription Information:</p>
+          <p>• Monthly: $12.99/month after 3-day free trial</p>
+          <p>• Yearly: $129/year after 7-day free trial</p>
+          <p>• Payment charged to Apple ID at purchase confirmation</p>
+          <p>• Auto-renews unless canceled 24 hours before period ends</p>
+          <p>• Manage subscriptions in App Store Account Settings</p>
+        </div>
+
+        {/* Legal Links - Required by Apple App Store Guidelines */}
         <div className="text-center space-y-3">
           <p className="text-xs text-[#1a2332]">
-            Cancel anytime.<br />
+            Cancel anytime from your App Store account settings.<br />
             <span className="italic">100% of your support goes toward building better tools to make stronger relationships.</span>
           </p>
           
-          <div className="flex justify-center gap-6 text-xs text-[#2e4059]/60">
-            <a href="/terms" target="_blank" rel="noopener noreferrer" className="hover:underline">
-              Terms of Use
+          <div className="flex justify-center gap-4 text-sm font-medium">
+            <a 
+              href="/terms" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-[#2e4059] hover:underline underline-offset-4"
+            >
+              Terms of Use (EULA)
             </a>
-            <a href="/privacy" target="_blank" rel="noopener noreferrer" className="hover:underline">
+            <span className="text-[#2e4059]/30">•</span>
+            <a 
+              href="/privacy" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-[#2e4059] hover:underline underline-offset-4"
+            >
               Privacy Policy
             </a>
           </div>
