@@ -174,16 +174,29 @@ export class SubscriptionService {
   }
 
   static async handlePurchase(userId: string, productId: string): Promise<Subscription | null> {
-    console.log('SubscriptionService.handlePurchase called for user:', userId, 'product:', productId);
-    console.log('Current StoreKit environment:', this.storeKit.getServiceInfo());
+    console.log('💳 [SUBSCRIPTION] handlePurchase called for user:', userId, 'product:', productId);
+    console.log('💳 [SUBSCRIPTION] Current StoreKit environment:', this.storeKit.getServiceInfo());
     
     try {
+      console.log('💳 [SUBSCRIPTION] Step 1: Initiating StoreKit purchase');
       const transaction = await this.storeKit.purchaseProduct(productId);
+      console.log('💳 [SUBSCRIPTION] Step 2: StoreKit purchase completed, creating subscription');
+      
       const subscription = await this.createOrUpdateSubscription(userId, transaction);
+      console.log('💳 [SUBSCRIPTION] Step 3: Subscription created/updated:', subscription?.id);
+      
       await this.storeKit.finishTransaction(transaction.transactionId);
+      console.log('💳 [SUBSCRIPTION] Step 4: Transaction finished');
+      
+      console.log('💳 [SUBSCRIPTION SUCCESS] Purchase handled successfully');
       return subscription;
     } catch (error) {
-      console.error('Purchase failed:', error);
+      console.error('💳 [SUBSCRIPTION FAILED] Purchase failed:', {
+        message: error.message,
+        stack: error.stack,
+        userId,
+        productId
+      });
       throw error;
     }
   }
@@ -215,16 +228,32 @@ export class SubscriptionService {
     userId: string,
     transaction: PurchaseTransaction
   ): Promise<Subscription | null> {
+    console.log('💾 [DATABASE] Creating/updating subscription for user:', userId);
+    console.log('💾 [DATABASE] Transaction:', {
+      productId: transaction.productId,
+      transactionId: transaction.transactionId,
+      isTrialPeriod: transaction.isTrialPeriod
+    });
+    
     try {
-      const { data: product } = await supabase
+      console.log('💾 [DATABASE] Step 1: Fetching product details for:', transaction.productId);
+      const { data: product, error: productError } = await supabase
         .from('subscription_products')
         .select('trial_period_days, billing_period')
         .eq('product_id', transaction.productId)
         .single();
 
+      if (productError) {
+        console.error('💾 [DATABASE ERROR] Failed to fetch product:', productError);
+        throw productError;
+      }
+
       if (!product) {
+        console.error('💾 [DATABASE ERROR] Product not found:', transaction.productId);
         throw new Error(`Product not found: ${transaction.productId}`);
       }
+      
+      console.log('💾 [DATABASE] Step 2: Product found:', product);
 
       const productData = product as unknown as { trial_period_days: number; billing_period: string };
       const now = new Date();
@@ -249,6 +278,14 @@ export class SubscriptionService {
         app_store_original_transaction_id: transaction.originalTransactionId,
         updated_at: now.toISOString()
       };
+      
+      console.log('💾 [DATABASE] Step 3: Upserting subscription data:', {
+        userId: subscriptionData.user_id,
+        productId: subscriptionData.product_id,
+        status: subscriptionData.status,
+        trialEndDate: subscriptionData.trial_end_date,
+        periodEnd: subscriptionData.current_period_end
+      });
 
       const { data: subscription, error } = await supabase
         .from('subscriptions')
@@ -259,13 +296,19 @@ export class SubscriptionService {
         .single();
 
       if (error) {
-        console.error('Error creating/updating subscription:', error);
+        console.error('💾 [DATABASE ERROR] Failed to upsert subscription:', error);
         throw error;
       }
-
+      
+      console.log('💾 [DATABASE SUCCESS] Subscription created/updated:', subscription?.id);
       return subscription as unknown as Subscription;
     } catch (error) {
-      console.error('Failed to create/update subscription:', error);
+      console.error('💾 [DATABASE FAILED] Error in createOrUpdateSubscription:', {
+        message: error.message,
+        stack: error.stack,
+        userId,
+        transactionId: transaction.transactionId
+      });
       throw error;
     }
   }

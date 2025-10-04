@@ -54,6 +54,9 @@ verify_jwt = false
 [functions.check-feature-access]
 verify_jwt = true
 
+[functions.check-subscription-config]
+verify_jwt = false
+
 [edge_runtime]
 policy = "per_worker"
 inspector_port = 8083
