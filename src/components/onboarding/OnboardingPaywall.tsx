@@ -276,10 +276,19 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
               )}
             </>
           ) : (
-            <div className="col-span-full text-center py-8">
-              <p className="text-[#2e4059]/60">
-                Unable to load subscription options. Please check your connection and try again.
+            <div className="col-span-full text-center py-8 bg-blue-50 rounded-lg p-6">
+              <p className="text-[#2e4059] font-medium mb-2">
+                📱 Subscriptions available on iOS & Android
               </p>
+              <p className="text-[#2e4059]/60 text-sm">
+                This is a web preview. On the actual app, users will see subscription pricing here and can purchase directly through the App Store.
+              </p>
+              <Button
+                onClick={onSkip}
+                className="mt-4 bg-[#2e4059] hover:bg-[#2e4059]/90 text-white"
+              >
+                Continue to App (Demo)
+              </Button>
             </div>
           )}
         </div>
