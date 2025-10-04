@@ -39,7 +39,14 @@ serve(async (req) => {
 
     const { receiptData, userId, transactionId, originalTransactionId, productId, purchaseDate, expiresDate, isTrialPeriod } = await req.json() as ReceiptValidationRequest;
 
-    console.log('Validating receipt for user:', userId, 'product:', productId);
+    console.log('Receipt validation request:', {
+      userId,
+      productId,
+      transactionId,
+      isTrialPeriod,
+      hasReceiptData: !!receiptData,
+      hasExpiresDate: !!expiresDate
+    });
 
     // Validate with Apple's servers
     const appleResponse = await validateWithApple(receiptData);
@@ -137,8 +144,20 @@ serve(async (req) => {
 
   } catch (error) {
     console.error('Receipt validation error:', error);
+    
+    // Enhanced error logging for debugging
+    console.error('Error details:', {
+      message: error.message,
+      stack: error.stack,
+      name: error.name
+    });
+    
     return new Response(
-      JSON.stringify({ success: false, error: error.message }),
+      JSON.stringify({ 
+        success: false, 
+        error: error.message || 'Unknown error occurred',
+        errorType: error.name || 'UnknownError'
+      }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }

@@ -1,6 +1,13 @@
 import { Purchases } from '@revenuecat/purchases-capacitor';
 import { RevenueCatConfig } from './revenueCatConfig';
 
+// Helper to check if we're in a native environment
+const isNativeEnvironment = (): boolean => {
+  return typeof window !== 'undefined' && 
+         window.Capacitor && 
+         window.Capacitor.platform !== 'web';
+};
+
 export class EntitlementService {
   // Your RevenueCat entitlement identifiers
   static readonly ENTITLEMENTS = {
@@ -9,9 +16,14 @@ export class EntitlementService {
   };
 
   static async hasEntitlement(entitlementId: string): Promise<boolean> {
-    await RevenueCatConfig.initialize();
-    
+    // Don't try to use RevenueCat on web
+    if (!isNativeEnvironment()) {
+      console.log('EntitlementService: Web environment detected, skipping RevenueCat check');
+      return false;
+    }
+
     try {
+      await RevenueCatConfig.initialize();
       const customerInfo = await Purchases.getCustomerInfo();
       return (customerInfo as any).entitlements?.active[entitlementId] !== undefined;
     } catch (error) {
@@ -21,9 +33,14 @@ export class EntitlementService {
   }
 
   static async hasAnyActiveEntitlement(): Promise<boolean> {
-    await RevenueCatConfig.initialize();
-    
+    // Don't try to use RevenueCat on web
+    if (!isNativeEnvironment()) {
+      console.log('EntitlementService: Web environment detected, skipping RevenueCat check');
+      return false;
+    }
+
     try {
+      await RevenueCatConfig.initialize();
       const customerInfo = await Purchases.getCustomerInfo();
       return Object.keys((customerInfo as any).entitlements?.active || {}).length > 0;
     } catch (error) {
@@ -33,9 +50,14 @@ export class EntitlementService {
   }
 
   static async getActiveEntitlements(): Promise<string[]> {
-    await RevenueCatConfig.initialize();
-    
+    // Don't try to use RevenueCat on web
+    if (!isNativeEnvironment()) {
+      console.log('EntitlementService: Web environment detected, skipping RevenueCat check');
+      return [];
+    }
+
     try {
+      await RevenueCatConfig.initialize();
       const customerInfo = await Purchases.getCustomerInfo();
       return Object.keys((customerInfo as any).entitlements?.active || {});
     } catch (error) {
