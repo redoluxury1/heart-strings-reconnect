@@ -53,10 +53,8 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
         return;
       }
 
-      // Configure RevenueCat with debug logging
-      Purchases.setLogLevel({ level: LOG_LEVEL.DEBUG });
-      await Purchases.configure({ apiKey: 'appl_OnCrqXNltwcZinVNJnxEMJuiHOa' });
-
+      // RevenueCat is already configured via RevenueCatConfig service
+      // Just fetch offerings directly
       const offerings = await Purchases.getOfferings();
       const current = offerings?.current;
       
