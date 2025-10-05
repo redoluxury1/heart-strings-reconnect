@@ -105,12 +105,57 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
     
     setLoading(true);
     try {
+      console.log('🛒 [PAYWALL] Starting purchase flow for package:', pkg.identifier);
       const { customerInfo } = await Purchases.purchasePackage({ aPackage: pkg });
+      console.log('🛒 [PAYWALL] Purchase completed with RevenueCat');
+      
+      // CRITICAL: Validate receipt with backend to activate subscription
+      try {
+        console.log('🛒 [PAYWALL] Starting receipt validation...');
+        const { ReceiptValidator } = await import('@/services/nativeStoreKit/receiptValidator');
+        
+        // Get active entitlement to validate
+        const entitlements = customerInfo.entitlements.active || {};
+        const entitlementKeys = Object.keys(entitlements);
+        
+        if (entitlementKeys.length > 0) {
+          const entitlement = entitlements[entitlementKeys[0]];
+          const productId = entitlement.productIdentifier;
+          
+          // Create transaction object from entitlement
+          const transaction = {
+            transactionId: entitlement.latestPurchaseDate || `${Date.now()}`,
+            originalTransactionId: entitlement.originalPurchaseDate || entitlement.latestPurchaseDate || `${Date.now()}`,
+            productId: productId,
+            purchaseDate: new Date(entitlement.latestPurchaseDate || Date.now()),
+            expiresDate: entitlement.expirationDate ? new Date(entitlement.expirationDate) : undefined,
+            isTrialPeriod: entitlement.willRenew || false,
+            receiptData: (customerInfo as any).originalAppUserId || ''
+          };
+          
+          console.log('🛒 [PAYWALL] Validating receipt for:', productId);
+          // This will validate the receipt with the backend and activate subscription
+          await ReceiptValidator.validateReceipt(transaction);
+          console.log('🛒 [PAYWALL] Receipt validation completed successfully');
+        } else {
+          console.error('🛒 [PAYWALL] No active entitlements found after purchase');
+        }
+      } catch (validationError) {
+        console.error('🛒 [PAYWALL] Receipt validation failed:', validationError);
+        // Show error to user - this is critical
+        toast({
+          title: "Purchase Incomplete",
+          description: "Purchase was processed but premium access is not yet active. Please contact support.",
+          variant: "destructive"
+        });
+        setLoading(false);
+        return;
+      }
       
       // Refresh subscription status immediately and wait for it to complete
       await refreshSubscription();
       
-      // Check if ANY entitlement is now active (using our actual entitlement IDs)
+      // Check if ANY entitlement is now active
       const hasActiveEntitlement = 
         customerInfo.entitlements.active['entl51d1c435c2'] !== undefined ||
         customerInfo.entitlements.active['entl2a85cac069'] !== undefined ||
@@ -128,8 +173,6 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
           onContinue();
         }, 500);
       } else {
-        // Purchase processed but entitlement not active yet - still allow continuation
-        // RevenueCat may take a moment to sync
         console.log('Purchase completed, entitlements syncing...');
         toast({
           title: "Subscription Activated",
@@ -153,7 +196,6 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
       }
       
       // For any other error, show a gentle message and allow skip
-      // Never show technical error details to avoid App Store rejection
       toast({
         title: "Continue Without Premium",
         description: "You can try subscribing again later from Settings.",
