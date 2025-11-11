@@ -90,10 +90,18 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
     if (!isNative) {
       toast({
         title: "Demo Mode",
-        description: "Subscriptions only work on actual iOS/Android devices. In the app, this would open the purchase flow.",
+        description: "In the app, this would open the App Store purchase flow. Proceeding with demo...",
       });
-      // For demo purposes, just continue
-      setTimeout(() => onContinue(), 1500);
+      setLoading(true);
+      // Show a loading state to simulate purchase flow
+      setTimeout(() => {
+        setLoading(false);
+        toast({
+          title: "Demo Purchase Complete",
+          description: "In the real app, you would now have premium access!",
+        });
+        setTimeout(() => onContinue(), 1000);
+      }, 2000);
       return;
     }
 
