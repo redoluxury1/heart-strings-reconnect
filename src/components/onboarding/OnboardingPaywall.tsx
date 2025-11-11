@@ -106,83 +106,96 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
     setLoading(true);
     try {
       console.log('🛒 [PAYWALL] Starting purchase flow for package:', pkg.identifier);
-      const { customerInfo } = await Purchases.purchasePackage({ aPackage: pkg });
+      
+      // Step 1: Complete the purchase
+      await Purchases.purchasePackage({ aPackage: pkg });
       console.log('🛒 [PAYWALL] Purchase completed with RevenueCat');
       
-      // CRITICAL: Validate receipt with backend to activate subscription
-      try {
-        console.log('🛒 [PAYWALL] Starting receipt validation...');
-        const { ReceiptValidator } = await import('@/services/nativeStoreKit/receiptValidator');
+      // Step 2: Force sync purchases with RevenueCat servers
+      console.log('🛒 [PAYWALL] Syncing purchases...');
+      await Purchases.syncPurchases();
+      
+      // Step 3: Get customer info and check entitlements
+      console.log('🛒 [PAYWALL] Getting customer info...');
+      let { customerInfo } = await Purchases.getCustomerInfo();
+      
+      // Check if ANY entitlement is active
+      const checkActiveEntitlement = (info: any) => {
+        return info.entitlements.active['entl51d1c435c2'] !== undefined ||
+               info.entitlements.active['entl2a85cac069'] !== undefined ||
+               Object.keys(info.entitlements.active || {}).length > 0;
+      };
+      
+      let hasActiveEntitlement = checkActiveEntitlement(customerInfo);
+      
+      // Step 4: If no active entitlement, retry once after delay
+      if (!hasActiveEntitlement) {
+        console.log('🛒 [PAYWALL] Entitlement not found immediately, retrying in 1.5s...');
+        await new Promise(resolve => setTimeout(resolve, 1500));
         
-        // Get active entitlement to validate
-        const entitlements = customerInfo.entitlements.active || {};
-        const entitlementKeys = Object.keys(entitlements);
-        
-        if (entitlementKeys.length > 0) {
-          const entitlement = entitlements[entitlementKeys[0]];
-          const productId = entitlement.productIdentifier;
-          
-          // Create transaction object from entitlement
-          const transaction = {
-            transactionId: entitlement.latestPurchaseDate || `${Date.now()}`,
-            originalTransactionId: entitlement.originalPurchaseDate || entitlement.latestPurchaseDate || `${Date.now()}`,
-            productId: productId,
-            purchaseDate: new Date(entitlement.latestPurchaseDate || Date.now()),
-            expiresDate: entitlement.expirationDate ? new Date(entitlement.expirationDate) : undefined,
-            isTrialPeriod: entitlement.willRenew || false,
-            receiptData: (customerInfo as any).originalAppUserId || ''
-          };
-          
-          console.log('🛒 [PAYWALL] Validating receipt for:', productId);
-          // This will validate the receipt with the backend and activate subscription
-          await ReceiptValidator.validateReceipt(transaction);
-          console.log('🛒 [PAYWALL] Receipt validation completed successfully');
-        } else {
-          console.error('🛒 [PAYWALL] No active entitlements found after purchase');
-        }
-      } catch (validationError) {
-        console.error('🛒 [PAYWALL] Receipt validation failed:', validationError);
-        // Show error to user - this is critical
-        toast({
-          title: "Purchase Incomplete",
-          description: "Purchase was processed but premium access is not yet active. Please contact support.",
-          variant: "destructive"
-        });
-        setLoading(false);
-        return;
+        const retryResult = await Purchases.getCustomerInfo();
+        customerInfo = retryResult.customerInfo;
+        hasActiveEntitlement = checkActiveEntitlement(customerInfo);
       }
       
-      // Refresh subscription status immediately and wait for it to complete
+      // Step 5: Validate receipt with backend for our database
+      if (hasActiveEntitlement) {
+        try {
+          console.log('🛒 [PAYWALL] Starting backend receipt validation...');
+          const { ReceiptValidator } = await import('@/services/nativeStoreKit/receiptValidator');
+          
+          const entitlements = customerInfo.entitlements.active || {};
+          const entitlementKeys = Object.keys(entitlements);
+          
+          if (entitlementKeys.length > 0) {
+            const entitlement = entitlements[entitlementKeys[0]];
+            const productId = entitlement.productIdentifier;
+            
+            const transaction = {
+              transactionId: entitlement.latestPurchaseDate || `${Date.now()}`,
+              originalTransactionId: entitlement.originalPurchaseDate || entitlement.latestPurchaseDate || `${Date.now()}`,
+              productId: productId,
+              purchaseDate: new Date(entitlement.latestPurchaseDate || Date.now()),
+              expiresDate: entitlement.expirationDate ? new Date(entitlement.expirationDate) : undefined,
+              isTrialPeriod: entitlement.willRenew || false,
+              receiptData: (customerInfo as any).originalAppUserId || ''
+            };
+            
+            await ReceiptValidator.validateReceipt(transaction);
+            console.log('🛒 [PAYWALL] Backend validation completed');
+          }
+        } catch (validationError) {
+          console.error('🛒 [PAYWALL] Backend validation failed (non-critical):', validationError);
+          // Don't block user if backend validation fails - RevenueCat entitlement is what matters
+        }
+      }
+      
+      // Step 6: Refresh subscription status
       await refreshSubscription();
       
-      // Check if ANY entitlement is now active
-      const hasActiveEntitlement = 
-        customerInfo.entitlements.active['entl51d1c435c2'] !== undefined ||
-        customerInfo.entitlements.active['entl2a85cac069'] !== undefined ||
-        Object.keys(customerInfo.entitlements.active || {}).length > 0;
-      
+      // Step 7: Show appropriate message based on entitlement status
       if (hasActiveEntitlement) {
         toast({
           title: "Welcome to Premium!",
           description: "Your subscription is now active. Enjoy all the exclusive features.",
         });
         
-        // Small delay to ensure state propagates to all components
         setTimeout(() => {
           setLoading(false);
           onContinue();
         }, 500);
       } else {
-        console.log('Purchase completed, entitlements syncing...');
+        // Entitlement still not active after retry
+        console.warn('🛒 [PAYWALL] Entitlement still not active after retry');
         toast({
-          title: "Subscription Activated",
-          description: "Thank you for subscribing! Your premium features will be available shortly.",
+          title: "Purchase Complete",
+          description: "Purchase complete, but still syncing. Please try reopening the app in a few seconds.",
         });
         
         setTimeout(() => {
           setLoading(false);
           onContinue();
-        }, 500);
+        }, 1000);
       }
     } catch (error: any) {
       console.error('Purchase error details:', error);
