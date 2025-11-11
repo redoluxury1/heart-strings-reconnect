@@ -256,20 +256,12 @@ const Features = () => {
             <p className="text-xl text-midnight-indigo/80 mb-6 max-w-2xl mx-auto">
               Join thousands of couples who are building stronger, more connected relationships with Bridge.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a 
-                href="/intro" 
-                className="bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-xl font-medium transition-all duration-200 hover:shadow-lg hover-scale"
-              >
-                Start Your Journey
-              </a>
-              <a 
-                href="/signup-choice" 
-                className="border border-primary text-primary hover:bg-primary/5 px-8 py-3 rounded-xl font-medium transition-all duration-200 hover:shadow-md"
-              >
-                Create Account
-              </a>
-            </div>
+            <a 
+              href="/intro" 
+              className="inline-block bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-xl font-medium transition-all duration-200 hover:shadow-lg hover-scale"
+            >
+              Get Started Now
+            </a>
           </div>
         </ContentContainer>
       </main>
