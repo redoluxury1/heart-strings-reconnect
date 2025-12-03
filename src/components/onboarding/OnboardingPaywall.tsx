@@ -46,9 +46,9 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
     setLoadError(null);
     try {
       // Check if we're running on native platform (iOS/Android, not web)
-      const isNative = typeof window !== 'undefined' && 
-                       window.Capacitor && 
-                       window.Capacitor.platform !== 'web';
+      // Must explicitly check for ios or android - Capacitor object exists on web too
+      const platform = window?.Capacitor?.platform || 'web';
+      const isNative = platform === 'ios' || platform === 'android';
       
       if (!isNative) {
         console.log('Running in web browser - skipping RevenueCat initialization');
@@ -172,9 +172,8 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
 
   const handleSubscribe = async (pkg: PurchasesPackage | null) => {
     // Check if we're running on native platform (iOS/Android, not web)
-    const isNative = typeof window !== 'undefined' && 
-                     window.Capacitor && 
-                     window.Capacitor.platform !== 'web';
+    const platform = window?.Capacitor?.platform || 'web';
+    const isNative = platform === 'ios' || platform === 'android';
     
     if (!isNative) {
       toast({
@@ -430,9 +429,8 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
           ) : (
             // Only show web preview message on web - on native, show loading or fallback to skip
             (() => {
-              const isNative = typeof window !== 'undefined' && 
-                               window.Capacitor && 
-                               window.Capacitor.platform !== 'web';
+              const platform = window?.Capacitor?.platform || 'web';
+              const isNative = platform === 'ios' || platform === 'android';
               
               if (isNative) {
                 // On native, if packages didn't load, show error with retry and restore options
