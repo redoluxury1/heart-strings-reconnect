@@ -6,6 +6,7 @@ import Footer from '@/components/layout/Footer';
 import HomeLanding from '@/components/home/HomeLanding';
 import Hero from '@/components/home/Hero';
 import WhyBridgeSection from '@/components/home/WhyBridgeSection';
+import FeatureDemoSection from '@/components/home/FeatureDemoSection';
 import StillUsSection from '@/components/home/StillUsSection';
 import SmallWinsSection from '@/components/home/SmallWinsSection';
 import RelationshipStatsSection from '@/components/home/RelationshipStatsSection';
@@ -28,6 +29,7 @@ const Index = () => {
         </BrandSection>
         
         <WhyBridgeSection />
+        <FeatureDemoSection />
         <StillUsSection />
         <SmallWinsSection />
         <RelationshipStatsSection />
