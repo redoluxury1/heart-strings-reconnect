@@ -1,9 +1,10 @@
 
+
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Heart, MessageCircle, Check } from 'lucide-react';
+import { Heart, MessageCircle, Check, Lightbulb } from 'lucide-react';
 
-type DemoStep = 'categories' | 'phrases' | 'selected';
+type DemoStep = 'categories' | 'phrases' | 'selected' | 'reasoning';
 
 const FeatureDemoAnimation: React.FC = () => {
   const [currentStep, setCurrentStep] = useState<DemoStep>('categories');
@@ -20,6 +21,12 @@ const FeatureDemoAnimation: React.FC = () => {
     "It really hurt when I felt dismissed in that moment.",
     "I need you to understand how that made me feel.",
     "Can we talk about what just happened?"
+  ];
+
+  const reasoningPoints = [
+    { text: "Uses 'I' statements instead of blame", delay: 0.2 },
+    { text: "Names the specific feeling (hurt)", delay: 0.5 },
+    { text: "Invites understanding, not defense", delay: 0.8 },
   ];
 
   // Animation sequence
@@ -47,13 +54,18 @@ const FeatureDemoAnimation: React.FC = () => {
       // Step 3: Show selected
       setCurrentStep('selected');
       
-      await new Promise(r => setTimeout(r, 3000));
+      await new Promise(r => setTimeout(r, 2000));
+      
+      // Step 4: Show reasoning
+      setCurrentStep('reasoning');
+      
+      await new Promise(r => setTimeout(r, 4000));
       
       // Loop
     };
 
     sequence();
-    const interval = setInterval(sequence, 9000);
+    const interval = setInterval(sequence, 12500);
     return () => clearInterval(interval);
   }, []);
 
@@ -185,10 +197,46 @@ const FeatureDemoAnimation: React.FC = () => {
                 "It really hurt when I felt dismissed in that moment."
               </p>
             </div>
+          </motion.div>
+        )}
+
+        {currentStep === 'reasoning' && (
+          <motion.div
+            key="reasoning"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="flex-1 flex flex-col px-2"
+          >
+            <div className="flex items-center gap-2 mb-3">
+              <div className="p-1.5 rounded-lg bg-amber-100">
+                <Lightbulb className="w-3 h-3 text-amber-600" />
+              </div>
+              <span className="text-xs font-medium text-navy-800">Why this works</span>
+            </div>
             
-            <p className="text-[10px] text-navy-800/50 mt-3">
-              A calmer way to express your feelings
-            </p>
+            <div className="bg-white border border-navy-800/10 rounded-xl p-3 mb-3">
+              <p className="text-[10px] text-navy-800/60 italic leading-relaxed">
+                "It really hurt when I felt dismissed in that moment."
+              </p>
+            </div>
+            
+            <div className="space-y-2">
+              {reasoningPoints.map((point, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: point.delay }}
+                  className="flex items-start gap-2"
+                >
+                  <div className="w-4 h-4 rounded-full bg-terracotta/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <Check className="w-2.5 h-2.5 text-terracotta" />
+                  </div>
+                  <p className="text-[11px] text-navy-800 leading-relaxed">{point.text}</p>
+                </motion.div>
+              ))}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
