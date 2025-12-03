@@ -1,12 +1,6 @@
 import { Purchases } from '@revenuecat/purchases-capacitor';
 import { RevenueCatConfig } from './revenueCatConfig';
-
-// Helper to check if we're in a native environment
-const isNativeEnvironment = (): boolean => {
-  return typeof window !== 'undefined' && 
-         window.Capacitor && 
-         window.Capacitor.platform !== 'web';
-};
+import { isNativePlatform } from '@/utils/platform';
 
 export class EntitlementService {
   // Your RevenueCat entitlement identifiers
@@ -16,8 +10,8 @@ export class EntitlementService {
   };
 
   static async hasEntitlement(entitlementId: string): Promise<boolean> {
-    // Don't try to use RevenueCat on web
-    if (!isNativeEnvironment()) {
+    // Don't try to use RevenueCat on web - use official Capacitor API
+    if (!isNativePlatform()) {
       console.log('EntitlementService: Web environment detected, skipping RevenueCat check');
       return false;
     }
@@ -33,8 +27,8 @@ export class EntitlementService {
   }
 
   static async hasAnyActiveEntitlement(): Promise<boolean> {
-    // Don't try to use RevenueCat on web
-    if (!isNativeEnvironment()) {
+    // Don't try to use RevenueCat on web - use official Capacitor API
+    if (!isNativePlatform()) {
       console.log('EntitlementService: Web environment detected, skipping RevenueCat check');
       return false;
     }
@@ -50,8 +44,8 @@ export class EntitlementService {
   }
 
   static async getActiveEntitlements(): Promise<string[]> {
-    // Don't try to use RevenueCat on web
-    if (!isNativeEnvironment()) {
+    // Don't try to use RevenueCat on web - use official Capacitor API
+    if (!isNativePlatform()) {
       console.log('EntitlementService: Web environment detected, skipping RevenueCat check');
       return [];
     }

@@ -1,6 +1,7 @@
 import { supabase } from '@/integrations/supabase/client';
 import { MockStoreKitService } from './mockStoreKitService';
 import { NativeStoreKitService } from './nativeStoreKit';
+import { isNativePlatform, isIOS, getPlatform } from '@/utils/platform';
 
 export interface StoreKitProduct {
   productId: string;
@@ -19,23 +20,6 @@ export interface PurchaseTransaction {
   isTrialPeriod: boolean;
   receiptData: string;
 }
-
-// Check if we're running in a Capacitor environment
-const isCapacitorEnvironment = () => {
-  return typeof window !== 'undefined' && 
-         window.Capacitor && 
-         window.Capacitor.platform !== 'web';
-};
-
-// Check if we're running on iOS specifically
-const isIOSEnvironment = () => {
-  return isCapacitorEnvironment() && window.Capacitor?.platform === 'ios';
-};
-
-// Check if we're running on a native platform (iOS or Android)
-const isNativePlatform = () => {
-  return isCapacitorEnvironment(); // This covers both iOS and Android
-};
 
 // Check if RevenueCat is properly configured
 const isRevenueCatConfigured = () => {
@@ -128,7 +112,7 @@ export class StoreKitService {
   getServiceInfo(): string {
     const env = this.getCurrentEnvironment();
     const configured = isRevenueCatConfigured() ? 'configured' : 'not configured';
-    const platform = window.Capacitor?.platform || 'unknown';
+    const platform = getPlatform();
     return `StoreKit running in ${env} mode${env === 'web' ? ` (mock service, RevenueCat ${configured})` : ` (native service on ${platform})`}`;
   }
 }
