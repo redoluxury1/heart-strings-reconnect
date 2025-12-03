@@ -339,20 +339,47 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
               )}
             </>
           ) : (
-            <div className="col-span-full text-center py-8 bg-blue-50 rounded-lg p-6">
-              <p className="text-[#2e4059] font-medium mb-2">
-                📱 Subscriptions available on iOS & Android
-              </p>
-              <p className="text-[#2e4059]/60 text-sm">
-                This is a web preview. On the actual app, users will see subscription pricing here and can purchase directly through the App Store.
-              </p>
-              <Button
-                onClick={onSkip}
-                className="mt-4 bg-[#2e4059] hover:bg-[#2e4059]/90 text-white"
-              >
-                Continue to App (Demo)
-              </Button>
-            </div>
+            // Only show web preview message on web - on native, show loading or fallback to skip
+            (() => {
+              const isNative = typeof window !== 'undefined' && 
+                               window.Capacitor && 
+                               window.Capacitor.platform !== 'web';
+              
+              if (isNative) {
+                // On native, if packages didn't load, show a simple message and allow continuing
+                return (
+                  <div className="col-span-full text-center py-8">
+                    <p className="text-[#2e4059]/60 text-sm mb-4">
+                      Unable to load subscription options. Please try again later.
+                    </p>
+                    <Button
+                      onClick={onSkip}
+                      className="bg-[#2e4059] hover:bg-[#2e4059]/90 text-white"
+                    >
+                      Continue
+                    </Button>
+                  </div>
+                );
+              }
+              
+              // Web preview message - only shown on web
+              return (
+                <div className="col-span-full text-center py-8 bg-blue-50 rounded-lg p-6">
+                  <p className="text-[#2e4059] font-medium mb-2">
+                    📱 Subscriptions available on iOS & Android
+                  </p>
+                  <p className="text-[#2e4059]/60 text-sm">
+                    This is a web preview. On the actual app, users will see subscription pricing here and can purchase directly through the App Store.
+                  </p>
+                  <Button
+                    onClick={onSkip}
+                    className="mt-4 bg-[#2e4059] hover:bg-[#2e4059]/90 text-white"
+                  >
+                    Continue to App (Demo)
+                  </Button>
+                </div>
+              );
+            })()
           )}
         </div>
 

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useSubscription } from '@/hooks/useSubscription';
 import OnboardingPaywall from '@/components/onboarding/OnboardingPaywall';
-import { Lock, Heart } from 'lucide-react';
+import { Lock, Heart, X, ArrowLeft } from 'lucide-react';
 import ContentContainer from '@/components/common/ContentContainer';
 
 interface PageSubscriptionGateProps {
@@ -17,9 +18,19 @@ export const PageSubscriptionGate: React.FC<PageSubscriptionGateProps> = ({
   pageName,
   pageDescription
 }) => {
+  const navigate = useNavigate();
   const { hasFeatureAccess, hasActiveSubscription, loading, refreshSubscription } = useSubscription();
   const [hasAccess, setHasAccess] = useState(false);
   const [isUpgradeModalOpen, setIsUpgradeModalOpen] = useState(false);
+
+  const handleGoBack = () => {
+    // Navigate back to previous page, or home if no history
+    if (window.history.length > 1) {
+      navigate(-1);
+    } else {
+      navigate('/');
+    }
+  };
 
   // Debug logging for modal state
   React.useEffect(() => {
@@ -57,7 +68,16 @@ export const PageSubscriptionGate: React.FC<PageSubscriptionGateProps> = ({
   if (!hasAccess) {
     return (
       <>
-        <div className="min-h-screen bg-gradient-to-br from-soft-cream/20 to-soft-blush/30 flex items-center justify-center p-4">
+        <div className="min-h-screen bg-gradient-to-br from-soft-cream/20 to-soft-blush/30 flex items-center justify-center p-4 relative">
+          {/* Close button in top-right corner */}
+          <button
+            onClick={handleGoBack}
+            className="absolute top-4 right-4 p-2 rounded-full bg-card/80 hover:bg-card border border-border/20 text-muted-foreground hover:text-foreground transition-colors z-10"
+            aria-label="Close"
+          >
+            <X className="w-6 h-6" />
+          </button>
+
           <ContentContainer maxWidth="lg">
             <div className="bg-card/95 backdrop-blur-sm rounded-xl shadow-elegant border border-border/20 p-8 text-center max-w-2xl mx-auto">
               {/* Lock icon with gentle animation */}
@@ -101,6 +121,14 @@ export const PageSubscriptionGate: React.FC<PageSubscriptionGateProps> = ({
                 <p className="text-sm text-muted-foreground">
                   Start your free trial and unlock all relationship tools
                 </p>
+                
+                {/* Maybe later button */}
+                <button
+                  onClick={handleGoBack}
+                  className="text-muted-foreground hover:text-foreground text-sm underline underline-offset-4 transition-colors py-2"
+                >
+                  Maybe later
+                </button>
               </div>
             </div>
           </ContentContainer>

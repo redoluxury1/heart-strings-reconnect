@@ -2,20 +2,31 @@
 /* iOS Safe Area Support */
 .safe-area-navbar {
   /* iOS safe area padding at the top for navbar */
-  padding-top: constant(safe-area-inset-top); /* Legacy iOS support */
-  padding-top: env(safe-area-inset-top); /* Modern iOS devices */
-  
-  /* Add standard padding on top of safe area */
-  padding-top: calc(constant(safe-area-inset-top) + 1rem);
-  padding-top: calc(env(safe-area-inset-top) + 1rem);
-  
-  padding-bottom: 1rem;
+  /* Use padding-top to push content below the status bar/notch */
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-top: constant(safe-area-inset-top); /* Legacy iOS 11.0-11.2 */
   
   /* Ensure the navbar is positioned correctly */
   position: sticky;
   top: 0;
   z-index: 50;
   background-color: #1E2A38; /* Navy blue background */
+}
+
+/* iOS Native App specific - more aggressive safe area handling */
+@supports (padding-top: env(safe-area-inset-top)) {
+  .safe-area-navbar {
+    /* On devices with notches, add the safe area inset */
+    padding-top: env(safe-area-inset-top);
+    /* The navbar content should have additional internal padding */
+  }
+}
+
+/* Fallback for devices without notch but still need some padding */
+@supports not (padding-top: env(safe-area-inset-top)) {
+  .safe-area-navbar {
+    padding-top: 0;
+  }
 }
 
 /* Full screen safe area support for mobile */
