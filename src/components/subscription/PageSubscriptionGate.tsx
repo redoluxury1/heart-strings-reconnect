@@ -147,6 +147,7 @@ export const PageSubscriptionGate: React.FC<PageSubscriptionGateProps> = ({
               onSkip={() => {
                 console.log('OnboardingPaywall onSkip called');
                 setIsUpgradeModalOpen(false);
+                handleGoBack();
               }}
             />
           </div>
