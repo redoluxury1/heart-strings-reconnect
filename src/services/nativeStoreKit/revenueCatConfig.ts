@@ -1,12 +1,6 @@
 
 import { Purchases } from '@revenuecat/purchases-capacitor';
-
-// Helper to check if we're in a native environment
-const isNativeEnvironment = (): boolean => {
-  return typeof window !== 'undefined' && 
-         window.Capacitor && 
-         window.Capacitor.platform !== 'web';
-};
+import { isNativePlatform } from '@/utils/platform';
 
 export class RevenueCatConfig {
   private static isInitialized = false;
@@ -14,8 +8,8 @@ export class RevenueCatConfig {
   static async initialize(): Promise<void> {
     if (this.isInitialized) return;
 
-    // Don't try to initialize RevenueCat on web
-    if (!isNativeEnvironment()) {
+    // Don't try to initialize RevenueCat on web - use official Capacitor API
+    if (!isNativePlatform()) {
       console.log('RevenueCatConfig: Web environment detected, skipping initialization');
       return;
     }

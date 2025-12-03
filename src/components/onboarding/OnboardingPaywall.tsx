@@ -6,6 +6,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useSubscription } from '@/hooks/useSubscription';
 import { Pause, Heart, Bot, Book, ArrowRightLeft, MessageSquare, Sparkles } from 'lucide-react';
 import { Purchases, PurchasesPackage, LOG_LEVEL, PURCHASES_ERROR_CODE, PACKAGE_TYPE } from '@revenuecat/purchases-capacitor';
+import { isNativePlatform, getPlatform } from '@/utils/platform';
 
 // Paywall component with Apple App Store compliance fixes:
 // - Silent cancellation handling (no error on user cancel)
@@ -45,10 +46,10 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
   const loadOfferings = async () => {
     setLoadError(null);
     try {
-      // Check if we're running on native platform (iOS/Android, not web)
-      // Must explicitly check for ios or android - Capacitor object exists on web too
-      const platform = window?.Capacitor?.platform || 'web';
-      const isNative = platform === 'ios' || platform === 'android';
+      // Check if we're running on native platform using official Capacitor API
+      const isNative = isNativePlatform();
+      const platform = getPlatform();
+      console.log('📦 [PAYWALL] Platform check:', { isNative, platform });
       
       if (!isNative) {
         console.log('Running in web browser - skipping RevenueCat initialization');
@@ -171,9 +172,8 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
   };
 
   const handleSubscribe = async (pkg: PurchasesPackage | null) => {
-    // Check if we're running on native platform (iOS/Android, not web)
-    const platform = window?.Capacitor?.platform || 'web';
-    const isNative = platform === 'ios' || platform === 'android';
+    // Check if we're running on native platform using official Capacitor API
+    const isNative = isNativePlatform();
     
     if (!isNative) {
       toast({
@@ -429,8 +429,8 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
           ) : (
             // Only show web preview message on web - on native, show loading or fallback to skip
             (() => {
-              const platform = window?.Capacitor?.platform || 'web';
-              const isNative = platform === 'ios' || platform === 'android';
+              // Use official Capacitor API for platform detection
+              const isNative = isNativePlatform();
               
               if (isNative) {
                 // On native, if packages didn't load, show error with retry and restore options
