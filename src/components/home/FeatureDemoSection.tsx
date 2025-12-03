@@ -45,7 +45,7 @@ const FeatureDemoSection: React.FC = () => {
               </ul>
               
               <Link 
-                to="/mid-fight" 
+                to="/during-conflict" 
                 className="inline-flex items-center gap-2 px-6 py-3 bg-terracotta hover:bg-terracotta/90 text-white rounded-lg font-medium transition-all duration-200 hover:shadow-lg group"
               >
                 Try it yourself
