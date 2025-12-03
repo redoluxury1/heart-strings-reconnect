@@ -5,7 +5,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { useSubscription } from '@/hooks/useSubscription';
 import { Pause, Heart, Bot, Book, ArrowRightLeft, MessageSquare, Sparkles } from 'lucide-react';
-import { Purchases, PurchasesPackage, LOG_LEVEL, PURCHASES_ERROR_CODE } from '@revenuecat/purchases-capacitor';
+import { Purchases, PurchasesPackage, LOG_LEVEL, PURCHASES_ERROR_CODE, PACKAGE_TYPE } from '@revenuecat/purchases-capacitor';
 
 // Paywall component with Apple App Store compliance fixes:
 // - Silent cancellation handling (no error on user cancel)
@@ -27,6 +27,8 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
   const [monthlyPackage, setMonthlyPackage] = useState<PurchasesPackage | null>(null);
   const [annualPackage, setAnnualPackage] = useState<PurchasesPackage | null>(null);
   const [packagesLoading, setPackagesLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
+  const [restoring, setRestoring] = useState(false);
 
   useEffect(() => {
     loadOfferings();
@@ -41,6 +43,7 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
   }, [monthlyPackage, annualPackage]);
 
   const loadOfferings = async () => {
+    setLoadError(null);
     try {
       // Check if we're running on native platform (iOS/Android, not web)
       const isNative = typeof window !== 'undefined' && 
@@ -53,31 +56,117 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
         return;
       }
 
+      console.log('📦 [PAYWALL] Loading RevenueCat offerings...');
+      
       // RevenueCat is already configured via RevenueCatConfig service
       // Just fetch offerings directly
       const offerings = await Purchases.getOfferings();
+      
+      console.log('📦 [PAYWALL] Raw offerings response:', JSON.stringify(offerings, null, 2));
+      
       const current = offerings?.current;
       
       if (!current) {
-        console.error('No current offering available');
+        console.error('📦 [PAYWALL] No current offering available');
+        console.log('📦 [PAYWALL] All offerings:', offerings?.all ? Object.keys(offerings.all) : 'none');
+        setLoadError('No subscription offerings configured');
         setPackagesLoading(false);
         return;
       }
 
-      // Find packages by their specific identifiers
-      const monthlyPkg = current.availablePackages.find(p => p.identifier === '$rc_monthly');
-      const annualPkg = current.availablePackages.find(p => p.identifier === '$rc_annual');
+      console.log('📦 [PAYWALL] Current offering:', current.identifier);
+      console.log('📦 [PAYWALL] Available packages:', current.availablePackages.map(p => ({
+        identifier: p.identifier,
+        packageType: p.packageType,
+        productId: p.product?.identifier
+      })));
+
+      // Flexible package lookup - try multiple strategies
+      let monthlyPkg = null;
+      let annualPkg = null;
+
+      // Strategy 1: Find by exact identifier
+      monthlyPkg = current.availablePackages.find(p => p.identifier === '$rc_monthly');
+      annualPkg = current.availablePackages.find(p => p.identifier === '$rc_annual');
+
+      // Strategy 2: Find by packageType if exact identifier not found
+      if (!monthlyPkg) {
+        monthlyPkg = current.availablePackages.find(p => 
+          p.packageType === PACKAGE_TYPE.MONTHLY
+        );
+      }
+      if (!annualPkg) {
+        annualPkg = current.availablePackages.find(p => 
+          p.packageType === PACKAGE_TYPE.ANNUAL
+        );
+      }
+
+      // Strategy 3: Find by identifier containing 'monthly' or 'annual'
+      if (!monthlyPkg) {
+        monthlyPkg = current.availablePackages.find(p => 
+          p.identifier.toLowerCase().includes('monthly') ||
+          p.product?.identifier?.toLowerCase().includes('monthly')
+        );
+      }
+      if (!annualPkg) {
+        annualPkg = current.availablePackages.find(p => 
+          p.identifier.toLowerCase().includes('annual') ||
+          p.identifier.toLowerCase().includes('yearly') ||
+          p.product?.identifier?.toLowerCase().includes('annual') ||
+          p.product?.identifier?.toLowerCase().includes('yearly')
+        );
+      }
+
+      console.log('📦 [PAYWALL] Found monthly package:', monthlyPkg?.identifier || 'none');
+      console.log('📦 [PAYWALL] Found annual package:', annualPkg?.identifier || 'none');
 
       setMonthlyPackage(monthlyPkg || null);
       setAnnualPackage(annualPkg || null);
 
       if (!monthlyPkg && !annualPkg) {
-        console.error('No packages found with identifiers $rc_monthly or $rc_annual');
+        console.error('📦 [PAYWALL] No packages found after all strategies');
+        setLoadError('No subscription packages available');
       }
-    } catch (error) {
-      console.error('Failed to load offerings:', error);
+    } catch (error: any) {
+      console.error('📦 [PAYWALL] Failed to load offerings:', error);
+      setLoadError(error?.message || 'Failed to load subscription options');
     } finally {
       setPackagesLoading(false);
+    }
+  };
+
+  const handleRestorePurchases = async () => {
+    setRestoring(true);
+    try {
+      console.log('🔄 [PAYWALL] Restoring purchases...');
+      await Purchases.restorePurchases();
+      const { customerInfo } = await Purchases.getCustomerInfo();
+      
+      const hasActiveEntitlement = Object.keys(customerInfo.entitlements.active || {}).length > 0;
+      
+      if (hasActiveEntitlement) {
+        toast({
+          title: "Subscription Restored!",
+          description: "Your premium access has been restored.",
+        });
+        await refreshSubscription();
+        setTimeout(() => onContinue(), 500);
+      } else {
+        toast({
+          title: "No Active Subscription",
+          description: "No previous subscription found for this account.",
+          variant: "destructive"
+        });
+      }
+    } catch (error: any) {
+      console.error('🔄 [PAYWALL] Restore failed:', error);
+      toast({
+        title: "Restore Failed",
+        description: "Unable to restore purchases. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setRestoring(false);
     }
   };
 
@@ -346,18 +435,44 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
                                window.Capacitor.platform !== 'web';
               
               if (isNative) {
-                // On native, if packages didn't load, show a simple message and allow continuing
+                // On native, if packages didn't load, show error with retry and restore options
                 return (
-                  <div className="col-span-full text-center py-8">
-                    <p className="text-[#2e4059]/60 text-sm mb-4">
-                      Unable to load subscription options. Please try again later.
+                  <div className="col-span-full text-center py-6 bg-white rounded-lg p-6 border border-gray-200">
+                    <p className="text-[#2e4059] font-medium mb-2">
+                      Unable to load subscription options
                     </p>
-                    <Button
-                      onClick={onSkip}
-                      className="bg-[#2e4059] hover:bg-[#2e4059]/90 text-white"
-                    >
-                      Continue
-                    </Button>
+                    {loadError && (
+                      <p className="text-[#2e4059]/60 text-xs mb-4">
+                        {loadError}
+                      </p>
+                    )}
+                    <div className="space-y-3">
+                      <Button
+                        onClick={() => {
+                          setPackagesLoading(true);
+                          loadOfferings();
+                        }}
+                        className="w-full bg-[#2e4059] hover:bg-[#2e4059]/90 text-white"
+                        disabled={packagesLoading}
+                      >
+                        {packagesLoading ? 'Loading...' : 'Try Again'}
+                      </Button>
+                      <Button
+                        onClick={handleRestorePurchases}
+                        variant="outline"
+                        className="w-full border-[#2e4059] text-[#2e4059]"
+                        disabled={restoring}
+                      >
+                        {restoring ? 'Restoring...' : 'Restore Purchases'}
+                      </Button>
+                      <Button
+                        onClick={onSkip}
+                        variant="ghost"
+                        className="w-full text-[#2e4059]/60"
+                      >
+                        Continue Without Premium
+                      </Button>
+                    </div>
                   </div>
                 );
               }
