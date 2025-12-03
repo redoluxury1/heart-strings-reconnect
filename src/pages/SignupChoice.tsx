@@ -67,6 +67,14 @@ const SignupChoice = () => {
           <p className="text-sm text-[#2e4059]/60 mt-8 font-normal">
             You can always invite your partner later if you're not ready yet.
           </p>
+          
+          {/* Maybe later option */}
+          <button
+            onClick={() => navigate('/')}
+            className="mt-6 text-[#2e4059]/60 hover:text-[#2e4059] text-sm underline underline-offset-4 transition-colors"
+          >
+            Maybe later
+          </button>
         </div>
       </OnboardingContainer>
     </div>
