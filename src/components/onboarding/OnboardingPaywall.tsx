@@ -356,14 +356,14 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
           )}
         </div>
 
-        {/* Maybe Later Button */}
+        {/* Skip for now Button */}
         <div className="text-center mb-4">
           <Button
             onClick={onSkip}
             variant="ghost"
             className="text-[#2e4059]/60 hover:text-[#2e4059] text-sm underline-offset-4 hover:underline"
           >
-            Maybe Later
+            Skip for now
           </Button>
         </div>
 
