@@ -354,6 +354,15 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
 
   // Check platform once for the entire component
   const isNative = isNativePlatform();
+  
+  // Debug logging for production troubleshooting
+  console.log('📱 [PAYWALL RENDER] Platform state:', {
+    isNative,
+    packagesLoading,
+    hasMonthlyPackage: !!monthlyPackage,
+    hasAnnualPackage: !!annualPackage,
+    loadError
+  });
 
   return (
     <div className="min-h-screen bg-[#F8F2F0] py-8 px-4 pt-[max(3.5rem,calc(2rem+env(safe-area-inset-top)))]">
