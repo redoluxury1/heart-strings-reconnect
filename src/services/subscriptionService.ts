@@ -15,14 +15,15 @@ export const FEATURE_KEYS = {
 
 // Demo account bypass removed - Apple reviewers will use sandbox subscriptions to test the full purchase flow
 
-// Debug mode helper function - ONLY works in development
+// Debug mode helper function - ONLY works in development builds
+// Uses Vite's import.meta.env.DEV which is properly replaced at build time
 const isDebugModeEnabled = (): boolean => {
-  // Debug mode only available in development environment
-  if (process.env.NODE_ENV !== 'development') {
+  // import.meta.env.DEV is replaced at build time - cannot be manipulated at runtime
+  if (!import.meta.env.DEV) {
     return false;
   }
   
-  // Check localStorage for debug bypass
+  // Check localStorage for debug bypass (only in dev builds)
   if (typeof window !== 'undefined') {
     return localStorage.getItem('bypassSubscription') === 'true';
   }
@@ -356,9 +357,9 @@ export class SubscriptionService {
     }
   }
 
-  // Debug helper methods - ONLY work in development
+  // Debug helper methods - ONLY work in development builds
   static enableDebugMode(): void {
-    if (process.env.NODE_ENV !== 'development') {
+    if (!import.meta.env.DEV) {
       console.warn('Debug mode only available in development environment');
       return;
     }
