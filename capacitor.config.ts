@@ -20,9 +20,10 @@ const config: CapacitorConfig = {
       splashImageSrc: '/lovable-uploads/d1b97295-f2af-4ad6-aa8d-78361478bd23.png'
     },
     StatusBar: {
-      style: 'light',
-      backgroundColor: '#faf8f3'
-    },
+       style: 'light',
+       backgroundColor: '#faf8f3',
+       overlaysWebView: false,
+     },
     Keyboard: {
       resize: 'body',
       style: 'dark'

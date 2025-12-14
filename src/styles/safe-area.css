@@ -68,6 +68,11 @@
   min-height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
 }
 
+/* Simple utility class for safe area top padding + extra breathing room */
+.safe-top {
+  padding-top: calc(env(safe-area-inset-top, 0px) + 12px);
+}
+
 .navbar-content {
   /* Standard content padding */
   padding-top: 0.5rem;
