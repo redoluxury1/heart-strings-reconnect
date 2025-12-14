@@ -17,7 +17,7 @@ const SignupChoice = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#dbd0e0] via-[#f5f1e8] to-[#e6c7bc] flex flex-col items-center justify-center px-4">
+    <div className="min-h-screen bg-gradient-to-br from-[#dbd0e0] via-[#f5f1e8] to-[#e6c7bc] flex flex-col items-center justify-center px-4 pt-[env(safe-area-inset-top)]">
       <OnboardingContainer>
         <div className="text-center">
           <h2 className="font-cormorant text-3xl font-medium text-[#2e4059] mb-4">

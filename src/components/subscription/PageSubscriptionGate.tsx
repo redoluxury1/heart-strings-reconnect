@@ -68,7 +68,7 @@ export const PageSubscriptionGate: React.FC<PageSubscriptionGateProps> = ({
   if (!hasAccess) {
     return (
       <>
-        <div className="min-h-screen bg-gradient-to-br from-soft-cream/20 to-soft-blush/30 flex items-center justify-center p-4 relative">
+        <div className="min-h-screen bg-gradient-to-br from-soft-cream/20 to-soft-blush/30 flex items-center justify-center p-4 pt-[calc(1rem+env(safe-area-inset-top))] relative">
           {/* Close button in top-right corner */}
           <button
             onClick={handleGoBack}
