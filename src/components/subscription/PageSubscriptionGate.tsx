@@ -80,6 +80,15 @@ export const PageSubscriptionGate: React.FC<PageSubscriptionGateProps> = ({
 
           <ContentContainer maxWidth="lg">
             <div className="bg-card/95 backdrop-blur-sm rounded-xl shadow-elegant border border-border/20 p-8 text-center max-w-2xl mx-auto">
+              {/* Back button at top of card */}
+              <button
+                onClick={handleGoBack}
+                className="flex items-center gap-2 text-muted-foreground hover:text-foreground text-sm mb-6 mx-auto transition-colors"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                <span>Go back</span>
+              </button>
+
               {/* Lock icon with gentle animation */}
               <div className="mb-6">
                 <div className="relative inline-block">
@@ -100,8 +109,7 @@ export const PageSubscriptionGate: React.FC<PageSubscriptionGateProps> = ({
                   {pageDescription}
                 </p>
                 <div className="bg-primary/5 rounded-lg p-4 border border-primary/10">
-                  <p className="text-sm text-primary font-medium flex items-center gap-2">
-                    <Heart className="h-4 w-4" fill="currentColor" />
+                  <p className="text-sm text-primary font-medium">
                     This feature is part of Bridge For Couples Premium
                   </p>
                 </div>
