@@ -88,7 +88,6 @@ const ScreenshotStudio: React.FC = () => {
               <div className="mt-4 p-3 bg-muted rounded-lg">
                 <p className="text-xs text-muted-foreground">
                   <strong>Tip:</strong> Open in a new tab, resize your browser to mobile size, and take screenshots manually.
-                  Use localStorage.setItem('bypassSubscription', 'true') in console to bypass paywalls.
                 </p>
               </div>
             </CardContent>

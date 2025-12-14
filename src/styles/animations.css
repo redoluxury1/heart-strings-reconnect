@@ -1,7 +1,26 @@
-
-
 /* This file is kept for backward compatibility, but now just imports the modular files */
 @import './animations/index.css';
+
+/* Bubble and floating animation keyframes */
+@keyframes fadeInSlow {
+  0% { 
+    opacity: 0; 
+    transform: translateY(20px) scale(0.9);
+  }
+  100% { 
+    opacity: 1; 
+    transform: translateY(0) scale(1);
+  }
+}
+
+.bubble-container {
+  position: relative;
+  z-index: 10;
+}
+
+.animate-fade-in-slow {
+  animation: fadeInSlow 0.6s ease-out forwards;
+}
 
 /* Add animations for pattern icons */
 @keyframes cycle-rotate {
