@@ -352,8 +352,11 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
     }
   ];
 
+  // Check platform once for the entire component
+  const isNative = isNativePlatform();
+
   return (
-    <div className="min-h-screen bg-[#F8F2F0] py-8 px-4 pt-[calc(2rem+env(safe-area-inset-top))]">
+    <div className="min-h-screen bg-[#F8F2F0] py-8 px-4 pt-[max(3.5rem,calc(2rem+env(safe-area-inset-top)))]">
       <div className="max-w-md mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
@@ -427,72 +430,62 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
               )}
             </>
           ) : (
-            // Only show web preview message on web - on native, show loading or fallback to skip
-            (() => {
-              // Use official Capacitor API for platform detection
-              const isNative = isNativePlatform();
-              
-              if (isNative) {
-                // On native, if packages didn't load, show error with retry and restore options
-                return (
-                  <div className="col-span-full text-center py-6 bg-white rounded-lg p-6 border border-gray-200">
-                    <p className="text-[#2e4059] font-medium mb-2">
-                      Unable to load subscription options
-                    </p>
-                    {loadError && (
-                      <p className="text-[#2e4059]/60 text-xs mb-4">
-                        {loadError}
-                      </p>
-                    )}
-                    <div className="space-y-3">
-                      <Button
-                        onClick={() => {
-                          setPackagesLoading(true);
-                          loadOfferings();
-                        }}
-                        className="w-full bg-[#2e4059] hover:bg-[#2e4059]/90 text-white"
-                        disabled={packagesLoading}
-                      >
-                        {packagesLoading ? 'Loading...' : 'Try Again'}
-                      </Button>
-                      <Button
-                        onClick={handleRestorePurchases}
-                        variant="outline"
-                        className="w-full border-[#2e4059] text-[#2e4059]"
-                        disabled={restoring}
-                      >
-                        {restoring ? 'Restoring...' : 'Restore Purchases'}
-                      </Button>
-                      <Button
-                        onClick={onSkip}
-                        variant="ghost"
-                        className="w-full text-[#2e4059]/60"
-                      >
-                        Continue Without Premium
-                      </Button>
-                    </div>
-                  </div>
-                );
-              }
-              
-              // Web preview message - only shown on web
-              return (
-                <div className="col-span-full text-center py-8 bg-blue-50 rounded-lg p-6">
-                  <p className="text-[#2e4059] font-medium mb-2">
-                    📱 Subscriptions available on iOS & Android
+            // On native, show error with retry options - on web, show preview message
+            isNative ? (
+              <div className="col-span-full text-center py-6 bg-white rounded-lg p-6 border border-gray-200">
+                <p className="text-[#2e4059] font-medium mb-2">
+                  Unable to load subscription options
+                </p>
+                {loadError && (
+                  <p className="text-[#2e4059]/60 text-xs mb-4">
+                    {loadError}
                   </p>
-                  <p className="text-[#2e4059]/60 text-sm">
-                    This is a web preview. On the actual app, users will see subscription pricing here and can purchase directly through the App Store.
-                  </p>
+                )}
+                <div className="space-y-3">
+                  <Button
+                    onClick={() => {
+                      setPackagesLoading(true);
+                      loadOfferings();
+                    }}
+                    className="w-full bg-[#2e4059] hover:bg-[#2e4059]/90 text-white"
+                    disabled={packagesLoading}
+                  >
+                    {packagesLoading ? 'Loading...' : 'Try Again'}
+                  </Button>
+                  <Button
+                    onClick={handleRestorePurchases}
+                    variant="outline"
+                    className="w-full border-[#2e4059] text-[#2e4059]"
+                    disabled={restoring}
+                  >
+                    {restoring ? 'Restoring...' : 'Restore Purchases'}
+                  </Button>
                   <Button
                     onClick={onSkip}
-                    className="mt-4 bg-[#2e4059] hover:bg-[#2e4059]/90 text-white"
+                    variant="ghost"
+                    className="w-full text-[#2e4059]/60"
                   >
-                    Continue to App (Demo)
+                    Continue Without Premium
                   </Button>
                 </div>
-              );
-            })()
+              </div>
+            ) : (
+              // Web preview message - only shown on web
+              <div className="col-span-full text-center py-8 bg-blue-50 rounded-lg p-6">
+                <p className="text-[#2e4059] font-medium mb-2">
+                  📱 Subscriptions available on iOS & Android
+                </p>
+                <p className="text-[#2e4059]/60 text-sm">
+                  This is a web preview. On the actual app, users will see subscription pricing here and can purchase directly through the App Store.
+                </p>
+                <Button
+                  onClick={onSkip}
+                  className="mt-4 bg-[#2e4059] hover:bg-[#2e4059]/90 text-white"
+                >
+                  Continue to App (Demo)
+                </Button>
+              </div>
+            )
           )}
         </div>
 
