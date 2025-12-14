@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { useSubscription } from '@/hooks/useSubscription';
-import { Pause, Heart, Bot, Book, ArrowRightLeft, MessageSquare, Sparkles } from 'lucide-react';
+import { Pause, Heart, Bot, Book, ArrowRightLeft, MessageSquare, Sparkles, X } from 'lucide-react';
 import { Purchases, PurchasesPackage, LOG_LEVEL, PURCHASES_ERROR_CODE, PACKAGE_TYPE } from '@revenuecat/purchases-capacitor';
 import { isNativePlatform, getPlatform } from '@/utils/platform';
 
@@ -365,7 +365,16 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
   });
 
   return (
-    <div className="min-h-screen bg-[#F8F2F0] py-8 px-4 pt-[max(3.5rem,calc(2rem+env(safe-area-inset-top)))]">
+    <div className="min-h-screen bg-[#F8F2F0] py-8 px-4 pt-[max(3.5rem,calc(2rem+env(safe-area-inset-top)))] relative">
+      {/* Close button in top-right corner */}
+      <button
+        onClick={onSkip}
+        className="absolute top-[max(1rem,calc(0.5rem+env(safe-area-inset-top)))] right-4 p-2 rounded-full bg-white/80 hover:bg-white border border-gray-200 text-[#2e4059]/60 hover:text-[#2e4059] transition-colors z-10"
+        aria-label="Close"
+      >
+        <X className="w-6 h-6" />
+      </button>
+      
       <div className="max-w-md mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
