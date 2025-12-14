@@ -2,9 +2,9 @@
 /* iOS Safe Area Support */
 .safe-area-navbar {
   /* iOS safe area padding at the top for navbar */
-  /* Use padding-top to push content below the status bar/notch */
-  padding-top: env(safe-area-inset-top, 0px);
-  padding-top: constant(safe-area-inset-top); /* Legacy iOS 11.0-11.2 */
+  /* Use max() to ensure minimum padding even if env() returns small value */
+  padding-top: max(env(safe-area-inset-top, 0px), 44px);
+  padding-top: max(constant(safe-area-inset-top), 44px); /* Legacy iOS 11.0-11.2 */
   
   /* Ensure the navbar is positioned correctly */
   position: sticky;
@@ -76,9 +76,9 @@
 /* Mobile specific adjustments */
 @media screen and (max-width: 768px) {
   .safe-area-navbar {
-    /* Slightly more padding for mobile on top of safe area */
-    padding-top: calc(constant(safe-area-inset-top) + 1.5rem);
-    padding-top: calc(env(safe-area-inset-top) + 1.5rem);
-    padding-bottom: 1rem;
+    /* Use max() to ensure at least 54px (status bar + buffer) on mobile */
+    padding-top: max(calc(constant(safe-area-inset-top) + 0.5rem), 54px);
+    padding-top: max(calc(env(safe-area-inset-top) + 0.5rem), 54px);
+    padding-bottom: 0.75rem;
   }
 }
