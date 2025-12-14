@@ -353,7 +353,7 @@ const OnboardingPaywall: React.FC<OnboardingPaywallProps> = ({
   ];
 
   return (
-    <div className="min-h-screen bg-[#F8F2F0] py-8 px-4">
+    <div className="min-h-screen bg-[#F8F2F0] py-8 px-4 pt-[calc(2rem+env(safe-area-inset-top))]">
       <div className="max-w-md mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
