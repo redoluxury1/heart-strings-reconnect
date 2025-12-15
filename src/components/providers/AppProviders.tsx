@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -9,6 +8,7 @@ import InterfaceProvider from '@/providers/InterfaceProvider';
 import { SubscriptionProvider } from './SubscriptionProvider';
 import { isNativePlatform } from '@/utils/platform';
 import { StatusBar } from '@capacitor/status-bar';
+import { useSafeAreaInit } from '@/hooks/useSafeAreaInit';
 
 interface AppProvidersProps {
   children: React.ReactNode;
@@ -16,6 +16,9 @@ interface AppProvidersProps {
 }
 
 const AppProviders: React.FC<AppProvidersProps> = ({ children, queryClient }) => {
+  // Initialize safe area CSS custom property
+  useSafeAreaInit();
+
   useEffect(() => {
     if (!isNativePlatform()) return;
 
