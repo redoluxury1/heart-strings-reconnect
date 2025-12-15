@@ -30,7 +30,7 @@ const config: CapacitorConfig = {
     }
   },
   ios: {
-    contentInset: 'automatic',
+    contentInset: 'always',
     backgroundColor: '#faf8f3'
   },
   android: {

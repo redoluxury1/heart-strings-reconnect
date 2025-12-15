@@ -1,38 +1,22 @@
-
 /* iOS Safe Area Support */
+
+/* CSS Custom Property for safe area - set by JS on native, defaults to 47px for notched iPhones */
+:root {
+  --safe-area-top: 47px;
+}
+
+/* Main navbar safe area class - uses JS-set custom property with fallback */
 .safe-area-navbar {
-  /* iOS safe area padding at the top for navbar */
-  /* Use max() to ensure minimum padding even if env() returns small value */
-  padding-top: max(env(safe-area-inset-top, 0px), 44px);
-  padding-top: max(constant(safe-area-inset-top), 44px); /* Legacy iOS 11.0-11.2 */
-  
-  /* Ensure the navbar is positioned correctly */
+  padding-top: var(--safe-area-top, 47px);
   position: sticky;
   top: 0;
   z-index: 50;
-  background-color: #1E2A38; /* Navy blue background */
-}
-
-/* iOS Native App specific - more aggressive safe area handling */
-@supports (padding-top: env(safe-area-inset-top)) {
-  .safe-area-navbar {
-    /* On devices with notches, add the safe area inset */
-    padding-top: env(safe-area-inset-top);
-    /* The navbar content should have additional internal padding */
-  }
-}
-
-/* Fallback for devices without notch but still need some padding */
-@supports not (padding-top: env(safe-area-inset-top)) {
-  .safe-area-navbar {
-    padding-top: 0;
-  }
+  background-color: #1E2A38;
 }
 
 /* Full screen safe area support for mobile */
 .safe-area-top {
-  padding-top: constant(safe-area-inset-top);
-  padding-top: env(safe-area-inset-top);
+  padding-top: var(--safe-area-top, 47px);
 }
 
 .safe-area-bottom {
@@ -51,8 +35,7 @@
 }
 
 .safe-area-all {
-  padding-top: constant(safe-area-inset-top);
-  padding-top: env(safe-area-inset-top);
+  padding-top: var(--safe-area-top, 47px);
   padding-bottom: constant(safe-area-inset-bottom);
   padding-bottom: env(safe-area-inset-bottom);
   padding-left: constant(safe-area-inset-left);
@@ -64,26 +47,14 @@
 /* Full screen container with safe areas */
 .safe-area-screen {
   min-height: 100vh;
-  min-height: calc(100vh - constant(safe-area-inset-top) - constant(safe-area-inset-bottom));
-  min-height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+  min-height: calc(100vh - var(--safe-area-top, 47px) - env(safe-area-inset-bottom, 0px));
 }
 
 /* Simple utility class for safe area top padding + extra breathing room */
 .safe-top {
-  padding-top: calc(env(safe-area-inset-top, 0px) + 12px);
+  padding-top: calc(var(--safe-area-top, 47px) + 12px);
 }
 
 .navbar-content {
-  /* Standard content padding */
   padding-top: 0.5rem;
-}
-
-/* Mobile specific adjustments */
-@media screen and (max-width: 768px) {
-  .safe-area-navbar {
-    /* Use max() to ensure at least 54px (status bar + buffer) on mobile */
-    padding-top: max(calc(constant(safe-area-inset-top) + 0.5rem), 54px);
-    padding-top: max(calc(env(safe-area-inset-top) + 0.5rem), 54px);
-    padding-bottom: 0.75rem;
-  }
 }
