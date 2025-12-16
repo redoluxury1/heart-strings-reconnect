@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import CardToolsList from './CardToolsList';
 import { CardContent } from '../types';
 import { setPostOnboardingRedirect } from '@/utils/redirectStorage';
+import { useSubscription } from '@/hooks/useSubscription';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface DesktopCardContentProps {
   card: CardContent;
@@ -24,8 +26,16 @@ const DesktopCardContent: React.FC<DesktopCardContentProps> = ({
   renderIcon
 }) => {
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const { hasActiveSubscription } = useSubscription();
 
   const handleClick = () => {
+    // Subscribed users go directly to feature
+    if (user && hasActiveSubscription && card.originalDestination) {
+      navigate(card.originalDestination);
+      return;
+    }
+    // Non-subscribed users go through onboarding
     if (card.originalDestination) {
       setPostOnboardingRedirect(card.originalDestination);
     }
