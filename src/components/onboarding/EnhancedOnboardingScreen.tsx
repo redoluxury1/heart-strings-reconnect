@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigate, Link } from "react-router-dom";
 import OptimizedImage from "@/components/common/OptimizedImage";
+import { isOnboardingBypassEnabled } from "@/utils/debugBypass";
 
 // Simplified orb config: 2 orbs, less intense effects
 const ORB_CONFIG = [
@@ -15,13 +16,19 @@ const EnhancedOnboardingScreen = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Dev bypass - redirect to home immediately
+    if (isOnboardingBypassEnabled()) {
+      navigate('/');
+      return;
+    }
+    
     const t1 = setTimeout(() => setShowContent(true), 300);
     const t2 = setTimeout(() => setShowButton(true), 600);
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
     };
-  }, []);
+  }, [navigate]);
 
   const handleGetStarted = () => {
     navigate("/signup-choice");
