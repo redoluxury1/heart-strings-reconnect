@@ -1,12 +1,20 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { User, Heart } from 'lucide-react';
 import OnboardingContainer from '@/components/onboarding/OnboardingContainer';
+import { isOnboardingBypassEnabled } from '@/utils/debugBypass';
 
 const SignupChoice = () => {
   const navigate = useNavigate();
+
+  // Dev bypass - redirect to home immediately
+  useEffect(() => {
+    if (isOnboardingBypassEnabled()) {
+      navigate('/');
+    }
+  }, [navigate]);
 
   const handleSoloChoice = () => {
     navigate('/auth?tab=signup&mode=solo');

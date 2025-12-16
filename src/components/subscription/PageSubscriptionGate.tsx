@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useSubscription } from '@/hooks/useSubscription';
 import { setPostOnboardingRedirect } from '@/utils/redirectStorage';
 import { Heart } from 'lucide-react';
+import { isOnboardingBypassEnabled } from '@/utils/debugBypass';
 
 interface PageSubscriptionGateProps {
   children: React.ReactNode;
@@ -24,6 +25,12 @@ export const PageSubscriptionGate: React.FC<PageSubscriptionGateProps> = ({
 
   useEffect(() => {
     const checkAccess = async () => {
+      // Dev bypass - skip all checks
+      if (isOnboardingBypassEnabled()) {
+        setHasAccess(true);
+        return;
+      }
+      
       if (hasActiveSubscription) {
         const access = await hasFeatureAccess(featureKey);
         setHasAccess(access);

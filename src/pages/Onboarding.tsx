@@ -10,6 +10,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { getPostOnboardingRedirect, clearPostOnboardingRedirect } from '@/utils/redirectStorage';
+import { isOnboardingBypassEnabled } from '@/utils/debugBypass';
 
 const Onboarding = () => {
   const { user, loading: authLoading } = useAuth();
@@ -34,9 +35,14 @@ const Onboarding = () => {
     }
   }, [user, authLoading, navigate]);
 
-  // Redirect to auth if not authenticated
+  // Redirect to auth if not authenticated (unless bypass enabled)
   useEffect(() => {
     if (!authLoading && !user) {
+      if (isOnboardingBypassEnabled()) {
+        console.log("Onboarding bypass enabled, redirecting to home");
+        navigate('/');
+        return;
+      }
       console.log("User not authenticated, redirecting to intro");
       navigate('/intro');
     }
