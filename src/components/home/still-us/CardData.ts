@@ -16,7 +16,7 @@ export const getCardData = (): CardContent[] => {
         "Color Healing"
       ],
       // Removed: comingSoonTools: ["Build a Bridge"],
-      link: "/during-conflict",
+      link: "/intro",
       gradientClass: "bg-[#FDFBF9]",
       iconBgClass: "",
       buttonText: "Let's Slow Down",
@@ -35,7 +35,7 @@ export const getCardData = (): CardContent[] => {
         "Bridge the Gap"
       ],
       // Removed: comingSoonTools: ["Build a Bridge"],
-      link: "/post-conflict",
+      link: "/intro",
       gradientClass: "bg-[#FDFBF9]",
       iconBgClass: "",
       buttonText: "Let's Reflect",
@@ -54,7 +54,7 @@ export const getCardData = (): CardContent[] => {
         "Let's Talk About Us"
       ],
       // Ensure bullet list aligns with tool order, no comingSoonTools
-      link: "/reconnect",
+      link: "/intro",
       gradientClass: "bg-[#FDFBF9]",
       iconBgClass: "",
       buttonText: "Let's Grow Closer",
