@@ -9,6 +9,7 @@ import { useOnboarding } from '../hooks/onboarding/useOnboarding';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { getPostOnboardingRedirect, clearPostOnboardingRedirect } from '@/utils/redirectStorage';
 
 const Onboarding = () => {
   const { user, loading: authLoading } = useAuth();
@@ -23,11 +24,13 @@ const Onboarding = () => {
     handleSkipPaywall
   } = useOnboarding();
 
-  // If user is already authenticated and has completed onboarding, redirect to home
+  // If user is already authenticated and has completed onboarding, redirect to stored destination or home
   useEffect(() => {
     if (!authLoading && user && user.user_metadata?.onboarding_complete) {
-      console.log("User has completed onboarding, redirecting to home");
-      navigate('/');
+      console.log("User has completed onboarding, redirecting");
+      const redirectTo = getPostOnboardingRedirect();
+      clearPostOnboardingRedirect();
+      navigate(redirectTo || '/');
     }
   }, [user, authLoading, navigate]);
 

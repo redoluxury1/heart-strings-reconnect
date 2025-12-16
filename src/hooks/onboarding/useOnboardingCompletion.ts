@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../use-toast';
 import { createRelationship } from '../../services/supabase';
+import { getPostOnboardingRedirect, clearPostOnboardingRedirect } from '@/utils/redirectStorage';
 
 export const useOnboardingCompletion = (partnerStatus: string) => {
   const navigate = useNavigate();
@@ -32,8 +33,12 @@ export const useOnboardingCompletion = (partnerStatus: string) => {
         description: "Your account has been set up successfully."
       });
       
-      // Navigate to home
-      navigate('/');
+      // Check for stored redirect destination
+      const redirectTo = getPostOnboardingRedirect();
+      clearPostOnboardingRedirect();
+      
+      // Navigate to stored destination or home
+      navigate(redirectTo || '/');
     } catch (error) {
       console.error("Error completing onboarding:", error);
       toast({

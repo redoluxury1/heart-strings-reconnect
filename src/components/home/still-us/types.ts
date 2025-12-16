@@ -8,6 +8,7 @@ export type CardContent = {
   icon: ReactNode;
   tools: string[];
   link: string;
+  originalDestination?: string; // The feature page to redirect to after onboarding
   gradientClass: string;
   iconBgClass: string;
   buttonText: string;

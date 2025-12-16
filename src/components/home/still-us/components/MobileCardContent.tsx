@@ -1,9 +1,10 @@
 
 import React from 'react';
 import { Button } from "@/components/ui/button";
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import CardToolsList from './CardToolsList';
 import { CardContent } from '../types';
+import { setPostOnboardingRedirect } from '@/utils/redirectStorage';
 
 interface MobileCardContentProps {
   card: CardContent;
@@ -22,6 +23,15 @@ const MobileCardContent: React.FC<MobileCardContentProps> = ({
   buttonStyles,
   renderIcon
 }) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    if (card.originalDestination) {
+      setPostOnboardingRedirect(card.originalDestination);
+    }
+    navigate(card.link);
+  };
+
   return (
     <>
       <div className="mb-4 flex items-center">
@@ -46,13 +56,12 @@ const MobileCardContent: React.FC<MobileCardContentProps> = ({
         />
       </div>
       
-      <Link to={card.link} className="block mt-auto">
-        <Button 
-          className={`w-full ${buttonStyles} py-3 px-5 rounded-lg transition-colors`}
-        >
-          {card.buttonText}
-        </Button>
-      </Link>
+      <Button 
+        onClick={handleClick}
+        className={`w-full ${buttonStyles} py-3 px-5 rounded-lg transition-colors mt-auto`}
+      >
+        {card.buttonText}
+      </Button>
     </>
   );
 };
