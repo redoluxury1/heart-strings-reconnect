@@ -1,9 +1,10 @@
 
 import React from 'react';
 import { Button } from "@/components/ui/button";
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import CardToolsList from './CardToolsList';
 import { CardContent } from '../types';
+import { setPostOnboardingRedirect } from '@/utils/redirectStorage';
 
 interface DesktopCardContentProps {
   card: CardContent;
@@ -22,6 +23,15 @@ const DesktopCardContent: React.FC<DesktopCardContentProps> = ({
   buttonStyles,
   renderIcon
 }) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    if (card.originalDestination) {
+      setPostOnboardingRedirect(card.originalDestination);
+    }
+    navigate(card.link);
+  };
+
   return (
     <div className="flex flex-col">
       <div className="flex items-center mb-3">
@@ -47,13 +57,12 @@ const DesktopCardContent: React.FC<DesktopCardContentProps> = ({
         />
       </div>
       
-      <Link to={card.link} className="block">
-        <Button 
-          className={`w-full ${buttonStyles} py-3 px-5 rounded-lg transition-colors`}
-        >
-          {card.buttonText}
-        </Button>
-      </Link>
+      <Button 
+        onClick={handleClick}
+        className={`w-full ${buttonStyles} py-3 px-5 rounded-lg transition-colors`}
+      >
+        {card.buttonText}
+      </Button>
     </div>
   );
 };

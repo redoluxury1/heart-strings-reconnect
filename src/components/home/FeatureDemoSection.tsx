@@ -1,14 +1,21 @@
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import ContentContainer from '../common/ContentContainer';
 import PhoneMockup from './PhoneMockup';
 import FeatureDemoAnimation from './FeatureDemoAnimation';
 import { useScrollReveal } from '@/hooks/use-scroll-reveal';
+import { setPostOnboardingRedirect } from '@/utils/redirectStorage';
 
 const FeatureDemoSection: React.FC = () => {
   const { ref, isVisible } = useScrollReveal();
+  const navigate = useNavigate();
+
+  const handleTryItYourself = () => {
+    setPostOnboardingRedirect('/during-conflict');
+    navigate('/intro');
+  };
 
   return (
     <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-b from-[#f8f5ef] to-white overflow-hidden">
@@ -44,13 +51,13 @@ const FeatureDemoSection: React.FC = () => {
                 </li>
               </ul>
               
-              <Link 
-                to="/intro" 
+              <button 
+                onClick={handleTryItYourself}
                 className="inline-flex items-center gap-2 px-6 py-3 bg-terracotta hover:bg-terracotta/90 text-white rounded-lg font-medium transition-all duration-200 hover:shadow-lg group"
               >
                 Try it yourself
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
+              </button>
             </div>
             
             {/* Phone mockup with animation */}
