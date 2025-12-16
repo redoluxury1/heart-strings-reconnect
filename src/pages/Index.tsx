@@ -1,6 +1,8 @@
 
 import React from 'react';
 import { usePageAnalytics } from '@/hooks/useAnalytics';
+import { useSubscription } from '@/hooks/useSubscription';
+import { useAuth } from '@/contexts/AuthContext';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import HomeLanding from '@/components/home/HomeLanding';
@@ -15,6 +17,11 @@ import ContentContainer from '@/components/common/ContentContainer';
 
 const Index = () => {
   usePageAnalytics('home_page');
+  const { user } = useAuth();
+  const { hasActiveSubscription, loading } = useSubscription();
+
+  // Show marketing sections only for non-subscribed users
+  const showMarketingSections = !user || (!loading && !hasActiveSubscription);
 
   return (
     <div className="min-h-screen flex flex-col bg-soft-cream">
@@ -22,14 +29,19 @@ const Index = () => {
       <Hero />
       
       <main className="flex-1">
-        <BrandSection className="py-6 sm:py-8 lg:py-12" showLogo={false}>
-          <ContentContainer>
-            <HomeLanding />
-          </ContentContainer>
-        </BrandSection>
+        {showMarketingSections && (
+          <>
+            <BrandSection className="py-6 sm:py-8 lg:py-12" showLogo={false}>
+              <ContentContainer>
+                <HomeLanding />
+              </ContentContainer>
+            </BrandSection>
+            
+            <WhyBridgeSection />
+            <FeatureDemoSection />
+          </>
+        )}
         
-        <WhyBridgeSection />
-        <FeatureDemoSection />
         <StillUsSection />
         <SmallWinsSection />
         <RelationshipStatsSection />
