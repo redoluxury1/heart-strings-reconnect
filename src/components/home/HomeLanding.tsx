@@ -19,7 +19,7 @@ const HomeLanding = () => {
         </p>
         <Link 
           to="/signup-choice" 
-          className="inline-flex items-center px-6 py-3 bg-terracotta hover:bg-terracotta/90 text-white border-[3px] border-navy-800 rounded-lg font-medium transition-all duration-200 hover:shadow-md"
+          className="inline-flex items-center px-8 py-4 text-lg bg-white hover:bg-gray-50 text-terracotta border-[3px] border-navy-800 rounded-lg font-medium transition-all duration-200 hover:shadow-md"
           style={{ 
             animation: 'subtle-glow 3s ease-in-out infinite',
           }}
