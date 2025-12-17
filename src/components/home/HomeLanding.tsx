@@ -19,7 +19,8 @@ const HomeLanding = () => {
         </p>
         <Link 
           to="/intro" 
-          className="inline-flex items-center px-6 py-3 bg-navy-800 hover:bg-navy-800/90 text-white border-2 border-terracotta rounded-lg font-medium transition-all duration-200 hover:shadow-md animate-pulse"
+          className="inline-flex items-center px-6 py-3 bg-navy-800 hover:bg-navy-800/90 text-white border-[3px] border-terracotta rounded-lg font-medium transition-all duration-200 hover:shadow-md animate-[pulse_3s_ease-in-out_infinite]"
+          style={{ animationTimingFunction: 'ease-in-out' }}
         >
           Get Started Now
         </Link>
