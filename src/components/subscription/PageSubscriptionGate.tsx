@@ -37,7 +37,7 @@ export const PageSubscriptionGate: React.FC<PageSubscriptionGateProps> = ({
       } else {
         // Not subscribed - redirect to onboarding
         setPostOnboardingRedirect(location.pathname);
-        navigate('/intro', { replace: true });
+        navigate('/signup-choice', { replace: true });
       }
     };
 

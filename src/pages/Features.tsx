@@ -257,7 +257,7 @@ const Features = () => {
               Join thousands of couples who are building stronger, more connected relationships with Bridge.
             </p>
             <a 
-              href="/intro" 
+              href="/signup-choice" 
               className="inline-block bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-xl font-medium transition-all duration-200 hover:shadow-lg hover-scale"
             >
               Get Started Now

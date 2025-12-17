@@ -43,8 +43,8 @@ const Onboarding = () => {
         navigate('/');
         return;
       }
-      console.log("User not authenticated, redirecting to intro");
-      navigate('/intro');
+      console.log("User not authenticated, redirecting to signup-choice");
+      navigate('/signup-choice');
     }
   }, [user, authLoading, navigate]);
 

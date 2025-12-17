@@ -15,7 +15,7 @@ export const getCardData = (): CardContent[] => {
         "What's Really Going On?", 
         "Color Healing"
       ],
-      link: "/intro",
+      link: "/signup-choice",
       originalDestination: "/during-conflict",
       gradientClass: "bg-[#FDFBF9]",
       iconBgClass: "",
@@ -34,7 +34,7 @@ export const getCardData = (): CardContent[] => {
         "Let's Work This Out", 
         "Bridge the Gap"
       ],
-      link: "/intro",
+      link: "/signup-choice",
       originalDestination: "/post-conflict",
       gradientClass: "bg-[#FDFBF9]",
       iconBgClass: "",
@@ -53,7 +53,7 @@ export const getCardData = (): CardContent[] => {
         "Spin the Date Night Wheel",
         "Let's Talk About Us"
       ],
-      link: "/intro",
+      link: "/signup-choice",
       originalDestination: "/reconnect",
       gradientClass: "bg-[#FDFBF9]",
       iconBgClass: "",

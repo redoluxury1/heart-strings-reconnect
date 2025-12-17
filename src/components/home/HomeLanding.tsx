@@ -18,7 +18,7 @@ const HomeLanding = () => {
           Want to learn more about how Bridge For Couples can help your relationship?
         </p>
         <Link 
-          to="/intro" 
+          to="/signup-choice"
           className="inline-flex items-center px-6 py-3 bg-navy-800 hover:bg-navy-800/90 text-white border-[3px] border-terracotta rounded-lg font-medium transition-all duration-200 hover:shadow-md"
           style={{ 
             animation: 'subtle-glow 3s ease-in-out infinite',
