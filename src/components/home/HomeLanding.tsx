@@ -12,16 +12,16 @@ const HomeLanding = () => {
         {dailyQuote.headline}
       </h1>
 
-      {/* Features Link */}
+      {/* Get Started CTA */}
       <div className="mt-8 pt-6 border-t border-navy-800/10">
         <p className="text-navy-800/70 mb-4">
           Want to learn more about how Bridge For Couples can help your relationship?
         </p>
         <Link 
-          to="/features" 
-          className="inline-flex items-center px-6 py-3 bg-primary/10 hover:bg-primary/20 text-primary border border-primary/20 rounded-lg font-medium transition-all duration-200 hover:shadow-md"
+          to="/intro" 
+          className="inline-flex items-center px-6 py-3 bg-navy-800 hover:bg-navy-800/90 text-white border-2 border-terracotta rounded-lg font-medium transition-all duration-200 hover:shadow-md animate-pulse"
         >
-          Explore All Features
+          Get Started Now
         </Link>
       </div>
     </div>
