@@ -64,7 +64,7 @@ const ScreenshotStudio: React.FC = () => {
                 </Button>
                 
                 <Button asChild variant="outline" className="h-auto p-4 flex flex-col gap-2">
-                  <Link to="/intro">
+                  <Link to="/signup-choice">
                     <Crown className="h-5 w-5" />
                     <span className="text-xs">Premium Paywall</span>
                   </Link>

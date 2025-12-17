@@ -61,7 +61,7 @@ const NavbarDesktopLinks: React.FC<NavbarDesktopLinksProps> = ({ user }) => {
           ) : (
             <>
               <NavigationMenuItem>
-                <Link to="/intro" className="text-sm font-medium text-white hover:text-soft-cream transition-colors px-3 py-2">
+                <Link to="/signup-choice" className="text-sm font-medium text-white hover:text-soft-cream transition-colors px-3 py-2">
                   Get Started
                 </Link>
               </NavigationMenuItem>
