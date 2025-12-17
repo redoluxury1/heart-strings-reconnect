@@ -18,18 +18,18 @@ const HomeLanding = () => {
           Want to learn more about how Bridge For Couples can help your relationship?
         </p>
         <Link 
-          to="/signup-choice"
-          className="inline-flex items-center px-6 py-3 bg-navy-800 hover:bg-navy-800/90 text-white border-[3px] border-terracotta rounded-lg font-medium transition-all duration-200 hover:shadow-md"
+          to="/signup-choice" 
+          className="inline-flex items-center px-6 py-3 bg-terracotta hover:bg-terracotta/90 text-white border-[3px] border-navy-800 rounded-lg font-medium transition-all duration-200 hover:shadow-md"
           style={{ 
             animation: 'subtle-glow 3s ease-in-out infinite',
           }}
         >
-          Get Started Now
+          Start For Free
         </Link>
         <style>{`
           @keyframes subtle-glow {
-            0%, 100% { box-shadow: 0 0 8px rgba(198, 124, 100, 0.3); }
-            50% { box-shadow: 0 0 16px rgba(198, 124, 100, 0.5); }
+            0%, 100% { box-shadow: 0 0 8px rgba(30, 41, 59, 0.3); }
+            50% { box-shadow: 0 0 16px rgba(30, 41, 59, 0.5); }
           }
         `}</style>
       </div>
