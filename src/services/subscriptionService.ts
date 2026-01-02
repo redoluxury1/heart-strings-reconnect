@@ -8,7 +8,6 @@ import { EntitlementService } from './nativeStoreKit/entitlementService';
 export const FEATURE_KEYS = {
   MID_FIGHT_ACCESS: 'entl51d1c435c2',
   POST_CONFLICT_ACCESS: 'entl51d1c435c2', 
-  RECONNECT_ACCESS: 'entl51d1c435c2',
   LOVE_NOTES_ACCESS: 'entl2a85cac069',
   ARCHIVE_ACCESS: 'entl2a85cac069'
 } as const;
@@ -114,7 +113,6 @@ export class SubscriptionService {
       const premiumFeatures = [
         FEATURE_KEYS.MID_FIGHT_ACCESS,
         FEATURE_KEYS.POST_CONFLICT_ACCESS,
-        FEATURE_KEYS.RECONNECT_ACCESS,
         FEATURE_KEYS.LOVE_NOTES_ACCESS,
         FEATURE_KEYS.ARCHIVE_ACCESS
       ];

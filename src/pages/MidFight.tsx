@@ -7,6 +7,7 @@ import FeatureCardSection from '@/components/mid-fight/FeatureCardSection';
 import BackgroundPhrases from '@/components/mid-fight/BackgroundPhrases';
 import PauseTool from '@/components/mid-fight/pause-tool/PauseTool';
 import MidFightColorHealing from '@/components/mid-fight/color-healing/MidFightColorHealing';
+import PauseScriptGenerator from '@/components/mid-fight/pause-script/PauseScriptGenerator';
 
 const MidFight = () => {
   const [selectedFeature, setSelectedFeature] = useState<string | null>(null);
@@ -41,7 +42,14 @@ const MidFight = () => {
           toggleFeature={toggleFeature}
         />
         
-        {/* Pause Tool Section - Moved to after What's Really Going On */}
+        {/* Pause Script Generator - AI-powered pause phrase helper */}
+        <section className="py-8 bg-soft-cream/30">
+          <ContentContainer maxWidth="lg">
+            <PauseScriptGenerator />
+          </ContentContainer>
+        </section>
+        
+        {/* Pause Tool Section */}
         <section className="py-8 bg-soft-blush/30">
           <ContentContainer maxWidth="lg">
             <PauseTool />

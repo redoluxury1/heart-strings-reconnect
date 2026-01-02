@@ -6,8 +6,7 @@ import WhereIsYourHeadAt from '@/components/post-conflict/steps/emotional-check-
 import YourPerspective from '@/components/post-conflict/steps/perspective/YourPerspective';
 import WishPartnerUnderstood from '@/components/post-conflict/steps/partner-understanding/WishPartnerUnderstood';
 import WhatDoYouNeed from '@/components/post-conflict/steps/needs/WhatDoYouNeed';
-import PartnerWaitingState from '@/components/post-conflict/steps/final/PartnerWaitingState';
-import ReflectionSummary from '@/components/post-conflict/steps/summary/ReflectionSummary';
+import SoloReflectionSummary from '@/components/post-conflict/steps/summary/SoloReflectionSummary';
 
 interface StepContentProps {
   currentStep: number;
@@ -26,7 +25,6 @@ interface StepContentProps {
 const StepContent: React.FC<StepContentProps> = ({
   currentStep,
   isAnimating,
-  bothPartnersReady,
   onReady,
   onNeedTime,
   onToneSelected,
@@ -36,11 +34,6 @@ const StepContent: React.FC<StepContentProps> = ({
   onUnderstandingComplete,
   onNeedsComplete
 }) => {
-  // If both partners are ready, show the summary screen
-  if (bothPartnersReady) {
-    return <ReflectionSummary />;
-  }
-  
   switch (currentStep) {
     case 0: // Intro - ready check
       return (
@@ -51,7 +44,7 @@ const StepContent: React.FC<StepContentProps> = ({
         />
       );
       
-    case 1: // Set tone
+    case 1: // Set tone/intention
       return <SetToneTool onComplete={onToneSelected} onBack={onBackToIntro} />;
       
     case 2: // Emotional check-in
@@ -66,8 +59,8 @@ const StepContent: React.FC<StepContentProps> = ({
     case 5: // What do you need to move forward
       return <WhatDoYouNeed onComplete={onNeedsComplete} />;
       
-    case 6: // Partner waiting state
-      return <PartnerWaitingState />;
+    case 6: // Solo reflection summary (no waiting for partner)
+      return <SoloReflectionSummary />;
       
     default:
       return <div>Loading...</div>;

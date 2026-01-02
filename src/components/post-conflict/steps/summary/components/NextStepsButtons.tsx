@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { HeartHandshake, MessageCircle, Heart, ArrowRight } from 'lucide-react';
+import { Heart, ArrowRight, BookOpen } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useSession } from '@/components/post-conflict/context/SessionContext';
 import WhiteFlagButton from './WhiteFlagButton';
@@ -10,16 +10,12 @@ const NextStepsButtons: React.FC = () => {
   const navigate = useNavigate();
   const { handleRestart } = useSession();
   
-  const handleTalkTogether = () => {
-    navigate('/reconnect');
-  };
-  
   const handleWriteLoveNote = () => {
     navigate('/love-notes');
   };
   
-  const handlePlayGame = () => {
-    navigate('/games');
+  const handleViewArchive = () => {
+    navigate('/archive');
   };
   
   const handleRetry = () => {
@@ -40,36 +36,28 @@ const NextStepsButtons: React.FC = () => {
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Button
-          onClick={handleTalkTogether}
-          className="bg-[#5D3A5A] hover:bg-[#5D3A5A]/90 text-white rounded-full flex items-center"
-        >
-          <MessageCircle className="mr-2 h-4 w-4" />
-          Talk This Through Together
-        </Button>
-        
-        <Button
           onClick={handleWriteLoveNote}
           className="bg-[#D3876A] hover:bg-[#D3876A]/90 text-white rounded-full flex items-center"
         >
           <Heart className="mr-2 h-4 w-4" />
-          Write a Love Note
+          Draft a Love Note
         </Button>
         
         <Button
-          variant="outline"
-          onClick={handlePlayGame}
-          className="border-[#5D3A5A] text-[#5D3A5A] hover:bg-[#5D3A5A]/10 bg-transparent rounded-full"
+          onClick={handleViewArchive}
+          className="bg-[#5D3A5A] hover:bg-[#5D3A5A]/90 text-white rounded-full flex items-center"
         >
-          Play Would You Rather
+          <BookOpen className="mr-2 h-4 w-4" />
+          View My Reflections
         </Button>
         
         <Button
           variant="outline"
           onClick={handleRetry}
-          className="border-[#D3876A] text-[#D3876A] hover:bg-[#D3876A]/10 bg-transparent rounded-full flex items-center"
+          className="border-[#D3876A] text-[#D3876A] hover:bg-[#D3876A]/10 bg-transparent rounded-full flex items-center md:col-span-2"
         >
           <ArrowRight className="mr-2 h-4 w-4" />
-          Let's Try That Again
+          Start Another Reflection
         </Button>
       </div>
     </div>
