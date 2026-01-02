@@ -14,7 +14,7 @@ const FeatureDemoSection: React.FC = () => {
 
   const handleTryItYourself = () => {
     setPostOnboardingRedirect('/during-conflict');
-    navigate('/signup-choice');
+    navigate('/auth?tab=signup');
   };
 
   return (

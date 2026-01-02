@@ -13,7 +13,7 @@ const HomeLanding = () => {
         <p className="text-navy-800/70 mb-4">
           Want to learn more about how Bridge For Couples can help your relationship?
         </p>
-        <Link to="/signup-choice" style={{
+        <Link to="/auth?tab=signup" style={{
         animation: 'subtle-glow 3s ease-in-out infinite'
       }} className="inline-flex items-center px-8 py-4 text-lg border-[3px] border-navy-800 rounded-lg font-medium transition-all duration-200 hover:shadow-md text-primary border-orange-600 bg-secondary">
           ​START  FOR    FREE  

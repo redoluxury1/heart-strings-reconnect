@@ -18,7 +18,7 @@ const Navbar = () => {
 
   const handleSignOut = async () => {
     await signOut();
-    navigate('/signup-choice');
+    navigate('/auth?tab=signup');
   };
 
   const handleLoveNoteClick = () => {

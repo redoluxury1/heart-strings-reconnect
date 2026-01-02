@@ -3,7 +3,6 @@ import React from 'react';
 import OnboardingContainer from '../components/onboarding/OnboardingContainer';
 import OnboardingLoader from '../components/onboarding/OnboardingLoader';
 import NotificationPermissionScreen from '../components/onboarding/NotificationPermissionScreen';
-import PartnerInvite from '../components/onboarding/PartnerInvite';
 import OnboardingPaywall from '../components/onboarding/OnboardingPaywall';
 import { useOnboarding } from '../hooks/onboarding/useOnboarding';
 import { useAuth } from '../contexts/AuthContext';
@@ -20,7 +19,6 @@ const Onboarding = () => {
     step,
     partnerStatus,
     handleNextStep,
-    handlePartnerInviteComplete,
     handleSkipNotifications,
     handleSkipPaywall
   } = useOnboarding();
@@ -43,8 +41,8 @@ const Onboarding = () => {
         navigate('/');
         return;
       }
-      console.log("User not authenticated, redirecting to signup-choice");
-      navigate('/signup-choice');
+      console.log("User not authenticated, redirecting to auth");
+      navigate('/auth?tab=signup');
     }
   }, [user, authLoading, navigate]);
 
@@ -58,17 +56,10 @@ const Onboarding = () => {
     return <OnboardingLoader />;
   }
 
-  console.log("User authenticated, showing onboarding step:", step, "Partner status:", partnerStatus);
+  console.log("User authenticated, showing onboarding step:", step);
   
   return (
     <OnboardingContainer>
-      {step === 1 && partnerStatus === 'couple' && (
-        <PartnerInvite
-          onBack={() => {}} // No back option in new flow
-          onComplete={handlePartnerInviteComplete}
-        />
-      )}
-      
       {step === 2 && (
         <NotificationPermissionScreen
           onContinue={handleNextStep}
@@ -81,15 +72,6 @@ const Onboarding = () => {
         <OnboardingPaywall
           onContinue={handleNextStep}
           onSkip={handleSkipPaywall}
-        />
-      )}
-
-      {/* Fallback for unexpected states */}
-      {step === 1 && partnerStatus === 'solo' && (
-        <NotificationPermissionScreen
-          onContinue={handleNextStep}
-          onSkip={handleSkipNotifications}
-          partnerStatus={partnerStatus}
         />
       )}
     </OnboardingContainer>
