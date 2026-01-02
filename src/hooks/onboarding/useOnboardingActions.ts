@@ -29,11 +29,7 @@ export const useOnboardingActions = ({
   const handleNextStep = () => {
     console.log(`📍 Current step: ${step}, moving to next step`);
     
-    if (step === 1) {
-      // From partner invite, go to notifications
-      console.log("🎯 Partner invite complete - moving to notifications");
-      setStep(2);
-    } else if (step === 2) {
+    if (step === 2) {
       // From notifications, go to paywall
       console.log("🎯 Notification step complete - moving to paywall");
       setStep(3);
@@ -42,23 +38,6 @@ export const useOnboardingActions = ({
       console.log("🎯 Paywall step complete - completing onboarding");
       completeOnboarding();
     }
-  };
-  
-  const handleAddPartner = () => {
-    // This function is no longer needed in the new flow
-    // Partner invite is now step 1 for couples
-    console.log("🎯 Partner invite already shown");
-  };
-  
-  const handleBackFromPartnerInvite = () => {
-    // Can't go back from partner invite in new flow
-    console.log("🎯 Cannot go back from partner invite");
-  };
-  
-  const handlePartnerInviteComplete = async () => {
-    // Move to notifications after partner invite
-    console.log("🎯 Partner invite complete - moving to notifications");
-    setStep(2);
   };
   
   const handleSkipNotifications = () => {
@@ -71,6 +50,20 @@ export const useOnboardingActions = ({
     // Complete onboarding after skipping paywall
     console.log("🎯 Paywall skipped - completing onboarding");
     completeOnboarding();
+  };
+  
+  // Legacy handlers kept for compatibility but simplified
+  const handleAddPartner = () => {
+    console.log("🎯 Partner invite moved to settings");
+  };
+  
+  const handleBackFromPartnerInvite = () => {
+    console.log("🎯 Partner invite no longer in onboarding flow");
+  };
+  
+  const handlePartnerInviteComplete = async () => {
+    console.log("🎯 Partner invite moved to settings");
+    setStep(2);
   };
   
   return {
