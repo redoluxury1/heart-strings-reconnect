@@ -8,10 +8,8 @@ import SignupChoice from "@/pages/SignupChoice";
 import Onboarding from "@/pages/Onboarding";
 import MidFight from "@/pages/MidFight";
 import PostConflict from "@/pages/PostConflict";
-import Reconnect from "@/pages/Reconnect";
 import LoveNotesReceived from "@/pages/LoveNotesReceived";
 import Archive from "@/pages/Archive";
-import Games from "@/pages/Games";
 import PartnerInvite from "@/pages/PartnerInvite";
 import Privacy from "@/pages/Privacy";
 import Terms from "@/pages/Terms";
@@ -56,22 +54,13 @@ const MainAppRoutes = () => {
           <PostConflict />
         </PageSubscriptionGate>
       } />
-      <Route key="reconnect" path="/reconnect" element={
-        <PageSubscriptionGate 
-          featureKey={FEATURE_KEYS.RECONNECT_ACCESS}
-          pageName="Reconnection Tools"
-          pageDescription="Rebuild intimacy and connection with activities designed to bring you closer together and reignite the spark in your relationship."
-        >
-          <Reconnect />
-        </PageSubscriptionGate>
-      } />
       
       {/* Other protected routes that require premium subscription */}
       <Route key="love-notes" path="/love-notes" element={
         <PageSubscriptionGate 
           featureKey={FEATURE_KEYS.LOVE_NOTES_ACCESS}
           pageName="Love Notes"
-          pageDescription="Exchange heartfelt messages with your partner. Express appreciation, love, and connection through thoughtful notes."
+          pageDescription="Write heartfelt messages to express appreciation and love. Prepare what you want to say before sharing with your partner."
         >
           <LoveNotesReceived />
         </PageSubscriptionGate>
@@ -80,12 +69,11 @@ const MainAppRoutes = () => {
         <PageSubscriptionGate 
           featureKey={FEATURE_KEYS.ARCHIVE_ACCESS}
           pageName="Saved Archive"
-          pageDescription="Access your saved conversations, reflections, repair plans, and progress. Review your relationship journey and growth over time."
+          pageDescription="Access your saved reflections, repair plans, and progress. Review your relationship journey and personal growth over time."
         >
           <Archive />
         </PageSubscriptionGate>
       } />
-      <Route key="games" path="/games" element={<Games />} />
       <Route key="communication-analysis" path="/communication-analysis" element={<CommunicationAnalysis />} />
       <Route key="invite" path="/invite" element={<PartnerInvite />} />
       <Route key="settings" path="/settings" element={<SettingsPage />} />

@@ -38,11 +38,6 @@ const NavbarDesktopLinks: React.FC<NavbarDesktopLinksProps> = ({ user }) => {
             </Link>
           </NavigationMenuItem>
           <NavigationMenuItem>
-            <Link to="/reconnect" className="text-sm font-medium text-white hover:text-soft-cream transition-colors px-3 py-2">
-              Reconnecting
-            </Link>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
             <Link to="/archive" className="text-sm font-medium text-white hover:text-soft-cream transition-colors px-3 py-2">
               Reflection
             </Link>

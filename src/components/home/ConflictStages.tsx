@@ -2,7 +2,7 @@
 import React from 'react';
 import ContentContainer from '../common/ContentContainer';
 import Card from '../common/Card';
-import { MessageCircle, BookOpen, Heart } from 'lucide-react';
+import { MessageCircle, BookOpen } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 
@@ -10,24 +10,17 @@ const ConflictStages = () => {
   const stages = [
     {
       title: "During Conflict",
-      description: "Tools to help deescalate tension, communicate effectively, and even connect with an expert when needed.",
+      description: "Tools to help you pause, gather your thoughts, and communicate more effectively in the heat of the moment.",
       icon: <MessageCircle className="h-6 w-6" />,
       link: "/during-conflict",
       color: "from-rose-100 to-rose-50"
     },
     {
       title: "Post Conflict",
-      description: "Guided reflection to process what happened and understand underlying needs and emotions.",
+      description: "Guided reflection to process what happened, understand your emotions, and prepare how to repair.",
       icon: <BookOpen className="h-6 w-6" />,
       link: "/post-conflict",
       color: "from-blue-100 to-blue-50"
-    },
-    {
-      title: "Reconnect",
-      description: "Exercises to rebuild emotional intimacy and strengthen your connection after conflict.",
-      icon: <Heart className="h-6 w-6" />,
-      link: "/reconnect",
-      color: "from-green-100 to-green-50"
     }
   ];
 

@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Flag } from 'lucide-react';
+import { Flag, Sparkles } from 'lucide-react';
 import WhiteFlagModal from './WhiteFlagModal';
 
 const WhiteFlagButton: React.FC = () => {
@@ -13,8 +13,8 @@ const WhiteFlagButton: React.FC = () => {
         onClick={() => setIsModalOpen(true)}
         className="bg-white border-2 border-[#D3876A] text-[#D3876A] hover:bg-[#D3876A]/5 rounded-full flex items-center gap-2 px-6 py-3"
       >
-        <Flag className="h-4 w-4" />
-        Send a White Flag
+        <Sparkles className="h-4 w-4" />
+        Draft a Peace Offering
       </Button>
       
       <WhiteFlagModal 
