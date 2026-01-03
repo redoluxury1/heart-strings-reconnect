@@ -41,7 +41,7 @@ const SuggestionCards: React.FC<SuggestionCardsProps> = ({
         transition={{ duration: 0.4 }}
         className="space-y-6 text-center"
       >
-        <h2 className="font-cormorant text-2xl font-semibold text-foreground">
+        <h2 className="font-cormorant text-2xl font-semibold text-midnight-indigo">
           No specific tips found
         </h2>
         <p className="text-muted-foreground">
@@ -68,7 +68,7 @@ const SuggestionCards: React.FC<SuggestionCardsProps> = ({
       className="space-y-6"
     >
       <div className="text-center">
-        <h2 className="font-cormorant text-2xl font-semibold text-foreground mb-2">
+        <h2 className="font-cormorant text-2xl font-semibold text-midnight-indigo mb-2">
           Here's what you could try next time
         </h2>
         <p className="text-muted-foreground text-sm">

@@ -5,7 +5,7 @@ import ContentContainer from '@/components/common/ContentContainer';
 import FloatingTextBubbles from '@/components/post-conflict/FloatingTextBubbles';
 import PostConflictToolHub, { ToolType } from '@/components/post-conflict/tool-hub/PostConflictToolHub';
 import TryNextTimeFlow from '@/components/post-conflict/try-next-time/TryNextTimeFlow';
-import FlipTheScriptFlow from '@/components/post-conflict/flip-the-script/FlipTheScriptFlow';
+import PatternTrackerFlow from '@/components/post-conflict/pattern-tracker/PatternTrackerFlow';
 
 const PostConflict = () => {
   const [selectedTool, setSelectedTool] = useState<ToolType | null>(null);
@@ -53,8 +53,8 @@ const PostConflict = () => {
                 />
               )}
               
-              {selectedTool === 'flip-the-script' && (
-                <FlipTheScriptFlow 
+              {selectedTool === 'pattern-tracker' && (
+                <PatternTrackerFlow 
                   onComplete={handleToolComplete}
                   onBack={handleBackToHub}
                 />

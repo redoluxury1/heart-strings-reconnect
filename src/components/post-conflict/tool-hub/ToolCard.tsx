@@ -35,7 +35,7 @@ const ToolCard: React.FC<ToolCardProps> = ({
           />
         </div>
         <div className="flex-1">
-          <h3 className="font-cormorant text-xl font-semibold text-foreground mb-2 group-hover:text-primary transition-colors">
+          <h3 className="font-cormorant text-xl font-semibold text-midnight-indigo mb-2 group-hover:text-midnight-indigo/80 transition-colors">
             {title}
           </h3>
           <p className="text-muted-foreground text-sm leading-relaxed">
