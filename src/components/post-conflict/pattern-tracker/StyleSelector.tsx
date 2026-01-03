@@ -2,20 +2,31 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import * as Icons from 'lucide-react';
-import { conflictStyles, ConflictStyle } from './data/styles';
+
+interface StyleOption {
+  id: string;
+  label: string;
+  description: string;
+  partnerDescription: string;
+  icon: string;
+}
 
 interface StyleSelectorProps {
   question: string;
   selectedStyle: string | null;
   onSelect: (styleId: string) => void;
   onContinue: () => void;
+  styles: StyleOption[];
+  isPartnerQuestion?: boolean;
 }
 
 const StyleSelector: React.FC<StyleSelectorProps> = ({
   question,
   selectedStyle,
   onSelect,
-  onContinue
+  onContinue,
+  styles,
+  isPartnerQuestion = false
 }) => {
   const getIcon = (iconName: string) => {
     const IconComponent = (Icons as any)[iconName];
@@ -39,8 +50,9 @@ const StyleSelector: React.FC<StyleSelectorProps> = ({
       </div>
 
       <div className="space-y-3">
-        {conflictStyles.map((style) => {
+        {styles.map((style) => {
           const isSelected = selectedStyle === style.id;
+          const displayDescription = isPartnerQuestion ? style.partnerDescription : style.description;
           
           return (
             <motion.button
@@ -75,7 +87,7 @@ const StyleSelector: React.FC<StyleSelectorProps> = ({
                     "text-sm",
                     isSelected ? "text-white/80" : "text-muted-foreground"
                   )}>
-                    {style.description}
+                    {displayDescription}
                   </p>
                 </div>
               </div>

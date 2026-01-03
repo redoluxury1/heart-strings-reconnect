@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Lightbulb, Target, MessageSquare, Brain, Copy, Check, RefreshCw } from 'lucide-react';
+import { Lightbulb, Target, MessageSquare, Brain, Copy, Check, RefreshCw, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { getAdviceForStyles, getStyleById } from './data/styles';
+import { getAdviceForStyles, getStyleById, getRecoveryAdvice, getRecoveryStyleById } from './data/styles';
 
 interface AdviceCardProps {
   userStyle: string;
@@ -10,6 +10,8 @@ interface AdviceCardProps {
   onBack: () => void;
   onComplete: () => void;
   onTryAnother: () => void;
+  patternType?: 'conflict' | 'recovery';
+  onContinue?: () => void;
 }
 
 const AdviceCard: React.FC<AdviceCardProps> = ({
@@ -17,12 +19,23 @@ const AdviceCard: React.FC<AdviceCardProps> = ({
   partnerStyle,
   onBack,
   onComplete,
-  onTryAnother
+  onTryAnother,
+  patternType = 'conflict',
+  onContinue
 }) => {
   const [copied, setCopied] = useState(false);
-  const advice = getAdviceForStyles(userStyle, partnerStyle);
-  const userStyleData = getStyleById(userStyle);
-  const partnerStyleData = getStyleById(partnerStyle);
+  
+  const advice = patternType === 'conflict' 
+    ? getAdviceForStyles(userStyle, partnerStyle)
+    : getRecoveryAdvice(userStyle, partnerStyle);
+    
+  const userStyleData = patternType === 'conflict'
+    ? getStyleById(userStyle)
+    : getRecoveryStyleById(userStyle);
+    
+  const partnerStyleData = patternType === 'conflict'
+    ? getStyleById(partnerStyle)
+    : getRecoveryStyleById(partnerStyle);
 
   const handleCopy = async () => {
     if (advice) {
@@ -43,6 +56,10 @@ const AdviceCard: React.FC<AdviceCardProps> = ({
     );
   }
 
+  const headerText = patternType === 'conflict' 
+    ? 'Your Conflict Dynamic' 
+    : 'Your Recovery Dynamic';
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -53,7 +70,7 @@ const AdviceCard: React.FC<AdviceCardProps> = ({
       {/* Dynamic header */}
       <div className="text-center">
         <h2 className="font-cormorant text-2xl font-semibold text-midnight-indigo mb-4">
-          Your Dynamic
+          {headerText}
         </h2>
         <div className="flex items-center justify-center gap-4 text-sm">
           <div className="bg-midnight-indigo/10 px-4 py-2 rounded-full">
@@ -143,14 +160,27 @@ const AdviceCard: React.FC<AdviceCardProps> = ({
           <RefreshCw className="h-4 w-4" />
           Try Another Combination
         </motion.button>
-        <motion.button
-          onClick={onComplete}
-          className="flex-1 px-6 py-3 rounded-full bg-midnight-indigo text-white hover:bg-midnight-indigo/90 transition-colors"
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          Done
-        </motion.button>
+        
+        {patternType === 'conflict' && onContinue ? (
+          <motion.button
+            onClick={onContinue}
+            className="flex-1 flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-midnight-indigo text-white hover:bg-midnight-indigo/90 transition-colors"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            Explore Another Pattern
+            <ArrowRight className="h-4 w-4" />
+          </motion.button>
+        ) : (
+          <motion.button
+            onClick={onComplete}
+            className="flex-1 px-6 py-3 rounded-full bg-midnight-indigo text-white hover:bg-midnight-indigo/90 transition-colors"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            Done
+          </motion.button>
+        )}
       </div>
     </motion.div>
   );

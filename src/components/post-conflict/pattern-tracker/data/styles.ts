@@ -2,10 +2,28 @@ export interface ConflictStyle {
   id: string;
   label: string;
   description: string;
+  partnerDescription: string;
   icon: string;
 }
 
 export interface StyleComboAdvice {
+  userStyle: string;
+  partnerStyle: string;
+  insight: string;
+  tryThis: string;
+  examplePhrase: string;
+  whyItWorks: string;
+}
+
+export interface RecoveryStyle {
+  id: string;
+  label: string;
+  description: string;
+  partnerDescription: string;
+  icon: string;
+}
+
+export interface RecoveryComboAdvice {
   userStyle: string;
   partnerStyle: string;
   insight: string;
@@ -19,31 +37,74 @@ export const conflictStyles: ConflictStyle[] = [
     id: 'escalate', 
     label: 'Escalate', 
     description: 'I get heated quickly and want to hash it out',
+    partnerDescription: 'They get heated quickly and want to hash it out',
     icon: 'Flame' 
   },
   { 
     id: 'resolve', 
     label: 'Resolve Immediately', 
     description: 'I try to fix it right away before it gets worse',
+    partnerDescription: 'They try to fix it right away before it gets worse',
     icon: 'Wrench' 
   },
   { 
     id: 'retreat', 
     label: 'Retreat', 
     description: 'I shut down or walk away to cool off',
+    partnerDescription: 'They shut down or walk away to cool off',
     icon: 'DoorOpen' 
   },
   { 
     id: 'deflect', 
     label: 'Deflect', 
     description: 'I change the subject or use humor to ease tension',
+    partnerDescription: 'They change the subject or use humor to ease tension',
     icon: 'Shuffle' 
   },
   { 
     id: 'freeze', 
     label: 'Freeze', 
     description: "I go quiet and don't know what to say",
+    partnerDescription: "They go quiet and don't know what to say",
     icon: 'Snowflake' 
+  }
+];
+
+export const recoveryStyles: RecoveryStyle[] = [
+  {
+    id: 'apologize-quickly',
+    label: 'Apologize Quickly',
+    description: 'I want to say sorry right away and move on',
+    partnerDescription: 'They want to say sorry right away and move on',
+    icon: 'Heart'
+  },
+  {
+    id: 'need-time',
+    label: 'Need Time Alone',
+    description: 'I need space before I can reconnect',
+    partnerDescription: 'They need space before they can reconnect',
+    icon: 'Clock'
+  },
+  {
+    id: 'act-normal',
+    label: 'Act Like Nothing Happened',
+    description: 'I prefer to move on without dwelling on it',
+    partnerDescription: 'They prefer to move on without dwelling on it',
+    icon: 'SkipForward'
+  },
+  {
+    id: 'need-reassurance',
+    label: 'Need Reassurance',
+    description: "I need to hear that we're okay before I can relax",
+    partnerDescription: "They need to hear that you're okay before they can relax",
+    icon: 'HandHeart'
+  },
+  {
+    id: 'process-together',
+    label: 'Process Together',
+    description: 'I want to talk through what happened before moving on',
+    partnerDescription: 'They want to talk through what happened before moving on',
+    icon: 'MessagesSquare'
   }
 ];
 
@@ -275,6 +336,234 @@ export const styleComboAdvice: StyleComboAdvice[] = [
   }
 ];
 
+export const recoveryComboAdvice: RecoveryComboAdvice[] = [
+  // Apologize Quickly + Need Time
+  {
+    userStyle: 'apologize-quickly',
+    partnerStyle: 'need-time',
+    insight: 'Your quick apology comes from a good place, but your partner needs space to process before they can accept it.',
+    tryThis: 'Apologize briefly, then give them space. Let them know you\'ll check in later.',
+    examplePhrase: "I'm sorry. I know you need some time. I'll be here when you're ready.",
+    whyItWorks: 'People who need time can feel pressured by repeated apologies. A single sincere apology followed by space shows respect for their process.'
+  },
+  // Need Time + Apologize Quickly
+  {
+    userStyle: 'need-time',
+    partnerStyle: 'apologize-quickly',
+    insight: 'Your partner wants to make things right immediately, but you need space first.',
+    tryThis: 'Acknowledge their apology, then ask for the time you need with reassurance.',
+    examplePhrase: "I hear your apology and I appreciate it. I just need a little time before we're fully okay.",
+    whyItWorks: 'Quick apologizers worry their apology wasn\'t accepted. Acknowledging it while asking for space prevents them from over-apologizing.'
+  },
+  // Act Normal + Process Together
+  {
+    userStyle: 'act-normal',
+    partnerStyle: 'process-together',
+    insight: 'You\'re ready to move on, but your partner feels like there\'s unfinished business.',
+    tryThis: 'Give them a brief conversation before returning to normal. It doesn\'t have to be long.',
+    examplePhrase: "I know you want to talk about it. Can we do a quick 5-minute check-in, then move on?",
+    whyItWorks: 'Processors need closure. A short, focused conversation satisfies their need to process without dragging things out.'
+  },
+  // Process Together + Act Normal
+  {
+    userStyle: 'process-together',
+    partnerStyle: 'act-normal',
+    insight: 'You want to talk through what happened, but your partner just wants to move forward.',
+    tryThis: 'Ask for a brief conversation and be specific about what you need to say.',
+    examplePhrase: "Can we talk for just 5 minutes? I have one thing I need to share, then we can move on.",
+    whyItWorks: 'People who act normal may feel drained by long discussions. Being specific about what you need makes it feel manageable.'
+  },
+  // Need Reassurance + Need Time
+  {
+    userStyle: 'need-reassurance',
+    partnerStyle: 'need-time',
+    insight: 'You need to know you\'re okay, but your partner needs space before they can give that.',
+    tryThis: 'Ask for a small reassurance before giving them space, then wait patiently.',
+    examplePhrase: "Can you just tell me we're okay before you take your time? That's all I need.",
+    whyItWorks: 'A quick reassurance costs little but means everything to someone who needs it. It makes giving space much easier.'
+  },
+  // Need Time + Need Reassurance
+  {
+    userStyle: 'need-time',
+    partnerStyle: 'need-reassurance',
+    insight: 'Your partner needs to know you\'re okay before they can relax, but you need space first.',
+    tryThis: 'Offer a brief reassurance before taking your space so they don\'t worry.',
+    examplePhrase: "We're okay. I just need some time to myself, but we're okay. I promise.",
+    whyItWorks: 'People who need reassurance can spiral with uncertainty. A quick confirmation before you step away prevents anxiety.'
+  },
+  // Apologize Quickly + Apologize Quickly
+  {
+    userStyle: 'apologize-quickly',
+    partnerStyle: 'apologize-quickly',
+    insight: 'You both rush to apologize, which is sweet—but make sure you\'re actually addressing the issue.',
+    tryThis: 'After the apologies, check in about what actually needs to change.',
+    examplePhrase: "I'm glad we both said sorry. But what can we do differently next time?",
+    whyItWorks: 'Quick apologies can become a band-aid. Taking a moment to discuss prevents the same issue from recurring.'
+  },
+  // Need Time + Need Time
+  {
+    userStyle: 'need-time',
+    partnerStyle: 'need-time',
+    insight: 'You both need space, which is fine—but make sure you actually come back together.',
+    tryThis: 'Set a specific time to reconnect so the issue doesn\'t get buried.',
+    examplePhrase: "Let's both take some time. Can we check in at 7pm?",
+    whyItWorks: 'Two people who need time can accidentally avoid each other indefinitely. A scheduled reconnection ensures resolution happens.'
+  },
+  // Act Normal + Act Normal
+  {
+    userStyle: 'act-normal',
+    partnerStyle: 'act-normal',
+    insight: 'You both prefer to move on quickly, but unaddressed issues can build up over time.',
+    tryThis: 'Occasionally check in about past conflicts to make sure nothing is lingering.',
+    examplePhrase: "Hey, that thing from last week—are we really okay about that?",
+    whyItWorks: 'Acting normal works short-term, but periodic check-ins prevent resentment from building up silently.'
+  },
+  // Need Reassurance + Need Reassurance
+  {
+    userStyle: 'need-reassurance',
+    partnerStyle: 'need-reassurance',
+    insight: 'You both need to know you\'re okay, which can feel clingy but is actually sweet.',
+    tryThis: 'Take turns giving reassurance. Say it first, then ask for it.',
+    examplePhrase: "We're okay. I love you. Are we okay?",
+    whyItWorks: 'Mutual reassurance-seekers can get stuck waiting for the other to go first. Leading with reassurance invites it in return.'
+  },
+  // Process Together + Process Together
+  {
+    userStyle: 'process-together',
+    partnerStyle: 'process-together',
+    insight: 'You both want to talk it through, which is healthy—but set a limit so you don\'t over-process.',
+    tryThis: 'Set a timer for your discussion, then agree to move on after.',
+    examplePhrase: "Let's talk this out for 15 minutes, then close the chapter. Deal?",
+    whyItWorks: 'Two processors can rehash endlessly. A time limit ensures you get closure without exhausting each other.'
+  },
+  // Apologize Quickly + Act Normal
+  {
+    userStyle: 'apologize-quickly',
+    partnerStyle: 'act-normal',
+    insight: 'You want to say sorry, but your partner has already moved on.',
+    tryThis: 'Keep your apology brief and don\'t demand a big response. They may just nod and move on.',
+    examplePhrase: "Hey, I'm sorry about earlier. That's all—we're good.",
+    whyItWorks: 'People who act normal don\'t need a big apology moment. A quick acknowledgment satisfies your need without dragging them back.'
+  },
+  // Act Normal + Apologize Quickly
+  {
+    userStyle: 'act-normal',
+    partnerStyle: 'apologize-quickly',
+    insight: 'Your partner wants to apologize, but you\'ve already moved on mentally.',
+    tryThis: 'Accept their apology graciously even if you\'ve forgotten about it.',
+    examplePhrase: "Thanks for saying that. We're good—I already forgot about it.",
+    whyItWorks: 'Quick apologizers need their apology received. Accepting it warmly closes the loop for them even if you didn\'t need it.'
+  },
+  // Need Reassurance + Apologize Quickly
+  {
+    userStyle: 'need-reassurance',
+    partnerStyle: 'apologize-quickly',
+    insight: 'Your partner apologizes fast, but you need more than sorry—you need to know you\'re okay.',
+    tryThis: 'Accept the apology and ask for the specific reassurance you need.',
+    examplePhrase: "I appreciate the apology. Can you also just tell me we're okay?",
+    whyItWorks: 'Apologies and reassurance are different things. Asking directly gets you what you actually need.'
+  },
+  // Apologize Quickly + Need Reassurance
+  {
+    userStyle: 'apologize-quickly',
+    partnerStyle: 'need-reassurance',
+    insight: 'Your apology is great, but your partner needs more—they need to know you\'re still okay.',
+    tryThis: 'Pair your apology with explicit reassurance about the relationship.',
+    examplePhrase: "I'm sorry. And just so you know—we're okay. I still love you.",
+    whyItWorks: 'For reassurance-seekers, "sorry" alone can feel incomplete. Adding "we\'re okay" gives them what they really need.'
+  },
+  // Process Together + Need Reassurance
+  {
+    userStyle: 'process-together',
+    partnerStyle: 'need-reassurance',
+    insight: 'You want to discuss what happened, but your partner needs to know you\'re okay first.',
+    tryThis: 'Lead with reassurance before diving into the discussion.',
+    examplePhrase: "We're okay—I love you. Now, can we talk about what happened?",
+    whyItWorks: 'Reassurance-seekers can\'t process until they feel safe. Leading with love opens them up to the conversation.'
+  },
+  // Need Reassurance + Process Together
+  {
+    userStyle: 'need-reassurance',
+    partnerStyle: 'process-together',
+    insight: 'Your partner wants to talk it through, but you need to know you\'re okay first.',
+    tryThis: 'Ask for reassurance before engaging in the discussion.',
+    examplePhrase: "Before we talk about it—are we okay? I need to know that first.",
+    whyItWorks: 'You can\'t engage in productive conversation while anxious. Getting reassurance first clears your mind.'
+  },
+  // Act Normal + Need Time
+  {
+    userStyle: 'act-normal',
+    partnerStyle: 'need-time',
+    insight: 'You\'re ready to move on, but your partner still needs space to process.',
+    tryThis: 'Give them the time they need without expecting them to "just be normal" with you.',
+    examplePhrase: "Take your time. I\'m here when you\'re ready—no rush.",
+    whyItWorks: 'Your readiness to move on can feel dismissive. Honoring their timeline shows you care about their process.'
+  },
+  // Need Time + Act Normal
+  {
+    userStyle: 'need-time',
+    partnerStyle: 'act-normal',
+    insight: 'You need space, but your partner is already acting like nothing happened.',
+    tryThis: 'Let them know you need time even if they\'re fine. You don\'t have to match their pace.',
+    examplePhrase: "I know you\'re ready to move on, but I still need a bit of time. I\'ll catch up.",
+    whyItWorks: 'Different recovery speeds are normal. Communicating your needs prevents feeling rushed or left behind.'
+  },
+  // Process Together + Act Normal
+  {
+    userStyle: 'process-together',
+    partnerStyle: 'act-normal',
+    insight: 'You want to talk it through, but your partner would rather just move on.',
+    tryThis: 'Ask for a brief check-in and respect their preference for brevity.',
+    examplePhrase: "Can we do a quick 5-minute debrief? Then I promise we can move on.",
+    whyItWorks: 'Keeping it short respects their style while honoring your need for closure. Win-win.'
+  },
+  // Act Normal + Process Together
+  {
+    userStyle: 'act-normal',
+    partnerStyle: 'process-together',
+    insight: 'Your partner wants to discuss everything, but you\'d rather move forward.',
+    tryThis: 'Participate in a brief conversation to give them closure, then move on together.',
+    examplePhrase: "I\'m ready to move on, but I know you need to talk. Let\'s do a quick check-in.",
+    whyItWorks: 'Meeting them halfway shows you care. A short conversation is a small investment for their peace of mind.'
+  },
+  // Process Together + Need Time
+  {
+    userStyle: 'process-together',
+    partnerStyle: 'need-time',
+    insight: 'You want to talk, but your partner needs space before they can engage.',
+    tryThis: 'Wait until they\'re ready, then have your discussion. Don\'t push.',
+    examplePhrase: "When you\'re ready to talk, I\'d like to process this together. No rush.",
+    whyItWorks: 'Pushing someone who needs time will backfire. Patience now leads to a better conversation later.'
+  },
+  // Need Time + Process Together
+  {
+    userStyle: 'need-time',
+    partnerStyle: 'process-together',
+    insight: 'Your partner wants to talk immediately, but you need space first.',
+    tryThis: 'Ask for time with a promise to discuss it later.',
+    examplePhrase: "I need some time first, but I promise we\'ll talk about this tonight.",
+    whyItWorks: 'Processors feel abandoned when you withdraw. A promise to return gives them something to hold onto.'
+  },
+  // Apologize Quickly + Process Together
+  {
+    userStyle: 'apologize-quickly',
+    partnerStyle: 'process-together',
+    insight: 'You want to apologize and move on, but your partner needs to talk it through.',
+    tryThis: 'Apologize, then stay present for the conversation they need.',
+    examplePhrase: "I\'m sorry. And I\'m here to talk about it if you need to.",
+    whyItWorks: 'Your apology opens the door; staying for the conversation shows you mean it.'
+  },
+  // Process Together + Apologize Quickly
+  {
+    userStyle: 'process-together',
+    partnerStyle: 'apologize-quickly',
+    insight: 'Your partner apologizes fast, but you still need to discuss what happened.',
+    tryThis: 'Accept the apology, then ask if you can still talk about it briefly.',
+    examplePhrase: "Thank you for apologizing. Can we still talk about what happened? It would help me.",
+    whyItWorks: 'Quick apologizers think sorry closes the book. Gently reopening it gets you the closure you need.'
+  }
+];
+
 export const getAdviceForStyles = (userStyle: string, partnerStyle: string): StyleComboAdvice | undefined => {
   return styleComboAdvice.find(
     advice => advice.userStyle === userStyle && advice.partnerStyle === partnerStyle
@@ -283,4 +572,14 @@ export const getAdviceForStyles = (userStyle: string, partnerStyle: string): Sty
 
 export const getStyleById = (id: string): ConflictStyle | undefined => {
   return conflictStyles.find(style => style.id === id);
+};
+
+export const getRecoveryAdvice = (userStyle: string, partnerStyle: string): RecoveryComboAdvice | undefined => {
+  return recoveryComboAdvice.find(
+    advice => advice.userStyle === userStyle && advice.partnerStyle === partnerStyle
+  );
+};
+
+export const getRecoveryStyleById = (id: string): RecoveryStyle | undefined => {
+  return recoveryStyles.find(style => style.id === id);
 };

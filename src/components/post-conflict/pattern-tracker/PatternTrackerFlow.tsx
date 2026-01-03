@@ -3,26 +3,39 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
 import StyleSelector from './StyleSelector';
 import AdviceCard from './AdviceCard';
+import { conflictStyles, recoveryStyles } from './data/styles';
 
 interface PatternTrackerFlowProps {
   onComplete: () => void;
   onBack: () => void;
 }
 
-type FlowStep = 'your-style' | 'partner-style' | 'advice';
+type FlowStep = 'your-style' | 'partner-style' | 'advice-1' | 'your-recovery' | 'partner-recovery' | 'advice-2';
 
 const PatternTrackerFlow: React.FC<PatternTrackerFlowProps> = ({ onComplete, onBack }) => {
   const [step, setStep] = useState<FlowStep>('your-style');
   const [userStyle, setUserStyle] = useState<string | null>(null);
   const [partnerStyle, setPartnerStyle] = useState<string | null>(null);
+  const [userRecovery, setUserRecovery] = useState<string | null>(null);
+  const [partnerRecovery, setPartnerRecovery] = useState<string | null>(null);
 
-  const handleTryAnother = () => {
+  const handleTryAnotherConflict = () => {
     setUserStyle(null);
     setPartnerStyle(null);
     setStep('your-style');
   };
 
-  const stepOrder: FlowStep[] = ['your-style', 'partner-style', 'advice'];
+  const handleTryAnotherRecovery = () => {
+    setUserRecovery(null);
+    setPartnerRecovery(null);
+    setStep('your-recovery');
+  };
+
+  const handleContinueToRecovery = () => {
+    setStep('your-recovery');
+  };
+
+  const stepOrder: FlowStep[] = ['your-style', 'partner-style', 'advice-1', 'your-recovery', 'partner-recovery', 'advice-2'];
   const currentStepIndex = stepOrder.indexOf(step);
 
   return (
@@ -42,7 +55,7 @@ const PatternTrackerFlow: React.FC<PatternTrackerFlowProps> = ({ onComplete, onB
         {stepOrder.map((s, i) => (
           <div
             key={s}
-            className={`h-1.5 w-12 rounded-full transition-colors ${
+            className={`h-1.5 w-8 rounded-full transition-colors ${
               currentStepIndex === i ? 'bg-midnight-indigo' : 
               (currentStepIndex > i ? 'bg-midnight-indigo/50' : 'bg-muted')
             }`}
@@ -63,6 +76,8 @@ const PatternTrackerFlow: React.FC<PatternTrackerFlowProps> = ({ onComplete, onB
               selectedStyle={userStyle}
               onSelect={setUserStyle}
               onContinue={() => setStep('partner-style')}
+              styles={conflictStyles}
+              isPartnerQuestion={false}
             />
           </motion.div>
         )}
@@ -78,14 +93,16 @@ const PatternTrackerFlow: React.FC<PatternTrackerFlowProps> = ({ onComplete, onB
               question="What does your partner usually do?"
               selectedStyle={partnerStyle}
               onSelect={setPartnerStyle}
-              onContinue={() => setStep('advice')}
+              onContinue={() => setStep('advice-1')}
+              styles={conflictStyles}
+              isPartnerQuestion={true}
             />
           </motion.div>
         )}
 
-        {step === 'advice' && userStyle && partnerStyle && (
+        {step === 'advice-1' && userStyle && partnerStyle && (
           <motion.div
-            key="advice"
+            key="advice-1"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
@@ -95,7 +112,73 @@ const PatternTrackerFlow: React.FC<PatternTrackerFlowProps> = ({ onComplete, onB
               partnerStyle={partnerStyle}
               onBack={() => setStep('partner-style')}
               onComplete={onComplete}
-              onTryAnother={handleTryAnother}
+              onTryAnother={handleTryAnotherConflict}
+              patternType="conflict"
+              onContinue={handleContinueToRecovery}
+            />
+          </motion.div>
+        )}
+
+        {step === 'your-recovery' && (
+          <motion.div
+            key="your-recovery"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+          >
+            <div className="text-center mb-4">
+              <span className="text-xs font-medium text-midnight-indigo/60 uppercase tracking-wide">
+                Recovery Patterns
+              </span>
+            </div>
+            <StyleSelector
+              question="After a fight, how do you usually recover?"
+              selectedStyle={userRecovery}
+              onSelect={setUserRecovery}
+              onContinue={() => setStep('partner-recovery')}
+              styles={recoveryStyles}
+              isPartnerQuestion={false}
+            />
+          </motion.div>
+        )}
+
+        {step === 'partner-recovery' && (
+          <motion.div
+            key="partner-recovery"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+          >
+            <div className="text-center mb-4">
+              <span className="text-xs font-medium text-midnight-indigo/60 uppercase tracking-wide">
+                Recovery Patterns
+              </span>
+            </div>
+            <StyleSelector
+              question="How does your partner usually recover?"
+              selectedStyle={partnerRecovery}
+              onSelect={setPartnerRecovery}
+              onContinue={() => setStep('advice-2')}
+              styles={recoveryStyles}
+              isPartnerQuestion={true}
+            />
+          </motion.div>
+        )}
+
+        {step === 'advice-2' && userRecovery && partnerRecovery && (
+          <motion.div
+            key="advice-2"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+          >
+            <AdviceCard
+              userStyle={userRecovery}
+              partnerStyle={partnerRecovery}
+              onBack={() => setStep('partner-recovery')}
+              onComplete={onComplete}
+              onTryAnother={handleTryAnotherRecovery}
+              patternType="recovery"
             />
           </motion.div>
         )}
