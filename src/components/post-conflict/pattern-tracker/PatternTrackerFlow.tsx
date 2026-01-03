@@ -1,37 +1,29 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
-import PatternSelector from './PatternSelector';
-import PatternInsights from './PatternInsights';
+import StyleSelector from './StyleSelector';
+import AdviceCard from './AdviceCard';
 
 interface PatternTrackerFlowProps {
   onComplete: () => void;
   onBack: () => void;
 }
 
-type FlowStep = 'select' | 'insights';
+type FlowStep = 'your-style' | 'partner-style' | 'advice';
 
 const PatternTrackerFlow: React.FC<PatternTrackerFlowProps> = ({ onComplete, onBack }) => {
-  const [step, setStep] = useState<FlowStep>('select');
-  const [selectedPatterns, setSelectedPatterns] = useState<string[]>([]);
-  const [savedInsights, setSavedInsights] = useState<string[]>([]);
+  const [step, setStep] = useState<FlowStep>('your-style');
+  const [userStyle, setUserStyle] = useState<string | null>(null);
+  const [partnerStyle, setPartnerStyle] = useState<string | null>(null);
 
-  const handlePatternSelect = (patternId: string) => {
-    setSelectedPatterns(prev => 
-      prev.includes(patternId)
-        ? prev.filter(p => p !== patternId)
-        : [...prev, patternId]
-    );
+  const handleTryAnother = () => {
+    setUserStyle(null);
+    setPartnerStyle(null);
+    setStep('your-style');
   };
 
-  const handleSaveInsight = (index: number) => {
-    const indexStr = index.toString();
-    setSavedInsights(prev => 
-      prev.includes(indexStr)
-        ? prev.filter(i => i !== indexStr)
-        : [...prev, indexStr]
-    );
-  };
+  const stepOrder: FlowStep[] = ['your-style', 'partner-style', 'advice'];
+  const currentStepIndex = stepOrder.indexOf(step);
 
   return (
     <div className="space-y-6">
@@ -47,46 +39,63 @@ const PatternTrackerFlow: React.FC<PatternTrackerFlowProps> = ({ onComplete, onB
 
       {/* Progress indicator */}
       <div className="flex justify-center gap-2">
-        {['select', 'insights'].map((s, i) => (
+        {stepOrder.map((s, i) => (
           <div
             key={s}
-            className={`h-1.5 w-16 rounded-full transition-colors ${
-              step === s ? 'bg-midnight-indigo' : 
-              (['select', 'insights'].indexOf(step) > i ? 'bg-midnight-indigo/50' : 'bg-muted')
+            className={`h-1.5 w-12 rounded-full transition-colors ${
+              currentStepIndex === i ? 'bg-midnight-indigo' : 
+              (currentStepIndex > i ? 'bg-midnight-indigo/50' : 'bg-muted')
             }`}
           />
         ))}
       </div>
 
       <AnimatePresence mode="wait">
-        {step === 'select' && (
+        {step === 'your-style' && (
           <motion.div
-            key="select"
+            key="your-style"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
           >
-            <PatternSelector
-              selectedPatterns={selectedPatterns}
-              onSelect={handlePatternSelect}
-              onContinue={() => setStep('insights')}
+            <StyleSelector
+              question="When an argument starts, what do you usually do?"
+              selectedStyle={userStyle}
+              onSelect={setUserStyle}
+              onContinue={() => setStep('partner-style')}
             />
           </motion.div>
         )}
 
-        {step === 'insights' && (
+        {step === 'partner-style' && (
           <motion.div
-            key="insights"
+            key="partner-style"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
           >
-            <PatternInsights
-              selectedPatterns={selectedPatterns}
-              savedInsights={savedInsights}
-              onSaveInsight={handleSaveInsight}
-              onBack={() => setStep('select')}
+            <StyleSelector
+              question="What does your partner usually do?"
+              selectedStyle={partnerStyle}
+              onSelect={setPartnerStyle}
+              onContinue={() => setStep('advice')}
+            />
+          </motion.div>
+        )}
+
+        {step === 'advice' && userStyle && partnerStyle && (
+          <motion.div
+            key="advice"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+          >
+            <AdviceCard
+              userStyle={userStyle}
+              partnerStyle={partnerStyle}
+              onBack={() => setStep('partner-style')}
               onComplete={onComplete}
+              onTryAnother={handleTryAnother}
             />
           </motion.div>
         )}
