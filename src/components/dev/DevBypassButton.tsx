@@ -14,8 +14,8 @@ const DevBypassButton = () => {
     localStorage.setItem('bypassSubscription', 'true');
     localStorage.setItem('bypassOnboarding', 'true');
     
-    // Navigate to mid-fight page for review
-    navigate('/mid-fight');
+    // Navigate to Mid-Fight tools for review
+    navigate('/during-conflict');
   };
 
   return (

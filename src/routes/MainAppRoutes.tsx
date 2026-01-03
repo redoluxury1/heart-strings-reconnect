@@ -1,4 +1,4 @@
-import { Route } from "react-router-dom";
+import { Navigate, Route } from "react-router-dom";
 import ProtectedRoute from "@/components/routing/ProtectedRoute";
 import { PageSubscriptionGate } from "@/components/subscription/PageSubscriptionGate";
 import { FEATURE_KEYS } from "@/services/subscriptionService";
@@ -36,6 +36,7 @@ const MainAppRoutes = () => {
       } />
       
       {/* Feature pages - now protected at page level */}
+      <Route key="mid-fight-alias" path="/mid-fight" element={<Navigate to="/during-conflict" replace />} />
       <Route key="during-conflict" path="/during-conflict" element={
         <PageSubscriptionGate 
           featureKey={FEATURE_KEYS.MID_FIGHT_ACCESS}
