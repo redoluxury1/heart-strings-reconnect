@@ -1,9 +1,9 @@
 import React from 'react';
-import { Lightbulb, RefreshCw } from 'lucide-react';
+import { Lightbulb, TrendingUp } from 'lucide-react';
 import { motion } from 'framer-motion';
 import ToolCard from './ToolCard';
 
-export type ToolType = 'try-next-time' | 'flip-the-script';
+export type ToolType = 'try-next-time' | 'pattern-tracker';
 
 interface PostConflictToolHubProps {
   onSelectTool: (tool: ToolType) => void;
@@ -18,7 +18,7 @@ const PostConflictToolHub: React.FC<PostConflictToolHubProps> = ({ onSelectTool 
       className="space-y-8"
     >
       <div className="text-center">
-        <h2 className="font-cormorant text-3xl font-semibold text-foreground mb-3">
+        <h2 className="font-cormorant text-3xl font-semibold text-midnight-indigo mb-3">
           How would you like to grow from this?
         </h2>
         <p className="text-muted-foreground max-w-md mx-auto">
@@ -32,14 +32,14 @@ const PostConflictToolHub: React.FC<PostConflictToolHubProps> = ({ onSelectTool 
           description="Get personalized tips for handling similar situations better in the future. Based on what triggered you and how you reacted."
           icon={Lightbulb}
           onClick={() => onSelectTool('try-next-time')}
-          accentColor="hsl(var(--primary))"
+          accentColor="hsl(248 34% 41%)"
         />
         <ToolCard
-          title="Flip the Script"
-          description="See the conflict through your partner's eyes. Build empathy by exploring their perspective, then get conversation starters to reconnect."
-          icon={RefreshCw}
-          onClick={() => onSelectTool('flip-the-script')}
-          accentColor="hsl(var(--accent))"
+          title="Pattern Tracker"
+          description="Track recurring conflict patterns over time. Identify what keeps coming up so you know what needs attention."
+          icon={TrendingUp}
+          onClick={() => onSelectTool('pattern-tracker')}
+          accentColor="#C65D4F"
         />
       </div>
     </motion.div>

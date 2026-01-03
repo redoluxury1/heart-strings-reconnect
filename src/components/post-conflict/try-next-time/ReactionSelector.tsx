@@ -33,7 +33,7 @@ const ReactionSelector: React.FC<ReactionSelectorProps> = ({
       className="space-y-6"
     >
       <div className="text-center">
-        <h2 className="font-cormorant text-2xl font-semibold text-foreground mb-2">
+        <h2 className="font-cormorant text-2xl font-semibold text-midnight-indigo mb-2">
           How did you react?
         </h2>
         <p className="text-muted-foreground text-sm">

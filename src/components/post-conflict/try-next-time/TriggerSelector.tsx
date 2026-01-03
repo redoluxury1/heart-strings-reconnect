@@ -30,7 +30,7 @@ const TriggerSelector: React.FC<TriggerSelectorProps> = ({
       className="space-y-6"
     >
       <div className="text-center">
-        <h2 className="font-cormorant text-2xl font-semibold text-foreground mb-2">
+        <h2 className="font-cormorant text-2xl font-semibold text-midnight-indigo mb-2">
           What set you off?
         </h2>
         <p className="text-muted-foreground text-sm">
