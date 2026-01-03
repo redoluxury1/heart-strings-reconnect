@@ -14,6 +14,7 @@ import SmallWinsSection from '@/components/home/SmallWinsSection';
 import RelationshipStatsSection from '@/components/home/RelationshipStatsSection';
 import BrandSection from '@/components/common/BrandSection';
 import ContentContainer from '@/components/common/ContentContainer';
+import DevBypassButton from '@/components/dev/DevBypassButton';
 
 const Index = () => {
   usePageAnalytics('home_page');
@@ -25,6 +26,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-soft-cream">
+      <DevBypassButton />
       <Navbar />
       <Hero />
       
