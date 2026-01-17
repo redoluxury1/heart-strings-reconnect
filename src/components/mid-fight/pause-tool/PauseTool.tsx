@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { PauseToolGate } from './PauseToolGate';
 import CodeWordActivationView from './CodeWordActivationView';
 import PauseActivatedView from './PauseActivatedView';
@@ -12,6 +12,7 @@ import RestartPhraseConfirmationView from './RestartPhraseConfirmationView';
 import NotReadyOptionsView from './NotReadyOptionsView';
 import CodeWordEstablishedView from './CodeWordEstablishedView';
 import { notifyPartner } from './hooks/utils/notificationUtils';
+import { useFeatureUsage } from '@/hooks/useFeatureUsage';
 
 export type PauseStatus = 'setup' | 'activation' | 'activated' | 'custom-timer' | 'in-pause' | 'ended' | 'confirm-restart' | 'not-ready';
 
@@ -37,6 +38,14 @@ const PauseToolContent = () => {
     codeWord,
     codeWordEstablished
   } = usePauseTimer();
+  const { trackFeatureCompletion } = useFeatureUsage();
+
+  // Track feature completion when user completes a pause timer
+  useEffect(() => {
+    if (pauseStatus === 'ended') {
+      trackFeatureCompletion('pause-tool');
+    }
+  }, [pauseStatus, trackFeatureCompletion]);
 
   // Function to go directly to timer selection
   const handleDirectTimerActivation = () => {

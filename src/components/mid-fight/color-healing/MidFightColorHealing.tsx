@@ -4,10 +4,12 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import ColorHealingMethod from '@/components/post-conflict/color-healing/ColorHealingMethod';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useFeatureUsage } from '@/hooks/useFeatureUsage';
 
 const MidFightColorHealing: React.FC = () => {
   const [showColorHealing, setShowColorHealing] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const { trackFeatureCompletion } = useFeatureUsage();
   
   // Preload the image when component mounts
   useEffect(() => {
@@ -19,6 +21,13 @@ const MidFightColorHealing: React.FC = () => {
       img.onload = null; // Clean up
     };
   }, []);
+
+  // Track feature completion when user starts color healing
+  useEffect(() => {
+    if (showColorHealing) {
+      trackFeatureCompletion('color-healing');
+    }
+  }, [showColorHealing, trackFeatureCompletion]);
   
   if (showColorHealing) {
     return <ColorHealingMethod />;

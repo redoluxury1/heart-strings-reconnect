@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
 import TriggerSelector from './TriggerSelector';
 import ReactionSelector from './ReactionSelector';
 import SuggestionCards from './SuggestionCards';
 import { getSuggestionsForSelection } from './data/suggestions';
+import { useFeatureUsage } from '@/hooks/useFeatureUsage';
 
 interface TryNextTimeFlowProps {
   onComplete: () => void;
@@ -18,6 +19,14 @@ const TryNextTimeFlow: React.FC<TryNextTimeFlowProps> = ({ onComplete, onBack })
   const [selectedTriggers, setSelectedTriggers] = useState<string[]>([]);
   const [selectedReactions, setSelectedReactions] = useState<string[]>([]);
   const [savedTips, setSavedTips] = useState<string[]>([]);
+  const { trackFeatureCompletion } = useFeatureUsage();
+
+  // Track feature completion when user reaches suggestions
+  useEffect(() => {
+    if (step === 'suggestions') {
+      trackFeatureCompletion('try-next-time');
+    }
+  }, [step, trackFeatureCompletion]);
 
   const handleTriggerSelect = (triggerId: string) => {
     setSelectedTriggers(prev => 
