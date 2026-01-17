@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
 import StyleSelector from './StyleSelector';
 import AdviceCard from './AdviceCard';
 import { conflictStyles, recoveryStyles } from './data/styles';
+import { useFeatureUsage } from '@/hooks/useFeatureUsage';
 
 interface PatternTrackerFlowProps {
   onComplete: () => void;
@@ -18,6 +19,14 @@ const PatternTrackerFlow: React.FC<PatternTrackerFlowProps> = ({ onComplete, onB
   const [partnerStyle, setPartnerStyle] = useState<string | null>(null);
   const [userRecovery, setUserRecovery] = useState<string | null>(null);
   const [partnerRecovery, setPartnerRecovery] = useState<string | null>(null);
+  const { trackFeatureCompletion } = useFeatureUsage();
+
+  // Track feature completion when user reaches advice screens
+  useEffect(() => {
+    if (step === 'advice-1' || step === 'advice-2') {
+      trackFeatureCompletion('pattern-tracker');
+    }
+  }, [step, trackFeatureCompletion]);
 
   const handleTryAnotherConflict = () => {
     setUserStyle(null);

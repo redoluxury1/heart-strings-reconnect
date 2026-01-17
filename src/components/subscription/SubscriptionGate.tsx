@@ -1,6 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useSubscription } from '@/hooks/useSubscription';
+import { useFeatureUsage } from '@/hooks/useFeatureUsage';
 import OnboardingPaywall from '@/components/onboarding/OnboardingPaywall';
 import { Lock } from 'lucide-react';
 
@@ -18,6 +19,7 @@ export const SubscriptionGate: React.FC<SubscriptionGateProps> = ({
   showUpgradePrompt = true
 }) => {
   const { hasFeatureAccess, hasActiveSubscription, loading, refreshSubscription } = useSubscription();
+  const { shouldShowPaywall, getPaywallMessage } = useFeatureUsage();
   const [hasAccess, setHasAccess] = useState(false);
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
 
@@ -39,7 +41,9 @@ export const SubscriptionGate: React.FC<SubscriptionGateProps> = ({
       const access = await hasFeatureAccess(featureKey);
       setHasAccess(access);
     } else {
-      setHasAccess(false);
+      // Freemium: allow access if paywall shouldn't be shown yet
+      const paywallRequired = shouldShowPaywall();
+      setHasAccess(!paywallRequired);
     }
   };
 
@@ -65,18 +69,19 @@ export const SubscriptionGate: React.FC<SubscriptionGateProps> = ({
   }
 
   if (showUpgradePrompt) {
+    const message = getPaywallMessage();
     return (
       <div className="flex flex-col items-center justify-center p-8 bg-gray-50 rounded-lg border border-gray-200">
         <Lock className="h-12 w-12 text-gray-400 mb-4" />
-        <h3 className="text-lg font-medium text-gray-900 mb-2">Premium Feature</h3>
+        <h3 className="text-lg font-medium text-gray-900 mb-2">You've Explored Our Tools!</h3>
         <p className="text-gray-600 text-center mb-4">
-          This feature is available with a premium subscription.
+          {message}
         </p>
         <button
           onClick={() => setShowUpgradeModal(true)}
           className="bg-[#2e4059] text-white px-6 py-2 rounded-full hover:bg-[#2e4059]/90"
         >
-          Upgrade to Premium
+          Subscribe Now
         </button>
         
         {showUpgradeModal && (

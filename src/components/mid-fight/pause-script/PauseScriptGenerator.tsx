@@ -1,10 +1,11 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Sparkles, Copy, Check, RefreshCw, MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { useFeatureUsage } from '@/hooks/useFeatureUsage';
 
 interface Script {
   title: string;
@@ -24,6 +25,14 @@ const PauseScriptGenerator: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [scripts, setScripts] = useState<GeneratedScripts | null>(null);
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
+  const { trackFeatureCompletion } = useFeatureUsage();
+
+  // Track feature completion when scripts are generated
+  useEffect(() => {
+    if (scripts) {
+      trackFeatureCompletion('pause-script');
+    }
+  }, [scripts, trackFeatureCompletion]);
 
   const quickEmotions = [
     'Overwhelmed',

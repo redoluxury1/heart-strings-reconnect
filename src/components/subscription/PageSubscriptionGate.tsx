@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useSubscription } from '@/hooks/useSubscription';
+import { useFeatureUsage } from '@/hooks/useFeatureUsage';
 import { setPostOnboardingRedirect } from '@/utils/redirectStorage';
 import { Heart } from 'lucide-react';
 import { isOnboardingBypassEnabled } from '@/utils/debugBypass';
@@ -21,6 +22,7 @@ export const PageSubscriptionGate: React.FC<PageSubscriptionGateProps> = ({
   const navigate = useNavigate();
   const location = useLocation();
   const { hasFeatureAccess, hasActiveSubscription, loading } = useSubscription();
+  const { shouldShowPaywall } = useFeatureUsage();
   const [hasAccess, setHasAccess] = useState<boolean | null>(null);
 
   useEffect(() => {
@@ -35,16 +37,23 @@ export const PageSubscriptionGate: React.FC<PageSubscriptionGateProps> = ({
         const access = await hasFeatureAccess(featureKey);
         setHasAccess(access);
       } else {
-        // Not subscribed - redirect to onboarding
-        setPostOnboardingRedirect(location.pathname);
-        navigate('/auth?tab=signup', { replace: true });
+        // Freemium: allow access if paywall shouldn't be shown yet
+        const paywallRequired = shouldShowPaywall();
+        if (paywallRequired) {
+          // User has hit the usage limit - redirect to signup
+          setPostOnboardingRedirect(location.pathname);
+          navigate('/auth?tab=signup', { replace: true });
+        } else {
+          // User still has free usage - allow access
+          setHasAccess(true);
+        }
       }
     };
 
     if (!loading) {
       checkAccess();
     }
-  }, [hasActiveSubscription, hasFeatureAccess, featureKey, loading, location.pathname, navigate]);
+  }, [hasActiveSubscription, hasFeatureAccess, featureKey, loading, location.pathname, navigate, shouldShowPaywall]);
 
   if (loading || hasAccess === null) {
     return (
