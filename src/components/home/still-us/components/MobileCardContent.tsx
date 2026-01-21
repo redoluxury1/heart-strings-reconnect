@@ -1,12 +1,8 @@
-
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { useNavigate } from 'react-router-dom';
 import CardToolsList from './CardToolsList';
 import { CardContent } from '../types';
-import { setPostOnboardingRedirect } from '@/utils/redirectStorage';
-import { useSubscription } from '@/hooks/useSubscription';
-import { useAuth } from '@/contexts/AuthContext';
 
 interface MobileCardContentProps {
   card: CardContent;
@@ -26,20 +22,12 @@ const MobileCardContent: React.FC<MobileCardContentProps> = ({
   renderIcon
 }) => {
   const navigate = useNavigate();
-  const { user } = useAuth();
-  const { hasActiveSubscription } = useSubscription();
 
   const handleClick = () => {
-    // Subscribed users go directly to feature
-    if (user && hasActiveSubscription && card.originalDestination) {
-      navigate(card.originalDestination);
-      return;
-    }
-    // Non-subscribed users go through onboarding
-    if (card.originalDestination) {
-      setPostOnboardingRedirect(card.originalDestination);
-    }
-    navigate(card.link);
+    // Navigate directly to the feature page
+    // PageSubscriptionGate will handle freemium/paywall logic
+    const destination = card.originalDestination || card.link;
+    navigate(destination);
   };
 
   return (
